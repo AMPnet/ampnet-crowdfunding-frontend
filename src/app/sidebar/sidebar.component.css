@@ -1,0 +1,34 @@
+#sidebar {
+	background-color: #ee455c;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	box-shadow: 0px 3px 15px rgba(0,0,0,0.3);
+}
+
+a {
+	color: #fff;
+	text-size: 30px;
+	padding-bottom: 20px;
+}
+
+a:hover {
+	cursor: pointer;
+}
+
+#main-logo {
+	width: 40px;
+	height: 40px;
+}
+
+#main-menu li {
+	font-size: 17px;
+	text-transform: uppercase;
+	font-weight: 600;
+	padding-left: 20px;
+	padding-top: 30px;
+}
+
+.active a {
+	color: #000;
+}

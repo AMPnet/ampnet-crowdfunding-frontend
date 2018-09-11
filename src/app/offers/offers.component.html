@@ -1,6 +1,14 @@
-<div class="container">
+<div class="container main-container">
+	<h3>Featured</h3>
 	<div id="component-container" class="row">
-		<div *ngFor="let component of components" class="col-lg-4 col-md-6">
+		<div *ngFor="let component of featuredComponents" class="col-lg-4 col-md-6 wow fadeIn">
+			<app-single-offer-item
+				[component]=component></app-single-offer-item>
+		</div>
+	</div>
+	<h3>Ending</h3>
+	<div id="component-container" class="row">
+		<div *ngFor="let component of components" class="col-lg-4 col-md-6 wow fadeIn">
 			<app-single-offer-item
 				[component]=component></app-single-offer-item>
 		</div>

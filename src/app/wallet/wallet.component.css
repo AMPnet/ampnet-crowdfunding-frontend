@@ -1,0 +1,24 @@
+.wallet-container {
+	padding-top: 20px;
+	background: #fff;
+}
+
+.row-eq-height {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display:         flex;
+}
+
+.button-container .btn {
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
+	font-size: 20px;
+	display: inline-flex;
+	align-items: center;
+}
+
+.wallet-chart-holder {
+	
+}

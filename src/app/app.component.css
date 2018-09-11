@@ -2,15 +2,21 @@
 	display: flex;
 	width: 100%;
 	flex-direction: row;
+	margin-top: 60px;
 }
 
 .sidebar-fixer {
-	width: 250px;
+	width: 240px;
 	height: 100vh;
+	position: fixed;
+	left: 0;
+	top: 60;
 }
 
 #main-container {
 	width: 100%;
 	display: flex;
 	flex-direction: column;
+	margin-left: 240px;
+	background-color: #f8f9fa;
 }

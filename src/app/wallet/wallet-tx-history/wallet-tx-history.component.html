@@ -1,0 +1,18 @@
+<table class="table table-hover table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Date</th>
+      <th scope="col">Amount</th>
+      <th scope="col">Type</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="txhistory-rows" *ngFor="let historyItem of txHistoryModel">
+      <th scope="row">{{historyItem.position}}</th>
+      <td>{{historyItem.date.toDateString()}}</td>
+      <td>{{historyItem.amount}}</td>
+      <td>{{historyItem.type}}</td>
+    </tr>
+  </tbody>
+</table>

@@ -9,6 +9,8 @@ import { OverviewComponent } from './overview/overview.component';
 import { WalletComponent } from './wallet/wallet.component';
 import { OffersComponent } from './offers/offers.component';
 import { SingleOfferItemComponent } from './offers/single-offer-item/single-offer-item.component';
+import { WalletChartComponent } from './wallet/wallet-chart/wallet-chart.component';
+import { WalletTxHistoryComponent } from './wallet/wallet-tx-history/wallet-tx-history.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { SingleOfferItemComponent } from './offers/single-offer-item/single-offe
     OverviewComponent,
     WalletComponent,
     OffersComponent,
-    SingleOfferItemComponent
+    SingleOfferItemComponent,
+    WalletChartComponent,
+    WalletTxHistoryComponent
   ],
   imports: [
     BrowserModule,

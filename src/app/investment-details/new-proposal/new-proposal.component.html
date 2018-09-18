@@ -1,0 +1,47 @@
+<div class="container p-5">
+	<div class="row">
+		<div class="input-group name-proposal-holder">
+			<input type="text" class="form-control" placeholder="Enter proposal name">
+		</div>
+	</div>
+	<div class="input-group mt-3 description-proposal-holder">
+		<textarea type="text" class="form-control" placeholder="Enter proposal description"></textarea>
+	</div>
+	<button class="btn btn-primary mt-2 btn-action-a px-4">
+		<i data-feather="paperclip" class="mr-2"></i>
+		<span class="text-uppercase">Attach documents</span>
+	</button>
+	<h5 class="text-uppercase mt-5 font-weight-bold">Contract</h5>
+	<ul class="nav nav-fill nav-tabs mt-3">
+		<li class="nav-item">
+			<a id="template-nav" (click)="tabToggle(0)" class="nav-link active">From Template</a>
+		</li>
+		<li class="nav-item">
+			<a id="custom-nav" (click)="tabToggle(1)" class="nav-link">Upload Custom</a>
+		</li>
+	</ul>
+	<!-- TEMPLATE TAB -->
+	<div class="contract-holder p-3">
+		<div id="template-holder">
+			<p class="explainer-mini text-uppercase">Choose proposal template</p>
+			<ul class="list-group">
+				<li class="list-group-item active">New Employee</li>
+				<li class="list-group-item">Right of hire</li>
+				<li class="list-group-item">Additional money raise</li>
+				<li class="list-group-item">Restructure equity</li>
+			</ul>
+		</div>
+		<div id="custom-holder">
+			<p class="explainer-mini text-uppercase font-weight-bold">Upload Solidity or Sophia code</p>
+			<button class="btn btn-primary">UPLOAD</button>
+		</div>
+	</div>
+
+	<button routerLink="/finish_new_proposal" id="next-button" class="btn btn-primary float-right mt-4 btn-action-a px-4">
+		<span class="text-uppercase align-middle">NEXT</span>
+	</button>
+	
+</div>
+
+
+

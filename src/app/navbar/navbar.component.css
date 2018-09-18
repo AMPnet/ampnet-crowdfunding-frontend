@@ -1,11 +1,36 @@
 .navbar {
-	height: 60px;
-	background-color: #7FA949;
+	height: 50px;
+	background-color: #2bb791;
 	color: #fcfcfc;
 	box-shadow: 0px 3px 15px rgba(0,0,0,0.2);
 }
 
 #main-logo {
-	height: 20px;
+	height: 27px;
 	margin-left: 10px;
+}
+
+.bell-badge {
+	position: relative;
+	transform: translate(50%, -40%);
+}
+
+#notification-bell:hover {
+	cursor: pointer;
+	transition: all 0.3s;
+	color: #353;
+}
+
+.logo-text {
+	font-size: 15px;
+}
+
+@media(min-width: 950px) {
+	.navbar-hamburger {
+		display: none;
+	}
+}
+
+.navbar-hamburger:hover {
+	cursor: pointer;
 }

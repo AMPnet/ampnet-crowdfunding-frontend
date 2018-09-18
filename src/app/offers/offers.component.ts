@@ -12,6 +12,7 @@ export class OffersComponent implements OnInit {
 
 	components: OfferModel[];
   featuredComponents: OfferModel[];
+  promotedOffer: OfferModel;
 
   constructor() { }
 
@@ -38,6 +39,15 @@ export class OffersComponent implements OnInit {
         headerImageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/GreenMountainWindFarm_Fluvanna_2004.jpg/1280px-GreenMountainWindFarm_Fluvanna_2004.jpg"
       }
     );
+    this.promotedOffer = {
+      title: "ORB Wind Power",
+      description: "Cutting edge wind farm on the shores of Netherlands",
+      offeredBy: "Greenpeace",
+      status: "In funding",
+      fundingRequired: 23492349,
+      currentFunding: 11334578,
+      headerImageUrl: "../../assets/wind-farm.png"
+    }
   }
 
 }

@@ -1,18 +1,17 @@
-<table class="table table-hover table-striped">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Date</th>
-      <th scope="col">Amount</th>
-      <th scope="col">Type</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr class="txhistory-rows" *ngFor="let historyItem of txHistoryModel">
-      <th scope="row">{{historyItem.position}}</th>
-      <td>{{historyItem.date.toDateString()}}</td>
-      <td>{{historyItem.amount}}</td>
-      <td>{{historyItem.type}}</td>
-    </tr>
-  </tbody>
-</table>
+<div class="list-group">
+	<button *ngFor="let historyItem of txHistoryModel" class="list-group-item list-group-item-action">
+		<div class="row">
+			<div class="col-md-3 h-100 align-middle">
+				<i class="align-middle" data-feather="download"></i>
+			</div>
+			<div class="col-md-3 ml-3">
+				<p class="explainer-mini mb-0 text-uppercase">Date</p>
+				{{historyItem.date.toDateString()}}
+			</div>
+			<div class="col-md-3">
+				<p class="explainer-mini mb-0 text-uppercase">Amount</p>
+				{{historyItem.amount}}
+			</div>
+		</div>
+	</button>
+</div>

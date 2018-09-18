@@ -10,15 +10,16 @@
   display:         flex;
 }
 
-.button-container .btn {
+/*.button-container .btn {
 	position: relative;
 	top: 50%;
 	transform: translateY(-50%);
-	font-size: 20px;
-	display: inline-flex;
-	align-items: center;
-}
+	font-size: 15px;
+	font-weight: bold;
+	text-transform: capitalize!important;
+	padding-top: 18px;
+}*/
 
-.wallet-chart-holder {
-	
+.button-container button {
+	height: 60px;
 }

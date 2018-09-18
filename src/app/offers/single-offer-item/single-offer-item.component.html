@@ -1,15 +1,12 @@
-<div class="card offer-holder">
+<div (click)="onClickedItem()" class="card offer-holder">
   <img class="card-img-top" src="{{component.headerImageUrl}}" alt="Card image cap">
   <div class="card-body">
     <h5 class="card-title">{{component.title}}</h5>
     <p class="card-text">{{component.description}}</p>
      <div class="dropdown-divider"></div>
     <div class="progress">
-  		<div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+  		<div class="progress-bar bg-info" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
 		</div>
 		<div class="progress-numerical"><i>$27,354</i> of $79,332</div>
-    <a href="#" class="btn btn-primary float-right">
-    	<div>Invest</div>
-  	</a>
   </div>
 </div>

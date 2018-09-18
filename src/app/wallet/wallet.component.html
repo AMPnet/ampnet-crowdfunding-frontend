@@ -1,24 +1,35 @@
-<div class="p-3 container">
+<div class="container root-content-container">
 	<div class="row row-eq-height">
 		<div class="col-md-6 mb-3">
-			<b>Balance</b>
-			<h1>$31,755</h1>
+			<b class="font-weight-normal">Total balance</b>
+			<h1>USD 31,755</h1>
 		</div>
 		<div class="button-container col-md-3 mb-3">
-				<div class="btn btn-primary w-100 h-75 float-right">Deposit</div>
+				<button type="button" class="btn btn-primary w-100 float-right"
+					data-toggle="modal" data-target="#deposit-modal">
+					<i class="mr-2" data-feather="download"></i>
+					<span class="align-middle">DEPOSIT</span>
+				</button>
 		</div>
 		<div class="button-container col-md-3 mb-3">
-				<div class="btn btn-primary w-100 h-75 float-right">Withdraw</div>
+				<button class="btn btn-primary w-100 float-right">
+					<i class="mr-2" data-feather="upload"></i>
+					<span class="align-middle">WITHDRAW</span>
+				</button>
 		</div>
 		
 		<div class="wallet-chart-holder col-md-12">
 				<app-wallet-chart></app-wallet-chart>
 		</div>
 		<div class="col-md-12 mt-5">
-			<h4 class="text-uppercase font-weight-bold">Transaction history</h4>
+			<h6 class="text-uppercase font-weight-bold">
+			 <i class="mr-2" data-feather="clock"></i>
+			 <span class="align-middle">Transaction history</span>
+			</h6>
 		</div>
 		<div class="col-md-12 mt-3 mb-3">
 			<app-wallet-tx-history></app-wallet-tx-history>
 		</div>
 	</div>
 </div>
+<app-deposit-modal></app-deposit-modal>

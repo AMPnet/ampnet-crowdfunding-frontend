@@ -1,21 +1,34 @@
 <nav class="navbar fixed-top navbar-expand-lg">
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
+  
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
     <div class="navbar-brand">
       <img id="main-logo" src="../../assets/logo-white.png">
+      <a routerLink="" class="text-white align-middle ml-2 logo-text">AMPnet</a>
     </div>
 
   	<div class="ml-auto"></div>
-  	<div class="mr-2">
-  		<span class="badge badge-pill badge-danger">3</span>
-  		<i data-feather="bell"></i>
+  	<div id="notification-bell" class="mr-2">
+      <div class="dropdown dropleft">
+        <a class="bell-badge badge badge-pill badge-danger dropdown-toggle" data-toggle="dropdown">3</a>
+        <a data-feather="bell" class="dropdown-toggle" data-toggle="dropdown"></a>
+
+        <div class="dropdown-menu ">
+          <a href="#" class="dropdown-item">
+            <i data-feather="user"></i>
+          New proposal from John
+          </a>
+          <a href="#" class="dropdown-item">
+            <i data-feather="user"></i>
+          New proposal from John
+          </a>
+        </div>
+      </div> 
   	</div>
-  	 
-  	
-    <div class="mr-2">Mislav Javor</div>
+    <a href="my_profile" class="mr-2 ml-3 text-white">John Doe</a>
+  </div>
+
+  <div class="navbar-hamburger" (click)="menuButtonClicked()">
+      <i data-feather="menu"></i>
   </div>
 </nav>
+

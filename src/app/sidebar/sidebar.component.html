@@ -1,20 +1,47 @@
 <div id="sidebar">
 	<ul id="main-menu" class="list-unstyled components">
-		<li routerLinkActive="active">
+		<p class="menu-header">MENU</p>
+		<li routerLink="overview" routerLinkActive="active">
 			<i class="menu-icon" data-feather="home"></i>
-			<a routerLink="overview">Overview</a>
+			<span>Overview</span>
 		</li>
-		<li routerLinkActive="active">
+		<li routerLink="my_profile" routerLinkActive="active">
 			<i class="menu-icon" data-feather="user"></i>
-			<a routerLink="myprofile">My Profile</a>
+			<span>My Profile</span>
 		</li>
-		<li routerLinkActive="active">
+		<li routerLink="/dash/wallet" routerLinkActive="active">
 			<i class="menu-icon" data-feather="dollar-sign"></i>
-			<a routerLink="wallet">Wallet</a>
+			<span>Wallet</span>
 		</li>
-		<li routerLinkActive="active">
+		<li routerLink="offers" routerLinkActive="active">
 			<i class="menu-icon" data-feather="trending-up"></i>
-			<a routerLink="offers">Offers</a>
+			<span>Offers</span>
+		</li>
+	</ul>
+
+
+	<ul id="main-menu" class="list-unstyled components">
+		<p class="menu-header">SETTINGS</p>
+		<li routerLink="general_settings" routerLinkActive="active">
+			<i class="menu-icon" data-feather="settings"></i>
+			<span>General</span>
+		</li>
+		<li routerLinkActive="active"  routerLink="payment_options">
+			<i class="menu-icon" data-feather="credit-card"></i>
+			<span>Payments</span>
+		</li>
+	</ul>
+
+	<div class="dropdown-divider"></div>
+
+	<ul id="main-menu" class="list-unstyled components">
+		<li (click)="contactUsClicked()" routerLinkActive="active">
+			<i class="menu-icon" data-feather="mail"></i>
+			<span>Contact Us</span>
+		</li>
+		<li (click)="logOutClicked()" routerLinkActive="active">
+			<i class="menu-icon" data-feather="log-out"></i>
+			<span>Log Out</span>
 		</li>
 	</ul>
 </div>

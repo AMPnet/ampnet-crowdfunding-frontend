@@ -1,0 +1,48 @@
+.breadcrumb {
+	background: #fff;
+}
+
+.breadcrumb a {
+	color: #333;
+}
+
+#invest-button {
+	background: #59D097;
+}
+
+.header-image {
+	height: 45vh;
+	object-fit: cover;
+}
+
+.documentHolder:hover {
+	cursor: pointer;
+}
+
+.document-holder .card {
+	margin-bottom: 20px;
+	border: none;
+	box-shadow: 0px 3px 5px rgba(0,0,0,0.1);
+	transition: all 0.3s ease-in-out;
+
+}
+
+.document-holder .card:hover {
+	cursor: pointer;
+	box-shadow: -4px 10px 15px rgba(0,0,0,0.1);
+	transform: scale(1.03);
+}
+
+.info-holder p {
+	font-size: 12px;
+	color: #777;
+	font-weight: bold;
+	vertical-align: middle;
+}
+
+.info-holder i {
+	height: 10px;
+	color: #777;
+	font-weight: bold;
+	vertical-align: middle;
+}

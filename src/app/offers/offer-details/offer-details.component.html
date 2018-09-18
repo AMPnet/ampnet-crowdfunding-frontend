@@ -1,0 +1,90 @@
+<div class="header-image-container col-md-12 ml-0 pl-0 pr-0 wow fadeIn">
+			<img class="header-image w-100" src="https://cna.ca/wp-content/uploads/2015/12/windandsolar-1024x800.jpg">
+		</div>
+
+<div class="container root-content-container wow fadeIn">
+	<div class="row">
+		
+		<div class="col-md-8">
+			<h1 class="title">
+					Project name
+			</h1>
+		</div>
+		<div class="col-md-4">
+			<button routerLink="/invest" id="invest-button" class="btn btn-primary w-100 h-100 float-right text-white">
+					<i class="mr-2" data-feather="pie-chart"></i>
+					<span class="align-middle">INVEST</span>
+				</button>
+		</div>
+		<div class="col-md-8 text-justify">
+			<h4 class="font-weight-bold mt-5 mb-4">ABOUT</h4>
+			Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+		</div>
+		<div class="col-md-4">
+			<h4 class="font-weight-bold mt-5 mb-4">INFO</h4>
+			<div class="mb-2 info-holder">
+				<p class="mb-2 font-weight-bold info-head-elem">
+					<i data-feather="map-pin" class="mr-2" height="14" width="14"></i>
+					<span class="align-middle">LOCATION</span>
+			</p>
+				Athens, Greece
+			</div>
+			<div class="dropdown-divider"></div>
+			<div class="mb-2 info-holder">
+				<p class="mb-2 font-weight-bold info-head-elem">
+					<i data-feather="at-sign" class="mr-2" height="14" width="14"></i>
+				OFFERED BY
+			</p>
+				Greenpeace
+			</div>
+			<div class="dropdown-divider"></div>
+			<div class="mb-2 info-holder">
+				<p class="mb-2 font-weight-bold info-head-elem">
+					<i data-feather="bar-chart" class="mr-2" height="14" width="14"></i>
+				RETURN ON INVESTMENT
+			</p>
+				6%-9%
+			</div>
+			<div class="dropdown-divider"></div>
+			<div class="mb-3 info-holder">
+				<p class="mb-2 font-weight-bold info-head-elem">
+					<i data-feather="calendar" class="mr-2" height="14" width="14"></i>
+				BEGINS
+			</p>
+				March 12th, 2019
+			</div>
+		</div>
+		<div class="col-md-12 mt-4">
+			<h3>STATUS</h3>
+		</div>
+		<div class="col-md-8">
+			<i data-feather="activity"></i>
+			<span class="ml-2">In Funding</span>
+		</div>
+		<div class="col-md-4 text-right">
+			1270 investors
+		</div>
+		<div class="col-md-12 mt-3">
+			<div class="progress">
+  			<div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+			</div>
+		</div>
+		<div class="col-md-12 mt-2">
+			$12,334,125 of $45,000,000 collected
+		</div>
+		<div class="col-md-12 mt-5 mb-2">
+			<h4>DOCS</h4>
+		</div>
+		<div class="document-holder col-md-4" *ngFor="let doc of docs">
+			<div class="card mb-4">
+				<div class="card-header">
+					{{doc.title}}
+				</div>
+				<div class="card-body">
+					<span>PDF</span>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>

@@ -25,7 +25,10 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { FinishNewProposalComponent } from './investment-details/finish-new-proposal/finish-new-proposal.component';
 import { ProposalDetailsComponent } from './investment-details/proposal-details/proposal-details.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
-import { DashboardHolderComponent } from './dashboard-holder/dashboard-holder.component';
+import { PublicLayoutComponent } from './public-layout/public-layout.component';
+import { SecureLayoutComponent } from './secure-layout/secure-layout.component';
+import { HeaderComponent } from './public-layout/header/header.component';
+import { SignUpComponent } from './authentication/sign-up/sign-up.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +54,10 @@ import { DashboardHolderComponent } from './dashboard-holder/dashboard-holder.co
     FinishNewProposalComponent,
     ProposalDetailsComponent,
     LandingPageComponent,
-    DashboardHolderComponent
+    PublicLayoutComponent,
+    SecureLayoutComponent,
+    HeaderComponent,
+    SignUpComponent
   ],
   imports: [
     BrowserModule,

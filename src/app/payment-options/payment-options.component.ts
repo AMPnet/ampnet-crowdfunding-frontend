@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PaymentOptionModel, PaymentOptionType } from '../models/PaymentOptionModel'
 import * as _ from 'lodash';
 
-declare var feather: any;
+
 
 @Component({
   selector: 'app-payment-options',
@@ -26,7 +26,7 @@ export class PaymentOptionsComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-  	feather.replace();
+  	;
   }
 
 }

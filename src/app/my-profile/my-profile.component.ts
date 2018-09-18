@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { InvestItemModel } from './single-invest-item/InvestItemModel';
 import * as _ from 'lodash';
 
-declare var feather: any;
+
 
 @Component({
   selector: 'app-my-profile',
@@ -16,7 +16,6 @@ export class MyProfileComponent implements OnInit {
   investments: InvestItemModel[];
 
   ngOnInit() {
-  	feather.replace();
   	this.investments = _.fill(Array(5), {
   		title: "ABC",
   		offeredBy: "Greenpeace",

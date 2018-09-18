@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { OfferDetailDocModel, OfferDetailDocType } from '../../models/OfferDetailDocModel'
 import * as _ from 'lodash';
 
-declare var feather: any;
+
 
 @Component({
   selector: 'app-offer-details',
@@ -16,7 +16,6 @@ export class OfferDetailsComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-  	feather.replace()
   	this.docs = _.fill(Array(5), {
   		docType: OfferDetailDocType.PDF,
   		title: "Hello World",

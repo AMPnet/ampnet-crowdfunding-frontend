@@ -1,0 +1,26 @@
+.landing-image {
+	width: 100%;
+	height: 100vh;
+	margin-top: -75px;
+	object-fit: cover;
+}
+
+.content-container {
+	position: absolute;
+	top: 30%;
+	left: 20%;
+	font-size: 70px;
+	line-height: 1em;
+	letter-spacing: -5px;
+	width: 50vw;
+	text-shadow: 0px 3px 5px rgba(0,0,0,0.2);
+}
+
+.content-container .btn {
+	width: 230px;
+}
+
+/*.landing-content-root {
+	height: calc(100vh - 50px);
+}*/
+

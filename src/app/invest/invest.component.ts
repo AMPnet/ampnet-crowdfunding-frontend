@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-declare var feather: any;
+
 
 @Component({
   selector: 'app-invest',
@@ -12,7 +12,7 @@ export class InvestComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-  	feather.replace();
+
   }
 
 }

@@ -1,0 +1,27 @@
+.left-image {
+  width: 100%;
+  height: calc(100vh - 75px);
+  object-fit: cover;
+}
+
+#top-container {
+  background: #48A97B;
+  height: 100vh;
+  margin-top: -75px;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.content-container{
+  padding-top: 75px;
+}
+
+#facebook-sign-up-btn {
+  background: #3B5998!important;
+}
+
+#google-sign-up-btn {
+  background: #d62d20!important;
+}

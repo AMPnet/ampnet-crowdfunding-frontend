@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { OfferModel } from "../OfferModel"
+import { OfferModel } from '../OfferModel';
 import { Router } from '@angular/router';
 
 @Component({
@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class SingleOfferItemComponent implements OnInit {
 
-	@Input() component: OfferModel;
+  @Input() component: OfferModel;
 
   constructor(private router: Router) { }
 
@@ -18,7 +18,7 @@ export class SingleOfferItemComponent implements OnInit {
   }
 
   onClickedItem() {
-  	this.router.navigateByUrl("/offer_details");
+    this.router.navigate(['dash', 'offer_details']);
   }
 
 }

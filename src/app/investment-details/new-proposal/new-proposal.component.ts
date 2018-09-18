@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-declare var feather: any;
+
 
 @Component({
   selector: 'app-new-proposal',
@@ -24,8 +24,6 @@ export class NewProposalComponent implements OnInit {
   	this.customNav = $("#custom-nav");
 
   	this.customHolder.hide();
-
-  	feather.replace();
   }
 
   tabToggle(position: number) {

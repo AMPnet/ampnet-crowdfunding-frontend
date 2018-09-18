@@ -26,7 +26,8 @@
               "src/styles.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               //"src/assets/bootstrap.minty.min.css",
-              "src/assets/animate.css"
+              "src/assets/animate.css",
+              "node_modules/@fortawesome/fontawesome-free/css/fontawesome.min.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
@@ -34,7 +35,8 @@
               "node_modules/bootstrap/dist/js/bootstrap.min.js",
               "node_modules/lodash/lodash.js",
               "node_modules/chart.js/dist/Chart.min.js",
-              "node_modules/wowjs/dist/wow.min.js"
+              "node_modules/wowjs/dist/wow.min.js",
+              "node_modules/@fortawesome/fontawesome-free/js/all.min.js"
             ]
           },
           "configurations": {

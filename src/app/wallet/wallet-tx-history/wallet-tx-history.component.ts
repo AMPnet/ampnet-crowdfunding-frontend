@@ -2,7 +2,7 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { TxHistoryModel, TxHistoryType } from '../../models/TransactionHistoryModel';
 import * as _ from 'lodash';
 
-declare var feather: any;
+
 
 @Component({
   selector: 'app-wallet-tx-history',
@@ -25,7 +25,7 @@ export class WalletTxHistoryComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    feather.replace();
+    
   }
 
 }

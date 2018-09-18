@@ -1,12 +1,12 @@
-<div class="container pl-5 pr-5 pt-5">
+<div class="container root-content-container">
 	<div class="row">
 		<div class="col-md-8 mb-5">
 			<span class="h5 text-uppercase font-weight-bold">Payment methods</span>
 		</div>
 		<div class="col-md-4 mb-5">
 			<button class="btn btn-primary w-100 prim-btn">
-				<i class="align-middle mr-2" data-feather="plus"></i>
-				<span class="align-middle">ADD NEW</span>
+				<i class="mr-2 fas fa-plus"></i>
+				<span>ADD NEW</span>
 			</button>
 		</div>
 		<div *ngFor="let paymentOption of paymentOptions" class="col-md-12 mb-3">
@@ -17,8 +17,8 @@
 					</span>
 					<span class="active-icon-holder float-right">
 						<span class="font-weight-bold mb-0 mr-3 align-middle">ACTIVE</span>
-						<i *ngIf="paymentOption.active" data-feather="check"></i>
-						<i *ngIf="!paymentOption.active" data-feather="x"></i>
+						<i *ngIf="paymentOption.active" class="fas fa-check"></i>
+						<i *ngIf="!paymentOption.active" class="fas fa-cross"></i>
 					</span>
 					<div>
 						<div class="mt-4">

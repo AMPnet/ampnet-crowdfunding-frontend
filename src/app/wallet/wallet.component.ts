@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as $ from 'jquery';
 
-declare var feather: any;
+
 
 @Component({
   selector: 'app-wallet',
@@ -13,7 +13,7 @@ export class WalletComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-  	feather.replace()
+  	
   }
 
   depositButtonClicked() {

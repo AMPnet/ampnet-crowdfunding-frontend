@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
+declare var $: any;
+
 
 @Component({
   selector: 'app-deposit-modal',
@@ -7,9 +11,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DepositModalComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
+  }
+
+  addPaymentOptionClicked() {
+     $('.modal').modal('toggle');
+     this.router.navigate(['dash', 'payment_options']);
   }
 
 }

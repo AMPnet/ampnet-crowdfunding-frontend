@@ -12,7 +12,7 @@
 
 .bell-badge {
 	position: relative;
-	transform: translate(50%, -40%);
+	transform: translate(30%, -60%);
 }
 
 #notification-bell:hover {

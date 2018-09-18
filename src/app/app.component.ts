@@ -1,8 +1,7 @@
-import { Component } from '@angular/core';
-import * as $ from "jquery";
+import { Component, OnInit } from '@angular/core';
+import * as $ from 'jquery';
 import { Router, NavigationEnd } from '@angular/router';
 
-declare var feather: any;
 declare var WOW: any;
 
 @Component({
@@ -10,14 +9,12 @@ declare var WOW: any;
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'AMPnet';
 
   constructor(private router: Router) { }
 
   ngOnInit() {
-  	feather.replace()
-  	new WOW().init();
-
+    new WOW().init();
   }
 }

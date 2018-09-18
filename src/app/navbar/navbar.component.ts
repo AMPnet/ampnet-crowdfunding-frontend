@@ -8,25 +8,33 @@ import * as $ from 'jquery';
 })
 export class NavbarComponent implements OnInit {
 
+  sidebar: JQuery;
+
+  public static toggleSidebar(toVisible: boolean) {
+
+    const sidebar = $('.sidebar-fixer');
+
+    if (toVisible) {
+     sidebar.animate({
+       left: 0
+     }, 100);
+    } else {
+      sidebar.animate({
+        left: '-240px'
+      }, 100);
+    }
+  }
+
   constructor() { }
 
   ngOnInit() {
   }
 
   menuButtonClicked() {
-  	console.log("in here");
+    console.log('in here');
 
-  	var sidebar = $(".sidebar-fixer");
+    this.sidebar = $('.sidebar-fixer');
 
-  	if(sidebar.position().left < 0) {
-			sidebar.animate({
-				left: 0
-			}, 100)
-  	} else {
-  		sidebar.animate({
-  			left: "-240px"
-  		}, 100);
-  	}
+    NavbarComponent.toggleSidebar(this.sidebar.position().left < 0);
   }
-
 }

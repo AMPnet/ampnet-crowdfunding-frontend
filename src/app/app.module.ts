@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { DisqusModule } from 'ngx-disqus';
 
 import { AppComponent } from './app.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
@@ -29,6 +30,8 @@ import { PublicLayoutComponent } from './public-layout/public-layout.component';
 import { SecureLayoutComponent } from './secure-layout/secure-layout.component';
 import { HeaderComponent } from './public-layout/header/header.component';
 import { SignUpComponent } from './authentication/sign-up/sign-up.component';
+import { TxOverviewComponent } from './wallet/tx-overview/tx-overview.component';
+import { LogInModalComponent } from './authentication/log-in-modal/log-in-modal.component';
 
 @NgModule({
   declarations: [
@@ -57,11 +60,14 @@ import { SignUpComponent } from './authentication/sign-up/sign-up.component';
     PublicLayoutComponent,
     SecureLayoutComponent,
     HeaderComponent,
-    SignUpComponent
+    SignUpComponent,
+    TxOverviewComponent,
+    LogInModalComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    DisqusModule.forRoot('ampnet.disqus.com/embed.js')
   ],
   providers: [{
     provide: LocationStrategy,

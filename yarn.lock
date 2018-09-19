@@ -4066,6 +4066,12 @@ neo-async@^2.5.0:
   version "2.5.2"
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.5.2.tgz#489105ce7bc54e709d736b195f82135048c50fcc"
 
+ngx-disqus@^2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/ngx-disqus/-/ngx-disqus-2.4.0.tgz#5c6763dd48e257f58fb552968406111d40fc48ee"
+  dependencies:
+    tslib "^1.9.0"
+
 nice-try@^1.0.4:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/nice-try/-/nice-try-1.0.5.tgz#a3378a7696ce7d223e88fc9b764bd7ef1089e366"

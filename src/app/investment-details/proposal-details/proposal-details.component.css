@@ -1,0 +1,9 @@
+.text-description {
+  color: #333;
+}
+
+@media(max-width: 800px) {
+  .voting-holder {
+    margin-top: 2rem;
+  }
+}

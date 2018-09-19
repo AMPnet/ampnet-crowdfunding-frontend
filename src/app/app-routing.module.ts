@@ -15,22 +15,21 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
 import { PublicLayoutComponent } from './public-layout/public-layout.component';
 import { SecureLayoutComponent } from './secure-layout/secure-layout.component';
 import { SignUpComponent } from './authentication/sign-up/sign-up.component';
-
+import { TxOverviewComponent } from './wallet/tx-overview/tx-overview.component';
 
 // Defines public routes accessible to everyone
 // (landing page, login, register, contact help, etc...)
-const publicRoutes: Routes = [
+
+
+// Defines secure routes only accessible to authenticated
+// users (dashboard)
+const routes: Routes = [
   { path: '', component: PublicLayoutComponent,
     children: [
       { path: 'sign_up', component: SignUpComponent },
       { path: '', component: LandingPageComponent }
     ]
-  }
-];
-
-// Defines secure routes only accessible to authenticated
-// users (dashboard)
-const secureRoutes: Routes = [
+  },
   { path: 'dash', component: SecureLayoutComponent,
     children: [
       { path: '', component: OffersComponent },
@@ -44,13 +43,11 @@ const secureRoutes: Routes = [
       { path: 'payment_options', component: PaymentOptionsComponent },
       { path: 'my_profile/investment_details/new_proposal', component: NewProposalComponent },
       { path: 'finish_new_proposal', component: FinishNewProposalComponent },
-      { path: 'proposal_details', component: ProposalDetailsComponent }
+      { path: 'my_profile/investment_details/proposal_details', component: ProposalDetailsComponent },
+      { path: 'wallet/tx_overview', component: TxOverviewComponent }
     ]
   }
 ];
-
-const routes: Routes = publicRoutes.concat(secureRoutes);
-
 
 @NgModule({
   imports: [ RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' }) ],

@@ -20,7 +20,7 @@ export class WalletTxHistoryComponent implements OnInit, AfterViewInit {
       position: 0,
       date: new Date(),
       amount: 200,
-      type: TxHistoryType.Deposit
+      type: TxHistoryType.Withdraw
     });
   }
 

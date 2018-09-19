@@ -5,7 +5,11 @@
 }
 
 #top-container {
-  background: #48A97B;
+  background-image: url("../../../assets/solar-farm.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: rgba(0,0,0,0.7);
+  background-blend-mode: multiply;
   height: 100vh;
   margin-top: -75px;
   width: 100vw;
@@ -18,10 +22,18 @@
   padding-top: 75px;
 }
 
-#facebook-sign-up-btn {
-  background: #3B5998!important;
+.card {
+  margin-left: 10px!important;
+  margin-right: 10px!important;
 }
 
-#google-sign-up-btn {
-  background: #d62d20!important;
+@media(min-width: 1100px) {
+  .card {
+    width: 50%;
+    margin: auto!important;
+  }
+}
+
+#submit-button {
+  height: 60px!important;
 }

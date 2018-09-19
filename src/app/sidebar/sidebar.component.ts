@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavbarComponent } from '../navbar/navbar.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
@@ -8,7 +9,7 @@ import { NavbarComponent } from '../navbar/navbar.component';
 })
 export class SidebarComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
     $('#main-menu li').on('click', () => {
@@ -17,7 +18,7 @@ export class SidebarComponent implements OnInit {
   }
 
   logOutClicked() {
-    window.location.href = 'http://ampnet.io';
+    this.router.navigate(['/']);
   }
 
   contactUsClicked() {

@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
+declare var $: any;
 
 @Component({
   selector: 'app-log-in-modal',
@@ -7,9 +10,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LogInModalComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
+  }
+
+  logInFacebookClicked() {
+    $("#log-in-modal").modal('toggle');
+    this.router.navigate(['/dash']);
+  }
+
+  logInGoogleClicked() {
+    $("#log-in-modal").modal('toggle');
+    this.router.navigate(['/dash']);
+  }
+
+  logInMailClicked() {
+    $("#log-in-modal").modal('toggle');
+    this.router.navigate(['/dash']);
   }
 
 }

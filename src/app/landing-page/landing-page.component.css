@@ -13,9 +13,7 @@
 	transform: translateY(-50px);
 }
 
-.content-container .btn {
-	width: 230px;
-}
+
 
 .landing-content-root {
 	background: url("../../assets/wind-turbine.jpg");
@@ -31,6 +29,10 @@
 		margin-left: 250px;
 		width: 550px;
 	}
+
+	.content-container .btn {
+	width: 230px;
+}
 }
 
 @media(max-width: 800px) {
@@ -38,5 +40,11 @@
 		margin-left: 0px;
 		text-align: center;
 		width: 100%;
+	}
+
+	.find-out-more-btn {
+		width: 100%!important;
+		margin-left: 0px;
+		margin-right: 0px;
 	}
 }

@@ -11,7 +11,30 @@
 		</div>
 		<div *ngFor="let paymentOption of paymentOptions" class="col-md-12 mb-3">
 			<div class="card">
-				<div class="card-body"></div>
+				<div class="card-body d-flex flex-column gray-text">
+					<div class="d-flex flex-row justify-content-between text-left">
+						<div>
+							<div class="explainer-mini text-uppercase mb-2">Name</div>
+							<b>{{paymentOption.name}}</b>
+						</div>
+						<div>
+							<div class="explainer-mini text-uppercase mb-2">Type</div>
+							<div *ngIf="paymentOption.type == 0">
+								<i class="fas fa-university mr-2"></i>
+								<span>Bank</span>
+							</div>
+						</div>
+						<div *ngIf="paymentOption.active">
+							<div class="explainer-mini text-uppercase mb-2">Active</div>
+							<i class="fas fa-check mr-2"></i>
+						</div>
+						<div>
+							<div class="explainer-mini text-uppercase mb-2">Actions</div>
+							<i class="fas fa-trash-alt float-left cursor-pointer"></i>
+							<i class="fas fa-edit float-right cursor-pointer"></i>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

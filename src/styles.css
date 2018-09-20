@@ -74,6 +74,14 @@ body {
 	}
 }
 
+.cursor-pointer {
+	cursor: pointer!important;
+}
+
+.gray-text {
+	color: #555;
+}
+
 .btn-action-a {
 	min-height: 60px;
 }

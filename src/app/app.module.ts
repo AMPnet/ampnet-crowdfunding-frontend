@@ -35,6 +35,7 @@ import { LogInModalComponent } from './authentication/log-in-modal/log-in-modal.
 import { NewPaymentOptionComponent } from './payment-options/new-payment-option/new-payment-option.component';
 import { CreditCardInputComponent } from './payment-options/new-payment-option/credit-card-input/credit-card-input.component';
 import { BankAccountInputComponent } from './payment-options/new-payment-option/bank-account-input/bank-account-input.component';
+import { WithdrawModalComponent } from './wallet/withdraw-modal/withdraw-modal.component';
 
 @NgModule({
   declarations: [
@@ -68,7 +69,8 @@ import { BankAccountInputComponent } from './payment-options/new-payment-option/
     LogInModalComponent,
     NewPaymentOptionComponent,
     CreditCardInputComponent,
-    BankAccountInputComponent
+    BankAccountInputComponent,
+    WithdrawModalComponent
   ],
   imports: [
     BrowserModule,

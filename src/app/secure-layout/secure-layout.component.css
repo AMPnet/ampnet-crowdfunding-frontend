@@ -2,7 +2,6 @@
 	display: flex;
 	width: 100%;
 	flex-direction: row;
-	margin-top: 50px;
 }
 
 .sidebar-fixer {
@@ -12,8 +11,8 @@
 	transition: all 0.3s;
 	z-index: 999;
 	transform: all 0.3s;
-	width: 240px;
-
+	width: 220px;
+	height: 100%;
 }
 
 @media (min-width: 800px) {
@@ -22,15 +21,15 @@
 	}
 
 	#main-container {
-		margin-left: 240px;
-		width: calc(100% - 240px);
+		margin-left: 220px;
+		width: calc(100% - 220px);
 	}
 }
 
 
 @media (max-width: 800px) {
 	.sidebar-fixer {
-		left: -240px;
+		left: -220px;
 	}
 
 	#main-container {

@@ -1,12 +1,17 @@
-<app-navbar></app-navbar>
 <div class="wrapper">
 	<div class="sidebar-fixer">
-			<app-sidebar></app-sidebar>
-	</div>
-	<div id="main-container">
-		<router-outlet></router-outlet>
-		<div class="align-bottom mt-auto">
-			<app-footer></app-footer>
-		</div>
-	</div>
+   <app-sidebar></app-sidebar>
+ </div>
+ <div id="main-container">
+  <nav aria-label="breadcrumb" class="mx-4 my-2">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="#">Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Library</li>
+    </ol>
+  </nav>
+  <router-outlet></router-outlet>
+  <div class="align-bottom mt-auto">
+   <app-footer></app-footer>
+ </div>
+</div>
 </div>

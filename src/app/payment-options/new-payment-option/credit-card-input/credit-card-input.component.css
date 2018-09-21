@@ -1,0 +1,12 @@
+.tab-holder {
+  color: #333;
+}
+
+.tab-holder li a.active {
+  background: #48A97B;
+  color: #fff;
+}
+
+.tab-holder:hover {
+  cursor: pointer;
+}

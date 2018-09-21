@@ -32,6 +32,9 @@ import { HeaderComponent } from './public-layout/header/header.component';
 import { SignUpComponent } from './authentication/sign-up/sign-up.component';
 import { TxOverviewComponent } from './wallet/tx-overview/tx-overview.component';
 import { LogInModalComponent } from './authentication/log-in-modal/log-in-modal.component';
+import { NewPaymentOptionComponent } from './payment-options/new-payment-option/new-payment-option.component';
+import { CreditCardInputComponent } from './payment-options/new-payment-option/credit-card-input/credit-card-input.component';
+import { BankAccountInputComponent } from './payment-options/new-payment-option/bank-account-input/bank-account-input.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +65,10 @@ import { LogInModalComponent } from './authentication/log-in-modal/log-in-modal.
     HeaderComponent,
     SignUpComponent,
     TxOverviewComponent,
-    LogInModalComponent
+    LogInModalComponent,
+    NewPaymentOptionComponent,
+    CreditCardInputComponent,
+    BankAccountInputComponent
   ],
   imports: [
     BrowserModule,

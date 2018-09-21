@@ -22,11 +22,15 @@ export class PaymentOptionsComponent implements OnInit {
   }
 
   ngOnInit() {
-		
+
   }
 
   ngAfterViewInit() {
   	;
+  }
+
+  editButtonClicked() {
+    alert("hehe");
   }
 
 }

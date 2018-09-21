@@ -27,7 +27,7 @@
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               //"src/assets/bootstrap.minty.min.css",
               "src/assets/animate.css",
-              "node_modules/@fortawesome/fontawesome-free/css/fontawesome.min.css"
+              "node_modules/@fortawesome/fontawesome-free/css/all.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",

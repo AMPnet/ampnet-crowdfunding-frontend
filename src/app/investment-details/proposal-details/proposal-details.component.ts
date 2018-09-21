@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProposalDetailsComponent implements OnInit {
 
-  identifier: string = "abc";
+  identifier = "abc";
 
   constructor() { }
 

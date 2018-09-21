@@ -16,7 +16,7 @@ import { PublicLayoutComponent } from './public-layout/public-layout.component';
 import { SecureLayoutComponent } from './secure-layout/secure-layout.component';
 import { SignUpComponent } from './authentication/sign-up/sign-up.component';
 import { TxOverviewComponent } from './wallet/tx-overview/tx-overview.component';
-
+import { NewPaymentOptionComponent } from './payment-options/new-payment-option/new-payment-option.component';
 // Defines public routes accessible to everyone
 // (landing page, login, register, contact help, etc...)
 
@@ -44,7 +44,8 @@ const routes: Routes = [
       { path: 'my_profile/investment_details/new_proposal', component: NewProposalComponent },
       { path: 'finish_new_proposal', component: FinishNewProposalComponent },
       { path: 'my_profile/investment_details/proposal_details', component: ProposalDetailsComponent },
-      { path: 'wallet/tx_overview', component: TxOverviewComponent }
+      { path: 'wallet/tx_overview', component: TxOverviewComponent },
+      { path: 'payment_options/new', component: NewPaymentOptionComponent}
     ]
   }
 ];

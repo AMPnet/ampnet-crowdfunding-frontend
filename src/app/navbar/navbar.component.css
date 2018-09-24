@@ -2,9 +2,18 @@
 	height: 50px;
 	background-color: #fff;
 	color: #333;
-	box-shadow: 12px 4px 15px rgba(0,0,0,0.2);
-	width: calc(100% - 220px);
+	box-shadow: 5px 3px 6px rgba(0,0,0,0.1);
 	margin-left: 220px;
+}
+
+@media(max-width: 800px) {
+	.navbar {
+		width: 100%;
+	}
+
+	.navbar {
+		width: calc(100% - 220px);;
+	}
 }
 
 #main-logo {

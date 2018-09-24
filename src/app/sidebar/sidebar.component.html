@@ -1,6 +1,11 @@
 <div id="sidebar">
+
+	<div class="mt-3 mb-3">
+		<img id="logo-image" src="../../assets/logo-white.png">
+	</div>
+
 	<ul id="main-menu" class="list-unstyled components">
-		<p class="menu-header">MENU</p>
+		<p class="menu-header ml-4 mb-1 mt-3 font-weight-bold">MENU</p>
 		<li routerLink="overview" routerLinkActive="active">
 			<i class="menu-icon fas fa-tachometer-alt"></i>
 			<span>Overview</span>
@@ -20,8 +25,8 @@
 	</ul>
 
 
-	<ul id="main-menu" class="list-unstyled components">
-		<p class="menu-header">SETTINGS</p>
+	<ul id="main-menu" class="list-unstyled components text-white">
+		<p class="menu-header ml-4 mb-1 mt-3 font-weight-bold">SETTINGS</p>
 		<li routerLink="general_settings" routerLinkActive="active">
 			<i class="menu-icon fas fa-cog"></i>
 			<span>General</span>
@@ -32,7 +37,7 @@
 		</li>
 	</ul>
 
-	<div class="dropdown-divider"></div>
+	<div id="divider-menu" class="dropdown-divider"></div>
 
 	<ul id="main-menu" class="list-unstyled components">
 		<li (click)="contactUsClicked()" routerLinkActive="active">

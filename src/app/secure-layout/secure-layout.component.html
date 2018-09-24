@@ -1,12 +1,13 @@
-<app-navbar></app-navbar>
 <div class="wrapper">
 	<div class="sidebar-fixer">
-			<app-sidebar></app-sidebar>
-	</div>
-	<div id="main-container">
-		<router-outlet></router-outlet>
-		<div class="align-bottom mt-auto">
-			<app-footer></app-footer>
-		</div>
-	</div>
+   <app-sidebar></app-sidebar>
+ </div>
+ <app-navbar></app-navbar>
+ <div id="main-container">
+
+  <router-outlet></router-outlet>
+  <div class="align-bottom mt-auto">
+   <app-footer></app-footer>
+ </div>
+</div>
 </div>

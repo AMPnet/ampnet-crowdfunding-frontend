@@ -79,3 +79,7 @@ input:focus::placeholder {
 	color: white;
 }
 
+.active-dropdown {
+	background: #31bf9c;
+	color: #fff;
+}

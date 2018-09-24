@@ -45,3 +45,22 @@
 .navbar-hamburger:hover {
 	cursor: pointer;
 }
+
+.search-nav-input {
+	width: 50vw;
+}
+
+.search-nav-input input {
+	border: none;
+	transition: all 0.3s;
+}
+
+.search-nav-input input:focus {
+	box-shadow: none;
+}
+
+#basic-addon1 {
+	border: none;
+	background: #fff;
+}
+

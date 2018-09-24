@@ -17,7 +17,7 @@ export class SingleInvestItemComponent implements OnInit {
   }
 
   onClickedItem() {
-  	this.router.navigate(['dash', 'my_profile', 'investment_details']);
+  	this.router.navigate(['dash', 'my_portfolio', 'investment_details']);
   }
 
 }

@@ -15,8 +15,8 @@ import { WalletTxHistoryComponent } from './wallet/wallet-tx-history/wallet-tx-h
 import { OfferDetailsComponent } from './offers/offer-details/offer-details.component';
 import { DepositModalComponent } from './wallet/deposit-modal/deposit-modal.component';
 import { InvestComponent } from './invest/invest.component';
-import { MyProfileComponent } from './my-profile/my-profile.component';
-import { SingleInvestItemComponent } from './my-profile/single-invest-item/single-invest-item.component';
+import { MyPortfolioComponent } from './my-portfolio/my-portfolio.component';
+import { SingleInvestItemComponent } from './my-portfolio/single-invest-item/single-invest-item.component';
 import { InvestmentDetailsComponent } from './investment-details/investment-details.component';
 import { SingleProposalItemComponent } from './investment-details/single-proposal-item/single-proposal-item.component';
 import { PaymentOptionsComponent } from './payment-options/payment-options.component';
@@ -51,7 +51,7 @@ import { WithdrawModalComponent } from './wallet/withdraw-modal/withdraw-modal.c
     OfferDetailsComponent,
     DepositModalComponent,
     InvestComponent,
-    MyProfileComponent,
+    MyPortfolioComponent,
     SingleInvestItemComponent,
     InvestmentDetailsComponent,
     SingleProposalItemComponent,

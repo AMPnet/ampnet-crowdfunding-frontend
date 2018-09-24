@@ -5,7 +5,7 @@ import { WalletComponent } from './wallet/wallet.component';
 import { OffersComponent } from './offers/offers.component';
 import { OfferDetailsComponent } from './offers/offer-details/offer-details.component';
 import { InvestComponent } from './invest/invest.component';
-import { MyProfileComponent } from './my-profile/my-profile.component';
+import { MyPortfolioComponent } from './my-portfolio/my-portfolio.component';
 import { InvestmentDetailsComponent } from './investment-details/investment-details.component';
 import { PaymentOptionsComponent } from './payment-options/payment-options.component';
 import { NewProposalComponent } from './investment-details/new-proposal/new-proposal.component';
@@ -38,12 +38,12 @@ const routes: Routes = [
       { path: 'offers', component: OffersComponent },
       { path: 'offer_details', component: OfferDetailsComponent },
       { path: 'offer_details/:id/invest', component: InvestComponent },
-      { path: 'my_profile', component: MyProfileComponent},
-      { path: 'my_profile/investment_details', component: InvestmentDetailsComponent },
+      { path: 'my_portfolio', component: MyPortfolioComponent },
+      { path: 'my_portfolio/investment_details', component: InvestmentDetailsComponent },
       { path: 'payment_options', component: PaymentOptionsComponent },
-      { path: 'my_profile/investment_details/new_proposal', component: NewProposalComponent },
+      { path: 'my_portfolio/investment_details/new_proposal', component: NewProposalComponent },
       { path: 'finish_new_proposal', component: FinishNewProposalComponent },
-      { path: 'my_profile/investment_details/proposal_details', component: ProposalDetailsComponent },
+      { path: 'my_portfolio/investment_details/proposal_details', component: ProposalDetailsComponent },
       { path: 'wallet/tx_overview', component: TxOverviewComponent },
       { path: 'payment_options/new', component: NewPaymentOptionComponent}
     ]

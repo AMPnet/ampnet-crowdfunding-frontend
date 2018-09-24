@@ -13,15 +13,22 @@ export class NavbarComponent implements OnInit {
   public static toggleSidebar(toVisible: boolean) {
 
     const sidebar = $('.sidebar-fixer');
+    const navbar = $('.navbar');
 
     if (toVisible) {
      sidebar.animate({
        left: 0
      }, 100);
+     navbar.animate({
+       'margin-left' : '220px'
+     }, 150);
     } else {
       sidebar.animate({
         left: '-240px'
       }, 100);
+      navbar.animate({
+        'margin-left': '0px'
+      }, 100)
     }
   }
 

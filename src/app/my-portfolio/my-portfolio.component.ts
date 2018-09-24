@@ -5,11 +5,11 @@ import * as _ from 'lodash';
 
 
 @Component({
-  selector: 'app-my-profile',
-  templateUrl: './my-profile.component.html',
-  styleUrls: ['./my-profile.component.css']
+  selector: 'app-my-portfolio',
+  templateUrl: './my-portfolio.component.html',
+  styleUrls: ['./my-portfolio.component.css']
 })
-export class MyProfileComponent implements OnInit {
+export class MyPortfolioComponent implements OnInit {
 
   constructor() { }
 

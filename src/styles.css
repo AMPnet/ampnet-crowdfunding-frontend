@@ -108,6 +108,11 @@ body {
 	background: #3B5998!important;
 }
 
+.active {
+	background: #31bf9c!important;
+	color: #fff!important;
+}
+
 .btn-color-google {
 	background: #d62d20!important;
 }

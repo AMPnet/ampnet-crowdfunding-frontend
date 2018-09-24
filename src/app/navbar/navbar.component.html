@@ -1,9 +1,18 @@
 <nav class="navbar fixed-top navbar-expand-lg">
-  
+
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-  	<div class="ml-auto"></div>
-  	<div id="notification-bell" class="mr-2">
+    <div class="mr-auto">
+      <div class="input-group search-nav-input">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1">
+            <i class="fas fa-search"></i>
+          </span>
+        </div>
+        <input type="text" class="form-control" placeholder="Search" aria-label="Username" aria-describedby="basic-addon1">
+      </div> 
+    </div>
+    <div id="notification-bell" class="mr-2">
       <div class="dropdown dropleft">
         <a class="bell-badge badge badge-pill badge-danger dropdown-toggle" data-toggle="dropdown">3</a>
         <a class="dropdown-toggle fas fa-bell" data-toggle="dropdown"></a>
@@ -11,21 +20,21 @@
         <div class="dropdown-menu p-3">
           <a routerLink="/dash/my_profile/investment_details/proposal_details" class="dropdown-item p-3">
             <i class="fas fa-file-alt mr-2"></i>
-          New proposal for Greenwich Biomass Plant
+            New proposal for Greenwich Biomass Plant
           </a>
           <div class="dropdown-divider"></div>
           <a routerLink="/dash/wallet/tx_overview" class="dropdown-item p-3">
             <i class="fas fa-hand-holding-usd mr-2"></i>
-          Monthly deposit from Johnoson Solar Installation (+$200)
+            Monthly deposit from Johnoson Solar Installation (+$200)
           </a>
         </div>
       </div> 
-  	</div>
+    </div>
     <a routerLink="my_profile" class="mr-2 ml-3 text-dark">John Doe</a>
   </div>
 
   <div class="navbar-hamburger" (click)="menuButtonClicked()">
-      <i class="fas fa-bars"></i>
+    <i class="fas fa-bars"></i>
   </div>
 </nav>
 

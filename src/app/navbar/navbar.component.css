@@ -1,7 +1,7 @@
 .navbar {
 	height: 50px;
-	background-color: #fff;
-	color: #333;
+	color: #fff;
+	background: #31bf9c;
 	box-shadow: 5px 3px 6px rgba(0,0,0,0.1);
 }
 
@@ -31,7 +31,7 @@
 #notification-bell:hover {
 	cursor: pointer;
 	transition: all 0.3s;
-	color: #353;
+	color: #cfc;
 }
 
 .logo-text {
@@ -55,14 +55,27 @@
 .search-nav-input input {
 	border: none;
 	transition: all 0.3s;
+	background: transparent;
+	color: #fcfcfc;
 }
 
 .search-nav-input input:focus {
 	box-shadow: none;
 }
 
+::placeholder {
+	opacity: 0.7;
+	color: white;
+}
+
+input:focus::placeholder {
+	color: transparent;
+	transition: all 0.3s;
+}
+
 #basic-addon1 {
 	border: none;
-	background: #fff;
+	background: #31bf9c;
+	color: white;
 }
 

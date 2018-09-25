@@ -13,7 +13,7 @@ jobs:
           command: npm install
       - run:
           name: Run tests
-          command: npm ng test
+          command: npm run ng test
       - run:
           name: Run linter
-          command: npm ng lint
+          command: npm run ng lint

@@ -7,12 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OverviewComponent implements OnInit {
 
-	components: string[];
+  components: string[];
 
   constructor() { }
 
   ngOnInit() {
-  	this.components = ['1', '2', '3', '4', '5', '6', '7'];
+    this.components = ['1', '2', '3', '4', '5', '6', '7'];
   }
 
 }

@@ -7,7 +7,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class SingleProposalItemComponent implements OnInit {
 
-	@Input() proposal;
+  @Input() proposal;
 
   constructor() { }
 

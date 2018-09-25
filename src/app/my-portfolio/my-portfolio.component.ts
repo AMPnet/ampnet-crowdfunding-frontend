@@ -16,13 +16,13 @@ export class MyPortfolioComponent implements OnInit {
   investments: InvestItemModel[];
 
   ngOnInit() {
-  	this.investments = _.fill(Array(5), {
-  		title: 'ABC',
-  		offeredBy: 'Greenpeace',
-  		country: 'Greece',
-  		amountInvested: 3400,
-  		headerImage: 'https://assets.rbl.ms/6470364/980x.jpg'
-  	});
+    this.investments = _.fill(Array(5), {
+      title: 'ABC',
+      offeredBy: 'Greenpeace',
+      country: 'Greece',
+      amountInvested: 3400,
+      headerImage: 'https://assets.rbl.ms/6470364/980x.jpg'
+    });
   }
 
 }

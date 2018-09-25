@@ -17,7 +17,7 @@ export class OffersComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-  	this.featuredComponents = _.fill(Array(3),
+    this.featuredComponents = _.fill(Array(3),
     {
       title: 'GreenEnergy Co',
       description: 'Invest in the coolest green energy solution world can offer',
@@ -25,7 +25,7 @@ export class OffersComponent implements OnInit {
       status: 'In funding',
       fundingRequired: 25763456,
       currentFunding: 12332567,
-      headerImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/GreenMountainWindFarm_Fluvanna_2004.jpg/1280px-GreenMountainWindFarm_Fluvanna_2004.jpg'
+      headerImageUrl: 'https://bit.ly/2QmyQ5E'
     }
     );
     this.components = _.fill(Array(20),
@@ -36,7 +36,7 @@ export class OffersComponent implements OnInit {
       status: 'In funding',
       fundingRequired: 25763456,
       currentFunding: 12332567,
-      headerImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/GreenMountainWindFarm_Fluvanna_2004.jpg/1280px-GreenMountainWindFarm_Fluvanna_2004.jpg'
+      headerImageUrl: 'https://bit.ly/2QmyQ5E'
     }
     );
     this.promotedOffer = {

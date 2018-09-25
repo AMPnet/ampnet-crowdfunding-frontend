@@ -11,16 +11,16 @@ import * as _ from 'lodash';
 })
 export class OfferDetailsComponent implements OnInit {
 
-	docs: OfferDetailDocModel[];
+  docs: OfferDetailDocModel[];
 
   constructor() { }
 
   ngOnInit() {
-  	this.docs = _.fill(Array(5), {
-  		docType: OfferDetailDocType.PDF,
-  		title: 'Hello World',
-  		src: new URL('http://google.com')
-  	});
+    this.docs = _.fill(Array(5), {
+      docType: OfferDetailDocType.PDF,
+      title: 'Hello World',
+      src: new URL('http://google.com')
+    });
   }
 
 }

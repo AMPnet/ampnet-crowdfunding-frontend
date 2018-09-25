@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class SingleInvestItemComponent implements OnInit {
 
-	@Input() investment: InvestItemModel;
+  @Input() investment: InvestItemModel;
 
   constructor(private router: Router) { }
 
@@ -17,7 +17,7 @@ export class SingleInvestItemComponent implements OnInit {
   }
 
   onClickedItem() {
-  	this.router.navigate(['dash', 'my_portfolio', 'investment_details']);
+    this.router.navigate(['dash', 'my_portfolio', 'investment_details']);
   }
 
 }

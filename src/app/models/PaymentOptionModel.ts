@@ -1,9 +1,9 @@
 export interface PaymentOptionModel {
-	name: string;
-	type: PaymentOptionType;
-	active: boolean;
+  name: string;
+  type: PaymentOptionType;
+  active: boolean;
 }
 
 export enum PaymentOptionType {
-	bankAccount, creditCard
+  bankAccount, creditCard
 }

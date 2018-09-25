@@ -11,22 +11,17 @@ import * as _ from 'lodash';
 })
 export class PaymentOptionsComponent implements OnInit {
 
-	paymentOptions: PaymentOptionModel[];
+  paymentOptions: PaymentOptionModel[];
 
   constructor() {
-  	this.paymentOptions = _.fill(Array(3), {
-  		name: 'PBZ Account',
-  		type: PaymentOptionType.bankAccount,
-  		active: true
-  	});
+    this.paymentOptions = _.fill(Array(3), {
+      name: 'PBZ Account',
+      type: PaymentOptionType.bankAccount,
+      active: true
+    });
   }
 
   ngOnInit() {
-
-  }
-
-  ngAfterViewInit() {
-
   }
 
   editButtonClicked() {

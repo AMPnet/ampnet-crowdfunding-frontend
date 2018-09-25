@@ -9,40 +9,40 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NewProposalComponent implements OnInit {
 
-	customHolder: JQuery;
-	templateHolder: JQuery;
+  customHolder: JQuery;
+  templateHolder: JQuery;
 
-	templateNav: JQuery;
-	customNav: JQuery;
+  templateNav: JQuery;
+  customNav: JQuery;
 
   constructor() { }
 
   ngOnInit() {
-  	this.customHolder = $('#custom-holder');
-  	this.templateHolder = $('#template-holder');
-  	this.templateNav = $('#template-nav');
-  	this.customNav = $('#custom-nav');
+    this.customHolder = $('#custom-holder');
+    this.templateHolder = $('#template-holder');
+    this.templateNav = $('#template-nav');
+    this.customNav = $('#custom-nav');
 
-  	this.customHolder.hide();
+    this.customHolder.hide();
   }
 
   tabToggle(position: number) {
 
-  	const activeClass = 'active';
+    const activeClass = 'active';
 
-  	if (position === 0) {
-  		this.templateHolder.show(300);
-  		this.customHolder.hide(300);
+    if (position === 0) {
+      this.templateHolder.show(300);
+      this.customHolder.hide(300);
 
-  		this.templateNav.addClass(activeClass);
-  		this.customNav.removeClass(activeClass);
-  	} else {
-  		this.customHolder.show(300);
-  		this.templateHolder.hide(300);
+      this.templateNav.addClass(activeClass);
+      this.customNav.removeClass(activeClass);
+    } else {
+      this.customHolder.show(300);
+      this.templateHolder.hide(300);
 
-  		this.templateNav.removeClass(activeClass);
-  		this.customNav.addClass(activeClass);
-  	}
+      this.templateNav.removeClass(activeClass);
+      this.customNav.addClass(activeClass);
+    }
   }
 
 }

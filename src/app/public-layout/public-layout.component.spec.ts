@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PublicLayoutComponent } from './public-layout.component';
+import { HeaderComponent } from './header/header.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import { LogInModalComponent } from '../authentication/log-in-modal/log-in-modal.component';
 
 describe('PublicLayoutComponent', () => {
   let component: PublicLayoutComponent;
@@ -8,7 +11,8 @@ describe('PublicLayoutComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PublicLayoutComponent ]
+      declarations: [ PublicLayoutComponent, HeaderComponent, LogInModalComponent ],
+      imports: [ RouterTestingModule ]
     })
     .compileComponents();
   }));

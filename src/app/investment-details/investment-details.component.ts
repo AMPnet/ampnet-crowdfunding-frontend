@@ -12,9 +12,9 @@ export class InvestmentDetailsComponent implements OnInit {
 
   constructor() { }
 
-  proposals: ProposalModel[];
+  public proposals: ProposalModel[];
 
-  headerImages: string[];
+  public headerImages: string[];
 
   ngOnInit() {
     this.proposals = _.fill(Array(5), {

@@ -1,25 +1,16 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { InvestmentDetailsComponent } from './investment-details.component';
+import { SingleProposalItemComponent } from './single-proposal-item/single-proposal-item.component';
+
 
 describe('InvestmentDetailsComponent', () => {
-  let component: InvestmentDetailsComponent;
-  let fixture: ComponentFixture<InvestmentDetailsComponent>;
-
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ InvestmentDetailsComponent ]
-    })
-    .compileComponents();
-  }));
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(InvestmentDetailsComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
   it('should create', () => {
-    expect(component).toBeTruthy();
+    TestBed.configureTestingModule({
+      declarations: [ InvestmentDetailsComponent, SingleProposalItemComponent ]
+    });
+    const fixture = TestBed.createComponent(InvestmentDetailsComponent);
+    const component = fixture.componentInstance;
+    expect(component).toBeDefined();
   });
 });

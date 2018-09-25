@@ -36,6 +36,8 @@ import { NewPaymentOptionComponent } from './payment-options/new-payment-option/
 import { CreditCardInputComponent } from './payment-options/new-payment-option/credit-card-input/credit-card-input.component';
 import { BankAccountInputComponent } from './payment-options/new-payment-option/bank-account-input/bank-account-input.component';
 import { WithdrawModalComponent } from './wallet/withdraw-modal/withdraw-modal.component';
+import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -70,12 +72,14 @@ import { WithdrawModalComponent } from './wallet/withdraw-modal/withdraw-modal.c
     NewPaymentOptionComponent,
     CreditCardInputComponent,
     BankAccountInputComponent,
-    WithdrawModalComponent
+    WithdrawModalComponent,
   ],
   imports: [
     BrowserModule,
+    RouterModule,
     AppRoutingModule,
-    DisqusModule.forRoot('ampnet.disqus.com/embed.js')
+    DisqusModule.forRoot('ampnet.disqus.com/embed.js'),
+    FormsModule
   ],
   providers: [{
     provide: LocationStrategy,

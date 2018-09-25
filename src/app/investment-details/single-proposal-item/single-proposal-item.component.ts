@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { ProposalModel } from '../../models/ProposalModel';
 
 @Component({
   selector: 'app-single-proposal-item',
@@ -7,7 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class SingleProposalItemComponent implements OnInit {
 
-  @Input() proposal;
+  @Input() public proposal: ProposalModel;
 
   constructor() { }
 

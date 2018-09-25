@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { Router } from '@angular/router';
 
+import * as $ from 'jquery';
+
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',

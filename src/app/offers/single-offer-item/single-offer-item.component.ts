@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class SingleOfferItemComponent implements OnInit {
 
-  @Input() component: OfferModel;
+  @Input() public component: OfferModel;
 
   constructor(private router: Router) { }
 

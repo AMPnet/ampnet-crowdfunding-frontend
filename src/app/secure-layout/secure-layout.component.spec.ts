@@ -1,6 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SecureLayoutComponent } from './secure-layout.component';
+import { SidebarComponent } from '../sidebar/sidebar.component';
+import { NavbarComponent } from '../navbar/navbar.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import { FooterComponent } from '../footer/footer.component';
 
 describe('SecureLayoutComponent', () => {
   let component: SecureLayoutComponent;
@@ -8,7 +12,13 @@ describe('SecureLayoutComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SecureLayoutComponent ]
+      declarations: [ 
+        SecureLayoutComponent, 
+        SidebarComponent, 
+        NavbarComponent,
+        FooterComponent
+      ],
+      imports: [RouterTestingModule]
     })
     .compileComponents();
   }));

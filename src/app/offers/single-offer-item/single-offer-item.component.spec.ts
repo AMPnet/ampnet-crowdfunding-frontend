@@ -1,25 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SingleOfferItemComponent } from './single-offer-item.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('SingleOfferItemComponent', () => {
-  let component: SingleOfferItemComponent;
-  let fixture: ComponentFixture<SingleOfferItemComponent>;
 
-  beforeEach(async(() => {
+
+  it('should create', () => {   
     TestBed.configureTestingModule({
-      declarations: [ SingleOfferItemComponent ]
-    })
-    .compileComponents();
-  }));
+      declarations: [ SingleOfferItemComponent ],
+      imports: [ RouterTestingModule ]
+    });
+    const fixture = TestBed.createComponent(SingleOfferItemComponent);
+    const component = fixture.componentInstance;
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(SingleOfferItemComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(component).toBeDefined();
   });
 });

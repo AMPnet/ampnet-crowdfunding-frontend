@@ -5,7 +5,15 @@ jobs:
       - image: circleci/node:8-browsers
     steps:
       - checkout
-      - run: npm install
+      - run: 
+          name: Install AngularCLI
+          command: npm install -g @angular/cli
       - run:
-          name: Print the Current Time
-          command: date
+          name: Install Node dependencies
+          command: npm install
+      - run:
+          name: Run tests
+          command: ng test
+      - run:
+          name: Run linter
+          command: ng lint

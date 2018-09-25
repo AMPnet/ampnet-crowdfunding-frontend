@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { WithdrawModalComponent } from './withdraw-modal.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('WithdrawModalComponent', () => {
   let component: WithdrawModalComponent;
@@ -8,7 +9,8 @@ describe('WithdrawModalComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ WithdrawModalComponent ]
+      declarations: [ WithdrawModalComponent ],
+      imports: [ RouterTestingModule ]
     })
     .compileComponents();
   }));

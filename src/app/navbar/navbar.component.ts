@@ -28,7 +28,7 @@ export class NavbarComponent implements OnInit {
       }, 100);
       navbar.animate({
         'margin-left': '0px'
-      }, 100)
+      }, 100);
     }
   }
 

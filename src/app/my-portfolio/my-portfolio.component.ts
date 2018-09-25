@@ -17,11 +17,11 @@ export class MyPortfolioComponent implements OnInit {
 
   ngOnInit() {
   	this.investments = _.fill(Array(5), {
-  		title: "ABC",
-  		offeredBy: "Greenpeace",
-  		country: "Greece",
+  		title: 'ABC',
+  		offeredBy: 'Greenpeace',
+  		country: 'Greece',
   		amountInvested: 3400,
-  		headerImage: "https://assets.rbl.ms/6470364/980x.jpg"
+  		headerImage: 'https://assets.rbl.ms/6470364/980x.jpg'
   	});
   }
 

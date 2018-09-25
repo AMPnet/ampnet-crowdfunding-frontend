@@ -12,7 +12,7 @@ export class SecureLayoutComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-  	;
+
   }
 
 }

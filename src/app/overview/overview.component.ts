@@ -12,7 +12,7 @@ export class OverviewComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-  	this.components = ['1', '2', '3', '4', '5', '6', '7']
+  	this.components = ['1', '2', '3', '4', '5', '6', '7'];
   }
 
 }

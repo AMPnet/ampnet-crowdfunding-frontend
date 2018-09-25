@@ -19,34 +19,34 @@ export class OffersComponent implements OnInit {
   ngOnInit() {
   	this.featuredComponents = _.fill(Array(3),
     {
-      title: "GreenEnergy Co",
-      description: "Invest in the coolest green energy solution world can offer",
-      offeredBy: "Greenpeace",
-      status: "In funding",
+      title: 'GreenEnergy Co',
+      description: 'Invest in the coolest green energy solution world can offer',
+      offeredBy: 'Greenpeace',
+      status: 'In funding',
       fundingRequired: 25763456,
       currentFunding: 12332567,
-      headerImageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/GreenMountainWindFarm_Fluvanna_2004.jpg/1280px-GreenMountainWindFarm_Fluvanna_2004.jpg"
+      headerImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/GreenMountainWindFarm_Fluvanna_2004.jpg/1280px-GreenMountainWindFarm_Fluvanna_2004.jpg'
     }
     );
-    this.components = _.fill(Array(20), 
+    this.components = _.fill(Array(20),
     {
-      title: "GreenEnergy Co",
-      description: "Invest in the coolest green energy solution world can offer",
-      offeredBy: "Greenpeace",
-      status: "In funding",
+      title: 'GreenEnergy Co',
+      description: 'Invest in the coolest green energy solution world can offer',
+      offeredBy: 'Greenpeace',
+      status: 'In funding',
       fundingRequired: 25763456,
       currentFunding: 12332567,
-      headerImageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/GreenMountainWindFarm_Fluvanna_2004.jpg/1280px-GreenMountainWindFarm_Fluvanna_2004.jpg"
+      headerImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/GreenMountainWindFarm_Fluvanna_2004.jpg/1280px-GreenMountainWindFarm_Fluvanna_2004.jpg'
     }
     );
     this.promotedOffer = {
-      title: "ORB Wind Power",
-      description: "Cutting edge wind farm on the shores of Netherlands",
-      offeredBy: "Greenpeace",
-      status: "In funding",
+      title: 'ORB Wind Power',
+      description: 'Cutting edge wind farm on the shores of Netherlands',
+      offeredBy: 'Greenpeace',
+      status: 'In funding',
       fundingRequired: 23492349,
       currentFunding: 11334578,
-      headerImageUrl: "../../assets/wind-farm.png"
+      headerImageUrl: '../../assets/wind-farm.png'
     };
   }
 

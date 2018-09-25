@@ -16,17 +16,17 @@ export class LogInModalComponent implements OnInit {
   }
 
   logInFacebookClicked() {
-    $("#log-in-modal").modal('toggle');
+    $('#log-in-modal').modal('toggle');
     this.router.navigate(['/dash']);
   }
 
   logInGoogleClicked() {
-    $("#log-in-modal").modal('toggle');
+    $('#log-in-modal').modal('toggle');
     this.router.navigate(['/dash']);
   }
 
   logInMailClicked() {
-    $("#log-in-modal").modal('toggle');
+    $('#log-in-modal').modal('toggle');
     this.router.navigate(['/dash']);
   }
 

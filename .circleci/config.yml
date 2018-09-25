@@ -7,7 +7,7 @@ jobs:
       - checkout
       - run: 
           name: Install AngularCLI
-          command: npm install -g @angular/cli
+          command: npm install @angular/cli
       - run:
           name: Install Node dependencies
           command: npm install

@@ -1,6 +1,9 @@
 version: 2
+
 jobs:
-  build:
+  test:
+    branches:
+      only: feature/*
     docker:
       - image: circleci/node:8-browsers
     steps:
@@ -17,3 +20,31 @@ jobs:
       - run:
           name: Run linter
           command: npm run ng lint
+  release:
+    branches:
+      only: master
+    docker: 
+      - image: circleci/node:8-browsers
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "23:4d:1c:bf:a6:a2:94:56:be:b5:6f:70:34:9b:b9:ad"
+      - checkout
+      - run: 
+          name: Install AngularCLI
+          command: npm install @angular/cli
+      - run:
+          name: Install Node dependencies
+          command: npm install
+      - run:
+          name: Run tests
+          command: npm run ng test --prod
+      - run:
+          name: Run linter
+          command: npm run ng lint
+      - run:
+          name: Build for release
+          command: npm run ng build --prod --extract-css=false
+      -run:
+          name: Transfer to server
+          command: scp -r dist/ampnet-frontend root@ampnet.io:/var/www/

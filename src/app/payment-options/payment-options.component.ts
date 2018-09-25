@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PaymentOptionModel, PaymentOptionType } from '../models/PaymentOptionModel'
+import { PaymentOptionModel, PaymentOptionType } from '../models/PaymentOptionModel';
 import * as _ from 'lodash';
 
 
@@ -15,7 +15,7 @@ export class PaymentOptionsComponent implements OnInit {
 
   constructor() {
   	this.paymentOptions = _.fill(Array(3), {
-  		name: "PBZ Account",
+  		name: 'PBZ Account',
   		type: PaymentOptionType.bankAccount,
   		active: true
   	});
@@ -26,11 +26,11 @@ export class PaymentOptionsComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-  	;
+
   }
 
   editButtonClicked() {
-    alert("hehe");
+    alert('hehe');
   }
 
 }

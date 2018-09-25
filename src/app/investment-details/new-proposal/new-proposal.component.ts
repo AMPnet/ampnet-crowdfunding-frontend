@@ -18,19 +18,19 @@ export class NewProposalComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-  	this.customHolder = $("#custom-holder");
-  	this.templateHolder = $("#template-holder");
-  	this.templateNav = $("#template-nav");
-  	this.customNav = $("#custom-nav");
+  	this.customHolder = $('#custom-holder');
+  	this.templateHolder = $('#template-holder');
+  	this.templateNav = $('#template-nav');
+  	this.customNav = $('#custom-nav');
 
   	this.customHolder.hide();
   }
 
   tabToggle(position: number) {
 
-  	var activeClass = "active";
+  	const activeClass = 'active';
 
-  	if(position === 0) {
+  	if (position === 0) {
   		this.templateHolder.show(300);
   		this.customHolder.hide(300);
 

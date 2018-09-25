@@ -25,7 +25,7 @@ export class WalletTxHistoryComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    
+
   }
 
 }

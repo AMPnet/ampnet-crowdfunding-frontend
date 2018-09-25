@@ -13,11 +13,11 @@ export class WalletComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-  	
+
   }
 
   depositButtonClicked() {
-  
+
   }
 
 }

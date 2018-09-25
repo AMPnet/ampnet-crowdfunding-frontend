@@ -1,7 +1,7 @@
 export interface OfferDetailDocModel {
-	docType: OfferDetailDocType
-	title: string
-	src: URL
+	docType: OfferDetailDocType;
+	title: string;
+	src: URL;
 }
 
 export enum OfferDetailDocType {

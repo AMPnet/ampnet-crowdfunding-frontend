@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { OfferDetailDocModel, OfferDetailDocType } from '../../models/OfferDetailDocModel'
+import { OfferDetailDocModel, OfferDetailDocType } from '../../models/OfferDetailDocModel';
 import * as _ from 'lodash';
 
 
@@ -18,8 +18,8 @@ export class OfferDetailsComponent implements OnInit {
   ngOnInit() {
   	this.docs = _.fill(Array(5), {
   		docType: OfferDetailDocType.PDF,
-  		title: "Hello World",
-  		src: new URL("http://google.com")
+  		title: 'Hello World',
+  		src: new URL('http://google.com')
   	});
   }
 

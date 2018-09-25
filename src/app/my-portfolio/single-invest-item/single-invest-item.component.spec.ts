@@ -6,7 +6,7 @@ import { InvestItemModel } from './InvestItemModel';
 
 describe('SingleInvestItemComponent', () => {
   it('should create', () => {
-   
+
     TestBed.configureTestingModule({
       declarations: [ SingleInvestItemComponent ],
       imports: [ RouterTestingModule ]

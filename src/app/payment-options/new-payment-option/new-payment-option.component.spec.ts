@@ -10,8 +10,8 @@ describe('NewPaymentOptionComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ 
-        NewPaymentOptionComponent, 
+      declarations: [
+        NewPaymentOptionComponent,
         CreditCardInputComponent,
         BankAccountInputComponent
       ]

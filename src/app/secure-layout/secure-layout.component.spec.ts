@@ -12,9 +12,9 @@ describe('SecureLayoutComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ 
-        SecureLayoutComponent, 
-        SidebarComponent, 
+      declarations: [
+        SecureLayoutComponent,
+        SidebarComponent,
         NavbarComponent,
         FooterComponent
       ],

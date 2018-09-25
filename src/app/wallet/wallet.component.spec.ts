@@ -15,8 +15,8 @@ describe('WalletComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-       WalletComponent, 
-       WalletChartComponent, 
+       WalletComponent,
+       WalletChartComponent,
        WalletTxHistoryComponent,
        DepositModalComponent,
        WithdrawModalComponent

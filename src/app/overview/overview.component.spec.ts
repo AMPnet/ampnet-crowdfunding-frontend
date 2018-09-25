@@ -8,7 +8,7 @@ describe('OverviewComponent', () => {
     TestBed.configureTestingModule({
       declarations: [OverviewComponent, WalletChartComponent]
     });
-   
+
     const fixture = TestBed.createComponent(OverviewComponent);
     const component = fixture.componentInstance;
 

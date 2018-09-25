@@ -6,7 +6,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 describe('SingleOfferItemComponent', () => {
 
 
-  it('should create', () => {   
+  it('should create', () => {
     TestBed.configureTestingModule({
       declarations: [ SingleOfferItemComponent ],
       imports: [ RouterTestingModule ]

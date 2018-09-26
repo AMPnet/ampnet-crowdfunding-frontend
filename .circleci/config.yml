@@ -4,6 +4,9 @@ jobs:
   build:
     docker:
       - image: circleci/node:8-browsers
+    branches:
+      ignore:
+        - master
     steps:
       - checkout
       - restore_cache:
@@ -25,3 +28,27 @@ jobs:
       - run:
           name: angular-lint
           command: yarn lint
+
+  deploy:
+    docker:
+      -image: circleci/node:8-browsers
+    branches:
+      only:
+        - master
+    steps:
+      - checkout
+      - run:
+          name: install-dependencies
+          command: yarn install
+      - run:
+          name: angular-build
+          command: yarn ng -- build --prod --aot --no-progress
+      - run:
+          name: angular-test
+          command: yarn test -- --no-progress
+      - run:
+          name: angular-lint
+          command: yarn lint
+      - run:
+          name: deploy-to-server
+          command: scp -r ./dist/ampnet-frontend root@ampnet.io:/var/www/

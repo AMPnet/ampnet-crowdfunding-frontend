@@ -45,7 +45,7 @@ const routes: Routes = [
       { path: 'finish_new_proposal', component: FinishNewProposalComponent },
       { path: 'my_portfolio/investment_details/proposal_details', component: ProposalDetailsComponent },
       { path: 'wallet/tx_overview', component: TxOverviewComponent },
-      { path: 'payment_options/new', component: NewPaymentOptionComponent}
+      { path: 'payment_options/new', component: NewPaymentOptionComponent }
     ]
   }
 ];

@@ -1,82 +1,28 @@
 version: 2
 
-commands:
-  install_angular_cli:
-    description: "Install Angular CLI to the local folder"
-    steps:
-      - run: npm install @angular/cli
-
-comamnds:
-  install_node_deps:
-    description: "Install node dependencies"
-    steps:
-      - run: npm install
-
 jobs:
   build:
+    working_directory: ~/app-name
     docker:
-      - image: circleci/node:8-browsers
+      - image: circleci/node:6-browsers
     steps:
       - checkout
-      - install_angular_cli
-      - install_node_deps
+      - restore_cache:
+          key: dependency-cache-{{ checksum "yarn.lock" }}
       - run:
-          name: Build
-          command: npm run ng build --prod --extract-css=false
-
-  test:
-    - checkout
-    - install_angular_cli
-    - install_node_deps
-    docker:
-      - image: circleci/node:8-browsers
-    steps:
+          name: install-dependencies
+          command: yarn install
+      - save_cache:
+          key: dependency-cache-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+            - ./node_modules
       - run:
-          name: Run tests
-          command: npm run ng test --prod
+          name: angular-build
+          command: yarn ng -- build --prod --aot --no-progress
       - run:
-          name: Run linter
-          command: npm run ng lint
-  
-  release:
-    docker: 
-      - image: circleci/node:8-browsers
-    steps:
-      - add_ssh_keys:
-          fingerprints:
-            - "23:4d:1c:bf:a6:a2:94:56:be:b5:6f:70:34:9b:b9:ad"
-      - checkout
-      - install_angular_cli
-      - install_node_deps
+          name: angular-test
+          command: yarn test -- --single-run --no-progress
       - run:
-          name: Build for release
-          command: npm run ng build --prod --extract-css=false
-      - run:
-          name: Transfer to server
-          command: scp -r dist/ampnet-frontend root@ampnet.io:/var/www/
-
-workflows:
-  version: 2
-  deploy:
-    triggers:
-      - schedule:
-          filters:
-            branches:
-             only:
-              - master
-    jobs:
-      - build
-      - test:
-        requires:
-            - build
-      - deploy:
-        requires:
-            - test
-  test-for-merge:
-    triggers:
-      - schedule:
-          filters:
-            branches:
-              except:
-                - master
-
+          name: angular-lint
+          command: yarn lint

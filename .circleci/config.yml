@@ -42,7 +42,7 @@ jobs:
           command: yarn ng -- build --prod --aot --no-progress
       - run:
           name: deploy-to-server
-          command: yes yes | scp -r ./dist/ampnet-frontend root@ampnet.io:/var/www/
+          command: scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r ./dist/ampnet-frontend root@ampnet.io:/var/www/
 
 workflows:
   version: 2

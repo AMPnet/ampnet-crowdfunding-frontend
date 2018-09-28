@@ -14,7 +14,7 @@ body {
 }
 
 .btn-primary {
-	background: #D96050!important;
+	background: #E87068!important;
 	box-shadow: 0px 3px 15px rgba(0,0,0,0.1);
 	border: none!important;
 }
@@ -63,7 +63,7 @@ body {
 }
 
 .progress-bar {
-	background-color: #D96050!important;
+	background-color: #494!important;
 }
 
 
@@ -110,7 +110,7 @@ body {
 }
 
 .active {
-	background: #D96050!important;
+	background: #EC7B73!important;
 	color: #fff!important;
 }
 

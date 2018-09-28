@@ -1,7 +1,7 @@
 .navbar {
 	height: 50px;
 	color: #fff;
-	background: #D96050;
+	background: #EC7B73;
 	box-shadow: 5px 3px 6px rgba(0,0,0,0.1);
 }
 
@@ -75,7 +75,7 @@ input:focus::placeholder {
 
 #basic-addon1 {
 	border: none;
-	background: #D96050;
+	background: #EC7B73;
 	color: white;
 }
 

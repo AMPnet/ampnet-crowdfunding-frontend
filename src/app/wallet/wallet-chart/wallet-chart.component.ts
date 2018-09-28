@@ -20,10 +20,10 @@ export class WalletChartComponent implements OnInit {
           label: 'Money',
           data: [11, 9, 25, 19, 29, 28],
           backgroundColor: [
-          '#59D09755'
+          '#3B599855'
           ],
           borderColor: [
-          '#59D097'
+          '#3B5998'
           ],
           borderWidth: 4
         }]
@@ -70,10 +70,10 @@ export class WalletChartComponent implements OnInit {
           label: 'Money',
           data: [11, 9, 25, 19, 29, 28],
           backgroundColor: [
-          '#59D09755'
+          '#3B599855'
           ],
           borderColor: [
-          '#59D097'
+          '#3B5998'
           ],
           borderWidth: 4
         }]

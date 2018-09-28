@@ -13,7 +13,7 @@ export class CreditCardInputComponent implements OnInit {
   }
 
   tabToggle(position: number) {
-    $('.tab-holder li a').removeClass('active');
-    $($('.tab-holder li a').get(position)).addClass('active');
+    $('.tab-holder li a').removeClass('active-second');
+    $($('.tab-holder li a').get(position)).addClass('active-second');
   }
 }

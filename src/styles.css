@@ -14,7 +14,7 @@ body {
 }
 
 .btn-primary {
-	background: #2bb791!important;
+	background: #D96050!important;
 	box-shadow: 0px 3px 15px rgba(0,0,0,0.1);
 	border: none!important;
 }
@@ -30,7 +30,7 @@ body {
 
 
 .btn-primary:hover {
-	background: #48A97B!important;
+	background: #C65748!important;
 }
 
 .list-group-item {
@@ -63,7 +63,7 @@ body {
 }
 
 .progress-bar {
-	background-color: #2bb791!important;
+	background-color: #D96050!important;
 }
 
 
@@ -110,7 +110,12 @@ body {
 }
 
 .active {
-	background: #31bf9c!important;
+	background: #D96050!important;
+	color: #fff!important;
+}
+
+.active-second {
+	background: #3B5998!important;
 	color: #fff!important;
 }
 

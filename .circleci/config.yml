@@ -1,12 +1,9 @@
 version: 2
 
 jobs:
-  build:
+  test:
     docker:
       - image: circleci/node:8-browsers
-    branches:
-      ignore:
-        - master
     steps:
       - checkout
       - restore_cache:
@@ -31,11 +28,11 @@ jobs:
 
   deploy:
     docker:
-      -image: circleci/node:8-browsers
-    branches:
-      only:
-        - master
+      - image: circleci/node:8-browsers
     steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "23:4d:1c:bf:a6:a2:94:56:be:b5:6f:70:34:9b:b9:ad"
       - checkout
       - run:
           name: install-dependencies
@@ -52,3 +49,16 @@ jobs:
       - run:
           name: deploy-to-server
           command: scp -r ./dist/ampnet-frontend root@ampnet.io:/var/www/
+
+workflows:
+  version: 2
+  test:
+    jobs: 
+      - test
+  deploy:
+    jobs:
+      - deploy:
+          filters:
+            branches:
+              only: master
+

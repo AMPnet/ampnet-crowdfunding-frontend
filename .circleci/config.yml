@@ -41,24 +41,25 @@ jobs:
           name: angular-build
           command: yarn ng -- build --prod --aot --no-progress
       - run:
-          name: angular-test
-          command: yarn test -- --no-progress
-      - run:
-          name: angular-lint
-          command: yarn lint
-      - run:
           name: deploy-to-server
-          command: scp -r ./dist/ampnet-frontend root@ampnet.io:/var/www/
+          command: yes | scp -r ./dist/ampnet-frontend root@ampnet.io:/var/www/
 
 workflows:
   version: 2
   test:
     jobs: 
-      - test
+      - test:
+          filters:
+            branches:
+              ignore: master
   deploy:
     jobs:
+      - test 
       - deploy:
+          requires:
+            - build
           filters:
             branches:
               only: master
+
 

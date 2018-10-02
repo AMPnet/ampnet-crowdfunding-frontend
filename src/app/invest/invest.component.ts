@@ -12,7 +12,7 @@ export class InvestComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-
+  	
   }
 
 }

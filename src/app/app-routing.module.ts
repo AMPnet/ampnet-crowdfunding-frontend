@@ -26,7 +26,6 @@ import { NewPaymentOptionComponent } from './payment-options/new-payment-option/
 const routes: Routes = [
   { path: '', component: PublicLayoutComponent,
     children: [
-      { path: 'sign_up', component: SignUpComponent },
       { path: '', component: LandingPageComponent }
     ]
   },
@@ -47,7 +46,8 @@ const routes: Routes = [
       { path: 'wallet/tx_overview', component: TxOverviewComponent },
       { path: 'payment_options/new', component: NewPaymentOptionComponent }
     ]
-  }
+  },
+  { path: 'sign_up', component: SignUpComponent }
 ];
 
 @NgModule({

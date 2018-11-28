@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Injectable } from '@angular/core';
 
 import * as $ from 'jquery';
+import { Http, Request, Response } from '@angular/http';
+
 
 @Component({
   selector: 'app-sign-up',
@@ -9,7 +11,7 @@ import * as $ from 'jquery';
 })
 export class SignUpComponent implements OnInit {
 
-  constructor() { }
+  constructor(private http: Http) { }
 
   ngOnInit() {
 

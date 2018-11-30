@@ -1,8 +1,8 @@
-.left-image {
+/* .left-image {
   width: 100%;
   height: calc(100vh - 75px);
   object-fit: cover;
-}
+} */
 
 #top-container {
   background-image: url("../../../assets/solar-farm.jpg");
@@ -10,9 +10,9 @@
   background-size: cover;
   background-color: rgba(0,0,0,0.7);
   background-blend-mode: multiply;
-  height: 100vh;
-  margin-top: -75px;
+  height: 100%;
   width: 100vw;
+  padding-bottom: 75px;
   display: flex;
   flex-direction: column;
   justify-content: center;

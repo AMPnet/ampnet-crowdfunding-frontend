@@ -38,6 +38,8 @@ import { BankAccountInputComponent } from './payment-options/new-payment-option/
 import { WithdrawModalComponent } from './wallet/withdraw-modal/withdraw-modal.component';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+
 
 @NgModule({
   declarations: [
@@ -79,7 +81,8 @@ import { FormsModule } from '@angular/forms';
     RouterModule,
     AppRoutingModule,
     DisqusModule.forRoot('ampnet.disqus.com/embed.js'),
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [{
     provide: LocationStrategy,

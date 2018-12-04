@@ -39,7 +39,12 @@ import { WithdrawModalComponent } from './wallet/withdraw-modal/withdraw-modal.c
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { ConfirmEmailComponent } from './authentication/confirm-email/confirm-email.component';
+import { JwtModule } from '@auth0/angular-jwt';
 
+export function tokenGetter() {
+  return localStorage.getItem('access_token');
+}
 
 @NgModule({
   declarations: [
@@ -75,6 +80,7 @@ import { HttpClientModule } from '@angular/common/http';
     CreditCardInputComponent,
     BankAccountInputComponent,
     WithdrawModalComponent,
+    ConfirmEmailComponent,
   ],
   imports: [
     BrowserModule,
@@ -82,7 +88,15 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     DisqusModule.forRoot('ampnet.disqus.com/embed.js'),
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        whitelistedDomains: [
+          'demo.ampnet.io'
+        ]
+      }
+    })
   ],
   providers: [{
     provide: LocationStrategy,

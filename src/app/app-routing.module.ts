@@ -17,6 +17,7 @@ import { SecureLayoutComponent } from './secure-layout/secure-layout.component';
 import { SignUpComponent } from './authentication/sign-up/sign-up.component';
 import { TxOverviewComponent } from './wallet/tx-overview/tx-overview.component';
 import { NewPaymentOptionComponent } from './payment-options/new-payment-option/new-payment-option.component';
+import { ConfirmEmailComponent } from './authentication/confirm-email/confirm-email.component';
 // Defines public routes accessible to everyone
 // (landing page, login, register, contact help, etc...)
 
@@ -47,7 +48,8 @@ const routes: Routes = [
       { path: 'payment_options/new', component: NewPaymentOptionComponent }
     ]
   },
-  { path: 'sign_up', component: SignUpComponent }
+  { path: 'sign_up', component: SignUpComponent },
+  { path: 'confirm_email', component: ConfirmEmailComponent }
 ];
 
 @NgModule({

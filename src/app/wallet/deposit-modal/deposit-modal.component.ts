@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Http, Response } from '@angular/http';
 
 declare var $: any;
 
@@ -12,7 +11,7 @@ declare var $: any;
 })
 export class DepositModalComponent implements OnInit {
 
-  constructor(private router: Router, private http: Http) { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
   }

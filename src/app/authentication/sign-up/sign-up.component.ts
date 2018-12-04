@@ -1,9 +1,10 @@
-import { Component, OnInit, Injectable } from '@angular/core';
+import { Component, OnInit, Injectable, Input } from '@angular/core';
 
 import * as $ from 'jquery';
 import { CountryService } from 'src/app/countries/country.service';
 import { CountryModel } from 'src/app/models/countries/CountryModel';
 import { SignUpService } from './sign-up.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -13,9 +14,18 @@ import { SignUpService } from './sign-up.service';
 })
 export class SignUpComponent implements OnInit {
 
+  firstName: string = "";
+  lastName: string = "";
+  phoneNumber: string = "";
+  email: string = "";
+  password: string = "";
+  confirmPassword: string = "";
+  selectedCountry: number = 0;  
+
   constructor(
     private countryService: CountryService,
-    private signUpService: SignUpService
+    private signUpService: SignUpService,
+    private router: Router
   ) { }
 
   countries: CountryModel[];
@@ -37,30 +47,36 @@ export class SignUpComponent implements OnInit {
 
   onSubmitClicked() {
 
-    let email = $('#email-input');
-    let password = $('#password-input');
-    let passConfirm = $('#password-confirm-input'); 
-    let phoneNumber = $('#phone-input');
-    let country = $('#country-selector');
-    let selectedCountry = country.find(':selected');
-
-    if(!this.checkEmail(<string>email.val()) ||
-      !this.checkPassword(<string>password.val(), <string>passConfirm.val())) {
-        return;
+    if(!this.handleInvalidInputs()) {
+      return;
     }
 
     this.signUpService.performEmailSignup(
-      <string>email.val(),
-      <string>password.val(),
-      'Mislav',
-      "Javor",
-      parseInt(selectedCountry.attr('value')) - 1,
-      "04949398934"
-    ).subscribe(res => {
-      console.log(res);
+      this.email,
+      this.password,
+      this.firstName,
+      this.lastName,
+      this.selectedCountry,
+      this.phoneNumber
+    ).subscribe(_ => {
+      this.handleSuccess();
     }, err => {
       console.log(err);
-    });
+    })
+
+  }
+
+  private handleSuccess() {
+    this.router.navigate(['confirm_email'], {
+      queryParams: {
+        email: this.email
+      }
+    })
+  }
+
+  private handleInvalidInputs(): boolean {
+
+    return this.checkEmail(this.email) && this.checkPassword(this.password, this.confirmPassword);
   }
 
   private checkEmail(email: string): boolean {

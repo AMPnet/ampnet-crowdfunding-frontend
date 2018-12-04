@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
+import { LogInModalService } from './log-in-modal.service';
 declare var $: any;
 
 @Component({
@@ -10,7 +10,11 @@ declare var $: any;
 })
 export class LogInModalComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  email: string;
+  password: string;
+
+  constructor(private router: Router, 
+    private loginService: LogInModalService) { }
 
   ngOnInit() {
   }
@@ -26,8 +30,12 @@ export class LogInModalComponent implements OnInit {
   }
 
   logInMailClicked() {
-    $('#log-in-modal').modal('toggle');
-    this.router.navigate(['/dash']);
+    this.loginService.performEmailLogin(this.email, this.password)
+      .subscribe(result => {
+        localStorage.setItem('access_token', result.token);
+      }, error => {
+        alert('Error: ' + JSON.stringify(error));
+      });
   }
 
 }

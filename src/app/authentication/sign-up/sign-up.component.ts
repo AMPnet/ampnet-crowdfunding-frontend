@@ -5,7 +5,9 @@ import { CountryService } from 'src/app/countries/country.service';
 import { CountryModel } from 'src/app/models/countries/CountryModel';
 import { SignUpService } from './sign-up.service';
 import { Router } from '@angular/router';
+import { ErrorModel } from 'src/app/models/ErrorModel';
 
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-sign-up',
@@ -13,6 +15,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./sign-up.component.css']
 })
 export class SignUpComponent implements OnInit {
+
 
   firstName: string = "";
   lastName: string = "";
@@ -47,9 +50,10 @@ export class SignUpComponent implements OnInit {
 
   onSubmitClicked() {
 
-    if(!this.handleInvalidInputs()) {
-      return;
-    }
+    // if(!this.handleInvalidInputs()) {
+    //   return;
+    // }
+    
 
     this.signUpService.performEmailSignup(
       this.email,
@@ -57,13 +61,20 @@ export class SignUpComponent implements OnInit {
       this.firstName,
       this.lastName,
       this.selectedCountry,
-      this.phoneNumber
-    ).subscribe(_ => {
-      this.handleSuccess();
-    }, err => {
-      console.log(err);
-    })
+      this.phoneNumber,
+      () => {
+        
+      }, this.handleError);
 
+  }
+
+  private handleError(errorModel: ErrorModel) {
+    swal({
+      title: 'Error',
+      text: errorModel.description,
+      type: 'error',
+      confirmButtonText: 'Close'
+    });
   }
 
   private handleSuccess() {

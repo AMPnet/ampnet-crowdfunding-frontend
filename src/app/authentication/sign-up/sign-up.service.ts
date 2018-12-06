@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { API } from 'src/app/utilities/endpoint-manager';
+import { ErrorModel } from 'src/app/models/ErrorModel';
 
 @Injectable({
   providedIn: 'root'
@@ -17,9 +18,11 @@ export class SignUpService {
     firstName: string,
     lastName: string,
     countryId: number,
-    phoneNumber: string
+    phoneNumber: string,
+    onSuccess: () => void,
+    onError: (ErrorModel) => void
   ) {
-    return this.http.post(API.generateRoute(this.endpoint) , {
+    this.http.post(API.generateRoute(this.endpoint) , {
       'signup_method': 'EMAIL',
       'user_info' : {
         'email' : email,
@@ -29,6 +32,10 @@ export class SignUpService {
         'country_id' : countryId,
         'phone_number': phoneNumber
       }
+    }).subscribe(data => {
+      onSuccess();
+    }, error => {
+      onError(ErrorModel.fromResponse(error));
     });
   }
 }

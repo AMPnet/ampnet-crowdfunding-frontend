@@ -41,6 +41,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ConfirmEmailComponent } from './authentication/confirm-email/confirm-email.component';
 import { JwtModule } from '@auth0/angular-jwt';
+import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -89,6 +90,7 @@ export function tokenGetter() {
     DisqusModule.forRoot('ampnet.disqus.com/embed.js'),
     FormsModule,
     HttpClientModule,
+    SweetAlert2Module,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,

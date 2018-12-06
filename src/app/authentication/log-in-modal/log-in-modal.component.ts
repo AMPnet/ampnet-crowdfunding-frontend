@@ -30,6 +30,7 @@ export class LogInModalComponent implements OnInit {
   }
 
   logInMailClicked() {
+    alert("email: " + this.email);
     this.loginService.performEmailLogin(this.email, this.password)
       .subscribe(result => {
         localStorage.setItem('access_token', result.token);

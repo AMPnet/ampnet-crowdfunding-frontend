@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LogInModalService } from './log-in-modal.service';
 declare var $: any;
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-log-in-modal',
@@ -33,9 +34,19 @@ export class LogInModalComponent implements OnInit {
     this.loginService.performEmailLogin(this.email, this.password)
       .subscribe(result => {
         localStorage.setItem('access_token', result.token);
+        this.navigateToDash();
       }, error => {
-        alert('Error: ' + JSON.stringify(error));
+        swal(
+          "Error",
+          error.error.description,
+          "error"
+        );
       });
+  }
+
+  private navigateToDash() {
+    $("#log-in-modal").modal('toggle');
+    this.router.navigate(['/dash']);
   }
 
 }

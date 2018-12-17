@@ -18,6 +18,8 @@ import { SignUpComponent } from './authentication/sign-up/sign-up.component';
 import { TxOverviewComponent } from './wallet/tx-overview/tx-overview.component';
 import { NewPaymentOptionComponent } from './payment-options/new-payment-option/new-payment-option.component';
 import { ConfirmEmailComponent } from './authentication/confirm-email/confirm-email.component';
+import { AuthGuard } from './authentication/auth.guard';
+
 // Defines public routes accessible to everyone
 // (landing page, login, register, contact help, etc...)
 
@@ -31,6 +33,7 @@ const routes: Routes = [
     ]
   },
   { path: 'dash', component: SecureLayoutComponent,
+    canActivate: [AuthGuard],
     children: [
       { path: '', component: OffersComponent },
       { path: 'overview', component: OverviewComponent },
@@ -49,7 +52,8 @@ const routes: Routes = [
     ]
   },
   { path: 'sign_up', component: SignUpComponent },
-  { path: 'confirm_email', component: ConfirmEmailComponent }
+  { path: 'confirm_email', component: ConfirmEmailComponent },
+  { path: 'overview', component: OffersComponent }
 ];
 
 @NgModule({

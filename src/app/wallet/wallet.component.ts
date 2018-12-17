@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import * as $ from 'jquery';
-
+import { WalletService } from './wallet.service';
+import swal from 'sweetalert2';
+import { WalletModel } from '../models/WalletModel';
 
 
 @Component({
@@ -10,14 +12,36 @@ import * as $ from 'jquery';
 })
 export class WalletComponent implements OnInit {
 
-  constructor() { }
+  constructor(private walletService: WalletService) { }
+
+  private walletModel: WalletModel;
 
   ngOnInit() {
-
+    this.fetchWallet();
   }
 
   depositButtonClicked() {
 
+  }
+
+  fetchWallet() {
+    this.walletService.getWallet().subscribe(res => {
+      this.walletModel = res;
+    }, err => {
+      alert(JSON.stringify(err));
+    })
+  }
+
+  walletIsInitialized(): boolean {
+    return this.walletModel != null;
+  }
+
+  initWallet() {  
+    this.walletService.initWallet().subscribe(res => {
+      this.walletModel = res;
+    }, err => {
+      alert(JSON.stringify(err));
+    });
   }
 
 }

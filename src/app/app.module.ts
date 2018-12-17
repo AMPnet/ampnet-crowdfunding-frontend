@@ -37,13 +37,21 @@ import { CreditCardInputComponent } from './payment-options/new-payment-option/c
 import { BankAccountInputComponent } from './payment-options/new-payment-option/bank-account-input/bank-account-input.component';
 import { WithdrawModalComponent } from './wallet/withdraw-modal/withdraw-modal.component';
 import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ConfirmEmailComponent } from './authentication/confirm-email/confirm-email.component';
-import { JwtModule } from '@auth0/angular-jwt';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
+}
+
+export function jwtOptionsFactory() {
+  return {
+    tokenGetter: () => {
+      return localStorage.getItem('access_token');
+    },
+    whitelistedDomains: ['localhost:4200']
+  }
 }
 
 @NgModule({
@@ -88,15 +96,8 @@ export function tokenGetter() {
     AppRoutingModule,
     DisqusModule.forRoot('ampnet.disqus.com/embed.js'),
     FormsModule,
-    HttpClientModule,
-    JwtModule.forRoot({
-      config: {
-        tokenGetter: tokenGetter,
-        whitelistedDomains: [
-          'demo.ampnet.io'
-        ]
-      }
-    })
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [{
     provide: LocationStrategy,

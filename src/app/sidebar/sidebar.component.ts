@@ -20,7 +20,8 @@ export class SidebarComponent implements OnInit {
   }
 
   logOutClicked() {
-    this.router.navigate(['/']);
+    localStorage.removeItem('access_token');
+    location.reload();
   }
 
   contactUsClicked() {

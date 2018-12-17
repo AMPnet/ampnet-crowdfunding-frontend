@@ -16,12 +16,7 @@ export class WalletTxHistoryComponent implements OnInit, AfterViewInit {
   constructor() { }
 
   ngOnInit() {
-    this.txHistoryModel = _.fill(Array(20), {
-      position: 0,
-      date: new Date(),
-      amount: 200,
-      type: TxHistoryType.Withdraw
-    });
+    
   }
 
   ngAfterViewInit() {

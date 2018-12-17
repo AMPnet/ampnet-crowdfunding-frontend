@@ -6,4 +6,12 @@ export module API {
         return APIURL + endpoint;
     }
 
+    export function tokenHeaders() {
+        return {
+            headers: {
+                'Authorization' : 'Bearer ' + localStorage.getItem('access_token');
+            }
+        }
+    }
+
 }

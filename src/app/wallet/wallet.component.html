@@ -1,8 +1,9 @@
 <div class="container root-content-container">
-	<div class="row row-eq-height">
+	<!-- IF WALLET HAS BEEN INITIALIZED -->
+	<div *ngIf="walletIsInitialized()" class="row row-eq-height">
 		<div class="col-md-6 mb-3">
 			<b class="font-weight-bold explainer-mini text-uppercase">Total balance</b>
-			<h1>USD 31,755</h1>
+			<h1>{{walletModel.currency}} {{walletModel.balance}}</h1>
 		</div>
 		<div class="button-container col-md-3 mb-3">
 				<button type="button" class="btn btn-primary w-100 float-right"
@@ -30,6 +31,12 @@
 		<div class="col-md-12 mt-3 mb-3">
 			<app-wallet-tx-history></app-wallet-tx-history>
 		</div>
+	</div>
+	<div *ngIf="!walletIsInitialized()" class="no-init-container">
+		<div class="no-init-msg">
+			Wallet not initialized. <br> Please initialize wallet!
+		</div>
+		<button (click)="initWallet()" class="btn btn-primary no-init-btn">Initialize</button>
 	</div>
 </div>
 <app-deposit-modal></app-deposit-modal>

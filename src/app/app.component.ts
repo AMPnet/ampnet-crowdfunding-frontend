@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as $ from 'jquery';
 import { Router, NavigationEnd } from '@angular/router';
+import { Spinner } from 'spin.js';
 
 declare var WOW: any;
 

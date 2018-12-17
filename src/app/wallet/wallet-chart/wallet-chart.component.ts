@@ -64,20 +64,6 @@ export class WalletChartComponent implements OnInit {
     console.log(ctx);
     const myChart = new Chart(<any>ctx, {
       type: 'line',
-      data: {
-        labels: ['JUN', 'JUL', 'OCT', 'SEP', 'NOV', 'DEC'],
-        datasets: [{
-          label: 'Money',
-          data: [11, 9, 25, 19, 29, 28],
-          backgroundColor: [
-          '#3B599855'
-          ],
-          borderColor: [
-          '#3B5998'
-          ],
-          borderWidth: 4
-        }]
-      },
       options: {
         scales: {
           yAxes: [{

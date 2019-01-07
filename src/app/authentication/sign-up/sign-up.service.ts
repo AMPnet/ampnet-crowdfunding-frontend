@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { API } from 'src/app/utilities/endpoint-manager';
+import { AuthService, GoogleLoginProvider, SocialUser } from 'angularx-social-login';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,10 @@ export class SignUpService {
 
   private endpoint = "/signup";
 
-  constructor(private http: HttpClient) { }
+
+  constructor(
+    private http: HttpClient,
+    private authService: AuthService) { }
 
   performEmailSignup(
     email: string,
@@ -29,6 +33,29 @@ export class SignUpService {
         'country_id' : countryId,
         'phone_number': phoneNumber
       }
+    });
+  }
+
+  performGoogleSignup(authToken: string) {
+    return this.http.post(API.generateRoute(this.endpoint), {
+      "signup_method": "GOOGLE",
+      "user_info" : {
+        "token" : authToken
+      }
+    });
+  }
+
+  signInWithGoogle(): void {
+    this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
+  }
+
+  signOut(): void {
+    this.authService.signOut();
+  }
+
+  checkSocialLogin(onComplete: (user: SocialUser) => void) {
+    this.authService.authState.subscribe((user) => {
+      onComplete(user);
     });
   }
 }

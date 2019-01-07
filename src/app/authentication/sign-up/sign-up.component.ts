@@ -7,6 +7,8 @@ import { SignUpService } from './sign-up.service';
 import { Router } from '@angular/router';
 import { Form, FormBuilder, FormControl, Validators, FormGroup } from '@angular/forms';
 import swal from 'sweetalert2';
+import { SocialUser, GoogleLoginProvider } from 'angularx-social-login';
+import { EmailSignupModel } from 'src/app/models/auth/EmailSignupModel';
 
 @Component({
   selector: 'app-sign-up',
@@ -25,6 +27,7 @@ export class SignUpComponent implements OnInit {
     private signUpService: SignUpService,
     private router: Router,
     private fb: FormBuilder
+
   ) { 
   }
 
@@ -36,7 +39,7 @@ export class SignUpComponent implements OnInit {
       countryModel
     ];
     this.getCountries();
-  
+
   }
 
   getCountries() {
@@ -101,6 +104,12 @@ export class SignUpComponent implements OnInit {
         email: this.submissionForm.controls['email'].value
       }
     })
+  }
+
+  performGoogleSignup() {
+    this.signUpService.checkSocialLogin(res => {
+      alert(res.authToken);
+    });
   }
 
 }

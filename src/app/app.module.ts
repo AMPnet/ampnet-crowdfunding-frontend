@@ -40,9 +40,23 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ConfirmEmailComponent } from './authentication/confirm-email/confirm-email.component';
+import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
+import { GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
+
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
+}
+
+let config = new AuthServiceConfig([
+  {
+    id: GoogleLoginProvider.PROVIDER_ID,
+    provider: new GoogleLoginProvider('507079277405-o3834fb5jojeq3u9tmm14aobeukg3jmo.apps.googleusercontent.com')
+  }
+])
+
+export function provideConfig() {
+  return config;
 }
 
 export function jwtOptionsFactory() {
@@ -97,11 +111,15 @@ export function jwtOptionsFactory() {
     DisqusModule.forRoot('ampnet.disqus.com/embed.js'),
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule, 
+    SocialLoginModule
   ],
   providers: [{
     provide: LocationStrategy,
     useClass: HashLocationStrategy
+  }, {
+    provide: AuthServiceConfig,
+    useFactory: provideConfig
   }],
   bootstrap: [AppComponent]
 })

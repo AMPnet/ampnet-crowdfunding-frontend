@@ -21,14 +21,16 @@ export class WalletComponent implements OnInit {
   }
 
   depositButtonClicked() {
-
+  
   }
 
   fetchWallet() {
     this.walletService.getWallet().subscribe(res => {
       this.walletModel = res;
     }, err => {
-      alert(JSON.stringify(err));
+     if(err.status != 404) {
+       swal("Error", err.message, "error");
+     }
     })
   }
 
@@ -40,7 +42,7 @@ export class WalletComponent implements OnInit {
     this.walletService.initWallet().subscribe(res => {
       this.walletModel = res;
     }, err => {
-      alert(JSON.stringify(err));
+      swal("Error", err.message, "error");
     });
   }
 

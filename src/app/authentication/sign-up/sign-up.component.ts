@@ -7,8 +7,10 @@ import { SignUpService } from './sign-up.service';
 import { Router } from '@angular/router';
 import { Form, FormBuilder, FormControl, Validators, FormGroup } from '@angular/forms';
 import swal from 'sweetalert2';
-import { SocialUser, GoogleLoginProvider } from 'angularx-social-login';
+import { SocialUser, GoogleLoginProvider, AuthService } from 'angularx-social-login';
 import { EmailSignupModel } from 'src/app/models/auth/EmailSignupModel';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 
 @Component({
   selector: 'app-sign-up',
@@ -26,8 +28,9 @@ export class SignUpComponent implements OnInit {
     private countryService: CountryService,
     private signUpService: SignUpService,
     private router: Router,
-    private fb: FormBuilder
-
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private spinner: NgxSpinnerService
   ) { 
   }
 
@@ -106,10 +109,39 @@ export class SignUpComponent implements OnInit {
     })
   }
 
-  performGoogleSignup() {
-    this.signUpService.checkSocialLogin(res => {
-      alert(res.authToken);
-    });
+  async performGoogleSignup() {
+    SpinnerUtil.showSpinner();
+
+    let that = this;
+    let afterSignout: () => void = function() {
+      that.authService.signIn(GoogleLoginProvider.PROVIDER_ID).then(res => {
+        that.signUpService.performSocialSignup(res.provider, res.authToken).subscribe(res => {
+          SpinnerUtil.hideSpinner();
+          that.router.navigate(['/fill_data'], {
+            queryParams: res
+          });
+        }, err => {
+          SpinnerUtil.hideSpinner();
+          swal(err.error.description, err.error.message, "warning");
+        });
+      }).catch(err => {
+        SpinnerUtil.hideSpinner();
+        swal("", "Problem signing in", "warning");
+      })
+    }
+    
+    this.authService.signOut().then(_ => {
+      afterSignout();
+    }).catch(_ => {
+      afterSignout();
+    })
+  }
+
+  
+
+  displayLoggedInMessage() {
+    swal("Logged In!", `You are already logged in with your Google Account.
+    Please go to the login screen and proceed there`, "info");
   }
 
 }

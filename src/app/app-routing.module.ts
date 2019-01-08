@@ -19,7 +19,7 @@ import { TxOverviewComponent } from './wallet/tx-overview/tx-overview.component'
 import { NewPaymentOptionComponent } from './payment-options/new-payment-option/new-payment-option.component';
 import { ConfirmEmailComponent } from './authentication/confirm-email/confirm-email.component';
 import { AuthGuard } from './authentication/auth.guard';
-
+import { FillDataComponent } from './authentication/sign-up/fill-data/fill-data.component';
 // Defines public routes accessible to everyone
 // (landing page, login, register, contact help, etc...)
 
@@ -53,7 +53,8 @@ const routes: Routes = [
   },
   { path: 'sign_up', component: SignUpComponent },
   { path: 'confirm_email', component: ConfirmEmailComponent },
-  { path: 'overview', component: OffersComponent }
+  { path: 'overview', component: OffersComponent },
+  { path: 'fill_data', component: FillDataComponent }
 ];
 
 @NgModule({

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { API } from 'src/app/utilities/endpoint-manager';
-import { AuthService, GoogleLoginProvider, SocialUser } from 'angularx-social-login';
+import { CheckEmailModel } from 'src/app/models/auth/check-email-model';
 
 @Injectable({
   providedIn: 'root'
@@ -9,11 +9,10 @@ import { AuthService, GoogleLoginProvider, SocialUser } from 'angularx-social-lo
 export class SignUpService {
 
   private endpoint = "/signup";
-
+  private checkEmailEndpoint = "/mail-check";
 
   constructor(
-    private http: HttpClient,
-    private authService: AuthService) { }
+    private http: HttpClient) { }
 
   performEmailSignup(
     email: string,
@@ -36,26 +35,22 @@ export class SignUpService {
     });
   }
 
-  performGoogleSignup(authToken: string) {
+  performSocialSignup(provider: string, authToken: string) {
     return this.http.post(API.generateRoute(this.endpoint), {
-      "signup_method": "GOOGLE",
+      "signup_method": provider,
       "user_info" : {
         "token" : authToken
       }
     });
   }
 
-  signInWithGoogle(): void {
-    this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
-  }
-
-  signOut(): void {
-    this.authService.signOut();
-  }
-
-  checkSocialLogin(onComplete: (user: SocialUser) => void) {
-    this.authService.authState.subscribe((user) => {
-      onComplete(user);
-    });
+  checkEmail(email: string, onComplete: (userExists: boolean) => void) {
+    return this.http.post(API.generateRoute(this.checkEmailEndpoint), {
+      "email" : email
+    }).subscribe((res: any) => {
+      onComplete(res.userExists);
+    }, err => {
+      // TODO: Handle error
+    })
   }
 }

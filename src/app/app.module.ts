@@ -42,7 +42,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { ConfirmEmailComponent } from './authentication/confirm-email/confirm-email.component';
 import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
 import { GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
-
+import { FillDataComponent } from './authentication/sign-up/fill-data/fill-data.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -103,6 +104,7 @@ export function jwtOptionsFactory() {
     BankAccountInputComponent,
     WithdrawModalComponent,
     ConfirmEmailComponent,
+    FillDataComponent,
   ],
   imports: [
     BrowserModule,
@@ -112,7 +114,8 @@ export function jwtOptionsFactory() {
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule, 
-    SocialLoginModule
+    SocialLoginModule,
+    NgxSpinnerModule
   ],
   providers: [{
     provide: LocationStrategy,

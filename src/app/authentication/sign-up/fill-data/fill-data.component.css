@@ -1,0 +1,33 @@
+#top-container {
+    background-image: url("../../../../assets/solar-farm.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: rgba(0,0,0,0.7);
+    background-blend-mode: multiply;
+    height: 100%;
+    width: 100vw;
+    padding-bottom: 75px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .content-container{
+    padding-top: 75px;
+  }
+  
+  .card {
+    margin-left: 10px!important;
+    margin-right: 10px!important;
+  }
+  
+  @media(min-width: 1100px) {
+    .card {
+      width: 50%;
+      margin: auto!important;
+    }
+  }
+  
+  #submit-button {
+    height: 60px!important;
+  }

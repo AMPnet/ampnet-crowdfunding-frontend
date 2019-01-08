@@ -122,11 +122,11 @@ export class SignUpComponent implements OnInit {
           });
         }, err => {
           SpinnerUtil.hideSpinner();
-          swal(err.error.description, err.error.message, "warning");
+          swal("", err.error.message, "warning");
         });
       }).catch(err => {
         SpinnerUtil.hideSpinner();
-        swal("", "Problem signing in", "warning");
+        swal("", err, "warning");
       })
     }
     

@@ -1,3 +1,7 @@
 .modal {
   border: none;
 }
+
+.fade-custom {
+  opacity: 1;
+}

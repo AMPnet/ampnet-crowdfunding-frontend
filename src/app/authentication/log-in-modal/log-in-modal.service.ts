@@ -25,4 +25,13 @@ export class LogInModalService {
       }
     });
   }
+
+  performSocialLogin(provider: string, authToken: string) {
+    return this.http.post(API.generateRoute(this.endpoint), {
+      "login_method" : provider,
+      "credentials" : {
+        "token" : authToken
+      }
+    });
+  }
 }

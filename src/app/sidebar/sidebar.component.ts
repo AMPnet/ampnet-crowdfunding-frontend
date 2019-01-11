@@ -21,7 +21,7 @@ export class SidebarComponent implements OnInit {
 
   logOutClicked() {
     localStorage.removeItem('access_token');
-    location.reload();
+    this.router.navigate(['']);
   }
 
   contactUsClicked() {

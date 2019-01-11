@@ -7,7 +7,7 @@ import { SignUpService } from './sign-up.service';
 import { Router } from '@angular/router';
 import { Form, FormBuilder, FormControl, Validators, FormGroup } from '@angular/forms';
 import swal from 'sweetalert2';
-import { SocialUser, GoogleLoginProvider, AuthService } from 'angularx-social-login';
+import { SocialUser, GoogleLoginProvider, AuthService, FacebookLoginProvider } from 'angularx-social-login';
 import { EmailSignupModel } from 'src/app/models/auth/EmailSignupModel';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
@@ -109,16 +109,26 @@ export class SignUpComponent implements OnInit {
     })
   }
 
-  async performGoogleSignup() {
+  performGoogleSignup() {
+    this.performSocialSignup(GoogleLoginProvider.PROVIDER_ID);
+  }
+
+  performFacebookSignup() {
+    this.performSocialSignup(FacebookLoginProvider.PROVIDER_ID);
+  }
+
+  performSocialSignup(provider: string) {
     SpinnerUtil.showSpinner();
 
     let that = this;
     let afterSignout: () => void = function() {
-      that.authService.signIn(GoogleLoginProvider.PROVIDER_ID).then(res => {
-        that.signUpService.performSocialSignup(res.provider, res.authToken).subscribe(res => {
+      that.authService.signIn(provider).then(res => {
+        that.signUpService.performSocialSignup(res.provider, res.authToken).subscribe(usr => {
           SpinnerUtil.hideSpinner();
+          usr["auth"] = res.authToken;
+          usr['provider'] = res.provider;
           that.router.navigate(['/fill_data'], {
-            queryParams: res
+            queryParams: usr
           });
         }, err => {
           SpinnerUtil.hideSpinner();

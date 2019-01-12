@@ -52,9 +52,9 @@ export class LogInModalComponent implements OnInit {
         this.navigateToDash();
       }, error => {
         swal(
-          "Error",
+          "",
           error.error.description,
-          "error"
+          "warning"
         );
       });
   }

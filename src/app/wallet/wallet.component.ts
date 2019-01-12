@@ -29,7 +29,7 @@ export class WalletComponent implements OnInit {
       this.walletModel = res;
     }, err => {
      if(err.status != 404) {
-       swal("Error", err.message, "error");
+       swal("", err.message, "warning");
      }
     })
   }
@@ -42,7 +42,7 @@ export class WalletComponent implements OnInit {
     this.walletService.initWallet().subscribe(res => {
       this.walletModel = res;
     }, err => {
-      swal("Error", err.message, "error");
+      swal("", err.error.message, "warning");
     });
   }
 

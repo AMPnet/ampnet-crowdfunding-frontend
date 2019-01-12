@@ -37,6 +37,18 @@
 		</li>
 	</ul>
 
+	<p class="menu-header ml-4 mb-3 mt-3 font-weight-bold">ORGANIZATIONS</p>
+	<ul id="main-menu" class="list-unstyled components">
+		<li routerLink="create_organization" routerLinkActive="active">
+			<i class="menu-icon fas fa-plus"></i>
+			<span>Create New</span>
+		</li>
+		<li (click)="logOutClicked()" routerLinkActive="active">
+			<i class="menu-icon fas fa-pen-alt"></i>
+			<span>Manage</span>
+		</li>
+	</ul>
+
 	<div id="divider-menu" class="dropdown-divider"></div>
 
 	<ul id="main-menu" class="list-unstyled components">

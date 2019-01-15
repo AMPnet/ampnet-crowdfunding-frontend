@@ -7,6 +7,8 @@ import swal from 'sweetalert2';
 import { FillDataService } from './fill-data.service';
 import { allSettled } from 'q';
 import { LogInModalService } from '../../log-in-modal/log-in-modal.service';
+import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
+import { Spinner } from 'spin.js';
 
 @Component({
   selector: 'app-fill-data',
@@ -72,14 +74,18 @@ export class FillDataComponent implements OnInit {
   }
 
   getCountries() {
+    SpinnerUtil.showSpinner();
     this.countryService.getCountries().subscribe(res => {
       this.countries = res.countries;
+      SpinnerUtil.hideSpinner();
     }, err => {
+      SpinnerUtil.hideSpinner();
       swal('', 'Error fetching countries', 'warning');
     });
   }
 
   submitButtonClicked() {
+    SpinnerUtil.showSpinner();
     this.logIn(() => {
       this.updateUserData();
     });
@@ -90,6 +96,7 @@ export class FillDataComponent implements OnInit {
       localStorage.setItem('access_token', (<any>res).token);
       onComplete();
     }, err => {
+      SpinnerUtil.hideSpinner();
       swal('', err.error.message, 'warning');
     })
   }
@@ -103,10 +110,12 @@ export class FillDataComponent implements OnInit {
       controls['country'].value,
       controls['phoneNumber'].value
     ).subscribe(res => {
+      SpinnerUtil.hideSpinner();
       swal('Success', `You've successfully signed up!`, 'success').then(res => {
         this.router.navigate(['dash']);
       });
     }, err => {
+      SpinnerUtil.hideSpinner();
       swal('', err.error.message, 'warning');
     });
   }

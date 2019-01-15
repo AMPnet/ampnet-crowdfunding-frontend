@@ -14,7 +14,7 @@ export class WalletService {
 
   initWallet() {
     return this.http.post<WalletModel>(API.generateRoute(this.endpoint), {
-      "address" : "0xa23D6C59369c0F1fBbb39c171A3b9cBE92A201c5"
+      "address" : "0xa23D6C59369c0F1fCbb39c171A3b9cBE92A201c5"
     }, API.tokenHeaders());
   }
 

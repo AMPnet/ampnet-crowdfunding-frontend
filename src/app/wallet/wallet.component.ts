@@ -3,6 +3,7 @@ import * as $ from 'jquery';
 import { WalletService } from './wallet.service';
 import swal from 'sweetalert2';
 import { WalletModel } from '../models/WalletModel';
+import { SpinnerUtil } from '../utilities/spinner-utilities';
 
 
 @Component({
@@ -25,9 +26,12 @@ export class WalletComponent implements OnInit {
   }
 
   fetchWallet() {
+    SpinnerUtil.showSpinner();
     this.walletService.getWallet().subscribe(res => {
+      SpinnerUtil.hideSpinner();
       this.walletModel = res;
     }, err => {
+      SpinnerUtil.hideSpinner();
      if(err.status != 404) {
        swal("", err.message, "warning");
      }
@@ -39,9 +43,12 @@ export class WalletComponent implements OnInit {
   }
 
   initWallet() {  
+    SpinnerUtil.showSpinner();
     this.walletService.initWallet().subscribe(res => {
+      SpinnerUtil.hideSpinner();
       this.walletModel = res;
     }, err => {
+      SpinnerUtil.hideSpinner();
       swal("", err.error.message, "warning");
     });
   }

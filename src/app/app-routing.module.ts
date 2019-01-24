@@ -20,7 +20,9 @@ import { NewPaymentOptionComponent } from './payment-options/new-payment-option/
 import { ConfirmEmailComponent } from './authentication/confirm-email/confirm-email.component';
 import { AuthGuard } from './authentication/auth.guard';
 import { FillDataComponent } from './authentication/sign-up/fill-data/fill-data.component';
-import { CreateOrganizationComponent } from './create-organization/create-organization.component';
+import { CreateOrganizationComponent } from './organizations/create-organization/create-organization.component';
+import { GeneralSettingsComponent } from './general-settings/general-settings.component';
+import { ManageOrganizationsComponent } from './organizations/manage-organizations/manage-organizations.component';
 // Defines public routes accessible to everyone
 // (landing page, login, register, contact help, etc...)
 
@@ -50,7 +52,9 @@ const routes: Routes = [
       { path: 'my_portfolio/investment_details/proposal_details', component: ProposalDetailsComponent },
       { path: 'wallet/tx_overview', component: TxOverviewComponent },
       { path: 'payment_options/new', component: NewPaymentOptionComponent },
-      { path: 'create_organization', component: CreateOrganizationComponent }
+      { path: 'create_organization', component: CreateOrganizationComponent },
+      { path: 'general_settings', component: GeneralSettingsComponent },
+      { path: 'manage_organizations', component: ManageOrganizationsComponent }
     ]
   },
   { path: 'sign_up', component: SignUpComponent },

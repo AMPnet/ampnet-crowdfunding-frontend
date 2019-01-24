@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as $ from 'jquery';
+import { UserService } from '../user-utils/user-service';
 
 @Component({
   selector: 'app-navbar',
@@ -9,6 +10,8 @@ import * as $ from 'jquery';
 export class NavbarComponent implements OnInit {
 
   sidebar: JQuery;
+
+  fullName: string;
 
   public static toggleSidebar(toVisible: boolean) {
 
@@ -32,9 +35,18 @@ export class NavbarComponent implements OnInit {
     }
   }
 
-  constructor() { }
+  constructor(private userService: UserService) { }
 
   ngOnInit() {
+    this.fetchUserData();
+  }
+
+  fetchUserData() {
+    this.userService.getOwnProfile().subscribe(res => {
+      this.fullName = res['first_name'] + ' ' + res['last_name'];
+    }, err => {
+
+    });
   }
 
   menuButtonClicked() {

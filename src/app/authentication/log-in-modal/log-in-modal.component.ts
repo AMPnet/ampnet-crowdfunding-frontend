@@ -4,6 +4,7 @@ import { LogInModalService } from './log-in-modal.service';
 declare var $: any;
 import swal from 'sweetalert2';
 import { AuthService, GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
+import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 
 @Component({
   selector: 'app-log-in-modal',
@@ -33,24 +34,31 @@ export class LogInModalComponent implements OnInit {
   }
   
   socialLoginClicked(provider: string) {
+    SpinnerUtil.showSpinner();
     this.auth.signIn(provider).then(res => {
       this.loginService.performSocialLogin(res.provider, res.authToken).subscribe(res => {
         localStorage.setItem('access_token', (<any>res).token);
+        SpinnerUtil.hideSpinner();
         this.router.navigate(['dash']);
       }, err => {
+        SpinnerUtil.hideSpinner();
         swal('', err.error.message, 'warning');
       });
     }, err => {
+      SpinnerUtil.hideSpinner();
       swal('', err, 'warning');
     });
   }
 
   logInMailClicked() {
+    SpinnerUtil.showSpinner();
     this.loginService.performEmailLogin(this.email, this.password)
       .subscribe(result => {
+        SpinnerUtil.hideSpinner();
         localStorage.setItem('access_token', result.token);
         this.navigateToDash();
       }, error => {
+        SpinnerUtil.hideSpinner();
         swal(
           "",
           error.error.description,

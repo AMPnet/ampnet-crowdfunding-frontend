@@ -1,10 +1,12 @@
+declare var $: any;
+
 export class SpinnerUtil {
 
     public static showSpinner() {
-        document.getElementById('spinner-overlay').hidden = false;
+        $('#spinner-overlay').fadeIn(300);
     }
 
     public static hideSpinner() {
-        document.getElementById('spinner-overlay').hidden = true;
+        $('#spinner-overlay').fadeOut(300);
     }
 }

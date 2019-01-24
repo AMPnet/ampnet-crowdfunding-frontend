@@ -8,7 +8,6 @@ import { FillDataService } from './fill-data.service';
 import { allSettled } from 'q';
 import { LogInModalService } from '../../log-in-modal/log-in-modal.service';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
-import { Spinner } from 'spin.js';
 
 @Component({
   selector: 'app-fill-data',

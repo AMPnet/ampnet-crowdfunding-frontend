@@ -14,7 +14,6 @@
     "@angular/animations": "^6.1.0",
     "@angular/common": "^6.1.0",
     "@angular/compiler": "^6.1.0",
-    "@angular/core": "^6.1.0",
     "@angular/forms": "^6.1.0",
     "@angular/http": "^6.1.0",
     "@angular/platform-browser": "^6.1.0",
@@ -44,8 +43,9 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.11.4",
-    "@angular/cli": "~6.2.3",
+    "@angular/cli": "^6.2.9",
     "@angular/compiler-cli": "^6.1.0",
+    "@angular/core": "^6.1.10",
     "@angular/language-service": "^6.1.0",
     "@types/angular": "^1.6.50",
     "@types/bootstrap": "^4.1.2",

@@ -44,7 +44,9 @@ import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
 import { GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
 import { FillDataComponent } from './authentication/sign-up/fill-data/fill-data.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
-import { CreateOrganizationComponent } from './create-organization/create-organization.component';
+import { CreateOrganizationComponent } from './organizations/create-organization/create-organization.component';
+import { GeneralSettingsComponent } from './general-settings/general-settings.component';
+import { ManageOrganizationsComponent } from './organizations/manage-organizations/manage-organizations.component';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -111,6 +113,8 @@ export function jwtOptionsFactory() {
     ConfirmEmailComponent,
     FillDataComponent,
     CreateOrganizationComponent,
+    GeneralSettingsComponent,
+    ManageOrganizationsComponent,
   ],
   imports: [
     BrowserModule,

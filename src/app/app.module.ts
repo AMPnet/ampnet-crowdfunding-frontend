@@ -47,6 +47,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { CreateOrganizationComponent } from './organizations/create-organization/create-organization.component';
 import { GeneralSettingsComponent } from './general-settings/general-settings.component';
 import { ManageOrganizationsComponent } from './organizations/manage-organizations/manage-organizations.component';
+import { OrganizationDetailsComponent } from './organizations/organization-details/organization-details.component';
+import { CreateNewProjectComponent } from './projects/create-new-project/create-new-project.component';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -115,6 +117,8 @@ export function jwtOptionsFactory() {
     CreateOrganizationComponent,
     GeneralSettingsComponent,
     ManageOrganizationsComponent,
+    OrganizationDetailsComponent,
+    CreateNewProjectComponent,
   ],
   imports: [
     BrowserModule,

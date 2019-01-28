@@ -23,6 +23,8 @@ import { FillDataComponent } from './authentication/sign-up/fill-data/fill-data.
 import { CreateOrganizationComponent } from './organizations/create-organization/create-organization.component';
 import { GeneralSettingsComponent } from './general-settings/general-settings.component';
 import { ManageOrganizationsComponent } from './organizations/manage-organizations/manage-organizations.component';
+import { OrganizationDetailsComponent } from './organizations/organization-details/organization-details.component';
+import { CreateNewProjectComponent } from './projects/create-new-project/create-new-project.component';
 // Defines public routes accessible to everyone
 // (landing page, login, register, contact help, etc...)
 
@@ -54,7 +56,9 @@ const routes: Routes = [
       { path: 'payment_options/new', component: NewPaymentOptionComponent },
       { path: 'create_organization', component: CreateOrganizationComponent },
       { path: 'general_settings', component: GeneralSettingsComponent },
-      { path: 'manage_organizations', component: ManageOrganizationsComponent }
+      { path: 'manage_organizations', component: ManageOrganizationsComponent },
+      { path: 'manage_organizations/:id', component: OrganizationDetailsComponent},
+      { path: 'manage_organizations/:id/create_project', component: CreateNewProjectComponent}
     ]
   },
   { path: 'sign_up', component: SignUpComponent },

@@ -6,6 +6,12 @@ export module API {
         return APIURL + endpoint;
     }
 
+    export function generateComplexRoute(endpoint: string, path: string[]) {
+        return APIURL + endpoint + "/" + path.reduce((a, b) => {
+            return a + "/" + b
+        });
+    }
+
     export function tokenHeaders() {
         return {
             headers: {

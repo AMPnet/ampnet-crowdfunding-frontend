@@ -1,3 +1,27 @@
-<div class="container root-content-container">
-  <h5 class="text-uppercase gray-text"><b>Organization list</b></h5>
+<div class="container root-content-container h-100">
+  <h5 class="text-uppercase gray-text"><b>Manage organizations</b></h5>
+  <div *ngIf="organizations.length > 0" class="row">
+    <div class="col-md-4 mt-2"  *ngFor="let org of organizations">
+        <div class="card px-1">
+            <div class="card-body">
+              <h6 class="card-title text-uppercase gray-text"><b>{{org.name}}</b></h6>
+              <p class="card-text">
+                Created by: {{org.created_by_user}}
+              </p>
+              <button routerLink="{{org.id}}" class="btn btn-primary px-3 py-2 text-uppercase">Details</button>
+            </div>
+          </div>
+    </div>
+  </div>
+  <div class="d-flex justify-content-center mt-5" *ngIf="organizations.length == 0">
+    <div class="d-flex flex-column mt-5">
+        <div class="d-flex text-center">
+            You are not the owner of any organizations. <br>
+            If you would like to manage an organization, please
+          </div> 
+          <button routerLink="/dash/create_organization" class="mt-5 btn btn-primary mt-3 px-5 py-3 text-uppercase">
+            Create a new organization
+          </button>
+        </div>
+  </div>
 </div>

@@ -18,4 +18,17 @@ export class OrganizationService {
         }, API.tokenHeaders());
     }
 
+    getPersonalOrganizations() {
+        return this.http.get(API.generateRoute(this.endpoint + "/personal"), API.tokenHeaders())
+    }
+
+    getSingleOrganization(id: number) {
+        return this.http
+            .get(API.generateComplexRoute(
+                this.endpoint, 
+                [id.toString()]), 
+                API.tokenHeaders()
+            );
+    }
+
 }

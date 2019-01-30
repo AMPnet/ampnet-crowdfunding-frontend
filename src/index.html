@@ -1,20 +1,36 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <title>AMPnet</title>
   <base href="/">
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-	<link href="https://fonts.googleapis.com/css?family=Work+Sans:300,400" rel="stylesheet">
+  <meta name="viewport" content="initial-scale=1.0, width=device-width" />
 
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link href="https://fonts.googleapis.com/css?family=Work+Sans:300,400" rel="stylesheet">
+  <script src="http://js.api.here.com/v3/3.0/mapsjs-core.js" type="text/javascript" charset="utf-8"></script>
+  <script src="http://js.api.here.com/v3/3.0/mapsjs-service.js" type="text/javascript" charset="utf-8"></script>
+  <script src="http://js.api.here.com/v3/3.0/mapsjs-mapevents.js" 
+     type="text/javascript" charset="utf-8"></script>
+     <script src="http://js.api.here.com/v3/3.0/mapsjs-ui.js" 
+      type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" type="text/css" 
+      href="http://js.api.here.com/v3/3.0/mapsjs-ui.css" />
 </head>
+
 <body>
   <app-root></app-root>
   <div id="spinner-holder"></div>
 </body>
+
 </html>
 <div style="display: none" id="spinner-overlay" class="full-overlay">
-  <div class="lds-ring spinner-pos"><div></div><div></div><div></div><div></div></div>
+  <div class="lds-ring spinner-pos">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
 </div>

@@ -21,6 +21,7 @@
     "@angular/router": "^6.1.0",
     "@auth0/angular-jwt": "^2.0.0",
     "@fortawesome/fontawesome-free": "^5.3.1",
+    "@ngx-translate/core": "^11.0.1",
     "@types/request": "^2.48.1",
     "angular-rest-client": "^2.0.0",
     "angularx-social-login": "^1.2.6",

@@ -49,6 +49,7 @@ import { GeneralSettingsComponent } from './general-settings/general-settings.co
 import { ManageOrganizationsComponent } from './organizations/manage-organizations/manage-organizations.component';
 import { OrganizationDetailsComponent } from './organizations/organization-details/organization-details.component';
 import { CreateNewProjectComponent } from './projects/create-new-project/create-new-project.component';
+import { HereMapComponent } from './here-map/here-map.component';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -119,6 +120,7 @@ export function jwtOptionsFactory() {
     ManageOrganizationsComponent,
     OrganizationDetailsComponent,
     CreateNewProjectComponent,
+    HereMapComponent,
   ],
   imports: [
     BrowserModule,

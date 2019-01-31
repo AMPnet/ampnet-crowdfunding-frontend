@@ -12,9 +12,9 @@ export class WalletService {
 
   constructor(private http: HttpClient) { }
 
-  initWallet() {
+  initWallet(address: string) {
     return this.http.post<WalletModel>(API.generateRoute(this.endpoint), {
-      "address" : "0xa23D6C59369c0F1fCbb39c171A3b9cBE92A201c5"
+      "address" : address
     }, API.tokenHeaders());
   }
 

@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import * as $ from 'jquery';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { WalletService } from './wallet.service';
 import swal from 'sweetalert2';
 import { WalletModel } from '../models/WalletModel';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
+import { EthereumProtocol, SyncProtocolUtils, SyncWalletRequest } from 'airgap-coin-lib';
 
+
+declare var $:any;
 
 @Component({
   selector: 'app-wallet',
@@ -12,6 +14,8 @@ import { SpinnerUtil } from '../utilities/spinner-utilities';
   styleUrls: ['./wallet.component.css']
 })
 export class WalletComponent implements OnInit {
+
+  @ViewChild("scanner") scanner;
 
   constructor(private walletService: WalletService) { }
 
@@ -42,15 +46,34 @@ export class WalletComponent implements OnInit {
     return this.walletModel != null;
   }
 
-  initWallet() {  
+  async scanSuccessHandler(event) {
     SpinnerUtil.showSpinner();
-    this.walletService.initWallet().subscribe(res => {
-      SpinnerUtil.hideSpinner();
+    $('#initWalletModal').modal('toggle');
+    
+    let eth = new EthereumProtocol();
+    let syncProtocolUtils = new SyncProtocolUtils();
+
+    let parsedResponse = (event).replace('airgap-wallet://?d=', '');
+    let syncCode = await syncProtocolUtils.deserialize(parsedResponse);
+    let payload = syncCode.payload as SyncWalletRequest;
+    let pubkey = payload.publicKey;
+    let address = eth.getAddressFromPublicKey(pubkey);
+
+    this.initWallet(address);
+  }
+
+  initWallet(address: string) {  
+    this.walletService.initWallet(address).subscribe(res => {
       this.walletModel = res;
+      SpinnerUtil.hideSpinner();
     }, err => {
       SpinnerUtil.hideSpinner();
-      swal("", err.error.message, "warning");
+      swal('', err.error.message, 'warning');
     });
   }
+  
+  camerasFoundHandler(event) {
+    this.scanner.scan(event[0].deviceId);
+  } 
 
 }

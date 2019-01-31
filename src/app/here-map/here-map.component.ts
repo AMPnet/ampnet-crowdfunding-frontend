@@ -26,9 +26,11 @@ export class HereMapComponent implements OnInit {
 
   public constructor() { }
 
-  public ngOnInit() { 
+  public ngOnInit() {
 
   }
+
+  private currentMarker: any;
 
   public ngAfterViewInit() {
     let platform = new H.service.Platform({
@@ -48,13 +50,26 @@ export class HereMapComponent implements OnInit {
 
     var ui = H.ui.UI.createDefault(map, defaultLayers);
 
-    map.addEventListener('tap', function(evt) {
+    var svgMarkup = `<svg width="50" height="45" viewBox="0 0 50 45" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12.0649 21.8264C6.64547 12.0223 13.7367 0 24.939 0V0C36.169 0 43.2574 12.0761 37.7826 21.8813L24.8744 45L12.0649 21.8264Z" fill="#E96F68"/>
+    <ellipse cx="25.1255" cy="13.6286" rx="3.76884" ry="3.85714" fill="white"/>
+    </svg>`;
+
+    map.setCenter({ lat: 44, lng: 17});
+    map.setZoom(3);
+
+    map.addEventListener('tap', function (evt) {
       var coord = map.screenToGeo(evt.currentPointer.viewportX, evt.currentPointer.viewportY);
-      alert('Clicked at ' + Math.abs(coord.lat.toFixed(4)) +
-      ((coord.lat > 0) ? 'N' : 'S') +
-      ' ' + Math.abs(coord.lng.toFixed(4)) +
-       ((coord.lng > 0) ? 'E' : 'W'));
+      var icon = new H.map.Icon(svgMarkup);
+      var coords = { lat: coord.lat, lng: coord.lng };
+      if (this.currentMarker != undefined) {
+        map.removeObject(this.currentMarker);
+      }
+      this.currentMarker = new H.map.Marker(coords, { icon: icon });
+      map.addObject(this.currentMarker);
     });
+
+
   }
 
 }

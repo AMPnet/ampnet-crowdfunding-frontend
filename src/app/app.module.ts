@@ -50,6 +50,7 @@ import { ManageOrganizationsComponent } from './organizations/manage-organizatio
 import { OrganizationDetailsComponent } from './organizations/organization-details/organization-details.component';
 import { CreateNewProjectComponent } from './projects/create-new-project/create-new-project.component';
 import { HereMapComponent } from './here-map/here-map.component';
+import { ZXingScannerModule } from '@zxing/ngx-scanner';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -131,7 +132,8 @@ export function jwtOptionsFactory() {
     ReactiveFormsModule,
     HttpClientModule, 
     SocialLoginModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    ZXingScannerModule
   ],
   providers: [{
     provide: LocationStrategy,

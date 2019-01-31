@@ -139,12 +139,7 @@ export class SignUpComponent implements OnInit {
         swal("", err, "warning");
       })
     }
-    
-    this.authService.signOut().then(_ => {
-      afterSignout();
-    }).catch(_ => {
-      afterSignout();
-    })
+    afterSignout();
   }
 
   

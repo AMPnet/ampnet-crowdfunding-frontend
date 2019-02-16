@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
 import { SingleOrganizationModel } from 'src/app/models/single-organization-model';
 import { OrganizationService } from '../organization-service';
 import { displayBackendError } from 'src/app/utilities/error-handler';

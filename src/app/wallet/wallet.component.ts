@@ -59,16 +59,16 @@ export class WalletComponent implements OnInit {
     let pubkey = payload.publicKey;
     let address = eth.getAddressFromPublicKey(pubkey);
 
-    this.initWallet(address);
+    this.initWallet(address, pubkey);
   }
 
-  initWallet(address: string) {  
-    this.walletService.initWallet(address).subscribe(res => {
+  initWallet(address: string, publicKey: string) {  
+    this.walletService.initWallet(address, publicKey).subscribe(res => {
       this.walletModel = res;
       SpinnerUtil.hideSpinner();
     }, err => {
       SpinnerUtil.hideSpinner();
-      swal('', err.error.message, 'warning');
+      swal('', JSON.stringify(err), 'warning');
     });
   }
   

@@ -3,6 +3,7 @@ import { OrganizationService } from '../organization-service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import swal from 'sweetalert2';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-organization',
@@ -15,7 +16,8 @@ export class CreateOrganizationComponent implements OnInit {
 
   constructor(
     private organizationService: OrganizationService,
-    private fb: FormBuilder) {
+    private fb: FormBuilder,
+    private router: Router) {
 
     this.newOrganizationForm = fb.group({
       name: ['', Validators.minLength(3)],
@@ -35,7 +37,11 @@ export class CreateOrganizationComponent implements OnInit {
         swal('', 'Successfully created a new organization', 'success');
       }, err => {
         SpinnerUtil.hideSpinner();
-        swal('', err.error.message, 'warning');
+        swal('', err.error.message, 'warning').then(() => {
+          this.router.navigate(['/dash','manage_organizations']);
+        }, () => {
+          this.router.navigate(['/dash','manage_organizations']);
+        });
       })
   }
 

@@ -134,5 +134,8 @@
       }
     }
   },
-  "defaultProject": "ampnet-frontend"
+  "defaultProject": "ampnet-frontend",
+  "cli": {
+    "defaultCollection": "@nativescript/schematics"
+  }
 }

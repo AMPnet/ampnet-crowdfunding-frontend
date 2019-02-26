@@ -20,9 +20,11 @@ export class WalletComponent implements OnInit {
   constructor(private walletService: WalletService) { }
 
   private walletModel: WalletModel;
+  shouldShowScanner = false;
 
   ngOnInit() {
     this.fetchWallet();
+    $('#initWalletModal').on('hidden.bs.modal', this.modalClosed);
   }
 
   depositButtonClicked() {
@@ -75,5 +77,13 @@ export class WalletComponent implements OnInit {
   camerasFoundHandler(event) {
     this.scanner.scan(event[0].deviceId);
   } 
+
+  initializeWalletButtonClicked() {
+    this.shouldShowScanner = true;
+  }
+
+  modalClosed() {
+    this.shouldShowScanner = false;
+  }
 
 }

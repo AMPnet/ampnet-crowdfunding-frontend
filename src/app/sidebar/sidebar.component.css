@@ -19,7 +19,7 @@ a {
 }
 
 #logo-image {
-	height: 30px!important;
+	height: 20px!important;
 }
 
 #main-menu li {
@@ -28,25 +28,25 @@ a {
 	padding-top: 12px;
 	padding-bottom: 12px;
 	transition: all 0.1s;
-	color: #e28080;
+	color: #555;
 	font-weight: bold;
 }
 
 #logo-image {
-	height: 2rem;
+	height: 1rem;
 	padding-left: 1.5rem;
 	margin-top: 0.5rem;
 }
 
 #main-menu li:hover {
-	background: #C65748;
+	background: #47a577;
 	color: #fff!important;
 	cursor: pointer;
 }
 
 .active {
 	color: #fff!important;
-	background: #D96050;
+	background: #47a577;
 }
 
 #main-menu li:focus {
@@ -70,5 +70,5 @@ a {
 
 .menu-header {
 	font-size: 13px;
-	color: #D96050;
+	color: #47a577;
 }

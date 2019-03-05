@@ -28,8 +28,9 @@ a {
 	padding-top: 12px;
 	padding-bottom: 12px;
 	transition: all 0.1s;
-	color: #555;
-	font-weight: bold;
+	color: #777;
+	font-weight: 500;
+	letter-spacing: normal;
 }
 
 #logo-image {
@@ -44,9 +45,10 @@ a {
 	cursor: pointer;
 }
 
-.active {
-	color: #fff!important;
-	background: #47a577;
+.side-active {
+	background: #e5fff2;
+	color: #47a577!important;
+	border-left: 3px solid #47a577;
 }
 
 #main-menu li:focus {

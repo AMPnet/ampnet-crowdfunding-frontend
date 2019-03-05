@@ -5,11 +5,16 @@
   font-size: 12px;
 }
 
-.tab-holder li a.active {
-  background: #48A97B;
-  color: #fff;
+.tab-active {
+  border-bottom: 3px solid #48A97B;
+  background: #e5fff2;
+  color: #48A97B!important;
 }
 
 .tab-holder:hover {
   cursor: pointer;
+}
+
+.nav-item {
+  border-radius: 0px!important;
 }

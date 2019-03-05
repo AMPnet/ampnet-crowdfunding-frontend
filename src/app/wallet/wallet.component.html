@@ -19,19 +19,22 @@
 				</button>
 		</div>
 		
-		<div class="wallet-chart-holder col-md-12">
-				<app-wallet-chart></app-wallet-chart>
-		</div>
-		<div class="col-md-12 mt-5">
-			<h6 class="text-uppercase font-weight-bold">
-			 <i class="mr-2 fas fa-history"></i>
-			 <span class="align-middle">Transaction history</span>
-			</h6>
-		</div>
+		
+
 		<div class="col-md-12 mt-3 mb-3">
-			<app-wallet-tx-history></app-wallet-tx-history>
+			<div class="card">
+				<div class="card-body">
+					<div class="card-title text-uppercase font-weight-bold gray-text">
+						Transaction hisotry
+					</div>
+					<app-wallet-tx-history></app-wallet-tx-history>
+				</div>
+				
+			</div>
 		</div>
 	</div>
+
+	<!-- IF WALLET HASN'T BEEN INITIALIZED -->
 	<div *ngIf="!walletIsInitialized()" class="no-init-container">
 		<div class="no-init-msg">
 			To start investing, initialize your wallet

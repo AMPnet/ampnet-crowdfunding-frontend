@@ -2,8 +2,8 @@
 	<img class="header-image w-100" src="https://cna.ca/wp-content/uploads/2015/12/windandsolar-1024x800.jpg">
 </div>
 
-<div class="container root-content-container wow fadeIn">
-	<div class="row">
+<div style="background: #fdfdfd" class="container root-content-container wow fadeIn">
+	<div class="row row-eq-height">
 
 		<div class="col-md-8">
 			<h3 class="title text-uppercase gray-text">
@@ -17,8 +17,8 @@
 				<span>INVEST</span>
 			</button>
 		</div>
-		<div class="col-md-8 p-3 equal">
-			<div class="card text-justify">
+		<div class="col-md-8 p-3">
+			<div class="card text-justify h-100">
 				<div class="card-body">
 					<div class="card-title">ABOUT</div>
 					<div class=" card-text">
@@ -38,7 +38,7 @@
 			</div>
 		</div>
 
-		<div class="col-md-4 p-3 equal">
+		<div class="col-md-4 p-3">
 			<div class="card">
 				<div class="card-body">
 					<div class="card-title">INFO</div>
@@ -79,40 +79,71 @@
 			</div>
 		</div>
 
-		<div class="card">
-		</div>
-		<div class="col-md-12 mt-4">
-			<h5 class="font-weight-bold mb-4 gray-text">STATUS</h5>
-		</div>
-		<div class="col-md-8">
-			<i class="fas fa-toggle-on"></i>
-			<span class="ml-3">In Funding</span>
-		</div>
-		<div class="col-md-4 text-right">
-			1270 investors
-		</div>
-		<div class="col-md-12 mt-1">
-			<div class="progress">
-				<div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0"
-					aria-valuemax="100"></div>
-			</div>
-		</div>
-		<div class="col-md-12 mt-2">
-			$12,334,125 of $45,000,000 collected
-		</div>
-		<div class="col-md-12 mt-5 mb-2">
-			<h5 class="text-uppercase gray-text"><b>DOCS</b></h5>
-		</div>
-		<div class="document-holder col-md-4" *ngFor="let doc of docs">
-			<div class="card mb-4">
-				<div class="card-header">
-					{{doc.title}}
-				</div>
+		<div class="col-md-12">
+			<div class="card">
 				<div class="card-body">
-					<span>PDF</span>
+					<div class="card-title">STATUS</div>
+					<div class="card-text">
+						<div class="row">
+							<div class="col-md-8">
+								<i class="fas fa-toggle-on"></i>
+								<span class="ml-3 explainer-mini gray-text text-uppercase">In Funding</span>
+							</div>
+							<div class="col-md-4 text-right">
+								1270 investors
+							</div>
+							<div class="col-md-12 mt-1">
+								<div class="progress">
+									<div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25"
+										aria-valuemin="0" aria-valuemax="100"></div>
+								</div>
+							</div>
+							<div class="col-md-12 mt-2">
+								$12,334,125 of $45,000,000 collected
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
+
+
+		<div class="col-md-7 mt-4">
+			<div class="card h-100">
+				<div class="card-body">
+					<div class="card-title">NEWS</div>
+					<div class="card-text">
+						<div class="row">
+							<div *ngFor="let d of ' '.repeat(2).split('')" class="col-md-12 mt-2 gray-text">
+								<h5>Permit granted for expansion</h5>
+								<p>The city council has granted permit for the expansion</p>
+								<div class="dropdown-divider"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-5 mt-4">
+				<div class="card h-100">
+					<div class="card-body">
+						<div class="card-title">DOCUMENTS</div>
+						<div class="card-text">
+							<div class="row">
+								<div *ngFor="let doc of docs" class="col-md-12 mt-2 gray-text">
+										<i class="fas fa-file-pdf"></i>
+										<span class="ml-3">{{doc.title}}</span>
+										<span class="float-right">
+											<i class="fas fa-download"></i>	
+										</span>
+										<div class="dropdown-divider mt-2"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		
 	</div>
 
 </div>

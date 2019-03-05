@@ -11,12 +11,21 @@ import * as _ from 'lodash';
 })
 export class WalletTxHistoryComponent implements OnInit, AfterViewInit {
 
-  txHistoryModel: TxHistoryModel[];
+  txHistoryModel: TxHistoryModel[] = [];
 
-  constructor() { }
+  constructor() { 
+
+  }
 
   ngOnInit() {
-    
+    let model = [{
+      amount: 100,
+      date: new Date(),
+      position: 1,
+      type: TxHistoryType.Deposit
+    }];
+    let repet = Array(4).fill(model);
+    this.txHistoryModel = repet;
   }
 
   ngAfterViewInit() {

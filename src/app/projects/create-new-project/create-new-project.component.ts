@@ -25,4 +25,6 @@ export class CreateNewProjectComponent implements OnInit, AfterViewInit {
     flatpickr(this.datePickerElement.nativeElement , {});
   }
 
+  submitButtonClicked() { }
+
 }

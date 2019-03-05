@@ -19,9 +19,9 @@ export class NewPaymentOptionComponent implements OnInit {
   }
 
   tabToggle(position: number) {
-    $('.tab-holder li a').removeClass('active');
+    $('.tab-holder li a').removeClass('tab-active');
     const activeElem = $($('.tab-holder li a').get(position));
-    activeElem.addClass('active');
+    activeElem.addClass('tab-active');
     const dataShow = activeElem.attr('data-show');
 
     $('.option-content-holder .payment-option-form').hide(300);

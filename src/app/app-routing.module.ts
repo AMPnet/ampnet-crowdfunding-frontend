@@ -25,9 +25,10 @@ import { GeneralSettingsComponent } from './general-settings/general-settings.co
 import { ManageOrganizationsComponent } from './organizations/manage-organizations/manage-organizations.component';
 import { OrganizationDetailsComponent } from './organizations/organization-details/organization-details.component';
 import { CreateNewProjectComponent } from './projects/create-new-project/create-new-project.component';
+import { MainAdminComponent } from './main-admin/main-admin.component';
+
 // Defines public routes accessible to everyone
 // (landing page, login, register, contact help, etc...)
-
 
 // Defines secure routes only accessible to authenticated
 // users (dashboard)
@@ -58,7 +59,8 @@ const routes: Routes = [
       { path: 'general_settings', component: GeneralSettingsComponent },
       { path: 'manage_organizations', component: ManageOrganizationsComponent },
       { path: 'manage_organizations/:id', component: OrganizationDetailsComponent},
-      { path: 'manage_organizations/:id/create_project', component: CreateNewProjectComponent}
+      { path: 'manage_organizations/:id/create_project', component: CreateNewProjectComponent},
+      { path: 'main_admin', component: MainAdminComponent }
     ]
   },
   { path: 'sign_up', component: SignUpComponent },

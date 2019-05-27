@@ -3,7 +3,6 @@ import { WalletService } from './wallet.service';
 import swal from 'sweetalert2';
 import { WalletModel } from '../models/WalletModel';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
-import { EthereumProtocol, SyncProtocolUtils, SyncWalletRequest } from 'airgap-coin-lib';
 
 
 declare var $:any;
@@ -23,7 +22,7 @@ export class WalletComponent implements OnInit {
   shouldShowScanner = false;
 
   ngOnInit() {
-    this.fetchWallet();
+    // this.fetchWallet();
     $('#initWalletModal').on('hidden.bs.modal', this.modalClosed);
   }
 
@@ -31,56 +30,56 @@ export class WalletComponent implements OnInit {
   
   }
 
-  fetchWallet() {
-    SpinnerUtil.showSpinner();
-    this.walletService.getWallet().subscribe(res => {
-      SpinnerUtil.hideSpinner();
-      this.walletModel = res;
-    }, err => {
-      SpinnerUtil.hideSpinner();
-     if(err.status != 404) {
-       swal("", err.message, "warning");
-     }
-    })
-  }
+  // fetchWallet() {
+  //   SpinnerUtil.showSpinner();
+  //   this.walletService.getWallet().subscribe(res => {
+  //     SpinnerUtil.hideSpinner();
+  //     this.walletModel = res;
+  //   }, err => {
+  //     SpinnerUtil.hideSpinner();
+  //    if(err.status != 404) {
+  //      swal("", err.message, "warning");
+  //    }
+  //   })
+  // }
 
-  walletIsInitialized(): boolean {
-    return this.walletModel != null;
-  }
+  // walletIsInitialized(): boolean {
+  //   return this.walletModel != null;
+  // }
 
-  async scanSuccessHandler(event) {
-    SpinnerUtil.showSpinner();
-    $('#initWalletModal').modal('toggle');
+  // async scanSuccessHandler(event) {
+  //   SpinnerUtil.showSpinner();
+  //   $('#initWalletModal').modal('toggle');
     
-    let eth = new EthereumProtocol();
-    let syncProtocolUtils = new SyncProtocolUtils();
+  //   let eth = new EthereumProtocol();
+  //   let syncProtocolUtils = new SyncProtocolUtils();
 
-    let parsedResponse = (event).replace('airgap-wallet://?d=', '');
-    let syncCode = await syncProtocolUtils.deserialize(parsedResponse);
-    let payload = syncCode.payload as SyncWalletRequest;
-    let pubkey = payload.publicKey;
-    let address = eth.getAddressFromPublicKey(pubkey);
+  //   let parsedResponse = (event).replace('airgap-wallet://?d=', '');
+  //   let syncCode = await syncProtocolUtils.deserialize(parsedResponse);
+  //   let payload = syncCode.payload as SyncWalletRequest;
+  //   let pubkey = payload.publicKey;
+  //   let address = eth.getAddressFromPublicKey(pubkey);
 
-    this.initWallet(address, pubkey);
-  }
+  //   this.initWallet(address, pubkey);
+  // }
 
-  initWallet(address: string, publicKey: string) {  
-    this.walletService.initWallet(address, publicKey).subscribe(res => {
-      this.walletModel = res;
-      SpinnerUtil.hideSpinner();
-    }, err => {
-      SpinnerUtil.hideSpinner();
-      swal('', JSON.stringify(err), 'warning');
-    });
-  }
+  // initWallet(address: string, publicKey: string) {  
+  //   this.walletService.initWallet(address, publicKey).subscribe(res => {
+  //     this.walletModel = res;
+  //     SpinnerUtil.hideSpinner();
+  //   }, err => {
+  //     SpinnerUtil.hideSpinner();
+  //     swal('', JSON.stringify(err), 'warning');
+  //   });
+  // }
   
-  camerasFoundHandler(event) {
-    this.scanner.scan(event[0].deviceId);
-  } 
+  // camerasFoundHandler(event) {
+  //   this.scanner.scan(event[0].deviceId);
+  // } 
 
-  initializeWalletButtonClicked() {
-    this.shouldShowScanner = true;
-  }
+  // initializeWalletButtonClicked() {
+  //   this.shouldShowScanner = true;
+  // }
 
   modalClosed() {
     this.shouldShowScanner = false;

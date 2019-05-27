@@ -1,0 +1,6 @@
+class PendingUserModel {
+
+    name: string;
+    
+
+}

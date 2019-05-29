@@ -1,30 +1,96 @@
 <div class="container root-content-container">
   
   <div class="row">
-    <div class="col-md-12 mb-5">
+    <div class="col-md-12 mb-3">
       <h5 class="text-uppercase font-weight-bold gray-text">Main admin</h5>
     </div>
 
-    <div class="col-md-12 mb-3">Mint Tokens</div>
+    <div class="col-md-12 mb-3 explainer-mini text-uppercase">Mint Tokens</div>
 
     <div class="input-group mb-3 col-md-12">
       <input id="mint-amount" type="number" class="form-control" placeholder="Amount in Euro" aria-label="Username" aria-describedby="basic-addon1">
     </div>
-    <div class="input-group mb-3 col-md-12">
-      <input type="number" class="form-control" placeholder="Recipient Address" aria-label="Username" aria-describedby="basic-addon1">
+
+    <select class="selectpicker form-control mx-3 mb-3 border" data-live-search="true">
+      <option data-tokens="ketchup mustard">John Smith (0x92384928492)</option>
+      <option data-tokens="mustard">Frank Rubenstein (0x928374928349823)</option>
+      <option data-tokens="frosting">John Bow (0x349829384)</option>
+      <option data-tokens="frosting">Terrence McKenna (0x349829384)</option>
+    </select>
+    
+    <div class="col-md-8 mb-3">
+      <button type="button" class="btn btn-primary px-5 py-2 w-100">
+        Upload payment receipt
+      </button>
+    </div>
+    <div class="col-md-4 mb-3">
+        <span>No file uploaded.</span> 
     </div>
     <div class="input-group mb-3 col-md-12">
-      <input type="number" class="form-control" placeholder="Transaction ID" aria-label="Username" aria-describedby="basic-addon1">
+      <input type="text" class="form-control" placeholder="Notes" aria-label="Username" aria-describedby="basic-addon1">
     </div>
-    <div class="input-group mb-3 col-md-12">
-      <input type="number" class="form-control" placeholder="Notes" aria-label="Username" aria-describedby="basic-addon1">
-    </div>
-    <div class="col-md-4">
-      <div class="btn btn-primary w-100">Mint</div>
+    <div class="col-md-12">
+      <div class="btn btn-primary w-25 py-2 float-right">Mint</div>
     </div>
 
-    <div class="col-md-12 mt-5 mb-3">Approve Users</div>
+    <div class="col-md-12 mt-3">
+      <hr>
+    </div>
+
+    <div class="col-md-12 mt-2 mb-3 explainer-mini text-uppercase">Approve Users</div>
+
+    <div *ngFor="let pendingUser of pendingUsers" 
+			class="col-lg-6 mb-3">
+			<div class="card px-3 cursor-pointer" (click)="onUserClicked()">
+				<div class="card-body d-flex flex-column gray-text">
+					<div class="d-flex flex-row justify-content-between text-left">
+						<div>
+							<div class="explainer-mini text-uppercase mb-2">Name</div>
+							<b>{{pendingUser.name}}</b>
+            </div>
+            <div>
+							<div class="explainer-mini text-uppercase mb-2">Contact</div>
+							{{pendingUser.contact}}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
   </div>
 
+</div>
+
+<div id="reviewUserModal" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Review user</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    
+    <div class="modal-body">
+      
+      <div class="explainer-mini">Name</div>
+      <div>John Smith</div>
+
+      <div class="explainer-mini mt-3">Date of Birth</div>
+      <div>2.4.1978</div>
+      
+      <div class="explainer-mini mt-3">Address</div>
+      <div>Ilica 12, 10000 Zagreb, Croatia</div>
+
+      <div class="explainer-mini mt-3">Additional notes</div>
+      <div>Prijava u zadrugu zbog svrhe ulaganja u obnovljive izvore energije</div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary">Approve user</button>
+        <button type="button" class="btn btn-danger">Decline user</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
 </div>

@@ -60,7 +60,7 @@ const routes: Routes = [
       { path: 'manage_organizations', component: ManageOrganizationsComponent },
       { path: 'manage_organizations/:id', component: OrganizationDetailsComponent},
       { path: 'manage_organizations/:id/create_project', component: CreateNewProjectComponent},
-      { path: 'main_admin', component: MainAdminComponent }
+      { path: 'token_management', component: MainAdminComponent }
     ]
   },
   { path: 'sign_up', component: SignUpComponent },

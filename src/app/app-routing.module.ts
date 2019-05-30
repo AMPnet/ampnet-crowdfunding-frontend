@@ -57,9 +57,9 @@ const routes: Routes = [
       { path: 'payment_options/new', component: NewPaymentOptionComponent },
       { path: 'create_organization', component: CreateOrganizationComponent },
       { path: 'general_settings', component: GeneralSettingsComponent },
-      { path: 'manage_organizations', component: ManageOrganizationsComponent },
-      { path: 'manage_organizations/:id', component: OrganizationDetailsComponent},
-      { path: 'manage_organizations/:id/create_project', component: CreateNewProjectComponent},
+      { path: 'manage_groups', component: ManageOrganizationsComponent },
+      { path: 'manage_groups/:id', component: OrganizationDetailsComponent},
+      { path: 'manage_groups/:id/create_project', component: CreateNewProjectComponent},
       { path: 'token_management', component: MainAdminComponent }
     ]
   },

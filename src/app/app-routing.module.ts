@@ -26,6 +26,7 @@ import { ManageOrganizationsComponent } from './organizations/manage-organizatio
 import { OrganizationDetailsComponent } from './organizations/organization-details/organization-details.component';
 import { CreateNewProjectComponent } from './projects/create-new-project/create-new-project.component';
 import { MainAdminComponent } from './main-admin/main-admin.component';
+import { OnboardingComponent } from './authentication/onboarding/onboarding.component';
 
 // Defines public routes accessible to everyone
 // (landing page, login, register, contact help, etc...)
@@ -66,7 +67,8 @@ const routes: Routes = [
   { path: 'sign_up', component: SignUpComponent },
   { path: 'confirm_email', component: ConfirmEmailComponent },
   { path: 'overview', component: OffersComponent },
-  { path: 'fill_data', component: FillDataComponent }
+  { path: 'fill_data', component: FillDataComponent },
+  { path: 'onboarding', component: OnboardingComponent }
 ];
 
 @NgModule({

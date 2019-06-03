@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { OnboardingService } from '../onboarding.service';
+import swal from 'sweetalert2';
 
 declare var initializeIdentyum: any;
 
@@ -10,21 +12,31 @@ declare var initializeIdentyum: any;
 })
 export class OnboardingComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router, 
+    private onboardingService: OnboardingService) { }
 
   ngOnInit() {
     var that = this;
-    let identyum = initializeIdentyum({
-      webSessionUuid: '6fce142a-10fb-443a-b379-9bf7a9484226', // SESSION_ID from POST request
-      parameters: {},
-      onProcessFinishSuccess: function(args) {
-        if(args.status == "success") {
-          that.router.navigateByUrl("/dash");
-        }
-      } 
+
+    this.onboardingService.getSessionID().subscribe((res: any) => {
+      let identyum = initializeIdentyum({
+        webSessionUuid: res.token, // SESSION_ID from POST request
+        parameters: {},
+        onProcessFinishSuccess: function(args) {
+          if(args.status == "success") {
+            that.router.navigateByUrl("/dash");
+          }
+        } 
+      });
+      identyum.load();
+    }, err => {
+      console.log(err);
     });
 
-    identyum.load();
+    
+
+    
   }
 
 }

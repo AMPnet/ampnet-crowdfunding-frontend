@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { API } from '../utilities/endpoint-manager';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OnboardingService {
 
+  endpoint: string = "/identyum/token";
+
   constructor(private http: HttpClient) { }
 
   getSessionID() {
-    return this.http.post("https://webid.identyum.com/api/webid/generateToken", {
-      "username": "ampnet",
-      "password" : "#ampnet$"
-    });
+    return this.http.get(API.generateRoute(this.endpoint));
   }
 }

@@ -1,35 +1,36 @@
 <div class="container root-content-container h-100">
-  <div class="mb-5">
-    <div class="row">
-      <div class="col-md-8">
-          <h5 class="text-uppercase gray-text"><b>Manage groups</b></h5>
+    <div class="mb-5">
+      <div class="row">
+        <div class="col-md-8">
+            <h5 class="text-uppercase gray-text"><b>Manage groups</b></h5>
+        </div>
+        <div class="col-md-4">
+          <button routerLink="/dash/create_organization" class="btn btn-primary float-right w-100">
+            Create Group
+          </button>
+        </div>
       </div>
-      <div class="col-md-4">
-        <button routerLink="/dash/create_organization" class="btn btn-primary float-right w-100">
-          Create Group
+    </div>
+    <div *ngIf="organizations.length > 0" class="row">
+        <div routerLink="{{org.id}}" class="col-md-6 cursor-pointer" *ngFor="let org of organizations">
+            <div class="card mb-3 group-display-card">
+              <div class="card-body">
+                <h5 class="text-center mb-0">{{org.name}}</h5>
+              </div>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center mt-5" *ngIf="organizations.length == 0">
+      <div class="d-flex flex-column mt-5">
+        <div class="d-flex text-center">
+          You are not the owner of any organizations. <br>
+          If you would like to manage an organization, please
+        </div>
+        <button routerLink="/dash/create_organization" class="mt-5 btn btn-primary mt-3 px-5 py-3 text-uppercase">
+          Create a new organization
         </button>
       </div>
     </div>
   </div>
+
   
-  <div *ngIf="organizations.length > 0" class="row">
-      <div routerLink="{{org.id}}" class="col-md-6 cursor-pointer" *ngFor="let org of organizations">
-          <div class="card mb-3 group-display-card">
-            <div class="card-body">
-              <h5 class="text-center mb-0">{{org.name}}</h5>
-            </div>
-          </div>
-      </div>
-  </div>
-  <div class="d-flex justify-content-center mt-5" *ngIf="organizations.length == 0">
-    <div class="d-flex flex-column mt-5">
-      <div class="d-flex text-center">
-        You are not the owner of any organizations. <br>
-        If you would like to manage an organization, please
-      </div>
-      <button routerLink="/dash/create_organization" class="mt-5 btn btn-primary mt-3 px-5 py-3 text-uppercase">
-        Create a new organization
-      </button>
-    </div>
-  </div>
-</div>

@@ -12,19 +12,11 @@ export class MainAdminComponent implements OnInit {
 
   constructor() { }
 
-  pendingUsers: PendingUserModel[];
 
   ngOnInit() {
     
-    this.pendingUsers = _.fill(Array(10) , {
-      name: "John Smith",
-      contact: "john.smith@gmail.com"
-    });
+   
 
-  }
-
-  onUserClicked() {
-    $("#reviewUserModal").modal();
   }
 
 }

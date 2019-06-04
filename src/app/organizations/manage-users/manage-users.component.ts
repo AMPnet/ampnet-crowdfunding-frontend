@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
+declare var _:any;
+declare var $:any;
+
 @Component({
   selector: 'app-manage-users',
   templateUrl: './manage-users.component.html',

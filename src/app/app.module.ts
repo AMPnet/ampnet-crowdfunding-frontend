@@ -57,6 +57,7 @@ import { NgAutonumericModule } from '@angularfy/ng-autonumeric';
 import { OnboardingComponent } from './authentication/onboarding/onboarding.component';
 import { ManageUsersComponent } from './organizations/manage-users/manage-users.component';
 import { DetailsComponent } from './organizations/manage-users/details/details.component';
+import { ManageProjectsComponent } from './manage-projects/manage-projects.component';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -133,6 +134,7 @@ export function jwtOptionsFactory() {
     OnboardingComponent,
     ManageUsersComponent,
     DetailsComponent,
+    ManageProjectsComponent,
   ],
   imports: [
     BrowserModule,

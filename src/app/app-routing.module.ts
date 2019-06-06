@@ -29,6 +29,7 @@ import { MainAdminComponent } from './main-admin/main-admin.component';
 import { OnboardingComponent } from './authentication/onboarding/onboarding.component';
 import { ManageUsersComponent } from './organizations/manage-users/manage-users.component';
 import { DetailsComponent } from './organizations/manage-users/details/details.component';
+import { ManageProjectsComponent } from './manage-projects/manage-projects.component';
 
 // Defines public routes accessible to everyone
 // (landing page, login, register, contact help, etc...)
@@ -65,7 +66,8 @@ const routes: Routes = [
       { path: 'manage_groups/:id/create_project', component: CreateNewProjectComponent},
       { path: 'token_management', component: MainAdminComponent },
       { path: 'manage_users', component: ManageUsersComponent },
-      { path: 'manage_users/:id', component: DetailsComponent }
+      { path: 'manage_users/:id', component: DetailsComponent },
+      { path: 'manage_projects', component: ManageProjectsComponent }
     ]
   },
   { path: 'sign_up', component: SignUpComponent },

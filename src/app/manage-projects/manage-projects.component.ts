@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 
 declare var _:any;
@@ -12,7 +13,11 @@ export class ManageProjectsComponent implements OnInit {
 
   manageProjectsModel: ManageProjectsModel[];
 
-  constructor() { }
+  constructor(private router: Router) { }
+
+  onUserClicked() {
+    this.router.navigateByUrl("/manage_projects/12");
+  }
 
   ngOnInit() {
 

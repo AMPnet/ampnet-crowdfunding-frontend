@@ -9,6 +9,7 @@ import { OnboardingComponent } from './authentication/onboarding/onboarding.comp
 import { ManageUsersComponent } from './organizations/manage-users/manage-users.component';
 import { DetailsComponent } from './organizations/manage-users/details/details.component';
 import { ManageProjectsComponent } from './manage-projects/manage-projects.component';
+import { ManageSingleProjectComponent } from './manage-projects/manage-single-project/manage-single-project.component';
 
 
 // Uncomment and add to NgModule imports if you need to use two-way binding
@@ -26,6 +27,7 @@ import { ManageProjectsComponent } from './manage-projects/manage-projects.compo
     ManageUsersComponent,
     DetailsComponent,
     ManageProjectsComponent,
+    ManageSingleProjectComponent,
   ],
   imports: [
     NativeScriptModule,

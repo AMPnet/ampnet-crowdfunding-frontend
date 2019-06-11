@@ -10,5 +10,6 @@
     "**/*.tns.ts",
     "**/*.android.ts",
     "**/*.ios.ts"
-  ]
+  ],
+  "moduleResolution": "node"
 }

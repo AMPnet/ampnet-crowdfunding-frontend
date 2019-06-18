@@ -14,16 +14,79 @@
         aria-label="Username" aria-describedby="basic-addon1">
     </div>
 
+    <div class="col-md-12">
+      <hr>
+    </div>
+
     <p class="explainer-mini text-uppercase col-sm-12">Project image</p>
     
     <div class="col-md-12" id="drag-drop-area-img"></div>
 
-    <p class="explainer-mini text-uppercase col-md-12 mt-3">Project files</p>
+    <div class="col-md-12">
+      <hr>
+    </div>
 
-    <div class="col-md-12" id="drag-drop-area-files"></div>
+    <p class="explainer-mini text-uppercase col-md-8 mt-3">Project files</p>
 
-    <div class="col-md-12 mt-3 mb-5">
-      <button class="btn btn-primary w-50 py-3 float-right">UPDATE</button>
+    <div class="col-md-4 mt-3" >
+      <button id="proj-files-upload-target" class="btn btn-primary float-right px-5 py-3">
+        <i class="fas fa-plus mr-3"></i>
+        <span>Add files</span>
+      </button>
+    </div>
+
+    <div *ngIf="files.length == 0" class="col-md-12 mt-3">
+      <div class="border p-5 text-center">
+        No files added
+      </div>
+    </div>
+
+    <div *ngFor="let file of files; let i = index" class="col-md-4 mt-3">
+      <div class="card">
+        <div class="card-body">
+          <span>{{file}}</span>
+          <span class="float-right">
+            <span class="mr-3 cursor-pointer gray-text"
+              (click)="deleteFile(i)">
+              <i class="fas fa-trash"></i>
+            </span>
+            <span class="cursor-pointer gray-text">
+              <i class="fas fa-file-download"></i> 
+            </span>  
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <hr>
+    </div>
+
+    <p class="explainer-mini text-uppercase col-md-8 mt-3">Project news</p>
+
+    <div class="col-md-4 mt-3" >
+      <button id="proj-files-upload-target" class="btn btn-primary float-right px-5 py-3">
+        <i class="fas fa-plus mr-3"></i>
+        <span>Add news</span>
+      </button>
+    </div>
+
+    <div *ngFor="let preview of news" class="col-md-4 mt-3">
+      <div class="card">
+        <img class="card-img-top" src="{{preview.image}}" alt="">
+        <div class="card-body">
+          <h5 class="card-title">{{preview.title}}</h5>
+          <p class="card-text">{{preview.description}}</p>
+        </div>
+      </div>
+      
+    </div>
+
+    <div class="col-md-12 mt-5 mb-5">
+      <button class="btn btn-primary w-100 py-3 float-right">
+        <i class="fas fa-check mr-3"></i>
+        <span>Update</span>  
+      </button>
     </div>
 
   </div>

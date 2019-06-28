@@ -27,7 +27,7 @@ export class OnboardingComponent implements OnInit {
         parameters: {},
         onProcessFinishSuccess: function(args) {
           if(args.status == "success") {
-            that.router.navigateByUrl("/dash");
+            that.router.navigate(['sign_up'], { queryParams: { web_uuid: res.token }});
           }
         },
         onWidgetInitialized: function(args) {

@@ -7,7 +7,7 @@ import { API } from '../utilities/endpoint-manager';
 })
 export class OnboardingService {
 
-  endpoint: string = "/identyum/token";
+  endpoint: string = "/user_api/identyum/token";
 
   constructor(private http: HttpClient) { }
 

@@ -8,8 +8,8 @@ import { CheckEmailModel } from 'src/app/models/auth/check-email-model';
 })
 export class SignUpService {
 
-  private endpoint = "/signup";
-  private checkEmailEndpoint = "/mail-check";
+  private endpoint = "/user_api/signup";
+  private checkEmailEndpoint = "/user_api/mail-check";
 
   constructor(
     private http: HttpClient) { }
@@ -35,8 +35,9 @@ export class SignUpService {
     });
   }
 
-  performSocialSignup(provider: string, authToken: string) {
+  performSocialSignup(provider: string, authToken: string, webSessionUUID: string) {
     return this.http.post(API.generateRoute(this.endpoint), {
+      "web_session_uuid": webSessionUUID,
       "signup_method": provider,
       "user_info" : {
         "token" : authToken

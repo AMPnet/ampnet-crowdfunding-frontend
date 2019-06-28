@@ -38,7 +38,7 @@
     "flatpickr": "^4.5.2",
     "hammerjs": "^2.0.8",
     "jquery": "^3.3.1",
-    "lodash": "^4.17.10",
+    "lodash": "^4.7.15",
     "metascraper": "^5.4.3",
     "ngx-cookie-service": "^2.0.2",
     "ngx-disqus": "^2.4.0",

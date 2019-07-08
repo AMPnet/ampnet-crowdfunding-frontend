@@ -1,5 +1,5 @@
 <div id="core-root-manager" class="root root-content-container">
-  <div class="row">
+  <div class="row row-eq-height">
     <h5 class="text-uppercase mb-3 col-md-12">Manage your project</h5>
 
     <p class="explainer-mini text-uppercase col-md-12">Project details</p>
@@ -71,8 +71,8 @@
       </button>
     </div>
 
-    <div *ngFor="let preview of news" class="col-md-4 mt-3">
-      <div class="card">
+    <div *ngFor="let preview of news; let i = index" class="col-md-4 mt-3 cursor-pointer">
+      <div class="card h-100" (click)="linkClicked(i)" >
         <img class="card-img-top" src="{{preview.image}}" alt="">
         <div class="card-body">
           <h5 class="card-title">{{preview.title}}</h5>

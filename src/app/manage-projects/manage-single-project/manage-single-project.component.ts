@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import * as Uppy from 'uppy';
 import { XHRUpload, DragDrop, Dashboard } from 'uppy'; 
 import swal from 'sweetalert2';
+import { ManageProjectsService } from '../manage-projects-service';
 
 declare var _: any;
 declare var $: any;
@@ -29,7 +30,7 @@ export class ManageSingleProjectComponent implements OnInit {
 
   private news: NewsLink[] = [];
 
-  constructor() { }
+  constructor(private manageProjectsService: ManageProjectsService) { }
 
   ngOnInit() {
     this.setUploadAreas();
@@ -40,9 +41,23 @@ export class ManageSingleProjectComponent implements OnInit {
     var that = this;
     var link = this.newsLinks[index];
 
-    if(index < (this.newsLinks.length - 1)) {
-      setTimeout(() => { this.fetchNews(index + 1)} , 100);
-    }
+    this.manageProjectsService.getLinkPreview(link).subscribe((res: any) => {
+
+      this.news.push({
+        title: res.title,
+        description: res.description,
+        url: res.link,
+        image: res.image.url
+      });
+
+      if(index < (this.newsLinks.length - 1)) {
+        setTimeout(() => { this.fetchNews(index + 1)} , 100);
+      }
+    }, err => {
+
+    });
+
+    
   }
 
   private setUpUppy(id: string, allowedFileTypes: string[]): Uppy.Core.Uppy {
@@ -78,7 +93,7 @@ export class ManageSingleProjectComponent implements OnInit {
     });
     filesUppy.use(Uppy.Dashboard, {
       id: "myfilesdash",
-      target: "#proj-files-upload-target"
+      trigger: "#proj-files-upload-target"
     });
   }
 
@@ -94,6 +109,11 @@ export class ManageSingleProjectComponent implements OnInit {
       });
     });
 
+  }
+
+  linkClicked(index: number) {
+    let link = this.newsLinks[index];
+    window.location.href = link;
   }
 
   private setUploadFilesProject() {

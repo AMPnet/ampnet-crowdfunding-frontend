@@ -8,6 +8,7 @@ import { API } from "../utilities/endpoint-manager";
 export class OrganizationService {
 
     private endpoint = "/organization";
+    private walletEndpoint = "/wallet/organization";
 
     constructor(private http: HttpClient) { }
     
@@ -29,6 +30,20 @@ export class OrganizationService {
                 [id.toString()]), 
                 API.tokenHeaders()
             );
+    }
+
+    getOrganizationWallet(orgID: number) {
+        return this.http.get(API.generateComplexRoute(
+            this.walletEndpoint,
+            [orgID.toString()],
+        ), API.tokenHeaders())
+    }
+
+    getTransactionForCreationOfOrgWallet(orgID: number) {
+        return this.http.get(API.generateComplexRoute(
+            this.walletEndpoint,
+            [orgID.toString(), "transaction"]
+        ), API.tokenHeaders());
     }
 
 }

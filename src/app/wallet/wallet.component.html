@@ -1,72 +1,15 @@
-<!-- <div class="container root-content-container"> -->
-	<!-- IF WALLET HAS BEEN INITIALIZED -->
-	<!-- <div *ngIf="walletIsInitialized()" class="row row-eq-height">
-		<div class="col-md-6 mb-3">
-			<b class="font-weight-bold explainer-mini text-uppercase">Total balance</b>
-			<h1>{{walletModel.currency}} {{walletModel.balance}}</h1>
-		</div>
-		<div class="button-container col-md-3 mb-3">
-				<button type="button" class="btn btn-primary w-100 float-right"
-					data-toggle="modal" data-target="#deposit-modal">
-					<i class="mr-2 fas fa-arrow-circle-down"></i>
-					<span>DEPOSIT</span>
-				</button>
-		</div>
-		<div class="button-container col-md-3 mb-3">
-				<button class="btn btn-primary w-100 float-right" data-toggle="modal" data-target="#withdraw-modal">
-					<i class="mr-2 fas fa-arrow-circle-up"></i>
-					<span>WITHDRAW</span>
-				</button>
-		</div>
-		
-		
+<div class="container root-content-container">
 
-		<div class="col-md-12 mt-3 mb-3">
-			<div class="card">
-				<div class="card-body">
-					<div class="card-title text-uppercase font-weight-bold gray-text">
-						Transaction hisotry
-					</div>
-					<app-wallet-tx-history></app-wallet-tx-history>
-				</div>
-				
-			</div>
-		</div>
-	</div> -->
-
-	<!-- IF WALLET HASN'T BEEN INITIALIZED -->
-	<!-- <div *ngIf="!walletIsInitialized()" class="no-init-container">
-		<div class="no-init-msg">
-			To start investing, initialize your wallet
-		</div>
-		<button (click)="initializeWalletButtonClicked()"
-			 type="button" data-toggle="modal" data-target="#initWalletModal" 
-			 class="btn btn-primary no-init-btn">
-			Initialize
-		</button>
+	<div *ngIf="wallet == 'undefined'" class="row">
+		<h5 class="col-md-12">Initialize wallet</h5>
+		<input class="col-md-12 mb-3" type="text" placeholder="Address" id="addr">
+		<input class="col-md-12" type="text" placeholder="Public key" id="pubkey">
+		<button (click)="submitClicked()" class="btn btn-primary mt-3 px-5 py-3">Init</button>
 	</div>
-</div>
-<app-deposit-modal></app-deposit-modal>
-<app-withdraw-modal></app-withdraw-modal> -->
 
-<!-- INIT WALLET MODAL -->
-<!-- <div>
-	<div id="initWalletModal" class="modal fade-custom" tabindex="-1" role="dialog">
-			<div class="modal-dialog modal-dialog-centered" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title">Initialize wallet</h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body">
-						<zxing-scanner  *ngIf="shouldShowScanner"
-							#scanner (camerasFound)="camerasFoundHandler($event)" 
-							(scanSuccess)="scanSuccessHandler($event)"
-							[formats]="['QR_CODE']"></zxing-scanner>
-					</div>
-				</div>
-			</div>
-		</div>
-</div> -->
+	<div *ngIf="wallet != 'underfined'" class="row">
+		<div class="col-md-12 h5 text-uppercase">Balance</div>
+		<div class="col-md-12">{{wallet.balance}}</div>
+	</div>
+
+</div>

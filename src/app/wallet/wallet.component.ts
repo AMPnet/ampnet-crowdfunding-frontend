@@ -14,75 +14,31 @@ declare var $:any;
 })
 export class WalletComponent implements OnInit {
 
-  @ViewChild("scanner") scanner;
-
   constructor(private walletService: WalletService) { }
 
-  private walletModel: WalletModel;
-  shouldShowScanner = false;
+  wallet: WalletModel;
 
   ngOnInit() {
-    // this.fetchWallet();
-    $('#initWalletModal').on('hidden.bs.modal', this.modalClosed);
+    this.getUserWallet();
   }
 
-  depositButtonClicked() {
-  
+  submitClicked() {
+    let addr = $("#addr").val();
+    let pubKey = $("#pubkey").val();
+
+    this.walletService.initWallet(addr, pubKey).subscribe(res => {
+      alert(JSON.stringify(res));
+    }, err => {
+      alert(err);
+    });
   }
 
-  // fetchWallet() {
-  //   SpinnerUtil.showSpinner();
-  //   this.walletService.getWallet().subscribe(res => {
-  //     SpinnerUtil.hideSpinner();
-  //     this.walletModel = res;
-  //   }, err => {
-  //     SpinnerUtil.hideSpinner();
-  //    if(err.status != 404) {
-  //      swal("", err.message, "warning");
-  //    }
-  //   })
-  // }
+  getUserWallet() {
+    this.walletService.getWallet().subscribe(res => {
+      this.wallet = res;
+    }, err => {
 
-  // walletIsInitialized(): boolean {
-  //   return this.walletModel != null;
-  // }
-
-  // async scanSuccessHandler(event) {
-  //   SpinnerUtil.showSpinner();
-  //   $('#initWalletModal').modal('toggle');
-    
-  //   let eth = new EthereumProtocol();
-  //   let syncProtocolUtils = new SyncProtocolUtils();
-
-  //   let parsedResponse = (event).replace('airgap-wallet://?d=', '');
-  //   let syncCode = await syncProtocolUtils.deserialize(parsedResponse);
-  //   let payload = syncCode.payload as SyncWalletRequest;
-  //   let pubkey = payload.publicKey;
-  //   let address = eth.getAddressFromPublicKey(pubkey);
-
-  //   this.initWallet(address, pubkey);
-  // }
-
-  // initWallet(address: string, publicKey: string) {  
-  //   this.walletService.initWallet(address, publicKey).subscribe(res => {
-  //     this.walletModel = res;
-  //     SpinnerUtil.hideSpinner();
-  //   }, err => {
-  //     SpinnerUtil.hideSpinner();
-  //     swal('', JSON.stringify(err), 'warning');
-  //   });
-  // }
-  
-  // camerasFoundHandler(event) {
-  //   this.scanner.scan(event[0].deviceId);
-  // } 
-
-  // initializeWalletButtonClicked() {
-  //   this.shouldShowScanner = true;
-  // }
-
-  modalClosed() {
-    this.shouldShowScanner = false;
+    });
   }
 
 }

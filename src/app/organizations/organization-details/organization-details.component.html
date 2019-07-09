@@ -1,24 +1,18 @@
 <div class="container root-content-container">
-  <div class="row">
-    <div class="col-md-8">
-      <h3 class="text-uppercase gray-text title-holder"><b>Organization name</b></h3>
-      <h5 class="text-uppercase gray-text mt-5"><b>Projects</b></h5>
-      <div class="card bg-dark text-white mt-3 project-holder">
-        <img class="card-img" src="../../../assets/wind-farm.png" alt="Card image">
-        <div class="card-img-overlay">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">
-            Created by: <b>ORG Name</b>
-          </p>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <button routerLink="create_project" class="btn btn-primary w-100 text-uppercase title-holder">
-          <i class="mr-3 fas fa-plus"></i>
-        Create new project
-      </button>
-      <h5 class="gray-text text-uppercase mt-5"><b>About</b></h5>
-    </div>
+  
+  
+  <div *ngIf="!orgWalletInitialized" class="row">
+    <div class="col-md-12">Organization wallet not created, please sign the following transaction</div>
+ 
+    <textarea class="col-md-12 mt-3" name="" id="" rows="10" >
+      {{txData}}
+    </textarea>
+  
+    <textarea class="col-md-12 mt-3" name="" placeholder="Paste signed tx" id="signedTxData" cols="30" rows="10"></textarea>
+
+    <button (click)="signTxClicked()" class="col-md-4 mt-3" class="btn btn-primary">Sign transaction</button>
   </div>
+
+  
+
 </div>

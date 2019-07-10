@@ -20,7 +20,7 @@ export class OffersComponent implements OnInit {
     this.featuredComponents = _.fill(Array(3),
     {
       title: 'GreenEnergy Co',
-      description: 'Invest in the coolest green energy solution world can offer',
+      description: 'Invest in the coolest green energy solution world can offerAt vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga',
       offeredBy: 'Greenpeace',
       status: 'In funding',
       fundingRequired: 25763456,
@@ -31,7 +31,7 @@ export class OffersComponent implements OnInit {
     this.components = _.fill(Array(20),
     {
       title: 'GreenEnergy Co',
-      description: 'Invest in the coolest green energy solution world can offer',
+      description: 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.',
       offeredBy: 'Greenpeace',
       status: 'In funding',
       fundingRequired: 25763456,

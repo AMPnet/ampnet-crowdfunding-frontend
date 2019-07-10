@@ -15,7 +15,7 @@ export class MainAdminComponent implements OnInit {
 
   ngOnInit() {
     
-   
+    $(".selectpicker").selectpicker();
 
   }
 

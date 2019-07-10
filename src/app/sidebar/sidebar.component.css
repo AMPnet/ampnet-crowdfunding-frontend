@@ -13,9 +13,13 @@ a:hover {
 	text-decoration: none;
 }
 
+* {
+	font-weight: 500!important;
+}
+
 a {
 	color: #fff;
-	font-weight: lighter!important;
+	font-weight: bold;
 }
 
 #logo-image {
@@ -29,7 +33,7 @@ a {
 	padding-bottom: 12px;
 	transition: all 0.1s;
 	color: #777;
-	font-weight: 500;
+	font-weight: 500!important;
 	letter-spacing: normal;
 }
 

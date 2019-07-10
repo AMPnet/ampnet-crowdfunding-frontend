@@ -1,12 +1,52 @@
-<div (click)="onClickedItem()" class="card offer-holder">
-  <img class="card-img-top" src="{{component.headerImageUrl}}" alt="Card image cap">
-  <div class="card-body">
-    <h5 class="card-title">{{component.title}}</h5>
-    <p class="card-text">{{component.description}}</p>
-     <div class="dropdown-divider"></div>
-    <div class="progress">
-  		<div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-		</div>
-		<div class="progress-numerical"><i>$27,354</i> of $79,332</div>
+<div (click)="onClickedItem()" class="card-holder cursor-pointer">
+  <div class="card-left-holder pb-3">
+    <div class="card-img-holder">
+      <img class="card-img" class="w-100 h-100" src="{{component.headerImageUrl}}" alt="">
+    </div>
+    <div class="card-progress-holder">
+        
+        <div class="p explainer-mini text-uppercase mb-2 mt-2">
+          
+          <div class="float-right required-funding">${{component.fundingRequired}}</div>
+        </div>
+        <div class="w-100">
+            <div class="progress w-100">
+                <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+        </div>
+        
+        <div class="mt-2 d-flex flex-row justify-content-between gray-text">
+          <div>
+            <div class=" font-weight-bold">16%</div>
+            <div>Funded</div>
+          </div>
+          <div>
+            <div class=" font-weight-bold">$17,322,132</div>
+            <div>Raised</div>
+          </div>
+          <div>
+            <div class=" font-weight-bold">3.23.2019</div>
+            <div>Deadline</div>
+          </div>
+          <div>
+            <div class=" font-weight-bold">1,322</div>
+            <div>Investors</div>
+          </div>
+        </div>
+    </div>
+  </div>
+  <div class="card-content-holder">
+    <div class="card-content-text-holder">
+        <div class="h3 text-uppercase gray-text">
+            Vjetroelektrana Orjak-Kum-Greda
+          </div>
+          <hr>
+          <div class="p gray-text text-justify mb-3">
+              {{component.description}}
+          </div>
+    </div>
+    <div class="card-content-actions-holder">
+        <button class="btn btn-primary w-100 invest-button">Invest</button>
+    </div>
   </div>
 </div>

@@ -19,3 +19,9 @@
 	box-shadow: -4px 10px 20px rgba(0,0,0,0.1);
 	transform: scale(1.03);
 }
+
+@media(min-width: 800px) {
+	.pairing-text {
+		width: 50%;
+	}
+}

@@ -4,6 +4,7 @@ import { OrganizationService } from '../organization-service';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { displayBackendError } from 'src/app/utilities/error-handler';
 import { BroadcastService } from 'src/app/broadcast/broadcast-service';
+import * as QRCode from 'qrcode';
 
 declare var $: any;
 
@@ -18,6 +19,7 @@ export class OrganizationDetailsComponent implements OnInit {
   txData: string;
 
   txID: number;
+  organization: OrganizationModel;
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -35,7 +37,8 @@ export class OrganizationDetailsComponent implements OnInit {
 
   fetchDetails(onComplete: () => void) {
     let routeParams = this.activeRoute.snapshot.params;
-    this.organizationService.getSingleOrganization(routeParams.id).subscribe(res => {
+    this.organizationService.getSingleOrganization(routeParams.id).subscribe((res: OrganizationModel) => {
+      this.organization = res;
       onComplete();
     }, err => {
       SpinnerUtil.hideSpinner();
@@ -66,6 +69,11 @@ export class OrganizationDetailsComponent implements OnInit {
       this.orgWalletInitialized = false;
       this.txData = JSON.stringify(res.tx);
       this.txID = res.tx_id;
+
+      QRCode.toCanvas(document.getElementById("pairing-code"), this.txData, (err) => {
+        if(err) { alert(err) }
+      });
+
     }, err => {
       console.log(err);
     })

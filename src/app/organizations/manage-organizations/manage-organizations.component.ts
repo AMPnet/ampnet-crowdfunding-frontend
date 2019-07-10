@@ -14,7 +14,7 @@ import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 export class ManageOrganizationsComponent implements OnInit {
 
   @Input()
-  organizations: SingleOrganizationModel[] = [];
+  organizations: SingleOrganizationModel[];
 
   constructor(
     private organizationService: OrganizationService,

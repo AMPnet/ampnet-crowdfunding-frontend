@@ -69,6 +69,7 @@ export class OrganizationDetailsComponent implements OnInit {
       this.orgWalletInitialized = false;
       this.txData = JSON.stringify(res.tx);
       this.txID = res.tx_id;
+      console.log(JSON.stringify(res.tx));
 
       QRCode.toCanvas(document.getElementById("pairing-code"), this.txData, (err) => {
         if(err) { alert(err) }

@@ -1,9 +1,6 @@
 <div class="container root-content-container">
   
   <div class="row">
-    <div class="col-md-12 mb-3">
-      <h5 class="text-uppercase font-weight-bold gray-text">Tokens</h5>
-    </div>
 
     <div class="col-md-12 mb-3 explainer-mini text-uppercase">Mint Tokens</div>
 
@@ -37,7 +34,33 @@
       <hr>
     </div>
 
-    
+    <div class="col-md-12 mb-3 explainer-mini text-uppercase">Burn Tokens</div>
+
+    <div class="input-group mb-3 col-md-12">
+        <input id="mint-amount" type="number" class="form-control" placeholder="Amount in Euro" aria-label="Username" aria-describedby="basic-addon1">
+      </div>
+  
+      <select class="selectpicker form-control mx-3 mb-3 border" data-live-search="true">
+        <option data-tokens="ketchup mustard">John Smith (0x92384928492)</option>
+        <option data-tokens="mustard">Frank Rubenstein (0x928374928349823)</option>
+        <option data-tokens="frosting">John Bow (0x349829384)</option>
+        <option data-tokens="frosting">Terrence McKenna (0x349829384)</option>
+      </select>
+      
+      <div class="col-md-8 mb-3">
+        <button type="button" class="btn btn-primary px-5 py-2 w-100">
+          Upload payment receipt
+        </button>
+      </div>
+      <div class="col-md-4 mb-3">
+          <span>No file uploaded.</span> 
+      </div>
+      <div class="input-group mb-3 col-md-12">
+        <input type="text" class="form-control" placeholder="Notes" aria-label="Username" aria-describedby="basic-addon1">
+      </div>
+      <div class="col-md-12">
+        <div class="btn btn-danger w-25 py-2 float-right">Burn</div>
+      </div>
 
   </div>
 

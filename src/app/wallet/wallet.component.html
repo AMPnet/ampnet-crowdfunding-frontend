@@ -7,9 +7,21 @@
 		<button (click)="submitClicked()" class="btn btn-primary mt-3 px-5 py-3">Init</button>
 	</div>
 
-	<div *ngIf="wallet != 'underfined'" class="row">
-		<div class="col-md-12 h2 text-uppercase">Balance</div>
-		<div class="col-md-12">{{wallet.balance}}</div>
+	<div *ngIf="wallet != 'underfined'" class="">
+		<div class="w-100">
+			<span class="h2 float-left mb-3">Balance: EUR {{wallet.balance}}</span>
+
+			<div class="card w-100 mt-5">
+				<div class="card-body">
+					<div class="card-title text-uppercase">Manage funds</div>
+					<div class="card-text">
+						<button class="btn btn-primary btn-action-a px-5 mr-3">Deposit</button>
+						<button class="btn btn-primary btn-action-a px-5">Withdraw</button>
+					</div>
+				</div>
+
+			</div>
+		</div>
 	</div>
 
 </div>

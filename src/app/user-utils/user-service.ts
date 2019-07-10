@@ -7,7 +7,7 @@ import { Injectable } from "@angular/core";
 })
 export class UserService {
 
-    private endpoint = "/me";
+    private endpoint = "/user_api/me";
 
     constructor(private http: HttpClient) {}
 

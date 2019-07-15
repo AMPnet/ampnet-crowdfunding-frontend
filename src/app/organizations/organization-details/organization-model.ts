@@ -16,3 +16,12 @@ interface DocumentModel {
     size: number,
     created_at: string
 }
+
+interface WalletModel {
+    id; number,
+    hash: string,
+    type: string,
+    balance: number,
+    currency: string,
+    created_at: string
+}

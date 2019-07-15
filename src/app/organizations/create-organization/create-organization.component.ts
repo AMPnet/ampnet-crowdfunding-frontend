@@ -32,15 +32,16 @@ export class CreateOrganizationComponent implements OnInit {
     SpinnerUtil.showSpinner();
     let controls = this.newOrganizationForm.controls;
     this.organizationService.createOrganization(controls['name'].value, controls['type'].value)
-      .subscribe(res => {
+      .subscribe((res: any) => {
         SpinnerUtil.hideSpinner();
         swal('', 'Successfully created a new organization', 'success');
+        this.router.navigate(['/dash', 'manage_groups', res.id]);
       }, err => {
         SpinnerUtil.hideSpinner();
         swal('', err.error.message, 'warning').then(() => {
-          this.router.navigate(['/dash','manage_organizations']);
+          this.router.navigate(['/dash','manage_groups']);
         }, () => {
-          this.router.navigate(['/dash','manage_organizations']);
+          this.router.navigate(['/dash','manage_groups']);
         });
       })
   }

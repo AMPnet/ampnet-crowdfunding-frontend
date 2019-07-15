@@ -50,8 +50,8 @@ const routes: Routes = [
       { path: 'overview', component: OverviewComponent },
       { path: 'wallet', component: WalletComponent },
       { path: 'offers', component: OffersComponent },
-      { path: 'offer_details', component: OfferDetailsComponent },
-      { path: 'offer_details/:id/invest', component: InvestComponent },
+      { path: 'offers/:id', component: OfferDetailsComponent },
+      { path: 'offers/:id/invest', component: InvestComponent },
       { path: 'my_portfolio', component: MyPortfolioComponent },
       { path: 'my_portfolio/investment_details', component: InvestmentDetailsComponent },
       { path: 'payment_options', component: PaymentOptionsComponent },
@@ -68,8 +68,8 @@ const routes: Routes = [
       { path: 'token_management', component: MainAdminComponent },
       { path: 'manage_users', component: ManageUsersComponent },
       { path: 'manage_users/:id', component: DetailsComponent },
-      { path: 'manage_projects', component: ManageProjectsComponent },
-      { path: 'manage_projects/:id', component: ManageSingleProjectComponent }
+      { path: 'manage_groups/:id/projects', component: ManageProjectsComponent },
+      { path: 'manage_groups/:groupID/manage_project/:projectID', component: ManageSingleProjectComponent }
     ]
   },
   { path: 'sign_up', component: SignUpComponent },

@@ -18,7 +18,7 @@ export class SingleOfferItemComponent implements OnInit {
   }
 
   onClickedItem() {
-    this.router.navigate(['dash', 'offer_details']);
+    this.router.navigate(['dash', 'offers', '11']);
   }
 
 }

@@ -8,20 +8,36 @@
 	</div>
 
 	<div *ngIf="wallet != 'underfined'" class="">
-		<div class="w-100">
-			<span class="h2 float-left mb-3">Balance: EUR {{wallet.balance}}</span>
-
-			<div class="card w-100 mt-5">
-				<div class="card-body">
-					<div class="card-title text-uppercase">Manage funds</div>
-					<div class="card-text">
-						<button class="btn btn-primary btn-action-a px-5 mr-3">Deposit</button>
-						<button class="btn btn-primary btn-action-a px-5">Withdraw</button>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="card-body">
+						<div class="card-title">
+							<span class="explainer-mini text-uppercase float-left">
+								<h4>
+									<div class="explainer-mini text-uppercase">Balance</div>
+									<h4 class="mt-2">{{wallet.currency}} {{wallet.balance}}</h4>
+								</h4>
+							</span>
+							<span class="float-right">
+								<button class="btn btn-primary px-5 py-2 h-100">Deposit</button>
+								<button class="btn btn-primary px-5 py-2 ml-3 h-100">Withdraw</button>
+							</span>
+						</div>
 					</div>
 				</div>
-
+			</div>
+			<div class="col-md-12 mt-3">
+				<div class="card">
+					<div class="card-body">
+						<div class="card-title">
+							<div class="explainer-mini text-uppercase">Transaction history</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
+
 	</div>
 
 </div>

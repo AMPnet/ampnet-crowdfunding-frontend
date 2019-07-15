@@ -20,6 +20,8 @@ export class OrganizationDetailsComponent implements OnInit {
 
   txID: number;
   organization: OrganizationModel;
+  orgWallet: WalletModel;
+
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -48,8 +50,8 @@ export class OrganizationDetailsComponent implements OnInit {
 
   getOrganizationWallet(onComplete: () => void) {
     let routeParams = this.activeRoute.snapshot.params;
-    this.organizationService.getOrganizationWallet(routeParams.id).subscribe(res => {
-      this.orgWalletInitialized = true;
+    this.organizationService.getOrganizationWallet(routeParams.id).subscribe((res: WalletModel) => {
+      this.orgWallet = res
       onComplete();
     }, err => {
       if(err.error.err_code == "0501") { // 0501 meaning - "Missing wallet for org"
@@ -66,12 +68,12 @@ export class OrganizationDetailsComponent implements OnInit {
     
     let orgID = this.activeRoute.snapshot.params.id;
     this.organizationService.getTransactionForCreationOfOrgWallet(orgID).subscribe((res: any) => {
+
       this.orgWalletInitialized = false;
       this.txData = JSON.stringify(res.tx);
       this.txID = res.tx_id;
-      console.log(JSON.stringify(res.tx));
-
-      QRCode.toCanvas(document.getElementById("pairing-code"), this.txData, (err) => {
+      
+      QRCode.toCanvas(document.getElementById("pairing-code"), JSON.stringify(res), (err) => {
         if(err) { alert(err) }
       });
 

@@ -6,4 +6,5 @@ export interface OfferModel {
   fundingRequired: number;
   currentFunding: number;
   headerImageUrl: string;
+  endDate: string;
 }

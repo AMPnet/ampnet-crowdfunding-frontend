@@ -40,6 +40,7 @@
     "jquery": "^3.3.1",
     "lodash": "4.17.5",
     "metascraper": "^5.4.3",
+    "moment": "^2.24.0",
     "ngx-cookie-service": "^2.0.2",
     "ngx-disqus": "^2.4.0",
     "ngx-spinner": "^6.1.2",

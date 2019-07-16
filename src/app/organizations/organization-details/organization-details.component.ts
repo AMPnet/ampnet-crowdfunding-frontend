@@ -6,7 +6,9 @@ import { displayBackendError } from 'src/app/utilities/error-handler';
 import { BroadcastService } from 'src/app/broadcast/broadcast-service';
 import * as QRCode from 'qrcode';
 import swal from 'sweetalert2';
-
+import { OrganizationModel } from './organization-model';
+import { WalletModel } from './organization-model';
+ 
 declare var $: any;
 
 @Component({

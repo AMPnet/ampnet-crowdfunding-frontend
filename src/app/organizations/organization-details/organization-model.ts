@@ -1,4 +1,4 @@
-interface OrganizationModel {
+export interface OrganizationModel {
     id: number,
     name: string,
     created_at: string,
@@ -8,7 +8,7 @@ interface OrganizationModel {
     wallet_hash: string
 }
 
-interface DocumentModel {
+export interface DocumentModel {
     id: number,
     link: string,
     name: string,
@@ -17,7 +17,7 @@ interface DocumentModel {
     created_at: string
 }
 
-interface WalletModel {
+export interface WalletModel {
     id; number,
     hash: string,
     type: string,

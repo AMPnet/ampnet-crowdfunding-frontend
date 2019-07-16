@@ -3,6 +3,13 @@ import * as Uppy from 'uppy';
 import { XHRUpload, DragDrop, Dashboard } from 'uppy'; 
 import swal from 'sweetalert2';
 import { ManageProjectsService } from '../manage-projects-service';
+import { ActivatedRoute } from '@angular/router';
+import { ProjectService } from 'src/app/projects/project-service';
+import { ProjectModel } from '../../projects/create-new-project/project-model'
+import { displayBackendError } from 'src/app/utilities/error-handler';
+import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
+import { WalletModel } from '../../organizations/organization-details/organization-model';
+import * as QRCode from 'qrcode';
 
 declare var _: any;
 declare var $: any;
@@ -21,44 +28,80 @@ export class ManageSingleProjectComponent implements OnInit {
     "Development certificate"
   ];
 
-  private newsLinks: string[] = [
-    "https://www.index.hr/vijesti/clanak/sud-eua-odlucio-njemacke-cestarine-su-protivne-pravu-europske-unije/2094023.aspx",
-    "https://www.index.hr/vijesti/clanak/most-podnio-kaznenu-prijavu-protiv-ivice-kirina-zbog-pronevjere/2094050.aspx",
-    "https://www.index.hr/vijesti/clanak/kuna-blago-ojacala-prema-euru/2094047.aspx",
-    "https://www.index.hr/vijesti/clanak/potukli-se-na-jarunu-maloljetnik-tesko-ozlijedjen/2093378.aspx"
-  ]
-
   private news: NewsLink[] = [];
 
-  constructor(private manageProjectsService: ManageProjectsService) { }
+  project: ProjectModel;
+  wallet: WalletModel;
+  
+
+  constructor(private projectService: ProjectService ,private manageProjectsService: ManageProjectsService, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.setUploadAreas();
-    this.fetchNews(0);
+    // this.setUploadAreas();
+    // this.fetchNews(0);
+    this.getProject(() => {
+      SpinnerUtil.showSpinner();
+
+      this.projectService.getProjectWallet(this.project.id).subscribe((res: WalletModel) => {
+        SpinnerUtil.hideSpinner();
+        this.wallet = res;
+        this.setUploadAreas();
+      }, err => {
+        if(err.status == "404") { // 0501 meaning - "Missing wallet for org"
+          this.createInitQRCODE();
+        } else {
+          displayBackendError(err);
+        }
+        SpinnerUtil.hideSpinner();
+      })
+    });
   }
 
-  private fetchNews(index: number) {
-    var that = this;
-    var link = this.newsLinks[index];
-
-    this.manageProjectsService.getLinkPreview(link).subscribe((res: any) => {
-
-      this.news.push({
-        title: res.title,
-        description: res.description,
-        url: res.link,
-        image: res.image.url
+  createInitQRCODE() {
+    this.projectService.generateTransactionToCreateProjectWallet(this.project.id).subscribe((res) => {
+      QRCode.toCanvas(document.getElementById("pairing-code"), JSON.stringify(res), (err) => {
+        if(err) { alert(err) }
       });
-
-      if(index < (this.newsLinks.length - 1)) {
-        setTimeout(() => { this.fetchNews(index + 1)} , 100);
-      }
-    }, err => {
-
+    }, err  => {
+      displayBackendError(err);
     });
+  }
+
+  getProject(onComplete: () => void) {
+    SpinnerUtil.showSpinner();
+    let id = this.route.snapshot.params.projectID;
+    this.projectService.getProject(id).subscribe((res: ProjectModel) => {
+      SpinnerUtil.hideSpinner();
+      this.project = res;
+      onComplete();
+    }, err => {
+      SpinnerUtil.hideSpinner();
+      displayBackendError(err);
+    });
+  }
+
+  // private fetchNews(index: number) {
+  //   var that = this;
+  //   var link = this.newsLinks[index];
+
+  //   this.manageProjectsService.getLinkPreview(link).subscribe((res: any) => {
+
+  //     this.news.push({
+  //       title: res.title,
+  //       description: res.description,
+  //       url: res.link,
+  //       image: res.image.url
+  //     });
+
+  //     if(index < (this.newsLinks.length - 1)) {
+  //       setTimeout(() => { this.fetchNews(index + 1)} , 100);
+  //     }
+  //   }, err => {
+
+  //   });
 
     
-  }
+  // }
 
   private setUpUppy(id: string, allowedFileTypes: string[]): Uppy.Core.Uppy {
     return Uppy.Core({
@@ -111,10 +154,10 @@ export class ManageSingleProjectComponent implements OnInit {
 
   }
 
-  linkClicked(index: number) {
-    let link = this.newsLinks[index];
-    window.location.href = link;
-  }
+  // linkClicked(index: number) {
+  //   let link = this.newsLinks[index];
+  //   window.location.href = link;
+  // }
 
   private setUploadFilesProject() {
 

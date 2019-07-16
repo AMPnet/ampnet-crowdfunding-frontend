@@ -8,6 +8,7 @@ import { API } from "../utilities/endpoint-manager";
 export class ProjectService {
 
     private endpoint = "/project"
+    private walletEndpoint = "/wallet";
 
     constructor(private http: HttpClient) { }
 
@@ -25,7 +26,7 @@ export class ProjectService {
         maxInvestmentPerUser: number,
         active: boolean) {
 
-        this.http.post(API.generateRoute(this.endpoint), {
+        return this.http.post(API.generateRoute(this.endpoint), {
             "organization_id": organizationID,
             "name" : name,
             "description" : description,
@@ -42,4 +43,22 @@ export class ProjectService {
 
     }
 
+    getProjectWallet(projectID: number) {
+        return this.http.get(API.generateComplexRoute(this.walletEndpoint, [
+            "project", projectID.toString()
+        ]), API.tokenHeaders());
+    }
+
+    generateTransactionToCreateProjectWallet(projectID: number) {
+
+        return this.http.get(API.generateComplexRoute(this.walletEndpoint, [
+            "project", projectID.toString(), "transaction"
+        ]), API.tokenHeaders());
+    }
+
+    getProject(projectID: number) {
+        return this.http.get(API.generateComplexRoute(this.endpoint, [
+            projectID.toString()
+        ]), API.tokenHeaders());
+    }
 }

@@ -1,5 +1,5 @@
-<div id="core-root-manager" class="root root-content-container">
-  <div class="row row-eq-height">
+<div id="core-root-manager" class="container root-content-container">
+  <div *ngIf="wallet != undefined" class="row row-eq-height">
     <h5 class="text-uppercase mb-3 col-md-12">Manage your project</h5>
 
     <p class="explainer-mini text-uppercase col-md-12">Project details</p>
@@ -90,4 +90,18 @@
     </div>
 
   </div>
+  <div *ngIf="wallet == undefined" class="row">
+      <div class="row pt-5">
+        <div class="col-md-12 text-center mt-5 d-flex justify-content-center">
+          <div class="pairing-text">
+            For security reasons, you must authorize the group with your wallet. This is done automatically by scanning
+            the QR code with your
+            <b>AMPnet Wallet</b> application.
+          </div>
+        </div>
+        <div class="col-md-12 mt-5 d-flex justify-content-center">
+          <canvas class="" id="pairing-code"></canvas>
+        </div>
+      </div>
+    </div>
 </div>

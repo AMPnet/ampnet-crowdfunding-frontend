@@ -2,3 +2,9 @@
     max-height: 300px;
     object-fit: cover;
 }
+
+@media(min-width: 800px) {
+	.pairing-text {
+		width: 50%;
+	}
+}

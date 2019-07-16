@@ -65,7 +65,7 @@ const routes: Routes = [
       { path: 'general_settings', component: GeneralSettingsComponent },
       { path: 'manage_groups', component: ManageOrganizationsComponent },
       { path: 'manage_groups/:id', component: OrganizationDetailsComponent},
-      { path: 'manage_groups/:id/create_project', component: CreateNewProjectComponent},
+      { path: 'manage_groups/:orgId/create_project', component: CreateNewProjectComponent},
       { path: 'token_management', component: MainAdminComponent },
       { path: 'manage_users', component: ManageUsersComponent },
       { path: 'manage_users/:id', component: DetailsComponent },

@@ -3,13 +3,15 @@
   <div *ngIf="organization != 'undefined'">
     <div class="row">
       <div class="col-md-12">
-          <h3 class="float-left">{{organization.name}}</h3>
-          <span class="float-right">
-            <button disabled class="btn btn-primary disabled btn-action-a px-5">
-              <i class="fas fa-plus mr-3"></i>
-              Create project
-            </button>
-          </span>
+        <h3 class="float-left">{{organization.name}}</h3>
+        <span class="float-right">
+          <button [disabled]="!organization.approved" 
+            routerLink="create_project"
+            class="btn btn-primary btn-action-a px-5">
+            <i class="fas fa-plus mr-3"></i>
+            Create project
+          </button>
+        </span>
       </div>
     </div>
   </div>
@@ -30,17 +32,45 @@
   </div>
 
   <div *ngIf="orgWallet != undefined">
-    <div class="row mt-5 pt-5">
-      <div class="col-md-12">
+    <div class="row mt-3">
+      <div *ngIf="!organization.approved" class="col-md-12">
         <div class="alert alert-warning">
           This group is pending approval from admin. During this time, you can't create new projects.
         </div>
       </div>
-      <div class="col-md-12">
-        
-      </div>
       <div class="col-md-12 mt-3">
+        <div class="explainer-mini text-uppercase">Invite new members</div>
+      </div>
+      <div class="col-md-8">
+        <input id="email-invite-input" value="" class="form-control mt-3" type="text" placeholder="Enter user email" name="">
+      </div>
+      <div class="col-md-4">
+        <button (click)="inviteClicked()" class="btn btn-primary w-100 mt-3">Invite</button>
+      </div>
+      <div class="col-md-12">
         <hr>
+      </div>
+
+      <div class="col-md-12 mt-3">
+        <app-manage-projects></app-manage-projects>
+        <hr>
+      </div>
+      <div class="col-md-12">
+        <div class="explainer-mini text-uppercase mb-3">Manage users</div>
+        <ul class="list-group">
+          <li class="list-group-item">
+            <span class="float-left">John Smit (john.smith@email.com)</span>
+            <span class="float-right">
+              <i class="fas fa-trash cursor-pointer"></i> 
+            </span>
+          </li>
+          <li class="list-group-item">
+              <span class="float-left">John Smith</span>
+              <span class="float-right">
+                <i class="fas fa-trash cursor-pointer"></i> 
+              </span>
+            </li>
+        </ul>
       </div>
     </div>
   </div>

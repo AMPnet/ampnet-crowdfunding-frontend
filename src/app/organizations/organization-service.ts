@@ -9,6 +9,7 @@ export class OrganizationService {
 
     private endpoint = "/organization";
     private walletEndpoint = "/wallet/organization";
+    private inviteEndpoint = "/invites"
 
     constructor(private http: HttpClient) { }
     
@@ -44,6 +45,40 @@ export class OrganizationService {
             this.walletEndpoint,
             [orgID.toString(), "transaction"]
         ), API.tokenHeaders());
+    }
+
+    getAllOrganizations() {
+        return this.http.get(API.generateRoute(this.endpoint),
+        API.tokenHeaders());
+    }
+
+    approveOrganization(orgID: number) {
+        return this.http.post(
+            API.generateComplexRoute(this.endpoint, [orgID.toString(), "approve"]), {},
+            API.tokenHeaders()
+        );
+    }
+
+    inviteUser(orgID: number, userEmail: string) {
+        return this.http.post(API.generateComplexRoute(
+            this.inviteEndpoint, ["organization", orgID.toString(), "invite"]), {
+                "email": userEmail,
+                "role_type": "ORG_MEMBER"
+            }, API.tokenHeaders()
+        );
+    }
+
+    getMyInvitations() {
+        return this.http.get(API.generateComplexRoute(this.inviteEndpoint, ["me"]),
+        API.tokenHeaders())
+    }
+    
+    acceptInvite(orgID: number) {
+        return this.http.post(API.generateComplexRoute(this.inviteEndpoint, 
+            [
+                "me", orgID.toString(), "accept"
+            ]), { }, API.tokenHeaders()
+        );
     }
 
 }

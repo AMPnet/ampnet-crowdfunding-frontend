@@ -1,12 +1,13 @@
 <div class="container root-content-container">
   <form [formGroup]="newOrganizationForm">
-      <h5 class="text-uppercase gray-text"><b>Create a new group</b></h5>
-      <input formControlName="name" class="form-control mt-3 py-2 px-3 w-100" type="text" placeholder="Group name">
-      <button type="submit" 
-        class="btn btn-primary float-right mt-3 pt-3 pb-3 pl-5 pr-5 text-uppercase"
-        (click)="submitButtonClicked()">
-        <i class="mr-3 fas fa-plus"></i>
-          Create
-        </button>    
+    <h5 class="text-uppercase gray-text"><b>Create a new group</b></h5>
+    <input formControlName="name" class="form-control mt-3 py-2 px-3 w-100" type="text" placeholder="Group name">
+    <input class="formControl mr-3 py-2 px-3 w-100 mt-3" type="text"
+      placeholder="Invite users by mail (comma separated). e.g. (john@email.com, mark@email.com)">
+    <button type="submit" class="btn btn-primary float-right mt-3 pt-3 pb-3 pl-5 pr-5 text-uppercase"
+      (click)="submitButtonClicked()">
+      <i class="mr-3 fas fa-plus"></i>
+      Create
+    </button>
   </form>
 </div>

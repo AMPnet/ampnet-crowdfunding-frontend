@@ -1,25 +1,24 @@
-<div class="root root-content-container row">
+<div class="row">
 
 	<div class="col-md-12 mt-2 mb-3 explainer-mini text-uppercase">Manage Projects</div>
 
-	<div class="mb-3 col-md-12 input-group">
-		<div class="input-group-prepend">
-			<span class="input-group-text">Search</span>
+
+	<div *ngIf="manageProjectsModel == undefined" class="w-100">
+		<div class="col-md-12">
+			<div class="w-100 text-center mt-5 mb-5">
+				<p>There are no projects associated with this organization.</p>
+			</div>
+			<hr>
 		</div>
-		<input type="text" name="" id="" class="form-control">
 	</div>
 
 	<div *ngFor="let project of manageProjectsModel" class="col-lg-6 mb-3">
-		<div class="card px-3 cursor-pointer" routerLink="12">
+		<div class="card px-3 cursor-pointer" routerLink="manage_project/12">
 			<div class="card-body d-flex flex-column gray-text">
 				<div class="d-flex flex-row justify-content-between text-left">
 					<div>
 						<div class="explainer-mini text-uppercase mb-2">Name</div>
 						<b>{{project.name}}</b>
-					</div>
-					<div>
-						<div class="explainer-mini text-uppercase mb-2">Location</div>
-						{{project.locationName}}
 					</div>
 					<div>
 						<div class="explainer-mini text-uppercase mb-2">Owner</div>

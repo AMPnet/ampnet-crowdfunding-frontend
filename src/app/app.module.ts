@@ -58,6 +58,7 @@ import { ManageUsersComponent } from './organizations/manage-users/manage-users.
 import { DetailsComponent } from './organizations/manage-users/details/details.component';
 import { ManageProjectsComponent } from './manage-projects/manage-projects.component';
 import { ManageSingleProjectComponent } from './manage-projects/manage-single-project/manage-single-project.component';
+import { ApproveOrganizationsComponent } from './organizations/approve-organizations/approve-organizations.component';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -136,6 +137,7 @@ export function jwtOptionsFactory() {
     DetailsComponent,
     ManageProjectsComponent,
     ManageSingleProjectComponent,
+    ApproveOrganizationsComponent,
   ],
   imports: [
     BrowserModule,

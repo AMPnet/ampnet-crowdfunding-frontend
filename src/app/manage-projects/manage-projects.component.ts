@@ -16,13 +16,13 @@ export class ManageProjectsComponent implements OnInit {
   constructor(private router: Router) { }
 
   onUserClicked() {
-    this.router.navigateByUrl("/manage_projects/12");
+    this.router.navigate(['manage_project', '10']);
   }
 
   ngOnInit() {
 
-    this.manageProjectsModel = _.fill(Array(10), {
-      name: "PowerPlant",
+    this.manageProjectsModel = _.fill(Array(3), {
+      name: "Vjetroelektrana Orjak Greda",
       locationName: "Croatia",
       fundingNeeded: "50000",
       groupOwnerName: "Greenpeace Cro"

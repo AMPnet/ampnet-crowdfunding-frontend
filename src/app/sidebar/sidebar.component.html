@@ -18,6 +18,10 @@
 			<i class="menu-icon fas fa-wallet"></i>
 			<span>Wallet</span>
 		</li>
+		<li routerLink="manage_groups" routerLinkActive="side-active">
+				<i class="menu-icon fas fa-layer-group"></i>
+				<span>Groups</span>
+		</li>
 	</ul>
 
 
@@ -35,17 +39,18 @@
 
 	<p class="menu-header ml-4 mb-3 mt-3 font-weight-bold">ADMIN</p>
 	<ul id="main-menu" class="list-unstyled components">
-		<li routerLink="manage_groups" routerLinkActive="side-active">
-			<i class="menu-icon fas fa-layer-group"></i>
-			<span>Groups</span>
-		</li>
+		
 		<li routerLink="token_management" routerLinkActive="side-active">
 			<i class="menu-icon fas fa-coins"></i>
 			<span>Tokens</span>	
 		</li>
 		<li routerLink="manage_users" routerLinkActive="side-active">
-				<i class="menu-icon fas fa-user-cog"></i>
-				<span>Users</span>	
+				<i class="menu-icon fas fa-user-check"></i>
+				<span>Approve Users</span>	
+		</li>
+		<li routerLink="approve_organizations" routerLinkActive="side-active">
+				<i class="menu-icon fas fa-check-circle "></i>
+				<span>Approve Groups</span>	
 		</li>
 	</ul>
 

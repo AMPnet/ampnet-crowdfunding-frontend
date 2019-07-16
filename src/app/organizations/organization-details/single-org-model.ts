@@ -1,11 +1,11 @@
 interface SingleOrgModel {
     id: number,
     name: string,
-    createdAt: string,
+    created_at: string,
     approved: boolean,
-    legalInfo: string,
+    legal_info: string,
     documents: [DocumentModel],
-    walletHash: string
+    wallet_hash: string
 }
 
 interface DocumentModel {

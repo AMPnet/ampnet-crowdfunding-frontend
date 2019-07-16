@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { OrganizationService } from '../organization-service';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { displayBackendError } from 'src/app/utilities/error-handler';
 import { BroadcastService } from 'src/app/broadcast/broadcast-service';
 import * as QRCode from 'qrcode';
+import swal from 'sweetalert2';
 
 declare var $: any;
 
@@ -22,6 +23,7 @@ export class OrganizationDetailsComponent implements OnInit {
   organization: OrganizationModel;
   orgWallet: WalletModel;
 
+  emailInviteInput: any;
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -33,8 +35,9 @@ export class OrganizationDetailsComponent implements OnInit {
     this.fetchDetails(() => {
       this.getOrganizationWallet(() => {
         SpinnerUtil.hideSpinner()
-      })
+      });
     });
+
   }
 
   fetchDetails(onComplete: () => void) {
@@ -81,6 +84,20 @@ export class OrganizationDetailsComponent implements OnInit {
       console.log(err);
     })
 
+  }
+
+
+  inviteClicked() {
+    SpinnerUtil.showSpinner();
+    let email = $("#email-invite-input").val();
+    this.organizationService.inviteUser(this.organization.id, email).subscribe(res => {
+      SpinnerUtil.hideSpinner();
+      swal("Success", "Successfully invited user to organization", "success");
+    }, err => {
+      console.log(err);
+      SpinnerUtil.hideSpinner();
+      displayBackendError(err);
+    })
   }
 
   signTxClicked() {

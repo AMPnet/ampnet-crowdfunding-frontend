@@ -24,11 +24,12 @@
     "@angular/router": "^6.1.0",
     "@angularfy/ng-autonumeric": "^1.0.2",
     "@auth0/angular-jwt": "^2.0.0",
+    "@chenfengyuan/datepicker": "^1.0.8",
     "@fortawesome/fontawesome-free": "^5.3.1",
     "@ngx-translate/core": "^11.0.1",
     "@types/request": "^2.48.1",
     "angular-rest-client": "^2.0.0",
-    "angularx-social-login": "^1.2.6",
+    "angularx-social-login": "1.2.6",
     "autonumeric": "^4.5.4",
     "bootstrap": "^4.1.3",
     "bootstrap-select": "^1.13.10",
@@ -37,7 +38,7 @@
     "flatpickr": "^4.5.2",
     "hammerjs": "^2.0.8",
     "jquery": "^3.3.1",
-    "lodash": "^4.7.15",
+    "lodash": "4.17.5",
     "metascraper": "^5.4.3",
     "ngx-cookie-service": "^2.0.2",
     "ngx-disqus": "^2.4.0",
@@ -67,7 +68,7 @@
     "@types/jasmine": "~2.8.8",
     "@types/jasminewd2": "~2.0.3",
     "@types/jquery": "^3.3.6",
-    "@types/lodash": "^4.14.116",
+    "@types/lodash": "4.14.108",
     "@types/node": "~8.9.4",
     "codelyzer": "~4.3.0",
     "jasmine-core": "~2.99.1",
@@ -81,6 +82,6 @@
     "protractor": "~5.4.0",
     "ts-node": "~7.0.0",
     "tslint": "~5.11.0",
-    "typescript": "2.7.2"
+    "typescript": "2.9.2"
   }
 }

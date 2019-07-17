@@ -12,6 +12,7 @@ import { WalletModel } from '../../organizations/organization-details/organizati
 import * as QRCode from 'qrcode';
 import { timeout } from 'q';
 import { API } from 'src/app/utilities/endpoint-manager';
+import { headersToString } from 'selenium-webdriver/http';
 
 declare var _: any;
 declare var $: any;
@@ -155,6 +156,19 @@ export class ManageSingleProjectComponent implements OnInit {
     filesUppy.use(Uppy.Dashboard, {
       id: "myfilesdash",
       trigger: "#proj-files-upload-target"
+    });
+
+    filesUppy.use(Uppy.XHRUpload, {
+      endpoint: API.generateComplexRoute("/project", [
+        this.project.id.toString(), "document"
+      ]),
+      headers: {
+        "Authorization" : API.tokenHeaders().headers["Authorization"]
+      },
+      metaFields: [
+        "name", "filename"
+      ],
+      fieldName: "file"
     });
   }
 

@@ -14,6 +14,7 @@ export interface ProjectModel {
     max_per_user: number,
     main_image: string,
     news: [string],
+    documents: [string],
     gallery: [string],
     active: boolean,
     wallet_hash: string

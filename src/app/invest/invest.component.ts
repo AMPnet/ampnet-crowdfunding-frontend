@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { InvestViewModel } from './invest-view-model';
 import numeral from 'numeral';
+import { WalletService } from '../wallet/wallet.service';
+import { InvestService } from './invest.service';
+import { displayBackendError } from '../utilities/error-handler';
+import { SpinnerUtil } from '../utilities/spinner-utilities';
+import { WalletModel } from '../models/WalletModel';
 
 
 @Component({
@@ -17,7 +22,9 @@ export class InvestComponent implements OnInit {
   projectStake: string;
   breakevenPeriod: string;
 
-  constructor() { }
+  wallet: WalletModel;
+
+  constructor(private walletService: WalletService, private investService: InvestService) { }
 
   ngOnInit() {
     this.viewModel = {
@@ -30,6 +37,18 @@ export class InvestComponent implements OnInit {
       expectedReturnMax: 6.5,
       projectLifetime: 30
     };
+    this.getWalletBalance();
+  }
+
+  getWalletBalance() {
+    SpinnerUtil.showSpinner();
+    this.walletService.getWallet().subscribe(res => {
+      SpinnerUtil.hideSpinner();
+      this.wallet = res;
+    }, err => {
+      SpinnerUtil.hideSpinner();
+      displayBackendError(err);
+    })
   }
 
   inputChanged(event: any) {

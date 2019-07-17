@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { OrganizationService } from '../organizations/organization-service';
+import { SpinnerUtil } from '../utilities/spinner-utilities';
+import { displayBackendError } from '../utilities/error-handler';
 
 
 declare var _:any;
@@ -13,7 +16,9 @@ export class ManageProjectsComponent implements OnInit {
 
   manageProjectsModel: ManageProjectsModel[];
 
-  constructor(private router: Router) { }
+  @Input() groupID: number;
+
+  constructor(private router: Router, private orgService: OrganizationService) { }
 
   onUserClicked() {
     this.router.navigate(['manage_project', '10']);
@@ -28,6 +33,17 @@ export class ManageProjectsComponent implements OnInit {
       groupOwnerName: "Greenpeace Cro"
     });
 
+  }
+
+  getProjectsForGroup() {
+    SpinnerUtil.showSpinner();
+    this.orgService.getAllProjectsForOrganization(this.groupID).subscribe((res: any) => {
+      SpinnerUtil.hideSpinner();
+      
+    }, err => {
+      SpinnerUtil.hideSpinner();
+      displayBackendError(err);
+    });
   }
 
 }

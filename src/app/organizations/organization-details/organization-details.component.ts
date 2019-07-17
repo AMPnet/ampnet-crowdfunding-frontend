@@ -63,12 +63,10 @@ export class OrganizationDetailsComponent implements OnInit {
         displayBackendError(err);
       }
       onComplete();
-    })
-
+    });
   }
 
   initializeWalletClicked() {
-    
     let orgID = this.activeRoute.snapshot.params.id;
     this.organizationService.getTransactionForCreationOfOrgWallet(orgID).subscribe((res: any) => {
 
@@ -81,9 +79,8 @@ export class OrganizationDetailsComponent implements OnInit {
       });
 
     }, err => {
-      console.log(err);
-    })
-
+      displayBackendError(err);
+    });
   }
 
 

@@ -88,7 +88,7 @@
 								<i *ngIf="!offerModel.active" class="fas fa-toggle-off"></i>
 								<span class="ml-3 explainer-mini gray-text text-uppercase">
 									<span *ngIf="offerModel.active">Open for funding</span>
-									<span *ngIf="!offerModel.active">Closed for funding</span>		
+									<span *ngIf="!offerModel.active">Closed for funding</span>
 								</span>
 							</div>
 							<div class="col-md-4 text-right">
@@ -96,13 +96,13 @@
 							</div>
 							<div class="col-md-12 mt-1">
 								<div class="progress">
-									<div class="progress-bar" role="progressbar" 
-										[style.width]="(offerModel.current_funding / offerModel.expected_funding) * 100" aria-valuenow="25"
-										aria-valuemin="0" aria-valuemax="100"></div>
+									<div class="progress-bar" role="progressbar"
+										[style.width]="(offerModel.current_funding / offerModel.expected_funding) * 100"
+										aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
 								</div>
 							</div>
 							<div class="col-md-12 mt-2">
-								<b>{{offerModel.currency}} {{offerModel.current_funding}}</b> of 
+								<b>{{offerModel.currency}} {{offerModel.current_funding}}</b> of
 								<b>{{offerModel.currency}} {{offerModel.expected_funding}}</b> collected
 							</div>
 						</div>
@@ -118,27 +118,32 @@
 		<div class="col-md-12">
 			<div class="explainer-mini text-uppercase">News</div>
 		</div>
-		
-		<div class="col-md-12 mt-4">
-				<div class="card h-100">
-					<div class="card-body">
-						<div class="card-title explainer-mini">DOCUMENTS</div>
-						<div class="card-text">
-							<div class="row">
-								<div *ngFor="let doc of docs" class="col-md-12 mt-2 gray-text">
-										<i class="fas fa-file-pdf"></i>
-										<span class="ml-3">{{doc.title}}</span>
-										<span class="float-right">
-											<i class="fas fa-download"></i>	
-										</span>
-										<div class="dropdown-divider mt-2"></div>
-								</div>
+
+		<div class="col-md-6 mt-4">
+			<div class="card h-100">
+				<div class="card-body">
+					<div class="card-title explainer-mini">DOCUMENTS</div>
+					<div class="card-text">
+						<div class="row">
+							<div *ngFor="let doc of docs" class="col-md-12 mt-2 gray-text">
+								<i class="fas fa-file-pdf"></i>
+								<span class="ml-3">{{doc.title}}</span>
+								<span class="float-right">
+									<i class="fas fa-download"></i>
+								</span>
+								<div class="dropdown-divider mt-2"></div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		
+		</div>
+		<div class="col-md-6 mt-4">
+			<div class="card">
+				<here-map lat="37.7397" lng="-121.4252" width="100%" height="300px" [isForEditing]="false"></here-map>
+			</div>
+		</div>
+
 	</div>
 
 </div>

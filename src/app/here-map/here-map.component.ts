@@ -24,6 +24,9 @@ export class HereMapComponent implements OnInit {
   @Input()
   public height: any;
 
+  @Input()
+  public isForEditing: boolean;
+
   public constructor() { }
 
   public ngOnInit() {
@@ -55,19 +58,31 @@ export class HereMapComponent implements OnInit {
     <ellipse cx="25.1255" cy="13.6286" rx="3.76884" ry="3.85714" fill="white"/>
     </svg>`;
 
-    map.setCenter({ lat: 44, lng: 17});
+    map.setCenter({ lat: 44, lng: 17 });
     map.setZoom(3);
 
-    map.addEventListener('tap', function (evt) {
-      var coord = map.screenToGeo(evt.currentPointer.viewportX, evt.currentPointer.viewportY);
-      var icon = new H.map.Icon(svgMarkup);
-      var coords = { lat: coord.lat, lng: coord.lng };
-      if (this.currentMarker != undefined) {
-        map.removeObject(this.currentMarker);
-      }
+    var icon = new H.map.Icon(svgMarkup);
+
+
+    if(!this.isForEditing) {
+      let coords = { lat: this.lat, lng: this.lng };
       this.currentMarker = new H.map.Marker(coords, { icon: icon });
-      map.addObject(this.currentMarker);
-    });
+      setTimeout(() => {
+        map.addObject(this.currentMarker);
+      }, 500);
+    }
+
+    if (this.isForEditing) {
+      map.addEventListener('tap', function (evt) {
+        var coord = map.screenToGeo(evt.currentPointer.viewportX, evt.currentPointer.viewportY);
+        var coords = { lat: coord.lat, lng: coord.lng };
+        if (this.currentMarker != undefined) {
+          map.removeObject(this.currentMarker);
+        }
+        this.currentMarker = new H.map.Marker(coords, { icon: icon });
+        map.addObject(this.currentMarker);
+      });
+    }
 
 
   }

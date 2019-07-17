@@ -75,7 +75,7 @@ export class OffersComponent implements OnInit {
           offeredBy: proj.name,
           fundingRequired: proj.expected_funding,
           currentFunding: 1000,
-          headerImageUrl: "",
+          headerImageUrl: proj.main_image,
           status: "Active",
           endDate: proj.end_date,
           offerID: proj.id

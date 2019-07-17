@@ -129,12 +129,17 @@ export class ManageSingleProjectComponent implements OnInit {
     });
     
     var headers = API.tokenHeaders();
-
+    headers.headers["Access-Control-Allow-Origin"] = "*";
 
     uppy.use(Uppy.XHRUpload, { 
       endpoint: API.generateComplexRoute("/project", [ this.project.id.toString(), "image", "main"]),
-      headers: API.tokenHeaders(),
-      formData: false
+      headers: {
+        "Authorization" : headers.headers["Authorization"]
+      },
+      metaFields: [
+        "name", "filename"
+      ],
+      fieldName: "image"
     });
 
   }

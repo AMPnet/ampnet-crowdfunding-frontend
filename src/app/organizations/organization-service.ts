@@ -10,6 +10,7 @@ export class OrganizationService {
     private endpoint = "/organization";
     private walletEndpoint = "/wallet/organization";
     private inviteEndpoint = "/invites"
+    private projectEndpoint = "/project/organization";
 
     constructor(private http: HttpClient) { }
     
@@ -79,6 +80,12 @@ export class OrganizationService {
                 "me", orgID.toString(), "accept"
             ]), { }, API.tokenHeaders()
         );
+    }
+
+    getAllProjectsForOrganization(orgID: number) {
+        return this.http.get(API.generateComplexRoute(this.projectEndpoint,
+            [orgID.toString()]    
+        ), API.tokenHeaders());
     }
 
 }

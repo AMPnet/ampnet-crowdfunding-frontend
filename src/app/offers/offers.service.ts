@@ -17,4 +17,10 @@ export class OffersService {
     ]), API.tokenHeaders());
   }
 
+  getOfferByID(offerID: number) {
+    return this.http.get(API.generateComplexRoute(this.projectEndpoint, [
+      offerID.toString()
+    ]), API.tokenHeaders());
+  }
+
 }

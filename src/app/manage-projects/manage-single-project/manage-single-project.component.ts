@@ -10,6 +10,8 @@ import { displayBackendError } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { WalletModel } from '../../organizations/organization-details/organization-model';
 import * as QRCode from 'qrcode';
+import { timeout } from 'q';
+import { API } from 'src/app/utilities/endpoint-manager';
 
 declare var _: any;
 declare var $: any;
@@ -45,7 +47,9 @@ export class ManageSingleProjectComponent implements OnInit {
       this.projectService.getProjectWallet(this.project.id).subscribe((res: WalletModel) => {
         SpinnerUtil.hideSpinner();
         this.wallet = res;
-        this.setUploadAreas();
+        setTimeout(() => {
+          this.setUploadAreas();
+        }, 1000)
       }, err => {
         if(err.status == "404") { // 0501 meaning - "Missing wallet for org"
           this.createInitQRCODE();
@@ -123,7 +127,16 @@ export class ManageSingleProjectComponent implements OnInit {
       height: 300,
       width: width
     });
-    uppy.use(Uppy.Tus, { endpoint: 'https://master.tus.io/files/' })
+    
+    var headers = API.tokenHeaders();
+
+
+    uppy.use(Uppy.XHRUpload, { 
+      endpoint: API.generateComplexRoute("/project", [ this.project.id.toString(), "image", "main"]),
+      headers: API.tokenHeaders(),
+      formData: false
+    });
+
   }
   
   private setUploadAreas() {
@@ -145,11 +158,9 @@ export class ManageSingleProjectComponent implements OnInit {
       text: "Are you sure you want to delete this file? This action cannot be reversed",
       confirmButtonText: "Yes",
       showCancelButton: true,
-      cancelButtonText: "No",
-    }).then(() => {
-      this.files = _.filter(this.files, (val, i) => {
-        if(index != i) { return val }
-      });
+      cancelButtonText: "No"
+    }).then((res) => {
+      
     });
 
   }

@@ -77,7 +77,8 @@ export class OffersComponent implements OnInit {
           currentFunding: 1000,
           headerImageUrl: "",
           status: "Active",
-          endDate: proj.end_date
+          endDate: proj.end_date,
+          offerID: proj.id
         }
       });
       SpinnerUtil.hideSpinner();

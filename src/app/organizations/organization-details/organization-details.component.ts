@@ -20,11 +20,9 @@ export class OrganizationDetailsComponent implements OnInit {
 
   orgWalletInitialized: boolean;
   txData: string;
-
   txID: number;
   organization: OrganizationModel;
   orgWallet: WalletModel;
-
   emailInviteInput: any;
 
   constructor(

@@ -1,0 +1,8 @@
+<div *ngFor="let preview of news; let i = index" class="col-md-4 mt-3 cursor-pointer">
+  <div class="card h-100" (click)="linkClicked(i)" >
+    <img class="card-img-top" src="{{preview.image}}" alt="">
+    <div class="card-body">
+      <h5 class="card-title">{{preview.title}}</h5>
+      <p class="card-text">{{preview.description}}</p>
+    </div>
+</div>

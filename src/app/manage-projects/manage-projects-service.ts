@@ -25,4 +25,23 @@ export class ManageProjectsService {
 
   }
 
+  addNewsToProject(projectID: number, newsLink: string) {
+    return this.http.post(API.generateComplexRoute(this.projectEndpoint, [
+      projectID.toString(), "news"
+    ]), { "link" : newsLink }, API.tokenHeaders())
+  }
+
+  deleteNewsFromProject(projectID: number, newsLink: string) {
+    return this.http.request('delete', API.generateComplexRoute(this.projectEndpoint, [
+      projectID.toString(), "news"
+    ]), {
+      body: {
+        "link" : newsLink
+      },
+      headers: {
+        "Authorization" : API.tokenHeaders().headers["Authorization"]
+      }
+    });
+  }
+
 }

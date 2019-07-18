@@ -13,6 +13,7 @@ import * as QRCode from 'qrcode';
 import { timeout } from 'q';
 import { API } from 'src/app/utilities/endpoint-manager';
 import { headersToString } from 'selenium-webdriver/http';
+import { validURL } from '../../utilities/link-valid-util';
 
 declare var _: any;
 declare var $: any;
@@ -42,6 +43,10 @@ export class ManageSingleProjectComponent implements OnInit {
   ngOnInit() {
     // this.setUploadAreas();
     // this.fetchNews(0);
+    this.fetchAllData();
+  }
+
+  fetchAllData() {
     this.getProject(() => {
       SpinnerUtil.showSpinner();
 
@@ -71,6 +76,31 @@ export class ManageSingleProjectComponent implements OnInit {
     }, err  => {
       displayBackendError(err);
     });
+  }
+
+  addNewsLink() {
+    SpinnerUtil.showSpinner();
+    let linkHolder = $("#newsLink").val();
+    if(validURL(linkHolder)) {
+      this.manageProjectsService.addNewsToProject(this.project.id, linkHolder).subscribe(res => {
+        window.location.reload();
+      }, err => {
+        displayBackendError(err);
+      });
+    } else {
+      swal("", "Link invalid! The news link " + linkHolder + " is not a valid link");
+    }
+  }
+
+  deleteNewsClicked(link: string) {
+    SpinnerUtil.showSpinner();
+    this.manageProjectsService.deleteNewsFromProject(this.project.id, link).subscribe(res => {
+      SpinnerUtil.hideSpinner();
+      window.location.reload();''
+    }, err => {
+      SpinnerUtil.hideSpinner();
+      displayBackendError(err);
+    })
   }
 
   getProject(onComplete: () => void) {

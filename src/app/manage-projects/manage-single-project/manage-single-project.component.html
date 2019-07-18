@@ -71,16 +71,30 @@
 
     <p class="explainer-mini text-uppercase col-md-8 mt-3">Project news</p>
 
-    <div class="col-md-4 mt-3" >
-      <button (click)="addNewsClicked()" class="btn btn-primary float-right px-5 py-3">
-        <i class="fas fa-plus mr-3"></i>
-        <span>Add news</span>
+    <div class="col-md-8">
+      <input type="text" class="form-control w-100" id="newsLink" placeholder="News link (e.g. https://portal.com/news)">
+    </div>
+    <div class="col-md-4">
+      <button (click)="addNewsLink()" class="w-100 btn btn-primary h-100">
+        <i class="fas fa-plus mr-2"></i>
+        Add news
       </button>
     </div>
 
-    <div *ngFor="let preview of news">
-
+    <div class="col-md-12 mt-3">
+      <ul class="list-group">
+        <li *ngFor="let item of project.news" class="list-group-item d-flex flex-row justify-content-between">
+          <a href="{{item}}" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis" class="w-75">
+              {{item}}
+          </a>
+          <div class="cursor-pointer" (click)="deleteNewsClicked(item)">
+            <i class="fas fa-trash"></i> 
+          </div>
+        </li>
+      </ul>
     </div>
+    
+  
       
 
     <div class="col-md-12 mt-5 mb-5">

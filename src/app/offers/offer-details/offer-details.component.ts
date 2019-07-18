@@ -10,7 +10,9 @@ import { ProjectService } from 'src/app/projects/project-service';
 import * as moment from 'moment';
 import { prettyDate } from 'src/app/utilities/date-format-util';
 import swal from 'sweetalert2';
-
+import { NewsPreviewService } from 'src/app/news-preview/news-preview.service';
+import * as numeral from 'numeral';
+import { prettyCurrency } from 'src/app/utilities/currency-util';
 
 @Component({
   selector: 'app-offer-details',
@@ -23,7 +25,9 @@ export class OfferDetailsComponent implements OnInit {
 
   offerModel: SingleOfferModel;
 
-  constructor(private offerService: OffersService, private projectService: ProjectService, private route: ActivatedRoute) { }
+  newsPreviews: NewsLink[];
+
+  constructor(private offerService: OffersService, private newsPreviewService: NewsPreviewService, private projectService: ProjectService, private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.docs = _.fill(Array(5), {
@@ -32,6 +36,37 @@ export class OfferDetailsComponent implements OnInit {
       src: new URL('http://google.com')
     });
     this.getOfferDetails();
+    this.newsPreviews = [];
+  }
+
+  setUpNewsPreviews(newsLinks: string[]) {
+
+    console.log(newsLinks);
+
+    newsLinks.forEach(link => {
+      this.newsPreviewService.getLinkPreview(link).subscribe((res: any) => {
+        console.log(res);
+        this.newsPreviews.push({
+          title: res.title,
+          description: res.description,
+          image: res.image.url,
+          url: link
+        });
+      }, console.log )
+    });
+  }
+
+  linkClicked(url: string) {
+    window.location.href = url;
+  }
+
+  prettifyModel(res: SingleOfferModel) {
+    this.offerModel = res;
+    this.offerModel.start_date = prettyDate(res.start_date);
+    this.offerModel.end_date = prettyDate(res.end_date);
+    this.offerModel.expected_funding = numeral(res.expected_funding).format("0,0");
+    this.offerModel.currency = prettyCurrency(res.currency);
+    this.offerModel.investor_count = numeral(1270).format("0,0");
   }
 
   getOfferDetails() {
@@ -41,12 +76,8 @@ export class OfferDetailsComponent implements OnInit {
       SpinnerUtil.hideSpinner();
 
       if(res.current_funding == undefined) { res.current_funding = 0 }
-
-      console.log(res);
-
-      this.offerModel = res;
-      this.offerModel.start_date = prettyDate(res.start_date);
-      this.offerModel.end_date = prettyDate(res.end_date);
+      this.prettifyModel(res);
+      this.setUpNewsPreviews(this.offerModel.news);
 
     }, err => {
       SpinnerUtil.hideSpinner();

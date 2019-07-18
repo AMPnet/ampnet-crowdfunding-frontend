@@ -18,5 +18,4 @@ export interface ProjectModel {
     gallery: [string],
     active: boolean,
     wallet_hash: string
-
 }

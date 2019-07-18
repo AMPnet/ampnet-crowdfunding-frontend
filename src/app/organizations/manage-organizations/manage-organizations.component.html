@@ -11,8 +11,8 @@
         </div>
       </div>
     </div>
-    <div class="explainer-mini text-uppercase mb-3">My organizations</div>
-    <div *ngIf="organizations.length > 0">
+    <div class="explainer-mini text-uppercase mb-3">My groups</div>
+    <div *ngIf="(organizations != undefined) && (organizations.length > 0)">
         <ul class="cursor-pointer list-group">
           <li *ngFor="let org of organizations" routerLink="{{org.id}}" 
            class="list-group-item hover-bg mt-2">
@@ -26,7 +26,7 @@
           </li>    
         </ul>
     </div>
-    <div class="d-flex justify-content-center mt-5" *ngIf="organizations.length == 0">
+    <div class="d-flex justify-content-center mt-5" *ngIf="(organizations != undefined) && (organizations.length == 0)">
       <div class="d-flex flex-column mt-5">
         <div class="d-flex text-center">
           You currently don't have access to any groups.

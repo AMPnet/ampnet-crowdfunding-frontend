@@ -37,6 +37,7 @@ export class LogInModalComponent implements OnInit {
     SpinnerUtil.showSpinner();
     this.auth.signIn(provider).then(res => {
       this.loginService.performSocialLogin(res.provider, res.authToken).subscribe(res => {
+        console.log(res);
         localStorage.setItem('access_token', (<any>res).token);
         SpinnerUtil.hideSpinner();
         this.router.navigate(['dash']);

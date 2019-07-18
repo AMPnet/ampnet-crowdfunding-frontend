@@ -8,4 +8,6 @@ export interface OfferModel {
   currentFunding: number;
   headerImageUrl: string;
   endDate: string;
+  owner: string
+  currency: string
 }

@@ -1,6 +1,6 @@
 <div class="container root-content-container">
 
-	<div *ngIf="wallet == undefined" class="row">
+	<div *ngIf="(wallet == undefined) && checkComplete" class="row">
 		<h5 class="col-md-12">Initialize wallet</h5>
 		<input class="col-md-12 mb-3" type="text" placeholder="Address" id="addr">
 		<input class="col-md-12" type="text" placeholder="Public key" id="pubkey">

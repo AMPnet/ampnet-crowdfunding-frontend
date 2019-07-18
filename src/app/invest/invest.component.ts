@@ -6,7 +6,12 @@ import { InvestService } from './invest.service';
 import { displayBackendError } from '../utilities/error-handler';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { WalletModel } from '../models/WalletModel';
+import { ProjectModel } from '../projects/create-new-project/project-model';
+import { ProjectService } from '../projects/project-service';
+import { ActivatedRoute } from '@angular/router';
+import { prettyCurrency } from '../utilities/currency-util';
 
+declare var $:any;
 
 @Component({
   selector: 'app-invest',
@@ -15,7 +20,6 @@ import { WalletModel } from '../models/WalletModel';
 })
 export class InvestComponent implements OnInit {
 
-  private viewModel: InvestViewModel;
   inputValue: string;
 
   yearlyReturn: string;
@@ -24,20 +28,19 @@ export class InvestComponent implements OnInit {
 
   wallet: WalletModel;
 
-  constructor(private walletService: WalletService, private investService: InvestService) { }
+  project: ProjectModel;
+
+  expectedROI: number;
+
+  constructor(private walletService: WalletService, private investService: InvestService,
+    private projectService: ProjectService, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.viewModel = {
-      projectName: "Orjak",
-      minInvestment: 1000,
-      maxInvestment: 500000,
-      totalInvestment: 21000000,
-      currentlyInvested: 14250100,
-      expectedReturnMin: 5.5,
-      expectedReturnMax: 6.5,
-      projectLifetime: 30
-    };
+    this.expectedROI = 7.5;
     this.getWalletBalance();
+    this.getProject();
+    
+    
   }
 
   getWalletBalance() {
@@ -45,6 +48,19 @@ export class InvestComponent implements OnInit {
     this.walletService.getWallet().subscribe(res => {
       SpinnerUtil.hideSpinner();
       this.wallet = res;
+    }, err => {
+      SpinnerUtil.hideSpinner();
+      displayBackendError(err);
+    })
+  }
+
+  getProject() {
+    let id = this.route.snapshot.params.id;
+    SpinnerUtil.showSpinner();
+    this.projectService.getProject(id).subscribe((res: any) => {
+      res.currency = prettyCurrency(res.currency);
+      this.project = res;
+      SpinnerUtil.hideSpinner();
     }, err => {
       SpinnerUtil.hideSpinner();
       displayBackendError(err);
@@ -62,17 +78,17 @@ export class InvestComponent implements OnInit {
   }
   
   calculateProjectStake(investment: number): number {
-    let total = this.viewModel.totalInvestment;
+    let total = this.project.expected_funding;
     return (investment / total) * 100;
   } 
 
   calculateYearlyReturn(investment: number): number {
-    let maxReturn = this.viewModel.expectedReturnMax;
+    let maxReturn = this.expectedROI;
     return investment * (maxReturn / 100);
   }
 
   calculateTotalLifetimeReturn(investment): number {
-    return this.calculateYearlyReturn(investment) * this.viewModel.projectLifetime;
+    return this.calculateYearlyReturn(investment) * 20;
   } 
 
 }

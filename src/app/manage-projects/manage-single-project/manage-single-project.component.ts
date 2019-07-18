@@ -52,6 +52,7 @@ export class ManageSingleProjectComponent implements OnInit {
           this.setUploadAreas();
         }, 1000)
       }, err => {
+        alert(JSON.stringify(err));
         if(err.status == "404") { // 0501 meaning - "Missing wallet for org"
           this.createInitQRCODE();
         } else {
@@ -172,14 +173,26 @@ export class ManageSingleProjectComponent implements OnInit {
     });
   }
 
+  addNewsClicked() {
+
+  }
+
   public deleteFile(index: number): any {
     swal({
       text: "Are you sure you want to delete this file? This action cannot be reversed",
       confirmButtonText: "Yes",
       showCancelButton: true,
       cancelButtonText: "No"
-    }).then((res) => {
-      
+    }).then(() => {
+      SpinnerUtil.showSpinner();
+      this.manageProjectsService
+        .deleteDocument(this.project.id, index).subscribe(res => {
+          SpinnerUtil.hideSpinner();
+          this.getProject(() => {});
+        }, err => {
+          SpinnerUtil.hideSpinner();
+          displayBackendError(err);
+        })
     });
 
   }

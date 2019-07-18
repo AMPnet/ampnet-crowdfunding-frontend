@@ -5,7 +5,8 @@ import { OffersService } from './offers.service';
 import { ProjectModel } from '../projects/create-new-project/project-model';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { displayBackendError } from '../utilities/error-handler';
-
+import * as moment from 'moment';
+import * as numeral from 'numeral';
 
 @Component({
   selector: 'app-offers',
@@ -73,12 +74,14 @@ export class OffersComponent implements OnInit {
           title: proj.name,
           description: proj.description,
           offeredBy: proj.name,
-          fundingRequired: proj.expected_funding,
+          fundingRequired: numeral(proj.expected_funding).format("0,0"),
           currentFunding: 1000,
           headerImageUrl: proj.main_image,
           status: "Active",
-          endDate: proj.end_date,
-          offerID: proj.id
+          endDate: moment(proj.end_date).format("MMM Do, YYYY"),
+          offerID: proj.id,
+          owner: "Cooperative for Ethical Financing",
+          currency: proj.currency
         }
       });
       SpinnerUtil.hideSpinner();

@@ -4,16 +4,20 @@
   <div *ngIf="wallet != undefined" class="row row-eq-height">
     <h5 class="text-uppercase mb-3 col-md-12">Manage your project</h5>
 
-    <p class="explainer-mini text-uppercase col-md-12">Project details</p>
-
-    <div class="input-group mb-3 col-md-12">
-      <input id="mint-amount" type="number" class="form-control" placeholder="Enter new name" 
-        aria-label="Username" aria-describedby="basic-addon1">
+    <div class="col-md-12 mb-2">
+      <div class="explainer-mini text-uppercase">Name</div>
     </div>
 
     <div class="input-group mb-3 col-md-12">
-      <input id="mint-amount" type="number" class="form-control" placeholder="Enter new name" 
-        aria-label="Username" aria-describedby="basic-addon1">
+      <input id="mint-amount" type="text" class="form-control"
+        aria-label="Username" aria-describedby="basic-addon1" value="{{project.name}}">
+    </div>
+
+    <div class="col-md-12 mb-2">
+        <div class="explainer-mini text-uppercase">Description</div>
+      </div>
+    <div class="input-group mb-3 col-md-12">
+      <textarea class="form-control" name="" id="" cols="30" rows="10">{{project.description}}</textarea>
     </div>
 
     <div class="col-md-12">
@@ -43,13 +47,13 @@
       </div>
     </div>
 
-    <div *ngFor="let file of project.documents; let i = index" class="col-md-4 mt-3">
+    <div *ngFor="let file of project.documents; let i = index" class="col-md-6 mt-3">
       <div class="card">
         <div class="card-body">
           <span>{{file.name}}</span>
           <span class="float-right">
             <span class="mr-3 cursor-pointer gray-text"
-              (click)="deleteFile(i)">
+              (click)="deleteFile(file.id)">
               <i class="fas fa-trash"></i>
             </span>
             <a class="cursor-pointer gray-text"
@@ -68,7 +72,7 @@
     <p class="explainer-mini text-uppercase col-md-8 mt-3">Project news</p>
 
     <div class="col-md-4 mt-3" >
-      <button id="proj-files-upload-target" class="btn btn-primary float-right px-5 py-3">
+      <button (click)="addNewsClicked()" class="btn btn-primary float-right px-5 py-3">
         <i class="fas fa-plus mr-3"></i>
         <span>Add news</span>
       </button>

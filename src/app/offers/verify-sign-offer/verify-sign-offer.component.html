@@ -1,0 +1,21 @@
+<div *ngIf="project != undefined" class="root root-content-container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="explainer-mini text-uppercase">Verify and sign investment</div>
+      <div class="mt-3">
+        <h5 class="gray-text">You will invest 
+          <br> <i>{{project.currency}} {{investAmount}}</i> 
+          <br> into project <br> 
+          <i class="mt-2">{{project.name}}</i>
+        </h5>
+      </div>
+      <button (click)="generateInvestmentCode()" class="btn btn-primary w-100 mt-3 py-3">
+        <i class="fas fa-check-circle mr-2"></i>
+        Verify
+      </button>
+    </div>
+    <div class="w-100 d-flex justify-content-center">
+      <canvas id="sign-invest"></canvas>
+    </div>
+  </div>
+</div>

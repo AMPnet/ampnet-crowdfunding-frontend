@@ -23,4 +23,18 @@ export class OffersService {
     ]), API.tokenHeaders());
   }
 
+  generateTransactionToGreenvest(projectID: number, investAmount: number) {
+
+    return this.http.get(API.generateComplexRoute(this.projectEndpoint, [
+      projectID.toString(), "invest"
+    ]), {
+      params: {
+        "amount": investAmount.toString()
+      },
+      headers: {
+        "Authorization" : API.tokenHeaders().headers.Authorization
+      }
+    });
+
+  }
 }

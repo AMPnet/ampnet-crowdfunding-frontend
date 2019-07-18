@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { OrganizationService } from '../organizations/organization-service';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { displayBackendError } from '../utilities/error-handler';
+import { ProjectModel } from '../projects/create-new-project/project-model';
 
 
 declare var _:any;
@@ -14,7 +15,7 @@ declare var _:any;
 })
 export class ManageProjectsComponent implements OnInit {
 
-  manageProjectsModel: ManageProjectsModel[];
+  manageProjectsModel: ProjectModel[];
 
   @Input() groupID: number;
 
@@ -25,13 +26,7 @@ export class ManageProjectsComponent implements OnInit {
   }
 
   ngOnInit() {
-
-    this.manageProjectsModel = _.fill(Array(3), {
-      name: "Vjetroelektrana Orjak Greda",
-      locationName: "Croatia",
-      fundingNeeded: "50000",
-      groupOwnerName: "Greenpeace Cro"
-    });
+    this.getProjectsForGroup();
 
   }
 
@@ -39,7 +34,8 @@ export class ManageProjectsComponent implements OnInit {
     SpinnerUtil.showSpinner();
     this.orgService.getAllProjectsForOrganization(this.groupID).subscribe((res: any) => {
       SpinnerUtil.hideSpinner();
-      
+      console.log(res);
+      this.manageProjectsModel = res.projects;
     }, err => {
       SpinnerUtil.hideSpinner();
       displayBackendError(err);

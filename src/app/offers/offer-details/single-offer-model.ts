@@ -14,6 +14,7 @@ interface SingleOfferModel {
     max_per_user: number,
     main_image: string,
     gallery: [string],
+    documents: [string],
     news: [string],
     active: boolean,
     organization: OrganizationChildModel,

@@ -16,21 +16,30 @@
         </div>
         
         <div class="mt-2 d-flex flex-row justify-content-between gray-text">
-          <div>
+          <!-- <div>
             <div class=" font-weight-bold">16%</div>
             <div>Funded</div>
-          </div>
-          <div>
+          </div> -->
+          <div class="mt-2">
             <div class=" font-weight-bold">$17,322,132</div>
-            <div>Raised</div>
+            <div class="mt-1 explainer-mini">
+              <i class="fas fa-chart-bar mr-2"></i>
+              Raised
+            </div>
           </div>
-          <div>
-            <div class=" font-weight-bold">{{component.endDate}}</div>
-            <div>Deadline</div>
+          <div class="mt-2">
+            <div class="font-weight-bold">{{component.endDate}}</div>
+            <div class="explainer-mini mt-1">
+              <i class="fas fa-clock mr-2"></i>
+              Deadline
+            </div>
           </div>
-          <div>
+          <div class="mt-2"> 
             <div class=" font-weight-bold">1,322</div>
-            <div>Investors</div>
+            <div class="explainer-mini mt-1">
+              <i class="fas fa-crown mr-2"></i>
+              Investors
+            </div>
           </div>
         </div>
     </div>
@@ -40,6 +49,7 @@
         <div class="h3 text-uppercase gray-text">
             {{component.title}}
           </div>
+          <div class="explainer-mini text-uppercase">By: {{component.owner}}</div>
           <hr>
           <div class="p gray-text text-justify mb-3">
               {{component.description}}

@@ -13,16 +13,12 @@
 	</div>
 
 	<div *ngFor="let project of manageProjectsModel" class="col-lg-6 mb-3">
-		<div class="card px-3 cursor-pointer" routerLink="manage_project/12">
+		<div class="card px-3 cursor-pointer" routerLink="manage_project/{{project.id}}">
 			<div class="card-body d-flex flex-column gray-text">
 				<div class="d-flex flex-row justify-content-between text-left">
 					<div>
 						<div class="explainer-mini text-uppercase mb-2">Name</div>
 						<b>{{project.name}}</b>
-					</div>
-					<div>
-						<div class="explainer-mini text-uppercase mb-2">Owner</div>
-						{{project.groupOwnerName}}
 					</div>
 				</div>
 			</div>

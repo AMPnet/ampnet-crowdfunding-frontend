@@ -60,6 +60,7 @@ import { ManageProjectsComponent } from './manage-projects/manage-projects.compo
 import { ManageSingleProjectComponent } from './manage-projects/manage-single-project/manage-single-project.component';
 import { ApproveOrganizationsComponent } from './organizations/approve-organizations/approve-organizations.component';
 import { NewsPreviewComponent } from './news-preview/news-preview.component';
+import { VerifySignOfferComponent } from './offers/verify-sign-offer/verify-sign-offer.component';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -140,6 +141,7 @@ export function jwtOptionsFactory() {
     ManageSingleProjectComponent,
     ApproveOrganizationsComponent,
     NewsPreviewComponent,
+    VerifySignOfferComponent,
   ],
   imports: [
     BrowserModule,

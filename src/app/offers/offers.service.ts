@@ -37,4 +37,10 @@ export class OffersService {
     });
 
   }
+
+  generateTransactionToConfirmGreenvest(projectID: number) {
+    return this.http.get(API.generateComplexRoute(this.projectEndpoint, [
+      projectID.toString(), "invest", "confirm"
+    ]), API.tokenHeaders())
+  }
 }

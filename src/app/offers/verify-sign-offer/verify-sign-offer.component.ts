@@ -41,17 +41,23 @@ export class VerifySignOfferComponent implements OnInit {
 
   generateInvestmentCode() {
     SpinnerUtil.showSpinner();
-    this.offerService.generateTransactionToGreenvest(this.project.id, this.investAmount)
-      .subscribe((res: any) => {
-        SpinnerUtil.hideSpinner();
-        QRCode.toCanvas(document.getElementById("sign-invest"), res, (err) => {
-          console.log(err);
-        });
-      }, err => {
-        displayBackendError(err);
-        SpinnerUtil.hideSpinner();
-      });
+    // this.offerService.generateTransactionToGreenvest(this.project.id, this.investAmount)
+    //   .subscribe((res: any) => {
+    //     SpinnerUtil.hideSpinner();
+    //     QRCode.toCanvas(document.getElementById("sign-invest"), 
+    //     JSON.stringify(res), (err) => {
+    //       console.log(err);
+    //     });
+    //   }, err => {
+    //     displayBackendError(err);
+    //     SpinnerUtil.hideSpinner();
+    //   });
 
+    this.offerService.generateTransactionToConfirmGreenvest(this.project.id).subscribe(res => {
+      SpinnerUtil.hideSpinner();
+      QRCode.toCanvas(document.getElementById("sign-invest"), 
+        JSON.stringify(res), console.log);
+    }, displayBackendError)
     
   }
 }

@@ -7,21 +7,21 @@ import { API } from '../utilities/endpoint-manager';
 })
 export class IssuingAuthorityService {
 
-  issuerAddress = "";
+  issuerAddress = "0xC2500930248218f80187f07630A155F675c93930";
   endpoint = "/issuer"
   
   constructor(private http: HttpClient) { }
 
   mintTokens(amount: number, userUUID: string) {
-    this.tokenIssuingCall(amount, userUUID, "mint");
+    return this.tokenIssuingCall(amount, userUUID, "mint");
   }
 
   burnTokens(amount: number, userUUID: string) {
-    this.tokenIssuingCall(amount, userUUID, "burn");
+    return this.tokenIssuingCall(amount, userUUID, "burn");
   }
 
   private tokenIssuingCall(amount: number, userUUID: string, type: string) {
-    this.http.get(API.generateComplexRoute(this.endpoint, [type]), {
+    return this.http.get(API.generateComplexRoute(this.endpoint, [type]), {
       params: {
         "amount": amount.toString(),
         "uuid": userUUID,

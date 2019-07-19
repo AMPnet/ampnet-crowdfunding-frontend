@@ -1,9 +1,9 @@
 <div class="container root-content-container">
 
-	<div *ngIf="(wallet == undefined) && checkComplete" class="row">
+	<div *ngIf="(wallet == undefined)" class="row">
 		<h5 class="col-md-12">Initialize wallet</h5>
-		<input class="col-md-12 mb-3" type="text" placeholder="Address" id="addr">
-		<input class="col-md-12" type="text" placeholder="Public key" id="pubkey">
+		<input class="col-md-12 mb-3 form-control" type="text" placeholder="Address" id="addr">
+		<input class="col-md-12 form-control" type="text" placeholder="Public key" id="pubkey">
 		<button (click)="submitClicked()" class="btn btn-primary mt-3 px-5 py-3">Init</button>
 	</div>
 
@@ -17,7 +17,7 @@
 								<span class="explainer-mini text-uppercase col-md-6">
 									<h4>
 										<div class="explainer-mini text-uppercase">Balance</div>
-										<h4 class="mt-2">{{wallet.currency}} {{wallet.balance}}</h4>
+										<h4 class="mt-2">{{wallet.currency}}{{wallet.balance}}</h4>
 									</h4>
 								</span>
 								<span class="col-md-6 mt-3">
@@ -47,6 +47,32 @@
 			</div>
 		</div>
 
+	</div>
+
+	<hr>
+
+	<div class="text-center w-100 mt-5">
+		Due to security concerns, you must download the <b>AMPnet Wallet</b> application from Apple App Store or Google Play Store and 
+		authorize your investments with two devices. This is done to protect your investments. <br> <br>
+		Download the <b>AMPnet Wallet</b> app and enter the code you see on the screen after finishing registration.
+	</div>
+
+	<div class="d-flex justify-content-center flex-column text-center">
+		<h5 class="w-100 mt-5">Enter pairing code from the AMPnet Wallet mobile application</h5>
+		<div class="pairing-code-holder d-flex flex-row w-100 justify-content-center mt-5">
+			<input type="text" class="form-control mx-2" style="height: 50px; width: 50px" name="" id="">
+			<input type="text" class="form-control mx-2" style="height: 50px; width: 50px" name="" id="">
+			<input type="text" class="form-control mx-2" style="height: 50px; width: 50px" name="" id="">
+			<input type="text" class="form-control mx-2" style="height: 50px; width: 50px" name="" id="">
+			<input type="text" class="form-control mx-2" style="height: 50px; width: 50px" name="" id="">
+			<input type="text" class="form-control mx-2" style="height: 50px; width: 50px" name="" id="">
+		</div>
+		<div class="mt-5">
+			<button class="btn btn-primary btn-action-a px-5">
+				<i class="fas fa-cannabis mr-2"></i>
+				Pair	
+			</button>
+		</div>
 	</div>
 
 </div>

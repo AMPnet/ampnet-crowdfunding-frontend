@@ -81,6 +81,7 @@ img {
 	height: 290px;
 	word-wrap: break-word;
 	overflow: hidden;
+	text-overflow: ellipsis;
 	margin-bottom: 20px;
 }
 

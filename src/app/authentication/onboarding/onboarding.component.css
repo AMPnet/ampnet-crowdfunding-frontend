@@ -1,4 +1,14 @@
 .root {
     width: 100%;
-    height: 100%;
+    height: 100vh;
+}
+
+.onboarding-container {
+    background: url("../../../assets/hero-back.png");
+    background-size: cover;
+}
+
+.identyum-master-wrapper {
+    font-family: 'Quicksand', sans-serif!important;
+	font-weight: 400;
 }

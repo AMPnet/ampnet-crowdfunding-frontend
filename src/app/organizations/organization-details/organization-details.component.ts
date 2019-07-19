@@ -8,7 +8,8 @@ import * as QRCode from 'qrcode';
 import swal from 'sweetalert2';
 import { OrganizationModel } from './organization-model';
 import { WalletModel } from './organization-model';
- 
+import { MemberModel } from '../member-model';
+
 declare var $: any;
 
 @Component({
@@ -24,6 +25,7 @@ export class OrganizationDetailsComponent implements OnInit {
   organization: OrganizationModel;
   orgWallet: WalletModel;
   emailInviteInput: any;
+  orgMembers: MemberModel[];
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -36,6 +38,7 @@ export class OrganizationDetailsComponent implements OnInit {
       this.getOrganizationWallet(() => {
         SpinnerUtil.hideSpinner()
       });
+      this.getOrgMembers();
     });
 
   }
@@ -57,7 +60,7 @@ export class OrganizationDetailsComponent implements OnInit {
       this.orgWallet = res
       onComplete();
     }, err => {
-      if(err.error.err_code == "0501") { // 0501 meaning - "Missing wallet for org"
+      if(err.status == "404") { // 0501 meaning - "Missing wallet for org"
         this.initializeWalletClicked();
       } else {
         displayBackendError(err);
@@ -105,6 +108,18 @@ export class OrganizationDetailsComponent implements OnInit {
       alert(JSON.stringify(res));
     }, err => {
       console.log(err);
+    })
+  }
+
+  getOrgMembers() {
+    SpinnerUtil.showSpinner();
+    this.organizationService.getMembersForOrganization(this.organization.id).subscribe((res: any) => {
+      SpinnerUtil.hideSpinner();
+      let members: MemberModel[] = res.members;
+      alert(JSON.stringify(members));
+      this.orgMembers = members;
+    }, err => {
+      displayBackendError(err);
     })
   }
 }

@@ -4,7 +4,8 @@ import swal from 'sweetalert2';
 import { WalletModel } from '../models/WalletModel';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { displayBackendError } from '../utilities/error-handler';
-
+import { prettyCurrency } from '../utilities/currency-util';
+import * as numeral from 'numeral';
 
 declare var $:any;
 
@@ -30,7 +31,6 @@ export class WalletComponent implements OnInit {
 
     this.walletService.initWallet(addr, pubKey).subscribe(res => {
       alert(JSON.stringify(res));
-      this.checkComplete = true;
     }, err => {
       alert(err);
     });
@@ -41,9 +41,13 @@ export class WalletComponent implements OnInit {
     this.walletService.getWallet().subscribe(res => {
       SpinnerUtil.hideSpinner();
       this.wallet = res;
+      this.wallet.currency = prettyCurrency(res.currency);
+      this.wallet.balance = numeral(res.balance).format('0,0');
+      this.checkComplete = true;
     }, err => {
       SpinnerUtil.hideSpinner();
       displayBackendError(err);
+      this.checkComplete = true;
     });
   }
 

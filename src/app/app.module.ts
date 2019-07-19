@@ -61,6 +61,7 @@ import { ManageSingleProjectComponent } from './manage-projects/manage-single-pr
 import { ApproveOrganizationsComponent } from './organizations/approve-organizations/approve-organizations.component';
 import { NewsPreviewComponent } from './news-preview/news-preview.component';
 import { VerifySignOfferComponent } from './offers/verify-sign-offer/verify-sign-offer.component';
+import { RevenueShareComponent } from './project/revenue-share/revenue-share.component';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -142,6 +143,7 @@ export function jwtOptionsFactory() {
     ApproveOrganizationsComponent,
     NewsPreviewComponent,
     VerifySignOfferComponent,
+    RevenueShareComponent,
   ],
   imports: [
     BrowserModule,

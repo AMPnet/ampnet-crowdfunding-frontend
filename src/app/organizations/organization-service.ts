@@ -87,5 +87,11 @@ export class OrganizationService {
             [orgID.toString()]    
         ), API.tokenHeaders());
     }
+    
+    getMembersForOrganization(orgID: number) {
+        return this.http.get(API.generateComplexRoute(this.endpoint, [
+            orgID.toString(), "members"
+        ]), API.tokenHeaders());
+    }
 
 }

@@ -2,7 +2,20 @@
   
   <!-- Wallet exists -->
   <div *ngIf="wallet != undefined" class="row row-eq-height">
-    <h5 class="text-uppercase mb-3 col-md-12">Manage your project</h5>
+    <h5 class="text-uppercase mb-3 col-md-8">Manage your project</h5>
+    <div class="col-md-4">
+      <button routerLink="/dash/offers/{{project.id}}" class="btn btn-primary float-right">
+        <i class="fas fa-anchor mr-2"></i> 
+        Preview project
+      </button>
+    </div>
+
+    <div class="col-md-12 mt-3 mb-3">
+      <button routerLink="revenue_share" class="w-100 btn btn-danger py-3">
+        <i class="fas fa-chart-pie mr-2"></i>
+        Start revenue share
+      </button>
+    </div>
 
     <div class="col-md-12 mb-2">
       <div class="explainer-mini text-uppercase">Name</div>
@@ -49,8 +62,8 @@
 
     <div *ngFor="let file of project.documents; let i = index" class="col-md-6 mt-3">
       <div class="card">
-        <div class="card-body">
-          <span>{{file.name}}</span>
+        <div class="card-body d-flex flex-row justify-content-between">
+          <div class="w-75" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{file.name}}</div>
           <span class="float-right">
             <span class="mr-3 cursor-pointer gray-text"
               (click)="deleteFile(file.id)">

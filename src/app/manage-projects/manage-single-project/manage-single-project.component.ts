@@ -55,7 +55,7 @@ export class ManageSingleProjectComponent implements OnInit {
         this.wallet = res;
         setTimeout(() => {
           this.setUploadAreas();
-        }, 1000)
+        }, 300)
       }, err => {
         alert(JSON.stringify(err));
         if(err.status == "404") { // 0501 meaning - "Missing wallet for org"
@@ -83,7 +83,7 @@ export class ManageSingleProjectComponent implements OnInit {
     let linkHolder = $("#newsLink").val();
     if(validURL(linkHolder)) {
       this.manageProjectsService.addNewsToProject(this.project.id, linkHolder).subscribe(res => {
-        window.location.reload();
+        this.getProject(() => { });
       }, err => {
         displayBackendError(err);
       });
@@ -96,7 +96,7 @@ export class ManageSingleProjectComponent implements OnInit {
     SpinnerUtil.showSpinner();
     this.manageProjectsService.deleteNewsFromProject(this.project.id, link).subscribe(res => {
       SpinnerUtil.hideSpinner();
-      window.location.reload();''
+     this.getProject(() => {});
     }, err => {
       SpinnerUtil.hideSpinner();
       displayBackendError(err);
@@ -172,6 +172,8 @@ export class ManageSingleProjectComponent implements OnInit {
         "name", "filename"
       ],
       fieldName: "image"
+    }).on('upload-success', () => {
+      this.getProject(() => {});
     });
 
   }
@@ -199,7 +201,11 @@ export class ManageSingleProjectComponent implements OnInit {
       metaFields: [
         "name", "filename"
       ],
-      fieldName: "file"
+      fieldName: "file",
+      bundle: false
+    }).on('upload-success', () => {
+      this.getProject(() => {});
+      filesUppy.close();
     });
   }
 

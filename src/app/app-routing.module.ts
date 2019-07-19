@@ -33,6 +33,7 @@ import { ManageProjectsComponent } from './manage-projects/manage-projects.compo
 import { ManageSingleProjectComponent } from './manage-projects/manage-single-project/manage-single-project.component';
 import { ApproveOrganizationsComponent } from './organizations/approve-organizations/approve-organizations.component';
 import { VerifySignOfferComponent } from './offers/verify-sign-offer/verify-sign-offer.component';
+import { RevenueShareComponent } from './project/revenue-share/revenue-share.component';
 
 // Defines public routes accessible to everyone
 // (landing page, login, register, contact help, etc...)
@@ -73,7 +74,8 @@ const routes: Routes = [
       { path: 'manage_groups/:id/projects', component: ManageProjectsComponent },
       { path: 'manage_groups/:groupID/manage_project/:projectID', component: ManageSingleProjectComponent }, 
       { path: 'approve_organizations', component: ApproveOrganizationsComponent },
-      { path: 'offers/:offerID/invest/:investAmount/:investCurrency/verify_sign', component: VerifySignOfferComponent}
+      { path: 'offers/:offerID/invest/:investAmount/:investCurrency/verify_sign', component: VerifySignOfferComponent},
+      { path: 'manage_groups/:groupID/manage_project/:projectID/revenue_share', component: RevenueShareComponent }
     ]
   },
   { path: 'sign_up', component: SignUpComponent },

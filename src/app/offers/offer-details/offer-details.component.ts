@@ -67,6 +67,9 @@ export class OfferDetailsComponent implements OnInit {
     this.offerModel.expected_funding = numeral(res.expected_funding).format("0,0");
     this.offerModel.currency = prettyCurrency(res.currency);
     this.offerModel.investor_count = numeral(1270).format("0,0");
+    this.offerModel.current_funding = numeral(res.current_funding).format('0,0');
+    this.offerModel.min_per_user = numeral(res.min_per_user).format('0,0');
+    this.offerModel.max_per_user = numeral(res.max_per_user).format('0,0');
   }
 
   getOfferDetails() {

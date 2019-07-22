@@ -59,7 +59,8 @@ export class SignUpComponent implements OnInit {
       that.authService.signIn(provider).then(res => {
 
         alert(that.uuidParam);
-        that.signUpService.performSocialSignup(res.provider, res.authToken, that.uuidParam).subscribe(usr => {
+        that.signUpService.performSocialSignup(res.provider, 
+          res.authToken, that.uuidParam).subscribe(usr => {
 
           SpinnerUtil.hideSpinner();
           usr["auth"] = res.authToken;

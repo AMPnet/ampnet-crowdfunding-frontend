@@ -39,8 +39,6 @@ export class InvestComponent implements OnInit {
     this.expectedROI = 7.5;
     this.getWalletBalance();
     this.getProject();
-    
-    
   }
 
   getWalletBalance() {
@@ -48,6 +46,8 @@ export class InvestComponent implements OnInit {
     this.walletService.getWallet().subscribe(res => {
       SpinnerUtil.hideSpinner();
       this.wallet = res;
+      this.wallet.currency = prettyCurrency(res.currency);
+      this.wallet.balance = numeral(res.balance).format("0,0");
     }, err => {
       SpinnerUtil.hideSpinner();
       displayBackendError(err);

@@ -78,7 +78,7 @@ const routes: Routes = [
       { path: 'manage_groups/:groupID/manage_project/:projectID/revenue_share', component: RevenueShareComponent }
     ]
   },
-  { path: 'sign_up', component: SignUpComponent },
+  { path: 'sign_up/:userUUID', component: SignUpComponent },
   { path: 'confirm_email', component: ConfirmEmailComponent },
   { path: 'overview', component: OffersComponent },
   { path: 'fill_data', component: FillDataComponent },

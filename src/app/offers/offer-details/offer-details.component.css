@@ -46,3 +46,9 @@
 	font-weight: bold;
 	vertical-align: middle;
 }
+
+@media(max-width: 800px) {
+	.invest-button-holder {
+		margin-top: 2em;
+	}
+}

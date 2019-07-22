@@ -57,7 +57,6 @@ export class ManageSingleProjectComponent implements OnInit {
           this.setUploadAreas();
         }, 300)
       }, err => {
-        alert(JSON.stringify(err));
         if(err.status == "404") { // 0501 meaning - "Missing wallet for org"
           this.createInitQRCODE();
         } else {

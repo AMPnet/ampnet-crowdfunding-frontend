@@ -1,4 +1,4 @@
-<div *ngIf="userUUID.length > 0" class="container root-content-container">
+<div id="admin-root" *ngIf="userUUID.length > 0" class="container root-content-container">
   
   <div class="row">
 
@@ -15,14 +15,10 @@
       <option data-tokens="frosting">Terrence McKenna (0x349829384)</option>
     </select>
     
-    <div class="col-md-8 mb-3">
-      <button type="button" class="btn btn-primary px-5 py-2 w-100">
-        Upload payment receipt
-      </button>
+    <div class="col-md-12 mb-3">
+      <div id="receipt-upload-area-mint"></div>
     </div>
-    <div class="col-md-4 mb-3">
-        <span>No file uploaded.</span> 
-    </div>
+
     <div class="input-group mb-3 col-md-12">
       <input type="text" class="form-control" placeholder="Notes" aria-label="Username" aria-describedby="basic-addon1">
     </div>
@@ -34,7 +30,7 @@
       <hr>
     </div>
 
-    <div class="col-md-12 mb-3 explainer-mini text-uppercase">Burn Tokens</div>
+    <!-- <div class="col-md-12 mb-3 explainer-mini text-uppercase">Burn Tokens</div>
 
     <div class="input-group mb-3 col-md-12">
         <input id="mint-amount" type="number" class="form-control" placeholder="Amount in Euro" aria-label="Username" aria-describedby="basic-addon1">
@@ -60,9 +56,10 @@
       </div>
       <div class="col-md-12">
         <div class="btn btn-danger w-25 py-2 float-right">Burn</div>
-      </div>
+      </div> -->
 
       <div class="col-md-12">
+        <div class="explainer-mini text-uppercase">Sign transaction</div>
         <canvas id="mint-burn-sign-canvas"></canvas>
       </div>
 

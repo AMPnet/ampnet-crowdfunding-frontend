@@ -35,9 +35,8 @@ export class SignUpComponent implements OnInit {
   countries: CountryModel[];
 
   ngOnInit() {
-    this.route.queryParams.subscribe(params => {
-      this.uuidParam = params['web_uuid'];
-    });
+    this.uuidParam = this.route.snapshot.params.userUUID;
+    alert(this.uuidParam);
   }
 
   getCountries() {

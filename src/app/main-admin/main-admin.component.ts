@@ -4,8 +4,11 @@ import { UserService } from '../user-utils/user-service';
 import { displayBackendError } from '../utilities/error-handler';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import * as QRCode from 'qrcode';
+import * as Uppy from 'uppy';
+
 declare var _: any;
 declare var $: any;
+
 
 @Component({
   selector: 'app-main-admin',
@@ -29,6 +32,26 @@ export class MainAdminComponent implements OnInit {
       displayBackendError(err);
     })
 
+    let mintReceiptUppy =  Uppy.Core({
+      id: "payment-receipt-upload-uppy",
+      restrictions: {
+        maxFileSize: null,
+        maxNumberOfFiles: 1,
+        minNumberOfFiles: 1,
+        allowedFileTypes: null
+      }
+    });
+
+    setTimeout(() => {
+      mintReceiptUppy.use(Uppy.Dashboard, {
+        target: document.getElementById("receipt-upload-area-mint"),
+        height: 150,
+        inline: true,
+        hideUploadButton: true,
+        width: $("#admin-root").width()
+      });
+    }, 300)
+    
   }
 
   mintButtonClicked() {

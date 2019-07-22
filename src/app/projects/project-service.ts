@@ -62,4 +62,18 @@ export class ProjectService {
             projectID.toString()
         ]), API.tokenHeaders());
     }
+
+    updateProject(projectID: number, name: string, description: string,
+        location: string, locationText: string, roi: string, active: boolean) {
+        return this.http.post(API.generateComplexRoute(this.endpoint, [
+            projectID.toString()
+        ]), { 
+            "name": name,
+            "description": description,
+            "location": location,
+            "location_text": locationText,
+            "return_on_investment": roi,
+            "active": active.toString()
+        }, API.tokenHeaders())
+    }
 }

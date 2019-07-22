@@ -1,7 +1,41 @@
-<div class="root root-content-container">
+<div *ngIf="(projectWallet != undefined) && (projectModel != undefined)" class="root root-content-container">
   <div class="row">
+    <div class="col-md-12 mb-3">
+      <h4>{{projectModel.name}}</h4>
+    </div>
     <div class="col-md-12">
-      <div class="explainer-mini">Revenue share procedure</div>
+      <div class="card w-100 h-100">
+        <div class="card-body">
+          <div class="card-title">
+            <div class="d-flex flex-row justify-content-between">
+              <div class="explainer-mini">Project wallet</div>
+              <div>
+                <button class="btn btn-primary px-3 py-2 mr-2">Deposit</button>
+                <button class="btn btn-primary px-3 py-2">Withdraw</button>
+              </div>
+            </div>
+
+            <hr>
+          </div>
+          <div class="card-text">
+            <h5>Balance</h5>
+            <h5>{{projectWallet.currency}}{{projectWallet.balance}}</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <hr>
+    </div>
+    <div class="col-md-12">
+      <div class="explainer-mini mt-2 mb-2">Enter amount of money to be paid out to investors</div>
+      <input type="numer" class="form-control px-3 py-3" name="" id="">
+    </div>
+    <div class="col-md-12 mt-3">
+      <button class="btn btn-danger btn-action-a px-5 float-right">
+        <i class="fas fa-chart-pie mr-2"></i>
+        Start payout
+      </button>
     </div>
   </div>
 </div>

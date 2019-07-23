@@ -27,13 +27,10 @@
         </ul>
     </div>
     <div class="d-flex justify-content-center mt-5" *ngIf="(organizations != undefined) && (organizations.length == 0)">
-      <div class="d-flex flex-column mt-5">
+      <div class="d-flex flex-column mt-3">
         <div class="d-flex text-center">
           You currently don't have access to any groups.
         </div>
-        <button routerLink="/dash/create_organization" class="mt-5 btn btn-primary mt-3 px-5 py-3 text-uppercase">
-          Create a group
-        </button>
       </div>
     </div>
 

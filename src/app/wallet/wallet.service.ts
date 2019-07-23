@@ -22,4 +22,10 @@ export class WalletService {
   getWallet() {
     return this.http.get<WalletModel>(API.generateRoute(this.endpoint), API.tokenHeaders());
   }
+
+  getInfoFromPairingCode(pairingCode: string) {
+    return this.http.get(API.generateComplexRoute(this.endpoint, [
+      "pair", pairingCode
+    ]), API.tokenHeaders())
+  }
 }

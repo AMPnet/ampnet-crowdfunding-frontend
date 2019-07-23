@@ -8,6 +8,7 @@ import { prettyCurrency } from '../utilities/currency-util';
 import * as numeral from 'numeral';
 import * as QRCode from 'qrcode';
 import { API } from '../utilities/endpoint-manager';
+import { ChildActivationEnd } from '@angular/router';
 
 declare var $:any;
 
@@ -24,10 +25,7 @@ export class WalletComponent implements OnInit, AfterViewInit {
   checkComplete = false;
 
   ngOnInit() {
-    
-
     this.getUserWallet();
-
   }
 
   ngAfterViewInit() {
@@ -35,14 +33,14 @@ export class WalletComponent implements OnInit, AfterViewInit {
       console.log);
   }
 
-  submitClicked() {
-    let addr = $("#addr").val();
-    let pubKey = $("#pubkey").val();
-
+  startWalletInit(addr: string, pubKey: string) {
+    SpinnerUtil.showSpinner();
     this.walletService.initWallet(addr, pubKey).subscribe(res => {
-      alert(JSON.stringify(res));
+      SpinnerUtil.hideSpinner();
+      this.getUserWallet();
     }, err => {
-      alert(err);
+      SpinnerUtil.hideSpinner();
+      displayBackendError(err);
     });
   }
 
@@ -58,6 +56,23 @@ export class WalletComponent implements OnInit, AfterViewInit {
       SpinnerUtil.hideSpinner();
       displayBackendError(err);
       this.checkComplete = true;
+    });
+  }
+
+  pairButtonClicked() {
+    var inputs = $(".pairing-code-holder").children();
+    var pairingCodeArray: String[] = [];
+    inputs.each((i, item) => {
+      pairingCodeArray.push($(item).val())
+    });
+    var pairingString = pairingCodeArray.join("")
+    SpinnerUtil.showSpinner();
+    this.walletService.getInfoFromPairingCode(pairingString).subscribe((res: any) => {
+      SpinnerUtil.hideSpinner();
+      this.startWalletInit(res.address, res.public_key);
+    }, err => {
+      SpinnerUtil.hideSpinner();
+      displayBackendError(err);
     });
   }
 

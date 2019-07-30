@@ -1,7 +1,8 @@
 <div (click)="onClickedItem()" class="card-holder cursor-pointer">
   <div class="card-left-holder pb-3">
     <div class="card-img-holder">
-      <img class="card-img" class="w-100 h-100" style="background: gray" src="{{component.headerImageUrl}}" alt="">
+      <img class="w-100 h-100 card-img-base"
+      src="{{component.headerImageUrl}}" alt="">
     </div>
     <div class="card-progress-holder">
         
@@ -32,13 +33,6 @@
             <div class="explainer-mini mt-1">
               <i class="fas fa-clock mr-2"></i>
               Deadline
-            </div>
-          </div>
-          <div class="mt-2"> 
-            <div class=" font-weight-bold">1,322</div>
-            <div class="explainer-mini mt-1">
-              <i class="fas fa-crown mr-2"></i>
-              Investors
             </div>
           </div>
         </div>

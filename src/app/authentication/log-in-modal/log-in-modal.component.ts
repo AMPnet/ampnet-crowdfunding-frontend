@@ -38,7 +38,7 @@ export class LogInModalComponent implements OnInit {
     this.auth.signIn(provider).then(res => {
       this.loginService.performSocialLogin(res.provider, res.authToken).subscribe(res => {
         console.log(res);
-        localStorage.setItem('access_token', (<any>res).token);
+        localStorage.setItem('access_token', (<any>res).access_token);
         SpinnerUtil.hideSpinner();
         this.router.navigate(['dash']);
       }, err => {
@@ -56,7 +56,7 @@ export class LogInModalComponent implements OnInit {
     this.loginService.performEmailLogin(this.email, this.password)
       .subscribe(result => {
         SpinnerUtil.hideSpinner();
-        localStorage.setItem('access_token', result.token);
+        localStorage.setItem('access_token', result.access_token);
         this.navigateToDash();
       }, error => {
         SpinnerUtil.hideSpinner();

@@ -4,8 +4,11 @@
 }
 
 .onboarding-container {
-    background: url("../../../assets/hero-back.png");
-    background-size: cover;
+    background: url("../../../assets/bg-hero-light.png");
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-position-x: right;
+	background-position-y: bottom;
 }
 
 .identyum-master-wrapper {

@@ -4,20 +4,44 @@
   <div *ngIf="wallet != undefined" class="row row-eq-height">
     <h5 class="text-uppercase mb-3 col-md-8">Manage your project</h5>
     <div class="col-md-4">
-      <button routerLink="/dash/offers/{{project.id}}" class="btn btn-primary btn-action-a px-3 float-right">
+      <button routerLink="/dash/offers/{{project.id}}" class="btn btn-primary w-100 py-3 float-right">
         <i class="fas fa-anchor mr-2"></i>
         Preview project
       </button>
     </div>
 
-    <div class="col-md-12 mt-3 mb-3">
-      <button routerLink="revenue_share" class="w-100 btn btn-danger py-3">
-        <i class="fas fa-chart-pie mr-2"></i>
-        Start revenue share
+    <div class="col-md-12 mt-3 mb-5">
+      <button routerLink="revenue_share" class="w-100 btn btn-info py-3">
+        <i class="fas fa-money-bill-wave mr-2"></i>
+        Manage payments
       </button>
     </div>
 
-    <div class="col-md-12 mb-2">
+    <div class="col-md-8">
+      <div class="explainer-mini text-uppercase mb-2">Project status</div> 
+      <span *ngIf="project.active">
+        <i class="fas fa-check-circle mr-2"></i>
+        Public
+      </span>
+      <span *ngIf="!project.active">
+        <i class="fas fa-toggle-off mr-2"></i>
+        Hidden
+      </span>
+    </div>
+    <div class="col-md-4">
+      <button (click)="toggleProjectStatusClicked()" class="btn btn-info float-right h-100 w-100">
+        <span *ngIf="project.active">
+          <i class="fas fa-eye-slash mr-2"></i>
+          Hide project
+        </span>
+        <span *ngIf="!project.active">
+          <i class="fas fa-eye mr-2"></i>
+          Show project
+        </span>
+      </button>
+    </div>
+
+    <div class="col-md-12 mb-2 mt-5">
       <div class="explainer-mini text-uppercase">Name</div>
     </div>
 

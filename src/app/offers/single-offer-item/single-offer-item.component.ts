@@ -14,7 +14,9 @@ export class SingleOfferItemComponent implements OnInit {
   constructor(private router: Router) { }
 
   ngOnInit() {
-
+    if(this.component.headerImageUrl == null) {
+      this.component.headerImageUrl = "../../../assets/noimage.png"
+    }
   }
 
   onClickedItem() {

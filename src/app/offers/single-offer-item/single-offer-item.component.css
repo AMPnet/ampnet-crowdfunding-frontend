@@ -5,6 +5,7 @@
 	transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 	padding-bottom: 10px;  
 	border-radius: 5px;
+	background: #fefefe;
 }
 
 @media(max-width: 800px) {
@@ -58,6 +59,10 @@
 .card-img-holder {
 	height: 300px;
 	margin-bottom: 20px;
+}
+
+.card-img-base {
+	object-fit: cover!important;
 }
 
 

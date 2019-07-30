@@ -9,6 +9,7 @@ import swal from 'sweetalert2';
 import { OrganizationModel } from './organization-model';
 import { WalletModel } from './organization-model';
 import { MemberModel } from '../member-model';
+import { API } from 'src/app/utilities/endpoint-manager';
 
 declare var $: any;
 
@@ -76,8 +77,13 @@ export class OrganizationDetailsComponent implements OnInit {
       this.orgWalletInitialized = false;
       this.txData = JSON.stringify(res.tx);
       this.txID = res.tx_id;
+
+      var qrCodeData = {
+        "tx_data" : res,
+        "base_url": API.APIURL
+      }
       
-      QRCode.toCanvas(document.getElementById("pairing-code"), JSON.stringify(res), (err) => {
+      QRCode.toCanvas(document.getElementById("pairing-code"), JSON.stringify(qrCodeData), (err) => {
         if(err) { alert(err) }
       });
 

@@ -13,7 +13,7 @@ export class OffersService {
 
   getAllOffers() {
     return this.http.get(API.generateComplexRoute(this.projectEndpoint, [
-      "organization/16"
+      "organization/7"
     ]), API.tokenHeaders());
   }
 

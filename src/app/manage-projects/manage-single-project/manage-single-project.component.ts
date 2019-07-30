@@ -69,7 +69,13 @@ export class ManageSingleProjectComponent implements OnInit {
 
   createInitQRCODE() {
     this.projectService.generateTransactionToCreateProjectWallet(this.project.id).subscribe((res) => {
-      QRCode.toCanvas(document.getElementById("pairing-code"), JSON.stringify(res), (err) => {
+
+      var codeData = {
+        "base_url": API.APIURL,
+        "tx_data": res
+      }
+
+      QRCode.toCanvas(document.getElementById("pairing-code"), JSON.stringify(codeData), (err) => {
         if(err) { alert(err) }
       });
     }, err  => {
@@ -137,6 +143,24 @@ export class ManageSingleProjectComponent implements OnInit {
 
     
   // }
+
+  toggleProjectStatusClicked() {
+    SpinnerUtil.showSpinner()
+    this.projectService.updateProject(
+      this.project.id,
+      this.project.name,
+      this.project.description,
+      this.project.location,
+      this.project.location_text,
+      this.project.return_on_investment,
+      !this.project.active
+    ).subscribe(res => {
+      this.getProject(() => {})
+    }, err => {
+      SpinnerUtil.hideSpinner()
+      displayBackendError(err)
+    })
+  }
 
   private setUpUppy(id: string, allowedFileTypes: string[]): Uppy.Core.Uppy {
     return Uppy.Core({

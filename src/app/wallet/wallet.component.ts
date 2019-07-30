@@ -31,6 +31,25 @@ export class WalletComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     QRCode.toCanvas(document.getElementById("url-pairing-canvas"), API.APIURL, 
       console.log);
+    this.bindInputs();
+
+  }
+
+  bindInputs() {
+    var inputs = $(".pairing-code-holder").children();
+    
+    inputs.each((i, item) => {
+      $(item).keyup((e) => {
+        let isBackspace = e.keyCode == 8;
+        if((i == 0) && isBackspace) { return }
+        if((i == inputs.length) && !isBackspace) { return }
+        if(e.keyCode == 8) {
+          inputs.get(i - 1).focus();
+        } else {
+          inputs.get(i + 1).focus();
+        }
+      });
+    });
   }
 
   startWalletInit(addr: string, pubKey: string) {
@@ -67,6 +86,7 @@ export class WalletComponent implements OnInit, AfterViewInit {
     });
     var pairingString = pairingCodeArray.join("")
     SpinnerUtil.showSpinner();
+
     this.walletService.getInfoFromPairingCode(pairingString).subscribe((res: any) => {
       SpinnerUtil.hideSpinner();
       this.startWalletInit(res.address, res.public_key);

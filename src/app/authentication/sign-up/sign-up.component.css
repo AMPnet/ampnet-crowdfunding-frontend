@@ -5,10 +5,11 @@
 } */
 
 #top-container {
-  background-image: url("../../../assets/hero-back.png");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-blend-mode: multiply;
+  background: url("../../../assets/bg-hero-light.png");
+	background-repeat: no-repeat;
+	background-size: auto;
+	background-position-x: right;
+	background-position-y: bottom;
   height: 1000px;;
   width: 100vw;
   padding-bottom: 75px;

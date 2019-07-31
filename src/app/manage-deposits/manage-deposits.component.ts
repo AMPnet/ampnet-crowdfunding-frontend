@@ -1,5 +1,8 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import * as QRCode from 'qrcode'
+import { Router } from '@angular/router';
+
+declare var $: any;
 
 @Component({
   selector: 'app-manage-deposits',
@@ -8,16 +11,21 @@ import * as QRCode from 'qrcode'
 })
 export class ManageDepositsComponent implements OnInit, AfterViewInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
 
   }
 
   ngAfterViewInit() {
-    let code = "asldkjaskldjalksdjalksjdklasjdklajsdlaksjdlkasjdlakjkalsjdalsjdlasjdlaskjdalksdjlakdjaldjaldjalskdjaldjalsdja"
-    QRCode.toCanvas(document.getElementById("minting-code-canvas"), code, 
-      console.log)
+    // let code = "asldkjaskldjalksdjalksjdklasjdklajsdlaksjdlkasjdlakjkalsjdalsjdlasjdlaskjdalksdjlakdjaldjaldjalskdjaldjalsdja"
+    // QRCode.toCanvas(document.getElementById("minting-code-canvas"), code, 
+    //   console.log)
+  }
+
+  getDepositInfoClicked() {
+    let depositCode = $("#deposit-code-input").val();
+    this.router.navigate(["/dash", "manage_deposits", depositCode])
   }
 
 }

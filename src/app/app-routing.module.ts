@@ -38,6 +38,7 @@ import { ManageWithdrawalsComponent } from './manage-withdrawals/manage-withdraw
 import { SingleWithdrawalComponent } from './manage-withdrawals/single-withdrawal/single-withdrawal.component';
 import { ManageDepositsComponent } from './manage-deposits/manage-deposits.component';
 import { DepositComponent } from './deposit/deposit.component';
+import { ManageSingleDepositComponent } from './manage-deposits/manage-single-deposit/manage-single-deposit.component';
 
 // Defines public routes accessible to everyone
 // (landing page, login, register, contact help, etc...)
@@ -83,6 +84,7 @@ const routes: Routes = [
       { path: 'manage_withdrawals', component: ManageWithdrawalsComponent },
       { path: 'manage_withdrawals/:ID', component: SingleWithdrawalComponent },
       { path: 'manage_deposits', component: ManageDepositsComponent },
+      { path: 'manage_deposits/:ID', component: ManageSingleDepositComponent },
       { path: 'wallet/deposit', component: DepositComponent }
     ]
   },

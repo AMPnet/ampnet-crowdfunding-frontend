@@ -13,10 +13,10 @@ export class HereMapComponent implements OnInit {
   public mapElement: ElementRef;
 
   @Input()
-  public lat: any;
+  public lat: string;
 
   @Input()
-  public lng: any;
+  public lng: string;
 
   @Input()
   public width: any;
@@ -25,7 +25,7 @@ export class HereMapComponent implements OnInit {
   public height: any;
 
   @Input()
-  public isForEditing: boolean;
+  public isForEditing: string;
 
   public constructor() { }
 
@@ -58,21 +58,17 @@ export class HereMapComponent implements OnInit {
     <ellipse cx="25.1255" cy="13.6286" rx="3.76884" ry="3.85714" fill="white"/>
     </svg>`;
 
-    map.setCenter({ lat: 44, lng: 17 });
+    map.setCenter({ lat: parseFloat(this.lat), lng: parseFloat(this.lng) });
     map.setZoom(3);
 
     var icon = new H.map.Icon(svgMarkup);
 
+    this.setCurrentMarker(icon, map)
 
-    if(!this.isForEditing) {
-      let coords = { lat: this.lat, lng: this.lng };
-      this.currentMarker = new H.map.Marker(coords, { icon: icon });
-      setTimeout(() => {
-        map.addObject(this.currentMarker);
-      }, 500);
-    }
+    let shouldEdit = (this.isForEditing == "true")
 
-    if (this.isForEditing) {
+    if (shouldEdit) {
+      this.setCurrentMarker(icon, map)
       map.addEventListener('tap', function (evt) {
         var coord = map.screenToGeo(evt.currentPointer.viewportX, evt.currentPointer.viewportY);
         var coords = { lat: coord.lat, lng: coord.lng };
@@ -82,9 +78,18 @@ export class HereMapComponent implements OnInit {
         this.currentMarker = new H.map.Marker(coords, { icon: icon });
         map.addObject(this.currentMarker);
       });
-    }
-
-
+    } 
   }
+
+  setCurrentMarker(icon: any, map: any) {
+    var lat = parseFloat(this.lat)
+    var lng = parseFloat(this.lng)
+    let coords = { lat: lat, lng: lng };
+    this.currentMarker = new H.map.Marker(coords, { icon: icon });
+    setTimeout(() => {
+      map.addObject(this.currentMarker);
+    }, 500);
+  }
+
 
 }

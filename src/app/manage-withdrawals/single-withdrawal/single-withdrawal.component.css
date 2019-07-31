@@ -1,0 +1,9 @@
+@media(max-width: 800px) {
+    .withdrawal-examine-holder {
+        flex-direction: column;
+    }
+
+    .withdrawal-examine-holder div div {
+        margin-top: 1.5em;
+    }
+}

@@ -1,0 +1,17 @@
+<div class="root root-content-container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="explainer-mini text-uppercase">Manage withdrawals</div>
+    </div>
+    <div class="col-md-12 mt-3">
+    
+      <ul class="list-group">
+        <li *ngFor="let withdrawal of withdrawals" class="list-group-item cursor-pointer mt-2"
+          routerLink="{{withdrawal.id}}">
+          <span class="float-left">{{withdrawal.name}}</span>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+</div>

@@ -23,12 +23,10 @@ export class ApproveOrganizationsComponent implements OnInit {
     SpinnerUtil.showSpinner();
     this.orgService.getAllOrganizations().subscribe((res: any) => {
       let model: SingleOrgModel[] = res.organizations;
-      console.log(model);
       SpinnerUtil.hideSpinner();
       this.filterAndAttachOrgsAwaitingApproval(model);
     }, err => {
       SpinnerUtil.hideSpinner();
-      alert(JSON.stringify(err));
     });
   }
 

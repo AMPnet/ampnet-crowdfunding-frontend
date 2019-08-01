@@ -66,6 +66,7 @@ import { SingleWithdrawalComponent } from './manage-withdrawals/single-withdrawa
 import { DepositComponent } from './deposit/deposit.component';
 import { ManageDepositsComponent } from './manage-deposits/manage-deposits.component';
 import { ManageSingleDepositComponent } from './manage-deposits/manage-single-deposit/manage-single-deposit.component';
+import { WithdrawComponent } from './withdraw/withdraw.component';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -153,6 +154,7 @@ export function jwtOptionsFactory() {
     DepositComponent,
     ManageDepositsComponent,
     ManageSingleDepositComponent,
+    WithdrawComponent,
   ],
   imports: [
     BrowserModule,

@@ -3,22 +3,43 @@
     <div class="col-md-12">
         <div class="explainer-mini text-uppercase mb-3">Deposit info</div>
     </div>
-    <div class="col-md-12">
+    <div *ngIf="depositModel != undefined" class="col-md-12">
       <div class="card">
         <div class="card-body">
           <div class="d-flex justify-content-between">
             <div>
               <div class="explainer-mini text-uppercase">Name</div>
+              <div>{{depositModel.user.first_name}} {{depositModel.user.last_name}}</div>
             </div>
             <div>
-              <div class="explainer-mini text-uppercase">IBAN</div>
+              <div class="explainer-mini text-uppercase">Date created</div>
+              <div>{{depositModel.created_at}}</div>
             </div>
             <div>
-              <div class="explainer-mini text-uppercase">Amount</div>
-            </div>
+                <div class="explainer-mini text-uppercase">Reference</div>
+                <div>{{depositModel.reference}}</div>
+              </div>
           </div>
         </div>
       </div>
+      <div *ngIf="depositModel.approved" class="d-flex justify-content-center mt-5">
+        <div>
+            <div class="explainer-mini text-uppercase">Scan the code to issue tokens to user</div>
+            <canvas id="mint-deposit-code"></canvas>
+        </div>
+      
+      </div>
+      <div *ngIf="!depositModel.approved" class="explainer-mini text-uppercase mt-3 mb-2">
+        Confirm deposit amount
+      </div>
+      <input *ngIf="!depositModel.approved" type="number" name="" class="w-100 form-control py-3" id="deposit-amount">
+    </div>
+    <div *ngIf="(depositModel != undefined) && (!depositModel.approved)" class="col-md-12 mt-3">
+      <div id="payment-reciept-upload-target"></div>
+      <button (click)="approveButtonClicked()" class="btn btn-primary w-100 py-3 mt-3">
+        <i class="fas fa-qrcode mr-2"></i>
+        Approve and generate code
+      </button>
     </div>
   </div>
 </div>

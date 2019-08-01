@@ -3,5 +3,49 @@
     <div class="col-md-12">
       <div class="explainer-mini text-uppercase">Deposit</div>
     </div>
+    <div class="col-md-12 mt-3">
+      <div class="explainer-mini text-uppercase">Enter amount to deposit</div>
+      <input class="form-control w-100 py-3 mt-2" type="number" name="" id="deposit-amount">
+      <button (click)="depositButtonClicked()" class="btn btn-primary w-100 py-3 mt-3">
+        <i class="fas fa-money-bill-wave-alt mr-2"></i>
+        Generate payment info
+      </button>
+    </div>
+    
+  </div>
+
+  <div *ngIf="depositModel != undefined" class="mt-5 card">
+    <div class="card-body">
+      <div class="card-title explainer-mini text-uppercase">Payment details</div>
+    </div>
+    <div class="card-text">
+      <div class="row justify-content-between px-3 pb-3">
+        <!-- IBAN -->
+        <div class="col-md-4">
+          <div class="explainer-mini text-uppercase mb-2">
+            <i class="fas fa-piggy-bank mr-2 "></i>
+            IBAN
+          </div>
+          <div>HR23674827482347823</div>
+        </div>
+        <!-- AMOUNT -->
+        <div class="col-md-4">
+          <div class="explainer-mini text-uppercase mb-2">
+            <i class="fas fa-money-bill mr-2"></i>
+            Amount
+          </div>
+          <div>{{depositAmount}}</div>
+        </div>
+        <!-- REFERENCE -->
+        <div class="col-md-4">
+          <div class="explainer-mini text-uppercase mb-2">
+            <i class="fas fa-address-book mr-2"></i>
+            Description
+          </div>
+          <div>{{depositModel.reference}}</div>
+        </div>
+      </div>
+      
+    </div>    
   </div>
 </div>

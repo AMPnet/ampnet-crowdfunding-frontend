@@ -6,6 +6,7 @@ import { displayBackendError } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import * as QRCode from 'qrcode';
 import { OffersService } from '../offers.service';
+import { prettyCurrency } from 'src/app/utilities/currency-util';
 
 @Component({
   selector: 'app-verify-sign-offer',
@@ -20,6 +21,8 @@ export class VerifySignOfferComponent implements OnInit {
   projectID: number;
   investAmount: number;
 
+  clicked: boolean;
+
   project: ProjectModel;
 
   ngOnInit() {
@@ -33,6 +36,7 @@ export class VerifySignOfferComponent implements OnInit {
     this.projectService.getProject(this.projectID).subscribe((res: any) => {
       SpinnerUtil.hideSpinner();
       this.project = res;
+      this.project.currency = prettyCurrency(res.currency)
     }, err => {
       SpinnerUtil.hideSpinner();
       displayBackendError(err);
@@ -40,22 +44,24 @@ export class VerifySignOfferComponent implements OnInit {
   }
 
   generateInvestmentCode() {
+    this.clicked = true
     SpinnerUtil.showSpinner();
-    // this.offerService.generateTransactionToGreenvest(this.project.id, this.investAmount)
-    //   .subscribe((res: any) => {
-    //     SpinnerUtil.hideSpinner();
-    //     QRCode.toCanvas(document.getElementById("sign-invest"), 
-    //     JSON.stringify(res), (err) => {
-    //       console.log(err);
-    //     });
-    //   }, err => {
-    //     displayBackendError(err);
-    //     SpinnerUtil.hideSpinner();
-    //   });
+    this.offerService.generateTransactionToGreenvest(this.project.id, this.investAmount)
+      .subscribe((res: any) => {
+        SpinnerUtil.hideSpinner();
+        QRCode.toCanvas(document.getElementById("sign-invest"), 
+        JSON.stringify(res), (err) => {
+          console.log(err);
+        });
+      }, err => {
+        displayBackendError(err);
+        SpinnerUtil.hideSpinner();
+      });
 
+    
     this.offerService.generateTransactionToConfirmGreenvest(this.project.id).subscribe(res => {
       SpinnerUtil.hideSpinner();
-      QRCode.toCanvas(document.getElementById("sign-invest"), 
+      QRCode.toCanvas(document.getElementById("sign-confirm"), 
         JSON.stringify(res), console.log);
     }, displayBackendError)
     

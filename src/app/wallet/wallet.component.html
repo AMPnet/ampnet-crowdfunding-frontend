@@ -11,6 +11,13 @@
 
 	<div *ngIf="wallet != undefined" class="">
 		<div class="row">
+			<!-- <div class="col-md-12 mt-3">
+				<span class="explainer-mini text-uppercase h6 float-left h-100 align-middle">Wallet address</span>
+				<a href="https://rinkeby.etherscan.io/tx/{{wallet.hash}}" class="float-right">{{wallet.hash}}</a>
+			</div>
+			<div class="col-md-12 mt-3">
+				<hr>
+			</div> -->
 			<div class="col-md-12 mt-3">
 				<span class="explainer-mini text-uppercase h6 float-left h-100 align-middle">Current balance</span>
 				<span class="h2 float-right">{{wallet.currency}}{{wallet.balance}}.00</span>

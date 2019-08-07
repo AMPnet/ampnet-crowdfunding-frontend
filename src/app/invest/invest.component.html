@@ -4,7 +4,7 @@
 		<h2 class="col-md-12 mb-5 mt-0 main-text">{{project.name}}</h2>
 		<div class="col-md-6 mb-3">
 			<b class="font-weight-bold explainer-mini">AVAILABLE FUNDS</b>
-			<h1 class="main-text">{{wallet.currency}}{{wallet.balance}}</h1>
+			<h1 class="explainer-mini h2">{{wallet.currency}}{{wallet.balance}}</h1>
 		</div>
 		<div class="button-container col-md-3 mb-3">
 		</div>
@@ -21,51 +21,51 @@
 
 
 		<div class="col-md-12 pt-3 pb-3">
-			<span class="h5 main-text">I want to invest</span>
+			<span class="explainer-mini text-uppercase">I want to invest</span>
 			<div class="input-group mt-3">
 				<div class="input-group-prepend">
-					<span class="input-group-text" id="basic-addon1">{{wallet.currency}}</span>
+					<span class="input-group-text">€</span>
 				</div>
-				<input style="font-size: 40px;" 
-				[(ngModel)]="inputValue" (keyup)="inputChanged($event)" 
-				class="form-control" placeholder="Amount" aria-label="amount"
+				<input style="font-size: 30px"
+					[(ngModel)]="inputValue" (keyup)="inputChanged($event)" 
+					class="form-control px-3 py-4 h3" max="20" placeholder="€0.00" aria-label="amount"
 					aria-describedby="basic-addon1">
 			</div>
 
 		</div>
 
-		<div class="col-md-12">
-			<div class="dropdown-divider mb-5"></div>
-		</div>
-		<div *ngIf="inputValue != undefined" class="card col-md-12">
-			<div class="card-body">
-				<div class=" card-title">
-					<h5 class="main-text">STATS</h5>
-				</div>
-				<div class="row">
-					<div class="col-md-3">
-						<i class="mr-2 fas fa-chart-line explainer-mini"></i>
-						<span class="explainer-mini main-text">YEARLY RETURN</span>
-						<div class="h3 mt-2 main-text">{{wallet.currency}} {{yearlyReturn}}</div>
-					</div>
-					<div class="col-md-3">
-						<i class="mr-2 fas fa-chart-pie explainer-mini"></i>
-						<span class="explainer-mini main-text">PROJECT STAKE</span>
-						<div class="h3 mt-2 main-text">{{projectStake}}</div>
-					</div>
-					<div class="col-md-3">
-						<i class="mr-2 fas fa-calendar explainer-mini"></i>
-						<span class="explainer-mini main-text">TOTAL LIFETIME RETURN</span>
-						<div class="h3 mt-2 main-text">{{breakevenPeriod}}</div>
-					</div>
-					<div class="col-md-3">
-							<i class="mr-2 fas fa-calendar explainer-mini"></i>
-							<span class="explainer-mini main-text">NET PROFIT</span>
-							<div class="h3 mt-2 main-text">{{breakevenPeriod}}</div>
+		<div *ngIf="inputValue != undefined" class="col-md-12">
+			<div class="card">
+					<div class="card-body">
+							<div class=" card-title">
+								<div class="explainer-mini text-uppercase">Stats</div>
+							</div>
+							<div class="row">
+								<div class="col-md-3">
+									<i class="mr-2 fas fa-chart-line explainer-mini"></i>
+									<span class="explainer-mini main-text">YEARLY RETURN</span>
+									<div class="h3 mt-2 main-text">{{wallet.currency}} {{yearlyReturn}}</div>
+								</div>
+								<div class="col-md-3">
+									<i class="mr-2 fas fa-chart-pie explainer-mini"></i>
+									<span class="explainer-mini main-text">PROJECT STAKE</span>
+									<div class="h3 mt-2 main-text">{{projectStake}}</div>
+								</div>
+								<div class="col-md-3">
+									<i class="mr-2 fas fa-calendar explainer-mini"></i>
+									<span class="explainer-mini main-text">TOTAL LIFETIME RETURN</span>
+									<div class="h3 mt-2 main-text">{{breakevenPeriod}}</div>
+								</div>
+								<div class="col-md-3">
+										<i class="mr-2 fas fa-calendar explainer-mini"></i>
+										<span class="explainer-mini main-text">NET PROFIT</span>
+										<div class="h3 mt-2 main-text">{{breakevenPeriod}}</div>
+									</div>
+							</div>
+			
 						</div>
-				</div>
-
 			</div>
+			
 		</div>
 
 		<div class="col-md-9"></div>

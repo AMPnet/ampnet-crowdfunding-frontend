@@ -2,8 +2,7 @@ export class WalletModel {
     id: number;
     balance: number;
     currency: string;
-    createdAt: TransactionModel;
-    transactions: [TransactionModel];
+    hash: string;
 }
 
 export class TransactionModel {

@@ -7,6 +7,8 @@ import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { displayBackendError } from '../utilities/error-handler';
 import * as moment from 'moment';
 import * as numeral from 'numeral';
+import { ProjectService } from '../projects/project-service';
+import { WalletModel } from '../models/WalletModel';
 
 @Component({
   selector: 'app-offers',
@@ -19,63 +21,26 @@ export class OffersComponent implements OnInit {
   featuredComponents: OfferModel[];
   promotedOffer: OfferModel;
 
-  constructor(private offersService: OffersService) { }
+  constructor(private offersService: OffersService,
+    private projectService: ProjectService) { }
 
   ngOnInit() {
-    // this.featuredComponents = _.fill(Array(3),
-    // {
-    //   title: 'GreenEnergy Co',
-    //   description: 'Invest in the coolest green energy solution world can offerAt vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga',
-    //   offeredBy: 'Greenpeace',
-    //   status: 'In funding',
-    //   fundingRequired: 25763456,
-    //   currentFunding: 12332567,
-    //   headerImageUrl: 'https://bit.ly/2QmyQ5E'
-    // }
-    // );
-    // this.components = _.fill(Array(20),
-    // {
-    //   title: 'GreenEnergy Co',
-    //   description: 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.',
-    //   offeredBy: 'Greenpeace',
-    //   status: 'In funding',
-    //   fundingRequired: 25763456,
-    //   currentFunding: 12332567,
-    //   headerImageUrl: 'https://bit.ly/2QmyQ5E'
-    // }
-    // );
-    // this.promotedOffer = {
-    //   title: 'ORB Wind Power',
-    //   description: 'Cutting edge wind farm on the shores of Netherlands',
-    //   offeredBy: 'Greenpeace',
-    //   status: 'In funding',
-    //   fundingRequired: 23492349,
-    //   currentFunding: 11334578,
-    //   headerImageUrl: '../../assets/wind-farm.png'
-    // };
     this.getAllOffers();
   }
-
-  // title: string;
-  // description: string;
-  // offeredBy: string;
-  // status: string;
-  // fundingRequired: number;
-  // currentFunding: number;
-  // headerImageUrl: string;
 
   getAllOffers() {
     SpinnerUtil.showSpinner();
 
     this.offersService.getAllOffers().subscribe((res: any) => {
       let projects: [ProjectModel] = res.projects;
+      console.log(projects)
       this.components = projects.map((proj) => {
         return {
           title: proj.name,
           description: proj.description,
           offeredBy: proj.name,
           fundingRequired: numeral(proj.expected_funding).format("0,0"),
-          currentFunding: 1000,
+          currentFunding: 0,
           headerImageUrl: proj.main_image,
           status: "Active",
           endDate: moment(proj.end_date).format("MMM Do, YYYY"),
@@ -84,12 +49,24 @@ export class OffersComponent implements OnInit {
           currency: proj.currency
         }
       });
+      this.getProjectBalances(0)
       SpinnerUtil.hideSpinner();
     }, err => {
       console.log(err);
       displayBackendError(err);
       SpinnerUtil.hideSpinner();
     });
+  }
+
+  getProjectBalances(index: number) {
+    if(index >= this.components.length) { return }
+    let component = this.components[index]
+    this.projectService.getProjectWallet(component.offerID).subscribe((res: any) =>{
+      this.components[index].currentFunding = res.balance
+      this.getProjectBalances(index + 1)
+    }, err => {
+      displayBackendError(err)
+    })
   }
 
 }

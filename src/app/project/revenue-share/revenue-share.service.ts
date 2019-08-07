@@ -7,7 +7,7 @@ import { API } from 'src/app/utilities/endpoint-manager';
 })
 export class RevenueShareService {
 
-  private walletEndpoint = "/wallet/project"
+  private walletEndpoint = "/public/wallet/project"
 
   constructor(private http: HttpClient) { }
 

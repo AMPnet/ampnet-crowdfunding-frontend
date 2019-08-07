@@ -7,14 +7,13 @@ import { API } from '../utilities/endpoint-manager';
 })
 export class OffersService {
 
-  projectEndpoint = "/project";
+  projectEndpoint = "/public/project";
 
   constructor(private http: HttpClient) { }
 
   getAllOffers() {
-    return this.http.get(API.generateComplexRoute(this.projectEndpoint, [
-      "organization/7"
-    ]), API.tokenHeaders());
+    return this.http.get(API.generateRoute(this.projectEndpoint), 
+      API.tokenHeaders());
   }
 
   getOfferByID(offerID: number) {

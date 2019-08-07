@@ -8,7 +8,9 @@ import { API } from "../utilities/endpoint-manager";
 export class ProjectService {
 
     private endpoint = "/project"
-    private walletEndpoint = "/wallet";
+    private publicEndpoint = "/public/project"
+    private publicWalletEndpoint = "/public/wallet";
+    private walletEndpoint = "/wallet"
 
     constructor(private http: HttpClient) { }
 
@@ -45,7 +47,7 @@ export class ProjectService {
     }
 
     getProjectWallet(projectID: number) {
-        return this.http.get(API.generateComplexRoute(this.walletEndpoint, [
+        return this.http.get(API.generateComplexRoute(this.publicWalletEndpoint, [
             "project", projectID.toString()
         ]), API.tokenHeaders());
     }
@@ -58,7 +60,7 @@ export class ProjectService {
     }
 
     getProject(projectID: number) {
-        return this.http.get(API.generateComplexRoute(this.endpoint, [
+        return this.http.get(API.generateComplexRoute(this.publicEndpoint, [
             projectID.toString()
         ]), API.tokenHeaders());
     }

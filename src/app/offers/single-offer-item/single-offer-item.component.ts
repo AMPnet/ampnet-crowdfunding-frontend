@@ -1,6 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { OfferModel } from '../OfferModel';
 import { Router } from '@angular/router';
+import { ProjectService } from 'src/app/projects/project-service';
+import { displayBackendError } from 'src/app/utilities/error-handler';
+import { prettyCurrency } from 'src/app/utilities/currency-util';
 
 @Component({
   selector: 'app-single-offer-item',
@@ -11,9 +14,10 @@ export class SingleOfferItemComponent implements OnInit {
 
   @Input() public component: OfferModel;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private projectService: ProjectService) { }
 
   ngOnInit() {
+    this.component.currency = prettyCurrency(this.component.currency)
     if(this.component.headerImageUrl == null) {
       this.component.headerImageUrl = "../../../assets/noimage.png"
     }

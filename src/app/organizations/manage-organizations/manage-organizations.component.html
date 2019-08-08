@@ -15,7 +15,7 @@
     <div *ngIf="(organizations != undefined) && (organizations.length > 0)">
         <ul class="cursor-pointer list-group">
           <li *ngFor="let org of organizations" routerLink="{{org.id}}" 
-           class="list-group-item hover-bg mt-2">
+           class="list-group-item hover-bg">
             <span class="float-left">
               {{org.name}}
             </span>

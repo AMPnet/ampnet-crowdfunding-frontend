@@ -9,6 +9,7 @@ import { prettyDate } from 'src/app/utilities/date-format-util';
 import { API } from 'src/app/utilities/endpoint-manager';
 import { IssuingAuthorityService } from 'src/app/main-admin/issuing-authority.service';
 import * as QRCode from 'qrcode'
+import * as numeral from 'numeral'
 
 declare var $: any;
 
@@ -63,13 +64,13 @@ export class ManageSingleDepositComponent implements OnInit {
     this.depositService.getDeposit(id).subscribe((res: any) => {
       this.depositModel = res
       this.depositModel.created_at = prettyDate(res.created_at)
-
+      this.depositModel.amount = numeral(this.depositModel.amount).format(",")
       if(!this.depositModel.approved) {
         setTimeout(() => { this.createUploadArea() }, 300)
       } else {
         this.generateSigningCode()
       }
-
+    
       SpinnerUtil.hideSpinner()
     }, hideSpinnerAndDisplayError)
   }

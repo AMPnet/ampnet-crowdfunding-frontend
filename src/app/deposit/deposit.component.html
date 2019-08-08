@@ -1,11 +1,15 @@
 <div class="root root-content-container">
   <div class="row">
     <div class="col-md-12">
-      <div class="explainer-mini text-uppercase">Deposit</div>
+      <div class="explainer-mini text-uppercase h4">Deposit</div>
     </div>
     <div class="col-md-12 mt-3">
       <div class="explainer-mini text-uppercase">Enter amount to deposit</div>
-      <input class="form-control w-100 py-3 mt-2 currency-input" type="number" name="" id="deposit-amount">
+      <input 
+      class="form-control w-100 py-3 mt-2 currency-input p-4 font-weight-bold" 
+      type="number" 
+      name="" id="deposit-amount"
+      style="font-size: 20px">
       <button (click)="depositButtonClicked()" class="btn btn-primary w-100 py-3 mt-3">
         <i class="fas fa-money-bill-wave-alt mr-2"></i>
         Generate payment info

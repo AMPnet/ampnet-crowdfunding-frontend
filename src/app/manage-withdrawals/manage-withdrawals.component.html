@@ -6,9 +6,9 @@
     <div class="col-md-12 mt-3">
     
       <ul class="list-group">
-        <li *ngFor="let withdrawal of withdrawals" class="list-group-item cursor-pointer mt-2"
+        <li *ngFor="let withdrawal of withdrawals" class="list-group-item cursor-pointer"
           routerLink="{{withdrawal.id}}">
-          <span class="float-left">{{withdrawal.name}}</span>
+          <span class="float-left font-weight-bold gray-text">{{withdrawal.name}}</span>
         </li>
       </ul>
 

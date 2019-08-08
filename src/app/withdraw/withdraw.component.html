@@ -1,14 +1,41 @@
 <div class="root root-content-container">
-  <div class="row">
+  <div *ngIf="(banks != undefined) && (banks.length > 0)" class="row">
     <div class="col-md-12">
       <div class="explainer-mini text-uppercase">
         Withdrawal
       </div>
-      <input class="w-100 mt-3 py-4 form-control" type="number" 
+      <input class="w-100 mt-3 py-4 form-control font-weight-bold p-4" type="number" 
         placeholder="Enter withdrawal amount" name="" id="">
+
+      <div class="explainer-mini text-uppercase mt-4">
+        Choose bank account
+      </div>
+
+      <ul class=" list-group mt-3">
+        <li class="list-group-item cursor-pointer hover-bg font-weight-bold gray-text" 
+        *ngFor="let bank of banks; let i = index"
+        (click)="changeActiveAccount(i)">
+          {{bank.iban}}
+          <span *ngIf="activeBankAccount == i" class="float-right">
+            <i class="fas fa-check-circle"></i>
+          </span>
+        </li>
+      </ul>
+
       <button class="btn btn-primary py-3 mt-3 w-100">
         <i class="fas fa-barcode mr-2"></i>
         Generate withdrawal code
+      </button>
+    </div>
+  </div>
+  <div class="row" *ngIf="(banks != undefined) && (banks.length == 0)">
+    <div class="col-md-12 text-center h6 mt-5">
+        You cannot withdraw money without an active bank account
+    </div>
+    <div class="col-md-12 mt-5">
+      <button routerLink="/dash/payment_options/new" class="btn btn-primary py-3 w-100">
+        <i class="fas fa-piggy-bank mr-2"></i>
+        Add bank account
       </button>
     </div>
   </div>

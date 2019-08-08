@@ -3,6 +3,9 @@ import { NavbarComponent } from '../navbar/navbar.component';
 import { Router } from '@angular/router';
 
 import * as $ from 'jquery';
+import { UserService } from '../user-utils/user-service';
+import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
+import { SpinnerUtil } from '../utilities/spinner-utilities';
 
 @Component({
   selector: 'app-sidebar',
@@ -11,12 +14,22 @@ import * as $ from 'jquery';
 })
 export class SidebarComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  isAdmin: boolean
+
+  constructor(private router: Router, private userService: UserService) { }
 
   ngOnInit() {
     $('#main-menu li').on('click', () => {
       NavbarComponent.toggleSidebar(false);
     });
+    this.getProfile()
+  }
+
+  getProfile() {
+    SpinnerUtil.showSpinner()
+    this.userService.getOwnProfile().subscribe((res: any) => {
+      this.isAdmin = (res.role == 'ADMIN')
+    }, hideSpinnerAndDisplayError)
   }
 
   logOutClicked() {

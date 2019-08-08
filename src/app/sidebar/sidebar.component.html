@@ -37,8 +37,8 @@
 		</li>
 	</ul>
 
-	<p class="menu-header ml-4 mb-3 mt-3 font-weight-bold">ADMIN</p>
-	<ul id="main-menu" class="list-unstyled components">
+	<p *ngIf="isAdmin" class="menu-header ml-4 mb-3 mt-3 font-weight-bold">ADMIN</p>
+	<ul *ngIf="isAdmin" id="main-menu" class="list-unstyled components">
 		
 		<li routerLink="token_management" routerLinkActive="side-active">
 			<i class="menu-icon fas fa-coins"></i>

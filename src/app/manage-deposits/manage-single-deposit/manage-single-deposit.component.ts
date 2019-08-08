@@ -50,11 +50,11 @@ export class ManageSingleDepositComponent implements OnInit {
 
   generateSigningCode() {
     SpinnerUtil.showSpinner()
-    this.issuingAuthorityService
-      .mintTokens(this.depositModel.amount, this.depositModel.user.uuid).subscribe(res => {
-        SpinnerUtil.hideSpinner()
-        QRCode.toCanvas(document.getElementById("mint-deposit-code"), JSON.stringify(res), console.log)
-      }, hideSpinnerAndDisplayError)
+
+    this.depositService.generateDepositMintTx(this.depositModel.id).subscribe((res: any) => {
+      SpinnerUtil.hideSpinner()
+      QRCode.toCanvas(document.getElementById("mint-deposit-code"), JSON.stringify(res), console.log)
+    }, hideSpinnerAndDisplayError)
   }
 
   getDeposit() {

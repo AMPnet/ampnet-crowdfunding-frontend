@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { DepositServiceService } from './deposit-service.service';
-import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
+import { hideSpinnerAndDisplayError, displayBackendError } from '../utilities/error-handler';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { DepositModel } from './deposit-model';
+import Cleave from 'cleave.js'
+import swal from 'sweetalert2';
 
 declare var $: any;
 
@@ -19,6 +21,11 @@ export class DepositComponent implements OnInit {
   constructor(private depositService: DepositServiceService) { }
 
   ngOnInit() {
+    // let cleave = new Cleave('.currency-input', {
+    //   prefix: "€",
+    //   delimiter: ".",
+    //   numeralThousandsGroupStyle: 'thousand'
+    // })
   }
 
   depositButtonClicked() {
@@ -27,7 +34,15 @@ export class DepositComponent implements OnInit {
       this.depositModel = res
       this.depositAmount = $("#deposit-amount").val()
       SpinnerUtil.hideSpinner()
-    }, hideSpinnerAndDisplayError)
+    }, err => {
+      SpinnerUtil.hideSpinner()
+      console.log(err)
+      if(err.error.err_code == "0509") {
+        swal("", "You already have an existing deposit. Please wait until it's approved", "info")
+      } else {
+        displayBackendError(err)
+      }
+    })
   }
 
 }

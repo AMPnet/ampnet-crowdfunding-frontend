@@ -1,48 +1,22 @@
 <div class="container root-content-container">
-
   <div class="row">
-    <h5 class="col-md-12 mt-3 text-uppercase gray-text"><b>Add new payment option</b> </h5>
-
-    <div class="col-md-12 mt-3">
-      <ul class="tab-holder nav">
-        <!-- <li class="nav-item">
-          <a id="credit-card-nav-tab" (click)="tabToggle(0)" 
-            data-show="credit-card-input" class="nav-link tab-active">
-            <i class="fas fa-credit-card mr-2"></i>
-            <span>Credit Card</span>
-          </a>
-        </li> -->
-        <li class="nav-item">
-          <a id="bank-account-nav-tab" (click)="tabToggle(0)"
-             data-show="bank-account-input" class="nav-link">
-            <i class="fas fa-university mr-2 tab-active"></i>
-            <span>Bank Account</span>
-          </a>
-        </li>
-        <!-- <li class="nav-item">
-          <a id="bank-account-nav-tab" (click)="tabToggle(2)" class="nav-link">
-            <i class="fas fa-globe mr-2"></i>
-            <span>PayPal</span>
-          </a>
-        </li> -->
-        <li class="nav-item">
-          <a id="bank-account-nav-tab" (click)="tabToggle(1)" class="nav-link">
-            <i class="fas fa-globe mr-2"></i>
-            <span>Cryptocurrency</span>
-          </a>
-        </li>
-      </ul>
+    <div *ngIf="hasNoBankAccounts" class="col-md-12 text-center mb-5 mt-3 h6 gray-text">
+      You currenty have no bank accounts registered.
     </div>
-    <!-- Option content container -->
-    <div class="col-md-12 option-content-holder mt-5">
-      
-      <app-credit-card-input 
-        class="payment-option-form" 
-        id="credit-card-input"></app-credit-card-input>
-      <app-bank-account-input 
-        class="payment-option-form" 
-        id="bank-account-input"></app-bank-account-input>
-
+    <div class="col-md-12">
+      <div class="explainer-mini text-uppercase">
+        Enter bank account details
+      </div>
+    </div>
+    <div class="col-md-12 mt-3">
+      <input class="form-control w-100" type="text" name="" id="iban-holder" placeholder="IBAN">
+      <input class="form-control w-100 mt-2" type="text" name="" id="bankcode-holder" placeholder="SWIFT/BIC (Optional)">
+    </div>
+    <div class="col-md-12 mt-3">
+      <button (click)="addNewBankAccountClicked()" class="btn btn-primary py-3 w-100">
+        <i class="fas fa-plus-circle mr-2"></i>
+        Add new bank account
+      </button>
     </div>
   </div>
 </div>

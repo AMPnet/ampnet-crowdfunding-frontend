@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import * as $ from 'jquery';
+import { PaymentService } from '../payment.service';
+import { hideSpinnerAndDisplayError, displayBackendError } from 'src/app/utilities/error-handler';
+import { Router, ActivatedRoute } from '@angular/router';
+import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 
 
 @Component({
@@ -12,20 +16,37 @@ export class NewPaymentOptionComponent implements OnInit {
   creditCardNavTab: JQuery;
   bankAccountNavTab: JQuery;
 
-  constructor() { }
+  hasNoBankAccounts: boolean
+
+  constructor(private paymentService: PaymentService, 
+    private router: Router, 
+    private route: ActivatedRoute) { }
 
   ngOnInit() {
-    $('#bank-account-input').hide();
+    this.checkStatusAndSetText()
   }
 
-  tabToggle(position: number) {
-    $('.tab-holder li a').removeClass('tab-active');
-    const activeElem = $($('.tab-holder li a').get(position));
-    activeElem.addClass('tab-active');
-    const dataShow = activeElem.attr('data-show');
+  checkStatusAndSetText() {
+    let status = this.route.snapshot.queryParams.status;
+    this.hasNoBankAccounts = (status == "empty")
+  }
 
-    $('.option-content-holder .payment-option-form').hide(300);
-    $(`#${dataShow}`).show(300);
+  addNewBankAccountClicked() {
+    let iban: string = $("#iban-holder").val()
+    var bankCode: string = $("#bankcode-holder").val()
+    if(bankCode.length == 0) {
+      bankCode = "N/A"
+    }
+    SpinnerUtil.showSpinner()
+    this.paymentService.createBankAccount(iban, bankCode).subscribe(res => {
+      SpinnerUtil.hideSpinner()
+      this.router.navigate(["dash", "payment_options"])
+    }, err => {
+      SpinnerUtil.hideSpinner()
+      console.log(err)
+
+      displayBackendError(err)
+    })
   }
 
 }

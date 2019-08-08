@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { PaymentOptionModel, PaymentOptionType } from '../models/PaymentOptionModel';
 import * as _ from 'lodash';
+import { PaymentService } from './payment.service';
+import { BankAccountModel } from './bank-account-model';
+import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
+import { SpinnerUtil } from '../utilities/spinner-utilities';
+import { Router } from '@angular/router';
 
 
 
@@ -11,21 +16,37 @@ import * as _ from 'lodash';
 })
 export class PaymentOptionsComponent implements OnInit {
 
-  paymentOptions: PaymentOptionModel[];
+  banks: BankAccountModel[];
 
-  constructor() {
-    this.paymentOptions = _.fill(Array(3), {
-      name: 'PBZ Account',
-      type: PaymentOptionType.bankAccount,
-      active: true
-    });
+  constructor(private paymentService: PaymentService, 
+    private router: Router) {
+    
   }
 
   ngOnInit() {
+    this.getBankAccounts()
   }
 
-  editButtonClicked() {
-    alert('hehe');
+  getBankAccounts() {
+    SpinnerUtil.showSpinner()
+    this.paymentService.getMyBankAccounts().subscribe((res: any) => {
+      SpinnerUtil.hideSpinner()
+      if(res.bank_accounts.length == 0) {
+        this.router.navigate(["dash", "payment_options", "new"], {
+          queryParams: {
+            "status": "empty"
+          }
+        })
+      }
+      this.banks = res.bank_accounts;
+    }, hideSpinnerAndDisplayError)
+  }
+
+  deleteBankAccountClicked(id: number) {
+    SpinnerUtil.showSpinner()
+    this.paymentService.deleteBankAccount(id).subscribe(res => {
+      this.getBankAccounts()
+    }, hideSpinnerAndDisplayError)
   }
 
 }

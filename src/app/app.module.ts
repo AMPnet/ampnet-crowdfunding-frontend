@@ -33,8 +33,6 @@ import { SignUpComponent } from './authentication/sign-up/sign-up.component';
 import { TxOverviewComponent } from './wallet/tx-overview/tx-overview.component';
 import { LogInModalComponent } from './authentication/log-in-modal/log-in-modal.component';
 import { NewPaymentOptionComponent } from './payment-options/new-payment-option/new-payment-option.component';
-import { CreditCardInputComponent } from './payment-options/new-payment-option/credit-card-input/credit-card-input.component';
-import { BankAccountInputComponent } from './payment-options/new-payment-option/bank-account-input/bank-account-input.component';
 import { WithdrawModalComponent } from './wallet/withdraw-modal/withdraw-modal.component';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -128,8 +126,6 @@ export function jwtOptionsFactory() {
     TxOverviewComponent,
     LogInModalComponent,
     NewPaymentOptionComponent,
-    CreditCardInputComponent,
-    BankAccountInputComponent,
     WithdrawModalComponent,
     ConfirmEmailComponent,
     FillDataComponent,

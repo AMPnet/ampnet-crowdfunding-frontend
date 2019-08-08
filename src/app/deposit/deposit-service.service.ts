@@ -29,4 +29,22 @@ export class DepositServiceService {
       id.toString(), "approve?amount=" + amount.toString()
     ])
   }
+
+  public getUnapprovedDeposits() {
+    return this.http.get(API.generateComplexRoute(this.endpoint, [
+      "unapproved"
+    ]), API.tokenHeaders())
+  }
+
+  public deleteDeposit(id: number) {
+    return this.http.delete(API.generateComplexRoute(this.endpoint,[
+      id.toString()
+    ]), API.tokenHeaders())
+  }
+
+  generateDepositMintTx(id: number) {
+    return this.http.post(API.generateComplexRoute(this.endpoint, [
+      id.toString(), "transaction"
+    ]), {}, API.tokenHeaders())
+  }
 }

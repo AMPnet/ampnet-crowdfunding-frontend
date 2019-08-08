@@ -61,7 +61,7 @@ export class OrganizationDetailsComponent implements OnInit {
       this.orgWallet = res
       onComplete();
     }, err => {
-      if(err.status == "404") { // 0501 meaning - "Missing wallet for org"
+      if(err.status == "404") { // Organization wallet doesn't exist
         this.initializeWalletClicked();
       } else {
         displayBackendError(err);

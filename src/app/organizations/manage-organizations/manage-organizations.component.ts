@@ -54,6 +54,7 @@ export class ManageOrganizationsComponent implements OnInit {
       SpinnerUtil.hideSpinner();
       this.invitedToOrgs = res.organization_invites;
     }, err => {
+      SpinnerUtil.hideSpinner();
       displayBackendError(err);
     })
   }

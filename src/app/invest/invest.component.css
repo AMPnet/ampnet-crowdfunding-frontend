@@ -19,3 +19,8 @@
 .main-text {
 	color: #444;
 }
+
+.stats-card {
+	border: none;
+	background-color: transparent;
+}

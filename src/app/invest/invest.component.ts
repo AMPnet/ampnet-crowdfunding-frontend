@@ -10,6 +10,7 @@ import { ProjectModel } from '../projects/create-new-project/project-model';
 import { ProjectService } from '../projects/project-service';
 import { ActivatedRoute } from '@angular/router';
 import { prettyCurrency } from '../utilities/currency-util';
+import Cleave from 'cleave.js'
 
 declare var $:any;
 
@@ -60,6 +61,7 @@ export class InvestComponent implements OnInit {
     this.projectService.getProject(id).subscribe((res: any) => {
       res.currency = prettyCurrency(res.currency);
       this.project = res;
+      
       SpinnerUtil.hideSpinner();
     }, err => {
       SpinnerUtil.hideSpinner();

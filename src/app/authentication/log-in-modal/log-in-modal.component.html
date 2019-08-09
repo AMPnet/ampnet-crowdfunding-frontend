@@ -3,32 +3,31 @@
     <div class="modal-content">
       <div class="modal-body">
         <div class="container root-content-container">
-          <h5 class="font-weight-bold text-uppercase text-center w-100 ">Log In</h5>
           <button 
           (click)="logInFacebookClicked()"
-          class="btn btn-color-facebook btn-action-a w-100 btn-primary text-uppercase mt-3">
-          <span>Using Facebook</span>
+          class="btn btn-color-facebook btn-action-a w-100 btn-primary">
+          <span class="">Log in with Facebook</span>
         </button>
         <button 
         (click)="logInGoogleClicked()"
-        class="btn btn-color-google btn-action-a w-100 btn-primary text-uppercase mt-3">
-        <span>Using Google</span>
+        class="btn btn-color-google btn-action-a w-100 btn-primary mt-3">
+        <span class="">Log in with Google</span>
       </button>
       <div class="dropdown-divider mt-4 mb-4"></div>
       
         <div class="form-group">
-          <label for="exampleInputEmail1">Email address</label>
-          <input [(ngModel)]="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-          <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+          <label class="explainer-mini" for="exampleInputEmail1">Email address</label>
+          <input [(ngModel)]="email" type="email" class="form-control p-4" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
         </div>
         <div class="form-group">
-          <label for="exampleInputPassword1">Password</label>
-          <input [(ngModel)]="password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+          <label class="explainer-mini" for="exampleInputPassword1">Password</label>
+          <input [(ngModel)]="password" type="password" class="form-control p-4" id="exampleInputPassword1" placeholder="Password">
         </div>
         <button 
         (click)="logInMailClicked()"
-        type="submit" class="btn mb-3 btn-primary btn-action-a float-right w-100 text-uppercase">
-          LOG IN
+        type="submit" class="btn mb-3 btn-primary btn-action-a font-weight-bold float-right w-100">
+          <i class="fas fa-sign-in-alt mr-2"></i>
+          Login
         </button>
      
     </div>

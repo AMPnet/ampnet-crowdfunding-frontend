@@ -3,7 +3,7 @@
 	line-height: 1em;
 	letter-spacing: -3px;
 	margin-top: 250px;
-	color: #47a577;
+	color: #fff;
 }
  
 @media(max-width: 800px) {
@@ -13,9 +13,9 @@
 }
 
 .landing-content-root {
-	background: url("../../assets/bg-hero-light.png");
+	background: url("../../assets/waves.jpg");
 	background-repeat: no-repeat;
-	background-size: contain;
+	background-size: cover;
 	background-position-x: right;
 	background-position-y: bottom;
 	height: 100vh;

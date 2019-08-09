@@ -5,13 +5,25 @@
     </div>
     <div class="col-md-12 mt-3">
     
-      <ul class="list-group">
-        <li *ngFor="let withdrawal of withdrawals" class="list-group-item cursor-pointer"
+      <ul *ngIf="withdrawals != undefined" class="list-group">
+        <li *ngFor="let withdrawal of withdrawals" 
+        class="list-group-item cursor-pointer  gray-text explainer-mini"
           routerLink="{{withdrawal.id}}">
-          <span class="float-left font-weight-bold gray-text">{{withdrawal.name}}</span>
+          <span class="float-left font-weight-bold">
+            {{withdrawal.user.first_name}} {{withdrawal.user.last_name}} ({{withdrawal.user.email}})
+          </span>
+          <span class="float-right font-weight-bold ">
+              €{{withdrawal.amount}}
+          </span>
         </li>
       </ul>
-
     </div>
+    
+    <div *ngIf="withdrawals != undefined" class="col-md-12 mt-3">
+      <div *ngIf="withdrawals.length == 0" class="text-center explainer-mini text-uppercase">
+        No pending withdrawals
+      </div>
+    </div>
+
   </div>
 </div>

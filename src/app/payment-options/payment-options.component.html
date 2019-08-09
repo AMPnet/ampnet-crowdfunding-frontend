@@ -3,9 +3,8 @@
 		<div class="col-md-8 mb-5">
 			<h5 class="text-uppercase font-weight-bold gray-text">Bank Accounts</h5>
 		</div>
-		
-		<div *ngFor="let paymentOption of banks" 
-			class="col-md-12 mb-3">
+
+		<div *ngFor="let paymentOption of banks" class="col-md-12 mb-3">
 			<div class="card">
 				<div class="card-body d-flex flex-column gray-text">
 					<div class="d-flex flex-row justify-content-between text-left">
@@ -13,9 +12,16 @@
 							<div class="explainer-mini text-uppercase mb-2">IBAN</div>
 							<b>{{paymentOption.iban}}</b>
 						</div>
+
+						<div>
+							<div class="explainer-mini text-uppercase mb-2">Swift/BIC</div>
+							<b>{{paymentOption.bank_code}}</b>
+						</div>
+
 						<div>
 							<div class="explainer-mini text-uppercase mb-2">Actions</div>
-							<span (click)="deleteBankAccountClicked(paymentOption.id)" class="float-right align-middle cursor-pointer">
+							<span (click)="deleteBankAccountClicked(paymentOption.id)"
+								class="float-right align-middle cursor-pointer">
 								<i class="fas fa-trash-alt"></i>
 							</span>
 						</div>
@@ -29,10 +35,10 @@
 			</div>
 		</div>
 		<div class="col-md-12 mb-5 mt-5">
-				<button routerLink="new" class="btn btn-primary w-100 py-3 float-right">
-					<i class="mr-2 fas fa-plus-circle"></i>
-					<span>Add new</span>
-				</button>
-			</div>
+			<button routerLink="new" class="btn btn-primary w-100 py-3 float-right">
+				<i class="mr-2 fas fa-plus-circle"></i>
+				<span>Add new</span>
+			</button>
+		</div>
 	</div>
 </div>

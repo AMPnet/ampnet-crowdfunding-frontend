@@ -9,11 +9,11 @@
           <div class="d-flex justify-content-between withdrawal-examine-holder">
             <div>
               <div class="explainer-mini text-uppercase">Name</div>
-              <div>Jozo Jozić</div>
+              <div>{{withdrawal.user.first_name}} {{withdrawal.user.last_name}}</div>
             </div>
             <div>
               <div class="explainer-mini text-uppercase">IBAN</div>
-              <div>HR2893482934</div>
+              <div>{{withdrawal.bank_account}}</div>
             </div>
             <div>
               <div class="explainer-mini text-uppercase">SWIFT/BIC</div>
@@ -21,7 +21,7 @@
             </div>
             <div>
               <div class="explainer-mini text-uppercase">Amount</div>
-              <div>$1,500</div>
+              <div>EUR{{withdrawal.amount}}</div>
             </div>
           </div>
         </div>
@@ -32,11 +32,22 @@
       <div id="payment-reciept-upload-target"></div>
     </div>
 
-    <div class="col-md-12 mt-3">
-      <button class="btn btn-primary py-3 w-100">
+
+    <div class="col-md-12">
+      <div class="alert alert-danger">
+        Please perform the payout <b>after</b> finalizing the withdrawal!
+      </div>
+    </div>
+    <div *ngIf="(withdrawal != undefined) && (withdrawal.burned_tx_hash == null)" 
+    class="col-md-12 mt-1">
+      <button (click)="approveAndGenerateCodeClicked()" class="btn btn-primary py-3 w-100">
         <i class="fas fa-check-circle mr-2"></i>
-        Approve and generate code
+        Finalize withdrawal
       </button>
+    </div>
+
+    <div class="col-md-12 mt-5 text-center">
+      <canvas id="burn-generate-canvas"></canvas>
     </div>
 
   </div>

@@ -233,7 +233,9 @@ export class ManageSingleProjectComponent implements OnInit {
   }
 
   updateProject() {
-    //this.projectService.updateProject(this.project.id, )
+    // this.projectService.updateProject(
+      
+    // )
   }
 
   addNewsClicked() {

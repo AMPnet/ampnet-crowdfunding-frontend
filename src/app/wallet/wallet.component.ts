@@ -41,9 +41,21 @@ export class WalletComponent implements OnInit, AfterViewInit {
     inputs.each((i, item) => {
       $(item).keyup((e) => {
         let isBackspace = e.keyCode == 8;
+
+        let shouldIgnore = 
+          e.keyCode == 16 || // Shift
+          e.keyCode == 27 || // ESC
+          e.keyCode == 20 || // CAPS
+          e.keyCode == 9  || // Tab
+          e.keyCode == 17 ||// Ctr;
+          e.keyCode == 18 || //Alt
+          e.keyCode == 93 || // ContextMenu
+          (e.keyCode > 111 && e.keyCode < 124)
+
+        if(shouldIgnore) { return } 
         if((i == 0) && isBackspace) { return }
         if((i == inputs.length) && !isBackspace) { return }
-        if(e.keyCode == 8) {
+        if(isBackspace) {
           inputs.get(i - 1).focus();
         } else {
           inputs.get(i + 1).focus();

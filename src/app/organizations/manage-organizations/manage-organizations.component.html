@@ -16,7 +16,7 @@
         <ul class="cursor-pointer list-group">
           <li *ngFor="let org of organizations" routerLink="{{org.id}}" 
            class="list-group-item hover-bg">
-            <span class="float-left">
+            <span class="float-left explainer-mini">
               {{org.name}}
             </span>
             <span class="float-right">
@@ -38,7 +38,7 @@
       <div class="explainer-mini text-uppercase mt-5 mb-3">My group invites</div>
       <ul *ngIf="invitedToOrgs.length > 0" class="list-group">
         <li *ngFor="let invite of invitedToOrgs" class="list-group-item mt-2">
-          <span class="float-left">
+          <span class="float-left explainer-mini">
             {{invite.organization_name}}
           </span>
           <span class="float-right">
@@ -46,7 +46,7 @@
           </span>
         </li>
       </ul>
-      <div *ngIf="invitedToOrgs.length ==0" class="w-100 text-center pt-5 pb-5">
+      <div *ngIf="invitedToOrgs.length ==0" class="w-100 text-center pt-5 pb-5 explainer-mini">
         Not invited to any groups
       </div>
     </div>

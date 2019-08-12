@@ -16,7 +16,7 @@ export class DepositServiceService {
   }
 
   public getDeposit(reference: string) {
-    return this.http.get(API.generateRoute(this.endpoint), {
+    return this.http.get(API.generateComplexRoute(this.endpoint, ["search"]), {
       params: {
         "reference": reference
       },

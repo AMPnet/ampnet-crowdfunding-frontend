@@ -40,7 +40,6 @@ export class SingleWithdrawalComponent implements OnInit, AfterViewInit {
       this.withdrawal = withdraws.filter(item => {
         return (item.id == id)
       })[0]
-      alert(JSON.stringify(this.withdrawal))
     }, hideSpinnerAndDisplayError)
   }
 

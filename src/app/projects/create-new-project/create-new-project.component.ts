@@ -52,14 +52,14 @@ export class CreateNewProjectComponent implements OnInit, AfterViewInit {
       formValue.description,
       "abc",
       formValue.colloqual,
-      "10%",
+      "10",
       formValue.startDate,
       formValue.endDate,
       formValue.expectedFunding,
       "EUR",
       formValue.minPerUser,
       formValue.maxPerUser,
-      true
+      false
     ).subscribe((res: any) => {
       SpinnerUtil.hideSpinner();
       this.router.navigate(['/dash', 'manage_groups', orgID.toString(), 'manage_project', res.id]);

@@ -68,8 +68,8 @@
             </span>
           </li>
         </ul>
-        <div *ngIf="orgMembers == undefined" class="w-100 pt-3 pb-3 text-center">
-          Organization has no active users
+        <div *ngIf="(orgMembers != undefined) && (orgMembers.length == 0)" class="w-100 pt-3 pb-3 text-center explainer-mini">
+          You are the only member of {{organization.name}}
         </div> 
       </div>
     </div>

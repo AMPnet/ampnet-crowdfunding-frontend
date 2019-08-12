@@ -1,12 +1,47 @@
-<div (click)="onClickedItem()" class="card offer-holder">
-  <img class="card-img-top" src="{{investment.headerImage}}" alt="Card image cap">
+<div class="card cursor-pointer color-hover">
   <div class="card-body">
-    <h5 class="card-title">{{investment.title}}</h5>
-    <p class="card-text">{{investment.offeredBy}}</p>
-     <div class="dropdown-divider"></div>
-    <div class="progress">
-  		<div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-		</div>
-		<div class="progress-numerical"><i>$27,354</i> of $79,332</div>
+    <div class="card-title explainer-mini text-uppercase">
+      <div>
+        <span class="float-left font-weight-bold">Wind farm</span>
+        <span class="float-right">
+          <i class="fas fa-calendar mr-2"></i>
+          Jan 2nd, 2019
+        </span>
+      </div>
+    </div>
+    <div class="mt-5">
+      <hr>
+    </div>
+    <div class="card-text">
+      <div class="row justify-content-between">
+        <div class="col-md-4 mt-3">
+          <div class="explainer-mini">
+            <i class="fas fa-chart-pie mr-2"></i>
+            Amount invested
+          </div>
+          <div class="h6 font-weight-bold gray-text mt-2">
+            $24,300
+          </div>
+        </div>
+        <div class="col-md-4 mt-3">
+          <div class="explainer-mini">
+            <i class="fas fa-percentage mr-2"></i>
+            ROI
+          </div>
+          <div class="h6 font-weight-bold gray-text mt-2">
+            8,7%
+          </div>
+        </div>
+        <div class="col-md-4 mt-3">
+          <div class="explainer-mini">
+            <i class="fas fa-money-bill-wave mr-2"></i>
+            Total payouts
+          </div>
+          <div class="h6 font-weight-bold gray-text mt-2">
+            $3,200
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

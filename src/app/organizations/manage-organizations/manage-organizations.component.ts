@@ -36,7 +36,7 @@ export class ManageOrganizationsComponent implements OnInit {
   fetchPersonalOrgs() {
     SpinnerUtil.showSpinner();
     this.organizationService.getPersonalOrganizations().subscribe((res: any) => {
-      this.organizations = res.organizations;
+      this.organizations = res.organizations
       SpinnerUtil.hideSpinner();
     }, err => {
       SpinnerUtil.hideSpinner();

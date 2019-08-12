@@ -46,7 +46,7 @@
     </div>
 
     <div class="input-group mb-3 col-md-12">
-      <input id="mint-amount" type="text" class="form-control p-4 font-weight-bold" aria-label="Username" aria-describedby="basic-addon1"
+      <input id="project-name" type="text" class="form-control p-4 font-weight-bold" aria-label="Username" aria-describedby="basic-addon1"
         value="{{project.name}}">
     </div>
 
@@ -54,16 +54,16 @@
       <div class="explainer-mini text-uppercase">Description</div>
     </div>
     <div class="input-group mb-3 col-md-12">
-      <textarea class="form-control p-4" name="" id="" cols="30" rows="10">{{project.description}}</textarea>
+      <textarea id="project-description" class="form-control p-4" name="" cols="30" rows="10">{{project.description}}</textarea>
     </div>
 
     <div class="col-md-12 mb-2">
-      <div class="explainer-mini text-uppercase">Location colloquial name</div>
+      <div class="explainer-mini text-uppercase">Location name</div>
     </div>
 
     <div class="input-group mb-3 col-md-12">
-      <input id="mint-amount" type="text" class="form-control p-4" aria-label="Username" aria-describedby="basic-addon1"
-        value="{{project.name}}">
+      <input id="location-name" type="text" class="form-control p-4" aria-label="Username" aria-describedby="basic-addon1"
+        value="{{project.location_text}}">
     </div>
 
     <div class="col-md-12">
@@ -72,7 +72,7 @@
 
 
     <div class="col-md-12 mt-5 mb-5">
-      <button class="btn btn-primary w-100 py-3 float-right">
+      <button (click)="updateProject()" class="btn btn-primary w-100 py-3 float-right">
         <i class="fas fa-check mr-3"></i>
         <span>Update</span>
       </button>

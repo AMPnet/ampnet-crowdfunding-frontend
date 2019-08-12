@@ -8,6 +8,7 @@ import { API } from '../utilities/endpoint-manager';
 export class OffersService {
 
   projectEndpoint = "/public/project";
+  privateEndpoint = "/project"
 
   constructor(private http: HttpClient) { }
 
@@ -24,7 +25,7 @@ export class OffersService {
 
   generateTransactionToGreenvest(projectID: number, investAmount: number) {
 
-    return this.http.get(API.generateComplexRoute(this.projectEndpoint, [
+    return this.http.get(API.generateComplexRoute(this.privateEndpoint, [
       projectID.toString(), "invest"
     ]), {
       params: {
@@ -38,7 +39,7 @@ export class OffersService {
   }
 
   generateTransactionToConfirmGreenvest(projectID: number) {
-    return this.http.get(API.generateComplexRoute(this.projectEndpoint, [
+    return this.http.get(API.generateComplexRoute(this.privateEndpoint, [
       projectID.toString(), "invest", "confirm"
     ]), API.tokenHeaders())
   }

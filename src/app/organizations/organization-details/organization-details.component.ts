@@ -63,6 +63,10 @@ export class OrganizationDetailsComponent implements OnInit {
     }, err => {
       if(err.status == "404") { // Organization wallet doesn't exist
         this.initializeWalletClicked();
+      } else if(err.error.err_code == "0851") {
+        swal("", "The organization is being created. This can take up to a minute. Please check again later.", "info").then(() => {
+          window.history.back()
+        })
       } else {
         displayBackendError(err);
       }

@@ -6,7 +6,7 @@ import { ManageProjectsService } from '../manage-projects-service';
 import { ActivatedRoute } from '@angular/router';
 import { ProjectService } from 'src/app/projects/project-service';
 import { ProjectModel } from '../../projects/create-new-project/project-model'
-import { displayBackendError } from 'src/app/utilities/error-handler';
+import { displayBackendError, hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { WalletModel } from '../../organizations/organization-details/organization-model';
 import * as QRCode from 'qrcode';
@@ -60,6 +60,7 @@ export class ManageSingleProjectComponent implements OnInit {
         if(err.status == "404") { // 0501 meaning - "Missing wallet for org"
           this.createInitQRCODE();
         } else {
+          console.log(err)
           displayBackendError(err);
         }
         SpinnerUtil.hideSpinner();
@@ -70,12 +71,12 @@ export class ManageSingleProjectComponent implements OnInit {
   createInitQRCODE() {
     this.projectService.generateTransactionToCreateProjectWallet(this.project.id).subscribe((res) => {
 
-      var codeData = {
-        "base_url": API.APIURL,
-        "tx_data": res
+      var qrCodeData = {
+        "tx_data" : res,
+        "base_url": API.APIURL
       }
 
-      QRCode.toCanvas(document.getElementById("pairing-code"), JSON.stringify(codeData), (err) => {
+      QRCode.toCanvas(document.getElementById("pairing-code"), JSON.stringify(qrCodeData), (err) => {
         if(err) { alert(err) }
       });
     }, err  => {
@@ -232,10 +233,49 @@ export class ManageSingleProjectComponent implements OnInit {
     });
   }
 
+  
+
   updateProject() {
-    // this.projectService.updateProject(
-      
-    // )
+
+    let projectName = $("#project-name").val()
+    let projectDescription = $("#project-description").val()
+    let locationName = $("#location-name").val()
+
+
+    // function isEmptyOrNull(item: String): boolean {
+    //   if(item == undefined) { return true }
+    //   if(item == null) { return true }
+    //   if(item.length == 0) { return true }
+    //   return false
+    // }
+
+    // if(
+    //   isEmptyOrNull(projectName),
+    //   isEmptyOrNull(projectDescription),
+    //   isEmptyOrNull(locationName)
+    // ) {
+    //   swal("", "Project name, description and location name can't be empty", "info")
+    //   return
+    // }
+
+    var updatedProject = this.project
+    updatedProject.name = projectName
+    updatedProject.description = projectDescription
+    updatedProject.location_text = locationName
+
+    SpinnerUtil.showSpinner()
+    this.projectService.updateProject(
+      updatedProject.id,
+      updatedProject.name,
+      updatedProject.description,
+      updatedProject.location,
+      updatedProject.location_text,
+      updatedProject.return_on_investment,
+      updatedProject.active
+    ).subscribe(res => {
+      SpinnerUtil.hideSpinner()
+      this.getProject(() => {})
+    }, hideSpinnerAndDisplayError )
   }
 
   addNewsClicked() {

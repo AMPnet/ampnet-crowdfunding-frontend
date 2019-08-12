@@ -60,6 +60,7 @@ export class WalletComponent implements OnInit, AfterViewInit {
         } else {
           inputs.get(i + 1).focus();
         }
+
       });
     });
   }

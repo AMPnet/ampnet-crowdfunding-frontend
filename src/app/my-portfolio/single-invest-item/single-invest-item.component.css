@@ -19,3 +19,11 @@
 .progress-numerical {
 	margin-bottom: 10px;
 }
+
+.color-hover {
+	transition: all 0.3s;
+}
+
+.color-hover:hover {
+	box-shadow: 0 10px 20px rgba(105, 190, 148, 0.4);
+}

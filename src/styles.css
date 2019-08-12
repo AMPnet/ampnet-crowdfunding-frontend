@@ -36,6 +36,7 @@ body {
 
 .btn-primary:hover {
 	background: #47a577!important;
+	box-shadow: 0 10px 20px rgba(105, 190, 148, 0.4);
 }
 
 .list-group-item {

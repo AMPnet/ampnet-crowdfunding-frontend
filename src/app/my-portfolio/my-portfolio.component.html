@@ -7,30 +7,24 @@
 				</h5>
 				<div class="card-text">
 					<div class="row">
-						<div class="col-md-3 col-sm-6 mt-3">
+						<div class="col-md-4 col-sm-6 mt-3">
 							<p class="mb-2">
 								<i class="explainer-mini mr-2 fas fa-chart-pie"></i>
-								<span class="explainer-mini text-uppercase">Total investment</span>
+								<span class="explainer-mini">Investments</span>
 							</p>
-							<h5 class="mt-0">$12,345</h5>
+							<h6 class="mt-3 gray-text">$12,345</h6>
 						</div>
-						<div class="col-md-3 col-sm-6 mt-3">
+						<div class="col-md-4 col-sm-6 mt-3">
 							<p class="mb-2">
-								<i class="explainer-mini mr-2 fas fa-money-check"></i>
-								<span class="explainer-mini text-uppercase">Total earnings</span></p>
-							<h5 class="mt-0">$12,345</h5>
+								<i class="explainer-mini mr-2 fas fa-money-bill-alt"></i>
+								<span class="explainer-mini">Earnings</span></p>
+							<h6 class="mt-3 gray-text">$12,345</h6>
 						</div>
-						<div class="col-md-3 mt-3">
+						<div class="col-md-4 mt-3">
 							<p class="mb-2">
-								<i class="mr-2 explainer-mini fas fa-industry"></i>
-								<span class="explainer-mini text-uppercase">CO2 saved</span></p>
-							<h5 class="mt-0">123t</h5>
-						</div>
-						<div class="col-md-3 mt-3">
-							<p class="mb-2">
-								<i class="mr-2 explainer-mini fas fa-chart-line"></i>
-								<span class="explainer-mini text-uppercase">Total earnings</span></p>
-							<h5 class="mt-0">$12,345</h5>
+								<i class="mr-2 explainer-mini fas fa-percentage"></i>
+								<span class="explainer-mini">Average ROI</span></p>
+							<h6 class="mt-3 gray-text">$12,345</h6>
 						</div>
 					</div>
 				</div>
@@ -39,13 +33,21 @@
 		</div>
 
 	</div>
-	
-	<div class="container mt-5">
+
+	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
-				<h5 class="font-weight-bold gray-text mb-3">MY INVESTMENTS</h5>
+				<hr>
 			</div>
-			<div class="col-md-4" *ngFor="let investment of investments">
+		</div>
+	</div>
+
+	<div class="container mt-3">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="font-weight-bold gray-text mb-2 explainer-mini">MY INVESTMENTS</div>
+			</div>
+			<div class="col-md-12 mt-3" *ngFor="let investment of investments">
 				<app-single-invest-item [investment]=investment></app-single-invest-item>
 			</div>
 		</div>

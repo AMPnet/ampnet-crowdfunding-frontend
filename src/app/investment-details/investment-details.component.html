@@ -1,20 +1,45 @@
-<div class="container root-content-container wow fadeIn">
+<div class="root root-content-container">
 	<div class="row">
 		<div class="col-md-12">
-			<h5 class="text-uppercase"><b>Project name</b> </h5>
+			<h6>Project name</h6>
 		</div>
-		<p class="col-md-12 text-justify">
-			My money's in that office, right? If she start giving me some bullshit about it ain't there, and we got to go someplace else and get it, I'm gonna shoot you in the head then and there. Then I'm gonna shoot that bitch in the kneecaps, find out where my goddamn money is. She gonna tell me too. Hey, look at me when I'm talking to you, motherfucker. You listen: we go in there, and that Winston or anybody else is in there, you the first motherfucker to get shot. You understand?
-		</p>
-
-		<div class="col-md-12 mt-5 mb-4">
-			<span class="h5 text-uppercase align-middle">Proposals</span>
-			<a routerLink="new_proposal" class="btn btn-primary float-right text-white">New Proposal</a>
+		<div class="col-md-12 mt-3">
+			<div class="card">
+				<div class="card-body">
+					<div class="card-title explainer-mini text-uppercase">
+						Investment details
+					</div>
+					<div class="card-text">
+						<div class=""></div>
+					</div>
+				</div>
+			</div>
 		</div>
-		
-		<div class="col-md-6 mb-1" *ngFor="let proposal of proposals">
-			<app-single-proposal-item [proposal]=proposal></app-single-proposal-item>
+		<div class="col-md-12 mt-3">
+			<hr>
+		</div>
+		<div class="col-md-12 mt-1">
+			<div class="explainer-mini text-uppercase">
+				Investment transactions
+			</div>
+			<ul class="list-group mt-3">
+				<li class="list-group-item">
+					<span class="float-left explainer-mini">
+						$2,300 <i>on</i> Jan 3rd, 2019
+					</span>
+					<span class="float-right cursor-pointer">
+						<i class="fas fa-file-pdf"></i>
+					</span>
+				</li>
+				<li class="list-group-item">
+					<span class="float-left explainer-mini">
+						$2,300 <i>on</i> Jan 3rd, 2019
+					</span>
+					<span class="float-right cursor-pointer">
+						<i class="fas fa-file-pdf"></i>
+					</span>
+				</li>
+			</ul>
 		</div>
 	</div>
-	
 </div>

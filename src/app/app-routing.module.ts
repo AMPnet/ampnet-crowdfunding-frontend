@@ -69,7 +69,7 @@ const routes: Routes = [
       { path: 'my_portfolio/investment_details/proposal_details', component: ProposalDetailsComponent },
       { path: 'wallet/tx_overview', component: TxOverviewComponent },
       { path: 'payment_options/new', component: NewPaymentOptionComponent },
-      { path: 'create_organization', component: CreateOrganizationComponent },
+      { path: 'manage_groups/new', component: CreateOrganizationComponent },
       { path: 'general_settings', component: GeneralSettingsComponent },
       { path: 'manage_groups', component: ManageOrganizationsComponent },
       { path: 'manage_groups/:id', component: OrganizationDetailsComponent},

@@ -1,66 +1,68 @@
-<div class="container root-content-container">
+<div *ngIf="checkComplete">
+	<div class="container root-content-container">
 
-	<div *ngIf="(wallet == undefined)" class="row">
-		<div class="col-md-12 mt-3 gray-text text-center">
-			<h5>1. Scan the QR code with AMPnet Sign application</h5>
-		</div>
-		<div class="col-md-12 d-flex justify-content-center">
-			<canvas id="url-pairing-canvas"></canvas>
-		</div>
-		<div class="col-md-12 mt-5 gray-text text-center">
-			<h5>2. Enter the pairing code</h5>
-			<div class="d-flex mt-3 justify-content-center flex-row pairing-code-holder">
-				<input class="form-control mr-2" maxlength="1" type="text" name="" id="">
-				<input class="form-control mr-2" maxlength="1" type="text" name="" id="">
-				<input class="form-control mr-2" maxlength="1" type="text" name="" id="">
-				<input class="form-control mr-2" maxlength="1" type="text" name="" id="">
-				<input class="form-control mr-2" maxlength="1" type="text" name="" id="">
-				<input class="form-control" maxlength="1" type="text" name="" id="">
+		<div *ngIf="(wallet == undefined)" class="row">
+			<div class="col-md-12 mt-3 gray-text text-center">
+				<h5>1. Scan the QR code with AMPnet Sign application</h5>
 			</div>
-			<button (click)="pairButtonClicked()" class="btn btn-primary py-3 w-100 mt-5">
-				<i class="fas fa-phone mr-2"></i>
-				Pair
-			</button>
-		</div>
-	</div>
-
-	<div *ngIf="wallet != undefined" class="">
-		<div class="row">
-			<!-- <div class="col-md-12 mt-3">
-				<span class="explainer-mini text-uppercase h6 float-left h-100 align-middle">Wallet address</span>
-				<a href="https://rinkeby.etherscan.io/tx/{{wallet.hash}}" class="float-right">{{wallet.hash}}</a>
+			<div class="col-md-12 d-flex justify-content-center">
+				<canvas id="url-pairing-canvas"></canvas>
 			</div>
-			<div class="col-md-12 mt-3">
-				<hr>
-			</div> -->
-			<div class="col-md-12 mt-3">
-				<span class="explainer-mini text-uppercase h6 float-left h-100 align-middle">Current balance</span>
-				<span class="h2 float-right">{{wallet.currency}}{{wallet.balance}}.00</span>
-			</div>
-			<div class="col-md-6 mt-3">
-				<button routerLink="deposit" class="btn btn-primary w-100 py-3">
-					<i class="fas fa-arrow-circle-down mr-2"></i>
-					Deposit
+			<div class="col-md-12 mt-5 gray-text text-center">
+				<h5>2. Enter the pairing code</h5>
+				<div class="d-flex mt-3 justify-content-center flex-row pairing-code-holder">
+					<input class="form-control mr-2" maxlength="1" type="text" name="" id="">
+					<input class="form-control mr-2" maxlength="1" type="text" name="" id="">
+					<input class="form-control mr-2" maxlength="1" type="text" name="" id="">
+					<input class="form-control mr-2" maxlength="1" type="text" name="" id="">
+					<input class="form-control mr-2" maxlength="1" type="text" name="" id="">
+					<input class="form-control" maxlength="1" type="text" name="" id="">
+				</div>
+				<button (click)="pairButtonClicked()" class="btn btn-primary py-3 w-100 mt-5">
+					<i class="fas fa-phone mr-2"></i>
+					Pair
 				</button>
 			</div>
-			<div class="col-md-6 mt-3">
-				<button routerLink="withdraw" class="btn btn-primary w-100 py-3">
-					<i class="fas fa-arrow-circle-up mr-2"></i>
-					Withdraw
-				</button>
-			</div>
-			<div class="col-md-12 mt-3">
-				<hr>
-			</div>
-			<div class="col-md-12">
-				<div class="explainer-mini text-uppercase h6">
-					Transaction history
+		</div>
+	
+		<div *ngIf="wallet != undefined" class="">
+			<div class="row">
+				<!-- <div class="col-md-12 mt-3">
+					<span class="explainer-mini text-uppercase h6 float-left h-100 align-middle">Wallet address</span>
+					<a href="https://rinkeby.etherscan.io/tx/{{wallet.hash}}" class="float-right">{{wallet.hash}}</a>
 				</div>
-				<div class="w-100 mt-5 text-center explainer-mini">
-					No transaction history
+				<div class="col-md-12 mt-3">
+					<hr>
+				</div> -->
+				<div class="col-md-12 mt-3">
+					<span class="explainer-mini text-uppercase h6 float-left h-100 align-middle">Current balance</span>
+					<span class="h2 float-right">{{wallet.currency}}{{wallet.balance}}.00</span>
+				</div>
+				<div class="col-md-6 mt-3">
+					<button routerLink="deposit" class="btn btn-primary w-100 py-3">
+						<i class="fas fa-arrow-circle-down mr-2"></i>
+						Deposit
+					</button>
+				</div>
+				<div class="col-md-6 mt-3">
+					<button routerLink="withdraw" class="btn btn-primary w-100 py-3">
+						<i class="fas fa-arrow-circle-up mr-2"></i>
+						Withdraw
+					</button>
+				</div>
+				<div class="col-md-12 mt-3">
+					<hr>
+				</div>
+				<div class="col-md-12">
+					<div class="explainer-mini text-uppercase h6">
+						Transaction history
+					</div>
+					<div class="w-100 mt-5 text-center explainer-mini">
+						No transaction history
+					</div>
 				</div>
 			</div>
 		</div>
+	
 	</div>
-
 </div>

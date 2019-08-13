@@ -86,6 +86,8 @@ export class OrganizationDetailsComponent implements OnInit {
         "tx_data" : res,
         "base_url": API.APIURL
       }
+
+      console.log(res)
       
       QRCode.toCanvas(document.getElementById("pairing-code"), JSON.stringify(qrCodeData), (err) => {
         if(err) { alert(err) }

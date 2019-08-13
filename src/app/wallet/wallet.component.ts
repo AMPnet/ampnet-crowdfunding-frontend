@@ -86,6 +86,7 @@ export class WalletComponent implements OnInit, AfterViewInit {
       this.checkComplete = true;
     }, err => {
       SpinnerUtil.hideSpinner();
+      console.log(err)
       displayBackendError(err);
       this.checkComplete = true;
     });

@@ -25,8 +25,8 @@
           <b>AMPnet Wallet</b> application.
         </div>
       </div>
-      <div class="col-md-12 mt-5 d-flex justify-content-center">
-        <canvas class="" id="pairing-code"></canvas>
+      <div *ngIf="qrCodeData != ''" class="col-md-12 mt-5 d-flex justify-content-center">
+        <app-sign-broadcast [txData]="qrCodeData"></app-sign-broadcast>
       </div>
     </div>
   </div>

@@ -28,6 +28,8 @@ export class OrganizationDetailsComponent implements OnInit {
   emailInviteInput: any;
   orgMembers: MemberModel[];
 
+  qrCodeData: String = ""
+
   constructor(
     private activeRoute: ActivatedRoute,
     private organizationService: OrganizationService,
@@ -86,12 +88,7 @@ export class OrganizationDetailsComponent implements OnInit {
         "tx_data" : res,
         "base_url": API.APIURL
       }
-
-      console.log(res)
-      
-      QRCode.toCanvas(document.getElementById("pairing-code"), JSON.stringify(qrCodeData), (err) => {
-        if(err) { alert(err) }
-      });
+      this.qrCodeData = JSON.stringify(qrCodeData)
 
     }, err => {
       displayBackendError(err);

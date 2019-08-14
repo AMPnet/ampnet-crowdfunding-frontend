@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
 import { OfferModel } from '../OfferModel';
 import { Router } from '@angular/router';
 import { ProjectService } from 'src/app/projects/project-service';
@@ -22,6 +22,7 @@ export class SingleOfferItemComponent implements OnInit {
       this.component.headerImageUrl = "../../../assets/noimage.png"
     }
   }
+
 
   onClickedItem() {
     this.router.navigate(['dash', 'offers', this.component.offerID]);

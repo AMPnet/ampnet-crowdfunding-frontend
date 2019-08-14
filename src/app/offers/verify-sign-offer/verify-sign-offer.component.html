@@ -45,13 +45,13 @@
     </div>
     <div class="w-100 mt-5 d-flex justify-content-center">
       <div>
-          <div>
+          <div *ngIf="approveQRData.length > 0">
               <div class="explainer-mini text-uppercase">Invest</div>
-              <canvas id="sign-invest"></canvas>
+              <app-sign-broadcast (onTxBroadcasted)="approveBroadcasted($event)" [txData]="approveQRData"></app-sign-broadcast>
           </div>
-          <div class="mt-5">
-            <div class="explainer-mini text-uppercase">Approve</div>
-              <canvas id="sign-confirm"></canvas>
+          <div *ngIf="confirmQRData.length > 0" class="mt-5">
+            <div class="explainer-mini text-uppercase">Confirm</div>
+            <app-sign-broadcast [txData]="confirmQRData"></app-sign-broadcast>
           </div>
       </div>
       

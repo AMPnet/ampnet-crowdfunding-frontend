@@ -13,8 +13,24 @@
 			</button>
 		</div>
 
-		<div class="col-md-12">
-			<div class="dropdown-divider"></div>
+		<div class="col-md-12 mt-3">
+			<div class="card">
+				<div class="card-body">
+					<div class="card-title explainer-mini">
+						Investment terms
+					</div>
+					<div class="card-text">
+						<span class="float-left">
+							<div class="explainer-mini text-uppercase">Min investment</div>
+							<div>{{project.currency}}{{project.min_per_user}}</div>
+						</span>
+						<span class="float-right">
+							<div class="explainer-mini text-uppercase">Max investment</div>
+							<div>{{project.currency}}{{project.max_per_user}}</div>
+						</span>
+					</div>
+				</div>
+			</div>
 		</div>
 
 

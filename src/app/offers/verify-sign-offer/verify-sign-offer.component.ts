@@ -7,6 +7,7 @@ import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import * as QRCode from 'qrcode';
 import { OffersService } from '../offers.service';
 import { prettyCurrency } from 'src/app/utilities/currency-util';
+import { API } from 'src/app/utilities/endpoint-manager';
 
 @Component({
   selector: 'app-verify-sign-offer',
@@ -20,6 +21,9 @@ export class VerifySignOfferComponent implements OnInit {
 
   projectID: number;
   investAmount: number;
+
+  approveQRData = ""
+  confirmQRData = ""
 
   clicked: boolean;
 
@@ -49,21 +53,30 @@ export class VerifySignOfferComponent implements OnInit {
     this.offerService.generateTransactionToGreenvest(this.project.id, this.investAmount)
       .subscribe((res: any) => {
         SpinnerUtil.hideSpinner();
-        QRCode.toCanvas(document.getElementById("sign-invest"), 
-        JSON.stringify(res), (err) => {
-          console.log(err);
-        });
+        
+        var txData = {
+          "base_url": API.APIURL,
+          "tx_data" : res
+        }
+
+        this.approveQRData = JSON.stringify(txData)
+
       }, err => {
         displayBackendError(err);
         SpinnerUtil.hideSpinner();
-      });
+      });    
+  }
 
-    
+  approveBroadcasted(id: String) {
     this.offerService.generateTransactionToConfirmGreenvest(this.project.id).subscribe(res => {
       SpinnerUtil.hideSpinner();
-      QRCode.toCanvas(document.getElementById("sign-confirm"), 
-        JSON.stringify(res), console.log);
+      
+      var txData = {
+        "base_url": API.APIURL,
+        "tx_data": res
+      }
+      this.confirmQRData = JSON.stringify(txData)
+
     }, displayBackendError)
-    
   }
 }

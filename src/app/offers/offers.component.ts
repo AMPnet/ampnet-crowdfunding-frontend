@@ -39,7 +39,7 @@ export class OffersComponent implements OnInit {
           title: proj.name,
           description: proj.description,
           offeredBy: proj.name,
-          fundingRequired: numeral(proj.expected_funding).format("0,0"),
+          fundingRequired: proj.expected_funding,
           currentFunding: 0,
           headerImageUrl: proj.main_image,
           status: "Active",

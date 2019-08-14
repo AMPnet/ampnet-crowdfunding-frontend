@@ -27,6 +27,8 @@ export class OfferDetailsComponent implements OnInit {
 
   newsPreviews: NewsLink[];
 
+  fundedPercentage = 0
+
   constructor(private offerService: OffersService, private newsPreviewService: NewsPreviewService, private projectService: ProjectService, private route: ActivatedRoute) { }
 
   ngOnInit() {
@@ -79,6 +81,7 @@ export class OfferDetailsComponent implements OnInit {
       SpinnerUtil.hideSpinner();
 
       if(res.current_funding == undefined) { res.current_funding = 0 }
+      this.fundedPercentage = (res.current_funding / res.expected_funding) * 100
       this.prettifyModel(res);
       this.setUpNewsPreviews(this.offerModel.news);
 

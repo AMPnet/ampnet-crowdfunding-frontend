@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit, Output, EventEmitter } from '@angular/core';
 import * as QRCode from 'qrcode'
 import { API } from '../utilities/endpoint-manager';
 import * as Stomp from'@stomp/stompjs'
@@ -12,6 +12,8 @@ import { TXFullDataModel } from './tx-data-model'
 export class SignBroadcastComponent implements OnInit, AfterViewInit {
 
   @Input() txData: string
+  @Output() onTxBroadcasted = new EventEmitter()
+
 
   constructor() { }
 
@@ -37,6 +39,7 @@ export class SignBroadcastComponent implements OnInit, AfterViewInit {
       client.subscribe("/tx_status/" + castedData.tx_data.tx_id, (msg) => {
         this.txData = ""
         client.deactivate()
+        this.onTxBroadcasted.emit(castedData.tx_data.tx_id.toString())
       })
     }, 500)
   }

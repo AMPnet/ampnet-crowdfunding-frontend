@@ -49,7 +49,8 @@ import { WithdrawComponent } from './withdraw/withdraw.component';
 const routes: Routes = [
   { path: '', component: PublicLayoutComponent,
     children: [
-      { path: '', component: LandingPageComponent }
+      { path: '', component: LandingPageComponent },
+      { path: 'browse', component: OffersComponent }
     ]
   },
   { path: 'dash', component: SecureLayoutComponent,

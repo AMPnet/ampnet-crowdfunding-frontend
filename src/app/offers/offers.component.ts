@@ -32,6 +32,7 @@ export class OffersComponent implements OnInit {
     SpinnerUtil.showSpinner();
 
     this.offersService.getAllOffers().subscribe((res: any) => {
+      console.log(res)
       let projects: [ProjectModel] = res.projects;
       console.log(projects)
       this.components = projects.map((proj) => {
@@ -45,7 +46,7 @@ export class OffersComponent implements OnInit {
           status: "Active",
           endDate: moment(proj.end_date).format("MMM Do, YYYY"),
           offerID: proj.id,
-          owner: "Cooperative for Ethical Financing",
+          owner: proj.return_on_investment,
           currency: proj.currency
         }
       });

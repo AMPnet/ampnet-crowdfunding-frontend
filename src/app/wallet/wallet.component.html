@@ -1,4 +1,4 @@
-<div>
+<div *ngIf="checkComplete">
 	<div class="container root-content-container">
 
 		<div *ngIf="(wallet == undefined)" class="row">
@@ -34,6 +34,10 @@
 				<div class="col-md-12 mt-3">
 					<hr>
 				</div> -->
+				<div class="col-md-12">
+
+				</div>
+
 				<div class="col-md-12 mt-3">
 					<span class="explainer-mini text-uppercase h6 float-left h-100 align-middle">Current balance</span>
 					<span class="h2 float-right">{{wallet.currency}}{{wallet.balance}}.00</span>

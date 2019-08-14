@@ -4,7 +4,7 @@
 		<h2 class="col-md-12 mb-5 mt-0 main-text">{{project.name}}</h2>
 		<div class="col-md-8 mb-3">
 			<b class="font-weight-bold explainer-mini">AVAILABLE FUNDS</b>
-			<h1 class="explainer-mini h2">{{wallet.currency}}{{wallet.balance}}</h1>
+			<h1 class="explainer-mini h2">{{wallet.currency}}{{wallet.balance}}.00</h1>
 		</div>
 		<div class="button-container col-md-4 mb-3">
 			<button routerLink="/dash/wallet" class="py-3 btn btn-primary w-100 float-right">
@@ -37,15 +37,18 @@
 		<div class="col-md-12 pt-3 pb-3">
 			<span class="explainer-mini text-uppercase">I want to invest</span>
 				
-				<input style="font-size: 30px" id=""
+				<input style="font-size: 30px"
 					[(ngModel)]="inputValue" (keyup)="inputChanged($event)" 
-					class="form-control px-3 py-4 h3 mt-3 invest-amount-input" max="20" placeholder="€0.00" aria-label="amount"
-					aria-describedby="basic-addon1">
+					class="form-control px-3 py-4 h3 mt-3 invest-amount-input" max="20" placeholder="€0.00">
+
+				<div class="alert alert-warning mt-3" *ngIf="investmentOutOfBoundsWarningMessage.length > 0">
+					{{investmentOutOfBoundsWarningMessage}}
+				</div>
 
 		</div>
 
 		<div *ngIf="inputValue != undefined" class="col-md-12">
-			<div class="card stats-card gray-text">
+			<div *ngIf="investmentOutOfBoundsWarningMessage.length == 0" class="card stats-card gray-text">
 					<div class="card-body">
 							<div class=" card-title">
 								<div class="explainer-mini text-uppercase">Stats</div>
@@ -79,6 +82,7 @@
 		<div class="col-md-9"></div>
 		<div class="col-md-12 align-bottom mt-3">
 			<button routerLink="{{inputValue}}/EUR/verify_sign"
+			[disabled]="investmentOutOfBoundsWarningMessage.length > 0"
 			class="btn btn-primary float-right align-bottom py-3 w-100">
 				<i class="fas fa-chart-pie mr-2"></i>
 				INVEST

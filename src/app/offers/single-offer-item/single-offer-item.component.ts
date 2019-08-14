@@ -21,6 +21,7 @@ export class SingleOfferItemComponent implements OnInit {
     if(this.component.headerImageUrl == null) {
       this.component.headerImageUrl = "../../../assets/noimage.png"
     }
+
   }
 
 

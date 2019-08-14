@@ -13,14 +13,13 @@ export class OffersService {
   constructor(private http: HttpClient) { }
 
   getAllOffers() {
-    return this.http.get(API.generateRoute(this.projectEndpoint), 
-      API.tokenHeaders());
+    return this.http.get(API.generateRoute(this.projectEndpoint));
   }
 
   getOfferByID(offerID: number) {
     return this.http.get(API.generateComplexRoute(this.projectEndpoint, [
       offerID.toString()
-    ]), API.tokenHeaders());
+    ]));
   }
 
   generateTransactionToGreenvest(projectID: number, investAmount: number) {

@@ -68,15 +68,17 @@ export class VerifySignOfferComponent implements OnInit {
   }
 
   approveBroadcasted(id: String) {
-    this.offerService.generateTransactionToConfirmGreenvest(this.project.id).subscribe(res => {
-      SpinnerUtil.hideSpinner();
-      
-      var txData = {
-        "base_url": API.APIURL,
-        "tx_data": res
-      }
-      this.confirmQRData = JSON.stringify(txData)
-
-    }, displayBackendError)
+    
   }
 }
+
+// this.offerService.generateTransactionToConfirmGreenvest(this.project.id).subscribe(res => {
+//   SpinnerUtil.hideSpinner();
+  
+//   var txData = {
+//     "base_url": API.APIURL,
+//     "tx_data": res
+//   }
+//   this.confirmQRData = JSON.stringify(txData)
+
+// }, displayBackendError)

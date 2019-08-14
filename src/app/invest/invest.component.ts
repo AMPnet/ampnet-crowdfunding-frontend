@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
 import { InvestViewModel } from './invest-view-model';
 import numeral from 'numeral';
 import { WalletService } from '../wallet/wallet.service';
@@ -26,12 +26,14 @@ export class InvestComponent implements OnInit {
   yearlyReturn: string;
   projectStake: string;
   breakevenPeriod: string;
-
   wallet: WalletModel;
-
   project: ProjectModel;
-
   expectedROI: number;
+
+  investmentOutOfBoundsWarningMessage = ""
+
+  INVEST_LOW_MSG = "Investment amount too low. The minimum investment is "
+  INVEST_HIGH_MSG = "Investment amount too high. The maximum investment is "
 
   constructor(private walletService: WalletService, private investService: InvestService,
     private projectService: ProjectService, private route: ActivatedRoute) { }
@@ -41,6 +43,7 @@ export class InvestComponent implements OnInit {
     this.getWalletBalance();
     this.getProject();
   }
+
 
   getWalletBalance() {
     SpinnerUtil.showSpinner();
@@ -62,6 +65,8 @@ export class InvestComponent implements OnInit {
       res.currency = prettyCurrency(res.currency);
       this.project = res;
       
+      this.investmentOutOfBoundsWarningMessage 
+        = this.INVEST_LOW_MSG + res.currency + this.project.min_per_user
       SpinnerUtil.hideSpinner();
     }, err => {
       SpinnerUtil.hideSpinner();
@@ -77,6 +82,16 @@ export class InvestComponent implements OnInit {
                           .toFixed(4) + "%";
     this.breakevenPeriod = numeral(this.calculateTotalLifetimeReturn(inputValue)).format('0,0');
     
+    let parsedInput = parseInt(this.inputValue)
+    if(parsedInput < this.project.min_per_user) {
+      this.investmentOutOfBoundsWarningMessage =
+        this.INVEST_LOW_MSG + this.project.currency + this.project.min_per_user
+    } else if (parsedInput > this.project.max_per_user) {
+      this.investmentOutOfBoundsWarningMessage = 
+        this.INVEST_HIGH_MSG + this.project.currency + this.project.max_per_user
+    } else {
+      this.investmentOutOfBoundsWarningMessage = ""
+    }
   }
   
   calculateProjectStake(investment: number): number {

@@ -36,6 +36,8 @@ export class ManageSingleProjectComponent implements OnInit {
 
   project: ProjectModel;
   wallet: WalletModel;
+
+  qrCodeData: String = ""
   
 
   constructor(private projectService: ProjectService ,private manageProjectsService: ManageProjectsService, private route: ActivatedRoute) { }
@@ -75,10 +77,7 @@ export class ManageSingleProjectComponent implements OnInit {
         "tx_data" : res,
         "base_url": API.APIURL
       }
-
-      QRCode.toCanvas(document.getElementById("pairing-code"), JSON.stringify(qrCodeData), (err) => {
-        if(err) { alert(err) }
-      });
+      this.qrCodeData = JSON.stringify(qrCodeData)
     }, err  => {
       displayBackendError(err);
     });

@@ -1,13 +1,15 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
 import * as QRCode from 'qrcode'
 import { API } from '../utilities/endpoint-manager';
-import * as SockJS from 'sockjs-client'
+import * as Stomp from'@stomp/stompjs'
+import { TXFullDataModel } from './tx-data-model'
+
 @Component({
   selector: 'app-sign-broadcast',
   templateUrl: './sign-broadcast.component.html',
   styleUrls: ['./sign-broadcast.component.css']
 })
-export class SignBroadcastComponent implements OnInit {
+export class SignBroadcastComponent implements OnInit, AfterViewInit {
 
   @Input() txData: string
 
@@ -15,24 +17,28 @@ export class SignBroadcastComponent implements OnInit {
 
   ngOnInit() {
 
+      this.initSockets()
+  }
+
+  ngAfterViewInit() {
     QRCode.toCanvas(document.getElementById("sign-tx-canvas"), 
       this.txData, console.log)
+  }
 
-    let socket = new WebSocket("wss://api.ampnet.io/websocket/websocket")
+  initSockets() {
+    var url = "wss://api.ampnet.io/websocket/websocket"
+    var client = Stomp.Stomp.client(url)
 
-    socket.onopen = () => {
-      console.log("open")
-      socket.send(JSON.stringify({"command": "subscribe","identifier":"{\"channel\":\"/tx_status\"}"}))
-    }
+    client.activate()
 
-    socket.onmessage = () => {
-      console.log("message")
-    }
-
-    socket.onerror = (error) => {
-      console.log("WebSocket error: " + error)
-    }
-
+    let castedData: TXFullDataModel = JSON.parse(this.txData)
+    
+    setTimeout(() => {
+      client.subscribe("/tx_status/" + castedData.tx_data.tx_id, (msg) => {
+        this.txData = ""
+        client.deactivate()
+      })
+    }, 500)
   }
 
 }

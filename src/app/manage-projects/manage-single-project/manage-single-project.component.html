@@ -154,17 +154,10 @@
   </div>
 
   <!-- Wallet doesn't exist -->
-  <div *ngIf="wallet == undefined" class="row">
-    <div class="row pt-5">
-      <div class="col-md-12 text-center mt-5 d-flex justify-content-center">
-        <div class="pairing-text">
-          For security reasons, you must authorize the group with your wallet. This is done automatically by scanning
-          the QR code with your
-          <b>AMPnet Wallet</b> application.
-        </div>
-      </div>
+  <div *ngIf="qrCodeData.length > 0" class="row">
+    <div class="pt-5">
       <div class="col-md-12 mt-5 d-flex justify-content-center">
-        <canvas class="" id="pairing-code"></canvas>
+        <app-sign-broadcast [txData]="qrCodeData"></app-sign-broadcast>
       </div>
     </div>
   </div>

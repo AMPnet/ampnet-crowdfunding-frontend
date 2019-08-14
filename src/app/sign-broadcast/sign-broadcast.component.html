@@ -1,13 +1,22 @@
-<div class="root root-content-container">
-  
-  <div class="row">
+<div class="w-100">
+
+  <div *ngIf="txData.length > 0" class="row">
     <div class="col-md-12 text-center">
-      <div class="explainer-mini text-uppercase">
-        Sign the transaction
+      <div class="explainer-mini">
+        To create a group - authorize this action with your AMPnet Sign application
       </div>
     </div>
-    <div class="col-md-12 text-center">
+    <div class="col-md-12 text-center mt-3">
       <canvas id="sign-tx-canvas"></canvas>
+    </div>
+  </div>
+
+  <div *ngIf="txData.length == 0" class="row w-100">
+    <div class="col-md-12 text-center">
+      <div class="h1 color-app-default">
+        <i class="fas fa-check-circle mr-3"></i>
+        Success
+      </div>
     </div>
   </div>
 

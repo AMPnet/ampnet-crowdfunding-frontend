@@ -41,7 +41,7 @@ export class ProjectService {
             "currency": currency,
             "min_per_user": minInvestmentPerUser,
             "max_per_user": maxInvestmentPerUser,
-            "active" : true
+            "active" : false
         }, API.tokenHeaders())
 
     }

@@ -17,14 +17,7 @@
   </div>
 
   <div *ngIf="orgWallet == undefined" class="row">
-    <div class="row pt-5">
-      <div class="col-md-12 text-center mt-5 d-flex justify-content-center">
-        <div class="pairing-text">
-          For security reasons, you must authorize the group with your wallet. This is done automatically by scanning
-          the QR code with your
-          <b>AMPnet Wallet</b> application.
-        </div>
-      </div>
+    <div class="pt-5 w-100">
       <div *ngIf="qrCodeData != ''" class="col-md-12 mt-5 d-flex justify-content-center">
         <app-sign-broadcast [txData]="qrCodeData"></app-sign-broadcast>
       </div>

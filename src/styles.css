@@ -25,6 +25,10 @@ body {
 	border: none!important;
 }
 
+.color-app-default {
+	color: #69be94
+}
+
 .modal-content {
 	border-radius: 2px!important;
 }

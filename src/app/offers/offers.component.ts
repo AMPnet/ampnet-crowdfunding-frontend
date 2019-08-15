@@ -9,6 +9,7 @@ import * as moment from 'moment';
 import * as numeral from 'numeral';
 import { ProjectService } from '../projects/project-service';
 import { WalletModel } from '../models/WalletModel';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-offers',
@@ -21,11 +22,22 @@ export class OffersComponent implements OnInit {
   featuredComponents: OfferModel[];
   promotedOffer: OfferModel;
 
+  isOverview = false
+
   constructor(private offersService: OffersService,
-    private projectService: ProjectService) { }
+    private projectService: ProjectService,
+    private route: ActivatedRoute
+  ) { 
+
+  }
 
   ngOnInit() {
     this.getAllOffers();
+ 
+    if(this.route.snapshot.params.isOverview) {
+      this.isOverview = true
+    }
+
   }
 
   getAllOffers() {

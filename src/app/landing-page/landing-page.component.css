@@ -16,11 +16,8 @@
 	background: url("../../assets/waves.jpg");
 	background-repeat: no-repeat;
 	background-size: cover;
-	background-position-x: right;
-	background-position-y: bottom;
 	height: 100vh;
 	display: flex;
-	margin-top: -50px;
 	flex-direction: column;
 	justify-content: left;
 }
@@ -50,7 +47,6 @@
 	}
 
 	.landing-content-root {
-		background: url(../../assets/hero-back-mobile.png);
 		width: 100vw;
 		background-size: cover;
 	}

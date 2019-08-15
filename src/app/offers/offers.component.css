@@ -10,3 +10,18 @@ h3 {
 .promoted-offer-holder {
 	height: 200px;
 }
+
+.overview-modifier {
+	margin-top: 100px;
+}
+
+.overview-bg {
+	position: fixed;
+	top: 0;
+	left: 0;
+	max-width: 100%;
+	width: 100vw;
+	height: 100vh;
+	background: url("../../assets/waves.jpg");
+	background-size: cover;
+}

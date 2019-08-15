@@ -49,7 +49,7 @@ export class ProjectService {
     getProjectWallet(projectID: number) {
         return this.http.get(API.generateComplexRoute(this.publicWalletEndpoint, [
             "project", projectID.toString()
-        ]), API.tokenHeaders());
+        ]));
     }
 
     generateTransactionToCreateProjectWallet(projectID: number) {
@@ -62,7 +62,7 @@ export class ProjectService {
     getProject(projectID: number) {
         return this.http.get(API.generateComplexRoute(this.publicEndpoint, [
             projectID.toString()
-        ]), API.tokenHeaders());
+        ]));
     }
 
     updateProject(projectID: number, name: string, description: string,

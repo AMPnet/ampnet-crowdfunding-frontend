@@ -53,7 +53,7 @@ const routes: Routes = [
       { path: '', component: LandingPageComponent },
       { path: 'sign_up/:userUUID', component: SignUpComponent },
       { path: 'confirm_email', component: ConfirmEmailComponent },
-      { path: 'overview', component: OffersComponent },
+      { path: 'overview/:isOverview', component: OffersComponent },
       { path: 'overview/:id/:isOverview', component: OfferDetailsComponent },
       { path: 'fill_data', component: FillDataComponent },
       { path: 'onboarding', component: OnboardingComponent }

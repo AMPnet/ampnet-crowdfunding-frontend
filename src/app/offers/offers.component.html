@@ -1,4 +1,6 @@
-<div *ngIf="components != undefined" class="container root-content-container pt-5">
+<div [class.overview-bg]="isOverview"></div>
+
+<div *ngIf="components != undefined" [class.overview-modifier]="isOverview" class="container root-content-container pt-5">
 	<div id="component-container" class="row">
 		<div *ngFor="let component of components" class="col-md-12 wow fadeIn mt-3">
 			<div class="mb-5">
@@ -11,7 +13,7 @@
 
 <div *ngIf="(components != undefined) && (components.length == 0)">
 	<div class="root root-content-container">
-		<div class="d-flex justify-content-center explainer-mini">
+		<div class="d-flex justify-content-center">
 			No projects currently available for crowdfunding.
 		</div>
 	</div>

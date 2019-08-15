@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { OnboardingService } from '../onboarding.service';
 import swal from 'sweetalert2';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
+import { hideAuthButtons } from 'src/app/utilities/ui-utils';
 
 declare var initializeIdentyum: any;
+declare var $: any;
 
 @Component({
   selector: 'app-onboarding',
@@ -35,6 +37,7 @@ export class OnboardingComponent implements OnInit {
         } 
       });
       identyum.load();
+      $("#auth-buttons").hide()
     }, err => {
       console.log(err);
     });

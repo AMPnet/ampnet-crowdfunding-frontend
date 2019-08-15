@@ -8,9 +8,10 @@ import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { WalletModel } from '../models/WalletModel';
 import { ProjectModel } from '../projects/create-new-project/project-model';
 import { ProjectService } from '../projects/project-service';
-import { ActivatedRoute } from '@angular/router';
-import { prettyCurrency } from '../utilities/currency-util';
+import { ActivatedRoute, Router } from '@angular/router';
+import { prettyCurrency, autonumericCurrency, stripCurrencyData } from '../utilities/currency-util';
 import Cleave from 'cleave.js'
+import * as Autonumeric from 'autonumeric'
 
 declare var $:any;
 
@@ -36,12 +37,15 @@ export class InvestComponent implements OnInit {
   INVEST_HIGH_MSG = "Investment amount too high. The maximum investment is "
 
   constructor(private walletService: WalletService, private investService: InvestService,
-    private projectService: ProjectService, private route: ActivatedRoute) { }
+    private projectService: ProjectService, private route: ActivatedRoute,
+    private router: Router) { }
 
   ngOnInit() {
     this.expectedROI = 7.5;
     this.getWalletBalance();
     this.getProject();
+
+    
   }
 
 
@@ -52,6 +56,11 @@ export class InvestComponent implements OnInit {
       this.wallet = res;
       this.wallet.currency = prettyCurrency(res.currency);
       this.wallet.balance = numeral(res.balance).format("0,0");
+
+      setTimeout(() => {
+        autonumericCurrency("#amount-input")
+      }, 200)
+      
     }, err => {
       SpinnerUtil.hideSpinner();
       displayBackendError(err);
@@ -74,24 +83,44 @@ export class InvestComponent implements OnInit {
     })
   }
 
+  investButtonClicked() {
+    this.router.navigate(["./", stripCurrencyData(this.inputValue), "verify_sign"],
+    {
+      relativeTo: this.route
+    })
+  }
+
   inputChanged(event: any) {
-    let inputValue = parseInt(this.inputValue);
+
+    var inputValue = parseInt(
+      stripCurrencyData(this.inputValue)
+    )
+
+    if(inputValue == NaN) { 
+      inputValue = 0
+    }
+    console.log(inputValue)
     //this.inputValue = numeral(inputValue).format('0,0,0');
     this.yearlyReturn = numeral(this.calculateYearlyReturn(inputValue)).format('0,0.00'); 
     this.projectStake = this.calculateProjectStake(inputValue)
                           .toFixed(4) + "%";
     this.breakevenPeriod = numeral(this.calculateTotalLifetimeReturn(inputValue)).format('0,0');
     
-    let parsedInput = parseInt(this.inputValue)
-    if(parsedInput < this.project.min_per_user) {
+    if(inputValue < this.project.min_per_user) {
       this.investmentOutOfBoundsWarningMessage =
         this.INVEST_LOW_MSG + this.project.currency + this.project.min_per_user
-    } else if (parsedInput > this.project.max_per_user) {
+    } else if (inputValue > this.project.max_per_user) {
       this.investmentOutOfBoundsWarningMessage = 
         this.INVEST_HIGH_MSG + this.project.currency + this.project.max_per_user
     } else {
       this.investmentOutOfBoundsWarningMessage = ""
     }
+
+    let inputAmount = $("#amount-input")
+    let inputAmountContent: String = inputAmount.val();
+
+    
+    
   }
   
   calculateProjectStake(investment: number): number {

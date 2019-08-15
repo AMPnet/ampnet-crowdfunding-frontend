@@ -13,6 +13,7 @@ import swal from 'sweetalert2';
 import { NewsPreviewService } from 'src/app/news-preview/news-preview.service';
 import * as numeral from 'numeral';
 import { prettyCurrency } from 'src/app/utilities/currency-util';
+import { Meta } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-offer-details',
@@ -29,7 +30,13 @@ export class OfferDetailsComponent implements OnInit {
 
   fundedPercentage = 0
 
-  constructor(private offerService: OffersService, private newsPreviewService: NewsPreviewService, private projectService: ProjectService, private route: ActivatedRoute) { }
+  isOverview = false;
+
+  constructor(private offerService: OffersService, 
+    private newsPreviewService: NewsPreviewService, 
+    private projectService: ProjectService, 
+    private route: ActivatedRoute,
+    private meta: Meta) { }
 
   ngOnInit() {
     this.docs = _.fill(Array(5), {
@@ -39,6 +46,10 @@ export class OfferDetailsComponent implements OnInit {
     });
     this.getOfferDetails();
     this.newsPreviews = [];
+
+    if(this.route.snapshot.params.isOverview) {
+      this.isOverview = true
+    }
   }
 
   setUpNewsPreviews(newsLinks: string[]) {
@@ -74,6 +85,25 @@ export class OfferDetailsComponent implements OnInit {
     this.offerModel.max_per_user = numeral(res.max_per_user).format('0,0');
   }
 
+  setMetaTags() {
+    this.meta.addTag({
+      name: "og:title",
+      content: this.offerModel.name
+    })
+    this.meta.addTag({
+      name: "og:description",
+      content: this.offerModel.description
+    })
+    this.meta.addTag({
+      name: "og:image",
+      content: this.offerModel.main_image
+    })
+    this.meta.addTag({
+      name: "og:url",
+      content: window.location.href
+    })
+  }
+
   getOfferDetails() {
     SpinnerUtil.showSpinner();
     let offerID = this.route.snapshot.params.id;
@@ -84,7 +114,7 @@ export class OfferDetailsComponent implements OnInit {
       this.fundedPercentage = (res.current_funding / res.expected_funding) * 100
       this.prettifyModel(res);
       this.setUpNewsPreviews(this.offerModel.news);
-
+      this.setMetaTags()
     }, err => {
       SpinnerUtil.hideSpinner();
       console.log(err);

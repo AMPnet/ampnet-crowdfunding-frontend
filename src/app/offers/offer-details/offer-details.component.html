@@ -18,10 +18,15 @@
 			</h3>
 		</div>
 		<div class="col-md-4 invest-button-holder">
-			<button [disabled]="!offerModel.active" routerLink="invest" id="invest-button"
+			<button *ngIf="!isOverview" [disabled]="!offerModel.active" routerLink="invest" id="invest-button"
 				class="btn btn-primary w-100 btn-action-a float-right text-white">
 				<i class="mr-3 fas fa-chart-pie"></i>
 				<span>INVEST</span>
+			</button>
+			<button *ngIf="isOverview" routerLink="/onboarding" id="invest-button"
+				class="btn btn-primary w-100 btn-action-a float-right text-white">
+				<i class="mr-3 fas fa-chart-pie"></i>
+				<span>Sign Up & Invest</span>
 			</button>
 		</div>
 		<div class="col-md-8 p-3">

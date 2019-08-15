@@ -47,13 +47,20 @@ import { WithdrawComponent } from './withdraw/withdraw.component';
 // Defines secure routes only accessible to authenticated
 // users (dashboard)
 const routes: Routes = [
-  { path: '', component: PublicLayoutComponent,
+  {
+    path: '', component: PublicLayoutComponent,
     children: [
       { path: '', component: LandingPageComponent },
-      { path: 'browse', component: OffersComponent }
+      { path: 'sign_up/:userUUID', component: SignUpComponent },
+      { path: 'confirm_email', component: ConfirmEmailComponent },
+      { path: 'overview', component: OffersComponent },
+      { path: 'overview/:id/:isOverview', component: OfferDetailsComponent },
+      { path: 'fill_data', component: FillDataComponent },
+      { path: 'onboarding', component: OnboardingComponent }
     ]
   },
-  { path: 'dash', component: SecureLayoutComponent,
+  {
+    path: 'dash', component: SecureLayoutComponent,
     canActivate: [AuthGuard],
     children: [
       { path: '', component: OffersComponent },
@@ -73,15 +80,15 @@ const routes: Routes = [
       { path: 'manage_groups/new', component: CreateOrganizationComponent },
       { path: 'general_settings', component: GeneralSettingsComponent },
       { path: 'manage_groups', component: ManageOrganizationsComponent },
-      { path: 'manage_groups/:id', component: OrganizationDetailsComponent},
-      { path: 'manage_groups/:orgId/create_project', component: CreateNewProjectComponent},
+      { path: 'manage_groups/:id', component: OrganizationDetailsComponent },
+      { path: 'manage_groups/:orgId/create_project', component: CreateNewProjectComponent },
       { path: 'token_management', component: MainAdminComponent },
       { path: 'manage_users', component: ManageUsersComponent },
       { path: 'manage_users/:id', component: DetailsComponent },
       { path: 'manage_groups/:id/projects', component: ManageProjectsComponent },
-      { path: 'manage_groups/:groupID/manage_project/:projectID', component: ManageSingleProjectComponent }, 
+      { path: 'manage_groups/:groupID/manage_project/:projectID', component: ManageSingleProjectComponent },
       { path: 'approve_organizations', component: ApproveOrganizationsComponent },
-      { path: 'offers/:offerID/invest/:investAmount/:investCurrency/verify_sign', component: VerifySignOfferComponent},
+      { path: 'offers/:offerID/invest/:investAmount/verify_sign', component: VerifySignOfferComponent },
       { path: 'manage_groups/:groupID/manage_project/:projectID/revenue_share', component: RevenueShareComponent },
       { path: 'manage_withdrawals', component: ManageWithdrawalsComponent },
       { path: 'manage_withdrawals/:ID', component: SingleWithdrawalComponent },
@@ -90,16 +97,11 @@ const routes: Routes = [
       { path: 'wallet/deposit', component: DepositComponent },
       { path: 'wallet/withdraw', component: WithdrawComponent }
     ]
-  },
-  { path: 'sign_up/:userUUID', component: SignUpComponent },
-  { path: 'confirm_email', component: ConfirmEmailComponent },
-  { path: 'overview', component: OffersComponent },
-  { path: 'fill_data', component: FillDataComponent },
-  { path: 'onboarding', component: OnboardingComponent }
+  }
 ];
 
 @NgModule({
-  imports: [ RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' }) ],
-  exports: [ RouterModule ]
+  imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' })],
+  exports: [RouterModule]
 })
 export class AppRoutingModule { }

@@ -1,17 +1,19 @@
 .root {
-    width: 100%;
-    height: 100vh;
+    width: 100vw;
+	height: 100vh;
+	position: absolute
 }
 
 .onboarding-container {
-    background: url("../../../assets/bg-hero-light.png");
-	background-repeat: no-repeat;
-	background-size: contain;
-	background-position-x: right;
-	background-position-y: bottom;
+    background: url("../../../assets/waves.jpg");
+	background-size: cover;
 }
 
 .identyum-master-wrapper {
     font-family: 'Quicksand', sans-serif!important;
 	font-weight: 400;
+}
+
+#identyum-target {
+	margin-top: 15%
 }

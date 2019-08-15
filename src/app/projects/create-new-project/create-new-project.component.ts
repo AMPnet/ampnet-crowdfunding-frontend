@@ -6,6 +6,7 @@ import * as moment from 'moment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { displayBackendError } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
+import { autonumericCurrency } from 'src/app/utilities/currency-util';
 
 @Component({
   selector: 'app-create-new-project',
@@ -71,11 +72,20 @@ export class CreateNewProjectComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+
+    
     
   }
 
   ngAfterViewInit() {
     flatpickr(this.datePickerElement.nativeElement , {});
+    
+    setTimeout(() => {
+      autonumericCurrency("#min-per-user-input")
+      autonumericCurrency("#max-per-user-input")
+      autonumericCurrency("#expected-funding-input")
+    }, 200)
+    
   }
 
   submitButtonClicked() { }

@@ -42,8 +42,9 @@
 					[(ngModel)]="inputValue" (keyup)="inputChanged($event)" 
 					class="form-control px-3 py-4 h3 mt-3 invest-amount-input" placeholder="€0.00">
 
-				<div class="alert alert-warning mt-3" *ngIf="investmentOutOfBoundsWarningMessage.length > 0">
-					{{investmentOutOfBoundsWarningMessage}}
+				<div class="alert alert-danger mt-3" *ngIf="investmentOutOfBoundsWarningMessage.length > 0" 
+					[innerHTML]="investmentOutOfBoundsWarningMessage">
+					
 				</div>
 
 		</div>

@@ -43,6 +43,10 @@ export class OnboardingComponent implements OnInit {
     });
   }
 
+  initializeIdentyum() {
+    
+  }
+
 }
 
 

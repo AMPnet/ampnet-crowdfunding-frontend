@@ -33,8 +33,9 @@ export class InvestComponent implements OnInit {
 
   investmentOutOfBoundsWarningMessage = ""
 
-  INVEST_LOW_MSG = "Investment amount too low. The minimum investment is "
-  INVEST_HIGH_MSG = "Investment amount too high. The maximum investment is "
+  INVEST_LOW_MSG = "<b>Investment amount too low</b>. The minimum investment is "
+  INVEST_HIGH_MSG = "<b>Investment amount too high</b>. The maximum investment is "
+  WALLET_LOW_MSG = "<b>You don't have enough funds on your wallet</b>. Please deposit funds in the wallet tab."
 
   constructor(private walletService: WalletService, private investService: InvestService,
     private projectService: ProjectService, private route: ActivatedRoute,
@@ -114,6 +115,10 @@ export class InvestComponent implements OnInit {
         this.INVEST_HIGH_MSG + this.project.currency + this.project.max_per_user
     } else {
       this.investmentOutOfBoundsWarningMessage = ""
+    }
+
+    if(inputValue > this.wallet.balance) {
+      this.investmentOutOfBoundsWarningMessage += (". " + this.WALLET_LOW_MSG)
     }
 
     let inputAmount = $("#amount-input")

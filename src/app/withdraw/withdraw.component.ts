@@ -16,7 +16,7 @@ declare var $: any;
 export class WithdrawComponent implements OnInit {
 
   activeBankAccount: number = 0
-  banks: [BankAccountModel]
+  banks: BankAccountModel[]
 
   pendingWithdrawal: WithdrawalModel
 

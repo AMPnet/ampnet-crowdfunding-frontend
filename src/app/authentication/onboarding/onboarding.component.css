@@ -1,7 +1,7 @@
 .root {
     width: 100vw;
 	height: 100vh;
-	position: absolute
+	position: fixed;
 }
 
 .onboarding-container {
@@ -16,4 +16,8 @@
 
 #identyum-target {
 	margin-top: 15%
+}
+
+#card-holder {
+	margin-top: 15%;
 }

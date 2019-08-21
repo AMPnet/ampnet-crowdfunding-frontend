@@ -14,7 +14,8 @@ export function autonumericCurrency(selector: string, currencySymbol: string = "
     new Autonumeric(selector, {
         currencySymbol: currencySymbol,
         decimalCharacter: ',',
-        digitGroupSeparator: '.'
+        digitGroupSeparator: '.',
+        decimalPlaces: 0
     })
 }
 

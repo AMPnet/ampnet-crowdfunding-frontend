@@ -1,12 +1,16 @@
 .root {
-    width: 100vw;
-	height: 100vh;
-	position: fixed;
+	width: 100vw;
+	min-height: 100vh;
+	position: absolute;
+	height: 100%;
+	padding-bottom: 200px;
+	background: url("../../../assets/waves.jpg");
+	background-size: cover;
 }
 
 .onboarding-container {
-    background: url("../../../assets/waves.jpg");
-	background-size: cover;
+    
+	height: 100%;
 }
 
 .identyum-master-wrapper {
@@ -15,7 +19,8 @@
 }
 
 #identyum-target {
-	margin-top: 15%
+	margin-top: 12%;
+	padding-bottom: 12%;
 }
 
 #card-holder {

@@ -76,7 +76,7 @@ export class InvestComponent implements OnInit {
       this.project = res;
       
       this.investmentOutOfBoundsWarningMessage 
-        = this.INVEST_LOW_MSG + res.currency + this.project.min_per_user
+        = this.INVEST_LOW_MSG + res.currency + this.project.min_per_user + ". "
       SpinnerUtil.hideSpinner();
     }, err => {
       SpinnerUtil.hideSpinner();
@@ -109,16 +109,20 @@ export class InvestComponent implements OnInit {
     
     if(inputValue < this.project.min_per_user) {
       this.investmentOutOfBoundsWarningMessage =
-        this.INVEST_LOW_MSG + this.project.currency + this.project.min_per_user
+        this.INVEST_LOW_MSG + this.project.currency + this.project.min_per_user + ". "
     } else if (inputValue > this.project.max_per_user) {
       this.investmentOutOfBoundsWarningMessage = 
-        this.INVEST_HIGH_MSG + this.project.currency + this.project.max_per_user
+        this.INVEST_HIGH_MSG + this.project.currency + this.project.max_per_user + ". "
     } else {
       this.investmentOutOfBoundsWarningMessage = ""
     }
 
     if(inputValue > this.wallet.balance) {
-      this.investmentOutOfBoundsWarningMessage += (". " + this.WALLET_LOW_MSG)
+      var padding = ""
+      if(this.investmentOutOfBoundsWarningMessage.length > 0) {
+        padding = "<br><br>"
+      }
+      this.investmentOutOfBoundsWarningMessage += (padding + (this.WALLET_LOW_MSG))
     }
 
     let inputAmount = $("#amount-input")

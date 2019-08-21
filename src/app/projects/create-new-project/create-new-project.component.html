@@ -5,7 +5,7 @@
     <input formControlName="name" type="text" class="w-100 p-4 form-control font-weight-bold" name="" id="">
 
     <div class="explainer-mini text-uppercase mb-2 mt-3">Project description</div>
-    <textarea formControlName="description" class="w-100 p-4 form-control" name="" id="" cols="30" rows="10"></textarea>
+    <textarea formControlName="description" class="w-100 p-4 form-control" name="" id="proj-description" cols="30" rows="10"></textarea>
 
     <div class="explainer-mini text-uppercase mb-2 mt-3">Project name</div>
     <input type="text" class="w-100 p-4 form-control" name="" id="">
@@ -17,14 +17,14 @@
     <input formControlName="colloqual" type="text" class="w-100 p-4 form-control" name="" id="">
 
     <div class="explainer-mini text-uppercase mb-2 mt-3">Start date</div>
-    <input formControlName="startDate" type="date" class="w-100 p-4 form-control" name="" id="">
+    <input formControlName="startDate" type="date" class="w-100 p-4 form-control" name="" id="start-date">
 
     <div class="explainer-mini text-uppercase mb-2 mt-3">End date</div>
-    <input formControlName="endDate" type="date" class="w-100 p-4 form-control" name="" id="">
+    <input formControlName="endDate" type="date" class="w-100 p-4 form-control" name="" id="end-date">
 
     <div class="explainer-mini text-uppercase mb-2 mt-3">Expected funding</div>
     <input formControlName="expectedFunding" 
-    type="number" class="w-100 p-4 form-control" id="expected-funding-input">
+    type="text" class="w-100 p-4 form-control" id="expected-funding-input">
 
     <div class="explainer-mini text-uppercase mb-2 mt-3">Minimum investment per user</div>
     <div class="input-group">
@@ -32,7 +32,7 @@
           <span class="input-group-text">€</span>
       </div>
       <input formControlName="minPerUser" 
-      type="number" class=" p-4 form-control" id="min-per-user-input">
+      type="text" class=" p-4 form-control" id="min-per-user-input">
     </div>
 
     <div class="explainer-mini text-uppercase mb-2 mt-3">Maximum investment per user</div>
@@ -40,7 +40,7 @@
       <div class="input-group-prepend">
           <span class="input-group-text">€</span>
       </div>
-      <input formControlName="maxPerUser" type="number" 
+      <input formControlName="maxPerUser" type="text" 
       class=" p-4 form-control" name="" id="max-per-user-input">
     </div>
 

@@ -6,7 +6,9 @@ import * as moment from 'moment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { displayBackendError } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
-import { autonumericCurrency } from 'src/app/utilities/currency-util';
+import { autonumericCurrency, stripCurrencyData } from 'src/app/utilities/currency-util';
+
+declare var $: any;
 
 @Component({
   selector: 'app-create-new-project',
@@ -15,8 +17,6 @@ import { autonumericCurrency } from 'src/app/utilities/currency-util';
 })
 export class CreateNewProjectComponent implements OnInit, AfterViewInit {
 
-  @ViewChild("date-picker")
-  public datePickerElement: ElementRef;
 
   createProjectForm: FormGroup;
 
@@ -56,10 +56,10 @@ export class CreateNewProjectComponent implements OnInit, AfterViewInit {
       "10",
       formValue.startDate,
       formValue.endDate,
-      formValue.expectedFunding,
+      parseInt(stripCurrencyData(formValue.expectedFunding)),
       "EUR",
-      formValue.minPerUser,
-      formValue.maxPerUser,
+      parseInt(stripCurrencyData(formValue.minPerUser)),
+      parseInt(stripCurrencyData(formValue.maxPerUser)),
       false
     ).subscribe((res: any) => {
       SpinnerUtil.hideSpinner();
@@ -71,19 +71,41 @@ export class CreateNewProjectComponent implements OnInit, AfterViewInit {
     })
   }
 
+  projctFetched() {
+
+  }
+
   ngOnInit() {
 
-    
+    $(document).ready(() => {
+      $('#proj-description').summernote({
+        height: 300,                 // set editor height
+        minHeight: null,             // set minimum height of editor
+        maxHeight: null,             // set maximum height of editor
+        focus: false,
+        toolbar: [
+          // [groupName, [list of button]]
+          ['style', ['bold', 'italic', 'underline', 'clear']],
+          ['font', ['strikethrough', 'superscript', 'subscript']],
+          ['fontsize', []],
+          ['color', []],
+          ['para', ['ul', 'ol', 'paragraph']],
+          ['height', []]
+        ]                  // set focus to editable area after initializing summernote
+      });
+      autonumericCurrency("#min-per-user-input")
+      autonumericCurrency("#max-per-user-input")
+      autonumericCurrency("#expected-funding-input")
+    })
     
   }
 
   ngAfterViewInit() {
-    flatpickr(this.datePickerElement.nativeElement , {});
     
     setTimeout(() => {
-      autonumericCurrency("#min-per-user-input")
-      autonumericCurrency("#max-per-user-input")
-      autonumericCurrency("#expected-funding-input")
+
+
+      
     }, 200)
     
   }

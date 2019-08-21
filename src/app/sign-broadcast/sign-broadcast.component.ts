@@ -13,7 +13,7 @@ export class SignBroadcastComponent implements OnInit, AfterViewInit {
 
   @Input() txData: string
   @Output() onTxBroadcasted = new EventEmitter()
-
+  @Input() title: string = ""
 
   constructor() { }
 

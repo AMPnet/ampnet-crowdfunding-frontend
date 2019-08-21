@@ -214,3 +214,15 @@ input[type="number"] {
 	border: none!important;
     box-shadow: 0px 0px 6px 0px #00000025!important;
 }
+
+.note-editor {
+	border-radius: 5px!important;
+    border-color: transparent!important;
+    box-shadow: 0px 0px 6px 0px #00000025!important;
+	padding: 1.5rem!important;
+	width: 100%;
+}
+
+.note-editable {
+	background: transparent!important;
+}

@@ -46,6 +46,8 @@ export class ManageSingleProjectComponent implements OnInit {
     // this.setUploadAreas();
     // this.fetchNews(0);
     this.fetchAllData();
+
+    
   }
 
   fetchAllData() {
@@ -230,6 +232,25 @@ export class ManageSingleProjectComponent implements OnInit {
       this.getProject(() => {});
       filesUppy.close();
     });
+
+    $(document).ready(() => {
+      $('#project-description').summernote({
+        height: 300,                 // set editor height
+        minHeight: null,             // set minimum height of editor
+        maxHeight: null,             // set maximum height of editor
+        focus: false,
+        toolbar: [
+          // [groupName, [list of button]]
+          ['style', ['bold', 'italic', 'underline', 'clear']],
+          ['font', ['strikethrough', 'superscript', 'subscript']],
+          ['fontsize', []],
+          ['color', []],
+          ['para', ['ul', 'ol']],
+          ['height', []]
+        ]                  // set focus to editable area after initializing summernote
+      });
+      $(".note-editor").attr("id","note-custom");
+    })
   }
 
   

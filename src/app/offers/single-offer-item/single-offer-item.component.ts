@@ -3,7 +3,7 @@ import { OfferModel } from '../OfferModel';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ProjectService } from 'src/app/projects/project-service';
 import { displayBackendError } from 'src/app/utilities/error-handler';
-import { prettyCurrency } from 'src/app/utilities/currency-util';
+import { prettyCurrency, autonumericCurrency } from 'src/app/utilities/currency-util';
 
 @Component({
   selector: 'app-single-offer-item',
@@ -23,6 +23,9 @@ export class SingleOfferItemComponent implements OnInit {
     if(this.component.headerImageUrl == null) {
       this.component.headerImageUrl = "../../../assets/noimage.png"
     }
+    setTimeout(() => {
+      autonumericCurrency(".req-funding-" + this.component.offerID)
+    }, 300)
     
   }
 

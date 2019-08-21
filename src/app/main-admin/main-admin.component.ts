@@ -58,7 +58,7 @@ export class MainAdminComponent implements OnInit {
 
   mintButtonClicked() {
     SpinnerUtil.showSpinner();
-    this.issuingAuthService.mintTokens(10000, this.userUUID).subscribe((res: any) => {
+    this.issuingAuthService.mintTokens(50000, this.userUUID).subscribe((res: any) => {
       SpinnerUtil.hideSpinner();
       QRCode.toCanvas(document.getElementById("mint-burn-sign-canvas"), JSON.stringify(res), console.log);
     }, err => {

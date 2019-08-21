@@ -95,7 +95,7 @@ export class OfferDetailsComponent implements OnInit {
       content: this.offerModel.description
     })
     this.meta.addTag({
-      name: "og:image",
+      name: "og:image:secure_url",
       content: this.offerModel.main_image
     })
     this.meta.addTag({

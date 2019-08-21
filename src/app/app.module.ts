@@ -167,10 +167,8 @@ export function jwtOptionsFactory() {
     SocialLoginModule,
     NgxSpinnerModule
   ],
-  providers: [{
-    provide: LocationStrategy,
-    useClass: HashLocationStrategy
-  }, {
+  providers: [
+  {
     provide: AuthServiceConfig,
     useFactory: provideConfig
   }],

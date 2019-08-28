@@ -67,7 +67,11 @@ import { ManageSingleDepositComponent } from './manage-deposits/manage-single-de
 import { WithdrawComponent } from './withdraw/withdraw.component';
 import { SignBroadcastComponent } from './sign-broadcast/sign-broadcast.component';
 import { EscapeHtmlPipe } from './pipes/unescape';
-import { WalletActivationComponent } from './wallet-activation/wallet-activation.component'
+import { WalletActivationComponent } from './wallet-activation/wallet-activation.component';
+import { UserActivationComponent } from './wallet-activation/user-activation/user-activation.component';
+import { GroupActivationComponent } from './wallet-activation/group-activation/group-activation.component';
+import { ProjectActivationComponent } from './wallet-activation/project-activation/project-activation.component';
+import { ActivateSignComponent } from './wallet-activation/activate-sign/activate-sign.component'
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -156,7 +160,11 @@ export function jwtOptionsFactory() {
     WithdrawComponent,
     SignBroadcastComponent,
     EscapeHtmlPipe,
-    WalletActivationComponent
+    WalletActivationComponent,
+    UserActivationComponent,
+    GroupActivationComponent,
+    ProjectActivationComponent,
+    ActivateSignComponent
   ],
   imports: [
     BrowserModule,

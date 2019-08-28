@@ -40,6 +40,11 @@ import { ManageDepositsComponent } from './manage-deposits/manage-deposits.compo
 import { DepositComponent } from './deposit/deposit.component';
 import { ManageSingleDepositComponent } from './manage-deposits/manage-single-deposit/manage-single-deposit.component';
 import { WithdrawComponent } from './withdraw/withdraw.component';
+import { WalletActivationComponent } from './wallet-activation/wallet-activation.component';
+import { UserActivationComponent } from './wallet-activation/user-activation/user-activation.component';
+import { GroupActivationComponent } from './wallet-activation/group-activation/group-activation.component';
+import { ProjectActivationComponent } from './wallet-activation/project-activation/project-activation.component';
+import { ActivateSignComponent } from './wallet-activation/activate-sign/activate-sign.component';
 
 // Defines public routes accessible to everyone
 // (landing page, login, register, contact help, etc...)
@@ -95,7 +100,12 @@ const routes: Routes = [
       { path: 'manage_deposits', component: ManageDepositsComponent },
       { path: 'manage_deposits/:ID', component: ManageSingleDepositComponent },
       { path: 'wallet/deposit', component: DepositComponent },
-      { path: 'wallet/withdraw', component: WithdrawComponent }
+      { path: 'wallet/withdraw', component: WithdrawComponent }, 
+      { path: 'activation', component: WalletActivationComponent },
+      { path: 'activation/users', component: UserActivationComponent },
+      { path: 'activation/groups', component: GroupActivationComponent },
+      { path: 'activation/projects', component: ProjectActivationComponent },
+      { path: 'activation/:type/:id', component: ActivateSignComponent }
     ]
   }
 ];

@@ -6,17 +6,7 @@ export interface TXFullDataModel {
 interface TXDataModel {
     tx_id: number,
     info: TXInfoData
-    tx: TXDataModel
-}
-
-interface TXDataModel {
-    data: String,
-    to: String,
-    nonce: number,
-    gas_limit: number,
-    gas_price: number,
-    value: number,
-    public_key: String
+    tx: string
 }
 
 interface TXInfoData {

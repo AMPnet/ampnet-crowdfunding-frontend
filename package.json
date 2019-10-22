@@ -23,6 +23,7 @@
     "@angular/platform-browser-dynamic": "^6.1.0",
     "@angular/router": "^6.1.0",
     "@angularfy/ng-autonumeric": "^1.0.2",
+    "@arkane-network/arkane-connect": "^1.10.0",
     "@auth0/angular-jwt": "^2.0.0",
     "@chenfengyuan/datepicker": "^1.0.8",
     "@fortawesome/fontawesome-free": "^5.3.1",

@@ -1,6 +1,7 @@
 
 export module API {
-    export const APIURL = "http://ae-api.ampnet.io"
+
+    export const APIURL = "https://api.ampnet.io"
 
     
     export function generateRoute(endpoint: string) {

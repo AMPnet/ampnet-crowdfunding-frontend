@@ -3,12 +3,14 @@ import { WalletService } from './wallet.service';
 import swal from 'sweetalert2';
 import { WalletModel } from '../models/WalletModel';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
-import { displayBackendError } from '../utilities/error-handler';
+import { displayBackendError, displayErrorMessage } from '../utilities/error-handler';
 import { prettyCurrency } from '../utilities/currency-util';
 import * as numeral from 'numeral';
 import * as QRCode from 'qrcode';
 import { API } from '../utilities/endpoint-manager';
 import { ChildActivationEnd } from '@angular/router';
+import { ArkaneConnect } from '@arkane-network/arkane-connect'
+import { AuthenticationResult } from '@arkane-network/arkane-connect/dist/src/connect/connect';
 
 declare var $:any;
 
@@ -24,6 +26,8 @@ export class WalletComponent implements OnInit, AfterViewInit {
   wallet: WalletModel;
   checkComplete = false;
 
+  arkaneConnect: ArkaneConnect;
+
   ngOnInit() {
     this.getUserWallet();
   }
@@ -33,34 +37,41 @@ export class WalletComponent implements OnInit, AfterViewInit {
 
   }
 
-  bindInputs() {
-    var inputs = $(".pairing-code-holder").children();
-    
-    inputs.each((i, item) => {
-      $(item).keyup((e) => {
-        let isBackspace = e.keyCode == 8;
+  async setUpArkane() {
+    SpinnerUtil.showSpinner();    
+    try {
+      this.arkaneConnect = new ArkaneConnect('Arketype', {
+        environment: 'staging'
+      })
+      const authResult = await this.arkaneConnect.checkAuthenticated()
+      this.afterAuth(authResult)
+    } catch (reason) {
+      console.error(reason);
+      SpinnerUtil.hideSpinner();
+      displayErrorMessage("Cannot connect to secure wallet provider")
+    }
+  }
 
-        let shouldIgnore = 
-          e.keyCode == 16 || // Shift
-          e.keyCode == 27 || // ESC
-          e.keyCode == 20 || // CAPS
-          e.keyCode == 9  || // Tab
-          e.keyCode == 17 ||// Ctr;
-          e.keyCode == 18 || //Alt
-          e.keyCode == 93 || // ContextMenu
-          (e.keyCode > 111 && e.keyCode < 124)
-
-        if(shouldIgnore) { return } 
-        if((i == 0) && isBackspace) { return }
-        if((i == inputs.length) && !isBackspace) { return }
-        if(isBackspace) {
-          inputs.get(i - 1).focus();
-        } else {
-          inputs.get(i + 1).focus();
+  afterAuth(authResult: AuthenticationResult) {
+    authResult.authenticated(async (auth) => {
+        try {
+          const wallets = await this.arkaneConnect.api.getWallets();
+          if(wallets.length > 0) {
+            const wallet = wallets[0]
+            this.startWalletInit(wallet.address, "0xC2D7CF95645D33006175B78989035C7c9061d3F9")
+          } else {
+            SpinnerUtil.hideSpinner();
+            this.arkaneConnect.manageWallets("ETHEREUM")
+          }
+        } catch (err) {
+          SpinnerUtil.hideSpinner();
+          displayErrorMessage("Somethign went wrong while authenticating your secure account.")
         }
-
-      });
-    });
+    })
+    .notAuthenticated(async (auth) => {
+      const authResult = await this.arkaneConnect.flows.authenticate();
+      this.afterAuth(authResult)
+    })
   }
 
   startWalletInit(addr: string, pubKey: string) {
@@ -85,30 +96,6 @@ export class WalletComponent implements OnInit, AfterViewInit {
     }, err => {
       SpinnerUtil.hideSpinner();
       this.checkComplete = true;
-      setTimeout(() => {
-        QRCode.toCanvas(document.getElementById("url-pairing-canvas"), API.APIURL, 
-      console.log);
-      }, 100)
-      this.bindInputs();
-      //displayBackendError(err);
-    });
-  }
-
-  pairButtonClicked() {
-    var inputs = $(".pairing-code-holder").children();
-    var pairingCodeArray: String[] = [];
-    inputs.each((i, item) => {
-      pairingCodeArray.push($(item).val())
-    });
-    var pairingString = pairingCodeArray.join("")
-    SpinnerUtil.showSpinner();
-
-    this.walletService.getInfoFromPairingCode(pairingString).subscribe((res: any) => {
-      SpinnerUtil.hideSpinner();
-      this.startWalletInit(res.address, res.public_key);
-    }, err => {
-      SpinnerUtil.hideSpinner();
-      displayBackendError(err);
     });
   }
 

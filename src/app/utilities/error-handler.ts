@@ -7,7 +7,12 @@ export function displayBackendError(err: any) {
     } else {
         console.log("UNHANDLED ERROR!")
         console.log(err)
+        swal("", "An unknown error occurred.", "error")
     }
+}
+
+export function displayErrorMessage(msg: string) {
+    swal('', msg, "error")
 }
 
 export function hideSpinnerAndDisplayError(err: any) {

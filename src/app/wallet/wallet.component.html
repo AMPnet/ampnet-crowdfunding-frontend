@@ -2,26 +2,31 @@
 	<div class="container root-content-container">
 
 		<div *ngIf="(wallet == undefined)" class="row">
-			<div class="col-md-12 mt-3 gray-text text-center">
-				<h5>1. Scan the QR code with AMPnet Sign application</h5>
-			</div>
-			<div class="col-md-12 d-flex justify-content-center">
-				<canvas id="url-pairing-canvas"></canvas>
-			</div>
-			<div class="col-md-12 mt-5 gray-text text-center">
-				<h5>2. Enter the pairing code</h5>
-				<div class="d-flex mt-3 justify-content-center flex-row pairing-code-holder">
-					<input class="form-control mr-2" maxlength="1" type="text" name="" id="">
-					<input class="form-control mr-2" maxlength="1" type="text" name="" id="">
-					<input class="form-control mr-2" maxlength="1" type="text" name="" id="">
-					<input class="form-control mr-2" maxlength="1" type="text" name="" id="">
-					<input class="form-control mr-2" maxlength="1" type="text" name="" id="">
-					<input class="form-control" maxlength="1" type="text" name="" id="">
+			<div class="col-md-12 gray-text d-flex justify-content-center">
+				<div class="text-justify">
+					<h4 class="mb-3">
+						<i class="fas fa-wallet mr-3"></i>
+						Your private, secure wallet
+					</h4>
+					We're commited to making sure your funds are as 
+					safe as they can possibly be when using our platform. To do this,
+					we prevent the management of your money by anyone other than you.
+					<br><br>
+					This is why we use a third-party secure wallet to store 
+					your money and approve investments into projects. To start
+					the process of initializing your wallet - click on the button below.
 				</div>
-				<button (click)="pairButtonClicked()" class="btn btn-primary py-3 w-100 mt-5">
-					<i class="fas fa-phone mr-2"></i>
-					Pair
+			</div>
+			<div class="col-md-12 mt-5 text-center">
+				<button (click)="setUpArkane()" class="btn btn-primary py-3 mt-3 w-100">
+					<i class="fas fa-plus mr-3"></i>
+					Initialize secure wallet
 				</button>
+			</div>
+			<div class="col-md-12 mt-5 text-center explainer-mini">
+				Advanced users: This platform is powered by blockchain technology. A "wallet" is 
+				a keystorage service used for signing transactions. If you're an advanced user and would
+				like to sign transactions yourself, click <u>here</u>
 			</div>
 		</div>
 	

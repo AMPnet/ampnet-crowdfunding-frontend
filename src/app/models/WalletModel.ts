@@ -3,6 +3,7 @@ export class WalletModel {
     balance: number;
     currency: string;
     hash: string;
+    activated_at: string;
 }
 
 export class TransactionModel {

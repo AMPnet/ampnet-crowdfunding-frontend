@@ -8,8 +8,8 @@ import { CheckEmailModel } from 'src/app/models/auth/check-email-model';
 })
 export class SignUpService {
 
-  private endpoint = "/user_api/signup";
-  private checkEmailEndpoint = "/user_api/mail-check";
+  private endpoint = "/user/signup";
+  private checkEmailEndpoint = "/user/mail-check";
 
   constructor(
     private http: HttpClient) { }

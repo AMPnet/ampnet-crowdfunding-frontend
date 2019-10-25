@@ -12,5 +12,5 @@ interface UserActivationUserSubmodel {
 }
 
 interface UserActivationWalletModel {
-    id: number;
+    uuid: number;
 }

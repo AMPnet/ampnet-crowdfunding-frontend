@@ -8,14 +8,13 @@ import { WalletModel } from '../models/WalletModel';
 })
 export class WalletService {
 
-  private endpoint = '/wallet'; 
+  private endpoint = '/wallet/wallet'; 
 
   constructor(private http: HttpClient) { }
 
-  initWallet(address: string, publicKey: string) {
+  initWallet(address: string) {
     return this.http.post<WalletModel>(API.generateRoute(this.endpoint), {
-      "address" : address,
-      "public_key": publicKey
+      "public_key": address
     }, API.tokenHeaders());
   }
 

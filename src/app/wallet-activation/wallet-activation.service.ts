@@ -7,7 +7,7 @@ import { API } from "../utilities/endpoint-manager";
 })
 export class WalletActivationService {
 
-    private endpoint = "/cooperative/wallet"
+    private endpoint = "/wallet/cooperative/wallet"
 
     constructor(private http: HttpClient) { }
 

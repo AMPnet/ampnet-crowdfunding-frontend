@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { WalletActivationService } from '../wallet-activation.service';
-import { hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
+import { hideSpinnerAndDisplayError, displayErrorMessage } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { UserActivationModel } from './user-activation.model';
+import { ArkaneUtil } from 'src/app/utilities/arkane-util';
 
 @Component({
   selector: 'app-user-activation',
@@ -26,6 +27,18 @@ export class UserActivationComponent implements OnInit {
 
     }, hideSpinnerAndDisplayError)
 
+  }
+
+  activateUserClicked(id: number) {
+    SpinnerUtil.showSpinner()
+    this.activationService.getActivationData(id).subscribe(async (res: any) => {
+      SpinnerUtil.hideSpinner()
+      try {
+        await ArkaneUtil.signTx(res.tx)
+      } catch(reason) {
+        displayErrorMessage("Failed signing transaciton")
+      }
+    }, hideSpinnerAndDisplayError)
   }
 
 }

@@ -7,7 +7,7 @@ import { API } from '../utilities/endpoint-manager';
 })
 export class NewsPreviewService {
 
-  private linkEndpoint = "/link_api/preview";
+  private linkEndpoint = "/link/preview";
 
   constructor(private http: HttpClient) { }
 

@@ -9,7 +9,7 @@ import * as numeral from 'numeral';
 import * as QRCode from 'qrcode';
 import { API } from '../utilities/endpoint-manager';
 import { ChildActivationEnd } from '@angular/router';
-import { ArkaneConnect } from '@arkane-network/arkane-connect'
+import { ArkaneConnect, Wallet, SecretType } from '@arkane-network/arkane-connect'
 import { AuthenticationResult } from '@arkane-network/arkane-connect/dist/src/connect/connect';
 
 declare var $:any;
@@ -56,12 +56,19 @@ export class WalletComponent implements OnInit, AfterViewInit {
     authResult.authenticated(async (auth) => {
         try {
           const wallets = await this.arkaneConnect.api.getWallets();
-          if(wallets.length > 0) {
-            const wallet = wallets[0]
-            this.startWalletInit(wallet.address, "0xC2D7CF95645D33006175B78989035C7c9061d3F9")
+          var aewallet: Wallet;
+
+          wallets.forEach(x => {
+            if(x.secretType == SecretType.AETERNITY) {
+              aewallet = x;
+            }
+          })
+
+          if(aewallet != undefined) {
+            this.startWalletInit(aewallet.address)
           } else {
             SpinnerUtil.hideSpinner();
-            this.arkaneConnect.manageWallets("ETHEREUM")
+            this.arkaneConnect.manageWallets("AETERNITY")
           }
         } catch (err) {
           SpinnerUtil.hideSpinner();
@@ -74,9 +81,9 @@ export class WalletComponent implements OnInit, AfterViewInit {
     })
   }
 
-  startWalletInit(addr: string, pubKey: string) {
+  startWalletInit(addr: string) {
     SpinnerUtil.showSpinner();
-    this.walletService.initWallet(addr, pubKey).subscribe(res => {
+    this.walletService.initWallet(addr).subscribe(res => {
       SpinnerUtil.hideSpinner();
       this.getUserWallet();
     }, err => {
@@ -92,6 +99,7 @@ export class WalletComponent implements OnInit, AfterViewInit {
       this.wallet = res;
       this.wallet.currency = prettyCurrency(res.currency);
       this.wallet.balance = numeral(res.balance).format('0,0');
+      this.wallet.activated_at = res.activated_at;
       this.checkComplete = true;
     }, err => {
       SpinnerUtil.hideSpinner();

@@ -7,7 +7,7 @@ import { API } from '../utilities/endpoint-manager';
 })
 export class PaymentService {
 
-  endpoint = "/user_api/bank-account"
+  endpoint = "/user/bank-account"
 
   constructor(private http: HttpClient) { }
 

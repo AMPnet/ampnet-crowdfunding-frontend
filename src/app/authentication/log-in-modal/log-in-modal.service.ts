@@ -9,7 +9,7 @@ import { TokenModel } from 'src/app/models/auth/TokenModel';
 })
 export class LogInModalService {
 
-  private endpoint = '/user_api/token'
+  private endpoint = '/user/token'
 
   constructor(private http: HttpClient) { }
 

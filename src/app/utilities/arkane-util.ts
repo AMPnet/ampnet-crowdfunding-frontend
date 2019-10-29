@@ -1,78 +1,61 @@
-import { ArkaneConnect, Wallet, SecretType, WindowMode, SignatureRequestType } from "@arkane-network/arkane-connect";
-import { AuthenticationResult } from "@arkane-network/arkane-connect/dist/src/connect/connect";
+import { ArkaneConnect, Wallet, SecretType, WindowMode, SignatureRequestType } from '@arkane-network/arkane-connect';
+import { AuthenticationResult } from '@arkane-network/arkane-connect/dist/src/connect/connect';
 
 export class ArkaneUtil {
 
-    static async createInstance(): Promise<ArkaneConnect> {
-        let arkaneConnect = new ArkaneConnect("Arketype", {
-            environment: "staging"
-        })
-        try {
-            const arkaneRes = await arkaneConnect.checkAuthenticated()
-            try {
-                await ArkaneUtil.afterAuth(arkaneRes, arkaneConnect)
-                return Promise.resolve(arkaneConnect)
-            } catch (reason) {
-                return Promise.reject()
-            }
-        } catch (reason) {
-            return Promise.reject()
-        }
+    public static connect: ArkaneConnect;
 
+    static async authenticate(): Promise<AuthenticationResult> {
+        try {
+            const authResult = await ArkaneUtil.connect.checkAuthenticated()
+            return Promise.resolve(authResult)
+        } catch {
+            await Promise.reject()
+        }
     }
 
+    static async getAeWallet(): Promise<Wallet> {
+        const authResult = await this.authenticate()
 
-    static async afterAuth(authResult: AuthenticationResult, connect: ArkaneConnect): Promise<void> {
-        authResult
-            .authenticated(async (auth) => {
+        return new Promise<Wallet>((resolve, reject) => {
+
+            authResult
+            .authenticated(async(auth) => {
                 try {
-                    const wallets = await connect.api.getWallets();
-                    var aewallet: Wallet;
+                    const wallets = await ArkaneUtil.connect.api.getWallets()
+                    const aewallet = wallets.filter((x) => {
+                        x.secretType == SecretType.AETERNITY
+                    })[0]
 
-                    wallets.forEach(element => {
-                        if (element.secretType == SecretType.AETERNITY) {
-                            aewallet = element
-                        }
-                    });
-                    if (aewallet != undefined) {
-                        return Promise.resolve()
+                    if(aewallet != undefined) {
+                        resolve(aewallet)
                     } else {
-                        await connect.manageWallets("AETERNITY")
-                        ArkaneUtil.afterAuth(authResult, connect)
+                        ArkaneUtil.connect.manageWallets("AETERNITY")
                     }
-                } catch (reason) {
-                    return Promise.reject()
+                } catch {
+                    reject("Cannot fetch wallets")
                 }
             })
-            .notAuthenticated(async (auth) => {
-                const authRes = await connect.flows.authenticate()
-                ArkaneUtil.afterAuth(authRes, connect)
+            .notAuthenticated(async(auth) => {
+                const authResult = await ArkaneUtil.connect.flows.authenticate()
+                const wallet = await this.getAeWallet()
+                resolve(wallet)
             })
+        })
     }
 
-    static async signTx(txData: string): Promise<void> {
-        try {
-            const connectInstance = await ArkaneUtil.createInstance()
-
-            const wallets = await connectInstance.api.getWallets();
-            var aewallet: Wallet;
-
-            wallets.forEach(element => {
-                if (element.secretType = SecretType.AETERNITY) {
-                    aewallet = element
-                }
-            });
-            const signingResult = await connectInstance.createSigner(WindowMode.POPUP)
-                .sign(({
-                    walletId: aewallet.id,
-                    data: txData,
-                    type: SignatureRequestType.AETERNITY_RAW
-                }))
-            Promise.resolve();
-        } catch (reason) {
-            Promise.reject()
-        }
-
+    static async signTx(txData: string) {
+        const wallet = await ArkaneUtil.getAeWallet()
+        const signer = ArkaneUtil.connect.createSigner(WindowMode.POPUP)
+        const signedTx = await signer.signTransaction({
+            walletId: wallet.id,
+            type: SignatureRequestType.AETERNITY_RAW,
+            data: txData
+        })
+        console.log("SIGNED TX:", signedTx)
     }
 
+
+   
+>>>>>>> master
 }

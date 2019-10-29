@@ -7,7 +7,7 @@ import { API } from '../utilities/endpoint-manager';
 })
 export class OffersService {
 
-  projectEndpoint = "/public/project";
+  projectEndpoint = "/wallet/public/project/active";
   privateEndpoint = "/project"
 
   constructor(private http: HttpClient) { }

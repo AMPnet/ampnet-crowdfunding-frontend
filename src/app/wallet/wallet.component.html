@@ -2,25 +2,17 @@
 	<div class="container root-content-container">
 
 		<div *ngIf="(wallet == undefined)" class="row">
-			<div class="col-md-12 mt-3 gray-text text-center">
-				<h5>1. Scan the QR code with AMPnet Sign application</h5>
-			</div>
-			<div class="col-md-12 d-flex justify-content-center">
-				<canvas id="url-pairing-canvas"></canvas>
-			</div>
-			<div class="col-md-12 mt-5 gray-text text-center">
-				<h5>2. Enter the pairing code</h5>
-				<div class="d-flex mt-3 justify-content-center flex-row pairing-code-holder">
-					<input class="form-control mr-2" maxlength="1" type="text" name="" id="">
-					<input class="form-control mr-2" maxlength="1" type="text" name="" id="">
-					<input class="form-control mr-2" maxlength="1" type="text" name="" id="">
-					<input class="form-control mr-2" maxlength="1" type="text" name="" id="">
-					<input class="form-control mr-2" maxlength="1" type="text" name="" id="">
-					<input class="form-control" maxlength="1" type="text" name="" id="">
+			<div class="col-md-12">
+				<h4>
+					<i class="fas fa-wallet mr-2"></i>
+					Create a secure wallet
+				</h4>
+				<div class="mt-4">
+					Create a secure wallet for your AMPnet application.
 				</div>
-				<button (click)="pairButtonClicked()" class="btn btn-primary py-3 w-100 mt-5">
-					<i class="fas fa-phone mr-2"></i>
-					Pair
+				<button class="w-100 btn btn-primary py-3 mt-5">
+					<i class="fas fa-plus mr-2"></i>
+					Initialize wallet
 				</button>
 			</div>
 		</div>

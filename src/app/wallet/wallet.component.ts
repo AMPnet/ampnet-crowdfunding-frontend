@@ -33,36 +33,6 @@ export class WalletComponent implements OnInit, AfterViewInit {
 
   }
 
-  bindInputs() {
-    var inputs = $(".pairing-code-holder").children();
-    
-    inputs.each((i, item) => {
-      $(item).keyup((e) => {
-        let isBackspace = e.keyCode == 8;
-
-        let shouldIgnore = 
-          e.keyCode == 16 || // Shift
-          e.keyCode == 27 || // ESC
-          e.keyCode == 20 || // CAPS
-          e.keyCode == 9  || // Tab
-          e.keyCode == 17 ||// Ctr;
-          e.keyCode == 18 || //Alt
-          e.keyCode == 93 || // ContextMenu
-          (e.keyCode > 111 && e.keyCode < 124)
-
-        if(shouldIgnore) { return } 
-        if((i == 0) && isBackspace) { return }
-        if((i == inputs.length) && !isBackspace) { return }
-        if(isBackspace) {
-          inputs.get(i - 1).focus();
-        } else {
-          inputs.get(i + 1).focus();
-        }
-
-      });
-    });
-  }
-
   startWalletInit(addr: string, pubKey: string) {
     SpinnerUtil.showSpinner();
     this.walletService.initWallet(addr, pubKey).subscribe(res => {
@@ -89,26 +59,7 @@ export class WalletComponent implements OnInit, AfterViewInit {
         QRCode.toCanvas(document.getElementById("url-pairing-canvas"), API.APIURL, 
       console.log);
       }, 100)
-      this.bindInputs();
       //displayBackendError(err);
-    });
-  }
-
-  pairButtonClicked() {
-    var inputs = $(".pairing-code-holder").children();
-    var pairingCodeArray: String[] = [];
-    inputs.each((i, item) => {
-      pairingCodeArray.push($(item).val())
-    });
-    var pairingString = pairingCodeArray.join("")
-    SpinnerUtil.showSpinner();
-
-    this.walletService.getInfoFromPairingCode(pairingString).subscribe((res: any) => {
-      SpinnerUtil.hideSpinner();
-      this.startWalletInit(res.address, res.public_key);
-    }, err => {
-      SpinnerUtil.hideSpinner();
-      displayBackendError(err);
     });
   }
 

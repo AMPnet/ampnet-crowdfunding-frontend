@@ -5,26 +5,14 @@ export class ArkaneUtil {
 
     public static connect: ArkaneConnect;
 
-    static async authenticate(): Promise<AuthenticationResult> {
-        try {
-            const authResult = await ArkaneUtil.connect.checkAuthenticated()
-            return Promise.resolve(authResult)
-        } catch {
-            await Promise.reject()
-        }
-    }
-
-    static async getAeWallet(): Promise<Wallet> {
-        const authResult = await this.authenticate()
-
+    static async getAeWallet(authResult: AuthenticationResult): Promise<Wallet> {
         return new Promise<Wallet>((resolve, reject) => {
-
             authResult
             .authenticated(async(auth) => {
                 try {
                     const wallets = await ArkaneUtil.connect.api.getWallets()
-                    const aewallet = wallets.filter((x) => {
-                        x.secretType == SecretType.AETERNITY
+                    const aewallet = wallets.filter((x, i, arr) => {
+                        return x.secretType == SecretType.AETERNITY
                     })[0]
 
                     if(aewallet != undefined) {
@@ -38,24 +26,23 @@ export class ArkaneUtil {
             })
             .notAuthenticated(async(auth) => {
                 const authResult = await ArkaneUtil.connect.flows.authenticate()
-                const wallet = await this.getAeWallet()
+                const wallet = await this.getAeWallet(authResult)
                 resolve(wallet)
             })
         })
     }
 
     static async signTx(txData: string) {
-        const wallet = await ArkaneUtil.getAeWallet()
+
+        const arkaneAuthResult = await ArkaneUtil.connect.checkAuthenticated();
+
+        const wallet = await ArkaneUtil.getAeWallet(arkaneAuthResult)
         const signer = ArkaneUtil.connect.createSigner(WindowMode.POPUP)
-        const signedTx = await signer.signTransaction({
+        const signedTx = await signer.sign({
             walletId: wallet.id,
             type: SignatureRequestType.AETERNITY_RAW,
             data: txData
         })
         console.log("SIGNED TX:", signedTx)
     }
-
-
-   
->>>>>>> master
 }

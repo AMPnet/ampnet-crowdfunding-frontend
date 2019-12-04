@@ -1,5 +1,5 @@
 export class SingleOrganizationModel { 
-    id: number;
+    uuid: number;
     name: string;
     created_by_user: string;
     created_at: string;

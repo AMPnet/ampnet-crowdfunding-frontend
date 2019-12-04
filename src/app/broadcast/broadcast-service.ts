@@ -8,19 +8,20 @@ import { API } from '../utilities/endpoint-manager';
 })
 export class BroadcastService {
 
-  private endpoint = '/tx_broadcast';
+  private endpoint = '/wallet/tx_broadcast';
 
   constructor(
     private http: HttpClient) { }
   
   broadcastSignedTx(signed: string, id: number) {
       var apiHeaders = API.tokenHeaders();
+      alert("In function sig: " + signed)
       return this.http.post(API.generateRoute(this.endpoint), { }, {
           headers: {
               "Authorization" : apiHeaders.headers.Authorization
           },
           params: {
-              "tx_sig" : signed,
+              "tx_sig" : encodeURIComponent(signed),
               "tx_id" : id.toString()
           }
       });  

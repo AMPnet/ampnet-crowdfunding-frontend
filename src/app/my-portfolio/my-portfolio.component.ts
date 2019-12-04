@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { InvestItemModel } from './single-invest-item/InvestItemModel';
 import * as _ from 'lodash';
+import { PortfolioService } from './portfolio.service';
+import { displayBackendError } from '../utilities/error-handler';
+import { SpinnerUtil } from '../utilities/spinner-utilities';
 
 
 
@@ -11,7 +14,7 @@ import * as _ from 'lodash';
 })
 export class MyPortfolioComponent implements OnInit {
 
-  constructor() { }
+  constructor(private portfolioService: PortfolioService) { }
 
   investments: InvestItemModel[];
 
@@ -23,6 +26,18 @@ export class MyPortfolioComponent implements OnInit {
       amountInvested: 3400,
       headerImage: 'https://assets.rbl.ms/6470364/980x.jpg'
     });
+    this.getTransactions()
+  }
+
+  getTransactions() {
+    SpinnerUtil.showSpinner()
+    this.portfolioService.getInvestments().subscribe(res => {
+      console.log(res)
+      SpinnerUtil.hideSpinner()
+    }, err => {
+      displayBackendError(err)
+      SpinnerUtil.hideSpinner()
+    })
   }
 
 }

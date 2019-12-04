@@ -7,7 +7,7 @@ import { API } from '../utilities/endpoint-manager';
 })
 export class DepositServiceService {
 
-  private endpoint = "/api/v1/deposit"
+  private endpoint = "/wallet/deposit"
 
   constructor(private http: HttpClient) { }
 

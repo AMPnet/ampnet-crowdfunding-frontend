@@ -14,7 +14,7 @@
     <div class="explainer-mini text-uppercase mb-3">My groups</div>
     <div *ngIf="(organizations != undefined) && (organizations.length > 0)">
         <ul class="cursor-pointer list-group">
-          <li *ngFor="let org of organizations" routerLink="{{org.id}}" 
+          <li *ngFor="let org of organizations" routerLink="{{org.uuid}}" 
            class="list-group-item hover-bg">
             <span class="float-left explainer-mini">
               {{org.name}}

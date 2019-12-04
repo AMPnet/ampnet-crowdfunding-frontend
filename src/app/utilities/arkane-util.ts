@@ -1,4 +1,4 @@
-import { ArkaneConnect, Wallet, SecretType, WindowMode, SignatureRequestType } from '@arkane-network/arkane-connect';
+import { ArkaneConnect, Wallet, SecretType, WindowMode, SignatureRequestType, SignerResult } from '@arkane-network/arkane-connect';
 import { AuthenticationResult } from '@arkane-network/arkane-connect/dist/src/connect/connect';
 
 export class ArkaneUtil {
@@ -32,17 +32,21 @@ export class ArkaneUtil {
         })
     }
 
-    static async signTx(txData: string) {
+    static async signTx(txData: string): Promise<string> {
 
-        const arkaneAuthResult = await ArkaneUtil.connect.checkAuthenticated();
+        try {
+            const arkaneAuthResult = await ArkaneUtil.connect.checkAuthenticated();
 
-        const wallet = await ArkaneUtil.getAeWallet(arkaneAuthResult)
-        const signer = ArkaneUtil.connect.createSigner(WindowMode.POPUP)
-        const signedTx = await signer.sign({
-            walletId: wallet.id,
-            type: SignatureRequestType.AETERNITY_RAW,
-            data: txData
-        })
-        console.log("SIGNED TX:", signedTx)
+            const wallet = await ArkaneUtil.getAeWallet(arkaneAuthResult)
+            const signer = ArkaneUtil.connect.createSigner(WindowMode.POPUP)
+            const signedTx: SignerResult = await signer.sign({
+                walletId: wallet.id,
+                type: SignatureRequestType.AETERNITY_RAW,
+                data: txData
+            })
+            return Promise.resolve(signedTx.result.signedTransaction)
+        } catch(reason) {
+            return Promise.reject("Did not sign transaction")
+        }   
     }
 }

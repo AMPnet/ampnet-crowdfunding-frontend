@@ -72,7 +72,7 @@ export class WalletComponent implements OnInit, AfterViewInit {
           }
         } catch (err) {
           SpinnerUtil.hideSpinner();
-          displayErrorMessage("Somethign went wrong while authenticating your secure account.")
+          displayErrorMessage("Something went wrong while authenticating your secure account.")
         }
     })
     .notAuthenticated(async (auth) => {

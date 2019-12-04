@@ -7,7 +7,7 @@ import { API } from '../utilities/endpoint-manager';
 })
 export class WithdrawService {
 
-  endpoint = "/wallet/cooperative/withdraw"
+  endpoint = "/wallet/withdraw"
 
   constructor(private http: HttpClient) { }
 

@@ -99,7 +99,7 @@ export class OrganizationDetailsComponent implements OnInit {
   inviteClicked() {
     SpinnerUtil.showSpinner();
     let email = $("#email-invite-input").val();
-    this.organizationService.inviteUser(this.organization.id, email).subscribe(res => {
+    this.organizationService.inviteUser(this.organization.uuid, email).subscribe(res => {
       SpinnerUtil.hideSpinner();
       swal("Success", "Successfully invited user to organization", "success");
     }, err => {
@@ -122,7 +122,7 @@ export class OrganizationDetailsComponent implements OnInit {
 
   getOrgMembers() {
     SpinnerUtil.showSpinner();
-    this.organizationService.getMembersForOrganization(this.organization.id).subscribe((res: any) => {
+    this.organizationService.getMembersForOrganization(this.organization.uuid).subscribe((res: any) => {
       SpinnerUtil.hideSpinner();
       let members: MemberModel[] = res.members;
       this.orgMembers = members;

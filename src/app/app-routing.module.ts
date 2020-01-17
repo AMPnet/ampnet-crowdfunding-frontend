@@ -45,6 +45,7 @@ import { UserActivationComponent } from './wallet-activation/user-activation/use
 import { GroupActivationComponent } from './wallet-activation/group-activation/group-activation.component';
 import { ProjectActivationComponent } from './wallet-activation/project-activation/project-activation.component';
 import { ActivateSignComponent } from './wallet-activation/activate-sign/activate-sign.component';
+import { CompleteOnboardingComponent } from './complete-onboarding/complete-onboarding.component';
 
 // Defines public routes accessible to everyone
 // (landing page, login, register, contact help, etc...)
@@ -56,7 +57,7 @@ const routes: Routes = [
     path: '', component: PublicLayoutComponent,
     children: [
       { path: '', component: LandingPageComponent },
-      { path: 'sign_up/:userUUID', component: SignUpComponent },
+      { path: 'sign_up', component: SignUpComponent },
       { path: 'confirm_email', component: ConfirmEmailComponent },
       { path: 'overview/:isOverview', component: OffersComponent },
       { path: 'overview/:id/:isOverview', component: OfferDetailsComponent },
@@ -105,7 +106,8 @@ const routes: Routes = [
       { path: 'activation/users', component: UserActivationComponent },
       { path: 'activation/groups', component: GroupActivationComponent },
       { path: 'activation/projects', component: ProjectActivationComponent },
-      { path: 'activation/:type/:id', component: ActivateSignComponent }
+      { path: 'activation/:type/:id', component: ActivateSignComponent },
+      { path: 'complete_onboarding', component: CompleteOnboardingComponent }
     ]
   }
 ];

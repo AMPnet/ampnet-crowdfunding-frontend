@@ -11,6 +11,8 @@ import { SocialUser, GoogleLoginProvider, AuthService, FacebookLoginProvider } f
 import { EmailSignupModel } from 'src/app/models/auth/EmailSignupModel';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
+import { LogInModalService } from '../log-in-modal/log-in-modal.service';
+import { displayBackendError } from 'src/app/utilities/error-handler';
 
 @Component({
   selector: 'app-sign-up',
@@ -22,21 +24,19 @@ export class SignUpComponent implements OnInit {
 
   submissionForm: FormGroup;
   
-  uuidParam: string;
 
   constructor(
     private signUpService: SignUpService,
     private router: Router,
     private authService: AuthService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private loginService: LogInModalService
   ) { 
   }
 
   countries: CountryModel[];
 
   ngOnInit() {
-    this.uuidParam = this.route.snapshot.params.userUUID;
-    alert(this.uuidParam);
   }
 
   getCountries() {
@@ -58,14 +58,19 @@ export class SignUpComponent implements OnInit {
     let afterSignout: () => void = function() {
       that.authService.signIn(provider).then(res => {
 
-        alert(that.uuidParam);
         that.signUpService.performSocialSignup(res.provider, 
-          res.authToken, that.uuidParam).subscribe(usr => {
+          res.authToken).subscribe(usr => {
 
           SpinnerUtil.hideSpinner();
           usr["auth"] = res.authToken;
           usr['provider'] = res.provider;
-          that.router.navigate(['/dash']);
+         
+          that.loginService.performSocialLogin(GoogleLoginProvider.PROVIDER_ID, res.authToken)
+            .subscribe(res => {
+              localStorage.setItem('access_token', (<any>res).access_token);
+              that.router.navigate(["/dash"])
+            }, displayBackendError)
+
 
         }, err => {
 

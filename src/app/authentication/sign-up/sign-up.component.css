@@ -5,19 +5,11 @@
 } */
 
 #top-container {
-  background: url("../../../assets/bg-hero-light.png");
-	background-repeat: no-repeat;
-	background-size: auto;
-	background-position-x: right;
-	background-position-y: bottom;
-  height: 1000px;;
-  width: 100vw;
-  padding-bottom: 75px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  background: url("../../../assets/waves.jpg");
+  height: 100vh;
   padding-top: 50px;
-  padding-bottom: 50px;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .content-container{

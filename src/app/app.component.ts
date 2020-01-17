@@ -20,9 +20,5 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     new WOW().init();
 
-    ArkaneUtil.connect = new ArkaneConnect("Arketype", {
-      environment: "staging"
-    })
-
   }
 }

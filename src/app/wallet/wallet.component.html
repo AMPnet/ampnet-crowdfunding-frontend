@@ -32,11 +32,6 @@
 	
 		<div *ngIf="wallet != undefined" class="">
 			<div class="row">
-				<div *ngIf="wallet.activated_at == undefined" class="col-md-12">
-					<div class="alert alert-warning">
-						Your account is not yet activated
-					</div>
-				</div>
 				<!-- <div class="col-md-12 mt-3">
 					<span class="explainer-mini text-uppercase h6 float-left h-100 align-middle">Wallet address</span>
 					<a href="https://rinkeby.etherscan.io/tx/{{wallet.hash}}" class="float-right">{{wallet.hash}}</a>

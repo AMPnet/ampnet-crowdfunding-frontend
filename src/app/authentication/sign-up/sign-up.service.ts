@@ -35,9 +35,8 @@ export class SignUpService {
     });
   }
 
-  performSocialSignup(provider: string, authToken: string, webSessionUUID: string) {
+  performSocialSignup(provider: string, authToken: string) {
     return this.http.post(API.generateRoute(this.endpoint), {
-      "web_session_uuid": webSessionUUID,
       "signup_method": provider,
       "user_info" : {
         "token" : authToken

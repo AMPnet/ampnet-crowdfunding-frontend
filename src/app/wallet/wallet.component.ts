@@ -37,49 +37,15 @@ export class WalletComponent implements OnInit, AfterViewInit {
 
   }
 
-  async setUpArkane() {
-    SpinnerUtil.showSpinner();    
-    try {
-      this.arkaneConnect = new ArkaneConnect('Arketype', {
-        environment: 'staging'
-      })
-      const authResult = await this.arkaneConnect.checkAuthenticated()
-      this.afterAuth(authResult)
-    } catch (reason) {
-      console.error(reason);
-      SpinnerUtil.hideSpinner();
-      displayErrorMessage("Cannot connect to secure wallet provider")
-    }
-  }
-
-  afterAuth(authResult: AuthenticationResult) {
-    authResult.authenticated(async (auth) => {
-        try {
-          const wallets = await this.arkaneConnect.api.getWallets();
-          var aewallet: Wallet;
-
-          wallets.forEach(x => {
-            if(x.secretType == SecretType.AETERNITY) {
-              aewallet = x;
-            }
-          })
-
-          if(aewallet != undefined) {
-            this.startWalletInit(aewallet.address)
-          } else {
-            SpinnerUtil.hideSpinner();
-            this.arkaneConnect.manageWallets("AETERNITY")
-          }
-        } catch (err) {
-          SpinnerUtil.hideSpinner();
-          displayErrorMessage("Something went wrong while authenticating your secure account.")
-        }
-    })
-    .notAuthenticated(async (auth) => {
-      const authResult = await this.arkaneConnect.flows.authenticate();
-      this.afterAuth(authResult)
+  setUpArkane() {
+    let arkaneConnect = new ArkaneConnect("Arketype", { environment: "staging"})
+    arkaneConnect.flows.getAccount(SecretType.AETERNITY).then(acc => {
+      if((acc.wallets != undefined) && (acc.wallets.length > 0)) {
+        this.startWalletInit(acc.wallets[0].address)
+      }
     })
   }
+
 
   startWalletInit(addr: string) {
     SpinnerUtil.showSpinner();

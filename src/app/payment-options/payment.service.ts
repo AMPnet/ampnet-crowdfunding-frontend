@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { API } from '../utilities/endpoint-manager';
+import { PaymentModels } from '../models/payment-model';
+import { UserStatusStorage } from '../user-status-storage';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +14,13 @@ export class PaymentService {
   constructor(private http: HttpClient) { }
 
   getMyBankAccounts() {
-    return this.http.get(API.generateRoute(this.endpoint), API.tokenHeaders())
+    let bankData = this.http.get(API.generateRoute(this.endpoint), API.tokenHeaders())
+    
+    bankData.subscribe((res: PaymentModels) => {
+      UserStatusStorage.bankData = res
+    })
+    
+    return bankData
   }
 
   createBankAccount(iban: String, bankCode: String) {

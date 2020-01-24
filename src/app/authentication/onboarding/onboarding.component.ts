@@ -4,6 +4,7 @@ import { OnboardingService } from '../onboarding.service';
 import swal from 'sweetalert2';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { hideAuthButtons } from 'src/app/utilities/ui-utils';
+import { displayBackendError } from 'src/app/utilities/error-handler';
 
 declare var initializeIdentyum: any;
 declare var $: any;
@@ -28,9 +29,9 @@ export class OnboardingComponent implements OnInit {
         webSessionUuid: res.token, // SESSION_ID from POST request
         parameters: {},
         onProcessFinishSuccess: function(args) {
-          if(args.status == "success") {
-            that.router.navigate(['sign_up', res.token]);
-          }
+          that.onboardingService.verifyUser(res.token).subscribe(res => {
+            swal("", "Successfully verified profile", "info")
+          }, displayBackendError)
         },
         onWidgetInitialized: function(args) {
           SpinnerUtil.hideSpinner();

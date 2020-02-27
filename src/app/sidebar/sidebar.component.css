@@ -44,14 +44,14 @@ a {
 }
 
 #main-menu li:hover {
-	background: #47a577;
+	background: #23C8C3;
 	color: #fff!important;
 	cursor: pointer;
 }
 
 .side-active {
 	background: #e5fff2;
-	color: #47a577!important;
+	color: #1E4B3A!important;
 	border-left: 3px solid #47a577;
 }
 

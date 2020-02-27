@@ -1,12 +1,17 @@
 
 * {
-	font-family: 'Quicksand', sans-serif;
+	font-family: 'Spartan', sans-serif;
 	font-weight: 400;
 }
    
    h1, h2, h3, h4, h5, h6 {
 	font-weight: 500;
    }
+
+
+.serif {
+	font-family: 'Playfair Display'!important;
+}
 
 body {
 	background-color: #fcfcfc;
@@ -21,7 +26,7 @@ body {
 }
 
 .btn-primary {
-	background: #69be94!important;
+	background: #23C8C3!important;
 	box-shadow: 0px 3px 15px rgba(0,0,0,0.1);
 	border: none!important;
 }
@@ -40,7 +45,7 @@ body {
 
 
 .btn-primary:hover {
-	background: #47a577!important;
+	background: #1E4B3A!important;
 	box-shadow: 0 10px 20px rgba(105, 190, 148, 0.4);
 }
 

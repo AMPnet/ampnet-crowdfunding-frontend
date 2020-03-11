@@ -12,3 +12,10 @@
 .gtSuper {
 	font-family: "GTSuper";
 }
+
+
+@media(max-width: 800px) {
+	.feature-holder {
+		height: 380px;
+	}
+}

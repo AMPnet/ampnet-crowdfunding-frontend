@@ -5,6 +5,8 @@ import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { UserActivationModel } from './user-activation.model';
 import { ArkaneUtil } from 'src/app/utilities/arkane-util';
 import { BroadcastService } from 'src/app/broadcast/broadcast-service';
+import { ArkaneConnect, SecretType, WindowMode, SignatureRequestType } from '@arkane-network/arkane-connect';
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-user-activation',
@@ -30,27 +32,45 @@ export class UserActivationComponent implements OnInit {
 
   }
 
-  activateUserClicked(id: number) {
+  async activateUserClicked(id: number) {
     SpinnerUtil.showSpinner()
     
     this.activationService.getActivationData(id).subscribe(async (res: any) => {
       console.log("RES_TX", res.tx)
-      try {
-        let sigres = await ArkaneUtil.signTx(res.tx)
-        console.log("SIGRES", sigres);
-      
-        this.broadService.broadcastSignedTx(encodeURI(sigres), res.tx_id).subscribe(res => {
-          alert(JSON.stringify(res))
-          SpinnerUtil.hideSpinner()
+      let arkaneConnect = new ArkaneConnect('Arketype', {
+        environment: 'staging'
+      })
+      // arkaneConnect.flows.getAccount(SecretType.AETERNITY).then(acc => {
+        
+      //   let signed = arkaneConnect.createSigner(WindowMode.POPUP).sign({
+      //     walletId: acc.wallets[0].id,
+      //     data: res.tx,
+      //     type: SignatureRequestType.AETERNITY_RAW
+      //   }).then(sigRes => {
 
-        }, err => {
-          displayBackendError(err)
-          SpinnerUtil.hideSpinner()
+      //     this.broadService.broadcastSignedTx(sigRes.result.signedTransaction, res.tx_id)
+      //       .subscribe(res => {
+      //         swal("", "Success", "success")
+      //       }, hideSpinnerAndDisplayError)
 
-        })
-      } catch(reason) {
-        displayErrorMessage("Failed signing transaciton")
-      }
+      //   }).catch(err => {
+      //     swal("", "Failed signing transaction", "error")
+      //   })
+
+      // })
+
+      let account = await arkaneConnect.flows.getAccount(SecretType.AETERNITY)
+      let sigRes = await arkaneConnect.createSigner(WindowMode.POPUP).sign({
+        walletId: account.wallets[0].id,
+        data: res.tx,
+        type: SignatureRequestType.AETERNITY_RAW
+      })
+      this.broadService.broadcastSignedTx(sigRes.result.signedTransaction, res.tx_id)
+        .subscribe(res => {
+          SpinnerUtil.hideSpinner()
+          swal("", "Success", "success")
+        }, hideSpinnerAndDisplayError)
+
     }, hideSpinnerAndDisplayError)
   }
 

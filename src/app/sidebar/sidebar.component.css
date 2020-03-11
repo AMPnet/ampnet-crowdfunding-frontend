@@ -38,21 +38,22 @@ a {
 }
 
 #logo-image {
-	height: 1rem;
+	height: 17px!important;
 	padding-left: 1.5rem;
+	object-fit: contain;
 	margin-top: 0.5rem;
 }
 
 #main-menu li:hover {
-	background: #23C8C3;
+	background: #DEA546;
 	color: #fff!important;
 	cursor: pointer;
 }
 
 .side-active {
-	background: #e5fff2;
+	background: #fff0d9;
 	color: #1E4B3A!important;
-	border-left: 3px solid #47a577;
+	border-left: 3px solid #9a7402;
 }
 
 #main-menu li:focus {
@@ -76,5 +77,5 @@ a {
 
 .menu-header {
 	font-size: 13px;
-	color: #47a577;
+	color: #DEA546;
 }

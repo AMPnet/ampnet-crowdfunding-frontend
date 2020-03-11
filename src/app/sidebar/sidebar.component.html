@@ -1,7 +1,7 @@
 <div id="sidebar">
 
 	<div class="mt-2 mb-4">
-		<img id="logo-image" src="../../assets/greenvest.png">
+		<img id="logo-image" src="../../assets/genervestlogo.png">
 	</div>
 
 	<ul id="main-menu" class="list-unstyled components">
@@ -10,7 +10,7 @@
 			<i class="menu-icon fas fa-align-left"></i>
 			<span>Offers</span>
 		</li>
-		<li *ngIf="hasWalletActive" routerLink="my_portfolio" routerLinkActive="side-active">
+		<li routerLink="my_portfolio" routerLinkActive="side-active">
 			<i class="menu-icon fas fa-user"></i>
 			<span>My Portfolio</span>
 		</li>
@@ -27,7 +27,7 @@
 
 	<ul id="main-menu" class="list-unstyled components text-white">
 		<p class="menu-header ml-4 mb-3 mt-3 font-weight-bold">SETTINGS</p>
-		<li *ngIf="hasVerifiedProfile" routerLink="general_settings" routerLinkActive="side-active">
+		<li  routerLink="general_settings" routerLinkActive="side-active">
 			<i class="menu-icon fas fa-cog"></i>
 			<span>General</span>
 		</li>
@@ -41,15 +41,6 @@
 
 	<p *ngIf="isAdmin" class="menu-header ml-4 mb-3 mt-3 font-weight-bold">ADMIN</p>
 	<ul *ngIf="isAdmin" id="main-menu" class="list-unstyled components">
-		
-		<li routerLink="token_management" routerLinkActive="side-active">
-			<i class="menu-icon fas fa-coins"></i>
-			<span>Tokens</span>	
-		</li>
-		<li routerLink="activation/users" routerLinkActive="side-active">
-				<i class="menu-icon fas fa-user-cog"></i>
-				<span>Manage Users</span>	
-		</li>
 		<li routerLink="approve_organizations" routerLinkActive="side-active">
 				<i class="menu-icon fas fa-check-circle "></i>
 				<span>Approve Groups</span>	

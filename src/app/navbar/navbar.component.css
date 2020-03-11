@@ -1,7 +1,7 @@
 .navbar {
 	height: 50px;
 	color: #fff;
-	background: #23C8C3;
+	background: #DEA546;
 	box-shadow: 5px 3px 6px rgba(0,0,0,0.1);
 	z-index: 10!important;
 }
@@ -76,11 +76,11 @@ input:focus::placeholder {
 
 #basic-addon1 {
 	border: none;
-	background: #23C8C3;
+	background: #DEA546;
 	color: white;
 }
 
 .active-dropdown {
-	background: #23C8C3;
+	background: #DEA546;
 	color: #fff;
 }

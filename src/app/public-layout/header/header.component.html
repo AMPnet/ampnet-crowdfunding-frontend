@@ -4,7 +4,7 @@
 			<img src="../../../assets/genervest-logo-dark.png"  height="13" alt="">
 		</a>
 	</div>
-	<div id="auth-buttons">
+	<div *ngIf="!onlyLogo" id="auth-buttons">
 		<span class="text-white">
 			<button routerLink="sign_up" class="mr-4 px-4 py-2 btn ">Sign Up</button>
 		</span>

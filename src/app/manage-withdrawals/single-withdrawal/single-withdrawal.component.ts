@@ -1,11 +1,11 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import * as Uppy from 'uppy'
 import { ActivatedRoute } from '@angular/router';
-import { WithdrawService } from 'src/app/withdraw/withdraw.service';
 import { hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
 import { ManageWithdrawModel } from '../manage-withdraw-model';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import * as QRCode from 'qrcode'
+import { WithdrawCooperativeService } from 'src/app/manage-withdrawals/withdraw.cooperative.service';
 
 declare var $: any;
 
@@ -19,7 +19,7 @@ export class SingleWithdrawalComponent implements OnInit, AfterViewInit {
   withdrawal: ManageWithdrawModel
 
   constructor(private route: ActivatedRoute,
-    private withdrawService: WithdrawService) { }
+    private withdrawCooperativeService: WithdrawCooperativeService) { }
 
   ngOnInit() {
     this.getWithdrawal()
@@ -34,7 +34,7 @@ export class SingleWithdrawalComponent implements OnInit, AfterViewInit {
   getWithdrawal() {
     SpinnerUtil.showSpinner()
     let id = this.route.snapshot.params.ID;
-    this.withdrawService.getApprovedWithdrawals().subscribe((res:any) => {
+    this.withdrawCooperativeService.getApprovedWithdrawals().subscribe((res:any) => {
       SpinnerUtil.hideSpinner()
       let withdraws: [ManageWithdrawModel] = res.withdraws;
       this.withdrawal = withdraws.filter(item => {
@@ -45,9 +45,9 @@ export class SingleWithdrawalComponent implements OnInit, AfterViewInit {
 
   approveAndGenerateCodeClicked() {
     SpinnerUtil.showSpinner()
-    this.withdrawService.generateBurnWithdrawTx(this.withdrawal.id).subscribe(res => {
+    this.withdrawCooperativeService.generateBurnWithdrawTx(this.withdrawal.id).subscribe(res => {
       SpinnerUtil.hideSpinner()
-      QRCode.toCanvas(document.getElementById("burn-generate-canvas"), 
+      QRCode.toCanvas(document.getElementById("burn-generate-canvas"),
         JSON.stringify(res), console.log)
     }, hideSpinnerAndDisplayError)
   }

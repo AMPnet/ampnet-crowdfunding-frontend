@@ -1,11 +1,10 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import * as QRCode from 'qrcode'
 import { Router } from '@angular/router';
-import { DepositServiceService } from '../deposit/deposit-service.service';
 import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { DepositModel } from '../deposit/deposit-model';
 import swal from 'sweetalert2';
+import { DepositCooperativeService } from './deposit.cooperative.service';
 
 declare var $: any;
 
@@ -18,7 +17,7 @@ export class ManageDepositsComponent implements OnInit, AfterViewInit {
 
   unapprovedDeposits: [DepositModel]
 
-  constructor(private router: Router, private depositService: DepositServiceService) { }
+  constructor(private router: Router, private depositCooperativeService: DepositCooperativeService) { }
 
   ngOnInit() {
     this.getUnapprovedDeposits()
@@ -26,7 +25,7 @@ export class ManageDepositsComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     // let code = "asldkjaskldjalksdjalksjdklasjdklajsdlaksjdlkasjdlakjkalsjdalsjdlasjdlaskjdalksdjlakdjaldjaldjalskdjaldjalsdja"
-    // QRCode.toCanvas(document.getElementById("minting-code-canvas"), code, 
+    // QRCode.toCanvas(document.getElementById("minting-code-canvas"), code,
     //   console.log)
   }
 
@@ -37,18 +36,20 @@ export class ManageDepositsComponent implements OnInit, AfterViewInit {
 
   getUnapprovedDeposits() {
     SpinnerUtil.showSpinner()
-    this.depositService.getUnapprovedDeposits().subscribe((res: any) => {
+    this.depositCooperativeService.getUnapprovedDeposits().subscribe((res: any) => {
       this.unapprovedDeposits = res.deposits
       SpinnerUtil.hideSpinner()
     }, hideSpinnerAndDisplayError)
   }
 
+  // TODO: cooperative can decline deposit, user can delete it, add comment!
   deleteDeposit(id: number) {
+    let comment = "Some comment"
     SpinnerUtil.showSpinner()
-    this.depositService.deleteDeposit(id).subscribe(res => {
+    this.depositCooperativeService.declineDeposit(id, comment).subscribe(res => {
       this.getUnapprovedDeposits()
     }, hideSpinnerAndDisplayError)
-  } 
+  }
 
   contactPhoneClicked(index: number) {
     swal("Contact phone", "095 354 6106", "info")

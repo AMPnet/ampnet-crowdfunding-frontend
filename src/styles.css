@@ -1,6 +1,15 @@
+@font-face {
+	font-family: 'MaisonNeue';
+	src: url(assets/MaisonNeueExtended-Light.otf) format("opentype")
+}
+
+@font-face {
+	font-family: 'GTSuper';
+	src: url(assets/GT-Super-Text-Regular.otf) format("opentype");
+}
 
 * {
-	font-family: 'Spartan', sans-serif;
+	font-family: 'MaisonNeue', sans-serif;
 	font-weight: 400;
 }
    

@@ -8,3 +8,7 @@
 .featured-image:hover {
 	backdrop-filter: blur(0.8) 
 }
+
+.gtSuper {
+	font-family: "GTSuper";
+}

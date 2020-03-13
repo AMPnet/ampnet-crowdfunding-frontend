@@ -8,7 +8,7 @@ import { API } from "../utilities/endpoint-manager";
 export class OrganizationService {
 
     private endpoint = "/organization";
-    private walletEndpoint = "/wallet/organization";
+    private walletEndpoint = "wallet-api/wallet/organization";
     private inviteEndpoint = "/invites"
     private projectEndpoint = "/project/organization";
 

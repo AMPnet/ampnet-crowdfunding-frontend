@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import * as Uppy from 'uppy'
 import { ActivatedRoute } from '@angular/router';
-import { DepositServiceService } from 'src/app/deposit/deposit-service.service';
 import { hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { DepositModel } from 'src/app/deposit/deposit-model';
 import { prettyDate } from 'src/app/utilities/date-format-util';
 import { API } from 'src/app/utilities/endpoint-manager';
-import { IssuingAuthorityService } from 'src/app/main-admin/issuing-authority.service';
 import * as QRCode from 'qrcode'
 import * as numeral from 'numeral'
+import { DepositCooperativeService } from '../deposit.cooperative.service';
 
 declare var $: any;
 
@@ -22,16 +21,15 @@ export class ManageSingleDepositComponent implements OnInit {
 
   depositModel: DepositModel
 
-  constructor(private route: ActivatedRoute, 
-    private depositService: DepositServiceService,
-    private issuingAuthorityService: IssuingAuthorityService) { }
+  constructor(private route: ActivatedRoute,
+    private depositCooperativeService: DepositCooperativeService) { }
 
   paymentUppy: Uppy.Core.Uppy;
 
   ngOnInit() {
 
     this.getDeposit()
-    
+
 
   }
 
@@ -52,7 +50,7 @@ export class ManageSingleDepositComponent implements OnInit {
   generateSigningCode() {
     SpinnerUtil.showSpinner()
 
-    this.depositService.generateDepositMintTx(this.depositModel.id).subscribe((res: any) => {
+    this.depositCooperativeService.generateDepositMintTx(this.depositModel.id).subscribe((res: any) => {
       SpinnerUtil.hideSpinner()
       QRCode.toCanvas(document.getElementById("mint-deposit-code"), JSON.stringify(res), console.log)
     }, hideSpinnerAndDisplayError)
@@ -61,7 +59,7 @@ export class ManageSingleDepositComponent implements OnInit {
   getDeposit() {
     let id = this.route.snapshot.params.ID
     SpinnerUtil.showSpinner()
-    this.depositService.getDeposit(id).subscribe((res: any) => {
+    this.depositCooperativeService.getDeposit(id).subscribe((res: any) => {
       this.depositModel = res
       this.depositModel.created_at = prettyDate(res.created_at)
       this.depositModel.amount = numeral(this.depositModel.amount).format(",")
@@ -70,7 +68,7 @@ export class ManageSingleDepositComponent implements OnInit {
       } else {
         this.generateSigningCode()
       }
-    
+
       SpinnerUtil.hideSpinner()
     }, hideSpinnerAndDisplayError)
   }
@@ -78,11 +76,11 @@ export class ManageSingleDepositComponent implements OnInit {
   approveButtonClicked() {
     let depositAmount = $("#deposit-amount").val()
 
-    let depositApprovalURL = this.depositService.generateDepositApprovalURL(
+    let depositApprovalURL = this.depositCooperativeService.generateDepositApprovalURL(
       this.depositModel.id,
       depositAmount
     )
-    
+
     console.log("PAYMENT UPPY: " + this.paymentUppy)
     this.paymentUppy.use(Uppy.XHRUpload, {
       endpoint: depositApprovalURL,

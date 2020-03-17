@@ -15,36 +15,15 @@ export class DepositServiceService {
     return this.http.post(API.generateRoute(this.endpoint), { }, API.tokenHeaders())
   }
 
-  public getDeposit(reference: string) {
-    return this.http.get(API.generateComplexRoute(this.endpoint, ["search"]), {
-      params: {
-        "reference": reference
-      },
-      headers: API.tokenHeaders().headers
-    })
+  // not used
+  public getMyPendingDeposit() {
+    return this.http.get(API.generateComplexRoute(this.endpoint, []), API.tokenHeaders())
   }
 
-  public generateDepositApprovalURL(id: number, amount: number): string {
-    return API.generateComplexRoute(this.endpoint, [
-      id.toString(), "approve?amount=" + amount.toString()
-    ])
-  }
-
-  public getUnapprovedDeposits() {
-    return this.http.get(API.generateComplexRoute(this.endpoint, [
-      "unapproved"
-    ]), API.tokenHeaders())
-  }
-
+  // not used
   public deleteDeposit(id: number) {
     return this.http.delete(API.generateComplexRoute(this.endpoint,[
       id.toString()
     ]), API.tokenHeaders())
-  }
-
-  generateDepositMintTx(id: number) {
-    return this.http.post(API.generateComplexRoute(this.endpoint, [
-      id.toString(), "transaction"
-    ]), {}, API.tokenHeaders())
   }
 }

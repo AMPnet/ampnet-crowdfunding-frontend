@@ -33,17 +33,4 @@ export class WithdrawService {
   getMyPendingWithdraw() {
     return this.http.get(API.generateRoute(this.endpoint), API.tokenHeaders())
   }
-
-  getApprovedWithdrawals() {
-    return this.http.get(API.generateComplexRoute(this.endpoint, [
-      "approved"
-    ]), API.tokenHeaders())
-  }
-
-  getBurnedWithdrawals() {
-    return this.http.get(API.generateComplexRoute(this.endpoint, [
-      "burned"
-    ]), API.tokenHeaders())
-  }
-
 }

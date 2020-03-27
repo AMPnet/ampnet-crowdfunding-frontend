@@ -10,7 +10,7 @@ export class OrganizationService {
     private endpoint = "/organization";
     private walletEndpoint = "/wallet/wallet/organization";
     private inviteEndpoint = "/invites"
-    private projectEndpoint = "/organization";
+    private projectEndpoint = "/public/project/organization";
 
     constructor(private http: HttpClient) { }
     

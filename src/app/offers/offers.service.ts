@@ -7,13 +7,15 @@ import { API } from '../utilities/endpoint-manager';
 })
 export class OffersService {
 
-  projectEndpoint = "/wallet/public/project/active";
+  projectEndpoint = "/wallet/public/project";
   privateEndpoint = "/project"
 
   constructor(private http: HttpClient) { }
 
   getAllOffers() {
-    return this.http.get(API.generateRoute(this.projectEndpoint));
+    return this.http.get(API.generateComplexRoute(this.projectEndpoint, [
+      "active"
+    ]));
   }
 
   getOfferByID(offerID: number) {

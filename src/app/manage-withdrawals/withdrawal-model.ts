@@ -1,4 +1,5 @@
 interface WithdrawalModel {
     name: string, 
-    id: number
+    id: number,
+    amount: number
 }

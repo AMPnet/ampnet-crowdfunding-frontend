@@ -5,6 +5,9 @@ import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { BankAccountModel } from '../payment-options/bank-account-model';
 import { WithdrawService } from './withdraw.service';
 import * as QRCode from 'qrcode'
+import { ArkaneConnect, SecretType, WindowMode, SignatureRequestType } from '@arkane-network/arkane-connect';
+import { BroadcastService } from '../broadcast/broadcast-service';
+import swal from 'sweetalert2';
 
 declare var $: any;
 
@@ -21,7 +24,8 @@ export class WithdrawComponent implements OnInit {
   pendingWithdrawal: WithdrawalModel
 
   constructor(private paymentService: PaymentService,
-    private withdrawService: WithdrawService) { }
+    private withdrawService: WithdrawService,
+    private broadService: BroadcastService) { }
 
   ngOnInit() {
     this.getBankAccounts()
@@ -40,7 +44,6 @@ export class WithdrawComponent implements OnInit {
     SpinnerUtil.showSpinner()
     this.withdrawService.getMyPendingWithdraw().subscribe((res: any) => {
       this.pendingWithdrawal = res
-      this.generateApproveQR(res.id)
     }, hideSpinnerAndDisplayError)
   }
 
@@ -48,27 +51,27 @@ export class WithdrawComponent implements OnInit {
     this.activeBankAccount = index
   }
 
-  generateWithdrawClicked() {
-    let amount = $("#withdraw-amount").val()
+  async generateWithdrawClicked() {
+    
     
     SpinnerUtil.showSpinner()
-    this.withdrawService
-      .createWithdrawRequest(amount, this.banks[this.activeBankAccount].iban)
-      .subscribe((res: any) => {
-        this.generateApproveQR(res.id)
-      }, hideSpinnerAndDisplayError)
-  }
-
-  generateApproveQR(id: number) {
-    this.withdrawService.generateApproveWithdrawTx(id).subscribe(res =>{ 
-      SpinnerUtil.hideSpinner()
-      QRCode.toCanvas(document.getElementById("approve-data-canvas"),
-        JSON.stringify(res),
-        console.log)
-    }, err => { 
-      SpinnerUtil.hideSpinner()
-      displayBackendError(err)
+        
+    let arkaneConnect = new ArkaneConnect('Arketype', {
+      environment: 'staging'
     })
+
+    let account = await arkaneConnect.flows.getAccount(SecretType.AETERNITY)
+    let sigRes = await arkaneConnect.createSigner(WindowMode.POPUP).sign({
+      walletId: account.wallets[0].id,
+      data: res.tx,
+      type: SignatureRequestType.AETERNITY_RAW
+    })
+    this.broadService.broadcastSignedTx(sigRes.result.signedTransaction, res.tx_id)
+      .subscribe(res => {
+        SpinnerUtil.hideSpinner()
+        swal("","Success","success")
+      }, hideSpinnerAndDisplayError)
+
   }
 
 }

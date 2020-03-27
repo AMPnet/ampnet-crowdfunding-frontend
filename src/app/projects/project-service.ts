@@ -10,7 +10,7 @@ export class ProjectService {
     private endpoint = "/project"
     private publicEndpoint = "/public/project"
     private publicWalletEndpoint = "/wallet/public/wallet";
-    private walletEndpoint = "/wallet"
+    private walletEndpoint = "/wallet/wallet"
 
     constructor(private http: HttpClient) { }
 
@@ -67,7 +67,7 @@ export class ProjectService {
 
     updateProject(projectID: string, name: string, description: string,
         location: string, locationText: string, roi: string, active: boolean) {
-        return this.http.post(API.generateComplexRoute(this.endpoint, [
+        return this.http.put(API.generateComplexRoute(this.endpoint, [  
             projectID.toString()
         ]), { 
             "name": name,
@@ -75,7 +75,9 @@ export class ProjectService {
             "location": location,
             "location_text": locationText,
             "return_on_investment": roi,
-            "active": active.toString()
+            "active": active.toString(),
+            "tags": null,
+            "news": null
         }, API.tokenHeaders())
     }
 }

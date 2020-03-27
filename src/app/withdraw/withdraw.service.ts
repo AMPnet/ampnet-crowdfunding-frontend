@@ -8,6 +8,7 @@ import { API } from '../utilities/endpoint-manager';
 export class WithdrawService {
 
   endpoint = "/wallet/withdraw"
+  coopEndpoint = "/wallet/cooperative/withdraw"
 
   constructor(private http: HttpClient) { }
 
@@ -25,7 +26,7 @@ export class WithdrawService {
   }
 
   generateBurnWithdrawTx(withdrawID: number) {
-    return this.http.post(API.generateComplexRoute(this.endpoint, [
+    return this.http.post(API.generateComplexRoute(this.coopEndpoint, [
       withdrawID.toString(), "transaction", "burn"
     ]), {}, API.tokenHeaders())
   }

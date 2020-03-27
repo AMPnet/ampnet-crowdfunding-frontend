@@ -14,6 +14,8 @@ import { timeout } from 'q';
 import { API } from 'src/app/utilities/endpoint-manager';
 import { headersToString } from 'selenium-webdriver/http';
 import { validURL } from '../../utilities/link-valid-util';
+import { ArkaneConnect, SecretType, WindowMode, SignatureRequestType } from '@arkane-network/arkane-connect';
+import { BroadcastService } from 'src/app/broadcast/broadcast-service';
 
 declare var _: any;
 declare var $: any;
@@ -34,20 +36,20 @@ export class ManageSingleProjectComponent implements OnInit {
 
   private news: NewsLink[] = [];
 
+
   project: ProjectModel;
   wallet: WalletModel;
 
   qrCodeData: String = ""
   
 
-  constructor(private projectService: ProjectService ,private manageProjectsService: ManageProjectsService, private route: ActivatedRoute) { }
+  constructor(private projectService: ProjectService ,
+    private manageProjectsService: ManageProjectsService, 
+    private route: ActivatedRoute,
+    private broadService: BroadcastService) { }
 
   ngOnInit() {
-    // this.setUploadAreas();
-    // this.fetchNews(0);
     this.fetchAllData();
-
-    
   }
 
   fetchAllData() {
@@ -61,7 +63,7 @@ export class ManageSingleProjectComponent implements OnInit {
           this.setUploadAreas();
         }, 300)
       }, err => {
-        if(err.status == "404") { // 0501 meaning - "Missing wallet for org"
+        if(err.status == 404) { // 0501 meaning - "Missing wallet for org"
           this.createInitQRCODE();
         } else {
           console.log(err)
@@ -73,13 +75,30 @@ export class ManageSingleProjectComponent implements OnInit {
   }
 
   createInitQRCODE() {
-    this.projectService.generateTransactionToCreateProjectWallet(this.project.uuid).subscribe((res) => {
+    this.projectService.generateTransactionToCreateProjectWallet(this.project.uuid).subscribe((res: any) => {
 
       var qrCodeData = {
         "tx_data" : res,
         "base_url": API.APIURL
       }
-      this.qrCodeData = JSON.stringify(qrCodeData)
+      swal("", "Verify the project creation with your blockchain wallet. You will be prompted now!","info")
+        .then(async () => {
+        let arkaneConnect = new ArkaneConnect('Arketype', {
+          environment: 'staging'
+        })
+      
+        let account = await arkaneConnect.flows.getAccount(SecretType.AETERNITY)
+        let sigRes = await arkaneConnect.createSigner(WindowMode.POPUP).sign({
+          walletId: account.wallets[0].id,
+          data: res.tx,
+          type: SignatureRequestType.AETERNITY_RAW
+        })
+        this.broadService.broadcastSignedTx(sigRes.result.signedTransaction, res.tx_id)
+          .subscribe(res => {
+            SpinnerUtil.hideSpinner()
+            swal("", "Success", "success")
+          }, hideSpinnerAndDisplayError)
+      })
     }, err  => {
       displayBackendError(err);
     });
@@ -122,29 +141,6 @@ export class ManageSingleProjectComponent implements OnInit {
       displayBackendError(err);
     });
   }
-
-  // private fetchNews(index: number) {
-  //   var that = this;
-  //   var link = this.newsLinks[index];
-
-  //   this.manageProjectsService.getLinkPreview(link).subscribe((res: any) => {
-
-  //     this.news.push({
-  //       title: res.title,
-  //       description: res.description,
-  //       url: res.link,
-  //       image: res.image.url
-  //     });
-
-  //     if(index < (this.newsLinks.length - 1)) {
-  //       setTimeout(() => { this.fetchNews(index + 1)} , 100);
-  //     }
-  //   }, err => {
-
-  //   });
-
-    
-  // }
 
   toggleProjectStatusClicked() {
     SpinnerUtil.showSpinner()
@@ -240,14 +236,13 @@ export class ManageSingleProjectComponent implements OnInit {
         maxHeight: null,             // set maximum height of editor
         focus: false,
         toolbar: [
-          // [groupName, [list of button]]
           ['style', ['bold', 'italic', 'underline', 'clear']],
           ['font', ['strikethrough', 'superscript', 'subscript']],
           ['fontsize', []],
           ['color', []],
           ['para', ['ul', 'ol']],
           ['height', []]
-        ]                  // set focus to editable area after initializing summernote
+        ]               
       });
       $(".note-editor").attr("id","note-custom");
     })
@@ -260,23 +255,6 @@ export class ManageSingleProjectComponent implements OnInit {
     let projectName = $("#project-name").val()
     let projectDescription = $("#project-description").val()
     let locationName = $("#location-name").val()
-
-
-    // function isEmptyOrNull(item: String): boolean {
-    //   if(item == undefined) { return true }
-    //   if(item == null) { return true }
-    //   if(item.length == 0) { return true }
-    //   return false
-    // }
-
-    // if(
-    //   isEmptyOrNull(projectName),
-    //   isEmptyOrNull(projectDescription),
-    //   isEmptyOrNull(locationName)
-    // ) {
-    //   swal("", "Project name, description and location name can't be empty", "info")
-    //   return
-    // }
 
     var updatedProject = this.project
     updatedProject.name = projectName
@@ -321,11 +299,6 @@ export class ManageSingleProjectComponent implements OnInit {
     });
 
   }
-
-  // linkClicked(index: number) {
-  //   let link = this.newsLinks[index];
-  //   window.location.href = link;
-  // }
 
   private setUploadFilesProject() {
 

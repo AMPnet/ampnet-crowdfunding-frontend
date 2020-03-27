@@ -4,7 +4,7 @@
     <ul class="list-group">
       <li *ngFor="let project of projects" class="list-group-item explainer-mini">
         {{project.project.name}}
-        <span class="float-right cursor-pointer hover-fg" (click)="activateGroupClicked(project.wallet.uuid)">
+        <span class="float-right cursor-pointer hover-fg" (click)="activateProjectClicked(project.wallet.uuid)">
           <i class="fas fa-check-circle mr-2"></i>
           Activate
         </span>

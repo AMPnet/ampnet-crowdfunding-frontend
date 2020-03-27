@@ -26,8 +26,8 @@ export class ProjectActivationComponent implements OnInit {
   fetchWalletToActivate() {
     SpinnerUtil.showSpinner()
     this.activationService
-      .getUnactivatedWallets("organization").subscribe((res: any) => {
-      this.projects = res.organizations;
+      .getUnactivatedWallets("project").subscribe((res: any) => {
+      this.projects = res.projects;
       SpinnerUtil.hideSpinner()
       
     }, displayBackendError)

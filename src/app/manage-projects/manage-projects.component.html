@@ -13,8 +13,8 @@
 
 	<div class="col-lg-12 mb-3">
 		<ul class="list-group">
-			<li routerLink="manage_project/{{project.id}}" *ngFor="let project of manageProjectsModel" 
-			class="list-group-item hover-bg cursor-pointer">
+			<li routerLink="manage_project/{{project.uuid}}" *ngFor="let project of manageProjectsModel" 
+			class="list-group-item hover-bg cursor-pointer explainer-mini">
 				{{project.name}}
 			</li>
 		</ul>

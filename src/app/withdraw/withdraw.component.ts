@@ -54,23 +54,23 @@ export class WithdrawComponent implements OnInit {
   async generateWithdrawClicked() {
     
     
-    SpinnerUtil.showSpinner()
+    // SpinnerUtil.showSpinner()
         
-    let arkaneConnect = new ArkaneConnect('Arketype', {
-      environment: 'staging'
-    })
+    // let arkaneConnect = new ArkaneConnect('Arketype', {
+    //   environment: 'staging'
+    // })
 
-    let account = await arkaneConnect.flows.getAccount(SecretType.AETERNITY)
-    let sigRes = await arkaneConnect.createSigner(WindowMode.POPUP).sign({
-      walletId: account.wallets[0].id,
-      data: res.tx,
-      type: SignatureRequestType.AETERNITY_RAW
-    })
-    this.broadService.broadcastSignedTx(sigRes.result.signedTransaction, res.tx_id)
-      .subscribe(res => {
-        SpinnerUtil.hideSpinner()
-        swal("","Success","success")
-      }, hideSpinnerAndDisplayError)
+    // let account = await arkaneConnect.flows.getAccount(SecretType.AETERNITY)
+    // let sigRes = await arkaneConnect.createSigner(WindowMode.POPUP).sign({
+    //   walletId: account.wallets[0].id,
+    //   data: this.pendingWithdrawal.,
+    //   type: SignatureRequestType.AETERNITY_RAW
+    // })
+    // this.broadService.broadcastSignedTx(sigRes.result.signedTransaction, res.tx_id)
+    //   .subscribe(res => {
+    //     SpinnerUtil.hideSpinner()
+    //     swal("","Success","success")
+    //   }, hideSpinnerAndDisplayError)
 
   }
 

@@ -45,21 +45,21 @@ export class OffersComponent implements OnInit {
 
     this.offersService.getAllOffers().subscribe((res: any) => {
       console.log(res)
-      let projects: [ProjectModel] = res.projects;
+      let projects: [any] = res.projects;
       console.log(projects)
       this.components = projects.map((proj) => {
         return {
-          title: proj.name,
-          description: proj.description,
-          offeredBy: proj.name,
-          fundingRequired: proj.expected_funding,
+          title: proj.project.name,
+          description: proj.project.description,
+          offeredBy: proj.project.name,
+          fundingRequired: proj.project.expected_funding,
           currentFunding: 0,
-          headerImageUrl: proj.main_image,
+          headerImageUrl: proj.project.image_url,
           status: "Active",
-          endDate: moment(proj.end_date).format("MMM Do, YYYY"),
-          offerID: proj.uuid,
-          owner: proj.return_on_investment,
-          currency: proj.currency
+          endDate: moment(proj.project.end_date).format("MMM Do, YYYY"),
+          offerID: proj.project.uuid,
+          owner: proj.project.return_on_investment,
+          currency: proj.wallet.currency
         }
       });
       this.getProjectBalances(0)

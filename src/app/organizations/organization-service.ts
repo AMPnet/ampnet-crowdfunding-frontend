@@ -8,9 +8,9 @@ import { API } from "../utilities/endpoint-manager";
 export class OrganizationService {
 
     private endpoint = "/organization";
-    private walletEndpoint = "wallet-api/wallet/organization";
+    private walletEndpoint = "/wallet/wallet/organization";
     private inviteEndpoint = "/invites"
-    private projectEndpoint = "/project/organization";
+    private projectEndpoint = "/organization";
 
     constructor(private http: HttpClient) { }
     
@@ -25,7 +25,7 @@ export class OrganizationService {
         return this.http.get(API.generateRoute(this.endpoint + "/personal"), API.tokenHeaders())
     }
 
-    getSingleOrganization(id: number) {
+    getSingleOrganization(id: string) {
         return this.http
             .get(API.generateComplexRoute(
                 this.endpoint, 
@@ -41,7 +41,7 @@ export class OrganizationService {
         ), API.tokenHeaders())
     }
 
-    getTransactionForCreationOfOrgWallet(orgID: number) {
+    getTransactionForCreationOfOrgWallet(orgID: string) {
         return this.http.get(API.generateComplexRoute(
             this.walletEndpoint,
             [orgID.toString(), "transaction"]
@@ -60,7 +60,7 @@ export class OrganizationService {
         );
     }
 
-    inviteUser(orgID: number, userEmail: string) {
+    inviteUser(orgID: string, userEmail: string) {
         return this.http.post(API.generateComplexRoute(
             this.inviteEndpoint, ["organization", orgID.toString(), "invite"]), {
                 "email": userEmail,
@@ -82,13 +82,13 @@ export class OrganizationService {
         );
     }
 
-    getAllProjectsForOrganization(orgID: number) {
+    getAllProjectsForOrganization(orgID: string) {
         return this.http.get(API.generateComplexRoute(this.projectEndpoint,
             [orgID.toString()]    
         ), API.tokenHeaders());
     }
     
-    getMembersForOrganization(orgID: number) {
+    getMembersForOrganization(orgID: string) {
         return this.http.get(API.generateComplexRoute(this.endpoint, [
             orgID.toString(), "members"
         ]), API.tokenHeaders());

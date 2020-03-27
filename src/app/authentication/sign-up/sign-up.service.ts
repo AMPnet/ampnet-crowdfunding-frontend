@@ -16,21 +16,17 @@ export class SignUpService {
 
   performEmailSignup(
     email: string,
-    password: string,
     firstName: string,
-    lastName: string,
-    countryId: number,
-    phoneNumber: string
+    lastName: string, 
+    password: string
   ) {
     return this.http.post(API.generateRoute(this.endpoint) , {
       'signup_method': 'EMAIL',
-      'user_info' : {
-        'email' : email,
-        'password' : password,
-        'first_name' : firstName,
-        'last_name' : lastName,
-        'country_id' : countryId,
-        'phone_number': phoneNumber
+      'user_info': {
+        'first_name': firstName,
+        'last_name': lastName,
+        'email': email,
+        'password': password
       }
     });
   }

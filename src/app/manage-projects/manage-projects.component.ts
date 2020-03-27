@@ -17,7 +17,7 @@ export class ManageProjectsComponent implements OnInit {
 
   manageProjectsModel: ProjectModel[];
 
-  @Input() groupID: number;
+  @Input() groupID: string;
 
   constructor(private router: Router, private orgService: OrganizationService) { }
 
@@ -35,7 +35,9 @@ export class ManageProjectsComponent implements OnInit {
     this.orgService.getAllProjectsForOrganization(this.groupID).subscribe((res: any) => {
       SpinnerUtil.hideSpinner();
       console.log(res);
+
       this.manageProjectsModel = res.projects;
+      console.log("PROJECTS", res)
     }, err => {
       SpinnerUtil.hideSpinner();
       displayBackendError(err);

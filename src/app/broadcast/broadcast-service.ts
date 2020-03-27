@@ -16,14 +16,15 @@ export class BroadcastService {
   broadcastSignedTx(signed: string, id: number) {
       var apiHeaders = API.tokenHeaders();
       alert("In function sig: " + signed)
-      return this.http.post(API.generateRoute(this.endpoint), { }, {
+      return this.http.post(API.generateRoute(this.endpoint), { 
+        "tx_sig" : signed,
+              "tx_id" : id.toString()
+      }, {
           headers: {
               "Authorization" : apiHeaders.headers.Authorization
           },
-          params: {
-              "tx_sig" : encodeURIComponent(signed),
-              "tx_id" : id.toString()
-          }
+          
+          
       });  
   }  
 }

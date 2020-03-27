@@ -19,7 +19,7 @@ export class VerifySignOfferComponent implements OnInit {
   constructor(private route: ActivatedRoute, private projectService: ProjectService,
     private offerService: OffersService) { }
 
-  projectID: number;
+  projectID: string;
   investAmount: number;
 
   approveQRData = ""
@@ -50,7 +50,7 @@ export class VerifySignOfferComponent implements OnInit {
   generateInvestmentCode() {
     this.clicked = true
     SpinnerUtil.showSpinner();
-    this.offerService.generateTransactionToGreenvest(this.project.id, this.investAmount)
+    this.offerService.generateTransactionToGreenvest(this.project.uuid, this.investAmount)
       .subscribe((res: any) => {
         SpinnerUtil.hideSpinner();
         

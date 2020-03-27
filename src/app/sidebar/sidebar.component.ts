@@ -15,9 +15,9 @@ import { SpinnerUtil } from '../utilities/spinner-utilities';
 export class SidebarComponent implements OnInit {
 
   isAdmin: boolean
-  hasWalletActive: boolean = false
-  hasBankingInfo: boolean = false 
-  hasVerifiedProfile: boolean = false
+  hasWalletActive: boolean = true
+  hasBankingInfo: boolean = true
+  hasVerifiedProfile: boolean = true
 
   constructor(private router: Router, private userService: UserService) { }
 

@@ -17,7 +17,7 @@ export class WalletActivationService {
         ]), API.tokenHeaders())
     }
 
-    getActivationData(walletID: number) {
+    getActivationData(walletID: any) {
         return this.http.post(API.generateComplexRoute(this.endpoint, [
             walletID.toString(), "transaction"
         ]), {}, API.tokenHeaders())

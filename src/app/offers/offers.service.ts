@@ -22,7 +22,7 @@ export class OffersService {
     ]));
   }
 
-  generateTransactionToGreenvest(projectID: number, investAmount: number) {
+  generateTransactionToGreenvest(projectID: string, investAmount: number) {
 
     return this.http.get(API.generateComplexRoute(this.privateEndpoint, [
       projectID.toString(), "invest"

@@ -57,7 +57,7 @@ export class OffersComponent implements OnInit {
           headerImageUrl: proj.main_image,
           status: "Active",
           endDate: moment(proj.end_date).format("MMM Do, YYYY"),
-          offerID: proj.id,
+          offerID: proj.uuid,
           owner: proj.return_on_investment,
           currency: proj.currency
         }

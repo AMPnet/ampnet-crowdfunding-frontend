@@ -9,12 +9,12 @@ export class ProjectService {
 
     private endpoint = "/project"
     private publicEndpoint = "/public/project"
-    private publicWalletEndpoint = "/public/wallet";
+    private publicWalletEndpoint = "/wallet/public/wallet";
     private walletEndpoint = "/wallet"
 
     constructor(private http: HttpClient) { }
 
-    createProject(organizationID: number, 
+    createProject(organizationID: string, 
         name: string,
         description: string,
         location: string,
@@ -29,7 +29,7 @@ export class ProjectService {
         active: boolean) {
 
         return this.http.post(API.generateRoute(this.endpoint), {
-            "organization_id": organizationID,
+            "organization_uuid": organizationID,
             "name" : name,
             "description" : description,
             "location" : location,
@@ -46,26 +46,26 @@ export class ProjectService {
 
     }
 
-    getProjectWallet(projectID: number) {
+    getProjectWallet(projectID: string) {
         return this.http.get(API.generateComplexRoute(this.publicWalletEndpoint, [
             "project", projectID.toString()
-        ]));
+        ]) );
     }
 
-    generateTransactionToCreateProjectWallet(projectID: number) {
+    generateTransactionToCreateProjectWallet(projectID: string) {
 
         return this.http.get(API.generateComplexRoute(this.walletEndpoint, [
             "project", projectID.toString(), "transaction"
         ]), API.tokenHeaders());
     }
 
-    getProject(projectID: number) {
+    getProject(projectID: string) {
         return this.http.get(API.generateComplexRoute(this.publicEndpoint, [
             projectID.toString()
         ]));
     }
 
-    updateProject(projectID: number, name: string, description: string,
+    updateProject(projectID: string, name: string, description: string,
         location: string, locationText: string, roi: string, active: boolean) {
         return this.http.post(API.generateComplexRoute(this.endpoint, [
             projectID.toString()

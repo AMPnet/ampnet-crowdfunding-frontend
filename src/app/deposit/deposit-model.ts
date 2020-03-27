@@ -1,3 +1,8 @@
+export interface DepositCoreModel {
+    deposit:DepositModel,
+    user: DepositUserModel
+}
+
 
 export interface DepositModel {
     id: number,

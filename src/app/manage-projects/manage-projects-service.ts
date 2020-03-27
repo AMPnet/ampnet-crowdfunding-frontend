@@ -15,7 +15,7 @@ export class ManageProjectsService {
     private http: HttpClient) { }
   
 
-  deleteDocument(projectID: number, documentID: number) {
+  deleteDocument(projectID: string, documentID: number) {
     return this.http.delete(API.generateComplexRoute(this.projectEndpoint, [
       projectID.toString(), "document", documentID.toString()
     ]), API.tokenHeaders());
@@ -25,13 +25,13 @@ export class ManageProjectsService {
 
   }
 
-  addNewsToProject(projectID: number, newsLink: string) {
+  addNewsToProject(projectID: string, newsLink: string) {
     return this.http.post(API.generateComplexRoute(this.projectEndpoint, [
       projectID.toString(), "news"
     ]), { "link" : newsLink }, API.tokenHeaders())
   }
 
-  deleteNewsFromProject(projectID: number, newsLink: string) {
+  deleteNewsFromProject(projectID: string, newsLink: string) {
     return this.http.request('delete', API.generateComplexRoute(this.projectEndpoint, [
       projectID.toString(), "news"
     ]), {

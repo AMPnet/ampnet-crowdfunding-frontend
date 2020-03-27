@@ -38,6 +38,7 @@ export class ManageDepositsComponent implements OnInit, AfterViewInit {
     SpinnerUtil.showSpinner()
     this.depositCooperativeService.getUnapprovedDeposits().subscribe((res: any) => {
       this.unapprovedDeposits = res.deposits
+      console.log(this.unapprovedDeposits)
       SpinnerUtil.hideSpinner()
     }, hideSpinnerAndDisplayError)
   }

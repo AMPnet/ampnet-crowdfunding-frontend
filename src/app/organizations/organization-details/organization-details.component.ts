@@ -10,6 +10,7 @@ import { OrganizationModel } from './organization-model';
 import { WalletModel } from './organization-model';
 import { MemberModel } from '../member-model';
 import { API } from 'src/app/utilities/endpoint-manager';
+import { ArkaneConnect, SecretType, WindowMode, SignatureRequestType } from '@arkane-network/arkane-connect';
 
 declare var $: any;
 
@@ -78,21 +79,7 @@ export class OrganizationDetailsComponent implements OnInit {
 
   initializeWalletClicked() {
     let orgID = this.activeRoute.snapshot.params.id;
-    this.organizationService.getTransactionForCreationOfOrgWallet(orgID).subscribe((res: any) => {
-
-      this.orgWalletInitialized = false;
-      this.txData = JSON.stringify(res.tx);
-      this.txID = res.tx_id;
-
-      var qrCodeData = {
-        "tx_data" : res,
-        "base_url": API.APIURL
-      }
-      this.qrCodeData = JSON.stringify(qrCodeData)
-
-    }, err => {
-      displayBackendError(err);
-    });
+    
   }
 
 
@@ -120,10 +107,40 @@ export class OrganizationDetailsComponent implements OnInit {
     })
   }
 
+  async createOrgWalletClicked() {
+    let arkaneConnect = new ArkaneConnect('Arketype', {
+      environment: 'staging'
+    })
+    let account = await arkaneConnect.flows.getAccount(SecretType.AETERNITY)
+    
+    this.organizationService.getTransactionForCreationOfOrgWallet(this.organization.uuid).subscribe(async (res: any) => {
+
+      this.orgWalletInitialized = false;
+      this.txData = JSON.stringify(res.tx);
+      this.txID = res.tx_id;
+
+      var qrCodeData = {
+        "tx_data" : res,
+        "base_url": API.APIURL
+      }
+      let sigRes = await arkaneConnect.createSigner(WindowMode.POPUP).sign({
+        walletId: account.wallets[0].id,
+        data: res.tx,
+        type: SignatureRequestType.AETERNITY_RAW
+      })
+      this.broadcastService.broadcastSignedTx(sigRes.result.signedTransaction, res.tx_id).subscribe(res => {
+        swal("", "Success", "success")
+        this.ngOnInit()
+      }, displayBackendError)
+    }, err => {
+      displayBackendError(err);
+    });
+
+  }
+
   getOrgMembers() {
     SpinnerUtil.showSpinner();
     this.organizationService.getMembersForOrganization(this.organization.uuid).subscribe((res: any) => {
-      SpinnerUtil.hideSpinner();
       let members: MemberModel[] = res.members;
       this.orgMembers = members;
     }, err => {

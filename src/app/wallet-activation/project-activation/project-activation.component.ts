@@ -1,4 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
+import { WalletActivationService } from '../wallet-activation.service';
+import { ProjectActivationModel } from './project-activation.model';
+import { displayBackendError, hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
+import { ArkaneConnect, SecretType, WindowMode, SignatureRequestType } from '@arkane-network/arkane-connect';
+import { BroadcastService } from 'src/app/broadcast/broadcast-service';
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-project-activation',
@@ -7,9 +14,46 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProjectActivationComponent implements OnInit {
 
-  constructor() { }
+  projects: ProjectActivationModel[]
+
+  constructor(private activationService: WalletActivationService,
+    private broadService: BroadcastService) { }
 
   ngOnInit() {
+    this.fetchWalletToActivate()
+  }
+
+  fetchWalletToActivate() {
+    SpinnerUtil.showSpinner()
+    this.activationService
+      .getUnactivatedWallets("organization").subscribe((res: any) => {
+      this.projects = res.organizations;
+      SpinnerUtil.hideSpinner()
+      
+    }, displayBackendError)
+  }
+
+  activateProjectClicked(uuid: string) {
+
+    this.activationService.getActivationData(uuid).subscribe(async (res: any) => {
+      let arkaneConnect = new ArkaneConnect('Arketype', {
+        environment: 'staging'
+      })
+    
+      let account = await arkaneConnect.flows.getAccount(SecretType.AETERNITY)
+      let sigRes = await arkaneConnect.createSigner(WindowMode.POPUP).sign({
+        walletId: account.wallets[0].id,
+        data: res.tx,
+        type: SignatureRequestType.AETERNITY_RAW
+      })
+      this.broadService.broadcastSignedTx(sigRes.result.signedTransaction, res.tx_id)
+        .subscribe(res => {
+          SpinnerUtil.hideSpinner()
+          swal("", "Success", "success")
+        }, hideSpinnerAndDisplayError)
+
+    }, hideSpinnerAndDisplayError)
+
   }
 
 }

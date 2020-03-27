@@ -1,3 +1,19 @@
-<p>
-  group-activation works!
-</p>
+<div *ngIf="groups != undefined" class="container root-content-container">
+  <h5 class="explainer-mini">Unactivated groups</h5>
+  <div *ngIf="groups.length > 0" class="mt-3">
+    <ul class="list-group">
+      <li *ngFor="let group of groups" class="list-group-item explainer-mini">
+        {{group.organization.name}}
+        <span class="float-right cursor-pointer hover-fg" (click)="activateGroupClicked(group.wallet.uuid)">
+          <i class="fas fa-check-circle mr-2"></i>
+          Activate
+        </span>
+      </li>
+    </ul>
+  </div>
+  <div *ngIf="groups.length == 0" class="mt-3">
+    <div class="text-center explainer-mini mt-5">
+      No unactivated groups
+    </div>
+  </div>
+</div>

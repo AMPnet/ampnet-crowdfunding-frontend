@@ -40,25 +40,7 @@ export class UserActivationComponent implements OnInit {
       let arkaneConnect = new ArkaneConnect('Arketype', {
         environment: 'staging'
       })
-      // arkaneConnect.flows.getAccount(SecretType.AETERNITY).then(acc => {
-        
-      //   let signed = arkaneConnect.createSigner(WindowMode.POPUP).sign({
-      //     walletId: acc.wallets[0].id,
-      //     data: res.tx,
-      //     type: SignatureRequestType.AETERNITY_RAW
-      //   }).then(sigRes => {
-
-      //     this.broadService.broadcastSignedTx(sigRes.result.signedTransaction, res.tx_id)
-      //       .subscribe(res => {
-      //         swal("", "Success", "success")
-      //       }, hideSpinnerAndDisplayError)
-
-      //   }).catch(err => {
-      //     swal("", "Failed signing transaction", "error")
-      //   })
-
-      // })
-
+    
       let account = await arkaneConnect.flows.getAccount(SecretType.AETERNITY)
       let sigRes = await arkaneConnect.createSigner(WindowMode.POPUP).sign({
         walletId: account.wallets[0].id,

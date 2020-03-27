@@ -18,15 +18,16 @@
 
   <div *ngIf="orgWallet == undefined" class="row">
     <div class="pt-5 w-100">
-      <div *ngIf="qrCodeData != ''" class="col-md-12 mt-5 d-flex justify-content-center">
-        <app-sign-broadcast [txData]="qrCodeData"></app-sign-broadcast>
+      <div class="explainer-mini pb-3">
+        You must create the wallet for the organization. This will allow you to create projects and add members.
       </div>
+      <div (click)="createOrgWalletClicked()" class="btn btn-primary p-3 w-100">Create organization wallet</div>
     </div>
   </div>
 
   <div *ngIf="orgWallet != undefined">
     <div class="row mt-3">
-      <div *ngIf="!organization.approved" class="col-md-12">
+      <div *ngIf="orgWallet.hash == undefined" class="col-md-12">
         <div class="alert alert-warning">
           This group is pending approval from admin. During this time, you can't create new projects.
         </div>
@@ -48,7 +49,7 @@
       </div>
 
       <div class="col-md-12 mt-3">
-        <app-manage-projects [groupID]="organization.id" ></app-manage-projects>
+        <app-manage-projects [groupID]="organization.uuid" ></app-manage-projects>
         <hr>
       </div>
       <div class="col-md-12">

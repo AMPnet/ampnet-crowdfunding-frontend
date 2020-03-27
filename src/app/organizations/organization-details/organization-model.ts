@@ -1,5 +1,5 @@
 export interface OrganizationModel {
-    uuid: number,
+    uuid: string,
     name: string,
     created_at: string,
     approved: boolean,

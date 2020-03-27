@@ -13,11 +13,11 @@
             </div>
             <div>
               <div class="explainer-mini text-uppercase">Date created</div>
-              <div>{{depositModel.created_at}}</div>
+              <div>{{depositModel.deposit.created_at}}</div>
             </div>
             <div>
               <div class="explainer-mini text-uppercase">Reference</div>
-              <div>{{depositModel.reference}}</div>
+              <div>{{depositModel.deposit.reference}}</div>
             </div>
           </div>
         </div>
@@ -50,7 +50,7 @@
       <div id="payment-reciept-upload-target"></div>
       <button (click)="approveButtonClicked()" class="btn btn-primary w-100 py-3 mt-3">
         <i class="fas fa-qrcode mr-2"></i>
-        Approve and generate code
+        Approve and mint
       </button>
     </div>
   </div>

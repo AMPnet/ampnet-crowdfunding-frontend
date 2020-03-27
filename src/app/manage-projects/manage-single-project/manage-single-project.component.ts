@@ -54,7 +54,7 @@ export class ManageSingleProjectComponent implements OnInit {
     this.getProject(() => {
       SpinnerUtil.showSpinner();
 
-      this.projectService.getProjectWallet(this.project.id).subscribe((res: WalletModel) => {
+      this.projectService.getProjectWallet(this.project.uuid).subscribe((res: WalletModel) => {
         SpinnerUtil.hideSpinner();
         this.wallet = res;
         setTimeout(() => {
@@ -73,7 +73,7 @@ export class ManageSingleProjectComponent implements OnInit {
   }
 
   createInitQRCODE() {
-    this.projectService.generateTransactionToCreateProjectWallet(this.project.id).subscribe((res) => {
+    this.projectService.generateTransactionToCreateProjectWallet(this.project.uuid).subscribe((res) => {
 
       var qrCodeData = {
         "tx_data" : res,
@@ -89,7 +89,7 @@ export class ManageSingleProjectComponent implements OnInit {
     SpinnerUtil.showSpinner();
     let linkHolder = $("#newsLink").val();
     if(validURL(linkHolder)) {
-      this.manageProjectsService.addNewsToProject(this.project.id, linkHolder).subscribe(res => {
+      this.manageProjectsService.addNewsToProject(this.project.uuid, linkHolder).subscribe(res => {
         this.getProject(() => { });
       }, err => {
         displayBackendError(err);
@@ -101,7 +101,7 @@ export class ManageSingleProjectComponent implements OnInit {
 
   deleteNewsClicked(link: string) {
     SpinnerUtil.showSpinner();
-    this.manageProjectsService.deleteNewsFromProject(this.project.id, link).subscribe(res => {
+    this.manageProjectsService.deleteNewsFromProject(this.project.uuid, link).subscribe(res => {
       SpinnerUtil.hideSpinner();
      this.getProject(() => {});
     }, err => {
@@ -149,7 +149,7 @@ export class ManageSingleProjectComponent implements OnInit {
   toggleProjectStatusClicked() {
     SpinnerUtil.showSpinner()
     this.projectService.updateProject(
-      this.project.id,
+      this.project.uuid,
       this.project.name,
       this.project.description,
       this.project.location,
@@ -189,7 +189,7 @@ export class ManageSingleProjectComponent implements OnInit {
     headers.headers["Access-Control-Allow-Origin"] = "*";
 
     uppy.use(Uppy.XHRUpload, { 
-      endpoint: API.generateComplexRoute("/project", [ this.project.id.toString(), "image", "main"]),
+      endpoint: API.generateComplexRoute("/project", [ this.project.uuid.toString(), "image", "main"]),
       headers: {
         "Authorization" : headers.headers["Authorization"]
       },
@@ -218,7 +218,7 @@ export class ManageSingleProjectComponent implements OnInit {
 
     filesUppy.use(Uppy.XHRUpload, {
       endpoint: API.generateComplexRoute("/project", [
-        this.project.id.toString(), "document"
+        this.project.uuid.toString(), "document"
       ]),
       headers: {
         "Authorization" : API.tokenHeaders().headers["Authorization"]
@@ -285,7 +285,7 @@ export class ManageSingleProjectComponent implements OnInit {
 
     SpinnerUtil.showSpinner()
     this.projectService.updateProject(
-      updatedProject.id,
+      updatedProject.uuid,
       updatedProject.name,
       updatedProject.description,
       updatedProject.location,
@@ -311,7 +311,7 @@ export class ManageSingleProjectComponent implements OnInit {
     }).then(() => {
       SpinnerUtil.showSpinner();
       this.manageProjectsService
-        .deleteDocument(this.project.id, index).subscribe(res => {
+        .deleteDocument(this.project.uuid, index).subscribe(res => {
           SpinnerUtil.hideSpinner();
           this.getProject(() => {});
         }, err => {

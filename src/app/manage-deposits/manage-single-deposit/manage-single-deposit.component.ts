@@ -3,12 +3,15 @@ import * as Uppy from 'uppy'
 import { ActivatedRoute } from '@angular/router';
 import { hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
-import { DepositModel } from 'src/app/deposit/deposit-model';
+import { DepositModel, DepositCoreModel } from 'src/app/deposit/deposit-model';
 import { prettyDate } from 'src/app/utilities/date-format-util';
 import { API } from 'src/app/utilities/endpoint-manager';
 import * as QRCode from 'qrcode'
 import * as numeral from 'numeral'
 import { DepositCooperativeService } from '../deposit.cooperative.service';
+import { ArkaneConnect, SecretType, WindowMode, SignatureRequestType } from '@arkane-network/arkane-connect';
+import { BroadcastService } from 'src/app/broadcast/broadcast-service';
+import swal from 'sweetalert2';
 
 declare var $: any;
 
@@ -19,10 +22,11 @@ declare var $: any;
 })
 export class ManageSingleDepositComponent implements OnInit {
 
-  depositModel: DepositModel
+  depositModel: DepositCoreModel
 
   constructor(private route: ActivatedRoute,
-    private depositCooperativeService: DepositCooperativeService) { }
+    private depositCooperativeService: DepositCooperativeService,
+    private broadService: BroadcastService) { }
 
   paymentUppy: Uppy.Core.Uppy;
 
@@ -47,12 +51,26 @@ export class ManageSingleDepositComponent implements OnInit {
     })
   }
 
-  generateSigningCode() {
+  generateSignerAndSign() {
     SpinnerUtil.showSpinner()
 
-    this.depositCooperativeService.generateDepositMintTx(this.depositModel.id).subscribe((res: any) => {
+    this.depositCooperativeService.generateDepositMintTx(this.depositModel.deposit.id).subscribe(async (res: any) => {
       SpinnerUtil.hideSpinner()
-      QRCode.toCanvas(document.getElementById("mint-deposit-code"), JSON.stringify(res), console.log)
+      let arkaneConnect = new ArkaneConnect('Arketype', {
+        environment: 'staging'
+      })
+    
+      let account = await arkaneConnect.flows.getAccount(SecretType.AETERNITY)
+      let sigRes = await arkaneConnect.createSigner(WindowMode.POPUP).sign({
+        walletId: account.wallets[0].id,
+        data: res.tx,
+        type: SignatureRequestType.AETERNITY_RAW
+      })
+      this.broadService.broadcastSignedTx(sigRes.result.signedTransaction, res.tx_id)
+        .subscribe(res => {
+          SpinnerUtil.hideSpinner()
+          swal("", "Success", "success")
+        }, hideSpinnerAndDisplayError)
     }, hideSpinnerAndDisplayError)
   }
 
@@ -61,12 +79,12 @@ export class ManageSingleDepositComponent implements OnInit {
     SpinnerUtil.showSpinner()
     this.depositCooperativeService.getDeposit(id).subscribe((res: any) => {
       this.depositModel = res
-      this.depositModel.created_at = prettyDate(res.created_at)
-      this.depositModel.amount = numeral(this.depositModel.amount).format(",")
-      if(!this.depositModel.approved) {
+      this.depositModel.deposit.created_at = prettyDate(res.created_at)
+      this.depositModel.deposit.amount = numeral(this.depositModel.deposit.amount).format(",")
+      if(!this.depositModel.deposit.approved) {
         setTimeout(() => { this.createUploadArea() }, 300)
       } else {
-        this.generateSigningCode()
+        this.generateSignerAndSign()
       }
 
       SpinnerUtil.hideSpinner()
@@ -77,7 +95,7 @@ export class ManageSingleDepositComponent implements OnInit {
     let depositAmount = $("#deposit-amount").val()
 
     let depositApprovalURL = this.depositCooperativeService.generateDepositApprovalURL(
-      this.depositModel.id,
+      this.depositModel.deposit.id,
       depositAmount
     )
 

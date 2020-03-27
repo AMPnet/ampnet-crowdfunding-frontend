@@ -30,7 +30,7 @@ export class RevenueShareComponent implements OnInit {
     this.getProject(projID);
   }
 
-  getProject(projectID: number) {
+  getProject(projectID: string) {
     SpinnerUtil.showSpinner();
     this.projectService.getProject(projectID).subscribe((res: any) => {
       SpinnerUtil.hideSpinner();

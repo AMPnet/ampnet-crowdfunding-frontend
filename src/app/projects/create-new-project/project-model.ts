@@ -1,6 +1,6 @@
 export interface ProjectModel {
 
-    id: number, 
+    uuid: string, 
     name: string,
     description: string,
     location: string,

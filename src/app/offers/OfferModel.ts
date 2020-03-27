@@ -1,5 +1,5 @@
 export interface OfferModel {
-  offerID: number,
+  offerID: string,
   title: string;
   description: string;
   offeredBy: string;

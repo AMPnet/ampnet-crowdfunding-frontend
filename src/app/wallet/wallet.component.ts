@@ -38,7 +38,7 @@ export class WalletComponent implements OnInit, AfterViewInit {
   }
 
   setUpArkane() {
-    let arkaneConnect = new ArkaneConnect("Arketype", { environment: "staging"})
+    let arkaneConnect = new ArkaneConnect("AMPnet", { environment: "production"})
     arkaneConnect.flows.getAccount(SecretType.AETERNITY).then(acc => {
       if((acc.wallets != undefined) && (acc.wallets.length > 0)) {
         this.startWalletInit(acc.wallets[0].address)

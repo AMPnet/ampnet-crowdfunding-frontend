@@ -108,8 +108,8 @@ export class OrganizationDetailsComponent implements OnInit {
   }
 
   async createOrgWalletClicked() {
-    let arkaneConnect = new ArkaneConnect('Arketype', {
-      environment: 'staging'
+    let arkaneConnect = new ArkaneConnect('AMPnet', {
+      environment: 'production'
     })
     let account = await arkaneConnect.flows.getAccount(SecretType.AETERNITY)
     

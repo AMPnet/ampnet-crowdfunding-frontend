@@ -56,8 +56,8 @@ export class WithdrawComponent implements OnInit {
     
     // SpinnerUtil.showSpinner()
         
-    // let arkaneConnect = new ArkaneConnect('Arketype', {
-    //   environment: 'staging'
+    // let arkaneConnect = new ArkaneConnect('AMPnet', {
+    //   environment: 'production'
     // })
 
     // let account = await arkaneConnect.flows.getAccount(SecretType.AETERNITY)

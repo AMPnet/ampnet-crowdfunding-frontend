@@ -12,7 +12,7 @@ import { EmailSignupModel } from 'src/app/models/auth/EmailSignupModel';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { LogInModalService } from '../log-in-modal/log-in-modal.service';
-import { displayBackendError } from 'src/app/utilities/error-handler';
+import { displayBackendError, hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
 
 @Component({
   selector: 'app-sign-up',
@@ -20,18 +20,24 @@ import { displayBackendError } from 'src/app/utilities/error-handler';
   styleUrls: ['./sign-up.component.css']
 })
 export class SignUpComponent implements OnInit {
-
-
-  submissionForm: FormGroup;
   
+  emailSignupForm: FormGroup;
 
   constructor(
     private signUpService: SignUpService,
     private router: Router,
     private authService: AuthService,
     private route: ActivatedRoute,
-    private loginService: LogInModalService
-  ) { 
+    private loginService: LogInModalService,
+    private formBuilder: FormBuilder
+  ) {
+    this.emailSignupForm = this.formBuilder.group({
+      firstName: '',
+      lastName: '',
+      password: '',
+      confirmPassword: '',
+      email: ''
+    })
   }
 
   countries: CountryModel[];
@@ -86,6 +92,21 @@ export class SignUpComponent implements OnInit {
       })
     }
     afterSignout();
+  }
+
+  onSubmitEmailForm(formData) {
+    SpinnerUtil.showSpinner();
+    let values = this.emailSignupForm.value;
+    this.signUpService.performEmailSignup(
+      values.email,
+      values.firstName,
+      values.lastName,
+      values.password
+    ).subscribe((res: any) => {
+      swal("", "A confirmation mail has been sent to " + res.email, "success")
+      
+      SpinnerUtil.hideSpinner();
+    }, hideSpinnerAndDisplayError)
   }
 
   

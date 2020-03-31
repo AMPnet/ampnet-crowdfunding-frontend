@@ -47,7 +47,7 @@ export class CreateOrganizationComponent implements OnInit {
           });
         });
         
-        this.router.navigate(['/dash', 'manage_groups', res.id]);
+        this.router.navigate(['/dash', 'manage_groups', res.uuid]);
       }, err => {
         SpinnerUtil.hideSpinner();
         swal('', err.error.message, 'warning').then(() => {

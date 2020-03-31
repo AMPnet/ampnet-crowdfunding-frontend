@@ -5,6 +5,7 @@ import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { DepositModel } from './deposit-model';
 import Cleave from 'cleave.js'
 import swal from 'sweetalert2';
+import { autonumericCurrency, stripCurrencyData } from '../utilities/currency-util';
 
 declare var $: any;
 
@@ -26,13 +27,16 @@ export class DepositComponent implements OnInit {
     //   delimiter: ".",
     //   numeralThousandsGroupStyle: 'thousand'
     // })
+    $(document).ready(() => {
+      autonumericCurrency("#deposit-amount")
+    })
   }
 
   depositButtonClicked() {
     SpinnerUtil.showSpinner()
     this.depositService.createDeposit().subscribe((res: DepositModel) => {
       this.depositModel = res
-      this.depositAmount = $("#deposit-amount").val()
+      this.depositAmount = stripCurrencyData($("#deposit-amount").val())
       SpinnerUtil.hideSpinner()
     }, err => {
       SpinnerUtil.hideSpinner()

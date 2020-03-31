@@ -57,7 +57,7 @@ export class ManageSingleDepositComponent implements OnInit {
     this.depositCooperativeService.generateDepositMintTx(this.depositModel.deposit.id).subscribe(async (res: any) => {
       SpinnerUtil.hideSpinner()
       let arkaneConnect = new ArkaneConnect('AMPnet', {
-        environment: 'production'
+        environment: 'staging'
       })
     
       let account = await arkaneConnect.flows.getAccount(SecretType.AETERNITY)

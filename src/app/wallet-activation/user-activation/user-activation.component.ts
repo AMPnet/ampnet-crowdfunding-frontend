@@ -38,7 +38,7 @@ export class UserActivationComponent implements OnInit {
     this.activationService.getActivationData(id).subscribe(async (res: any) => {
       console.log("RES_TX", res.tx)
       let arkaneConnect = new ArkaneConnect('AMPnet', {
-        environment: 'production'
+        environment: 'staging'
       })
     
       let account = await arkaneConnect.flows.getAccount(SecretType.AETERNITY)

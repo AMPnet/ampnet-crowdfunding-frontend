@@ -39,7 +39,7 @@ export class GroupActivationComponent implements OnInit {
     this.activationService.getActivationData(uuid).subscribe(async (res: any) => {
       console.log("RES_TX", res.tx)
       let arkaneConnect = new ArkaneConnect('AMPnet', {
-        environment: 'production'
+        environment: 'staging'
       })
     
       let account = await arkaneConnect.flows.getAccount(SecretType.AETERNITY)
@@ -51,7 +51,9 @@ export class GroupActivationComponent implements OnInit {
       this.broadService.broadcastSignedTx(sigRes.result.signedTransaction, res.tx_id)
         .subscribe(res => {
           SpinnerUtil.hideSpinner()
-          swal("", "Success", "success")
+          swal("", "Success", "success").then(() => {
+            this.ngOnInit()
+          })
         }, hideSpinnerAndDisplayError)
 
     }, hideSpinnerAndDisplayError)

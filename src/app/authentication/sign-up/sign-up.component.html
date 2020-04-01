@@ -5,8 +5,6 @@
     <div class="card p-5 m-auto mt-5">
       <div id="card-content">
 
-
-        <h3 class="w-100 text-center text-uppercase mb-3">Sign up</h3>
         <div class="row">
           <div class="col-md-6">
             <button (click)="performGoogleSignup()" class="btn btn-primary w-100 btn-action-a mt-1 btn-color-google">Sign Up with
@@ -19,7 +17,7 @@
           </div>
         </div>
 
-        <div class="w-100 text-center mt-5 mb-4 h4">OR CREATE WITH EMAIL</div>
+        <div class="w-100 dropdown-divider mt-3"></div>
         <form id="emailForm" [formGroup]="emailSignupForm" (ngSubmit)="onSubmitEmailForm(emailSignupForm.value)">
           <input class="form-control mt-3 p-4" 
             formControlName="email" type="text" 

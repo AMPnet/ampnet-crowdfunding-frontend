@@ -20,13 +20,19 @@
         </div>
 
         <div class="w-100 text-center mt-5 mb-4 h4">OR CREATE WITH EMAIL</div>
-        <form [formGroup]="emailSignupForm" (ngSubmit)="onSubmitEmailForm(emailSignupForm.value)">
-          <input class="form-control mt-3 p-4" formControlName="email" type="text" placeholder="Email" id="email">
+        <form id="emailForm" [formGroup]="emailSignupForm" (ngSubmit)="onSubmitEmailForm(emailSignupForm.value)">
+          <input class="form-control mt-3 p-4" 
+            formControlName="email" type="text" 
+            placeholder="Email" 
+            id="email">
           <input class="form-control mt-3 p-4" formControlName="firstName" type="text" placeholder="First name" id="email">
           <input class="form-control mt-3 p-4" formControlName="lastName" type="text" placeholder="Last name" id="email">
           <input type="password" formControlName="password" class="form-control mt-3 p-4" placeholder="Password">
+          <small class="form-text text-muted mt-2">
+            Password must be 8 characters or longer.
+          </small>
           <input type="password" formControlName="confirmPassword" class="form-control mt-3 p-4" placeholder="Confirm password">
-          <button type="submit" class="btn btn-primary w-100 mt-3 py-3">
+          <button [disabled]="emailSignupForm.invalid" type="submit" class="btn btn-primary w-100 mt-3 py-3">
             <i class="fas fa-paper-plane mr-2"></i>
             Submit
           </button>

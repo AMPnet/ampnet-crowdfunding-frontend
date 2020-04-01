@@ -1,13 +1,8 @@
-/* .left-image {
-  width: 100%;
-  height: calc(100vh - 75px);
-  object-fit: cover;
-} */
 
 #top-container {
   background: url("../../../assets/africa.jpg");
-  height: 100vh;
   padding-top: 50px;
+  padding-bottom: 100px;
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -30,4 +25,14 @@
 
 #submit-button {
   height: 60px!important;
+}
+
+.ng-invalid.ng-dirty:not(form) {
+  border-right: 10px solid #ff4040!important;
+  border-left: 10px solid #ff4040!important;
+}
+
+.ng-valid.ng-dirty:not(form)  {
+  border-right: 10px solid #94da8d!important;
+  border-left: 10px solid #94da8d!important;
 }

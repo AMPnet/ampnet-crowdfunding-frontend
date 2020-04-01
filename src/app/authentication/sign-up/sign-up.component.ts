@@ -13,6 +13,10 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { LogInModalService } from '../log-in-modal/log-in-modal.service';
 import { displayBackendError, hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
+import { MustMatch } from './confirm-password-validator';
+import { trigger, state, style, transition, animate } from '@angular/animations'
+
+
 
 @Component({
   selector: 'app-sign-up',
@@ -32,11 +36,13 @@ export class SignUpComponent implements OnInit {
     private formBuilder: FormBuilder
   ) {
     this.emailSignupForm = this.formBuilder.group({
-      firstName: '',
-      lastName: '',
-      password: '',
-      confirmPassword: '',
-      email: ''
+      firstName: new FormControl('', [Validators.required]),
+      lastName: new FormControl('', [Validators.required]),
+      password: new FormControl('', [Validators.required, Validators.minLength(8)]),
+      confirmPassword: new FormControl('', [Validators.required, Validators.minLength(8)]),
+      email: new FormControl('', [Validators.required, Validators.email])
+    }, {
+      validator: MustMatch('password', 'confirmPassword')
     })
   }
 
@@ -103,9 +109,11 @@ export class SignUpComponent implements OnInit {
       values.lastName,
       values.password
     ).subscribe((res: any) => {
-      swal("", "A confirmation mail has been sent to " + res.email, "success")
-      
-      SpinnerUtil.hideSpinner();
+      swal("", "Sign-up successful!", "success")
+      this.loginService.performEmailLogin(values.email, values.password).subscribe((res: any) => {
+        localStorage.setItem('access_token', res.access_token)
+        this.router.navigate(['/dash'])
+      }, hideSpinnerAndDisplayError)
     }, hideSpinnerAndDisplayError)
   }
 

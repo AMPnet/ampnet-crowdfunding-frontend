@@ -5,8 +5,6 @@
     <div class="card p-5 m-auto mt-5">
       <div id="card-content">
 
-
-        <h3 class="w-100 text-center text-uppercase mb-3">Sign up</h3>
         <div class="row">
           <div class="col-md-6">
             <button (click)="performGoogleSignup()" class="btn btn-primary w-100 btn-action-a mt-1 btn-color-google">Sign Up with
@@ -19,14 +17,25 @@
           </div>
         </div>
 
-        <div class="w-100 text-center mt-5 mb-4 h4">OR CREATE WITH EMAIL</div>
-        <input class="form-control mt-3 p-4" type="text" name="" placeholder="Email" id="">
-        <input type="password" class="form-control mt-3 p-4" name="" placeholder="Password" id="">
-        <input type="password" class="form-control mt-3 p-4" name="" placeholder="Confirm password" id="">
-        <button class="btn btn-primary w-100 mt-3 py-3">
-          <i class="fas fa-paper-plane mr-2"></i>
-          Submit
-        </button>
+        <div class="w-100 dropdown-divider mt-3"></div>
+        <form id="emailForm" [formGroup]="emailSignupForm" (ngSubmit)="onSubmitEmailForm(emailSignupForm.value)">
+          <input class="form-control mt-3 p-4" 
+            formControlName="email" type="text" 
+            placeholder="Email" 
+            id="email">
+          <input class="form-control mt-3 p-4" formControlName="firstName" type="text" placeholder="First name" id="email">
+          <input class="form-control mt-3 p-4" formControlName="lastName" type="text" placeholder="Last name" id="email">
+          <input type="password" formControlName="password" class="form-control mt-3 p-4" placeholder="Password">
+          <small class="form-text text-muted mt-2">
+            Password must be 8 characters or longer.
+          </small>
+          <input type="password" formControlName="confirmPassword" class="form-control mt-3 p-4" placeholder="Confirm password">
+          <button [disabled]="emailSignupForm.invalid" type="submit" class="btn btn-primary w-100 mt-3 py-3">
+            <i class="fas fa-paper-plane mr-2"></i>
+            Submit
+          </button>
+        </form>
+        
       </div>
     </div>
   </div>

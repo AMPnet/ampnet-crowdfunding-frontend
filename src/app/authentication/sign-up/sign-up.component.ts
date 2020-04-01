@@ -12,7 +12,11 @@ import { EmailSignupModel } from 'src/app/models/auth/EmailSignupModel';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { LogInModalService } from '../log-in-modal/log-in-modal.service';
-import { displayBackendError } from 'src/app/utilities/error-handler';
+import { displayBackendError, hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
+import { MustMatch } from './confirm-password-validator';
+import { trigger, state, style, transition, animate } from '@angular/animations'
+
+
 
 @Component({
   selector: 'app-sign-up',
@@ -20,18 +24,26 @@ import { displayBackendError } from 'src/app/utilities/error-handler';
   styleUrls: ['./sign-up.component.css']
 })
 export class SignUpComponent implements OnInit {
-
-
-  submissionForm: FormGroup;
   
+  emailSignupForm: FormGroup;
 
   constructor(
     private signUpService: SignUpService,
     private router: Router,
     private authService: AuthService,
     private route: ActivatedRoute,
-    private loginService: LogInModalService
-  ) { 
+    private loginService: LogInModalService,
+    private formBuilder: FormBuilder
+  ) {
+    this.emailSignupForm = this.formBuilder.group({
+      firstName: new FormControl('', [Validators.required]),
+      lastName: new FormControl('', [Validators.required]),
+      password: new FormControl('', [Validators.required, Validators.minLength(8)]),
+      confirmPassword: new FormControl('', [Validators.required, Validators.minLength(8)]),
+      email: new FormControl('', [Validators.required, Validators.email])
+    }, {
+      validator: MustMatch('password', 'confirmPassword')
+    })
   }
 
   countries: CountryModel[];
@@ -86,6 +98,23 @@ export class SignUpComponent implements OnInit {
       })
     }
     afterSignout();
+  }
+
+  onSubmitEmailForm(formData) {
+    SpinnerUtil.showSpinner();
+    let values = this.emailSignupForm.value;
+    this.signUpService.performEmailSignup(
+      values.email,
+      values.firstName,
+      values.lastName,
+      values.password
+    ).subscribe((res: any) => {
+      swal("", "Sign-up successful!", "success")
+      this.loginService.performEmailLogin(values.email, values.password).subscribe((res: any) => {
+        localStorage.setItem('access_token', res.access_token)
+        this.router.navigate(['/dash'])
+      }, hideSpinnerAndDisplayError)
+    }, hideSpinnerAndDisplayError)
   }
 
   

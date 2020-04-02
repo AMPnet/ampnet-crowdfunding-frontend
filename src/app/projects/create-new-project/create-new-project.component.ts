@@ -50,15 +50,15 @@ export class CreateNewProjectComponent implements OnInit, AfterViewInit {
       orgID,
       formValue.name,
       formValue.description,
-      "abc",
+      formValue.location,
       formValue.colloqual,
       "10",
       formValue.startDate,
       formValue.endDate,
-      parseInt(stripCurrencyData(formValue.expectedFunding)),
+      formValue.expectedFunding,
       "EUR",
-      parseInt(stripCurrencyData(formValue.minPerUser)),
-      parseInt(stripCurrencyData(formValue.maxPerUser)),
+      formValue.minPerUser,
+      formValue.maxPerUser,
       false
     ).subscribe((res: any) => {
       SpinnerUtil.hideSpinner();

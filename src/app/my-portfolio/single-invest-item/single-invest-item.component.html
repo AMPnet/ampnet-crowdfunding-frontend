@@ -1,44 +1,31 @@
 <div (click)="onClickedItem()" class="card cursor-pointer color-hover">
   <div class="card-body">
-    <div class="card-title explainer-mini text-uppercase">
+    <div class="card-title text-uppercase">
       <div>
-        <span class="float-left font-weight-bold">Wind farm</span>
-        <span class="float-right">
-          <i class="fas fa-calendar mr-2"></i>
-          Jan 2nd, 2019
-        </span>
+        <span class="float-left font-weight-bold">{{investment.project.name}}</span>
       </div>
     </div>
-    <div class="mt-5">
+    <div class="mt-4">
       <hr>
     </div>
     <div class="card-text">
       <div class="row justify-content-between">
-        <div class="col-md-4 mt-3">
+        <div class="col-md-6 mt-3">
           <div class="explainer-mini">
             <i class="fas fa-chart-pie mr-2"></i>
             Amount invested
           </div>
           <div class="h6 font-weight-bold gray-text mt-2">
-            $24,300
+            {{investment.investment}} {{investment.project.currency}}
           </div>
         </div>
-        <div class="col-md-4 mt-3">
+        <div class="col-md-6 mt-3">
           <div class="explainer-mini">
             <i class="fas fa-percentage mr-2"></i>
-            ROI
+            Expected yearly return
           </div>
           <div class="h6 font-weight-bold gray-text mt-2">
-            8,7%
-          </div>
-        </div>
-        <div class="col-md-4 mt-3">
-          <div class="explainer-mini">
-            <i class="fas fa-money-bill-wave mr-2"></i>
-            Total payouts
-          </div>
-          <div class="h6 font-weight-bold gray-text mt-2">
-            $3,200
+            {{investment.project.return_on_investment}} %
           </div>
         </div>
       </div>

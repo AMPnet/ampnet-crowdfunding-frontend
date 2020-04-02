@@ -2,12 +2,15 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ProjectModel } from 'src/app/projects/create-new-project/project-model';
 import { ActivatedRoute } from '@angular/router';
 import { ProjectService } from 'src/app/projects/project-service';
-import { displayBackendError } from 'src/app/utilities/error-handler';
+import { displayBackendError, hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import * as QRCode from 'qrcode';
 import { OffersService } from '../offers.service';
 import { prettyCurrency } from 'src/app/utilities/currency-util';
 import { API } from 'src/app/utilities/endpoint-manager';
+import { ArkaneConnect, SecretType, WindowMode, SignatureRequestType } from '@arkane-network/arkane-connect';
+import { BroadcastService } from 'src/app/broadcast/broadcast-service';
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-verify-sign-offer',
@@ -17,15 +20,11 @@ import { API } from 'src/app/utilities/endpoint-manager';
 export class VerifySignOfferComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private projectService: ProjectService,
-    private offerService: OffersService) { }
+    private offerService: OffersService, private broadcastService: BroadcastService) { }
 
   projectID: string;
   investAmount: number;
 
-  approveQRData = ""
-  confirmQRData = ""
-
-  clicked: boolean;
 
   project: ProjectModel;
 
@@ -47,38 +46,29 @@ export class VerifySignOfferComponent implements OnInit {
     })
   }
 
-  generateInvestmentCode() {
-    this.clicked = true
+  verifyAndSign() {
     SpinnerUtil.showSpinner();
     this.offerService.generateTransactionToGreenvest(this.project.uuid, this.investAmount)
-      .subscribe((res: any) => {
+      .subscribe(async (res: any) => {
         SpinnerUtil.hideSpinner();
         
-        var txData = {
-          "base_url": API.APIURL,
-          "tx_data" : res
-        }
-
-        this.approveQRData = JSON.stringify(txData)
+        let arkaneConnect = new ArkaneConnect("AMPnet", { environment: "staging"} )
+        let acc = await arkaneConnect.flows.getAccount(SecretType.AETERNITY)
+        let sigRes = await arkaneConnect.createSigner(WindowMode.POPUP).sign({
+          walletId: acc.wallets[0].id,
+          data: res.tx,
+          type: SignatureRequestType.AETERNITY_RAW
+        })
+        this.broadcastService.broadcastSignedTx(sigRes.result.signedTransaction, res.tx_id)
+          .subscribe(res => {
+            swal("", "Successful investment. Allow up to 5 min for investment to become visible", "success")
+            SpinnerUtil.hideSpinner()
+          }, hideSpinnerAndDisplayError)
 
       }, err => {
         displayBackendError(err);
         SpinnerUtil.hideSpinner();
-      });    
-  }
-
-  approveBroadcasted(id: String) {
-    
+      });   
   }
 }
 
-// this.offerService.generateTransactionToConfirmGreenvest(this.project.id).subscribe(res => {
-//   SpinnerUtil.hideSpinner();
-  
-//   var txData = {
-//     "base_url": API.APIURL,
-//     "tx_data": res
-//   }
-//   this.confirmQRData = JSON.stringify(txData)
-
-// }, displayBackendError)

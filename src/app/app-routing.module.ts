@@ -76,7 +76,7 @@ const routes: Routes = [
       { path: 'offers/:id', component: OfferDetailsComponent },
       { path: 'offers/:id/invest', component: InvestComponent },
       { path: 'my_portfolio', component: MyPortfolioComponent },
-      { path: 'my_portfolio/investment_details', component: InvestmentDetailsComponent },
+      { path: 'my_portfolio/:id', component: InvestmentDetailsComponent },
       { path: 'payment_options', component: PaymentOptionsComponent },
       { path: 'my_portfolio/investment_details/new_proposal', component: NewProposalComponent },
       { path: 'finish_new_proposal', component: FinishNewProposalComponent },

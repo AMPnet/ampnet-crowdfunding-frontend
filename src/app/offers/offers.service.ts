@@ -8,7 +8,8 @@ import { API } from '../utilities/endpoint-manager';
 export class OffersService {
 
   projectEndpoint = "/wallet/public/project";
-  privateEndpoint = "/project"
+  investEndpoint = "/wallet/invest/project"
+  projectPublicEnd = "/public/project"
 
   constructor(private http: HttpClient) { }
 
@@ -18,30 +19,20 @@ export class OffersService {
     ]));
   }
 
-  getOfferByID(offerID: number) {
-    return this.http.get(API.generateComplexRoute(this.projectEndpoint, [
+  getOfferByID(offerID: string) {
+    return this.http.get(API.generateComplexRoute(this.projectPublicEnd, [
       offerID.toString()
     ]));
   }
 
   generateTransactionToGreenvest(projectID: string, investAmount: number) {
 
-    return this.http.get(API.generateComplexRoute(this.privateEndpoint, [
-      projectID.toString(), "invest"
+    return this.http.post(API.generateComplexRoute(this.investEndpoint, [
+      projectID
     ]), {
-      params: {
-        "amount": investAmount.toString()
-      },
-      headers: {
-        "Authorization" : API.tokenHeaders().headers.Authorization
-      }
-    });
+      "amount": investAmount.toString()
+    }, API.tokenHeaders())
 
-  }
-
-  generateTransactionToConfirmGreenvest(projectID: number) {
-    return this.http.get(API.generateComplexRoute(this.privateEndpoint, [
-      projectID.toString(), "invest", "confirm"
-    ]), API.tokenHeaders())
   }
 }
+

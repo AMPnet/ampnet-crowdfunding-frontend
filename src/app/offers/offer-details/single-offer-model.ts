@@ -1,6 +1,6 @@
 interface SingleOfferModel {
 
-    id: number,
+    uuid: string,
     name: string,
     description: string,
     location: string,

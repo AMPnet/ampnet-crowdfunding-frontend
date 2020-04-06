@@ -61,15 +61,15 @@ export class HereMapComponent implements OnInit {
     map.setCenter({ lat: parseFloat(this.lat), lng: parseFloat(this.lng) });
     map.setZoom(3);
 
-    var icon = new H.map.Icon(svgMarkup);
-
-    this.setCurrentMarker(icon, map)
-
     let shouldEdit = (this.isForEditing == "true")
 
-    if (shouldEdit) {
+    if(!shouldEdit) {
+      var icon = new H.map.Icon(svgMarkup);
       this.setCurrentMarker(icon, map)
-      map.addEventListener('tap', function (evt) {
+    }
+
+    if (shouldEdit) {
+        map.addEventListener('tap', function (evt) {
         var coord = map.screenToGeo(evt.currentPointer.viewportX, evt.currentPointer.viewportY);
         var coords = { lat: coord.lat, lng: coord.lng };
         if (this.currentMarker != undefined) {
@@ -77,6 +77,8 @@ export class HereMapComponent implements OnInit {
         }
         this.currentMarker = new H.map.Marker(coords, { icon: icon });
         map.addObject(this.currentMarker);
+        this.lat = String(coords.lat)
+        this.lng = String(coords.lng)
       });
     } 
   }

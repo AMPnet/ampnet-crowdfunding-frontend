@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { InvestItemModel } from './single-invest-item/InvestItemModel';
 import * as _ from 'lodash';
 import { PortfolioService } from './portfolio.service';
-import { displayBackendError } from '../utilities/error-handler';
+import { displayBackendError, hideSpinnerAndDisplayError } from '../utilities/error-handler';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
-
+import { PortfolioRoot, PortfolioStats } from './portfolio.models'
+import { WalletService } from '../wallet/wallet.service';
 
 
 @Component({
@@ -14,30 +15,50 @@ import { SpinnerUtil } from '../utilities/spinner-utilities';
 })
 export class MyPortfolioComponent implements OnInit {
 
-  constructor(private portfolioService: PortfolioService) { }
+  constructor(private portfolioService: PortfolioService,
+    private walletService: WalletService) { }
 
-  investments: InvestItemModel[];
+    
+  hasWallet = false;
+  portfolio: PortfolioRoot[];
+  stats: PortfolioStats;
+  roi: number = 0;
 
   ngOnInit() {
-    this.investments = _.fill(Array(5), {
-      title: 'ABC',
-      offeredBy: 'Greenpeace',
-      country: 'Greece',
-      amountInvested: 3400,
-      headerImage: 'https://assets.rbl.ms/6470364/980x.jpg'
-    });
+    
     this.getTransactions()
   }
 
   getTransactions() {
     SpinnerUtil.showSpinner()
-    this.portfolioService.getInvestments().subscribe(res => {
-      console.log(res)
-      SpinnerUtil.hideSpinner()
+
+    this.walletService.getWallet().subscribe((res: any) => {
+
+      if(res.hash != undefined) { // Check if wallet was activated by admin
+
+        this.portfolioService.getPortfolioStats().subscribe((res: any) => {
+          this.hasWallet = true;
+          this.stats = res;
+          if(this.stats.investments > 0) {
+            this.roi = ((this.stats.earnings + this.stats.investments) / (this.stats.investments) - 1) * 100
+          }
+          SpinnerUtil.showSpinner()
+          this.portfolioService.getPortfolio().subscribe((res: any) => {
+            this.portfolio = res.portfolio;
+            SpinnerUtil.hideSpinner()
+          }, hideSpinnerAndDisplayError)
+        }, hideSpinnerAndDisplayError)
+
+      } else {
+        SpinnerUtil.hideSpinner()
+      }
+
     }, err => {
-      displayBackendError(err)
       SpinnerUtil.hideSpinner()
     })
+    
+
+    
   }
 
 }

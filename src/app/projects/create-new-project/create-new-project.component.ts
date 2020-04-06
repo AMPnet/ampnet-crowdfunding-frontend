@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { displayBackendError } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { autonumericCurrency, stripCurrencyData } from 'src/app/utilities/currency-util';
+import { HereMapComponent } from 'src/app/here-map/here-map.component';
 
 declare var $: any;
 
@@ -17,6 +18,7 @@ declare var $: any;
 })
 export class CreateNewProjectComponent implements OnInit, AfterViewInit {
 
+  @ViewChild(HereMapComponent) hereMap: HereMapComponent;
 
   createProjectForm: FormGroup;
 
@@ -25,7 +27,6 @@ export class CreateNewProjectComponent implements OnInit, AfterViewInit {
     this.createProjectForm = this.fb.group({
       'name': [' ', Validators.required],
       'description': [' ', Validators.required],
-      'location': [' ', Validators.required],
       'colloqual': [' ', Validators.required],
       'startDate': [' ', Validators.required],
       'endDate': [' ', Validators.required],
@@ -50,15 +51,15 @@ export class CreateNewProjectComponent implements OnInit, AfterViewInit {
       orgID,
       formValue.name,
       formValue.description,
-      "abc",
+      this.hereMap.lat + "" + this.hereMap.lng,
       formValue.colloqual,
       "10",
       formValue.startDate,
       formValue.endDate,
-      parseInt(stripCurrencyData(formValue.expectedFunding)),
+      formValue.expectedFunding,
       "EUR",
-      parseInt(stripCurrencyData(formValue.minPerUser)),
-      parseInt(stripCurrencyData(formValue.maxPerUser)),
+      formValue.minPerUser,
+      formValue.maxPerUser,
       false
     ).subscribe((res: any) => {
       SpinnerUtil.hideSpinner();
@@ -100,12 +101,6 @@ export class CreateNewProjectComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    
-    setTimeout(() => {
-
-
-      
-    }, 200)
     
   }
 

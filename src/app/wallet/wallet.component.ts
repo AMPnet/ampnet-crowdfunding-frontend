@@ -19,7 +19,7 @@ declare var $:any;
   templateUrl: './wallet.component.html',
   styleUrls: ['./wallet.component.css']
 })
-export class WalletComponent implements OnInit, AfterViewInit {
+export class WalletComponent implements OnInit {
 
   constructor(private walletService: WalletService) { }
 
@@ -30,11 +30,6 @@ export class WalletComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.getUserWallet();
-  }
-
-  ngAfterViewInit() {
-    
-
   }
 
   setUpArkane() {
@@ -61,12 +56,12 @@ export class WalletComponent implements OnInit, AfterViewInit {
   getUserWallet() {
     SpinnerUtil.showSpinner();
     this.walletService.getWallet().subscribe(res => {
-      SpinnerUtil.hideSpinner();
       this.wallet = res;
       this.wallet.currency = prettyCurrency(res.currency);
       this.wallet.balance = numeral(res.balance).format('0,0');
       this.wallet.activated_at = res.activated_at;
       this.checkComplete = true;
+      SpinnerUtil.hideSpinner();
     }, err => {
       SpinnerUtil.hideSpinner();
       this.checkComplete = true;

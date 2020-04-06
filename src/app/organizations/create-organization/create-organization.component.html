@@ -1,13 +1,27 @@
-<div class="container root-content-container">
+<div class="root-content-container">
   <form [formGroup]="newOrganizationForm">
-    <h5 class="text-uppercase gray-text"><b>Create a new group</b></h5>
-    <input formControlName="name" class="form-control mt-3 p-4 w-100" type="text" placeholder="Group name">
-    <input id="invite-users-email" class="form-control mr-3 p-4 w-100 mt-3" type="text"
-      placeholder="Invite users by mail (comma separated). e.g. (john@email.com, mark@email.com)">
-    <button type="submit" class="btn btn-primary float-right mt-3 pt-3 pb-3 pl-5 pr-5 text-uppercase"
-      (click)="submitButtonClicked()">
-      <i class="mr-3 fas fa-plus"></i>
-      Create
-    </button>
+    <div class="row">
+
+      <h5 class="explainer-mini text-uppercase gray-text col-md-12"><b>Create a new group</b></h5>
+
+      <div class="col-md-12">
+        <input formControlName="name" class="form-control mt-3 p-4 w-100" type="text" placeholder="Group name">
+      </div>
+
+      <div class="col-md-12">
+        <input id="invite-users-email" class="form-control p-4 w-100 mt-3" type="text"
+        placeholder="Invite users by mail (comma separated). e.g. (john@email.com, mark@email.com)">
+      </div>
+      <div class="col-md-8"></div>
+
+      <div class="col-md-4">
+        <button type="submit" class="btn btn-primary w-100 float-right mt-3 py-3 px-5"
+        (click)="submitButtonClicked()">
+        <i class="mr-3 fas fa-plus"></i>
+        Create
+      </button>
+      </div>
+     
+    </div>
   </form>
 </div>

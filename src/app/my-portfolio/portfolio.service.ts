@@ -11,8 +11,18 @@ export class PortfolioService {
 
     constructor(private http: HttpClient) { }
 
-    getInvestments() {
-        return this.http.get(API.generateRoute(this.endpoint), API.tokenHeaders())
+    getPortfolioStats() {
+      return this.http.get(API.generateComplexRoute(this.endpoint, ["stats"]), API.tokenHeaders())
+    }
+
+    getPortfolio() {
+      return this.http.get(API.generateRoute(this.endpoint), API.tokenHeaders())
+    }
+
+    getInvestmentsInProject(projectID: string) {
+      return this.http.get(API.generateComplexRoute(this.endpoint, [
+        "project", projectID
+      ]), API.tokenHeaders())
     }
 
 }

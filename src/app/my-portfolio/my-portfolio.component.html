@@ -1,4 +1,4 @@
-<div class="root-content-container">
+<div *ngIf="hasWallet" class="root-content-container">
 	<div class="container wow fadeIn">
 		<div class="card">
 			<div class="card-body">
@@ -12,19 +12,19 @@
 								<i class="explainer-mini mr-2 fas fa-chart-pie"></i>
 								<span class="explainer-mini">Investments</span>
 							</p>
-							<h6 class="mt-3 gray-text">$12,345</h6>
+							<h6 class="mt-3 gray-text">{{stats.investments}} EUR</h6>
 						</div>
 						<div class="col-md-4 col-sm-6 mt-3">
 							<p class="mb-2">
 								<i class="explainer-mini mr-2 fas fa-money-bill-alt"></i>
 								<span class="explainer-mini">Earnings</span></p>
-							<h6 class="mt-3 gray-text">$12,345</h6>
+							<h6 class="mt-3 gray-text">{{stats.earnings}} EUR</h6>
 						</div>
 						<div class="col-md-4 mt-3">
 							<p class="mb-2">
 								<i class="mr-2 explainer-mini fas fa-percentage"></i>
-								<span class="explainer-mini">Average ROI</span></p>
-							<h6 class="mt-3 gray-text">$12,345</h6>
+								<span class="explainer-mini">Return on investment</span></p>
+							<h6 class="mt-3 gray-text">{{roi}}%</h6>
 						</div>
 					</div>
 				</div>
@@ -45,11 +45,26 @@
 	<div class="container mt-3">
 		<div class="row">
 			<div class="col-md-12">
-				<div class="font-weight-bold gray-text mb-2 explainer-mini">MY INVESTMENTS</div>
+				<div class="font-weight-bold gray-text mb-2 explainer-mini">
+					MY INVESTMENTS
+				</div>
+				<div *ngIf="portfolio.length == 0">
+					<div class="w-100 text-center mt-5">
+						You don't have any active investments
+					</div>
+				</div>
 			</div>
-			<div class="col-md-12 mt-3" *ngFor="let investment of investments">
-				<app-single-invest-item [investment]=investment></app-single-invest-item>
+			<div class="col-md-6 mt-3" *ngFor="let item of portfolio">
+				<app-single-invest-item [investment]=item></app-single-invest-item>
 			</div>
 		</div>
+	</div>
+</div>
+
+<div *ngIf="!hasWallet" class="root-content-container">
+	<div class="conatiner wow fadeIn mt-5">
+		<h6 class=" text-center w-100">
+			Your portfolio will be available after you've invested into a project.
+		</h6>
 	</div>
 </div>

@@ -76,7 +76,7 @@ const routes: Routes = [
       { path: 'offers/:id', component: OfferDetailsComponent },
       { path: 'offers/:id/invest', component: InvestComponent },
       { path: 'my_portfolio', component: MyPortfolioComponent },
-      { path: 'my_portfolio/investment_details', component: InvestmentDetailsComponent },
+      { path: 'my_portfolio/:id', component: InvestmentDetailsComponent },
       { path: 'payment_options', component: PaymentOptionsComponent },
       { path: 'my_portfolio/investment_details/new_proposal', component: NewProposalComponent },
       { path: 'finish_new_proposal', component: FinishNewProposalComponent },
@@ -102,11 +102,7 @@ const routes: Routes = [
       { path: 'manage_deposits/:ID', component: ManageSingleDepositComponent },
       { path: 'wallet/deposit', component: DepositComponent },
       { path: 'wallet/withdraw', component: WithdrawComponent }, 
-      { path: 'activation', component: WalletActivationComponent },
-      { path: 'activation/users', component: UserActivationComponent },
-      { path: 'activation/groups', component: GroupActivationComponent },
-      { path: 'activation/projects', component: ProjectActivationComponent },
-      { path: 'activation/:type/:id', component: ActivateSignComponent },
+      { path: 'activation/:type', component: WalletActivationComponent },
       { path: 'complete_onboarding', component: CompleteOnboardingComponent }
     ]
   }

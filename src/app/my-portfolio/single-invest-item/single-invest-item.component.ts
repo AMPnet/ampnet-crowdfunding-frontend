@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { InvestItemModel } from './InvestItemModel';
 import { Router } from '@angular/router';
+import { PortfolioRoot } from '../portfolio.models';
 
 @Component({
   selector: 'app-single-invest-item',
@@ -9,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class SingleInvestItemComponent implements OnInit {
 
-  @Input() investment: InvestItemModel;
+  @Input() investment: PortfolioRoot;
 
   constructor(private router: Router) { }
 
@@ -17,7 +18,7 @@ export class SingleInvestItemComponent implements OnInit {
   }
 
   onClickedItem() {
-    this.router.navigate(['dash', 'my_portfolio', 'investment_details']);
+    this.router.navigate(['dash', 'my_portfolio', this.investment.project.uuid]);
   }
 
 }

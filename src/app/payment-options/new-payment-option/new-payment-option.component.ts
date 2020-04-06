@@ -40,7 +40,7 @@ export class NewPaymentOptionComponent implements OnInit {
   }
 
   addNewBankAccountClicked() {
-    let iban: string = (<string>$("#iban-holder").val())
+    let iban: string = (<string>$("#iban-holder").val()).replace(/ /g, '')
     var bankCode: string = (<string>$("#bankcode-holder").val())
     if(bankCode.length == 0) {
       bankCode = "N/A"

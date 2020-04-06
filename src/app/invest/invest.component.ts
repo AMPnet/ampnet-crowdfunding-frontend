@@ -42,7 +42,7 @@ export class InvestComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
-    this.expectedROI = 7.5;
+    this.expectedROI = 10.5;
     this.getWalletBalance();
     this.getProject();
 
@@ -143,7 +143,7 @@ export class InvestComponent implements OnInit {
   }
 
   calculateTotalLifetimeReturn(investment): number {
-    return this.calculateYearlyReturn(investment) * 20;
+    return this.calculateYearlyReturn(investment) * 25;
   } 
 
 }

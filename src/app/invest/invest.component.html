@@ -37,10 +37,10 @@
 		<div class="col-md-12 pt-3 pb-3">
 			<span class="explainer-mini text-uppercase">I want to invest</span>
 				
-				<input style="font-size: 30px"
+				<input style="font-size: 20px; padding: 25px!important"
 					id="amount-input"
 					[(ngModel)]="inputValue" (keyup)="inputChanged($event)" 
-					class="form-control px-3 py-4 h3 mt-3 invest-amount-input" placeholder="€0.00">
+					class="form-control h3 mt-3 invest-amount-input" placeholder="€0.00">
 
 				<div class="alert alert-danger mt-3" *ngIf="investmentOutOfBoundsWarningMessage.length > 0" 
 					[innerHTML]="investmentOutOfBoundsWarningMessage">
@@ -58,19 +58,19 @@
 							<div class="row justify-content-between">
 								<div class="col-md-4">
 									<i class="mr-2 fas fa-chart-line explainer-mini"></i>
-									<span class="explainer-mini main-text">YEARLY RETURN</span>
+									<span class="explainer-mini main-text">Expected yearly return</span>
 									<div class="h3 mt-2 main-text">{{wallet.currency}} {{yearlyReturn}}</div>
 								</div>
 								<div class="col-md-4 text-center">
 									<i class="mr-2 fas fa-chart-pie explainer-mini"></i>
-									<span class="explainer-mini main-text">PROJECT STAKE</span>
+									<span class="explainer-mini main-text">Project stake</span>
 									<div class="h3 mt-2 main-text">{{projectStake}}</div>
 								</div>
 								<div class="col-md-4">
 									<div class="float-right">
 											<i class="mr-2 fas fa-calendar explainer-mini"></i>
-											<span class="explainer-mini main-text">TOTAL LIFETIME RETURN</span>
-											<div class="h3 mt-2 main-text">{{breakevenPeriod}}</div>
+											<span class="explainer-mini main-text">Expected lifetime return</span>
+											<div class="h3 mt-2 main-text">{{wallet.currency}}{{breakevenPeriod}}</div>
 									</div>
 									
 								</div>

@@ -24,23 +24,10 @@ export class SecureLayoutComponent implements OnInit {
   hasWalletActive = false;
 
   constructor(private userService: UserService, 
-    private walletService: WalletService, 
-    private router: Router,
-    private paymentService: PaymentService) { }
+    private router: Router) { }
 
   ngOnInit() {
    
-    this.userService.getOwnProfile().subscribe((res: UserModel) => {
-      UserStatusStorage.personalData = res;
-    }, displayBackendError)
-
-    this.walletService.getWallet().subscribe((res: WalletModel) => {
-      UserStatusStorage.walletData = res
-    }, displayBackendError)
-
-    this.paymentService.getMyBankAccounts().subscribe((res: PaymentModels) => {
-      UserStatusStorage.bankData = res
-    }, displayBackendError)
     
     this.router.events.subscribe(() => {
       this.userIsVerified = UserStatusStorage.personalData.verified;

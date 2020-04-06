@@ -61,6 +61,7 @@ export class ManageSingleDepositComponent implements OnInit {
       })
     
       let account = await arkaneConnect.flows.getAccount(SecretType.AETERNITY)
+
       let sigRes = await arkaneConnect.createSigner(WindowMode.POPUP).sign({
         walletId: account.wallets[0].id,
         data: res.tx,

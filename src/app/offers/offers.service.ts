@@ -7,7 +7,7 @@ import { API } from '../utilities/endpoint-manager';
 })
 export class OffersService {
 
-  projectEndpoint = "/wallet/public/project";
+  projectEndpoint = "/public/project";
   investEndpoint = "/wallet/invest/project"
   projectPublicEnd = "/public/project"
 

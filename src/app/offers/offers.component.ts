@@ -49,20 +49,23 @@ export class OffersComponent implements OnInit {
       console.log(projects)
       this.components = projects.map((proj) => {
         return {
-          title: proj.project.name,
-          description: proj.project.description,
-          offeredBy: proj.project.name,
-          fundingRequired: proj.project.expected_funding,
+          title: proj.name,
+          description: proj.description,
+          offeredBy: proj.name,
+          fundingRequired: proj.expected_funding,
           currentFunding: 0,
-          headerImageUrl: proj.project.image_url,
+          headerImageUrl: proj.main_image,
           status: "Active",
-          endDate: moment(proj.project.end_date).format("MMM Do, YYYY"),
-          offerID: proj.project.uuid,
-          owner: proj.project.return_on_investment,
-          currency: proj.wallet.currency
+          endDate: moment(proj.end_date).format("MMM Do, YYYY"),
+          offerID: proj.uuid,
+          owner: proj.return_on_investment,
+          currency: ""
         }
       });
-      this.getProjectBalances(0)
+      if(projects.length > 0) {
+        this.getProjectBalances(0)
+
+      }
       SpinnerUtil.hideSpinner();
     }, err => {
       console.log(err);
@@ -76,6 +79,7 @@ export class OffersComponent implements OnInit {
     let component = this.components[index]
     this.projectService.getProjectWallet(component.offerID).subscribe((res: any) =>{
       this.components[index].currentFunding = res.balance
+      this.components[index].currency = res.currency
       this.getProjectBalances(index + 1)
     }, err => {
       displayBackendError(err)

@@ -1,4 +1,4 @@
-<div class="root-content-container">
+<div *ngIf="hasWallet" class="root-content-container">
 	<div class="container wow fadeIn">
 		<div class="card">
 			<div class="card-body">
@@ -45,11 +45,26 @@
 	<div class="container mt-3">
 		<div class="row">
 			<div class="col-md-12">
-				<div class="font-weight-bold gray-text mb-2 explainer-mini">MY INVESTMENTS</div>
+				<div class="font-weight-bold gray-text mb-2 explainer-mini">
+					MY INVESTMENTS
+				</div>
+				<div *ngIf="portfolio.length == 0">
+					<div class="w-100 text-center mt-5">
+						You don't have any active investments
+					</div>
+				</div>
 			</div>
 			<div class="col-md-6 mt-3" *ngFor="let item of portfolio">
 				<app-single-invest-item [investment]=item></app-single-invest-item>
 			</div>
 		</div>
+	</div>
+</div>
+
+<div *ngIf="!hasWallet" class="root-content-container">
+	<div class="conatiner wow fadeIn mt-5">
+		<h6 class=" text-center w-100">
+			Your portfolio will be available after you've invested into a project.
+		</h6>
 	</div>
 </div>

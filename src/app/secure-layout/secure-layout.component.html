@@ -4,11 +4,6 @@
  </div>
  <app-navbar></app-navbar>
  <div id="main-container">
-  <div *ngIf="(!userIsVerified) || (!hasWalletActive)">
-    <div class="alert alert-warning">
-      Please finish your onboarding by verifying your personal data and initialising a wallet <a routerLink="/dash/complete_onboarding">here</a>
-    </div>
-  </div>
 
   <router-outlet></router-outlet>
   <div class="align-bottom mt-auto">

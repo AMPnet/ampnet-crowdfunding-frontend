@@ -77,6 +77,8 @@ export class HereMapComponent implements OnInit {
         }
         this.currentMarker = new H.map.Marker(coords, { icon: icon });
         map.addObject(this.currentMarker);
+        this.lat = String(coords.lat)
+        this.lng = String(coords.lng)
       });
     } 
   }

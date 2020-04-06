@@ -34,6 +34,18 @@ body {
 	border-radius: 5px; */
 }
 
+.alert {
+	border-radius: 50px!important;
+	text-align: center;
+}
+
+.alert-info {
+	background: #fff6e8!important;
+	border-color: #DEA546!important;
+	color: #5f4720!important;
+
+}
+
 .btn-primary {
 	background: #DEA546!important;
 	box-shadow: 0px 3px 15px rgba(0,0,0,0.1);
@@ -49,7 +61,7 @@ body {
 }
 
 .btn {
-	border-radius: 2px!important;
+	border-radius: 50px!important;
 }
 
 
@@ -135,7 +147,7 @@ body {
 }
 
 .active {
-	background: #47a577!important;
+	background: #79551f!important;
 	color: #fff!important;
 }
 
@@ -226,7 +238,8 @@ input[type="number"] {
 
 .form-control {
 	border: none!important;
-    box-shadow: 0px 0px 6px 0px #00000025!important;
+	border-radius: 50px!important;
+	box-shadow: 0px 0px 6px 0px #00000025!important;
 }
 
 .note-editor {

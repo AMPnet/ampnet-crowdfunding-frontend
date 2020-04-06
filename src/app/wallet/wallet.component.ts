@@ -19,7 +19,7 @@ declare var $:any;
   templateUrl: './wallet.component.html',
   styleUrls: ['./wallet.component.css']
 })
-export class WalletComponent implements OnInit, AfterViewInit {
+export class WalletComponent implements OnInit {
 
   constructor(private walletService: WalletService) { }
 
@@ -30,11 +30,6 @@ export class WalletComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.getUserWallet();
-  }
-
-  ngAfterViewInit() {
-    
-
   }
 
   setUpArkane() {

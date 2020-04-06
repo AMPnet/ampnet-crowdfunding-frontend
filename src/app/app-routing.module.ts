@@ -102,11 +102,7 @@ const routes: Routes = [
       { path: 'manage_deposits/:ID', component: ManageSingleDepositComponent },
       { path: 'wallet/deposit', component: DepositComponent },
       { path: 'wallet/withdraw', component: WithdrawComponent }, 
-      { path: 'activation', component: WalletActivationComponent },
-      { path: 'activation/users', component: UserActivationComponent },
-      { path: 'activation/groups', component: GroupActivationComponent },
-      { path: 'activation/projects', component: ProjectActivationComponent },
-      { path: 'activation/:type/:id', component: ActivateSignComponent },
+      { path: 'activation/:type', component: WalletActivationComponent },
       { path: 'complete_onboarding', component: CompleteOnboardingComponent }
     ]
   }

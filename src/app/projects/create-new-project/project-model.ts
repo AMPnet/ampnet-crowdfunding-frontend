@@ -13,7 +13,7 @@ export interface ProjectModel {
     min_per_user: number,
     max_per_user: number,
     main_image: string,
-    news: [string],
+    news: string[],
     documents: [string],
     gallery: [string],
     active: boolean,

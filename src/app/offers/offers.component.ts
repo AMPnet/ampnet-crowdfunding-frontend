@@ -10,6 +10,7 @@ import * as numeral from 'numeral';
 import { ProjectService } from '../projects/project-service';
 import { WalletModel } from '../models/WalletModel';
 import { ActivatedRoute } from '@angular/router';
+import { centsToBaseCurrencyUnit } from '../utilities/currency-util';
 
 @Component({
   selector: 'app-offers',
@@ -52,7 +53,7 @@ export class OffersComponent implements OnInit {
           title: proj.name,
           description: proj.description,
           offeredBy: proj.name,
-          fundingRequired: proj.expected_funding,
+          fundingRequired: centsToBaseCurrencyUnit(proj.expected_funding),
           currentFunding: 0,
           headerImageUrl: proj.main_image,
           status: "Active",
@@ -78,7 +79,7 @@ export class OffersComponent implements OnInit {
     if(index >= this.components.length) { return }
     let component = this.components[index]
     this.projectService.getProjectWallet(component.offerID).subscribe((res: any) =>{
-      this.components[index].currentFunding = res.balance
+      this.components[index].currentFunding = centsToBaseCurrencyUnit(res.balance)
       this.components[index].currency = res.currency
       this.getProjectBalances(index + 1)
     }, err => {

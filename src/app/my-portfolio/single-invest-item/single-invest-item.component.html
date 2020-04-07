@@ -1,4 +1,5 @@
-<div (click)="onClickedItem()" class="card cursor-pointer color-hover">
+<div (click)="onClickedItem()" class="card cursor-pointer color-hover" 
+  [style.background]="getImageAsURL()">
   <div class="card-body">
     <div class="card-title text-uppercase">
       <div>

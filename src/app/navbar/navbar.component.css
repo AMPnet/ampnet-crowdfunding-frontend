@@ -1,7 +1,7 @@
 .navbar {
 	height: 50px;
-	color: #fff;
-	background: #DEA546;
+	color: #DEA546;
+	background: #fff;
 	box-shadow: 5px 3px 6px rgba(0,0,0,0.1);
 	z-index: 10!important;
 }

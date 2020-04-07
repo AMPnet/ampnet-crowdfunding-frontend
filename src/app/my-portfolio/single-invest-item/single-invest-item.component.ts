@@ -21,4 +21,8 @@ export class SingleInvestItemComponent implements OnInit {
     this.router.navigate(['dash', 'my_portfolio', this.investment.project.uuid]);
   }
 
+  getImageAsURL() {
+    return "url(" + this.investment.project.main_image + ")"
+  }
+
 }

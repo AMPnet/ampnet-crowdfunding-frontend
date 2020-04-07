@@ -108,7 +108,7 @@ export class ManageSingleProjectComponent implements OnInit {
     SpinnerUtil.showSpinner();
     let linkHolder = $("#newsLink").val();
     if(validURL(linkHolder)) {
-      this.manageProjectsService.addNewsToProject(this.project.uuid, linkHolder).subscribe(res => {
+      this.manageProjectsService.addNewsToProject(this.project, linkHolder).subscribe(res => {
         this.getProject(() => { });
       }, err => {
         displayBackendError(err);

@@ -12,7 +12,7 @@ import { prettyDate } from 'src/app/utilities/date-format-util';
 import swal from 'sweetalert2';
 import { NewsPreviewService } from 'src/app/news-preview/news-preview.service';
 import * as numeral from 'numeral';
-import { prettyCurrency } from 'src/app/utilities/currency-util';
+import { prettyCurrency, centsToBaseCurrencyUnit } from 'src/app/utilities/currency-util';
 import { Meta } from '@angular/platform-browser';
 
 @Component({
@@ -77,12 +77,12 @@ export class OfferDetailsComponent implements OnInit {
     this.offerModel = res;
     this.offerModel.start_date = prettyDate(res.start_date);
     this.offerModel.end_date = prettyDate(res.end_date);
-    this.offerModel.expected_funding = numeral(res.expected_funding).format("0,0");
+    this.offerModel.expected_funding = numeral(centsToBaseCurrencyUnit(res.expected_funding)).format("0,0");
     this.offerModel.currency = prettyCurrency(res.currency);
     this.offerModel.investor_count = numeral(1270).format("0,0");
     this.offerModel.current_funding = numeral(res.current_funding).format('0,0');
-    this.offerModel.min_per_user = numeral(res.min_per_user).format('0,0');
-    this.offerModel.max_per_user = numeral(res.max_per_user).format('0,0');
+    this.offerModel.min_per_user = numeral(centsToBaseCurrencyUnit(res.min_per_user)).format('0,0');
+    this.offerModel.max_per_user = numeral(centsToBaseCurrencyUnit(res.max_per_user)).format('0,0');
   }
 
   setMetaTags() {

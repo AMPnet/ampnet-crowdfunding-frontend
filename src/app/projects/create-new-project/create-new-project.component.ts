@@ -56,10 +56,10 @@ export class CreateNewProjectComponent implements OnInit, AfterViewInit {
       "10",
       formValue.startDate,
       formValue.endDate,
-      formValue.expectedFunding,
+      stripCurrencyData(formValue.expectedFunding),
       "EUR",
-      formValue.minPerUser,
-      formValue.maxPerUser,
+      stripCurrencyData(formValue.minPerUser),
+      stripCurrencyData(formValue.maxPerUser),
       false
     ).subscribe((res: any) => {
       SpinnerUtil.hideSpinner();

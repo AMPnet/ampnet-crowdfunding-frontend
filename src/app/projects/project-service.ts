@@ -22,10 +22,10 @@ export class ProjectService {
         returnOnInvestment: string,
         startDate: string,
         endDate: string,
-        expectedFunding: number,
+        expectedFunding: string,
         currency: string,
-        minInvestmentPerUser: number,
-        maxInvestmentPerUser: number,
+        minInvestmentPerUser: string,
+        maxInvestmentPerUser: string,
         active: boolean) {
 
         return this.http.post(API.generateRoute(this.endpoint), {

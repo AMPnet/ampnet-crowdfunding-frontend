@@ -84,7 +84,14 @@
 
     <p class="explainer-mini text-uppercase col-sm-12">Project image</p>
 
-    <div class="col-md-12" id="drag-drop-area-img"></div>
+    <div *ngIf="project != undefined" class="col-md-6">
+      <img *ngIf="project.main_image != null" class=" img-fluid" src="{{project.main_image}}" alt="">
+      <div *ngIf="project.main_image == null" class="w-100 text-center mt-5">
+        Project has no image set
+      </div>
+    </div>
+
+    <div class="col-md-6" id="drag-drop-area-img"></div>
 
     <div class="col-md-12">
       <hr>

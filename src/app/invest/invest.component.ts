@@ -9,7 +9,7 @@ import { WalletModel } from '../models/WalletModel';
 import { ProjectModel } from '../projects/create-new-project/project-model';
 import { ProjectService } from '../projects/project-service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { prettyCurrency, autonumericCurrency, stripCurrencyData } from '../utilities/currency-util';
+import { prettyCurrency, autonumericCurrency, stripCurrencyData, centsToBaseCurrencyUnit } from '../utilities/currency-util';
 import Cleave from 'cleave.js'
 import * as Autonumeric from 'autonumeric'
 
@@ -56,7 +56,7 @@ export class InvestComponent implements OnInit {
       SpinnerUtil.hideSpinner();
       this.wallet = res;
       this.wallet.currency = prettyCurrency(res.currency);
-      this.wallet.balance = numeral(res.balance).format("0,0");
+      this.wallet.balance = numeral(centsToBaseCurrencyUnit(res.balance)).format("0,0");
 
       setTimeout(() => {
         autonumericCurrency("#amount-input")
@@ -74,7 +74,10 @@ export class InvestComponent implements OnInit {
     this.projectService.getProject(id).subscribe((res: any) => {
       res.currency = prettyCurrency(res.currency);
       this.project = res;
-      
+
+      this.project.min_per_user = centsToBaseCurrencyUnit(res.min_per_user)
+      this.project.max_per_user = centsToBaseCurrencyUnit(res.max_per_user)
+
       this.investmentOutOfBoundsWarningMessage 
         = this.INVEST_LOW_MSG + res.currency + this.project.min_per_user + ". "
       SpinnerUtil.hideSpinner();

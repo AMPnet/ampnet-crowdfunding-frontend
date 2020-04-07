@@ -15,6 +15,7 @@ export class SingleInvestItemComponent implements OnInit {
   constructor(private router: Router) { }
 
   ngOnInit() {
+    
   }
 
   onClickedItem() {
@@ -22,7 +23,8 @@ export class SingleInvestItemComponent implements OnInit {
   }
 
   getImageAsURL() {
-    return "url(" + this.investment.project.main_image + ")"
+    console.log(this.investment.project)
+    return "url(" + (<any>this.investment.project).image_url + ")"
   }
 
 }

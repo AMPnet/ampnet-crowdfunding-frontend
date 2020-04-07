@@ -37,17 +37,21 @@
 					<div class="card-text">
 						<div class="row">
 							<div class="col-md-8">
-								<i *ngIf="offerModel.active" class="fas fa-toggle-on"></i>
-								<i *ngIf="!offerModel.active" class="fas fa-toggle-off"></i>
-								<span class="ml-3 explainer-mini gray-text">
-									<span class="explainer-mini" *ngIf="offerModel.active">Open for funding</span>
-									<span class="explainer-mini" *ngIf="!offerModel.active">Closed for funding</span>
+								
+								
+								<span class="explainer-mini gray-text">
+									<span class="" *ngIf="offerModel.active">
+										<i class="fas fa-toggle-on mr-3"></i>
+										Open for funding
+									</span>
+									<span class="explainer-mini" *ngIf="!offerModel.active">
+										<i class="fas fa-toggle-off"></i>
+										Closed for funding
+									</span>
 								</span>
 							</div>
-							<div class="col-md-4 text-right">
-								{{offerModel.investor_count}}
-							</div>
-							<div class="col-md-12 mt-1">
+							
+							<div class="col-md-12 mt-2">
 								<div class="progress">
 									<div class="progress-bar" role="progressbar"
 										[style.width.%]="fundedPercentage"

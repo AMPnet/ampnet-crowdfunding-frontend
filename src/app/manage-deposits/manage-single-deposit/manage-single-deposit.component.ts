@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import * as Uppy from 'uppy'
 import { ActivatedRoute } from '@angular/router';
 import { hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
@@ -12,6 +12,9 @@ import { DepositCooperativeService } from '../deposit.cooperative.service';
 import { ArkaneConnect, SecretType, WindowMode, SignatureRequestType } from '@arkane-network/arkane-connect';
 import { BroadcastService } from 'src/app/broadcast/broadcast-service';
 import swal from 'sweetalert2';
+import { baseCurrencyUnitToCents, autonumericCurrency, stripCurrencyData } from 'src/app/utilities/currency-util';
+import MicroModal from 'micromodal'
+import { FormBuilder } from '@angular/forms';
 
 declare var $: any;
 
@@ -20,13 +23,16 @@ declare var $: any;
   templateUrl: './manage-single-deposit.component.html',
   styleUrls: ['./manage-single-deposit.component.css']
 })
-export class ManageSingleDepositComponent implements OnInit {
+export class ManageSingleDepositComponent implements OnInit, AfterViewInit {
 
   depositModel: DepositCoreModel
 
   constructor(private route: ActivatedRoute,
     private depositCooperativeService: DepositCooperativeService,
-    private broadService: BroadcastService) { }
+    private broadService: BroadcastService,
+    ) {
+
+  }
 
   paymentUppy: Uppy.Core.Uppy;
 
@@ -34,6 +40,10 @@ export class ManageSingleDepositComponent implements OnInit {
 
     this.getDeposit()
 
+  }
+
+  ngAfterViewInit() {
+    
 
   }
 
@@ -83,21 +93,37 @@ export class ManageSingleDepositComponent implements OnInit {
       this.depositModel.deposit.created_at = prettyDate(res.created_at)
       this.depositModel.deposit.amount = numeral(this.depositModel.deposit.amount).format(",")
       if(!this.depositModel.deposit.approved) {
-        setTimeout(() => { this.createUploadArea() }, 300)
+        setTimeout(() => { this.createUploadArea(); MicroModal.init(); }, 300)
       } else {
         this.generateSignerAndSign()
       }
+
+      setTimeout(() => {
+        autonumericCurrency("#deposit-amount")
+        autonumericCurrency("#deposit-confirm-amount")
+  
+      }, 200)
 
       SpinnerUtil.hideSpinner()
     }, hideSpinnerAndDisplayError)
   }
 
   approveButtonClicked() {
-    let depositAmount = $("#deposit-amount").val()
+    let depositAmount = parseInt(stripCurrencyData($("#deposit-amount").val()))
+    let depositConfirmAmount = parseInt(stripCurrencyData($("#deposit-confirm-amount").val()))
+
+    if(depositAmount != depositConfirmAmount) {
+      swal("", "The deposit amounts don't match. Please check the proper deposit amount and try again!", 
+        "error").then(() => {
+          (<any>$("#modal-confirm-deposit")).modal('hide')
+          location.reload()
+        });
+      return
+    }
 
     let depositApprovalURL = this.depositCooperativeService.generateDepositApprovalURL(
       this.depositModel.deposit.id,
-      depositAmount
+      baseCurrencyUnitToCents(depositAmount)
     )
 
     console.log("PAYMENT UPPY: " + this.paymentUppy)

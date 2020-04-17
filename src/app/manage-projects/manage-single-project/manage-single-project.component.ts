@@ -149,8 +149,7 @@ export class ManageSingleProjectComponent implements OnInit {
       this.project.name,
       this.project.description,
       this.project.location,
-      this.project.location_text,
-      this.project.return_on_investment,
+      this.project.roi,
       !this.project.active
     ).subscribe(res => {
       this.getProject(() => {})
@@ -267,8 +266,7 @@ export class ManageSingleProjectComponent implements OnInit {
       updatedProject.name,
       updatedProject.description,
       updatedProject.location,
-      updatedProject.location_text,
-      updatedProject.return_on_investment,
+      updatedProject.roi,
       updatedProject.active
     ).subscribe(res => {
       SpinnerUtil.hideSpinner()

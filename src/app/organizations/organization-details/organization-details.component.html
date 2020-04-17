@@ -36,7 +36,7 @@
         </div>
       </div>
       <div class="col-md-12 mt-3">
-        <div class="explainer-mini text-uppercase mb-3">Invite new members</div>
+        <div class="explainer-mini mb-3">Invite new members</div>
       </div>
       <div class="col-md-8">
         <input id="email-invite-input" value="" class="form-control p-4" type="text" placeholder="Enter user email" name="">
@@ -48,15 +48,15 @@
         </button>
       </div>
       <div class="col-md-12">
-        <hr>
+        <!-- <hr> -->
       </div>
 
-      <div class="col-md-12 mt-3">
+      <div class="col-md-12 mt-4">
         <app-manage-projects [groupID]="organization.uuid" ></app-manage-projects>
-        <hr>
+        <!-- <hr> -->
       </div>
-      <div class="col-md-12">
-        <div class="explainer-mini text-uppercase mb-3">Manage users</div>
+      <div class="col-md-12 mt-4">
+        <div class="explainer-mini mb-3">Manage users</div>
         <ul class="list-group">
           <li *ngFor="let member of orgMembers" class="list-group-item">
             <span class="float-left">{{member.first_name}} {{member.last_name}}</span>

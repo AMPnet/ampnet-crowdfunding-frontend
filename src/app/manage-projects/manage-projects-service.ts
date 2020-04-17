@@ -41,7 +41,7 @@ export class ManageProjectsService {
       "description" : project.description,
       "location" : project.location,
       "location_text": project.location_text,
-      "return_on_investment": project.return_on_investment,
+      "roi": project.roi,
       "active": project.active,
       "tags": null,
       "news": currentNews

@@ -4,7 +4,7 @@ import swal from 'sweetalert2';
 import { WalletModel } from '../models/WalletModel';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { displayBackendError, displayErrorMessage } from '../utilities/error-handler';
-import { prettyCurrency } from '../utilities/currency-util';
+import { prettyCurrency, centsToBaseCurrencyUnit } from '../utilities/currency-util';
 import * as numeral from 'numeral';
 import * as QRCode from 'qrcode';
 import { API } from '../utilities/endpoint-manager';
@@ -58,7 +58,7 @@ export class WalletComponent implements OnInit {
     this.walletService.getWallet().subscribe(res => {
       this.wallet = res;
       this.wallet.currency = prettyCurrency(res.currency);
-      this.wallet.balance = numeral(res.balance).format('0,0');
+      this.wallet.balance = numeral(centsToBaseCurrencyUnit(res.balance)).format('0,0');
       this.wallet.activated_at = res.activated_at;
       this.checkComplete = true;
       SpinnerUtil.hideSpinner();

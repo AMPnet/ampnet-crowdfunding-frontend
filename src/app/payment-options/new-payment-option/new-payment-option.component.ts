@@ -5,6 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { BankCodeModel } from './bank-code-model';
 import 'bootstrap-select'
+import file from '../../../assets/hr-bic.json'
 
 declare var $: any
 
@@ -20,18 +21,17 @@ export class NewPaymentOptionComponent implements OnInit {
 
   hasNoBankAccounts: boolean
   
-  bankCodes: [BankCodeModel]
+  bankCodes: BankCodeModel[]
 
   constructor(private paymentService: PaymentService, 
     private router: Router, 
     private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.checkStatusAndSetText()
-    let file = require("../../../assets/hr-bic.json")
-    this.bankCodes = file.list
+    this.checkStatusAndSetText();
+    this.bankCodes = file.list;
     
-    $(".bank-code-picker").selectpicker()
+    JSON.parse(JSON.stringify($(".bank-code-picker"))).selectpicker()
   }
 
   checkStatusAndSetText() {

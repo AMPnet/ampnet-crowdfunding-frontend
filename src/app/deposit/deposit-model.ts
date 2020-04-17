@@ -6,7 +6,8 @@ export interface DepositCoreModel {
 
 export interface DepositModel {
     id: number,
-    user: DepositUserModel,
+    owner: string,
+    created_by: string,
     reference: string,
     approved: boolean,
     approved_at: string,

@@ -1,3 +1,7 @@
+<div *ngIf="isOverview">
+	<app-header></app-header>
+</div>
+
 <div *ngIf="offerModel != undefined" class="header-image-container col-md-12 ml-0 pl-0 pr-0 wow fadeIn">
 	<img class="header-image w-100" src="{{offerModel.main_image}}">
 </div>
@@ -13,7 +17,7 @@
 		</div>
 
 		<div class="col-md-8">
-			<h3 class="title text-uppercase gray-text">
+			<h3 class="title gray-text">
 				<b>{{offerModel.name}}</b>
 			</h3>
 		</div>
@@ -23,7 +27,7 @@
 				<i class="mr-3 fas fa-chart-pie"></i>
 				<span>Invest</span>
 			</button>
-			<button *ngIf="isOverview" routerLink="/onboarding" id="invest-button"
+			<button *ngIf="isOverview" routerLink="/sign_up" id="invest-button"
 				class="btn btn-primary w-100 btn-action-a float-right text-white">
 				<i class="mr-3 fas fa-chart-pie"></i>
 				<span>Sign Up & Invest</span>

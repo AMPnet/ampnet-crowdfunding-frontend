@@ -72,7 +72,8 @@ import { UserActivationComponent } from './wallet-activation/user-activation/use
 import { GroupActivationComponent } from './wallet-activation/group-activation/group-activation.component';
 import { ProjectActivationComponent } from './wallet-activation/project-activation/project-activation.component';
 import { ActivateSignComponent } from './wallet-activation/activate-sign/activate-sign.component';
-import { CompleteOnboardingComponent } from './complete-onboarding/complete-onboarding.component'
+import { CompleteOnboardingComponent } from './complete-onboarding/complete-onboarding.component';
+import { SummaryComponent } from './summary/summary.component'
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -166,7 +167,8 @@ export function jwtOptionsFactory() {
     GroupActivationComponent,
     ProjectActivationComponent,
     ActivateSignComponent,
-    CompleteOnboardingComponent
+    CompleteOnboardingComponent,
+    SummaryComponent
   ],
   imports: [
     BrowserModule,

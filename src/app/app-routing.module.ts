@@ -46,6 +46,7 @@ import { GroupActivationComponent } from './wallet-activation/group-activation/g
 import { ProjectActivationComponent } from './wallet-activation/project-activation/project-activation.component';
 import { ActivateSignComponent } from './wallet-activation/activate-sign/activate-sign.component';
 import { CompleteOnboardingComponent } from './complete-onboarding/complete-onboarding.component';
+import { SummaryComponent } from './summary/summary.component';
 
 // Defines public routes accessible to everyone
 // (landing page, login, register, contact help, etc...)
@@ -62,7 +63,8 @@ const routes: Routes = [
       { path: 'overview/:isOverview', component: OffersComponent },
       { path: 'overview/:id/:isOverview', component: OfferDetailsComponent },
       { path: 'fill_data', component: FillDataComponent },
-      { path: 'onboarding', component: OnboardingComponent }
+      { path: 'onboarding', component: OnboardingComponent },
+      { path: 'summary', component: SummaryComponent }
     ]
   },
   {
@@ -101,7 +103,7 @@ const routes: Routes = [
       { path: 'manage_deposits', component: ManageDepositsComponent },
       { path: 'manage_deposits/:ID', component: ManageSingleDepositComponent },
       { path: 'wallet/deposit', component: DepositComponent },
-      { path: 'wallet/withdraw', component: WithdrawComponent }, 
+      { path: 'wallet/withdraw', component: WithdrawComponent },
       { path: 'activation/:type', component: WalletActivationComponent },
       { path: 'complete_onboarding', component: CompleteOnboardingComponent }
     ]

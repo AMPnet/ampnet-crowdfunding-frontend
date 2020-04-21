@@ -5,7 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { BankCodeModel } from './bank-code-model';
 import 'bootstrap-select'
-import file from '../../../assets/hr-bic.json'
+
 
 declare var $: any
 
@@ -14,7 +14,7 @@ declare var $: any
   templateUrl: './new-payment-option.component.html',
   styleUrls: ['./new-payment-option.component.css']
 })
-export class NewPaymentOptionComponent implements OnInit {
+export class NewPaymentOptionComponent implements OnInit, AfterViewInit {
 
   creditCardNavTab: JQuery;
   bankAccountNavTab: JQuery;
@@ -29,9 +29,16 @@ export class NewPaymentOptionComponent implements OnInit {
 
   ngOnInit() {
     this.checkStatusAndSetText();
+
+    let file = require("../../../assets/hr-bic.json")
+    
     this.bankCodes = file.list;
     
-    JSON.parse(JSON.stringify($(".bank-code-picker"))).selectpicker()
+  }
+
+  ngAfterViewInit() {
+    $("select").selectpicker()
+
   }
 
   checkStatusAndSetText() {

@@ -6,6 +6,7 @@ import { displayBackendError, hideSpinnerAndDisplayError } from '../utilities/er
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { PortfolioRoot, PortfolioStats } from './portfolio.models'
 import { WalletService } from '../wallet/wallet.service';
+import { centsToBaseCurrencyUnit } from '../utilities/currency-util';
 
 
 @Component({
@@ -39,12 +40,13 @@ export class MyPortfolioComponent implements OnInit {
         this.portfolioService.getPortfolioStats().subscribe((res: any) => {
           this.hasWallet = true;
           this.stats = res;
+          this.stats.investments = centsToBaseCurrencyUnit(this.stats.investments)
           if(this.stats.investments > 0) {
             this.roi = ((this.stats.earnings + this.stats.investments) / (this.stats.investments) - 1) * 100
           }
           SpinnerUtil.showSpinner()
           this.portfolioService.getPortfolio().subscribe((res: any) => {
-            this.portfolio = res.portfolio;
+            this.portfolio = res.portfolio
             SpinnerUtil.hideSpinner()
           }, hideSpinnerAndDisplayError)
         }, hideSpinnerAndDisplayError)

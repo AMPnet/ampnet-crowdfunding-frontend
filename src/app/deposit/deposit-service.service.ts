@@ -17,7 +17,7 @@ export class DepositServiceService {
 
   // not used
   public getMyPendingDeposit() {
-    return this.http.get(API.generateComplexRoute(this.endpoint, []), API.tokenHeaders())
+    return this.http.get(API.generateRoute(this.endpoint), API.tokenHeaders())
   }
 
   // not used
@@ -26,4 +26,5 @@ export class DepositServiceService {
       id.toString()
     ]), API.tokenHeaders())
   }
+
 }

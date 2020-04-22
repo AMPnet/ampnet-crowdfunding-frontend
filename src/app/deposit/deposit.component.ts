@@ -22,17 +22,21 @@ export class DepositComponent implements OnInit {
   constructor(private depositService: DepositServiceService) { }
 
   ngOnInit() {
-    // let cleave = new Cleave('.currency-input', {
-    //   prefix: "€",
-    //   delimiter: ".",
-    //   numeralThousandsGroupStyle: 'thousand'
-    // })
-    $(document).ready(() => {
-      autonumericCurrency("#deposit-amount")
+    SpinnerUtil.showSpinner();
+    this.depositService.getMyPendingDeposit().subscribe((res: DepositModel) => {
+      SpinnerUtil.hideSpinner()
+      this.depositModel = res;
+    }, err => {
+      SpinnerUtil.hideSpinner()
+      if(err.status = 404) {
+        this.generateDepositInfo()
+      } else {
+        displayBackendError(err)
+      }
     })
   }
 
-  depositButtonClicked() {
+  generateDepositInfo() {
     SpinnerUtil.showSpinner()
     this.depositService.createDeposit().subscribe((res: DepositModel) => {
       this.depositModel = res

@@ -17,9 +17,9 @@ export class ProjectService {
     createProject(organizationID: string, 
         name: string,
         description: string,
-        location: string,
+        location: any,
         locationText: string,
-        returnOnInvestment: string,
+        returnOnInvestment: any,
         startDate: string,
         endDate: string,
         expectedFunding: number,
@@ -33,8 +33,7 @@ export class ProjectService {
             "name" : name,
             "description" : description,
             "location" : location,
-            "location_text" : locationText,
-            "return_on_investment": returnOnInvestment,
+            "roi": returnOnInvestment,
             "start_date": startDate,
             "end_date": endDate,
             "expected_funding": expectedFunding,
@@ -66,15 +65,14 @@ export class ProjectService {
     }
 
     updateProject(projectID: string, name: string, description: string,
-        location: string, locationText: string, roi: string, active: boolean) {
+        location: { lat: string, long: string }, roi: { from: number, to: number }, active: boolean) {
         return this.http.put(API.generateComplexRoute(this.endpoint, [  
             projectID.toString()
         ]), { 
             "name": name,
             "description": description,
             "location": location,
-            "location_text": locationText,
-            "return_on_investment": roi,
+            "roi": roi,
             "active": active.toString(),
             "tags": null,
             "news": null

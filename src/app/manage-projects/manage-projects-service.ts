@@ -25,10 +25,27 @@ export class ManageProjectsService {
 
   }
 
-  addNewsToProject(projectID: string, newsLink: string) {
-    return this.http.post(API.generateComplexRoute(this.projectEndpoint, [
-      projectID.toString(), "news"
-    ]), { "link" : newsLink }, API.tokenHeaders())
+  addNewsToProject(project: ProjectModel, newsLink: string) {
+
+    var currentNews = project.news;
+    if(currentNews != undefined) {
+      currentNews.push(newsLink)
+    } else {
+      currentNews = [newsLink]
+    }
+
+    return this.http.put(API.generateComplexRoute(this.projectEndpoint, [
+      project.uuid
+    ]), {
+      "name" : project.name,
+      "description" : project.description,
+      "location" : project.location,
+      "location_text": project.location_text,
+      "roi": project.roi,
+      "active": project.active,
+      "tags": null,
+      "news": currentNews
+    }, API.tokenHeaders())
   }
 
   deleteNewsFromProject(projectID: string, newsLink: string) {

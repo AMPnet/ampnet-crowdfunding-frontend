@@ -1,3 +1,7 @@
+<div *ngIf="isOverview">
+	<app-header></app-header>
+</div>
+
 <div *ngIf="offerModel != undefined" class="header-image-container col-md-12 ml-0 pl-0 pr-0 wow fadeIn">
 	<img class="header-image w-100" src="{{offerModel.main_image}}">
 </div>
@@ -13,26 +17,65 @@
 		</div>
 
 		<div class="col-md-8">
-			<h3 class="title text-uppercase gray-text">
+			<h3 class="title gray-text">
 				<b>{{offerModel.name}}</b>
 			</h3>
 		</div>
-		<div class="col-md-4 invest-button-holder">
+		<div class="col-md-4 mb-3 invest-button-holder">
 			<button *ngIf="!isOverview" [disabled]="!offerModel.active" routerLink="invest" id="invest-button"
 				class="btn btn-primary w-100 btn-action-a float-right text-white">
 				<i class="mr-3 fas fa-chart-pie"></i>
-				<span>INVEST</span>
+				<span>Invest</span>
 			</button>
-			<button *ngIf="isOverview" routerLink="/onboarding" id="invest-button"
+			<button *ngIf="isOverview" routerLink="/sign_up" id="invest-button"
 				class="btn btn-primary w-100 btn-action-a float-right text-white">
 				<i class="mr-3 fas fa-chart-pie"></i>
 				<span>Sign Up & Invest</span>
 			</button>
 		</div>
+
+		<div class="col-md-12">
+			<div class="card h-100">
+				<div class="card-body">
+					<div class="card-title explainer-mini">Status</div>
+					<div class="card-text">
+						<div class="row">
+							<div class="col-md-8">
+								
+								
+								<span class="explainer-mini gray-text">
+									<span class="" *ngIf="offerModel.active">
+										<i class="fas fa-toggle-on mr-3"></i>
+										Open for funding
+									</span>
+									<span class="explainer-mini" *ngIf="!offerModel.active">
+										<i class="fas fa-toggle-off"></i>
+										Closed for funding
+									</span>
+								</span>
+							</div>
+							
+							<div class="col-md-12 mt-2">
+								<div class="progress">
+									<div class="progress-bar" role="progressbar"
+										[style.width.%]="fundedPercentage"
+										></div>
+								</div>
+							</div>
+							<div class="col-md-12 mt-2">
+								<b>{{offerModel.currency}}{{offerModel.current_funding}}</b> of
+								<b>{{offerModel.currency}}{{offerModel.expected_funding}}</b> collected
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
 		<div class="col-md-8 p-3">
 			<div class="card text-justify h-100">
 				<div class="card-body">
-					<div class="card-title explainer-mini">ABOUT</div>
+					<div class="card-title explainer-mini">About</div>
 					<div class=" card-text" [innerHTML]="offerModel.description">
 						
 					</div>
@@ -43,36 +86,28 @@
 		<div class="col-md-4 p-3">
 			<div class="card h-100">
 				<div class="card-body">
-					<div class="card-title explainer-mini">INFO</div>
+					<div class="card-title explainer-mini">Info</div>
 					<div class="card-text">
 						<div class="mb-2 info-holder">
 							<p class="mb-2 font-weight-bold info-head-elem">
 								<i class="mr-2 fas fa-map-marker-alt" height="14" width="14"></i>
-								LOCATION
+								Location
 							</p>
 							{{offerModel.location_text}}
 						</div>
 						<div class="dropdown-divider"></div>
 						<div class="mb-2 info-holder">
 							<p class="mb-2 font-weight-bold info-head-elem">
-								<i class="mr-2 fas fa-align-left"></i>
-								OFFERED BY
-							</p>
-							<!-- {{offerModel.organization.name}} -->
-						</div>
-						<div class="dropdown-divider"></div>
-						<div class="mb-2 info-holder">
-							<p class="mb-2 font-weight-bold info-head-elem">
 								<i class="mr-2 fas fa-chart-line"></i>
-								RETURN ON INVESTMENT
+								Expected yearly return
 							</p>
-							{{offerModel.return_on_investment}}
+							{{offerModel.return_on_investment}}%
 						</div>
 						<div class="dropdown-divider"></div>
 						<div class="mb-3 info-holder">
 							<p class="mb-2 font-weight-bold info-head-elem">
 								<i class="mr-2 fas fa-calendar-alt" height="14" width="14"></i>
-								BEGINS
+								Begins
 							</p>
 							{{offerModel.start_date}}
 						</div>
@@ -80,28 +115,44 @@
 						<div class="mb-3 info-holder">
 							<p class="mb-2 font-weight-bold info-head-elem">
 								<i class="mr-2 fas fa-calendar-alt" height="14" width="14"></i>
-								ENDS
+								Ends
 							</p>
 							{{offerModel.end_date}}
+						</div>
+						<div class="dropdown-divider"></div>
+						<div class="mb-3 info-holder">
+							<p class="mb-2 font-weight-bold info-head-elem">
+								<i class="mr-2 fas fa-arrow-down" height="14" width="14"></i>
+								Min Investment
+							</p>
+							{{offerModel.currency}}{{offerModel.min_per_user}}
+						</div>
+						<div class="dropdown-divider"></div>
+						<div class="mb-3 info-holder">
+							<p class="mb-2 font-weight-bold info-head-elem">
+								<i class="mr-2 fas fa-arrow-up" height="14" width="14"></i>
+								Max Investment
+							</p>
+							{{offerModel.currency}}{{offerModel.max_per_user}}
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 
-		<div class="col-md-6 mb-3">
+		<!-- <div class="col-md-6 mb-3">
 			<div class="card h-100">
 				<div class="card-body">
 					<div class="card-text">
 						<div class="d-flex justify-content-between flex-row">
 							<div class="d-flex flex-column">
-								<div class="explainer-mini text-uppercase">
+								<div class="explainer-mini">
 									Min investment
 								</div>
 								<div class="p">{{offerModel.currency}}{{offerModel.min_per_user}}</div>
 							</div>
 							<div class="d-flex flex-column">
-								<div class="explainer-mini text-uppercase">
+								<div class="explainer-mini">
 									Max investment
 								</div>
 								<div class="p">
@@ -112,9 +163,9 @@
 					</div>
 				</div>
 			</div>
-		</div>
+		</div> -->
 
-		<div class="col-md-6 mb-3">
+		<div class="col-md-12 mb-3">
 			<div class="card h-100">
 				<div class="card-body">
 					<div class="card-title">
@@ -137,52 +188,15 @@
 			</div>
 		</div>
 
-		<div class="col-md-12">
-			<div class="card h-100">
-				<div class="card-body">
-					<div class="card-title explainer-mini">STATUS</div>
-					<div class="card-text">
-						<div class="row">
-							<div class="col-md-8">
-								<i *ngIf="offerModel.active" class="fas fa-toggle-on"></i>
-								<i *ngIf="!offerModel.active" class="fas fa-toggle-off"></i>
-								<span class="ml-3 explainer-mini gray-text text-uppercase">
-									<span class="explainer-mini" *ngIf="offerModel.active">Open for funding</span>
-									<span class="explainer-mini" *ngIf="!offerModel.active">Closed for funding</span>
-								</span>
-							</div>
-							<div class="col-md-4 text-right">
-								{{offerModel.investor_count}}
-							</div>
-							<div class="col-md-12 mt-1">
-								<div class="progress">
-									<div class="progress-bar" role="progressbar"
-										[style.width.%]="fundedPercentage"
-										></div>
-								</div>
-							</div>
-							<div class="col-md-12 mt-2">
-								<b>{{offerModel.currency}}{{offerModel.current_funding}}</b> of
-								<b>{{offerModel.currency}}{{offerModel.expected_funding}}</b> collected
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<div class="col-md-12 mt-3">
-			<hr>
-		</div>
 
 		<div *ngIf="newsPreviews.length > 0" class="col-md-12">
-			<div class="explainer-mini text-uppercase mb-3">News</div>
+			<div class="explainer-mini mb-3">News</div>
 			<ul class="list-group">
 				<a *ngFor="let news of newsPreviews" style="height: 120px; text-decoration: none" href="{{news.url}}"
 					class="list-group-item p-0 mt-2 cursor-pointer gray-text">
 					<div class="w-100 h-100 d-flex flex-row">
 						<div style="width: 120px">
-							<img style="height: 100%; width: 120px; object-fit: cover" src="{{news.image}}" alt="">
+							<img class="news-holder-image" style="" src="{{news.image}}" alt="">
 						</div>
 						<div class="p-3 d-flex flex-column mb-0">
 							<div style="overflow: hidden; text-overflow: ellipsis"
@@ -198,7 +212,7 @@
 		<div class="col-md-6 mt-4">
 			<div class="card h-100">
 				<div class="card-body">
-					<div class="card-title explainer-mini">DOCUMENTS</div>
+					<div class="card-title explainer-mini">Documents</div>
 					<div class="card-text">
 						<div class="row px-2">
 							<div *ngFor="let doc of offerModel.documents" class="w-100">

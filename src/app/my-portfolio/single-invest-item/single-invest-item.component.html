@@ -1,4 +1,5 @@
-<div (click)="onClickedItem()" class="card cursor-pointer color-hover">
+<div (click)="onClickedItem()" class="card cursor-pointer color-hover investment-item-card-holder" 
+  [style.background]="getImageAsURL()">
   <div class="card-body">
     <div class="card-title text-uppercase">
       <div>
@@ -11,20 +12,20 @@
     <div class="card-text">
       <div class="row justify-content-between">
         <div class="col-md-6 mt-3">
-          <div class="explainer-mini">
+          <div class="explainer-mini text-white">
             <i class="fas fa-chart-pie mr-2"></i>
             Amount invested
           </div>
-          <div class="h6 font-weight-bold gray-text mt-2">
+          <div class="h6 font-weight-bold mt-2">
             {{investment.investment}} {{investment.project.currency}}
           </div>
         </div>
         <div class="col-md-6 mt-3">
-          <div class="explainer-mini">
+          <div class="explainer-mini text-white">
             <i class="fas fa-percentage mr-2"></i>
             Expected yearly return
           </div>
-          <div class="h6 font-weight-bold gray-text mt-2">
+          <div class="h6 font-weight-bold mt-2">
             {{investment.project.return_on_investment}} %
           </div>
         </div>

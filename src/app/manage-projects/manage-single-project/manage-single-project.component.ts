@@ -84,7 +84,7 @@ export class ManageSingleProjectComponent implements OnInit {
       swal("", "Verify the project creation with your blockchain wallet. You will be prompted now!","info")
         .then(async () => {
         let arkaneConnect = new ArkaneConnect('AMPnet', {
-          environment: 'staging'
+          environment: 'stagin'
         })
       
         let account = await arkaneConnect.flows.getAccount(SecretType.AETERNITY)
@@ -97,6 +97,7 @@ export class ManageSingleProjectComponent implements OnInit {
           .subscribe(res => {
             SpinnerUtil.hideSpinner()
             swal("", "Success", "success")
+            this.ngOnInit()
           }, hideSpinnerAndDisplayError)
       })
     }, err  => {
@@ -108,7 +109,7 @@ export class ManageSingleProjectComponent implements OnInit {
     SpinnerUtil.showSpinner();
     let linkHolder = $("#newsLink").val();
     if(validURL(linkHolder)) {
-      this.manageProjectsService.addNewsToProject(this.project.uuid, linkHolder).subscribe(res => {
+      this.manageProjectsService.addNewsToProject(this.project, linkHolder).subscribe(res => {
         this.getProject(() => { });
       }, err => {
         displayBackendError(err);
@@ -149,8 +150,7 @@ export class ManageSingleProjectComponent implements OnInit {
       this.project.name,
       this.project.description,
       this.project.location,
-      this.project.location_text,
-      this.project.return_on_investment,
+      this.project.roi,
       !this.project.active
     ).subscribe(res => {
       this.getProject(() => {})
@@ -267,8 +267,7 @@ export class ManageSingleProjectComponent implements OnInit {
       updatedProject.name,
       updatedProject.description,
       updatedProject.location,
-      updatedProject.location_text,
-      updatedProject.return_on_investment,
+      updatedProject.roi,
       updatedProject.active
     ).subscribe(res => {
       SpinnerUtil.hideSpinner()

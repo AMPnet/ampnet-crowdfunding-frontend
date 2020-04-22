@@ -27,3 +27,17 @@
 .color-hover:hover {
 	box-shadow: 0 10px 20px rgba(105, 190, 148, 0.4);
 }
+
+.investment-item-card-holder {
+	background-size: contain;
+}
+.card {
+	border: none!important;
+	background-size: cover!important;
+}
+
+.card-body {
+	background: linear-gradient(45deg, rgba(142, 85, 0, 0.7), rgba(199, 1, 1, 0.57));
+	border-radius: 15px!important;
+	color: white!important;
+}

@@ -1,12 +1,15 @@
 import swal from "sweetalert2";
 import { SpinnerUtil } from "./spinner-utilities";
 
-export function displayBackendError(err: any) {
-    if((err.error == undefined) || (err.error.message != undefined)) {
-        swal('', err.error.message, 'warning');
+export function displayBackendError(resp: any) {
+
+    let error = resp.error;
+
+    if(error.description != undefined) {
+        swal('', error.description, 'warning');
+    } else if(error.message != undefined) {
+        swal('', error.message, 'warning')
     } else {
-        console.log("UNHANDLED ERROR!")
-        console.log(err)
         swal("", "An unknown error occurred.", "error")
     }
 }

@@ -6,7 +6,7 @@ import { displayBackendError, hideSpinnerAndDisplayError } from 'src/app/utiliti
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import * as QRCode from 'qrcode';
 import { OffersService } from '../offers.service';
-import { prettyCurrency } from 'src/app/utilities/currency-util';
+import { prettyCurrency, baseCurrencyUnitToCents } from 'src/app/utilities/currency-util';
 import { API } from 'src/app/utilities/endpoint-manager';
 import { ArkaneConnect, SecretType, WindowMode, SignatureRequestType } from '@arkane-network/arkane-connect';
 import { BroadcastService } from 'src/app/broadcast/broadcast-service';
@@ -48,11 +48,11 @@ export class VerifySignOfferComponent implements OnInit {
 
   verifyAndSign() {
     SpinnerUtil.showSpinner();
-    this.offerService.generateTransactionToGreenvest(this.project.uuid, this.investAmount)
+    this.offerService.generateTransactionToGreenvest(this.project.uuid, baseCurrencyUnitToCents(this.investAmount))
       .subscribe(async (res: any) => {
         SpinnerUtil.hideSpinner();
         
-        let arkaneConnect = new ArkaneConnect("AMPnet", { environment: "staging"} )
+        let arkaneConnect = new ArkaneConnect("AMPnet", { environment: "production"} )
         let acc = await arkaneConnect.flows.getAccount(SecretType.AETERNITY)
         let sigRes = await arkaneConnect.createSigner(WindowMode.POPUP).sign({
           walletId: acc.wallets[0].id,

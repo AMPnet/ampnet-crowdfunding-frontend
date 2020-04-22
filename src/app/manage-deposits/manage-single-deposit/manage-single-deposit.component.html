@@ -1,22 +1,22 @@
 <div class="root root-content-container">
   <div class="row">
     <div class="col-md-12">
-      <div class="explainer-mini text-uppercase mb-3">Deposit info</div>
+      <div class="explainer-mini mb-3">Deposit info</div>
     </div>
     <div *ngIf="depositModel != undefined" class="col-md-12">
-      <div class="card">
+      <div class="card px-3">
         <div class="card-body">
           <div class="d-flex justify-content-between">
             <div>
-              <div class="explainer-mini text-uppercase">Name</div>
+              <div class="explainer-mini">Name</div>
               <div>{{depositModel.user.first_name}} {{depositModel.user.last_name}}</div>
             </div>
             <div>
-              <div class="explainer-mini text-uppercase">Date created</div>
+              <div class="explainer-mini">Date created</div>
               <div>{{depositModel.deposit.created_at}}</div>
             </div>
             <div>
-              <div class="explainer-mini text-uppercase">Reference</div>
+              <div class="explainer-mini">Reference</div>
               <div>{{depositModel.deposit.reference}}</div>
             </div>
           </div>
@@ -26,7 +26,7 @@
 
         <div>
           <div class="mb-5 mt-3">
-            <div class="explainer-mini text-uppercase">
+            <div class="explainer-mini">
               Mint amount
             </div>
             <div class="gray-text h1 mt-3">
@@ -36,22 +36,46 @@
               Verify the amount of currency minted for this deposit! This action cannot be reverted!
             </div> 
           </div>
-          <div class="explainer-mini text-uppercase">Scan the code to issue tokens to user</div>
+          <div class="explainer-mini">Scan the code to issue tokens to user</div>
           <canvas id="mint-deposit-code"></canvas>
         </div>
 
       </div>
-      <div *ngIf="!depositModel.approved" class="explainer-mini text-uppercase mt-3 mb-2">
-        Confirm deposit amount
+      <div *ngIf="!depositModel.approved" class="explainer-mini mt-3 mb-2">
+        Deposit amount
       </div>
-      <input *ngIf="!depositModel.approved" type="number" name="" class="w-100 form-control py-3" id="deposit-amount">
+      <input *ngIf="!depositModel.approved" name="" class=" px-3 w-100 form-control py-4" id="deposit-amount">
     </div>
     <div *ngIf="(depositModel != undefined)" class="col-md-12 mt-3">
       <div id="payment-reciept-upload-target"></div>
-      <button (click)="approveButtonClicked()" class="btn btn-primary w-100 py-3 mt-3">
-        <i class="fas fa-qrcode mr-2"></i>
-        Approve and mint
+      <button data-toggle="modal" data-target="#modal-confirm-deposit" class="btn btn-primary w-100 py-3 mt-3">
+        <i class="fas fa-check-circle mr-2"></i>
+        Confirm deposit
       </button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modal-confirm-deposit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Confirm deposit amount</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <input type="text" id="deposit-confirm-amount" class="form-control px-4 py-4">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary px-5 py-2" data-dismiss="modal">Cancel</button>
+        <button (click)="approveButtonClicked()" type="button" class="btn btn-primary px-5 py-2">
+          <i class="fas fa-check-circle mr-2"></i>
+          Create & Mint
+        </button>
+      </div>
     </div>
   </div>
 </div>

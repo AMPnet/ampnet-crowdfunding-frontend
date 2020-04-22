@@ -6,6 +6,7 @@ import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { BankCodeModel } from './bank-code-model';
 import 'bootstrap-select'
 
+
 declare var $: any
 
 @Component({
@@ -13,25 +14,31 @@ declare var $: any
   templateUrl: './new-payment-option.component.html',
   styleUrls: ['./new-payment-option.component.css']
 })
-export class NewPaymentOptionComponent implements OnInit {
+export class NewPaymentOptionComponent implements OnInit, AfterViewInit {
 
   creditCardNavTab: JQuery;
   bankAccountNavTab: JQuery;
 
   hasNoBankAccounts: boolean
   
-  bankCodes: [BankCodeModel]
+  bankCodes: BankCodeModel[]
 
   constructor(private paymentService: PaymentService, 
     private router: Router, 
     private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.checkStatusAndSetText()
+    this.checkStatusAndSetText();
+
     let file = require("../../../assets/hr-bic.json")
-    this.bankCodes = file.list
     
-    $(".bank-code-picker").selectpicker()
+    this.bankCodes = file.list;
+    
+  }
+
+  ngAfterViewInit() {
+    $("select").selectpicker()
+
   }
 
   checkStatusAndSetText() {
@@ -40,7 +47,7 @@ export class NewPaymentOptionComponent implements OnInit {
   }
 
   addNewBankAccountClicked() {
-    let iban: string = (<string>$("#iban-holder").val())
+    let iban: string = (<string>$("#iban-holder").val()).replace(/ /g, '')
     var bankCode: string = (<string>$("#bankcode-holder").val())
     if(bankCode.length == 0) {
       bankCode = "N/A"

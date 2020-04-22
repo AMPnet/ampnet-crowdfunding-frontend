@@ -19,7 +19,8 @@
 						</div>	
 					</div>
 				</div>
-				<div class="col-md-6" style="background-color: #DEA546; height: 25vh;">
+				<div [routerLink]="['/overview/discover']" 
+				[queryParams]="{ filter: 'solar' }" class="col-md-6" style="background-color: #DEA546; height: 25vh;">
 					<div class="p-3 cursor-pointer">
 						<div class="gtSuper font-weight-lighter">
 							Featured
@@ -27,7 +28,8 @@
 						<h2 class="pt-3">Solar projects</h2>
 					</div>
 				</div>
-				<div class="col-md-6" style="background-color: #23C8C3; height: 25vh;">
+				<div [routerLink]="['/overview/discover']" 
+				[queryParams]="{ filter: ['wind', 'bio'] }" class="col-md-6" style="background-color: #23C8C3; height: 25vh;">
 					<div class="p-3 cursor-pointer">
 						<div class="gtSuper font-weight-lighter">
 							Featured

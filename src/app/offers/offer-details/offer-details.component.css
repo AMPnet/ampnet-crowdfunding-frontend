@@ -52,3 +52,9 @@
 		margin-top: 2em;
 	}
 }
+
+.news-holder-image {
+	height: 100%; width: 120px; object-fit: cover;
+	border-top-left-radius: 20px;
+	border-bottom-left-radius: 20px;
+}

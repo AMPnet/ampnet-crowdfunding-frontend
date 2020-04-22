@@ -6,7 +6,7 @@ import * as moment from 'moment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { displayBackendError } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
-import { autonumericCurrency, stripCurrencyData } from 'src/app/utilities/currency-util';
+import { autonumericCurrency, stripCurrencyData, baseCurrencyUnitToCents } from 'src/app/utilities/currency-util';
 import { HereMapComponent } from 'src/app/here-map/here-map.component';
 
 declare var $: any;
@@ -51,15 +51,21 @@ export class CreateNewProjectComponent implements OnInit, AfterViewInit {
       orgID,
       formValue.name,
       formValue.description,
-      this.hereMap.lat + "" + this.hereMap.lng,
+      {
+        "lat": this.hereMap.lat,
+        "long": this.hereMap.lng
+      },
       formValue.colloqual,
-      "10",
+      {
+        "from": 2.1,
+        "to" : 5.3
+      },
       formValue.startDate,
       formValue.endDate,
-      formValue.expectedFunding,
+      baseCurrencyUnitToCents(parseInt(stripCurrencyData(formValue.expectedFunding))),
       "EUR",
-      formValue.minPerUser,
-      formValue.maxPerUser,
+      baseCurrencyUnitToCents(parseInt(stripCurrencyData(formValue.minPerUser))),
+      baseCurrencyUnitToCents(parseInt(stripCurrencyData(formValue.maxPerUser))),
       false
     ).subscribe((res: any) => {
       SpinnerUtil.hideSpinner();
@@ -78,21 +84,6 @@ export class CreateNewProjectComponent implements OnInit, AfterViewInit {
   ngOnInit() {
 
     $(document).ready(() => {
-      $('#proj-description').summernote({
-        height: 300,                 // set editor height
-        minHeight: null,             // set minimum height of editor
-        maxHeight: null,             // set maximum height of editor
-        focus: false,
-        toolbar: [
-          // [groupName, [list of button]]
-          ['style', ['bold', 'italic', 'underline', 'clear']],
-          ['font', ['strikethrough', 'superscript', 'subscript']],
-          ['fontsize', []],
-          ['color', []],
-          ['para', ['ul', 'ol', 'paragraph']],
-          ['height', []]
-        ]                  // set focus to editable area after initializing summernote
-      });
       autonumericCurrency("#min-per-user-input")
       autonumericCurrency("#max-per-user-input")
       autonumericCurrency("#expected-funding-input")

@@ -64,9 +64,9 @@ const routes: Routes = [
       { path: 'overview/:id/:isOverview', component: OfferDetailsComponent },
       { path: 'fill_data', component: FillDataComponent },
       { path: 'onboarding', component: OnboardingComponent },
-      { path: 'summary', component: SummaryComponent }
     ]
   },
+  { path: 'summary', component: SummaryComponent },
   {
     path: 'dash', component: SecureLayoutComponent,
     canActivate: [AuthGuard],

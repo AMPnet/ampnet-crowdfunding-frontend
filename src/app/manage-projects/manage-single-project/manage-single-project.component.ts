@@ -84,7 +84,7 @@ export class ManageSingleProjectComponent implements OnInit {
       swal("", "Verify the project creation with your blockchain wallet. You will be prompted now!","info")
         .then(async () => {
         let arkaneConnect = new ArkaneConnect('AMPnet', {
-          environment: 'staging'
+          environment: 'stagin'
         })
       
         let account = await arkaneConnect.flows.getAccount(SecretType.AETERNITY)
@@ -97,6 +97,7 @@ export class ManageSingleProjectComponent implements OnInit {
           .subscribe(res => {
             SpinnerUtil.hideSpinner()
             swal("", "Success", "success")
+            this.ngOnInit()
           }, hideSpinnerAndDisplayError)
       })
     }, err  => {

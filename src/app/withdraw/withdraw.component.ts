@@ -61,6 +61,11 @@ export class WithdrawComponent implements OnInit {
     // })
 
     // let account = await arkaneConnect.flows.getAccount(SecretType.AETERNITY)
+
+    // this.withdrawService.createWithdrawRequest(
+
+    // )
+
     // let sigRes = await arkaneConnect.createSigner(WindowMode.POPUP).sign({
     //   walletId: account.wallets[0].id,
     //   data: this.pendingWithdrawal.,

@@ -52,14 +52,16 @@ export class InvestComponent implements OnInit {
 
   getWalletBalance() {
     SpinnerUtil.showSpinner();
-    this.walletService.getWallet().subscribe(res => {
-      SpinnerUtil.hideSpinner();
+    this.walletService.getWa
+    llet().subscribe(res => {
       this.wallet = res;
       this.wallet.currency = prettyCurrency(res.currency);
       this.wallet.balance = numeral(centsToBaseCurrencyUnit(res.balance)).format("0,0");
 
       setTimeout(() => {
         autonumericCurrency("#amount-input")
+        SpinnerUtil.hideSpinner();
+
       }, 200)
       
     }, err => {

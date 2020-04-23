@@ -52,7 +52,7 @@ export class VerifySignOfferComponent implements OnInit {
       .subscribe(async (res: any) => {
         SpinnerUtil.hideSpinner();
         
-        let arkaneConnect = new ArkaneConnect("AMPnet", { environment: "production"} )
+        let arkaneConnect = new ArkaneConnect("AMPnet", { environment: "staging"} )
         let acc = await arkaneConnect.flows.getAccount(SecretType.AETERNITY)
         let sigRes = await arkaneConnect.createSigner(WindowMode.POPUP).sign({
           walletId: acc.wallets[0].id,

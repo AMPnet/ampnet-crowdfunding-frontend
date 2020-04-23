@@ -108,9 +108,7 @@ export class OrganizationDetailsComponent implements OnInit {
   }
 
   async createOrgWalletClicked() {
-    let arkaneConnect = new ArkaneConnect('AMPnet', {
-      environment: 'staging'
-    })
+    let arkaneConnect = new ArkaneConnect('AMPnet', { environment: 'staging'} )
     let account = await arkaneConnect.flows.getAccount(SecretType.AETERNITY)
     
     this.organizationService.getTransactionForCreationOfOrgWallet(this.organization.uuid).subscribe(async (res: any) => {

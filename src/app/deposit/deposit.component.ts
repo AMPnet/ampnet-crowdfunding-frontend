@@ -3,9 +3,7 @@ import { DepositServiceService } from './deposit-service.service';
 import { hideSpinnerAndDisplayError, displayBackendError } from '../utilities/error-handler';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { DepositModel } from './deposit-model';
-import Cleave from 'cleave.js'
 import swal from 'sweetalert2';
-import { autonumericCurrency, stripCurrencyData } from '../utilities/currency-util';
 
 declare var $: any;
 
@@ -17,14 +15,14 @@ declare var $: any;
 export class DepositComponent implements OnInit {
 
   depositModel: DepositModel;
-  depositAmount: string;
+  masterIban: string;
 
   constructor(private depositService: DepositServiceService) { }
 
   ngOnInit() {
     SpinnerUtil.showSpinner();
+    this.getMasterIban();
     this.depositService.getMyPendingDeposit().subscribe((res: DepositModel) => {
-      SpinnerUtil.hideSpinner()
       this.depositModel = res;
     }, err => {
       SpinnerUtil.hideSpinner()
@@ -40,8 +38,6 @@ export class DepositComponent implements OnInit {
     SpinnerUtil.showSpinner()
     this.depositService.createDeposit().subscribe((res: DepositModel) => {
       this.depositModel = res
-      this.depositAmount = stripCurrencyData($("#deposit-amount").val())
-      SpinnerUtil.hideSpinner()
     }, err => {
       SpinnerUtil.hideSpinner()
       console.log(err)
@@ -53,4 +49,11 @@ export class DepositComponent implements OnInit {
     })
   }
 
+  getMasterIban() {
+    this.depositService.getPlatformBankAccounts().subscribe((res: any) => {
+      this.masterIban = res.bank_accounts[0].iban
+    }, err => {
+      hideSpinnerAndDisplayError(err)
+    });
+  }
 }

@@ -20,20 +20,18 @@ export class NewPaymentOptionComponent implements OnInit, AfterViewInit {
   bankAccountNavTab: JQuery;
 
   hasNoBankAccounts: boolean
-  
+
   bankCodes: BankCodeModel[]
 
-  constructor(private paymentService: PaymentService, 
-    private router: Router, 
+  constructor(private paymentService: PaymentService,
+    private router: Router,
     private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.checkStatusAndSetText();
 
     let file = require("../../../assets/hr-bic.json")
-    
     this.bankCodes = file.list;
-    
   }
 
   ngAfterViewInit() {
@@ -48,12 +46,14 @@ export class NewPaymentOptionComponent implements OnInit, AfterViewInit {
 
   addNewBankAccountClicked() {
     let iban: string = (<string>$("#iban-holder").val()).replace(/ /g, '')
-    var bankCode: string = (<string>$("#bankcode-holder").val())
+    let bankCode: string = (<string>$("#bankcode-holder").val())
     if(bankCode.length == 0) {
       bankCode = "N/A"
     }
+    let alias: string =  (<string>$("#alias-holder").val())
+
     SpinnerUtil.showSpinner()
-    this.paymentService.createBankAccount(iban, bankCode).subscribe(res => {
+    this.paymentService.createBankAccount(iban, bankCode, alias).subscribe(res => {
       SpinnerUtil.hideSpinner()
       this.router.navigate(["dash", "payment_options"])
     }, err => {

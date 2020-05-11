@@ -15,18 +15,17 @@ export class PaymentService {
 
   getMyBankAccounts() {
     let bankData = this.http.get(API.generateRoute(this.endpoint), API.tokenHeaders())
-    
     bankData.subscribe((res: PaymentModels) => {
       UserStatusStorage.bankData = res
     })
-    
     return bankData
   }
 
-  createBankAccount(iban: String, bankCode: String) {
+  createBankAccount(iban: String, bankCode: String, alias: String) {
     return this.http.post(API.generateRoute(this.endpoint), {
       "iban": iban,
-      "bank_code": bankCode
+      "bank_code": bankCode,
+      "alias": alias
     }, API.tokenHeaders())
   }
 

@@ -11,7 +11,12 @@
 						<div>
 							<div class="explainer-mini text-uppercase mb-2">IBAN</div>
 							<b>{{paymentOption.iban}}</b>
-						</div>
+            </div>
+
+						<div *ngIf="paymentOption.alias">
+							<div class="explainer-mini text-uppercase mb-2">Alias</div>
+              <b>{{paymentOption.alias}}</b>
+            </div>
 
 						<div>
 							<div class="explainer-mini text-uppercase mb-2">Swift/BIC</div>

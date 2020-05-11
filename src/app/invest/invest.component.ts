@@ -45,15 +45,12 @@ export class InvestComponent implements OnInit {
     this.expectedROI = 10.5;
     this.getWalletBalance();
     this.getProject();
-
-    
   }
 
 
   getWalletBalance() {
     SpinnerUtil.showSpinner();
-    this.walletService.getWa
-    llet().subscribe(res => {
+    this.walletService.getWallet().subscribe(res => {
       this.wallet = res;
       this.wallet.currency = prettyCurrency(res.currency);
       this.wallet.balance = numeral(centsToBaseCurrencyUnit(res.balance)).format("0,0");
@@ -61,9 +58,8 @@ export class InvestComponent implements OnInit {
       setTimeout(() => {
         autonumericCurrency("#amount-input")
         SpinnerUtil.hideSpinner();
-
       }, 200)
-      
+
     }, err => {
       SpinnerUtil.hideSpinner();
       displayBackendError(err);
@@ -80,7 +76,7 @@ export class InvestComponent implements OnInit {
       this.project.min_per_user = centsToBaseCurrencyUnit(res.min_per_user)
       this.project.max_per_user = centsToBaseCurrencyUnit(res.max_per_user)
 
-      this.investmentOutOfBoundsWarningMessage 
+      this.investmentOutOfBoundsWarningMessage
         = this.INVEST_LOW_MSG + res.currency + this.project.min_per_user + ". "
       SpinnerUtil.hideSpinner();
     }, err => {
@@ -102,21 +98,21 @@ export class InvestComponent implements OnInit {
       stripCurrencyData(this.inputValue)
     )
 
-    if(inputValue == NaN) { 
+    if(inputValue == NaN) {
       inputValue = 0
     }
     console.log(inputValue)
     //this.inputValue = numeral(inputValue).format('0,0,0');
-    this.yearlyReturn = numeral(this.calculateYearlyReturn(inputValue)).format('0,0.00'); 
+    this.yearlyReturn = numeral(this.calculateYearlyReturn(inputValue)).format('0,0.00');
     this.projectStake = this.calculateProjectStake(inputValue)
                           .toFixed(4) + "%";
     this.breakevenPeriod = numeral(this.calculateTotalLifetimeReturn(inputValue)).format('0,0');
-    
+
     if(inputValue < this.project.min_per_user) {
       this.investmentOutOfBoundsWarningMessage =
         this.INVEST_LOW_MSG + this.project.currency + this.project.min_per_user + ". "
     } else if (inputValue > this.project.max_per_user) {
-      this.investmentOutOfBoundsWarningMessage = 
+      this.investmentOutOfBoundsWarningMessage =
         this.INVEST_HIGH_MSG + this.project.currency + this.project.max_per_user + ". "
     } else {
       this.investmentOutOfBoundsWarningMessage = ""
@@ -133,14 +129,12 @@ export class InvestComponent implements OnInit {
     let inputAmount = $("#amount-input")
     let inputAmountContent: String = inputAmount.val();
 
-    
-    
   }
-  
+
   calculateProjectStake(investment: number): number {
     let total = this.project.expected_funding;
     return (investment / total) * 100;
-  } 
+  }
 
   calculateYearlyReturn(investment: number): number {
     let maxReturn = this.expectedROI;
@@ -149,6 +143,6 @@ export class InvestComponent implements OnInit {
 
   calculateTotalLifetimeReturn(investment): number {
     return this.calculateYearlyReturn(investment) * 25;
-  } 
+  }
 
 }

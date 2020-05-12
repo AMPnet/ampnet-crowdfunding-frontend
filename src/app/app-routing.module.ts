@@ -47,6 +47,7 @@ import { ProjectActivationComponent } from './wallet-activation/project-activati
 import { ActivateSignComponent } from './wallet-activation/activate-sign/activate-sign.component';
 import { CompleteOnboardingComponent } from './complete-onboarding/complete-onboarding.component';
 import { SummaryComponent } from './summary/summary.component';
+import { PlatformBankAccountComponent } from './platform-bank-account/platform-bank-account.component';
 
 // Defines public routes accessible to everyone
 // (landing page, login, register, contact help, etc...)
@@ -105,7 +106,8 @@ const routes: Routes = [
       { path: 'wallet/deposit', component: DepositComponent },
       { path: 'wallet/withdraw', component: WithdrawComponent },
       { path: 'activation/:type', component: WalletActivationComponent },
-      { path: 'complete_onboarding', component: CompleteOnboardingComponent }
+      { path: 'complete_onboarding', component: CompleteOnboardingComponent },
+      { path: 'admin/platform_bank_account', component: PlatformBankAccountComponent }
     ]
   }
 ];

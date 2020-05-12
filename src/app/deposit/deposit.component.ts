@@ -23,6 +23,7 @@ export class DepositComponent implements OnInit {
     SpinnerUtil.showSpinner();
     this.getMasterIban();
     this.depositService.getMyPendingDeposit().subscribe((res: DepositModel) => {
+      SpinnerUtil.hideSpinner()
       this.depositModel = res;
     }, err => {
       SpinnerUtil.hideSpinner()
@@ -37,6 +38,7 @@ export class DepositComponent implements OnInit {
   generateDepositInfo() {
     SpinnerUtil.showSpinner()
     this.depositService.createDeposit().subscribe((res: DepositModel) => {
+      SpinnerUtil.hideSpinner()
       this.depositModel = res
     }, err => {
       SpinnerUtil.hideSpinner()

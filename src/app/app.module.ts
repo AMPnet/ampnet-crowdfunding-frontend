@@ -74,7 +74,8 @@ import { ProjectActivationComponent } from './wallet-activation/project-activati
 import { ActivateSignComponent } from './wallet-activation/activate-sign/activate-sign.component';
 import { CompleteOnboardingComponent } from './complete-onboarding/complete-onboarding.component';
 import { SummaryComponent } from './summary/summary.component';
-import { PlatformBankAccountComponent } from './platform-bank-account/platform-bank-account.component'
+import { PlatformBankAccountComponent } from './platform-bank-account/platform-bank-account.component';
+import { NewPlatformBankAccountComponent } from './platform-bank-account/new-platform-bank-account/new-platform-bank-account.component'
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -170,7 +171,8 @@ export function jwtOptionsFactory() {
     ActivateSignComponent,
     CompleteOnboardingComponent,
     SummaryComponent,
-    PlatformBankAccountComponent
+    PlatformBankAccountComponent,
+    NewPlatformBankAccountComponent
   ],
   imports: [
     BrowserModule,

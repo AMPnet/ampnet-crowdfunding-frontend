@@ -13,7 +13,7 @@ export class PlatformBankAccountService {
 
   constructor(private http: HttpClient) { }
 
-  getMyBankAccounts() {
+  getBankAccounts() {
     return this.http.get(API.generateRoute(this.endpoint), API.tokenHeaders())
   }
 

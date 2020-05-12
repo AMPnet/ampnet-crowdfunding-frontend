@@ -1,28 +1,49 @@
 <div class="container root-content-container">
-  <div class="row">
-    <div *ngIf="hasNoBankAccounts" class="col-md-12 text-center mb-5 mt-3 h6 gray-text">
-      Platform have no bank accounts registered.
-    </div>
-    <div class="col-md-12">
-      <div class="explainer-mini text-uppercase">
-        Enter bank account details
+	<div class="row">
+		<div class="col-md-8 mb-5">
+			<h5 class="text-uppercase font-weight-bold gray-text">Platform Bank Accounts</h5>
+		</div>
+
+		<div *ngFor="let paymentOption of banks" class="col-md-12 mb-3">
+			<div class="card">
+				<div class="card-body d-flex flex-column gray-text">
+					<div class="d-flex flex-row justify-content-between text-left">
+						<div>
+							<div class="explainer-mini text-uppercase mb-2">IBAN</div>
+							<b>{{paymentOption.iban}}</b>
+            </div>
+
+						<div *ngIf="paymentOption.alias">
+							<div class="explainer-mini text-uppercase mb-2">Alias</div>
+              <b>{{paymentOption.alias}}</b>
+            </div>
+
+						<div>
+							<div class="explainer-mini text-uppercase mb-2">Swift/BIC</div>
+							<b>{{paymentOption.bank_code}}</b>
+						</div>
+
+						<div>
+							<div class="explainer-mini text-uppercase mb-2">Actions</div>
+							<span (click)="deleteBankAccountClicked(paymentOption.id)"
+								class="float-right align-middle cursor-pointer">
+								<i class="fas fa-trash-alt"></i>
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div *ngIf="banks != undefined && banks.length == 0" class="col-md-12">
+			<div class="text-center">
+				No payment options available. Please add a new payment option
       </div>
-    </div>
-    <div class="col-md-12 mt-3">
-      <input class="form-control w-100 p-4 font-weight-bold" type="text" name="" id="platform-iban-holder" placeholder="IBAN">
-      <select data-live-search="true" class="form-control mt-3 p-2 font-weight-bold bank-code-picker" type="text" name="" id="platform-bankcode-holder" placeholder="SWIFT/BIC (Optional)">
-        <option *ngFor="let bankCode of bankCodes; let i = index" value="{{bankCode.swift_code}}">
-          {{bankCode.bank}} ({{bankCode.city}}) : {{bankCode.swift_code}}
-        </option>
-      </select>
-      <input class="form-control mt-3 p-4" type="text" name="" id="platform-alias-holder" placeholder="Bank account alias">
-    </div>
-    <div class="col-md-8"></div>
-    <div class="col-md-4 mt-3">
-      <button (click)="addNewBankAccountClicked()" class="btn btn-primary py-3 w-100">
-        <i class="fas fa-plus-circle mr-2"></i>
-        Add new bank account
-      </button>
-    </div>
-  </div>
+      <div class="col-md-12 mb-5 mt-5">
+        <button routerLink="new" class="btn btn-primary w-100 py-3 float-right">
+          <i class="mr-2 fas fa-plus-circle"></i>
+          <span>Add new</span>
+        </button>
+      </div>
+		</div>
+	</div>
 </div>

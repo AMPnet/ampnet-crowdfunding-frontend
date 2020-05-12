@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { BankCodeModel } from 'src/app/payment-options/new-payment-option/bank-code-model';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { PlatformBankAccountService } from './platform-bank-account.service';
 import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
-
-declare var $: any
+import { BankAccountModel } from '../payment-options/bank-account-model';
 
 @Component({
   selector: 'app-platform-bank-account',
@@ -14,47 +12,35 @@ declare var $: any
 })
 export class PlatformBankAccountComponent implements OnInit {
 
-  creditCardNavTab: JQuery;
-  bankAccountNavTab: JQuery;
+  banks: BankAccountModel[];
 
-  hasNoBankAccounts: boolean
-
-  bankCodes: BankCodeModel[]
-
-  constructor(private router: Router,
-    private route: ActivatedRoute,
-    private service: PlatformBankAccountService) { }
+  constructor(
+    private service: PlatformBankAccountService,
+    private router: Router) {}
 
   ngOnInit() {
-    this.checkStatusAndSetText();
-
-    let file = require("../../assets/hr-bic.json")
-    this.bankCodes = file.list;
+    this.getBankAccounts()
   }
 
-  ngAfterViewInit() {
-    $("select").selectpicker()
-  }
-
-  checkStatusAndSetText() {
-    let status = this.route.snapshot.queryParams.status;
-    this.hasNoBankAccounts = (status == "empty")
-  }
-
-  addNewBankAccountClicked() {
-    let iban: string = (<string>$("#platform-iban-holder").val()).replace(/ /g, '')
-    let bankCode: string = (<string>$("#platform-bankcode-holder").val())
-    if(bankCode.length == 0) {
-      bankCode = "N/A"
-    }
-    let alias: string =  (<string>$("#platform-alias-holder").val())
-
+  getBankAccounts() {
     SpinnerUtil.showSpinner()
-    this.service.createBankAccount(iban, bankCode, alias).subscribe(res => {
+    this.service.getBankAccounts().subscribe((res: any) => {
       SpinnerUtil.hideSpinner()
-      this.router.navigate(["dash", "admin", "platform_bank_account"])
-    }, err => {
-      hideSpinnerAndDisplayError(err)
-    })
+      if(res.bank_accounts.length == 0) {
+        this.router.navigate(["dash", "admin", "platform_bank_account", "new"], {
+          queryParams: {
+            "status": "empty"
+          }
+        })
+      }
+      this.banks = res.bank_accounts;
+    }, hideSpinnerAndDisplayError)
+  }
+
+  deleteBankAccountClicked(id: number) {
+    SpinnerUtil.showSpinner()
+    this.service.deleteBankAccount(id).subscribe(res => {
+      this.getBankAccounts()
+    }, hideSpinnerAndDisplayError)
   }
 }

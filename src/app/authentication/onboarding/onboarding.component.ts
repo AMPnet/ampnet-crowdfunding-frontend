@@ -39,7 +39,7 @@ export class OnboardingComponent implements OnInit {
       loader.onload = () => {
       }
       document.getElementsByTagName('head')[0].appendChild(loader)
-
+      SpinnerUtil.hideSpinner()
     }, hideSpinnerAndDisplayError)
 
   }

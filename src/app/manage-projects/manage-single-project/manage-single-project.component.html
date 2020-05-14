@@ -54,7 +54,7 @@
       <div class="explainer-mini text-uppercase">Description</div>
     </div>
     <div class="input-group mb-3 col-md-12">
-      <textarea id="project-description" class="form-control p-4" name="" cols="30" rows="10">{{project.description}}</textarea>
+      <textarea id="project-description" style="border-radius: 5px!important;" class="form-control p-4" name="" cols="30" rows="10">{{project.description}}</textarea>
     </div>
 
     <div class="col-md-12 mb-2">
@@ -67,7 +67,8 @@
     </div>
 
     <div *ngIf="project.location != undefined" class="col-md-12">
-        <here-map isForEditing="false" lat="{{project.location.lat}}" lng="{{project.location.long}}" width="100%" height="300px"></here-map>
+      <iframe width="100%" height="450" frameborder="0" style="border:0"
+src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJ8UNwBh-9oRQR3Y1mdkU1Nic&key=AIzaSyBuLWPhp0M-h1AbUUa_Nbn75IkiBw0oieQ" allowfullscreen></iframe>
     </div>
 
 

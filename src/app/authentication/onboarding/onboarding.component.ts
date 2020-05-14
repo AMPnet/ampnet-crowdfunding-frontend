@@ -15,6 +15,8 @@ declare var $: any;
   styleUrls: ['./onboarding.component.css']
 })
 export class OnboardingComponent implements OnInit {
+ 
+  hasClientToken = false;
 
   constructor(
     private router: Router, 
@@ -24,11 +26,14 @@ export class OnboardingComponent implements OnInit {
     var that = this;
 
     SpinnerUtil.showSpinner();
-    let script: any = document.createElement('idy-flow-manager');
     this.onboardingService.getSessionID().subscribe((res:any) => {
+      let script: any = document.createElement('idy-flow-manager');
       script.clientToken = res.access_token
+      document.querySelector('#identyum-target').appendChild(script);
+      setTimeout(() => {
+        this.hasClientToken = true;
+      }, 200)
     }, hideSpinnerAndDisplayError)
-    document.querySelector('#identyum-target').appendChild(script);
 
   }
 

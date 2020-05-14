@@ -50,6 +50,7 @@ import { SummaryComponent } from './summary/summary.component';
 import { PlatformBankAccountComponent } from './platform-bank-account/platform-bank-account.component';
 import { NewPlatformBankAccountComponent } from './platform-bank-account/new-platform-bank-account/new-platform-bank-account.component';
 import { ExchangeComponent } from './exchange/exchange.component';
+import { OwnershipComponent } from './ownership/ownership.component';
 
 // Defines public routes accessible to everyone
 // (landing page, login, register, contact help, etc...)
@@ -111,7 +112,8 @@ const routes: Routes = [
       { path: 'complete_onboarding', component: CompleteOnboardingComponent },
       { path: 'admin/platform_bank_account', component: PlatformBankAccountComponent },
       { path: 'admin/platform_bank_account/new', component: NewPlatformBankAccountComponent },
-      { path: 'exchange', component: ExchangeComponent }
+      { path: 'exchange', component: ExchangeComponent },
+      { path: 'ownership', component: OwnershipComponent }
     ]
   }
 ];

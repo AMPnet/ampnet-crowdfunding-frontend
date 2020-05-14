@@ -30,6 +30,7 @@ export class OnboardingComponent implements OnInit {
       
       let script: any = document.createElement('idy-flow-manager');
       script.clientToken = res
+      script.startLanguage = "en"
       document.querySelector('#identyum-target').appendChild(script);
 
       let loader = document.createElement('script')

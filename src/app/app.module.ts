@@ -74,6 +74,8 @@ import { ProjectActivationComponent } from './wallet-activation/project-activati
 import { ActivateSignComponent } from './wallet-activation/activate-sign/activate-sign.component';
 import { CompleteOnboardingComponent } from './complete-onboarding/complete-onboarding.component';
 import { SummaryComponent } from './summary/summary.component';
+import { PlatformBankAccountComponent } from './platform-bank-account/platform-bank-account.component';
+import { NewPlatformBankAccountComponent } from './platform-bank-account/new-platform-bank-account/new-platform-bank-account.component'
 import { ExchangeComponent } from './exchange/exchange.component'
 
 export function tokenGetter() {
@@ -170,6 +172,8 @@ export function jwtOptionsFactory() {
     ActivateSignComponent,
     CompleteOnboardingComponent,
     SummaryComponent,
+    PlatformBankAccountComponent,
+    NewPlatformBankAccountComponent,
     ExchangeComponent
   ],
   imports: [
@@ -179,7 +183,7 @@ export function jwtOptionsFactory() {
     DisqusModule.forRoot('ampnet.disqus.com/embed.js'),
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule, 
+    HttpClientModule,
     SocialLoginModule,
     NgxSpinnerModule
   ],

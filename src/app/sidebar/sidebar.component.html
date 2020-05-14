@@ -47,15 +47,19 @@
 	<ul *ngIf="isAdmin" id="main-menu" class="list-unstyled components">
 		<li routerLink="manage_withdrawals" routerLinkActive="side-active">
 			<i class="menu-icon fas fa-arrow-circle-up "></i>
-			<span>Withdrawals</span>	
+			<span>Withdrawals</span>
 		</li>
 		<li routerLink="manage_deposits" routerLinkActive="side-active">
 			<i class="menu-icon fas fa-arrow-circle-down "></i>
-			<span>Deposits</span>	
+			<span>Deposits</span>
 		</li>
 		<li routerLink="activation/users" routerLinkActive="side-active">
 			<i class="menu-icon fas fa-flag-checkered"></i>
 			<span>Activations</span>
+		</li>
+		<li routerLink="admin/platform_bank_account" routerLinkActive="side-active">
+			<i class="menu-icon fas fa-university"></i>
+			<span>Bank account</span>
 		</li>
 	</ul>
 

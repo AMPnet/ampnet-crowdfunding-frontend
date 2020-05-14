@@ -15,9 +15,12 @@ export class DepositServiceService {
     return this.http.post(API.generateRoute(this.endpoint), { }, API.tokenHeaders())
   }
 
-  // not used
   public getMyPendingDeposit() {
     return this.http.get(API.generateRoute(this.endpoint), API.tokenHeaders())
+  }
+
+  public getPlatformBankAccounts() {
+    return this.http.get(API.generateRoute("/wallet/bank-account"), API.tokenHeaders())
   }
 
   // not used

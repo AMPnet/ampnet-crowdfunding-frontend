@@ -1,5 +1,5 @@
 <div class="root root-content-container" *ngIf="investment != undefined">
-	<div class="row">
+	<div class="row mb-5">
 		<div class="col-md-12">
 			<h4>{{investment.project.name}}</h4>
 		</div>
@@ -22,4 +22,8 @@
 			</ul>
 		</div>
 	</div>
+	<div class="explainer-mini text-uppercase mb-3">
+		Investment details
+	</div>
+	<app-offer-details></app-offer-details>
 </div>

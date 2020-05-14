@@ -4,7 +4,7 @@ import { OnboardingService } from '../onboarding.service';
 import swal from 'sweetalert2';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { hideAuthButtons } from 'src/app/utilities/ui-utils';
-import { displayBackendError } from 'src/app/utilities/error-handler';
+import { displayBackendError, hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
 
 declare var initializeIdentyum: any;
 declare var $: any;
@@ -24,24 +24,12 @@ export class OnboardingComponent implements OnInit {
     var that = this;
 
     SpinnerUtil.showSpinner();
-    this.onboardingService.getSessionID().subscribe((res: any) => {
-      let identyum = initializeIdentyum({
-        webSessionUuid: res.token, // SESSION_ID from POST request
-        parameters: {},
-        onProcessFinishSuccess: function(args) {
-          that.onboardingService.verifyUser(res.token).subscribe(res => {
-            swal("", "Successfully verified profile", "info")
-          }, displayBackendError)
-        },
-        onWidgetInitialized: function(args) {
-          SpinnerUtil.hideSpinner();
-        } 
-      });
-      identyum.load();
-      $("#auth-buttons").hide()
-    }, err => {
-      console.log(err);
-    });
+    let script: any = document.createElement('idy-flow-manager');
+    this.onboardingService.getSessionID().subscribe((res:any) => {
+      script.clientToken = res.access_token
+    }, hideSpinnerAndDisplayError)
+    document.querySelector('#identyum-target').appendChild(script);
+
   }
 
   initializeIdentyum() {

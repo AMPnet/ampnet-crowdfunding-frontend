@@ -53,30 +53,49 @@ export class WithdrawComponent implements OnInit {
 
   async generateWithdrawClicked() {
     
-    
-    // SpinnerUtil.showSpinner()
+    if(this.pendingWithdrawal != undefined) {
+      this.burnWithdraw()
+      return;
+    }
+    SpinnerUtil.showSpinner()
+    let amount: any = $("#withdraw-amount").val()
+    let iban = this.banks[this.activeBankAccount].iban;
+    this.withdrawService.createWithdrawRequest(amount, iban).subscribe((res:any) => {
+      this.pendingWithdrawal = res;
+      SpinnerUtil.hideSpinner()
+    }, hideSpinnerAndDisplayError)
+
+  }
+
+  burnWithdraw() {
+    SpinnerUtil.showSpinner()
+    this.withdrawService.generateApproveWithdrawTx(this.pendingWithdrawal.id).subscribe(async (res:any) => {
         
-    // let arkaneConnect = new ArkaneConnect('AMPnet', {
-    //   environment: 'staging'
-    // })
+      let arkaneConnect = new ArkaneConnect('AMPnet', {
+        environment: 'staging'
+      })
+    
+      let account = await arkaneConnect.flows.getAccount(SecretType.AETERNITY)
 
-    // let account = await arkaneConnect.flows.getAccount(SecretType.AETERNITY)
+      let sigRes = await arkaneConnect.createSigner(WindowMode.POPUP).sign({
+        walletId: account.wallets[0].id,
+        data: res.tx,
+        type: SignatureRequestType.AETERNITY_RAW
+      })
+      this.broadService.broadcastSignedTx(sigRes.result.signedTransaction, res.tx_id)
+        .subscribe(res => {
+          SpinnerUtil.hideSpinner()
+          swal("", "Success", "success")
+        }, hideSpinnerAndDisplayError)
 
-    // this.withdrawService.createWithdrawRequest(
+      SpinnerUtil.hideSpinner()
+    }, hideSpinnerAndDisplayError)
+  }
 
-    // )
-
-    // let sigRes = await arkaneConnect.createSigner(WindowMode.POPUP).sign({
-    //   walletId: account.wallets[0].id,
-    //   data: this.pendingWithdrawal.,
-    //   type: SignatureRequestType.AETERNITY_RAW
-    // })
-    // this.broadService.broadcastSignedTx(sigRes.result.signedTransaction, res.tx_id)
-    //   .subscribe(res => {
-    //     SpinnerUtil.hideSpinner()
-    //     swal("","Success","success")
-    //   }, hideSpinnerAndDisplayError)
-
+  deleteWithdrawal() {
+    this.withdrawService.deleteWithdrawal(this.pendingWithdrawal.id).subscribe(res => {
+      swal("", "Success!", "success")
+    }, hideSpinnerAndDisplayError)
   }
 
 }

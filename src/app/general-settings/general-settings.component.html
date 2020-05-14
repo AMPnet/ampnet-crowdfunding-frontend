@@ -1,40 +1,41 @@
-<div *ngIf="(user != undefined) && (!user.verified)" class="container root-content-container">
-    <div *ngIf="!user.verified">
-        <h5 class="explainer-mini" >Update user information</h5>
-        <app-onboarding></app-onboarding>
-    </div>
-</div>
-
-<div *ngIf="(user != undefined) && (user.verified)" class="container root-content-container">
-    <div class="row">
-        <div class="col-md-3">
-            <div class="mt-4">
-                <div class="explainer-mini">First name</div>
-                {{user.first_name}}
-            </div>
+<div *ngIf="!updatingInfo">
+    <div *ngIf="(user != undefined) && (!user.verified)" class="container root-content-container">
+        <div *ngIf="!user.verified">
+            <h5 class="explainer-mini" >Update user information</h5>
+            <app-onboarding></app-onboarding>
         </div>
-        <div class="col-md-3">
-            <div class="mt-4">
-                <div class="explainer-mini">Last name</div>
-                {{user.last_name}}
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="mt-4">
-                <div class="explainer-mini">Email</div>
-                {{user.email}}
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="mt-4">
-                <div class="explainer-mini">Approved by admin</div>
-                {{user.enabled}}
-            </div>
-        </div>
-        
-        
-        
     </div>
     
-    <button class="btn btn-primary p-3 mt-5 w-100">Update user information</button>
+    <div *ngIf="(user != undefined) && (user.verified)" class="container root-content-container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="mt-4">
+                    <div class="explainer-mini">First name</div>
+                    {{user.first_name}}
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="mt-4">
+                    <div class="explainer-mini">Last name</div>
+                    {{user.last_name}}
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="mt-4">
+                    <div class="explainer-mini">Email</div>
+                    {{user.email}}
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="mt-4">
+                    <div class="explainer-mini">Approved by admin</div>
+                    {{user.enabled}}
+                </div>
+            </div>
+        </div>        
+        <button (click)="updateInfoClicked()" class="btn btn-primary p-3 mt-5 w-100">Update user information</button>
+    </div>
+</div>
+<div *ngIf="updatingInfo">
+    <app-onboarding></app-onboarding>
 </div>

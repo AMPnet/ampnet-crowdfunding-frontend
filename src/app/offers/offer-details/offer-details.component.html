@@ -22,7 +22,7 @@
 			</h3>
 		</div>
 		<div *ngIf="!isPortfolio" class="col-md-4 mb-3 invest-button-holder">
-			<button *ngIf="!isOverview" [disabled]="!offerModel.active" routerLink="invest" id="invest-button"
+			<button *ngIf="(!isOverview) && userConfirmed" [disabled]="!offerModel.active" routerLink="invest" id="invest-button"
 				class="btn btn-primary w-100 btn-action-a float-right text-white">
 				<i class="mr-3 fas fa-chart-pie"></i>
 				<span>Invest</span>
@@ -31,6 +31,11 @@
 				class="btn btn-primary w-100 btn-action-a float-right text-white">
 				<i class="mr-3 fas fa-chart-pie"></i>
 				<span>Sign Up & Invest</span>
+			</button>
+			<button *ngIf="(!isOverview) && !userConfirmed" [disabled]="!offerModel.active" routerLink="/dash/general_settings" id="invest-button"
+				class="btn btn-primary w-100 btn-action-a float-right text-white">
+				<i class="mr-3 fas fa-chart-pie"></i>
+				<span>Verify Profile & Invest</span>
 			</button>
 		</div>
 

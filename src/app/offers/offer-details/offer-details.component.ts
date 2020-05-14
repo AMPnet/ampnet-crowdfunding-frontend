@@ -4,7 +4,7 @@ import * as _ from 'lodash';
 import { OffersService } from '../offers.service';
 import { ActivatedRoute } from '@angular/router';
 import { OfferModel } from '../OfferModel';
-import { displayBackendError } from 'src/app/utilities/error-handler';
+import { displayBackendError, hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { ProjectService } from 'src/app/projects/project-service';
 import * as moment from 'moment';
@@ -14,6 +14,7 @@ import { NewsPreviewService } from 'src/app/news-preview/news-preview.service';
 import * as numeral from 'numeral';
 import { prettyCurrency, centsToBaseCurrencyUnit } from 'src/app/utilities/currency-util';
 import { Meta } from '@angular/platform-browser';
+import { UserService } from 'src/app/user-utils/user-service';
 
 @Component({
   selector: 'app-offer-details',
@@ -32,11 +33,13 @@ export class OfferDetailsComponent implements OnInit {
 
   isOverview = false;
   isPortfolio = false;
+  userConfirmend = false;
 
   constructor(private offerService: OffersService, 
     private newsPreviewService: NewsPreviewService, 
     private projectService: ProjectService, 
     private route: ActivatedRoute,
+    private userService: UserService,
     private meta: Meta) { }
 
   ngOnInit() {
@@ -53,6 +56,12 @@ export class OfferDetailsComponent implements OnInit {
     }
     if(this.route.snapshot.params.inPortfolio) {
       this.isPortfolio = true;
+    }
+
+    if(!this.isOverview && !this.isPortfolio) {
+      this.userService.getOwnProfile().subscribe((res:any) => {
+        this.userConfirmend = res.verified;
+      }, hideSpinnerAndDisplayError)
     }
   }
 

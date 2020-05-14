@@ -58,12 +58,10 @@
     </div>
 
     <div class="col-md-12 mb-2">
-      <div class="explainer-mini text-uppercase">Location name</div>
+      <div class="explainer-mini text-uppercase">Project tags</div>
     </div>
 
     <div class="input-group mb-3 col-md-12">
-      <input id="location-name" type="text" class="form-control p-4" aria-label="Username" aria-describedby="basic-addon1"
-        value="{{project.location_text}}">
     </div>
 
     <div *ngIf="project.location != undefined" class="col-md-12">
@@ -71,6 +69,7 @@
 src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJ8UNwBh-9oRQR3Y1mdkU1Nic&key=AIzaSyBuLWPhp0M-h1AbUUa_Nbn75IkiBw0oieQ" allowfullscreen></iframe>
     </div>
 
+=
 
     <div class="col-md-12 mt-5 mb-5">
       <button (click)="updateProject()" class="btn btn-primary w-100 py-3 float-right">

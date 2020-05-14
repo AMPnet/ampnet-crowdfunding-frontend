@@ -6,6 +6,9 @@ import { ManageWithdrawModel } from '../manage-withdraw-model';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import * as QRCode from 'qrcode'
 import { WithdrawCooperativeService } from 'src/app/manage-withdrawals/withdraw.cooperative.service';
+import { ArkaneConnect, SecretType, WindowMode, SignatureRequestType } from '@arkane-network/arkane-connect';
+import { BroadcastService } from 'src/app/broadcast/broadcast-service';
+import swal from 'sweetalert2';
 
 declare var $: any;
 
@@ -19,7 +22,8 @@ export class SingleWithdrawalComponent implements OnInit, AfterViewInit {
   withdrawal: ManageWithdrawModel
 
   constructor(private route: ActivatedRoute,
-    private withdrawCooperativeService: WithdrawCooperativeService) { }
+    private withdrawCooperativeService: WithdrawCooperativeService,
+    private broadcastService: BroadcastService) { }
 
   ngOnInit() {
     this.getWithdrawal()
@@ -45,10 +49,24 @@ export class SingleWithdrawalComponent implements OnInit, AfterViewInit {
 
   approveAndGenerateCodeClicked() {
     SpinnerUtil.showSpinner()
-    this.withdrawCooperativeService.generateBurnWithdrawTx(this.withdrawal.id).subscribe(res => {
-      SpinnerUtil.hideSpinner()
-      QRCode.toCanvas(document.getElementById("burn-generate-canvas"),
-        JSON.stringify(res), console.log)
+    this.withdrawCooperativeService.generateBurnWithdrawTx(this.withdrawal.id).subscribe(async (res:any) => {
+      
+      let arkaneConnect = new ArkaneConnect('AMPnet', {
+        environment: 'staging'
+      })
+      let account = await arkaneConnect.flows.getAccount(SecretType.AETERNITY)
+
+      let sigRes = await arkaneConnect.createSigner(WindowMode.POPUP).sign({
+        walletId: account.wallets[0].id,
+        data: res.tx,
+        type: SignatureRequestType.AETERNITY_RAW
+      })
+      this.broadcastService.broadcastSignedTx(sigRes.result.signedTransaction, res.tx_id)
+        .subscribe(res => {
+          SpinnerUtil.hideSpinner()
+          swal("", "Success", "success")
+        }, hideSpinnerAndDisplayError)
+
     }, hideSpinnerAndDisplayError)
   }
 

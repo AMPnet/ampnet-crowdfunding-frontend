@@ -14,6 +14,7 @@ import { UserModel } from '../models/user-model';
 export class GeneralSettingsComponent implements OnInit {
 
   user: UserModel;
+  updatingInfo = false;
 
   constructor(
     private userService: UserService,
@@ -27,6 +28,10 @@ export class GeneralSettingsComponent implements OnInit {
       this.user = res;
       SpinnerUtil.hideSpinner()
     }, hideSpinnerAndDisplayError)
+  }
+
+  updateInfoClicked() {
+    this.updatingInfo = true;
   }
 
 }

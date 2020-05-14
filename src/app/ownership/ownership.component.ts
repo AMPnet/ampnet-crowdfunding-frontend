@@ -2,6 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../user-utils/user-service';
 import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
 import { UserModel } from '../models/user-model';
+import { OwnershipService } from './ownership.service';
+import { BroadcastService } from '../broadcast/broadcast-service';
+import { ArkaneConnect, SecretType, WindowMode, SignatureRequestType } from '@arkane-network/arkane-connect';
+import { SpinnerUtil } from '../utilities/spinner-utilities';
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-ownership',
@@ -12,12 +17,51 @@ export class OwnershipComponent implements OnInit {
 
   user: UserModel;
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, 
+    private ownershipService: OwnershipService,
+    private broadcastService: BroadcastService) { }
 
   ngOnInit() {
     this.userService.getOwnProfile().subscribe((res: any) => {
       this.user = res;
     }, hideSpinnerAndDisplayError)
+  }
+
+  changePlatformManagerClicked() {
+
+    let platformManagerAddress: any = $("#platform-manager-address").val()
+
+    this.ownershipService.getPlatformManagerTransaction(platformManagerAddress).subscribe(res => {
+      this.confirmAndBroadcastTransaction(res)
+    }, hideSpinnerAndDisplayError)
+  }
+
+  changeTokenIssuerClicked() {
+
+    let tokenIssuerAddress: any = $("#token-issuer-address").val()
+
+    this.ownershipService.getTokenIssuerTransaction(tokenIssuerAddress).subscribe(res => {
+      this.confirmAndBroadcastTransaction(res)
+    }, hideSpinnerAndDisplayError)
+  }
+
+  async confirmAndBroadcastTransaction(res: any) {
+    let arkaneConnect = new ArkaneConnect('AMPnet', {
+      environment: 'staging'
+    })
+  
+    let account = await arkaneConnect.flows.getAccount(SecretType.AETERNITY)
+
+    let sigRes = await arkaneConnect.createSigner(WindowMode.POPUP).sign({
+      walletId: account.wallets[0].id,
+      data: res.tx,
+      type: SignatureRequestType.AETERNITY_RAW
+    })
+    this.broadcastService.broadcastSignedTx(sigRes.result.signedTransaction, res.tx_id)
+      .subscribe(res => {
+        SpinnerUtil.hideSpinner()
+        swal("", "Success", "success")
+      }, hideSpinnerAndDisplayError)
   }
 
 }

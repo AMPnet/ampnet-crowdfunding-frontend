@@ -16,6 +16,8 @@ import { headersToString } from 'selenium-webdriver/http';
 import { validURL } from '../../utilities/link-valid-util';
 import { ArkaneConnect, SecretType, WindowMode, SignatureRequestType } from '@arkane-network/arkane-connect';
 import { BroadcastService } from 'src/app/broadcast/broadcast-service';
+import Tagify from '@yaireo/tagify'
+
 
 declare var _: any;
 declare var $: any;
@@ -60,7 +62,7 @@ export class ManageSingleProjectComponent implements OnInit {
         SpinnerUtil.hideSpinner();
         this.wallet = res;
         setTimeout(() => {
-          this.setUploadAreas();
+          this.setUploadAreas();  
         }, 300)
       }, err => {
         if(err.status == 404) { // 0501 meaning - "Missing wallet for org"

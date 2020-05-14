@@ -20,13 +20,13 @@
             {{investment.investment}} {{investment.project.currency}}
           </div>
         </div>
-        <div class="col-md-6 mt-3">
+        <div *ngIf="investment.project.roi != undefined" class="col-md-6 mt-3">
           <div class="explainer-mini text-white">
             <i class="fas fa-percentage mr-2"></i>
             Expected yearly return
           </div>
           <div class="h6 font-weight-bold mt-2">
-            
+            {{investment.project.roi.from}}
           </div>
         </div>
       </div>

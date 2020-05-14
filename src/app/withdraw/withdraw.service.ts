@@ -34,4 +34,8 @@ export class WithdrawService {
   getMyPendingWithdraw() {
     return this.http.get(API.generateRoute(this.endpoint), API.tokenHeaders())
   }
+
+  deleteWithdrawal(id: any) {
+    return this.http.delete(API.generateComplexRoute(this.endpoint, [id]), API.tokenHeaders());
+  }
 }

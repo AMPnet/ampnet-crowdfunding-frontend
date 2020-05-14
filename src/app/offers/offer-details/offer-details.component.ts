@@ -31,6 +31,7 @@ export class OfferDetailsComponent implements OnInit {
   fundedPercentage = 0
 
   isOverview = false;
+  isPortfolio = false;
 
   constructor(private offerService: OffersService, 
     private newsPreviewService: NewsPreviewService, 
@@ -49,6 +50,9 @@ export class OfferDetailsComponent implements OnInit {
 
     if(this.route.snapshot.params.isOverview) {
       this.isOverview = true
+    }
+    if(this.route.snapshot.params.inPortfolio) {
+      this.isPortfolio = true;
     }
   }
 

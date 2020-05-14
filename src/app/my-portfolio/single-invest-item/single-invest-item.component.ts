@@ -22,7 +22,7 @@ export class SingleInvestItemComponent implements OnInit {
 
   onClickedItem() {
     
-    this.router.navigate(['dash', 'my_portfolio', this.investment.project.uuid]);
+    this.router.navigate(['dash', 'my_portfolio', this.investment.project.uuid, "in_portfolio"]);
   }
 
   getImageAsURL() {

@@ -76,6 +76,7 @@ import { CompleteOnboardingComponent } from './complete-onboarding/complete-onbo
 import { SummaryComponent } from './summary/summary.component';
 import { PlatformBankAccountComponent } from './platform-bank-account/platform-bank-account.component';
 import { NewPlatformBankAccountComponent } from './platform-bank-account/new-platform-bank-account/new-platform-bank-account.component'
+import { ExchangeComponent } from './exchange/exchange.component'
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -172,7 +173,8 @@ export function jwtOptionsFactory() {
     CompleteOnboardingComponent,
     SummaryComponent,
     PlatformBankAccountComponent,
-    NewPlatformBankAccountComponent
+    NewPlatformBankAccountComponent,
+    ExchangeComponent
   ],
   imports: [
     BrowserModule,

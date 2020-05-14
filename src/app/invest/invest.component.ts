@@ -44,7 +44,6 @@ export class InvestComponent implements OnInit {
   ngOnInit() {
     this.expectedROI = 10.5;
     this.getWalletBalance();
-    this.getProject();
   }
 
 
@@ -59,6 +58,7 @@ export class InvestComponent implements OnInit {
         autonumericCurrency("#amount-input")
         SpinnerUtil.hideSpinner();
       }, 200)
+      this.getProject()
 
     }, err => {
       SpinnerUtil.hideSpinner();

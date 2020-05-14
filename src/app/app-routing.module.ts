@@ -49,6 +49,7 @@ import { CompleteOnboardingComponent } from './complete-onboarding/complete-onbo
 import { SummaryComponent } from './summary/summary.component';
 import { PlatformBankAccountComponent } from './platform-bank-account/platform-bank-account.component';
 import { NewPlatformBankAccountComponent } from './platform-bank-account/new-platform-bank-account/new-platform-bank-account.component';
+import { ExchangeComponent } from './exchange/exchange.component';
 
 // Defines public routes accessible to everyone
 // (landing page, login, register, contact help, etc...)
@@ -80,7 +81,7 @@ const routes: Routes = [
       { path: 'offers/:id', component: OfferDetailsComponent },
       { path: 'offers/:id/invest', component: InvestComponent },
       { path: 'my_portfolio', component: MyPortfolioComponent },
-      { path: 'my_portfolio/:id', component: InvestmentDetailsComponent },
+      { path: 'my_portfolio/:id/:inPortfolio', component: InvestmentDetailsComponent },
       { path: 'payment_options', component: PaymentOptionsComponent },
       { path: 'my_portfolio/investment_details/new_proposal', component: NewProposalComponent },
       { path: 'finish_new_proposal', component: FinishNewProposalComponent },
@@ -109,7 +110,8 @@ const routes: Routes = [
       { path: 'activation/:type', component: WalletActivationComponent },
       { path: 'complete_onboarding', component: CompleteOnboardingComponent },
       { path: 'admin/platform_bank_account', component: PlatformBankAccountComponent },
-      { path: 'admin/platform_bank_account/new', component: NewPlatformBankAccountComponent }
+      { path: 'admin/platform_bank_account/new', component: NewPlatformBankAccountComponent },
+      { path: 'exchange', component: ExchangeComponent }
     ]
   }
 ];

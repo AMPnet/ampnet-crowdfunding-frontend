@@ -5,6 +5,7 @@ declare var $: any;
 import swal from 'sweetalert2';
 import { AuthService, GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
+import { hideSpinnerAndDisplayError, displayBackendError } from 'src/app/utilities/error-handler';
 
 @Component({
   selector: 'app-log-in-modal',
@@ -58,14 +59,14 @@ export class LogInModalComponent implements OnInit {
         SpinnerUtil.hideSpinner();
         localStorage.setItem('access_token', result.access_token);
         this.navigateToDash();
-      }, error => {
-        SpinnerUtil.hideSpinner();
-        swal(
-          "",
-          error.error.description,
-          "warning"
-        );
-      });
+      }, (err) => {
+        SpinnerUtil.hideSpinner()
+        if(err.status == 401) {
+          swal("", "Invalid email and/or password", "warning")
+        } else {
+          displayBackendError(err)
+        }
+      } );
   }
 
   private navigateToDash() {

@@ -33,8 +33,8 @@ export class WalletComponent implements OnInit {
   }
 
   setUpArkane() {
-    let arkaneConnect = new ArkaneConnect("AMPnet", { environment: "staging"})
-    arkaneConnect.flows.getAccount(SecretType.AETERNITY).then(acc => {
+    this.arkaneConnect = new ArkaneConnect("AMPnet", { environment: "staging"})
+    this.arkaneConnect.flows.getAccount(SecretType.AETERNITY).then(acc => {
       if((acc.wallets != undefined) && (acc.wallets.length > 0)) {
         this.startWalletInit(acc.wallets[0].address)
       }
@@ -48,6 +48,7 @@ export class WalletComponent implements OnInit {
       SpinnerUtil.hideSpinner();
       this.getUserWallet();
     }, err => {
+      this.arkaneConnect.logout()
       SpinnerUtil.hideSpinner();
       displayBackendError(err);
     });

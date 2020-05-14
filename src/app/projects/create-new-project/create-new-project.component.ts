@@ -7,7 +7,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { displayBackendError } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { autonumericCurrency, stripCurrencyData, baseCurrencyUnitToCents } from 'src/app/utilities/currency-util';
-import { HereMapComponent } from 'src/app/here-map/here-map.component';
 
 declare var $: any;
 
@@ -18,7 +17,6 @@ declare var $: any;
 })
 export class CreateNewProjectComponent implements OnInit, AfterViewInit {
 
-  @ViewChild(HereMapComponent) hereMap: HereMapComponent;
 
   createProjectForm: FormGroup;
 
@@ -52,8 +50,8 @@ export class CreateNewProjectComponent implements OnInit, AfterViewInit {
       formValue.name,
       formValue.description,
       {
-        "lat": this.hereMap.lat,
-        "long": this.hereMap.lng
+        "lat": 0,
+        "long": 0
       },
       formValue.colloqual,
       {

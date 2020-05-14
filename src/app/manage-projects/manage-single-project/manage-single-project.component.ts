@@ -84,7 +84,7 @@ export class ManageSingleProjectComponent implements OnInit {
       swal("", "Verify the project creation with your blockchain wallet. You will be prompted now!","info")
         .then(async () => {
         let arkaneConnect = new ArkaneConnect('AMPnet', {
-          environment: 'stagin'
+          environment: 'staging'
         })
       
         let account = await arkaneConnect.flows.getAccount(SecretType.AETERNITY)
@@ -207,10 +207,13 @@ export class ManageSingleProjectComponent implements OnInit {
     var filesUppy = Uppy.Core({
       id: "files-upload-uppy"
     });
+    let width = $("#core-root-manager").width();
     filesUppy.use(Uppy.Dashboard, {
-      id: "myfilesdash",
-      trigger: "#proj-files-upload-target"
-    });
+      target: "#files-upload-uppy",
+      inline: true,
+      height: 200,
+      width: width
+    })
 
     filesUppy.use(Uppy.XHRUpload, {
       endpoint: API.generateComplexRoute("/project", [

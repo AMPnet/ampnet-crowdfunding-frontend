@@ -37,35 +37,20 @@
 		<div class="col-md-12">
 			<div class="card h-100">
 				<div class="card-body">
-					<div class="card-title explainer-mini">Status</div>
-					<div class="card-text">
-						<div class="row">
-							<div class="col-md-8">
-								
-								
-								<span class="explainer-mini gray-text">
-									<span class="" *ngIf="offerModel.active">
-										<i class="fas fa-toggle-on mr-3"></i>
-										Open for funding
-									</span>
-									<span class="explainer-mini" *ngIf="!offerModel.active">
-										<i class="fas fa-toggle-off"></i>
-										Closed for funding
-									</span>
-								</span>
-							</div>
-							
-							<div class="col-md-12 mt-2">
-								<div class="progress">
-									<div class="progress-bar" role="progressbar"
-										[style.width.%]="fundedPercentage"
-										></div>
-								</div>
-							</div>
-							<div class="col-md-12 mt-2">
-								<b>{{offerModel.currency}}{{offerModel.current_funding}}</b> of
-								<b>{{offerModel.currency}}{{offerModel.expected_funding}}</b> collected
-							</div>
+					<div class="card-title">
+						<i class="fas fa-share-alt mr-3 explainer-mini"></i>
+						<span class="explainer-mini">Share this project</span>
+					</div>
+					<div class="card-text d-flex flex-row justify-content-between">
+						<div style="color: blue" class="explainer-mini cursor-pointer">
+							Facebook
+						</div>
+						<div style="color: blue" class="explainer-mini cursor-pointer">
+							Twitter
+						</div>
+						<div class="explainer-mini cursor-pointer">
+							<i class="fas fa-link mr-2"></i>
+							Link
 						</div>
 					</div>
 				</div>
@@ -101,7 +86,7 @@
 								<i class="mr-2 fas fa-chart-line"></i>
 								Expected yearly return
 							</p>
-							{{offerModel.return_on_investment}}%
+							{{offerModel.roi.from}}% - {{offerModel.roi.to}}%
 						</div>
 						<div class="dropdown-divider"></div>
 						<div class="mb-3 info-holder">
@@ -140,76 +125,7 @@
 			</div>
 		</div>
 
-		<!-- <div class="col-md-6 mb-3">
-			<div class="card h-100">
-				<div class="card-body">
-					<div class="card-text">
-						<div class="d-flex justify-content-between flex-row">
-							<div class="d-flex flex-column">
-								<div class="explainer-mini">
-									Min investment
-								</div>
-								<div class="p">{{offerModel.currency}}{{offerModel.min_per_user}}</div>
-							</div>
-							<div class="d-flex flex-column">
-								<div class="explainer-mini">
-									Max investment
-								</div>
-								<div class="p">
-									{{offerModel.currency}}{{offerModel.max_per_user}}
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div> -->
-
-		<div class="col-md-12 mb-3">
-			<div class="card h-100">
-				<div class="card-body">
-					<div class="card-title">
-						<i class="fas fa-share-alt mr-3 explainer-mini"></i>
-						<span class="explainer-mini">Share this project</span>
-					</div>
-					<div class="card-text d-flex flex-row justify-content-between">
-						<div style="color: blue" class="explainer-mini cursor-pointer">
-							Facebook
-						</div>
-						<div style="color: blue" class="explainer-mini cursor-pointer">
-							Twitter
-						</div>
-						<div class="explainer-mini cursor-pointer">
-							<i class="fas fa-link mr-2"></i>
-							Link
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-
-		<div *ngIf="newsPreviews.length > 0" class="col-md-12">
-			<div class="explainer-mini mb-3">News</div>
-			<ul class="list-group">
-				<a *ngFor="let news of newsPreviews" style="height: 120px; text-decoration: none" href="{{news.url}}"
-					class="list-group-item p-0 mt-2 cursor-pointer gray-text">
-					<div class="w-100 h-100 d-flex flex-row">
-						<div style="width: 120px">
-							<img class="news-holder-image" style="" src="{{news.image}}" alt="">
-						</div>
-						<div class="p-3 d-flex flex-column mb-0">
-							<div style="overflow: hidden; text-overflow: ellipsis"
-								class="explainer-mini mb-2 text-uppercase w-100">{{news.title}}</div>
-							<div style="overflow: hidden; text-overflow: ellipsis">{{news.description}}</div>
-						</div>
-					</div>
-				</a>
-			</ul>
-			<hr>
-		</div>
-
-		<div class="col-md-6 mt-4">
+		<div class="col-md-6 mt-3">
 			<div class="card h-100">
 				<div class="card-body">
 					<div class="card-title explainer-mini">Documents</div>
@@ -233,10 +149,65 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-md-6 mt-4">
-			<div class="card">
+
+		<div class="col-md-6 mt-3">
+			<div class="card h-100">
+				<div class="card-body">
+					<div class="card-title explainer-mini">Status</div>
+					<div class="card-text">
+						<div class="row">
+							<div class="col-md-8">
+								
+								
+								<span class="explainer-mini gray-text">
+									<span class="" *ngIf="offerModel.active">
+										<i class="fas fa-toggle-on mr-3"></i>
+										Open for funding
+									</span>
+									<span class="explainer-mini" *ngIf="!offerModel.active">
+										<i class="fas fa-toggle-off"></i>
+										Closed for funding
+									</span>
+								</span>
+							</div>
+							
+							<div class="col-md-12 mt-2">
+								<div class="progress">
+									<div class="progress-bar" role="progressbar"
+										[style.width.%]="fundedPercentage"
+										></div>
+								</div>
+							</div>
+							<div class="col-md-12 mt-2">
+								<b>{{offerModel.currency}}{{offerModel.current_funding}}</b> of
+								<b>{{offerModel.currency}}{{offerModel.expected_funding}}</b> collected
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
+
+		
+		<div *ngIf="newsPreviews.length > 0" class="col-md-12 mt-3">
+				<ul class="list-group">
+					<a *ngFor="let news of newsPreviews" style="height: 120px; text-decoration: none" href="{{news.url}}"
+						class="list-group-item p-0 mt-2 cursor-pointer gray-text">
+						<div class="w-100 h-100 d-flex flex-row">
+							<div style="width: 120px">
+								<img class="news-holder-image" style="" src="{{news.image}}" alt="">
+							</div>
+							<div class="p-3 d-flex flex-column mb-0">
+								<div style="overflow: hidden; text-overflow: ellipsis"
+									class="explainer-mini mb-2 text-uppercase w-100">{{news.title}}</div>
+								<div style="overflow: hidden; text-overflow: ellipsis">{{news.description}}</div>
+							</div>
+						</div>
+					</a>
+				</ul>
+			
+		</div>
+
 		<div class="col-md-12 mt-3">
 				<disqus [identifier]="offerModel.uuid"></disqus>
 		</div>

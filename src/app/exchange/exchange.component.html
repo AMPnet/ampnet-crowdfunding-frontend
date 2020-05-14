@@ -1,3 +1,43 @@
-<p>
-  exchange works!
-</p>
+<div *ngIf="portfolio != undefined" class="container root-content-container">
+  <div class="alert alert-info w-100">
+    The exchange allows you to sell your projects to prospective buyers or buy projects from other investors at a discount!
+  </div>
+
+  <div class="explainer-mini mt-4">Sell project shares</div>
+  <select (change)="onChangeSelect($event.target.value)" data-live-search="true" name="" id="" class="form-control w-100 mt-2 px-3 py-2">
+    <option value="" disabled selected>Select the project you want to sell</option>
+    <option *ngFor="let item of portfolio; let i = index" value="{{i}}">
+      {{item.project.name}}
+    </option>
+  </select>
+  <div *ngIf="selectedProjectIndex > -1" class="mt-3 w-100">
+    <div class="row">
+      <div class="col-md-6">
+        <span class="">
+          Your number of shares
+          <div class="explainer-mini">
+            {{portfolio[selectedProjectIndex].investment}}
+          </div>
+        </span>
+      </div>
+      <div class="col-md-6">
+        <span class=" float-right">
+          Total number of shares
+          <div class="explainer-mini">
+            {{portfolio[selectedProjectIndex].project.expected_funding}}
+          </div>
+        </span>
+      </div>
+    </div>
+    
+   <input type="text" placeholder="Enter the number of shares you want to sell" class="form-control w-100 mt-3 p-4">
+   
+   <button class="btn btn-primary px-4 py-3 float-right mt-3">Publish sales proposal</button>
+
+  </div>
+
+  <div class="explainer-mini mt-5">Projects on sale</div>
+
+</div> 
+
+

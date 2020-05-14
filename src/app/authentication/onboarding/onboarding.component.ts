@@ -27,12 +27,18 @@ export class OnboardingComponent implements OnInit {
 
     SpinnerUtil.showSpinner();
     this.onboardingService.getSessionID().subscribe((res:any) => {
+      
       let script: any = document.createElement('idy-flow-manager');
-      script.clientToken = res.access_token
+      script.clientToken = res
       document.querySelector('#identyum-target').appendChild(script);
-      setTimeout(() => {
-        this.hasClientToken = true;
-      }, 200)
+
+      let loader = document.createElement('script')
+      loader.type = "text/javascript"
+      loader.src = "https://web-components.stage.identyum.com/flow-manager/component"
+      loader.onload = () => {
+      }
+      document.getElementsByTagName('head')[0].appendChild(loader)
+
     }, hideSpinnerAndDisplayError)
 
   }

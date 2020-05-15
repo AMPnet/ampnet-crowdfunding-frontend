@@ -8,6 +8,8 @@ import * as QRCode from 'qrcode'
 import { ArkaneConnect, SecretType, WindowMode, SignatureRequestType } from '@arkane-network/arkane-connect';
 import { BroadcastService } from '../broadcast/broadcast-service';
 import swal from 'sweetalert2';
+import { baseCurrencyUnitToCents, centsToBaseCurrencyUnit } from '../utilities/currency-util';
+import  numeral  from 'numeral'
 
 declare var $: any;
 
@@ -22,6 +24,8 @@ export class WithdrawComponent implements OnInit {
   banks: BankAccountModel[]
 
   pendingWithdrawal: WithdrawalModel
+
+  withdrawAmount: string = ""
 
   constructor(private paymentService: PaymentService,
     private withdrawService: WithdrawService,
@@ -44,6 +48,9 @@ export class WithdrawComponent implements OnInit {
     SpinnerUtil.showSpinner()
     this.withdrawService.getMyPendingWithdraw().subscribe((res: any) => {
       this.pendingWithdrawal = res
+      this.withdrawAmount = numeral(
+        centsToBaseCurrencyUnit(this.pendingWithdrawal.amount)
+      ).format("0,0")
     }, hideSpinnerAndDisplayError)
   }
 
@@ -60,7 +67,8 @@ export class WithdrawComponent implements OnInit {
     SpinnerUtil.showSpinner()
     let amount: any = $("#withdraw-amount").val()
     let iban = this.banks[this.activeBankAccount].iban;
-    this.withdrawService.createWithdrawRequest(amount, iban).subscribe((res:any) => {
+    let centAmount = baseCurrencyUnitToCents(amount)
+    this.withdrawService.createWithdrawRequest(centAmount, iban).subscribe((res:any) => {
       this.pendingWithdrawal = res;
       SpinnerUtil.hideSpinner()
     }, hideSpinnerAndDisplayError)

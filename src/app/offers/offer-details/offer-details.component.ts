@@ -15,6 +15,7 @@ import * as numeral from 'numeral';
 import { prettyCurrency, centsToBaseCurrencyUnit } from 'src/app/utilities/currency-util';
 import { Meta } from '@angular/platform-browser';
 import { UserService } from 'src/app/user-utils/user-service';
+import { WalletService } from 'src/app/wallet/wallet.service';
 
 @Component({
   selector: 'app-offer-details',
@@ -33,7 +34,7 @@ export class OfferDetailsComponent implements OnInit {
 
   isOverview = false;
   isPortfolio = false;
-  userConfirmend = false;
+  userConfirmed = true;
 
   constructor(private offerService: OffersService, 
     private newsPreviewService: NewsPreviewService, 
@@ -59,8 +60,9 @@ export class OfferDetailsComponent implements OnInit {
     }
 
     if(!this.isOverview && !this.isPortfolio) {
-      this.userService.getOwnProfile().subscribe((res:any) => {
-        this.userConfirmend = res.verified;
+      SpinnerUtil.showSpinner()
+      this.userService.getOwnProfile().subscribe((res: any) => {
+        this.userConfirmed = res.verified;
       }, hideSpinnerAndDisplayError)
     }
   }

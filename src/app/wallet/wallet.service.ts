@@ -23,6 +23,7 @@ export class WalletService {
     let walletResponse = this.http.get<WalletModel>(API.generateRoute(this.endpoint), API.tokenHeaders());
     walletResponse.subscribe((res: WalletModel) => {
       UserStatusStorage.walletData = res
+      
     })
     return walletResponse
   }

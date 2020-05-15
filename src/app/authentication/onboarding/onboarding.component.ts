@@ -40,6 +40,15 @@ export class OnboardingComponent implements OnInit {
       }
       document.getElementsByTagName('head')[0].appendChild(loader)
       SpinnerUtil.hideSpinner()
+
+      script.addEventListener('finished', (event) => {
+        SpinnerUtil.showSpinner()
+        this.onboardingService.verifyUser(res.access_token).subscribe(res => {
+          swal("", "Success", "success")
+          SpinnerUtil.hideSpinner()
+        }, hideSpinnerAndDisplayError)
+      })
+
     }, hideSpinnerAndDisplayError)
 
   }

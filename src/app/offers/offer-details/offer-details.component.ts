@@ -35,6 +35,7 @@ export class OfferDetailsComponent implements OnInit {
   isOverview = false;
   isPortfolio = false;
   userConfirmed = true;
+  projectBalance = 0;
 
   constructor(private offerService: OffersService, 
     private newsPreviewService: NewsPreviewService, 
@@ -130,6 +131,13 @@ export class OfferDetailsComponent implements OnInit {
       this.prettifyModel(res);
       this.setUpNewsPreviews(this.offerModel.news);
       this.setMetaTags()
+      SpinnerUtil.showSpinner()
+      this.projectService.getProjectWallet(offerID).subscribe((res: any) => {
+        this.offerModel.current_funding = centsToBaseCurrencyUnit(res.balance);
+        this.fundedPercentage = 100 * (this.offerModel.current_funding) / (this.offerModel.expected_funding) 
+        this.structureProjectData()
+        SpinnerUtil.hideSpinner()
+      }, hideSpinnerAndDisplayError)
     }, err => {
       SpinnerUtil.hideSpinner();
       console.log(err);
@@ -141,6 +149,10 @@ export class OfferDetailsComponent implements OnInit {
         displayBackendError(err);
       }
     });
+  }
+
+  structureProjectData() {
+
   }
 
 }

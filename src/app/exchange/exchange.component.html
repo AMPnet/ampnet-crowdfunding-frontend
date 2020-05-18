@@ -28,6 +28,7 @@
           </div>
         </span>
       </div>
+      
     </div>
     
    <input (change)="onChangeInput($event.target.value)" min="0" max="{{portfolio[selectedProjectIndex].investment}}" id="input-share-sales" type="range" placeholder="Enter the number of shares you want to sell" class="form-control w-100 mt-3 p-4">
@@ -49,6 +50,24 @@
         </div>
        </div>
      </div>
+     <div class="col-md-4 mt-3">
+      <div>Your purchase price</div>
+      <div class="explainer-mini">
+        {{pricePaidFor}}EUR
+      </div>
+    </div>
+    <div class="col-md-4 mt-3 text-center">
+      <div>Project age</div>
+      <div class="explainer-mini">
+        3 years
+      </div>
+    </div>
+    <div class="col-md-4 mt-3 float-right">
+      <div class="text-right">Suggested discounted price</div>
+      <div class="explainer-mini text-right">
+        {{suggestedSalePrice}}EUR
+      </div>
+    </div>
    </div>
    
    

@@ -6,7 +6,7 @@
       <div class="explainer-mini text-uppercase">
         Withdrawal
       </div>
-      <input class="w-100 mt-3 py-4 form-control font-weight-bold p-4" type="number"
+      <input class="w-100 mt-3 py-4 form-control  p-4" type="number"
         placeholder="Enter withdrawal amount" name="" id="withdraw-amount">
 
       <div class="explainer-mini text-uppercase mt-4">
@@ -14,7 +14,7 @@
       </div>
 
       <ul class=" list-group mt-3">
-        <li class="list-group-item cursor-pointer hover-bg font-weight-bold gray-text"
+        <li class="list-group-item cursor-pointer hover-bg  gray-text"
         *ngFor="let bank of banks; let i = index"
         (click)="changeActiveAccount(i)">
           {{bank.iban}}

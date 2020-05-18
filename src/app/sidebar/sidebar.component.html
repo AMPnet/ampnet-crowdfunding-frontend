@@ -5,7 +5,7 @@
 	</div>
 
 	<ul id="main-menu" class="list-unstyled components">
-		<p class="menu-header ml-4 mb-3 mt-3 font-weight-bold">MENU</p>
+		<p class="menu-header ml-4 mb-3 mt-3 ">MENU</p>
 		<li routerLink="offers" routerLinkActive="side-active">
 			<i class="menu-icon fas fa-align-left"></i>
 			<span>Offers</span>
@@ -23,14 +23,14 @@
 				<span>Investment groups</span>
 		</li>
 		<li routerLink="exchange" routerLinkActive="side-active">
-			<i class="menu-icon fas fa-coins"></i>
-			<span>Exchange</span>
+			<i class="menu-icon fas fa-store"></i>
+			<span>Project market</span>
 		</li>
 	</ul>
 
 
 	<ul id="main-menu" class="list-unstyled components text-white">
-		<p class="menu-header ml-4 mb-3 mt-3 font-weight-bold">SETTINGS</p>
+		<p class="menu-header ml-4 mb-3 mt-3 ">SETTINGS</p>
 		<li  routerLink="general_settings" routerLinkActive="side-active">
 			<i class="menu-icon fas fa-user-cog"></i>
 			<span>User Profile</span>
@@ -43,7 +43,7 @@
 		</li>
 	</ul>
 
-	<p *ngIf="isAdmin" class="menu-header ml-4 mb-3 mt-3 font-weight-bold">ADMIN</p>
+	<p *ngIf="isAdmin" class="menu-header ml-4 mb-3 mt-3 ">ADMIN</p>
 	<ul *ngIf="isAdmin" id="main-menu" class="list-unstyled components">
 		<li routerLink="manage_withdrawals" routerLinkActive="side-active">
 			<i class="menu-icon fas fa-arrow-circle-up "></i>

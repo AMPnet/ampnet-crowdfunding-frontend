@@ -88,7 +88,6 @@ body {
 }
 
 .explainer-mini {
-	font-weight: bold;
 	font-size: 14px;
 	color: #777;
 }
@@ -124,8 +123,8 @@ body {
 	background-size: rgb(244,247,250);
 }
 
-.font-weight-bold {
-	font-weight: 400!important;
+. {
+	font-weight: 200!important;
 }
 
 .cursor-pointer {

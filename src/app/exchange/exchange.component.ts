@@ -19,6 +19,8 @@ export class ExchangeComponent implements OnInit {
   personalShares = "";
   totalShares = "";
   sharesForSale = "";
+  pricePaidFor = "";
+  suggestedSalePrice = "";
 
   constructor(private portfolioService: PortfolioService) { }
 
@@ -48,8 +50,12 @@ export class ExchangeComponent implements OnInit {
   }
 
   onChangeInput(value: number) {
-    this.remainingShares = this.numeralFormat(this.portfolio[this.selectedProjectIndex].investment - value)
+    let folioItem = this.portfolio[this.selectedProjectIndex];
+
+    this.remainingShares = this.numeralFormat(folioItem.investment - value)
     this.sharesForSale = this.numeralFormat(value);
+    this.pricePaidFor = this.numeralFormat(value / 100)
+    this.suggestedSalePrice = this.numeralFormat((value / 100) * 0.7)
   }
 
   numeralFormat(input: number) : string {

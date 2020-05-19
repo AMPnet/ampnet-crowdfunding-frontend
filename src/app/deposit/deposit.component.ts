@@ -17,6 +17,8 @@ export class DepositComponent implements OnInit {
   depositModel: DepositModel;
   masterIban: string;
 
+  projectUUID: string = ""
+
   constructor(private depositService: DepositServiceService) { }
 
   ngOnInit() {

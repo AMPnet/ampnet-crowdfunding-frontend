@@ -1,7 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { WalletComponent } from './wallet.component';
-import { WalletChartComponent } from './wallet-chart/wallet-chart.component';
 import { WalletTxHistoryComponent } from './wallet-tx-history/wallet-tx-history.component';
 import { DepositModalComponent } from './deposit-modal/deposit-modal.component';
 import { WithdrawModalComponent } from './withdraw-modal/withdraw-modal.component';
@@ -16,7 +15,6 @@ describe('WalletComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
        WalletComponent,
-       WalletChartComponent,
        WalletTxHistoryComponent,
        DepositModalComponent,
        WithdrawModalComponent

@@ -9,7 +9,6 @@ import { AppRoutingModule } from './/app-routing.module';
 import { WalletComponent } from './wallet/wallet.component';
 import { OffersComponent } from './offers/offers.component';
 import { SingleOfferItemComponent } from './offers/single-offer-item/single-offer-item.component';
-import { WalletChartComponent } from './wallet/wallet-chart/wallet-chart.component';
 import { WalletTxHistoryComponent } from './wallet/wallet-tx-history/wallet-tx-history.component';
 import { OfferDetailsComponent } from './offers/offer-details/offer-details.component';
 import { DepositModalComponent } from './wallet/deposit-modal/deposit-modal.component';
@@ -112,7 +111,6 @@ export function jwtOptionsFactory() {
     WalletComponent,
     OffersComponent,
     SingleOfferItemComponent,
-    WalletChartComponent,
     WalletTxHistoryComponent,
     OfferDetailsComponent,
     DepositModalComponent,

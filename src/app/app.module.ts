@@ -6,7 +6,6 @@ import { AppComponent } from './app.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { AppRoutingModule } from './/app-routing.module';
-import { OverviewComponent } from './overview/overview.component';
 import { WalletComponent } from './wallet/wallet.component';
 import { OffersComponent } from './offers/offers.component';
 import { SingleOfferItemComponent } from './offers/single-offer-item/single-offer-item.component';
@@ -22,7 +21,6 @@ import { SingleProposalItemComponent } from './investment-details/single-proposa
 import { PaymentOptionsComponent } from './payment-options/payment-options.component';
 import { FooterComponent } from './footer/footer.component';
 import { NewProposalComponent } from './investment-details/new-proposal/new-proposal.component';
-import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { FinishNewProposalComponent } from './investment-details/finish-new-proposal/finish-new-proposal.component';
 import { ProposalDetailsComponent } from './investment-details/proposal-details/proposal-details.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
@@ -111,7 +109,6 @@ export function jwtOptionsFactory() {
     AppComponent,
     SidebarComponent,
     NavbarComponent,
-    OverviewComponent,
     WalletComponent,
     OffersComponent,
     SingleOfferItemComponent,

@@ -1,6 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { WalletChartComponent } from '../wallet/wallet-chart/wallet-chart.component';
 import { SingleInvestItemComponent } from './single-invest-item/single-invest-item.component';
 
 
@@ -14,7 +13,6 @@ describe('MyPortfolioComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         MyPortfolioComponent,
-        WalletChartComponent,
         SingleInvestItemComponent
       ],
       imports: [ RouterTestingModule, RouterTestingModule ]

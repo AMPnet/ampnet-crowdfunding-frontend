@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { OverviewComponent } from './overview/overview.component';
 import { WalletComponent } from './wallet/wallet.component';
 import { OffersComponent } from './offers/offers.component';
 import { OfferDetailsComponent } from './offers/offer-details/offer-details.component';
@@ -41,10 +40,6 @@ import { DepositComponent } from './deposit/deposit.component';
 import { ManageSingleDepositComponent } from './manage-deposits/manage-single-deposit/manage-single-deposit.component';
 import { WithdrawComponent } from './withdraw/withdraw.component';
 import { WalletActivationComponent } from './wallet-activation/wallet-activation.component';
-import { UserActivationComponent } from './wallet-activation/user-activation/user-activation.component';
-import { GroupActivationComponent } from './wallet-activation/group-activation/group-activation.component';
-import { ProjectActivationComponent } from './wallet-activation/project-activation/project-activation.component';
-import { ActivateSignComponent } from './wallet-activation/activate-sign/activate-sign.component';
 import { CompleteOnboardingComponent } from './complete-onboarding/complete-onboarding.component';
 import { SummaryComponent } from './summary/summary.component';
 import { PlatformBankAccountComponent } from './platform-bank-account/platform-bank-account.component';
@@ -76,7 +71,6 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     children: [
       { path: '', component: OffersComponent },
-      { path: 'overview', component: OverviewComponent },
       { path: 'wallet', component: WalletComponent },
       { path: 'offers', component: OffersComponent },
       { path: 'offers/:id', component: OfferDetailsComponent },

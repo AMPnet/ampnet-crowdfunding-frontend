@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { InvestItemModel } from './single-invest-item/InvestItemModel';
 import * as _ from 'lodash';
 import { PortfolioService } from './portfolio.service';
-import { displayBackendError, hideSpinnerAndDisplayError } from '../utilities/error-handler';
+import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { PortfolioRoot, PortfolioStats } from './portfolio.models'
 import { WalletService } from '../wallet/wallet.service';
@@ -19,14 +18,13 @@ export class MyPortfolioComponent implements OnInit {
   constructor(private portfolioService: PortfolioService,
     private walletService: WalletService) { }
 
-    
+
   hasWallet = false;
   portfolio: PortfolioRoot[];
   stats: PortfolioStats;
   roi: number = 0;
 
   ngOnInit() {
-    
     this.getTransactions()
   }
 
@@ -58,9 +56,6 @@ export class MyPortfolioComponent implements OnInit {
     }, err => {
       SpinnerUtil.hideSpinner()
     })
-    
-
-    
   }
 
 }

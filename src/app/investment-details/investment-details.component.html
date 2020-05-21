@@ -2,7 +2,12 @@
 	<div class="row mb-5">
 		<div class="col-md-12">
 			<h4>{{investment.project.name}}</h4>
-		</div>
+    </div>
+    <div class="float-right w-100" *ngIf="isCancelable">
+      <button (click)="cancelInvestment()" class="btn btn-primary py-3 w-25">
+        Cancel
+      </button>
+    </div>
 		<div class="col-md-12">
 			<hr/>
 		</div>

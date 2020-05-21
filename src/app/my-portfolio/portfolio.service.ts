@@ -25,4 +25,18 @@ export class PortfolioService {
       ]), API.tokenHeaders())
     }
 
+    generateCancelInvestmentTransaction(project: string) {
+      return this.http.post(API.generateComplexRoute("/wallet/invest", [
+        "project", project,
+        "cancel"
+      ]), {}, API.tokenHeaders())
+    }
+
+    isInvestmentCancelable(projectWallet: string, userWallet: string) {
+      return this.http.get(API.generateComplexRoute("/middleware", [
+        "projects", projectWallet,
+        "investors", userWallet,
+        "cancelable"
+      ]))
+    }
 }

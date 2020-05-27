@@ -1,8 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { InvestItemModel } from './InvestItemModel';
 import { Router } from '@angular/router';
 import { PortfolioRoot } from '../portfolio.models';
-import { prettyCurrency, autonumericCurrency, centsToBaseCurrencyUnit } from 'src/app/utilities/currency-util';
+import { prettyCurrency, centsToBaseCurrencyUnit } from 'src/app/utilities/currency-util';
 
 @Component({
   selector: 'app-single-invest-item',
@@ -21,7 +20,6 @@ export class SingleInvestItemComponent implements OnInit {
   }
 
   onClickedItem() {
-    
     this.router.navigate(['dash', 'my_portfolio', this.investment.project.uuid, "in_portfolio"]);
   }
 

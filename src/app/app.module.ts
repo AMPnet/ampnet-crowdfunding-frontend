@@ -61,7 +61,6 @@ import { DepositComponent } from './deposit/deposit.component';
 import { ManageDepositsComponent } from './manage-deposits/manage-deposits.component';
 import { ManageSingleDepositComponent } from './manage-deposits/manage-single-deposit/manage-single-deposit.component';
 import { WithdrawComponent } from './withdraw/withdraw.component';
-import { SignBroadcastComponent } from './sign-broadcast/sign-broadcast.component';
 import { EscapeHtmlPipe } from './pipes/unescape';
 import { WalletActivationComponent } from './wallet-activation/wallet-activation.component';
 import { UserActivationComponent } from './wallet-activation/user-activation/user-activation.component';
@@ -157,7 +156,6 @@ export function jwtOptionsFactory() {
     ManageDepositsComponent,
     ManageSingleDepositComponent,
     WithdrawComponent,
-    SignBroadcastComponent,
     EscapeHtmlPipe,
     WalletActivationComponent,
     UserActivationComponent,

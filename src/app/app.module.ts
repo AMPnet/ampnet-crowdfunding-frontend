@@ -66,28 +66,27 @@ import { WalletActivationComponent } from './wallet-activation/wallet-activation
 import { UserActivationComponent } from './wallet-activation/user-activation/user-activation.component';
 import { GroupActivationComponent } from './wallet-activation/group-activation/group-activation.component';
 import { ProjectActivationComponent } from './wallet-activation/project-activation/project-activation.component';
-import { ActivateSignComponent } from './wallet-activation/activate-sign/activate-sign.component';
 import { CompleteOnboardingComponent } from './complete-onboarding/complete-onboarding.component';
 import { SummaryComponent } from './summary/summary.component';
 import { PlatformBankAccountComponent } from './platform-bank-account/platform-bank-account.component';
-import { NewPlatformBankAccountComponent } from './platform-bank-account/new-platform-bank-account/new-platform-bank-account.component'
+import { NewPlatformBankAccountComponent } from './platform-bank-account/new-platform-bank-account/new-platform-bank-account.component';
 import { ExchangeComponent } from './exchange/exchange.component';
-import { OwnershipComponent } from './ownership/ownership.component'
+import { OwnershipComponent } from './ownership/ownership.component';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
 }
 
-let config = new AuthServiceConfig([
+const config = new AuthServiceConfig([
   {
     id: GoogleLoginProvider.PROVIDER_ID,
     provider: new GoogleLoginProvider('507079277405-o3834fb5jojeq3u9tmm14aobeukg3jmo.apps.googleusercontent.com')
   },
   {
     id: FacebookLoginProvider.PROVIDER_ID,
-    provider: new FacebookLoginProvider("293264554869933")
+    provider: new FacebookLoginProvider('293264554869933')
   }
-])
+]);
 
 export function provideConfig() {
   return config;
@@ -99,7 +98,7 @@ export function jwtOptionsFactory() {
       return localStorage.getItem('access_token');
     },
     whitelistedDomains: ['localhost:4200']
-  }
+  };
 }
 
 @NgModule({
@@ -161,7 +160,6 @@ export function jwtOptionsFactory() {
     UserActivationComponent,
     GroupActivationComponent,
     ProjectActivationComponent,
-    ActivateSignComponent,
     CompleteOnboardingComponent,
     SummaryComponent,
     PlatformBankAccountComponent,
@@ -181,10 +179,11 @@ export function jwtOptionsFactory() {
     NgxSpinnerModule
   ],
   providers: [
-  {
-    provide: AuthServiceConfig,
-    useFactory: provideConfig
-  }],
+    {
+      provide: AuthServiceConfig,
+      useFactory: provideConfig
+    }],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

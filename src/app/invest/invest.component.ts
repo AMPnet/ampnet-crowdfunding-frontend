@@ -101,7 +101,7 @@ export class InvestComponent implements OnInit {
     if(inputValue == NaN) {
       inputValue = 0
     }
-    console.log(inputValue)
+
     //this.inputValue = numeral(inputValue).format('0,0,0');
     this.yearlyReturn = numeral(this.calculateYearlyReturn(inputValue)).format('0,0.00');
     this.projectStake = this.calculateProjectStake(inputValue)

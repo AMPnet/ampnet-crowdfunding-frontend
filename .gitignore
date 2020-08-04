@@ -13,7 +13,8 @@ src/**/*.js
 /node_modules
 
 # IDEs and editors
-/.idea
+.idea/*
+!.idea/codeStyles/
 .project
 .classpath
 .c9/

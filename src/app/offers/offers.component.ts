@@ -23,20 +23,20 @@ export class OffersComponent implements OnInit {
   featuredComponents: OfferModel[];
   promotedOffer: OfferModel;
 
-  isOverview = false
+  isOverview = false;
 
   constructor(private offersService: OffersService,
-    private projectService: ProjectService,
-    private route: ActivatedRoute
-  ) { 
+              private projectService: ProjectService,
+              private route: ActivatedRoute
+  ) {
 
   }
 
   ngOnInit() {
     this.getAllOffers();
- 
-    if(this.route.snapshot.params.isOverview) {
-      this.isOverview = true
+
+    if (this.route.snapshot.params.isOverview) {
+      this.isOverview = true;
     }
 
   }
@@ -45,9 +45,7 @@ export class OffersComponent implements OnInit {
     SpinnerUtil.showSpinner();
 
     this.offersService.getAllOffers().subscribe((res: any) => {
-      console.log(res)
-      let projects: [any] = res.projects;
-      console.log(projects)
+      const projects: [any] = res.projects;
       this.components = projects.map((proj) => {
         return {
           title: proj.name,
@@ -56,15 +54,15 @@ export class OffersComponent implements OnInit {
           fundingRequired: centsToBaseCurrencyUnit(proj.expected_funding),
           currentFunding: 0,
           headerImageUrl: proj.main_image,
-          status: "Active",
-          endDate: moment(proj.end_date).format("MMM Do, YYYY"),
+          status: 'Active',
+          endDate: moment(proj.end_date).format('MMM Do, YYYY'),
           offerID: proj.uuid,
           owner: proj.return_on_investment,
-          currency: ""
-        }
+          currency: ''
+        };
       });
-      if(projects.length > 0) {
-        this.getProjectBalances(0)
+      if (projects.length > 0) {
+        this.getProjectBalances(0);
 
       }
       SpinnerUtil.hideSpinner();
@@ -76,15 +74,17 @@ export class OffersComponent implements OnInit {
   }
 
   getProjectBalances(index: number) {
-    if(index >= this.components.length) { return }
-    let component = this.components[index]
-    this.projectService.getProjectWallet(component.offerID).subscribe((res: any) =>{
-      this.components[index].currentFunding = centsToBaseCurrencyUnit(res.balance)
-      this.components[index].currency = res.currency
-      this.getProjectBalances(index + 1)
+    if (index >= this.components.length) {
+      return;
+    }
+    const component = this.components[index];
+    this.projectService.getProjectWallet(component.offerID).subscribe((res: any) => {
+      this.components[index].currentFunding = centsToBaseCurrencyUnit(res.balance);
+      this.components[index].currency = res.currency;
+      this.getProjectBalances(index + 1);
     }, err => {
-      displayBackendError(err)
-    })
+      displayBackendError(err);
+    });
   }
 
 }

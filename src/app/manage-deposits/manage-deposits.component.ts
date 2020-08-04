@@ -24,9 +24,6 @@ export class ManageDepositsComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    // let code = "asldkjaskldjalksdjalksjdklasjdklajsdlaksjdlkasjdlakjkalsjdalsjdlasjdlaskjdalksdjlakdjaldjaldjalskdjaldjalsdja"
-    // QRCode.toCanvas(document.getElementById("minting-code-canvas"), code,
-    //   console.log)
   }
 
   getDepositInfoClicked() {
@@ -38,7 +35,6 @@ export class ManageDepositsComponent implements OnInit, AfterViewInit {
     SpinnerUtil.showSpinner()
     this.depositCooperativeService.getUnapprovedDeposits().subscribe((res: any) => {
       this.unapprovedDeposits = res.deposits
-      console.log(this.unapprovedDeposits)
       SpinnerUtil.hideSpinner()
     }, hideSpinnerAndDisplayError)
   }

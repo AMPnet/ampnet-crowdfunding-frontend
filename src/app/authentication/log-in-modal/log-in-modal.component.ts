@@ -17,7 +17,7 @@ export class LogInModalComponent implements OnInit {
   email: string;
   password: string;
 
-  constructor(private router: Router, 
+  constructor(private router: Router,
     private loginService: LogInModalService,
     private auth: AuthService) { }
 
@@ -33,12 +33,11 @@ export class LogInModalComponent implements OnInit {
     $('#log-in-modal').modal('toggle');
     this.socialLoginClicked(GoogleLoginProvider.PROVIDER_ID);
   }
-  
+
   socialLoginClicked(provider: string) {
     SpinnerUtil.showSpinner();
     this.auth.signIn(provider).then(res => {
       this.loginService.performSocialLogin(res.provider, res.authToken).subscribe(res => {
-        console.log(res);
         localStorage.setItem('access_token', (<any>res).access_token);
         SpinnerUtil.hideSpinner();
         this.router.navigate(['dash']);

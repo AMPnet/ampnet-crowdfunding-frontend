@@ -30,19 +30,20 @@ export class OfferDetailsComponent implements OnInit {
 
   newsPreviews: NewsLink[];
 
-  fundedPercentage = 0
+  fundedPercentage = 0;
 
   isOverview = false;
   isPortfolio = false;
   userConfirmed = true;
   projectBalance = 0;
 
-  constructor(private offerService: OffersService, 
-    private newsPreviewService: NewsPreviewService, 
-    private projectService: ProjectService, 
-    private route: ActivatedRoute,
-    private userService: UserService,
-    private meta: Meta) { }
+  constructor(private offerService: OffersService,
+              private newsPreviewService: NewsPreviewService,
+              private projectService: ProjectService,
+              private route: ActivatedRoute,
+              private userService: UserService,
+              private meta: Meta) {
+  }
 
   ngOnInit() {
     this.docs = _.fill(Array(5), {
@@ -53,35 +54,31 @@ export class OfferDetailsComponent implements OnInit {
     this.getOfferDetails();
     this.newsPreviews = [];
 
-    if(this.route.snapshot.params.isOverview) {
-      this.isOverview = true
+    if (this.route.snapshot.params.isOverview) {
+      this.isOverview = true;
     }
-    if(this.route.snapshot.params.inPortfolio) {
+    if (this.route.snapshot.params.inPortfolio) {
       this.isPortfolio = true;
     }
 
-    if(!this.isOverview && !this.isPortfolio) {
-      SpinnerUtil.showSpinner()
+    if (!this.isOverview && !this.isPortfolio) {
+      SpinnerUtil.showSpinner();
       this.userService.getOwnProfile().subscribe((res: any) => {
         this.userConfirmed = res.verified;
-      }, hideSpinnerAndDisplayError)
+      }, hideSpinnerAndDisplayError);
     }
   }
 
   setUpNewsPreviews(newsLinks: string[]) {
-
-    console.log(newsLinks);
-
     newsLinks.forEach(link => {
       this.newsPreviewService.getLinkPreview(link).subscribe((res: any) => {
-        console.log(res);
         this.newsPreviews.push({
           title: res.title,
           description: res.description,
           image: res.image.url,
           url: link
         });
-      }, console.log )
+      }, console.log);
     });
   }
 
@@ -93,9 +90,9 @@ export class OfferDetailsComponent implements OnInit {
     this.offerModel = res;
     this.offerModel.start_date = prettyDate(res.start_date);
     this.offerModel.end_date = prettyDate(res.end_date);
-    this.offerModel.expected_funding = numeral(centsToBaseCurrencyUnit(res.expected_funding)).format("0,0");
+    this.offerModel.expected_funding = numeral(centsToBaseCurrencyUnit(res.expected_funding)).format('0,0');
     this.offerModel.currency = prettyCurrency(res.currency);
-    this.offerModel.investor_count = numeral(1270).format("0,0");
+    this.offerModel.investor_count = numeral(1270).format('0,0');
     this.offerModel.current_funding = numeral(res.current_funding).format('0,0');
     this.offerModel.min_per_user = numeral(centsToBaseCurrencyUnit(res.min_per_user)).format('0,0');
     this.offerModel.max_per_user = numeral(centsToBaseCurrencyUnit(res.max_per_user)).format('0,0');
@@ -103,21 +100,21 @@ export class OfferDetailsComponent implements OnInit {
 
   setMetaTags() {
     this.meta.addTag({
-      name: "og:title",
+      name: 'og:title',
       content: this.offerModel.name
-    })
+    });
     this.meta.addTag({
-      name: "og:description",
+      name: 'og:description',
       content: this.offerModel.description
-    })
+    });
     this.meta.addTag({
-      name: "og:image:secure_url",
+      name: 'og:image:secure_url',
       content: this.offerModel.main_image
-    })
+    });
     this.meta.addTag({
-      name: "og:url",
+      name: 'og:url',
       content: window.location.href
-    })
+    });
   }
 
   getOfferDetails() {
@@ -126,23 +123,27 @@ export class OfferDetailsComponent implements OnInit {
     this.offerService.getOfferByID(offerID).subscribe((res: SingleOfferModel) => {
       SpinnerUtil.hideSpinner();
 
-      if(res.current_funding == undefined) { res.current_funding = 0 }
-      this.fundedPercentage = (res.current_funding / res.expected_funding) * 100
+      if (res.current_funding == undefined) {
+        res.current_funding = 0;
+      }
+      this.fundedPercentage = (res.current_funding / res.expected_funding) * 100;
       this.prettifyModel(res);
       this.setUpNewsPreviews(this.offerModel.news);
-      this.setMetaTags()
-      SpinnerUtil.showSpinner()
+      this.setMetaTags();
+      SpinnerUtil.showSpinner();
       this.projectService.getProjectWallet(offerID).subscribe((res: any) => {
         this.offerModel.current_funding = centsToBaseCurrencyUnit(res.balance);
-        this.fundedPercentage = 100 * (this.offerModel.current_funding) / (this.offerModel.expected_funding) 
-        this.structureProjectData()
-        SpinnerUtil.hideSpinner()
-      }, hideSpinnerAndDisplayError)
+        this.fundedPercentage = 100 * (this.offerModel.current_funding) / (this.offerModel.expected_funding);
+        this.structureProjectData();
+        SpinnerUtil.hideSpinner();
+      }, hideSpinnerAndDisplayError);
     }, err => {
       SpinnerUtil.hideSpinner();
       console.log(err);
-      if(err.error.err_code == "0851") {
-        swal("Pending confirmation", "The project is being verified - this should take up to 5 minutes. Please check later", "info").then(() => {
+      if (err.error.err_code === '0851') {
+        swal('Pending confirmation',
+          'The project is being verified - this should take up to 5 minutes. Please check later',
+          'info').then(() => {
           window.history.back();
         });
       } else {

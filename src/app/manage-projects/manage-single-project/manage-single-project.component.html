@@ -18,7 +18,7 @@
     </div>
 
     <div class="col-md-8">
-      <div class="explainer-mini text-uppercase mb-2">Project status</div> 
+      <div class="explainer-mini text-uppercase mb-2">Project status</div>
       <span *ngIf="project.active">
         <i class="fas fa-check-circle mr-2"></i>
         Public
@@ -155,14 +155,5 @@ src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJ8UNwBh-9oRQR3Y1md
       </ul>
     </div>
 
-  </div>
-
-  <!-- Wallet doesn't exist -->
-  <div *ngIf="qrCodeData.length > 0" class="row">
-    <div class="pt-5">
-      <div class="col-md-12 mt-5 d-flex justify-content-center">
-        <app-sign-broadcast [txData]="qrCodeData"></app-sign-broadcast>
-      </div>
-    </div>
   </div>
 </div>

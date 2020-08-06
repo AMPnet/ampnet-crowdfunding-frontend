@@ -1,4 +1,4 @@
-class PendingUserModel {
+export interface PendingUserModel {
     name: string;
     contact: string;
 }

@@ -7,14 +7,14 @@ import { API } from '../utilities/endpoint-manager';
 })
 export class NewsPreviewService {
 
-  private linkEndpoint = "/link/preview";
+  private linkEndpoint = '/link/preview';
 
   constructor(private http: HttpClient) { }
 
   getLinkPreview(url: string) {
     return this.http.get(API.generateRoute(this.linkEndpoint), {
         params: {
-            "url": url
+            'url': url
         }
     });
 }

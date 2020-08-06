@@ -7,10 +7,10 @@ import { API } from 'src/app/utilities/endpoint-manager';
 })
 export class FillDataService {
 
-  private endpoint = "/me";
+  private endpoint = '/me';
 
   constructor(private http: HttpClient) { }
-  
+
   updateUserData(
     email: string,
     firstName: string,
@@ -19,11 +19,11 @@ export class FillDataService {
     phoneNumber: string
   ) {
     return this.http.post(API.generateRoute(this.endpoint), {
-      "email": email,
-      "first_name": firstName,
-      "last_name": lastName,
-      "country_id": countryID,
-      "phone_number": phoneNumber
+      'email': email,
+      'first_name': firstName,
+      'last_name': lastName,
+      'country_id': countryID,
+      'phone_number': phoneNumber
     }, API.tokenHeaders());
   }
 }

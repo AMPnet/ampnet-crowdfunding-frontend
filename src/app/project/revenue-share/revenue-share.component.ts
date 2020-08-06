@@ -25,7 +25,7 @@ export class RevenueShareComponent implements OnInit {
 
   ngOnInit() {
 
-    let projID = this.route.snapshot.params.projectID;
+    const projID = this.route.snapshot.params.projectID;
 
     this.getProjectWallet(projID);
     this.getProject(projID);

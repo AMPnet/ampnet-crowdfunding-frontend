@@ -9,6 +9,7 @@ import { BroadcastService } from '../broadcast/broadcast-service';
 import swal from 'sweetalert2';
 import { baseCurrencyUnitToCents, centsToBaseCurrencyUnit } from '../utilities/currency-util';
 import numeral from 'numeral';
+import { WithdrawalModel } from './withdrawal-model';
 
 declare var $: any;
 
@@ -19,12 +20,12 @@ declare var $: any;
 })
 export class WithdrawComponent implements OnInit {
 
-  activeBankAccount: number = 0;
+  activeBankAccount = 0;
   banks: BankAccountModel[];
 
   pendingWithdrawal: WithdrawalModel;
 
-  withdrawAmount: string = '';
+  withdrawAmount = '';
 
   constructor(private paymentService: PaymentService,
               private withdrawService: WithdrawService,
@@ -60,14 +61,14 @@ export class WithdrawComponent implements OnInit {
 
   async generateWithdrawClicked() {
 
-    if (this.pendingWithdrawal != undefined) {
+    if (this.pendingWithdrawal !== undefined) {
       this.burnWithdraw();
       return;
     }
     SpinnerUtil.showSpinner();
-    let amount: any = $('#withdraw-amount').val();
-    let iban = this.banks[this.activeBankAccount].iban;
-    let centAmount = baseCurrencyUnitToCents(amount);
+    const amount: any = $('#withdraw-amount').val();
+    const iban = this.banks[this.activeBankAccount].iban;
+    const centAmount = baseCurrencyUnitToCents(amount);
     this.withdrawService.createWithdrawRequest(centAmount, iban).subscribe((res: any) => {
       this.pendingWithdrawal = res;
       SpinnerUtil.hideSpinner();
@@ -79,13 +80,13 @@ export class WithdrawComponent implements OnInit {
     SpinnerUtil.showSpinner();
     this.withdrawService.generateApproveWithdrawTx(this.pendingWithdrawal.id).subscribe(async (res: any) => {
 
-      let arkaneConnect = new ArkaneConnect('AMPnet', {
+      const arkaneConnect = new ArkaneConnect('AMPnet', {
         environment: 'staging'
       });
 
-      let account = await arkaneConnect.flows.getAccount(SecretType.AETERNITY);
+      const account = await arkaneConnect.flows.getAccount(SecretType.AETERNITY);
 
-      let sigRes = await arkaneConnect.createSigner(WindowMode.POPUP).sign({
+      const sigRes = await arkaneConnect.createSigner(WindowMode.POPUP).sign({
         walletId: account.wallets[0].id,
         data: res.tx,
         type: SignatureRequestType.AETERNITY_RAW

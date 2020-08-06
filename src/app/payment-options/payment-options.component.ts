@@ -18,35 +18,35 @@ export class PaymentOptionsComponent implements OnInit {
 
   banks: BankAccountModel[];
 
-  constructor(private paymentService: PaymentService, 
+  constructor(private paymentService: PaymentService,
     private router: Router) {
-    
+
   }
 
   ngOnInit() {
-    this.getBankAccounts()
+    this.getBankAccounts();
   }
 
   getBankAccounts() {
-    SpinnerUtil.showSpinner()
+    SpinnerUtil.showSpinner();
     this.paymentService.getMyBankAccounts().subscribe((res: any) => {
-      SpinnerUtil.hideSpinner()
-      if(res.bank_accounts.length == 0) {
-        this.router.navigate(["dash", "payment_options", "new"], {
+      SpinnerUtil.hideSpinner();
+      if (res.bank_accounts.length == 0) {
+        this.router.navigate(['dash', 'payment_options', 'new'], {
           queryParams: {
-            "status": "empty"
+            'status': 'empty'
           }
-        })
+        });
       }
       this.banks = res.bank_accounts;
-    }, hideSpinnerAndDisplayError)
+    }, hideSpinnerAndDisplayError);
   }
 
   deleteBankAccountClicked(id: number) {
-    SpinnerUtil.showSpinner()
+    SpinnerUtil.showSpinner();
     this.paymentService.deleteBankAccount(id).subscribe(res => {
-      this.getBankAccounts()
-    }, hideSpinnerAndDisplayError)
+      this.getBankAccounts();
+    }, hideSpinnerAndDisplayError);
   }
 
 }

@@ -70,7 +70,6 @@ export class CreateNewProjectComponent implements OnInit, AfterViewInit {
       SpinnerUtil.hideSpinner();
       this.router.navigate(['/dash', 'manage_groups', orgID.toString(), 'manage_project', res.uuid]);
     }, err => {
-      console.log(err);
       SpinnerUtil.hideSpinner();
       displayBackendError(err);
     });

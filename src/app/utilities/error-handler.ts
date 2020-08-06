@@ -3,22 +3,22 @@ import { SpinnerUtil } from './spinner-utilities';
 
 export function displayBackendError(resp: any) {
 
-    let error = resp.error;
+    const error = resp.error;
 
-    if(error.description != undefined) {
+    if (error.description != undefined) {
         swal('', error.description, 'warning');
-    } else if(error.message != undefined) {
-        swal('', error.message, 'warning')
+    } else if (error.message != undefined) {
+        swal('', error.message, 'warning');
     } else {
-        swal("", "An unknown error occurred.", "error")
+        swal('', 'An unknown error occurred.', 'error');
     }
 }
 
 export function displayErrorMessage(msg: string) {
-    swal('', msg, "error")
+    swal('', msg, 'error');
 }
 
 export function hideSpinnerAndDisplayError(err: any) {
-    SpinnerUtil.hideSpinner()
-    displayBackendError(err)
+    SpinnerUtil.hideSpinner();
+    displayBackendError(err);
 }

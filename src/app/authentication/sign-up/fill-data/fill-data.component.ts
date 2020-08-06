@@ -32,15 +32,15 @@ export class FillDataComponent implements OnInit {
     private fb: FormBuilder,
     private fillDataService: FillDataService,
     private loginService: LogInModalService,
-    private router: Router) { 
+    private router: Router) {
 
 
 
-    
+
   }
 
   ngOnInit() {
-    let nameValidators = [Validators.minLength(1), Validators.maxLength(30)];
+    const nameValidators = [Validators.minLength(1), Validators.maxLength(30)];
 
     this.submissionForm = this.fb.group({
       firstName: ['', nameValidators],
@@ -59,7 +59,7 @@ export class FillDataComponent implements OnInit {
         this.authToken = params['auth'];
         this.provider = params['provider'];
 
-        let controls = this.submissionForm.controls;
+        const controls = this.submissionForm.controls;
         controls['firstName'].setValue(this.firstName);
         controls['lastName'].setValue(this.lastName);
         controls['email'].setValue(this.email);
@@ -97,11 +97,11 @@ export class FillDataComponent implements OnInit {
     }, err => {
       SpinnerUtil.hideSpinner();
       swal('', err.error.message, 'warning');
-    })
+    });
   }
 
   updateUserData() {
-    let controls = this.submissionForm.controls;
+    const controls = this.submissionForm.controls;
     this.fillDataService.updateUserData(
       controls['email'].value,
       controls['firstName'].value,

@@ -16,13 +16,13 @@ export class WalletTxHistoryComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    let model = [{
+    const model = [{
       amount: 100,
       date: new Date(),
       position: 1,
       type: TxHistoryType.Deposit
     }];
-    let repet = Array(4).fill(model);
+    const repet = Array(4).fill(model);
     this.txHistoryModel = repet;
   }
 

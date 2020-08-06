@@ -63,7 +63,6 @@ export class OffersComponent implements OnInit {
       }
       SpinnerUtil.hideSpinner();
     }, err => {
-      console.log(err);
       displayBackendError(err);
       SpinnerUtil.hideSpinner();
     });

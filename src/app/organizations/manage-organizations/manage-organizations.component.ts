@@ -36,16 +36,16 @@ export class ManageOrganizationsComponent implements OnInit {
   fetchPersonalOrgs() {
     SpinnerUtil.showSpinner();
     this.organizationService.getPersonalOrganizations().subscribe((res: any) => {
-      this.organizations = res.organizations
+      this.organizations = res.organizations;
       SpinnerUtil.hideSpinner();
     }, err => {
       SpinnerUtil.hideSpinner();
       displayBackendError(err);
-    })
+    });
   }
 
   detailsClicked(id: number) {
-    this.router.navigate(['organization_details', id])
+    this.router.navigate(['organization_details', id]);
   }
 
   fetchOrgInvites() {
@@ -56,14 +56,14 @@ export class ManageOrganizationsComponent implements OnInit {
     }, err => {
       SpinnerUtil.hideSpinner();
       displayBackendError(err);
-    })
+    });
   }
 
   acceptInvite(orgID: number) {
     SpinnerUtil.showSpinner();
     this.organizationService.acceptInvite(orgID).subscribe(res => {
       SpinnerUtil.hideSpinner();
-      swal("Success", "Accepted invitation to organization", "success");
+      swal('Success', 'Accepted invitation to organization', 'success');
       this.refreshState();
     }, err => {
       SpinnerUtil.hideSpinner();

@@ -44,14 +44,14 @@ export class ExchangeComponent implements OnInit {
 
   onChangeSelect(item: any) {
     this.selectedProjectIndex = item;
-    let folioItem = this.portfolio[item];
+    const folioItem = this.portfolio[item];
     this.personalShares = this.numeralFormat(folioItem.investment);
     this.totalShares = this.numeralFormat(folioItem.project.expected_funding);
 
   }
 
   onChangeInput(value: number) {
-    let folioItem = this.portfolio[this.selectedProjectIndex];
+    const folioItem = this.portfolio[this.selectedProjectIndex];
 
     this.remainingShares = this.numeralFormat(folioItem.investment - value);
     this.sharesForSale = this.numeralFormat(value);

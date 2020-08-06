@@ -9,7 +9,7 @@ import { TokenModel } from 'src/app/models/auth/TokenModel';
 })
 export class LogInModalService {
 
-  private endpoint = '/user/token'
+  private endpoint = '/user/token';
 
   constructor(private http: HttpClient) { }
 
@@ -28,9 +28,9 @@ export class LogInModalService {
 
   performSocialLogin(provider: string, authToken: string) {
     return this.http.post(API.generateRoute(this.endpoint), {
-      "login_method" : provider,
-      "credentials" : {
-        "token" : authToken
+      'login_method' : provider,
+      'credentials' : {
+        'token' : authToken
       }
     });
   }

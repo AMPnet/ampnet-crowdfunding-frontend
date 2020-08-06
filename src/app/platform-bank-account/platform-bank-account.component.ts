@@ -19,28 +19,28 @@ export class PlatformBankAccountComponent implements OnInit {
     private router: Router) {}
 
   ngOnInit() {
-    this.getBankAccounts()
+    this.getBankAccounts();
   }
 
   getBankAccounts() {
-    SpinnerUtil.showSpinner()
+    SpinnerUtil.showSpinner();
     this.service.getBankAccounts().subscribe((res: any) => {
-      SpinnerUtil.hideSpinner()
-      if(res.bank_accounts.length == 0) {
-        this.router.navigate(["dash", "admin", "platform_bank_account", "new"], {
+      SpinnerUtil.hideSpinner();
+      if (res.bank_accounts.length == 0) {
+        this.router.navigate(['dash', 'admin', 'platform_bank_account', 'new'], {
           queryParams: {
-            "status": "empty"
+            'status': 'empty'
           }
-        })
+        });
       }
       this.banks = res.bank_accounts;
-    }, hideSpinnerAndDisplayError)
+    }, hideSpinnerAndDisplayError);
   }
 
   deleteBankAccountClicked(id: number) {
-    SpinnerUtil.showSpinner()
+    SpinnerUtil.showSpinner();
     this.service.deleteBankAccount(id).subscribe(res => {
-      this.getBankAccounts()
-    }, hideSpinnerAndDisplayError)
+      this.getBankAccounts();
+    }, hideSpinnerAndDisplayError);
   }
 }

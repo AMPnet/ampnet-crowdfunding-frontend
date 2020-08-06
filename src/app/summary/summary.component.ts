@@ -11,8 +11,8 @@ import { SpinnerUtil } from '../utilities/spinner-utilities';
 })
 export class SummaryComponent implements OnInit {
 
-  numberOfUsers: number = 0;
-  numberOfActiveProjects: number = 0;
+  numberOfUsers = 0;
+  numberOfActiveProjects = 0;
   blockchainSummary: BlockchainSummary = {
     average_funded_project_size: 0,
     average_project_size: 0,
@@ -34,7 +34,6 @@ export class SummaryComponent implements OnInit {
   private getUsers() {
     SpinnerUtil.showSpinner();
     this.summaryService.getUsers().subscribe((res: any) => {
-      console.log(res);
       this.numberOfUsers = res.registered;
       this.completedRequests += 1;
       SpinnerUtil.hideSpinner();

@@ -14,7 +14,7 @@ export class BroadcastService {
   }
 
   broadcastSignedTx(signed: string, id: number) {
-    var apiHeaders = API.tokenHeaders();
+    const apiHeaders = API.tokenHeaders();
     return this.http.post(API.generateRoute(this.endpoint), {
       'tx_sig': signed,
       'tx_id': id.toString()

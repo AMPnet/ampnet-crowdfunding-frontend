@@ -24,44 +24,44 @@ export class OwnershipComponent implements OnInit {
   ngOnInit() {
     this.userService.getOwnProfile().subscribe((res: any) => {
       this.user = res;
-    }, hideSpinnerAndDisplayError)
+    }, hideSpinnerAndDisplayError);
   }
 
   changePlatformManagerClicked() {
 
-    let platformManagerAddress: any = $("#platform-manager-address").val()
+    const platformManagerAddress: any = $('#platform-manager-address').val();
 
     this.ownershipService.getPlatformManagerTransaction(platformManagerAddress).subscribe(res => {
-      this.confirmAndBroadcastTransaction(res)
-    }, hideSpinnerAndDisplayError)
+      this.confirmAndBroadcastTransaction(res);
+    }, hideSpinnerAndDisplayError);
   }
 
   changeTokenIssuerClicked() {
 
-    let tokenIssuerAddress: any = $("#token-issuer-address").val()
+    const tokenIssuerAddress: any = $('#token-issuer-address').val();
 
     this.ownershipService.getTokenIssuerTransaction(tokenIssuerAddress).subscribe(res => {
-      this.confirmAndBroadcastTransaction(res)
-    }, hideSpinnerAndDisplayError)
+      this.confirmAndBroadcastTransaction(res);
+    }, hideSpinnerAndDisplayError);
   }
 
   async confirmAndBroadcastTransaction(res: any) {
-    let arkaneConnect = new ArkaneConnect('AMPnet', {
+    const arkaneConnect = new ArkaneConnect('AMPnet', {
       environment: 'staging'
-    })
+    });
 
-    let account = await arkaneConnect.flows.getAccount(SecretType.AETERNITY)
+    const account = await arkaneConnect.flows.getAccount(SecretType.AETERNITY);
 
-    let sigRes = await arkaneConnect.createSigner(WindowMode.POPUP).sign({
+    const sigRes = await arkaneConnect.createSigner(WindowMode.POPUP).sign({
       walletId: account.wallets[0].id,
       data: res.tx,
       type: SignatureRequestType.AETERNITY_RAW
-    })
+    });
     this.broadcastService.broadcastSignedTx(sigRes.result.signedTransaction, res.tx_id)
       .subscribe(res => {
-        SpinnerUtil.hideSpinner()
-        swal("", "Success", "success")
-      }, hideSpinnerAndDisplayError)
+        SpinnerUtil.hideSpinner();
+        swal('', 'Success', 'success');
+      }, hideSpinnerAndDisplayError);
   }
 
 }

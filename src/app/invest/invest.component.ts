@@ -65,7 +65,7 @@ export class InvestComponent implements OnInit {
   }
 
   getProject() {
-    let id = this.route.snapshot.params.id;
+    const id = this.route.snapshot.params.id;
     SpinnerUtil.showSpinner();
     this.projectService.getProject(id).subscribe((res: any) => {
       res.currency = prettyCurrency(res.currency);
@@ -92,7 +92,7 @@ export class InvestComponent implements OnInit {
 
   inputChanged(event: any) {
 
-    var inputValue = parseInt(
+    let inputValue = parseInt(
       stripCurrencyData(this.inputValue)
     );
 
@@ -100,7 +100,7 @@ export class InvestComponent implements OnInit {
       inputValue = 0;
     }
 
-    //this.inputValue = numeral(inputValue).format('0,0,0');
+    // this.inputValue = numeral(inputValue).format('0,0,0');
     this.yearlyReturn = numeral(this.calculateYearlyReturn(inputValue)).format('0,0.00');
     this.projectStake = this.calculateProjectStake(inputValue)
       .toFixed(4) + '%';
@@ -117,25 +117,25 @@ export class InvestComponent implements OnInit {
     }
 
     if (inputValue > this.wallet.balance) {
-      var padding = '';
+      let padding = '';
       if (this.investmentOutOfBoundsWarningMessage.length > 0) {
         padding = '<br><br>';
       }
       this.investmentOutOfBoundsWarningMessage += (padding + (this.WALLET_LOW_MSG));
     }
 
-    let inputAmount = $('#amount-input');
-    let inputAmountContent: String = inputAmount.val();
+    const inputAmount = $('#amount-input');
+    const inputAmountContent: String = inputAmount.val();
 
   }
 
   calculateProjectStake(investment: number): number {
-    let total = this.project.expected_funding;
+    const total = this.project.expected_funding;
     return (investment / total) * 100;
   }
 
   calculateYearlyReturn(investment: number): number {
-    let maxReturn = this.expectedROI;
+    const maxReturn = this.expectedROI;
     return investment * (maxReturn / 100);
   }
 

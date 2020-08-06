@@ -7,8 +7,8 @@ import { API } from '../utilities/endpoint-manager';
 })
 export class OnboardingService {
 
-  endpoint: string = "/user/identyum/token";
-  verifyEndpoint: string = "/user/me/verify";
+  endpoint = '/user/identyum/token';
+  verifyEndpoint = '/user/me/verify';
 
   constructor(private http: HttpClient) { }
 
@@ -18,7 +18,7 @@ export class OnboardingService {
 
   verifyUser(webSessionUUID: string) {
     return this.http.post(API.generateRoute(this.verifyEndpoint), {
-      "user_session_uuid": webSessionUUID
-    }, API.tokenHeaders())
+      'user_session_uuid': webSessionUUID
+    }, API.tokenHeaders());
   }
 }

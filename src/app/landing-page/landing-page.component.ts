@@ -10,7 +10,7 @@ export class LandingPageComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    $("#auth-buttons").show()
+    $('#auth-buttons').show();
   }
 
 }

@@ -29,7 +29,6 @@ export class GroupActivationComponent implements OnInit {
     this.activationService
       .getUnactivatedWallets('organization').subscribe((res: any) => {
       this.groups = res.organizations;
-      console.log(this.groups);
       SpinnerUtil.hideSpinner();
 
     }, displayBackendError);
@@ -38,12 +37,12 @@ export class GroupActivationComponent implements OnInit {
   activateGroupClicked(uuid: string) {
 
     this.activationService.getActivationData(uuid).subscribe(async (res: any) => {
-      let arkaneConnect = new ArkaneConnect('AMPnet', {
+      const arkaneConnect = new ArkaneConnect('AMPnet', {
         environment: 'staging'
       });
 
-      let account = await arkaneConnect.flows.getAccount(SecretType.AETERNITY);
-      let sigRes = await arkaneConnect.createSigner(WindowMode.POPUP).sign({
+      const account = await arkaneConnect.flows.getAccount(SecretType.AETERNITY);
+      const sigRes = await arkaneConnect.createSigner(WindowMode.POPUP).sign({
         walletId: account.wallets[0].id,
         data: res.tx,
         type: SignatureRequestType.AETERNITY_RAW

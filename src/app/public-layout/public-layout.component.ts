@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 export class PublicLayoutComponent implements OnInit {
 
   constructor(private router: Router) {
-    if(AuthGuard.checkLogin()) {
+    if (AuthGuard.checkLogin()) {
       router.navigate(['dash']);
     }
   }

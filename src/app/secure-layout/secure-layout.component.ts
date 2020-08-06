@@ -22,8 +22,8 @@ export class SecureLayoutComponent implements OnInit {
 
     this.router.events.subscribe(() => {
       this.userIsVerified = UserStatusStorage.personalData.verified;
-      this.hasWalletActive = UserStatusStorage.walletData != undefined
-    })
+      this.hasWalletActive = UserStatusStorage.walletData != undefined;
+    });
 
   }
 

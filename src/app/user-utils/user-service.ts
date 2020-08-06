@@ -9,16 +9,16 @@ import { UserStatusStorage } from '../user-status-storage';
 })
 export class UserService {
 
-    private endpoint = "/user/me";
+    private endpoint = '/user/me';
 
     constructor(private http: HttpClient) {}
 
     public getOwnProfile() {
-        let userResponse = this.http.get(API.generateRoute(this.endpoint), API.tokenHeaders())
+        const userResponse = this.http.get(API.generateRoute(this.endpoint), API.tokenHeaders());
         userResponse.subscribe((res: UserModel) => {
-            UserStatusStorage.personalData = res
-        })
-        return userResponse
+            UserStatusStorage.personalData = res;
+        });
+        return userResponse;
     }
 
 }

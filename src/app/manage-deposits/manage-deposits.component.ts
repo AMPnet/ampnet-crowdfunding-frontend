@@ -15,41 +15,41 @@ declare var $: any;
 })
 export class ManageDepositsComponent implements OnInit, AfterViewInit {
 
-  unapprovedDeposits: [DepositModel]
+  unapprovedDeposits: [DepositModel];
 
   constructor(private router: Router, private depositCooperativeService: DepositCooperativeService) { }
 
   ngOnInit() {
-    this.getUnapprovedDeposits()
+    this.getUnapprovedDeposits();
   }
 
   ngAfterViewInit() {
   }
 
   getDepositInfoClicked() {
-    let depositCode = $("#deposit-code-input").val();
-    this.router.navigate(["/dash", "manage_deposits", depositCode])
+    const depositCode = $('#deposit-code-input').val();
+    this.router.navigate(['/dash', 'manage_deposits', depositCode]);
   }
 
   getUnapprovedDeposits() {
-    SpinnerUtil.showSpinner()
+    SpinnerUtil.showSpinner();
     this.depositCooperativeService.getUnapprovedDeposits().subscribe((res: any) => {
-      this.unapprovedDeposits = res.deposits
-      SpinnerUtil.hideSpinner()
-    }, hideSpinnerAndDisplayError)
+      this.unapprovedDeposits = res.deposits;
+      SpinnerUtil.hideSpinner();
+    }, hideSpinnerAndDisplayError);
   }
 
   // TODO: cooperative can decline deposit, user can delete it, add comment!
   deleteDeposit(id: number) {
-    let comment = "Some comment"
-    SpinnerUtil.showSpinner()
+    const comment = 'Some comment';
+    SpinnerUtil.showSpinner();
     this.depositCooperativeService.declineDeposit(id, comment).subscribe(res => {
-      this.getUnapprovedDeposits()
-    }, hideSpinnerAndDisplayError)
+      this.getUnapprovedDeposits();
+    }, hideSpinnerAndDisplayError);
   }
 
   contactPhoneClicked(index: number) {
-    swal("Contact phone", "095 354 6106", "info")
+    swal('Contact phone', '095 354 6106', 'info');
   }
 
 }

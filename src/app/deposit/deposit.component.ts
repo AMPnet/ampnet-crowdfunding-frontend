@@ -17,7 +17,7 @@ export class DepositComponent implements OnInit {
   depositModel: DepositModel;
   masterIban: string;
 
-  projectUUID: string = '';
+  projectUUID = '';
 
   constructor(private depositService: DepositServiceService) {
   }
@@ -45,7 +45,7 @@ export class DepositComponent implements OnInit {
       this.depositModel = res;
     }, err => {
       SpinnerUtil.hideSpinner();
-      console.log(err);
+
       if (err.error.err_code === '0509') {
         swal('', 'You already have an existing deposit. Please wait until it\'s approved', 'info');
       } else {

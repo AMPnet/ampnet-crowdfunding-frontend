@@ -21,7 +21,7 @@ export class WalletService {
   }
 
   getWallet() {
-    let walletResponse = this.http.get<WalletModel>(API.generateRoute(this.endpoint), API.tokenHeaders());
+    const walletResponse = this.http.get<WalletModel>(API.generateRoute(this.endpoint), API.tokenHeaders());
     walletResponse.subscribe((res: WalletModel) => {
       UserStatusStorage.walletData = res;
 

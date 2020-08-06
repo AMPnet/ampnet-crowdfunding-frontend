@@ -21,40 +21,40 @@ export class MyPortfolioComponent implements OnInit {
   hasWallet = false;
   portfolio: PortfolioRoot[];
   stats: PortfolioStats;
-  roi: number = 0;
+  roi = 0;
 
   ngOnInit() {
-    this.getTransactions()
+    this.getTransactions();
   }
 
   getTransactions() {
-    SpinnerUtil.showSpinner()
+    SpinnerUtil.showSpinner();
 
     this.walletService.getWallet().subscribe((res: any) => {
 
-      if(res.hash != undefined) { // Check if wallet was activated by admin
+      if (res.hash != undefined) { // Check if wallet was activated by admin
 
         this.portfolioService.getPortfolioStats().subscribe((res: any) => {
           this.hasWallet = true;
           this.stats = res;
-          this.stats.investments = centsToBaseCurrencyUnit(this.stats.investments)
-          if(this.stats.investments > 0) {
-            this.roi = ((this.stats.earnings + this.stats.investments) / (this.stats.investments) - 1) * 100
+          this.stats.investments = centsToBaseCurrencyUnit(this.stats.investments);
+          if (this.stats.investments > 0) {
+            this.roi = ((this.stats.earnings + this.stats.investments) / (this.stats.investments) - 1) * 100;
           }
-          SpinnerUtil.showSpinner()
+          SpinnerUtil.showSpinner();
           this.portfolioService.getPortfolio().subscribe((res: any) => {
-            this.portfolio = res.portfolio
-            SpinnerUtil.hideSpinner()
-          }, hideSpinnerAndDisplayError)
-        }, hideSpinnerAndDisplayError)
+            this.portfolio = res.portfolio;
+            SpinnerUtil.hideSpinner();
+          }, hideSpinnerAndDisplayError);
+        }, hideSpinnerAndDisplayError);
 
       } else {
-        SpinnerUtil.hideSpinner()
+        SpinnerUtil.hideSpinner();
       }
 
     }, err => {
-      SpinnerUtil.hideSpinner()
-    })
+      SpinnerUtil.hideSpinner();
+    });
   }
 
 }

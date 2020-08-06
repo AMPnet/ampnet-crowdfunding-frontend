@@ -6,7 +6,7 @@ import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { Router } from '@angular/router';
 import { validateEmail } from 'src/app/utilities/email-util';
 
-declare var $:any;
+declare var $: any;
 
 @Component({
   selector: 'app-create-organization',
@@ -33,7 +33,7 @@ export class CreateOrganizationComponent implements OnInit {
 
   submitButtonClicked() {
     SpinnerUtil.showSpinner();
-    let controls = this.newOrganizationForm.controls;
+    const controls = this.newOrganizationForm.controls;
     this.organizationService.createOrganization(controls['name'].value, controls['type'].value)
       .subscribe((res: any) => {
         SpinnerUtil.hideSpinner();
@@ -41,7 +41,6 @@ export class CreateOrganizationComponent implements OnInit {
 
         this.fetchAndCheckInvites().forEach((invite) => {
           this.organizationService.inviteUser(res.id, invite).subscribe((eres) => {
-            console.log("Success: " + eres);
           }, err => {
             console.log(err);
           });
@@ -51,15 +50,15 @@ export class CreateOrganizationComponent implements OnInit {
       }, err => {
         SpinnerUtil.hideSpinner();
         swal('', err.error.message, 'warning').then(() => {
-          this.router.navigate(['/dash','manage_groups']);
+          this.router.navigate(['/dash', 'manage_groups']);
         }, () => {
-          this.router.navigate(['/dash','manage_groups']);
+          this.router.navigate(['/dash', 'manage_groups']);
         });
-      })
+      });
   }
 
   fetchAndCheckInvites(): string[] {
-    return (<string>$("#invite-users-email").val()).split(',')
+    return (<string>$('#invite-users-email').val()).split(',')
       .map((invite) => {
         return invite.trim();
       }).filter((trimmed) => {

@@ -9,15 +9,15 @@ import { ProjectModel } from '../projects/create-new-project/project-model';
 export class ManageProjectsService {
 
   private endpoint = '/countries';
-  private projectEndpoint = "/project"
+  private projectEndpoint = '/project';
 
   constructor(
     private http: HttpClient) { }
-  
+
 
   deleteDocument(projectID: string, documentID: number) {
     return this.http.delete(API.generateComplexRoute(this.projectEndpoint, [
-      projectID.toString(), "document", documentID.toString()
+      projectID.toString(), 'document', documentID.toString()
     ]), API.tokenHeaders());
   }
 
@@ -27,36 +27,36 @@ export class ManageProjectsService {
 
   addNewsToProject(project: ProjectModel, newsLink: string) {
 
-    var currentNews = project.news;
-    if(currentNews != undefined) {
-      currentNews.push(newsLink)
+    let currentNews = project.news;
+    if (currentNews != undefined) {
+      currentNews.push(newsLink);
     } else {
-      currentNews = [newsLink]
+      currentNews = [newsLink];
     }
 
     return this.http.put(API.generateComplexRoute(this.projectEndpoint, [
       project.uuid
     ]), {
-      "name" : project.name,
-      "description" : project.description,
-      "location" : project.location,
-      "location_text": project.location_text,
-      "roi": project.roi,
-      "active": project.active,
-      "tags": null,
-      "news": currentNews
-    }, API.tokenHeaders())
+      'name' : project.name,
+      'description' : project.description,
+      'location' : project.location,
+      'location_text': project.location_text,
+      'roi': project.roi,
+      'active': project.active,
+      'tags': null,
+      'news': currentNews
+    }, API.tokenHeaders());
   }
 
   deleteNewsFromProject(projectID: string, newsLink: string) {
     return this.http.request('delete', API.generateComplexRoute(this.projectEndpoint, [
-      projectID.toString(), "news"
+      projectID.toString(), 'news'
     ]), {
       body: {
-        "link" : newsLink
+        'link' : newsLink
       },
       headers: {
-        "Authorization" : API.tokenHeaders().headers["Authorization"]
+        'Authorization' : API.tokenHeaders().headers['Authorization']
       }
     });
   }

@@ -15,46 +15,46 @@ declare var $: any;
   styleUrls: ['./onboarding.component.css']
 })
 export class OnboardingComponent implements OnInit {
- 
+
   hasClientToken = false;
 
   constructor(
-    private router: Router, 
+    private router: Router,
     private onboardingService: OnboardingService) { }
 
   ngOnInit() {
-    var that = this;
+    const that = this;
 
     SpinnerUtil.showSpinner();
-    this.onboardingService.getSessionID().subscribe((res:any) => {
-      
-      let script: any = document.createElement('idy-flow-manager');
-      script.clientToken = res
-      script.startLanguage = "en"
+    this.onboardingService.getSessionID().subscribe((res: any) => {
+
+      const script: any = document.createElement('idy-flow-manager');
+      script.clientToken = res;
+      script.startLanguage = 'en';
       document.querySelector('#identyum-target').appendChild(script);
 
-      let loader = document.createElement('script')
-      loader.type = "text/javascript"
-      loader.src = "https://web-components.stage.identyum.com/flow-manager/component"
+      const loader = document.createElement('script');
+      loader.type = 'text/javascript';
+      loader.src = 'https://web-components.stage.identyum.com/flow-manager/component';
       loader.onload = () => {
-      }
-      document.getElementsByTagName('head')[0].appendChild(loader)
-      SpinnerUtil.hideSpinner()
+      };
+      document.getElementsByTagName('head')[0].appendChild(loader);
+      SpinnerUtil.hideSpinner();
 
       script.addEventListener('finished', (event) => {
-        SpinnerUtil.showSpinner()
+        SpinnerUtil.showSpinner();
         this.onboardingService.verifyUser(res.access_token).subscribe(res => {
-          swal("", "Success", "success")
-          SpinnerUtil.hideSpinner()
-        }, hideSpinnerAndDisplayError)
-      })
+          swal('', 'Success', 'success');
+          SpinnerUtil.hideSpinner();
+        }, hideSpinnerAndDisplayError);
+      });
 
-    }, hideSpinnerAndDisplayError)
+    }, hideSpinnerAndDisplayError);
 
   }
 
   initializeIdentyum() {
-    
+
   }
 
 }

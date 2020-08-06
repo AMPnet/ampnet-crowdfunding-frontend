@@ -1,18 +1,13 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { WalletService } from './wallet.service';
-import swal from 'sweetalert2';
 import { WalletModel } from '../models/WalletModel';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
-import { displayBackendError, displayErrorMessage } from '../utilities/error-handler';
-import { prettyCurrency, centsToBaseCurrencyUnit } from '../utilities/currency-util';
+import { displayBackendError } from '../utilities/error-handler';
+import { centsToBaseCurrencyUnit, prettyCurrency } from '../utilities/currency-util';
 import * as numeral from 'numeral';
-import * as QRCode from 'qrcode';
-import { API } from '../utilities/endpoint-manager';
-import { ChildActivationEnd } from '@angular/router';
-import { ArkaneConnect, Wallet, SecretType } from '@arkane-network/arkane-connect'
-import { AuthenticationResult } from '@arkane-network/arkane-connect/dist/src/connect/connect';
+import { ArkaneConnect, SecretType } from '@arkane-network/arkane-connect';
 
-declare var $:any;
+declare var $: any;
 
 @Component({
   selector: 'app-wallet',
@@ -21,7 +16,8 @@ declare var $:any;
 })
 export class WalletComponent implements OnInit {
 
-  constructor(private walletService: WalletService) { }
+  constructor(private walletService: WalletService) {
+  }
 
   wallet: WalletModel;
   checkComplete = false;
@@ -33,12 +29,12 @@ export class WalletComponent implements OnInit {
   }
 
   setUpArkane() {
-    this.arkaneConnect = new ArkaneConnect("AMPnet", { environment: "staging"})
+    this.arkaneConnect = new ArkaneConnect('AMPnet', {environment: 'staging'});
     this.arkaneConnect.flows.getAccount(SecretType.AETERNITY).then(acc => {
-      if((acc.wallets != undefined) && (acc.wallets.length > 0)) {
-        this.startWalletInit(acc.wallets[0].address)
+      if ((acc.wallets != undefined) && (acc.wallets.length > 0)) {
+        this.startWalletInit(acc.wallets[0].address);
       }
-    })
+    });
   }
 
 
@@ -48,7 +44,7 @@ export class WalletComponent implements OnInit {
       SpinnerUtil.hideSpinner();
       this.getUserWallet();
     }, err => {
-      this.arkaneConnect.logout()
+      this.arkaneConnect.logout();
       SpinnerUtil.hideSpinner();
       displayBackendError(err);
     });

@@ -26,7 +26,7 @@ export class NavbarComponent implements OnInit {
         'margin-left' : '220px'
       }, 220);
      }});
-     
+
 
     } else {
       sidebar.animate({
@@ -36,7 +36,7 @@ export class NavbarComponent implements OnInit {
           'margin-left': '0px'
         }, 220);
       }});
-      
+
     }
   }
 
@@ -55,8 +55,6 @@ export class NavbarComponent implements OnInit {
   }
 
   menuButtonClicked() {
-    console.log('in here');
-
     this.sidebar = $('.sidebar-fixer');
 
     NavbarComponent.toggleSidebar(this.sidebar.position().left < 0);

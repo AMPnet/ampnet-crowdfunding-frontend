@@ -1,5 +1,5 @@
 {
-  "name": "ampnet-admin-frontend",
+  "name": "ampnet-crowdfunding-frontend",
   "version": "0.0.0",
   "scripts": {
     "android": "tns run android --bundle",
@@ -53,7 +53,6 @@
     "qrcode": "^1.4.0",
     "redux": "^4.0.1",
     "reflect-metadata": "~0.1.8",
-    "request": "^2.88.0",
     "rxjs": "~6.6.2",
     "spin.js": "^4.1.0",
     "sweetalert2": "^7.32.2",

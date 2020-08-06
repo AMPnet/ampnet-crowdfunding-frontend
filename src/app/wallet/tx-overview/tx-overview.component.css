@@ -1,12 +1,10 @@
-
-
-@media(max-width: 800px) {
+@media (max-width: 800px) {
   .tx-content-container {
     width: 100%;
   }
 }
 
-@media(min-width: 800px) {
+@media (min-width: 800px) {
   .tx-content-container {
     width: 600px;
   }

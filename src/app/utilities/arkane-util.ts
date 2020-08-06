@@ -1,4 +1,4 @@
-import { ArkaneConnect, Wallet, SecretType, WindowMode, SignatureRequestType, SignerResult } from '@arkane-network/arkane-connect';
+import { ArkaneConnect, SecretType, SignatureRequestType, SignerResult, Wallet, WindowMode } from '@arkane-network/arkane-connect';
 import { AuthenticationResult } from '@arkane-network/arkane-connect/dist/src/connect/connect';
 
 export class ArkaneUtil {

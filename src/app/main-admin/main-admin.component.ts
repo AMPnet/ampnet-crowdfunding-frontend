@@ -5,7 +5,7 @@ import { displayBackendError } from '../utilities/error-handler';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import * as QRCode from 'qrcode';
 import * as Uppy from 'uppy';
-import "bootstrap-select"
+import 'bootstrap-select';
 
 declare var _: any;
 declare var $: any;
@@ -52,7 +52,7 @@ export class MainAdminComponent implements OnInit {
         width: $("#admin-root").width()
       });
     }, 300)
-    
+
     $("#user-picker").selectpicker()
   }
 

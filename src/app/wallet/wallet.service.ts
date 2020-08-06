@@ -9,28 +9,29 @@ import { UserStatusStorage } from '../user-status-storage';
 })
 export class WalletService {
 
-  private endpoint = '/wallet/wallet'; 
+  private endpoint = '/wallet/wallet';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   initWallet(address: string) {
     return this.http.post<WalletModel>(API.generateRoute(this.endpoint), {
-      "public_key": address
+      'public_key': address
     }, API.tokenHeaders());
   }
 
   getWallet() {
     let walletResponse = this.http.get<WalletModel>(API.generateRoute(this.endpoint), API.tokenHeaders());
     walletResponse.subscribe((res: WalletModel) => {
-      UserStatusStorage.walletData = res
-      
-    })
-    return walletResponse
+      UserStatusStorage.walletData = res;
+
+    });
+    return walletResponse;
   }
 
   getInfoFromPairingCode(pairingCode: string) {
     return this.http.get(API.generateComplexRoute(this.endpoint, [
-      "pair", pairingCode
-    ]), API.tokenHeaders())
+      'pair', pairingCode
+    ]), API.tokenHeaders());
   }
 }

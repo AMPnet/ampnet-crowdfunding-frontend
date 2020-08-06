@@ -1,6 +1,6 @@
-import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { API } from "../utilities/endpoint-manager";
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { API } from '../utilities/endpoint-manager';
 
 @Injectable({
     providedIn: 'root'
@@ -13,7 +13,7 @@ export class OrganizationService {
     private projectEndpoint = "/public/project/organization";
 
     constructor(private http: HttpClient) { }
-    
+
     createOrganization(name: string, legalInfo: string) {
         return this.http.post(API.generateRoute(this.endpoint), {
             "name": name,
@@ -28,8 +28,8 @@ export class OrganizationService {
     getSingleOrganization(id: string) {
         return this.http
             .get(API.generateComplexRoute(
-                this.endpoint, 
-                [id.toString()]), 
+                this.endpoint,
+                [id.toString()]),
                 API.tokenHeaders()
             );
     }
@@ -73,9 +73,9 @@ export class OrganizationService {
         return this.http.get(API.generateComplexRoute(this.inviteEndpoint, ["me"]),
         API.tokenHeaders())
     }
-    
+
     acceptInvite(orgID: number) {
-        return this.http.post(API.generateComplexRoute(this.inviteEndpoint, 
+        return this.http.post(API.generateComplexRoute(this.inviteEndpoint,
             [
                 "me", orgID.toString(), "accept"
             ]), { }, API.tokenHeaders()
@@ -84,10 +84,10 @@ export class OrganizationService {
 
     getAllProjectsForOrganization(orgID: string) {
         return this.http.get(API.generateComplexRoute(this.projectEndpoint,
-            [orgID.toString()]    
+            [orgID.toString()]
         ), API.tokenHeaders());
     }
-    
+
     getMembersForOrganization(orgID: string) {
         return this.http.get(API.generateComplexRoute(this.endpoint, [
             orgID.toString(), "members"

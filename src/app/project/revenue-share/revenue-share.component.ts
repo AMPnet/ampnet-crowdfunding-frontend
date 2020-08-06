@@ -20,7 +20,8 @@ export class RevenueShareComponent implements OnInit {
   projectModel: ProjectModel;
 
   constructor(private revShareService: RevenueShareService,
-    private route: ActivatedRoute, private projectService: ProjectService) { }
+              private route: ActivatedRoute, private projectService: ProjectService) {
+  }
 
   ngOnInit() {
 
@@ -42,7 +43,7 @@ export class RevenueShareComponent implements OnInit {
   }
 
   getProjectWallet(projectID: number) {
-    
+
 
     SpinnerUtil.showSpinner();
     this.revShareService.getProjectWallet(projectID).subscribe((res: any) => {

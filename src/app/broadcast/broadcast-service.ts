@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 import { API } from '../utilities/endpoint-manager';
 
 @Injectable({
@@ -11,19 +10,20 @@ export class BroadcastService {
   private endpoint = '/wallet/tx_broadcast';
 
   constructor(
-    private http: HttpClient) { }
-  
+    private http: HttpClient) {
+  }
+
   broadcastSignedTx(signed: string, id: number) {
-      var apiHeaders = API.tokenHeaders();
-      return this.http.post(API.generateRoute(this.endpoint), { 
-        "tx_sig" : signed,
-              "tx_id" : id.toString()
-      }, {
-          headers: {
-              "Authorization" : apiHeaders.headers.Authorization
-          },
-          
-          
-      });  
-  }  
+    var apiHeaders = API.tokenHeaders();
+    return this.http.post(API.generateRoute(this.endpoint), {
+      'tx_sig': signed,
+      'tx_id': id.toString()
+    }, {
+      headers: {
+        'Authorization': apiHeaders.headers.Authorization
+      },
+
+
+    });
+  }
 }

@@ -7,15 +7,16 @@ import { API } from '../utilities/endpoint-manager';
 })
 export class OffersService {
 
-  projectEndpoint = "/public/project";
-  investEndpoint = "/wallet/invest/project"
-  projectPublicEnd = "/public/project"
+  projectEndpoint = '/public/project';
+  investEndpoint = '/wallet/invest/project';
+  projectPublicEnd = '/public/project';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   getAllOffers() {
     return this.http.get(API.generateComplexRoute(this.projectEndpoint, [
-      "active"
+      'active'
     ]));
   }
 
@@ -30,8 +31,8 @@ export class OffersService {
     return this.http.post(API.generateComplexRoute(this.investEndpoint, [
       projectID
     ]), {
-      "amount": investAmount.toString()
-    }, API.tokenHeaders())
+      'amount': investAmount.toString()
+    }, API.tokenHeaders());
 
   }
 }

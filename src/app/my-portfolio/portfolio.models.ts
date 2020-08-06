@@ -1,4 +1,4 @@
-import { ProjectModel } from "../projects/create-new-project/project-model";
+import { ProjectModel } from '../projects/create-new-project/project-model';
 
 export interface PortfolioRoot {
     project: ProjectModel,
@@ -21,5 +21,5 @@ export interface TxData {
     to_tx_hash: string,
     amount: number,
     type: string,
-    date: string    
+    date: string
 }

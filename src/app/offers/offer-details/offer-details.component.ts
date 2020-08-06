@@ -3,19 +3,16 @@ import { OfferDetailDocModel, OfferDetailDocType } from '../../models/OfferDetai
 import * as _ from 'lodash';
 import { OffersService } from '../offers.service';
 import { ActivatedRoute } from '@angular/router';
-import { OfferModel } from '../OfferModel';
 import { displayBackendError, hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { ProjectService } from 'src/app/projects/project-service';
-import * as moment from 'moment';
 import { prettyDate } from 'src/app/utilities/date-format-util';
 import swal from 'sweetalert2';
 import { NewsPreviewService } from 'src/app/news-preview/news-preview.service';
 import * as numeral from 'numeral';
-import { prettyCurrency, centsToBaseCurrencyUnit } from 'src/app/utilities/currency-util';
+import { centsToBaseCurrencyUnit, prettyCurrency } from 'src/app/utilities/currency-util';
 import { Meta } from '@angular/platform-browser';
 import { UserService } from 'src/app/user-utils/user-service';
-import { WalletService } from 'src/app/wallet/wallet.service';
 
 @Component({
   selector: 'app-offer-details',

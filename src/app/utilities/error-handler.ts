@@ -1,5 +1,5 @@
-import swal from "sweetalert2";
-import { SpinnerUtil } from "./spinner-utilities";
+import swal from 'sweetalert2';
+import { SpinnerUtil } from './spinner-utilities';
 
 export function displayBackendError(resp: any) {
 

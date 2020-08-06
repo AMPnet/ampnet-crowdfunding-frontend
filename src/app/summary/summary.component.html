@@ -3,12 +3,12 @@
   <h1>Platform Summary</h1>
 
   <div id="summary-list">
-    <div class="summary-item" *ngIf="numberOfUsers">
+    <div *ngIf="numberOfUsers" class="summary-item">
       <p>Total number of platform users:</p>
       <div class="number-circle">{{ numberOfUsers }}</div>
     </div>
 
-    <div class="summary-item" *ngIf="numberOfActiveProjects">
+    <div *ngIf="numberOfActiveProjects" class="summary-item">
       <p>Currently active projects for funding:</p>
       <div class="number-circle">{{ numberOfActiveProjects }}</div>
     </div>

@@ -8,9 +8,9 @@ describe('WithdrawComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ WithdrawComponent ]
+      declarations: [WithdrawComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

@@ -14,16 +14,16 @@ describe('WalletComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-       WalletComponent,
-       WalletTxHistoryComponent,
-       DepositModalComponent,
-       WithdrawModalComponent
+        WalletComponent,
+        WalletTxHistoryComponent,
+        DepositModalComponent,
+        WithdrawModalComponent
       ],
       imports: [
         RouterTestingModule
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

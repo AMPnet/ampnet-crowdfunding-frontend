@@ -1,86 +1,86 @@
 .navbar {
-	height: 50px;
-	color: #DEA546;
-	background: #fff;
-	box-shadow: 5px 3px 6px rgba(0,0,0,0.1);
-	z-index: 10!important;
+  height: 50px;
+  color: #DEA546;
+  background: #fff;
+  box-shadow: 5px 3px 6px rgba(0, 0, 0, 0.1);
+  z-index: 10 !important;
 }
 
-@media(max-width: 800px) {
-	.navbar {
-		width: 100%;
-		margin-left: 0px;
-	}
+@media (max-width: 800px) {
+  .navbar {
+    width: 100%;
+    margin-left: 0px;
+  }
 }
 
-@media(min-width: 800px) {
-	.navbar {
-		margin-left: 220px!important;
-	}
+@media (min-width: 800px) {
+  .navbar {
+    margin-left: 220px !important;
+  }
 }
- 
+
 #main-logo {
-	height: 14px;
-	margin-left: 10px;
+  height: 14px;
+  margin-left: 10px;
 }
 
 .bell-badge {
-	position: relative;
-	transform: translate(30%, -60%);
+  position: relative;
+  transform: translate(30%, -60%);
 }
 
 #notification-bell:hover {
-	cursor: pointer;
-	transition: all 0.3s;
-	color: #cfc;
+  cursor: pointer;
+  transition: all 0.3s;
+  color: #cfc;
 }
 
 .logo-text {
-	font-size: 15px;
+  font-size: 15px;
 }
 
-@media(min-width: 950px) {
-	.navbar-hamburger {
-		display: none;
-	}
+@media (min-width: 950px) {
+  .navbar-hamburger {
+    display: none;
+  }
 }
 
 .navbar-hamburger:hover {
-	cursor: pointer;
+  cursor: pointer;
 }
 
 .search-nav-input {
-	width: 50vw;
+  width: 50vw;
 }
 
 .search-nav-input input {
-	border: none;
-	transition: all 0.3s;
-	background: transparent;
-	color: #fcfcfc;
+  border: none;
+  transition: all 0.3s;
+  background: transparent;
+  color: #fcfcfc;
 }
 
 .search-nav-input input:focus {
-	box-shadow: none;
+  box-shadow: none;
 }
 
 ::placeholder {
-	opacity: 0.7;
-	color: white;
+  opacity: 0.7;
+  color: white;
 }
 
 input:focus::placeholder {
-	color: transparent;
-	transition: all 0.3s;
+  color: transparent;
+  transition: all 0.3s;
 }
 
 #basic-addon1 {
-	border: none;
-	background: #DEA546;
-	color: white;
+  border: none;
+  background: #DEA546;
+  color: white;
 }
 
 .active-dropdown {
-	background: #DEA546;
-	color: #fff;
+  background: #DEA546;
+  color: #fff;
 }

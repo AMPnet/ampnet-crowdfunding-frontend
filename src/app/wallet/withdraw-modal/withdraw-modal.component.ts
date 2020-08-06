@@ -10,11 +10,12 @@ declare var $: any;
 })
 export class WithdrawModalComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router) {
+  }
 
   addPaymentOptionClicked() {
-     $('#withdraw-modal').modal('toggle');
-     this.router.navigate(['dash', 'payment_options', 'new']);
+    $('#withdraw-modal').modal('toggle');
+    this.router.navigate(['dash', 'payment_options', 'new']);
   }
 
   ngOnInit() {

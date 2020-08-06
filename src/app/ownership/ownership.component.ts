@@ -4,7 +4,7 @@ import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
 import { UserModel } from '../models/user-model';
 import { OwnershipService } from './ownership.service';
 import { BroadcastService } from '../broadcast/broadcast-service';
-import { ArkaneConnect, SecretType, WindowMode, SignatureRequestType } from '@arkane-network/arkane-connect';
+import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import swal from 'sweetalert2';
 
@@ -17,7 +17,7 @@ export class OwnershipComponent implements OnInit {
 
   user: UserModel;
 
-  constructor(private userService: UserService, 
+  constructor(private userService: UserService,
     private ownershipService: OwnershipService,
     private broadcastService: BroadcastService) { }
 
@@ -49,7 +49,7 @@ export class OwnershipComponent implements OnInit {
     let arkaneConnect = new ArkaneConnect('AMPnet', {
       environment: 'staging'
     })
-  
+
     let account = await arkaneConnect.flows.getAccount(SecretType.AETERNITY)
 
     let sigRes = await arkaneConnect.createSigner(WindowMode.POPUP).sign({

@@ -1,13 +1,13 @@
 export enum UserRoles {
-    ADMIN,
-    USER
+  ADMIN,
+  USER
 }
 
 
 export interface EmailSignupModel {
-    email: string,
-    firstName: string,
-    lastName: string,
-    country: string,
-    phoneNumber: string
+  email: string,
+  firstName: string,
+  lastName: string,
+  country: string,
+  phoneNumber: string
 }

@@ -9,10 +9,10 @@ describe('DepositModalComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DepositModalComponent ],
-      imports: [ RouterTestingModule ]
+      declarations: [DepositModalComponent],
+      imports: [RouterTestingModule]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

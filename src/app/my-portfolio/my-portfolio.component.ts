@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import * as _ from 'lodash';
 import { PortfolioService } from './portfolio.service';
 import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
-import { PortfolioRoot, PortfolioStats } from './portfolio.models'
+import { PortfolioRoot, PortfolioStats } from './portfolio.models';
 import { WalletService } from '../wallet/wallet.service';
 import { centsToBaseCurrencyUnit } from '../utilities/currency-util';
 

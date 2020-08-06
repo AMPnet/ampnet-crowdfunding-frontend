@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SummaryService } from './summary.service';
-import { displayBackendError, hideSpinnerAndDisplayError } from '../utilities/error-handler';
+import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
 import { BlockchainSummary } from './blockchain-summary';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 

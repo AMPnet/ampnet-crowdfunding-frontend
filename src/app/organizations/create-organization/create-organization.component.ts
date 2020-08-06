@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { OrganizationService } from '../organization-service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import swal from 'sweetalert2';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { Router } from '@angular/router';
@@ -46,7 +46,7 @@ export class CreateOrganizationComponent implements OnInit {
             console.log(err);
           });
         });
-        
+
         this.router.navigate(['/dash', 'manage_groups', res.uuid]);
       }, err => {
         SpinnerUtil.hideSpinner();

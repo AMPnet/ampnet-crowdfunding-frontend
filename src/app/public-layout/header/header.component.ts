@@ -1,5 +1,4 @@
-import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
-
+import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 
 
 @Component({

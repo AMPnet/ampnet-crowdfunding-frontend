@@ -16,13 +16,12 @@ declare var $: any;
 })
 export class WalletComponent implements OnInit {
 
-  constructor(private walletService: WalletService) {
-  }
-
   wallet: WalletModel;
   checkComplete = false;
-
   arkaneConnect: ArkaneConnect;
+
+  constructor(private walletService: WalletService) {
+  }
 
   ngOnInit() {
     this.getUserWallet();

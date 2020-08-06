@@ -1,8 +1,8 @@
-import { HttpClient } from "@angular/common/http";
-import { API } from "../utilities/endpoint-manager";
-import { Injectable } from "@angular/core";
-import { UserModel } from "../models/user-model";
-import { UserStatusStorage } from "../user-status-storage";
+import { HttpClient } from '@angular/common/http';
+import { API } from '../utilities/endpoint-manager';
+import { Injectable } from '@angular/core';
+import { UserModel } from '../models/user-model';
+import { UserStatusStorage } from '../user-status-storage';
 
 @Injectable({
     providedIn: 'root'

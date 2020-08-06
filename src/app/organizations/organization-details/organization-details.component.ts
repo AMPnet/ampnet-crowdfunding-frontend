@@ -1,16 +1,14 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { OrganizationService } from '../organization-service';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { displayBackendError } from 'src/app/utilities/error-handler';
 import { BroadcastService } from 'src/app/broadcast/broadcast-service';
-import * as QRCode from 'qrcode';
 import swal from 'sweetalert2';
-import { OrganizationModel } from './organization-model';
-import { WalletModel } from './organization-model';
+import { OrganizationModel, WalletModel } from './organization-model';
 import { MemberModel } from '../member-model';
 import { API } from 'src/app/utilities/endpoint-manager';
-import { ArkaneConnect, SecretType, WindowMode, SignatureRequestType } from '@arkane-network/arkane-connect';
+import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
 
 declare var $: any;
 
@@ -79,7 +77,7 @@ export class OrganizationDetailsComponent implements OnInit {
 
   initializeWalletClicked() {
     let orgID = this.activeRoute.snapshot.params.id;
-    
+
   }
 
 
@@ -110,7 +108,7 @@ export class OrganizationDetailsComponent implements OnInit {
   async createOrgWalletClicked() {
     let arkaneConnect = new ArkaneConnect('AMPnet', { environment: 'staging'} )
     let account = await arkaneConnect.flows.getAccount(SecretType.AETERNITY)
-    
+
     this.organizationService.getTransactionForCreationOfOrgWallet(this.organization.uuid).subscribe(async (res: any) => {
 
       this.orgWalletInitialized = false;

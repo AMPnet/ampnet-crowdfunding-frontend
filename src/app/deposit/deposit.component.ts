@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DepositServiceService } from './deposit-service.service';
-import { hideSpinnerAndDisplayError, displayBackendError } from '../utilities/error-handler';
+import { displayBackendError, hideSpinnerAndDisplayError } from '../utilities/error-handler';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { DepositModel } from './deposit-model';
 import swal from 'sweetalert2';

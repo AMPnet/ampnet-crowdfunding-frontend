@@ -1,12 +1,12 @@
-import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { SingleOrganizationModel } from 'src/app/models/single-organization-model';
 import { OrganizationService } from '../organization-service';
 import { displayBackendError } from 'src/app/utilities/error-handler';
-import { API } from 'src/app/utilities/endpoint-manager';
 import { Router } from '@angular/router';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { OrgInviteModel } from './org-invite-model';
 import swal from 'sweetalert2';
+
 @Component({
   selector: 'app-manage-organizations',
   templateUrl: './manage-organizations.component.html',
@@ -32,7 +32,7 @@ export class ManageOrganizationsComponent implements OnInit {
     this.fetchPersonalOrgs();
     this.fetchOrgInvites();
   }
-  
+
   fetchPersonalOrgs() {
     SpinnerUtil.showSpinner();
     this.organizationService.getPersonalOrganizations().subscribe((res: any) => {
@@ -69,6 +69,6 @@ export class ManageOrganizationsComponent implements OnInit {
       SpinnerUtil.hideSpinner();
       displayBackendError(err);
     });
-  } 
+  }
 
 }

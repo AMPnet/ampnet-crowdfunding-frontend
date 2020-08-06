@@ -1,5 +1,4 @@
-import { Component, OnInit, OnChanges } from '@angular/core';
-import { InvestViewModel } from './invest-view-model';
+import { Component, OnInit } from '@angular/core';
 import numeral from 'numeral';
 import { WalletService } from '../wallet/wallet.service';
 import { InvestService } from './invest.service';
@@ -9,11 +8,9 @@ import { WalletModel } from '../models/WalletModel';
 import { ProjectModel } from '../projects/create-new-project/project-model';
 import { ProjectService } from '../projects/project-service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { prettyCurrency, autonumericCurrency, stripCurrencyData, centsToBaseCurrencyUnit } from '../utilities/currency-util';
-import Cleave from 'cleave.js'
-import * as Autonumeric from 'autonumeric'
+import { autonumericCurrency, centsToBaseCurrencyUnit, prettyCurrency, stripCurrencyData } from '../utilities/currency-util';
 
-declare var $:any;
+declare var $: any;
 
 @Component({
   selector: 'app-invest',
@@ -31,15 +28,16 @@ export class InvestComponent implements OnInit {
   project: ProjectModel;
   expectedROI: number;
 
-  investmentOutOfBoundsWarningMessage = ""
+  investmentOutOfBoundsWarningMessage = '';
 
-  INVEST_LOW_MSG = "<b>Investment amount too low</b>. The minimum investment is "
-  INVEST_HIGH_MSG = "<b>Investment amount too high</b>. The maximum investment is "
-  WALLET_LOW_MSG = "<b>You don't have enough funds on your wallet</b>. Please deposit funds in the wallet tab."
+  INVEST_LOW_MSG = '<b>Investment amount too low</b>. The minimum investment is ';
+  INVEST_HIGH_MSG = '<b>Investment amount too high</b>. The maximum investment is ';
+  WALLET_LOW_MSG = '<b>You don\'t have enough funds on your wallet</b>. Please deposit funds in the wallet tab.';
 
   constructor(private walletService: WalletService, private investService: InvestService,
-    private projectService: ProjectService, private route: ActivatedRoute,
-    private router: Router) { }
+              private projectService: ProjectService, private route: ActivatedRoute,
+              private router: Router) {
+  }
 
   ngOnInit() {
     this.expectedROI = 10.5;
@@ -52,18 +50,18 @@ export class InvestComponent implements OnInit {
     this.walletService.getWallet().subscribe(res => {
       this.wallet = res;
       this.wallet.currency = prettyCurrency(res.currency);
-      this.wallet.balance = numeral(centsToBaseCurrencyUnit(res.balance)).format("0,0");
+      this.wallet.balance = numeral(centsToBaseCurrencyUnit(res.balance)).format('0,0');
 
       setTimeout(() => {
-        autonumericCurrency("#amount-input")
+        autonumericCurrency('#amount-input');
         SpinnerUtil.hideSpinner();
-      }, 200)
-      this.getProject()
+      }, 200);
+      this.getProject();
 
     }, err => {
       SpinnerUtil.hideSpinner();
       displayBackendError(err);
-    })
+    });
   }
 
   getProject() {
@@ -73,60 +71,60 @@ export class InvestComponent implements OnInit {
       res.currency = prettyCurrency(res.currency);
       this.project = res;
 
-      this.project.min_per_user = centsToBaseCurrencyUnit(res.min_per_user)
-      this.project.max_per_user = centsToBaseCurrencyUnit(res.max_per_user)
+      this.project.min_per_user = centsToBaseCurrencyUnit(res.min_per_user);
+      this.project.max_per_user = centsToBaseCurrencyUnit(res.max_per_user);
 
       this.investmentOutOfBoundsWarningMessage
-        = this.INVEST_LOW_MSG + res.currency + this.project.min_per_user + ". "
+        = this.INVEST_LOW_MSG + res.currency + this.project.min_per_user + '. ';
       SpinnerUtil.hideSpinner();
     }, err => {
       SpinnerUtil.hideSpinner();
       displayBackendError(err);
-    })
+    });
   }
 
   investButtonClicked() {
-    this.router.navigate(["./", stripCurrencyData(this.inputValue), "verify_sign"],
-    {
-      relativeTo: this.route
-    })
+    this.router.navigate(['./', stripCurrencyData(this.inputValue), 'verify_sign'],
+      {
+        relativeTo: this.route
+      });
   }
 
   inputChanged(event: any) {
 
     var inputValue = parseInt(
       stripCurrencyData(this.inputValue)
-    )
+    );
 
-    if(inputValue == NaN) {
-      inputValue = 0
+    if (inputValue == NaN) {
+      inputValue = 0;
     }
 
     //this.inputValue = numeral(inputValue).format('0,0,0');
     this.yearlyReturn = numeral(this.calculateYearlyReturn(inputValue)).format('0,0.00');
     this.projectStake = this.calculateProjectStake(inputValue)
-                          .toFixed(4) + "%";
+      .toFixed(4) + '%';
     this.breakevenPeriod = numeral(this.calculateTotalLifetimeReturn(inputValue)).format('0,0');
 
-    if(inputValue < this.project.min_per_user) {
+    if (inputValue < this.project.min_per_user) {
       this.investmentOutOfBoundsWarningMessage =
-        this.INVEST_LOW_MSG + this.project.currency + this.project.min_per_user + ". "
+        this.INVEST_LOW_MSG + this.project.currency + this.project.min_per_user + '. ';
     } else if (inputValue > this.project.max_per_user) {
       this.investmentOutOfBoundsWarningMessage =
-        this.INVEST_HIGH_MSG + this.project.currency + this.project.max_per_user + ". "
+        this.INVEST_HIGH_MSG + this.project.currency + this.project.max_per_user + '. ';
     } else {
-      this.investmentOutOfBoundsWarningMessage = ""
+      this.investmentOutOfBoundsWarningMessage = '';
     }
 
-    if(inputValue > this.wallet.balance) {
-      var padding = ""
-      if(this.investmentOutOfBoundsWarningMessage.length > 0) {
-        padding = "<br><br>"
+    if (inputValue > this.wallet.balance) {
+      var padding = '';
+      if (this.investmentOutOfBoundsWarningMessage.length > 0) {
+        padding = '<br><br>';
       }
-      this.investmentOutOfBoundsWarningMessage += (padding + (this.WALLET_LOW_MSG))
+      this.investmentOutOfBoundsWarningMessage += (padding + (this.WALLET_LOW_MSG));
     }
 
-    let inputAmount = $("#amount-input")
+    let inputAmount = $('#amount-input');
     let inputAmountContent: String = inputAmount.val();
 
   }

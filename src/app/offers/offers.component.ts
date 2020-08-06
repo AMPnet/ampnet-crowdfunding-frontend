@@ -1,14 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { OfferModel } from './OfferModel';
-import * as _ from 'lodash';
 import { OffersService } from './offers.service';
-import { ProjectModel } from '../projects/create-new-project/project-model';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { displayBackendError } from '../utilities/error-handler';
 import * as moment from 'moment';
-import * as numeral from 'numeral';
 import { ProjectService } from '../projects/project-service';
-import { WalletModel } from '../models/WalletModel';
 import { ActivatedRoute } from '@angular/router';
 import { centsToBaseCurrencyUnit } from '../utilities/currency-util';
 

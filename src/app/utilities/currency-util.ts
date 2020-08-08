@@ -1,9 +1,9 @@
 import * as Autonumeric from 'autonumeric';
 
 export function prettyCurrency(input: string) {
-  if (input == 'EUR') {
+  if (input === 'EUR') {
     return '€';
-  } else if (input == 'USD') {
+  } else if (input === 'USD') {
     return '$';
   } else {
     return input;
@@ -11,7 +11,7 @@ export function prettyCurrency(input: string) {
 }
 
 export function autonumericCurrency(selector: string, currencySymbol: string = '€') {
-  new Autonumeric(selector, {
+  return new Autonumeric(selector, {
     currencySymbol: currencySymbol,
     decimalCharacter: ',',
     digitGroupSeparator: '.',

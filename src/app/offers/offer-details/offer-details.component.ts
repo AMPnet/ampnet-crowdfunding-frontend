@@ -9,7 +9,7 @@ import { ProjectService } from 'src/app/projects/project-service';
 import { prettyDate } from 'src/app/utilities/date-format-util';
 import swal from 'sweetalert2';
 import { NewsPreviewService } from 'src/app/news-preview/news-preview.service';
-import * as numeral from 'numeral';
+import numeral from 'numeral';
 import { centsToBaseCurrencyUnit, prettyCurrency } from 'src/app/utilities/currency-util';
 import { Meta } from '@angular/platform-browser';
 import { UserService } from 'src/app/user-utils/user-service';

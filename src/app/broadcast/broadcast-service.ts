@@ -6,7 +6,6 @@ import { API } from '../utilities/endpoint-manager';
   providedIn: 'root'
 })
 export class BroadcastService {
-
   private endpoint = '/wallet/tx_broadcast';
 
   constructor(

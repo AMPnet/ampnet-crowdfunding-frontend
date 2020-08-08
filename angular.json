@@ -39,6 +39,12 @@
               "node_modules/wowjs/dist/wow.min.js",
               "node_modules/@fortawesome/fontawesome-free/js/all.min.js",
               "node_modules/bootstrap-select/dist/js/bootstrap-select.min.js"
+            ],
+            "allowedCommonJsDependencies": [
+              "lodash",
+              "bootstrap-select",
+              "js-base64",
+              "@arkane-network/arkane-connect"
             ]
           },
           "configurations": {

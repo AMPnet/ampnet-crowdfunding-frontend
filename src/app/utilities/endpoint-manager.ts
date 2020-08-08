@@ -9,9 +9,7 @@ export module API {
     }
 
     export function generateComplexRoute(endpoint: string, path: string[]) {
-        return APIURL + endpoint + '/' + path.reduce((a, b) => {
-            return a + '/' + b;
-        });
+        return APIURL + endpoint + '/' + path.reduce((a, b) => a + '/' + b);
     }
 
     export function tokenHeaders() {

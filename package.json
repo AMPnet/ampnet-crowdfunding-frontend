@@ -2,14 +2,13 @@
   "name": "ampnet-crowdfunding-frontend",
   "version": "0.0.0",
   "scripts": {
-    "android": "tns run android --bundle",
-    "ios": "tns run ios --bundle",
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "start": "ng serve --disable-host-check",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "deploy-prod": "sh ./deploy.sh",
+    "build-prod": "ng build --prod --extract-css=false"
   },
   "private": true,
   "dependencies": {

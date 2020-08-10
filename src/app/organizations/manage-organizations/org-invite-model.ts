@@ -1,4 +1,4 @@
 export interface OrgInviteModel {
-    organization_id: number,
-    organization_name: string
+    organization_id: number;
+    organization_name: string;
 }

@@ -1,4 +1,4 @@
 export class CheckEmailModel {
-    email: string;
-    userExists: boolean;
+  email: string;
+  userExists: boolean;
 }

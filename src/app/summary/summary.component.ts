@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SummaryService } from './summary.service';
-import { displayBackendError, hideSpinnerAndDisplayError } from '../utilities/error-handler';
+import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
 import { BlockchainSummary } from './blockchain-summary';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 
@@ -11,57 +11,55 @@ import { SpinnerUtil } from '../utilities/spinner-utilities';
 })
 export class SummaryComponent implements OnInit {
 
-  numberOfUsers: number = 0
-  numberOfActiveProjects: number = 0
+  numberOfUsers = 0;
+  numberOfActiveProjects = 0;
   blockchainSummary: BlockchainSummary = {
     average_funded_project_size: 0,
     average_project_size: 0,
     average_user_investment: 0,
     number_of_funded_projects: 0,
     total_money_raised: 0
-  }
+  };
   completedRequests = 0;
 
-  constructor(private summaryService: SummaryService) { }
+  constructor(private summaryService: SummaryService) {
+  }
 
   ngOnInit() {
-    this.getActiveProjects()
-    this.getUsers()
-    this.getBlockchainMiddlewareSummary()
+    this.getActiveProjects();
+    this.getUsers();
+    this.getBlockchainMiddlewareSummary();
   }
 
   private getUsers() {
-    SpinnerUtil.showSpinner()
+    SpinnerUtil.showSpinner();
     this.summaryService.getUsers().subscribe((res: any) => {
-      console.log(res);
       this.numberOfUsers = res.registered;
       this.completedRequests += 1;
-      SpinnerUtil.hideSpinner()
-    }, hideSpinnerAndDisplayError );
+      SpinnerUtil.hideSpinner();
+    }, hideSpinnerAndDisplayError);
   }
 
   private getActiveProjects() {
-    SpinnerUtil.showSpinner()
+    SpinnerUtil.showSpinner();
     this.summaryService.getNumberOfActiveProjects().subscribe((res: any) => {
-      console.log(res);
       this.numberOfActiveProjects = res.active_projects;
-      this.completedRequests +=1;
-      SpinnerUtil.hideSpinner()
-    }, hideSpinnerAndDisplayError );
+      this.completedRequests += 1;
+      SpinnerUtil.hideSpinner();
+    }, hideSpinnerAndDisplayError);
   }
 
   private getBlockchainMiddlewareSummary() {
-    SpinnerUtil.showSpinner()
+    SpinnerUtil.showSpinner();
     this.summaryService.getBlockchainMiddlewareData().subscribe((res: any) => {
-      console.log(res);
-      SpinnerUtil.hideSpinner()
-      this.completedRequests +=1;
-      this.blockchainSummary = res
+      SpinnerUtil.hideSpinner();
+      this.completedRequests += 1;
+      this.blockchainSummary = res;
       // this.numberOfFundedProjects = res.numberOfFundedProjects;
       // this.averageProjectSize = res.averageProjectSize;
       // this.averageFundedProjectSize = res.averageFundedProjectSize;
       // this.averageUserInvestment = res.averageUserInvestment;
       // this.totalMoneyRaised = res.totalMoneyRaised;
-    }, hideSpinnerAndDisplayError );
+    }, hideSpinnerAndDisplayError);
   }
 }

@@ -9,13 +9,13 @@ import { UserStatusStorage } from '../user-status-storage';
 export class CompleteOnboardingComponent implements OnInit {
 
   isVerified: boolean;
-  hasWallet: boolean
+  hasWallet: boolean;
 
   constructor() { }
 
   ngOnInit() {
-    this.isVerified = UserStatusStorage.personalData.verified
-    this.hasWallet = UserStatusStorage.walletData != undefined
+    this.isVerified = UserStatusStorage.personalData.verified;
+    this.hasWallet = UserStatusStorage.walletData != undefined;
   }
 
 }

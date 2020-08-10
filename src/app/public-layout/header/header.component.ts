@@ -1,5 +1,4 @@
-import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
-
+import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 
 
 @Component({
@@ -9,7 +8,7 @@ import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
 })
 export class HeaderComponent implements OnInit, AfterViewInit {
 
-  @Input() onlyLogo: boolean = false;
+  @Input() onlyLogo = false;
 
   constructor() { }
 

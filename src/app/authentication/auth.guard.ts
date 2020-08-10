@@ -6,13 +6,13 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
+
+  public static checkLogin() {
+    return localStorage.getItem('access_token') !== null;
+  }
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
     return AuthGuard.checkLogin();
-  }
-
-  public static checkLogin() {
-    return localStorage.getItem('access_token') !== null;
   }
 }

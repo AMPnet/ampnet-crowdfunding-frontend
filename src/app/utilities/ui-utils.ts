@@ -1,9 +1,9 @@
-declare var $: any
+declare var $: any;
 
 export function hideAuthButtons() {
-    $("#auth-buttons").hide()
+    $('#auth-buttons').hide();
 }
 
 export function showAuthButtons() {
-    $("#auth-buttons").hide()
+    $('#auth-buttons').hide();
 }

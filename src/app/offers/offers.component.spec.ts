@@ -11,10 +11,10 @@ describe('OffersComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ RouterTestingModule ],
-      declarations: [ OffersComponent, SingleOfferItemComponent ]
+      imports: [RouterTestingModule],
+      declarations: [OffersComponent, SingleOfferItemComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

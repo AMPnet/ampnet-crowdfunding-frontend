@@ -6,7 +6,7 @@ import { displayBackendError } from '../utilities/error-handler';
 import { ProjectModel } from '../projects/create-new-project/project-model';
 
 
-declare var _:any;
+declare var _: any;
 
 @Component({
   selector: 'app-manage-projects',
@@ -34,16 +34,14 @@ export class ManageProjectsComponent implements OnInit {
     SpinnerUtil.showSpinner();
     this.orgService.getAllProjectsForOrganization(this.groupID).subscribe((res: any) => {
       SpinnerUtil.hideSpinner();
-      console.log(res);
 
       this.manageProjectsModel = res.projects;
-      console.log("PROJECTS", res)
     }, err => {
       SpinnerUtil.hideSpinner();
       displayBackendError(err);
     });
   }
 
-  
+
 
 }

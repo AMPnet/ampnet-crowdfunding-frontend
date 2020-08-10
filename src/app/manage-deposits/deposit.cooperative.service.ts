@@ -7,50 +7,50 @@ import { API } from '../utilities/endpoint-manager';
 })
 export class DepositCooperativeService {
 
-  private endpoint = "/wallet/cooperative/deposit"
+  private endpoint = '/wallet/cooperative/deposit';
 
   constructor(private http: HttpClient) { }
 
   public createDeposit() {
-    return this.http.post(API.generateRoute(this.endpoint), { }, API.tokenHeaders())
+    return this.http.post(API.generateRoute(this.endpoint), { }, API.tokenHeaders());
   }
 
   public getDeposit(reference: string) {
-    return this.http.get(API.generateComplexRoute(this.endpoint, ["search"]), {
+    return this.http.get(API.generateComplexRoute(this.endpoint, ['search']), {
       params: {
-        "reference": reference
+        'reference': reference
       },
       headers: API.tokenHeaders().headers
-    })
+    });
   }
 
   public generateDepositApprovalURL(id: number, amount: number): string {
     return API.generateComplexRoute(this.endpoint, [
-      id.toString(), "approve?amount=" + amount.toString()
-    ])
+      id.toString(), 'approve?amount=' + amount.toString()
+    ]);
   }
 
   public getUnapprovedDeposits() {
     return this.http.get(API.generateComplexRoute(this.endpoint, [
-      "unapproved"
-    ]), API.tokenHeaders())
+      'unapproved'
+    ]), API.tokenHeaders());
   }
 
   public getApprovedDeposits() {
     return this.http.get(API.generateComplexRoute(this.endpoint, [
-      "unapproved"
-    ]), API.tokenHeaders())
+      'unapproved'
+    ]), API.tokenHeaders());
   }
 
   public generateDepositMintTx(id: number) {
     return this.http.post(API.generateComplexRoute(this.endpoint, [
-      id.toString(), "transaction"
-    ]), {}, API.tokenHeaders())
+      id.toString(), 'transaction'
+    ]), {}, API.tokenHeaders());
   }
 
   public declineDeposit(id: number, comment: string) {
     return this.http.post(API.generateComplexRoute(this.endpoint, [
-      id.toString(), "decline"
-    ]), { comment: comment }, API.tokenHeaders())
+      id.toString(), 'decline'
+    ]), { comment: comment }, API.tokenHeaders());
   }
 }

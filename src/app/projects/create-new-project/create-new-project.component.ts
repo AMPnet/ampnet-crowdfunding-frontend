@@ -1,12 +1,11 @@
-import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { ProjectService } from '../project-service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import flatpickr from 'flatpickr';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { displayBackendError } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
-import { autonumericCurrency, stripCurrencyData, baseCurrencyUnitToCents } from 'src/app/utilities/currency-util';
+import { autonumericCurrency, baseCurrencyUnitToCents, stripCurrencyData } from 'src/app/utilities/currency-util';
 
 declare var $: any;
 
@@ -16,12 +15,12 @@ declare var $: any;
   styleUrls: ['./create-new-project.component.css']
 })
 export class CreateNewProjectComponent implements OnInit, AfterViewInit {
-
-
   createProjectForm: FormGroup;
 
-  constructor(private projectService: ProjectService, private fb: FormBuilder,
-    private activatedRoute: ActivatedRoute, private router: Router) { 
+  constructor(private projectService: ProjectService,
+              private fb: FormBuilder,
+              private activatedRoute: ActivatedRoute,
+              private router: Router) {
     this.createProjectForm = this.fb.group({
       'name': [' ', Validators.required],
       'description': [' ', Validators.required],
@@ -35,13 +34,15 @@ export class CreateNewProjectComponent implements OnInit, AfterViewInit {
   }
 
   submitForm() {
-    if(!this.createProjectForm.valid) { return }
-    var formValue = this.createProjectForm.value;
-    let date = moment(formValue.startDate).format("YYYY-MM-DDTHH:mm:ss.SSS[Z]");
+    if (!this.createProjectForm.valid) {
+      return;
+    }
+    const formValue = this.createProjectForm.value;
+    const date = moment(formValue.startDate).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
     formValue.startDate = date;
-    formValue.endDate = moment(formValue.endDate).format("YYYY-MM-DDTHH:mm:ss.SSS[Z]");
-    formValue.location = "abc";
-    let orgID = this.activatedRoute.snapshot.params.orgId;
+    formValue.endDate = moment(formValue.endDate).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
+    formValue.location = 'abc';
+    const orgID = this.activatedRoute.snapshot.params.orgId;
 
     SpinnerUtil.showSpinner();
 
@@ -50,18 +51,18 @@ export class CreateNewProjectComponent implements OnInit, AfterViewInit {
       formValue.name,
       formValue.description,
       {
-        "lat": 0,
-        "long": 0
+        'lat': 0,
+        'long': 0
       },
       formValue.colloqual,
       {
-        "from": 2.1,
-        "to" : 5.3
+        'from': 2.1,
+        'to': 5.3
       },
       formValue.startDate,
       formValue.endDate,
       baseCurrencyUnitToCents(parseInt(stripCurrencyData(formValue.expectedFunding))),
-      "EUR",
+      'EUR',
       baseCurrencyUnitToCents(parseInt(stripCurrencyData(formValue.minPerUser))),
       baseCurrencyUnitToCents(parseInt(stripCurrencyData(formValue.maxPerUser))),
       false
@@ -69,30 +70,22 @@ export class CreateNewProjectComponent implements OnInit, AfterViewInit {
       SpinnerUtil.hideSpinner();
       this.router.navigate(['/dash', 'manage_groups', orgID.toString(), 'manage_project', res.uuid]);
     }, err => {
-      console.log(err);
       SpinnerUtil.hideSpinner();
       displayBackendError(err);
-    })
-  }
-
-  projctFetched() {
-
+    });
   }
 
   ngOnInit() {
-
     $(document).ready(() => {
-      autonumericCurrency("#min-per-user-input")
-      autonumericCurrency("#max-per-user-input")
-      autonumericCurrency("#expected-funding-input")
-    })
-    
+      autonumericCurrency('#min-per-user-input');
+      autonumericCurrency('#max-per-user-input');
+      autonumericCurrency('#expected-funding-input');
+    });
   }
 
   ngAfterViewInit() {
-    
   }
 
-  submitButtonClicked() { }
-
+  submitButtonClicked() {
+  }
 }

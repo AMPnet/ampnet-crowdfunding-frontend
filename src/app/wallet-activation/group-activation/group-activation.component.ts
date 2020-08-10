@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { WalletActivationService } from '../wallet-activation.service';
 import { displayBackendError, hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
-import {GroupActivationModel} from "./group-activation.model"
+import { GroupActivationModel } from './group-activation.model';
 import { ArkaneConnect, SecretType, WindowMode, SignatureRequestType } from '@arkane-network/arkane-connect';
 import { BroadcastService } from 'src/app/broadcast/broadcast-service';
 import swal from 'sweetalert2';
@@ -15,48 +15,47 @@ import swal from 'sweetalert2';
 export class GroupActivationComponent implements OnInit {
 
   constructor(private activationService: WalletActivationService,
-    private broadService: BroadcastService) { }
+              private broadService: BroadcastService) {
+  }
 
-  groups: GroupActivationModel[]
+  groups: GroupActivationModel[];
 
   ngOnInit() {
-    this.fetchWalletToActivate()
+    this.fetchWalletToActivate();
   }
 
   fetchWalletToActivate() {
-    SpinnerUtil.showSpinner()
+    SpinnerUtil.showSpinner();
     this.activationService
-      .getUnactivatedWallets("organization").subscribe((res: any) => {
+      .getUnactivatedWallets('organization').subscribe((res: any) => {
       this.groups = res.organizations;
-      console.log(this.groups)
-      SpinnerUtil.hideSpinner()
-      
-    }, displayBackendError)
+      SpinnerUtil.hideSpinner();
+
+    }, displayBackendError);
   }
 
   activateGroupClicked(uuid: string) {
 
     this.activationService.getActivationData(uuid).subscribe(async (res: any) => {
-      console.log("RES_TX", res.tx)
-      let arkaneConnect = new ArkaneConnect('AMPnet', {
+      const arkaneConnect = new ArkaneConnect('AMPnet', {
         environment: 'staging'
-      })
-    
-      let account = await arkaneConnect.flows.getAccount(SecretType.AETERNITY)
-      let sigRes = await arkaneConnect.createSigner(WindowMode.POPUP).sign({
+      });
+
+      const account = await arkaneConnect.flows.getAccount(SecretType.AETERNITY);
+      const sigRes = await arkaneConnect.createSigner(WindowMode.POPUP).sign({
         walletId: account.wallets[0].id,
         data: res.tx,
         type: SignatureRequestType.AETERNITY_RAW
-      })
+      });
       this.broadService.broadcastSignedTx(sigRes.result.signedTransaction, res.tx_id)
         .subscribe(res => {
-          SpinnerUtil.hideSpinner()
-          swal("", "Success", "success").then(() => {
-            this.ngOnInit()
-          })
-        }, hideSpinnerAndDisplayError)
+          SpinnerUtil.hideSpinner();
+          swal('', 'Success', 'success').then(() => {
+            this.ngOnInit();
+          });
+        }, hideSpinnerAndDisplayError);
 
-    }, hideSpinnerAndDisplayError)
+    }, hideSpinnerAndDisplayError);
 
   }
 

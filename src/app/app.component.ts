@@ -3,7 +3,7 @@ import * as $ from 'jquery';
 import { Router, NavigationEnd } from '@angular/router';
 import { ArkaneUtil } from './utilities/arkane-util';
 import { environment } from 'src/environments/environment.prod';
-import { ArkaneConnect } from '@arkane-network/arkane-connect'
+import { ArkaneConnect } from '@arkane-network/arkane-connect';
 
 declare var WOW: any;
 

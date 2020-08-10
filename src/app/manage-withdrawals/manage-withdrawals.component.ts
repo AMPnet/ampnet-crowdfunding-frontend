@@ -11,21 +11,21 @@ import { WithdrawCooperativeService } from './withdraw.cooperative.service';
 })
 export class ManageWithdrawalsComponent implements OnInit {
 
-  withdrawals: ManageWithdrawModel[]
+  withdrawals: ManageWithdrawModel[];
 
   constructor(private withdrawCooperativeService: WithdrawCooperativeService) {
   }
 
   ngOnInit() {
-    this.getApprovedWithdrawals()
+    this.getApprovedWithdrawals();
   }
 
   getApprovedWithdrawals() {
-    SpinnerUtil.showSpinner()
+    SpinnerUtil.showSpinner();
     return this.withdrawCooperativeService.getApprovedWithdrawals().subscribe((res: any) => {
-      SpinnerUtil.hideSpinner()
-      this.withdrawals = res.withdraws
-    }, hideSpinnerAndDisplayError)
+      SpinnerUtil.hideSpinner();
+      this.withdrawals = res.withdraws;
+    }, hideSpinnerAndDisplayError);
   }
 
 }

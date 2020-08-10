@@ -1,5 +1,5 @@
 export interface OfferModel {
-  offerID: string,
+  offerID: string;
   title: string;
   description: string;
   offeredBy: string;
@@ -8,6 +8,6 @@ export interface OfferModel {
   currentFunding: number;
   headerImageUrl: string;
   endDate: string;
-  owner: string
-  currency: string
+  owner: string;
+  currency: string;
 }

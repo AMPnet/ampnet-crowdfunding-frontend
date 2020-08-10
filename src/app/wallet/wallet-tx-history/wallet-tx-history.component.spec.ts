@@ -8,9 +8,9 @@ describe('WalletTxHistoryComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ WalletTxHistoryComponent ]
+      declarations: [WalletTxHistoryComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

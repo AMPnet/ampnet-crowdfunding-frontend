@@ -1,10 +1,10 @@
-import { OrganizationModel } from "src/app/organizations/organization-details/organization-model";
+import { OrganizationModel } from 'src/app/organizations/organization-details/organization-model';
 
 export interface GroupActivationModel {
-    organization: OrganizationModel,
-    wallet: GroupActivationWalletModel
+    organization: OrganizationModel;
+    wallet: GroupActivationWalletModel;
 }
 
 interface GroupActivationWalletModel {
-    uuid: string
+    uuid: string;
 }

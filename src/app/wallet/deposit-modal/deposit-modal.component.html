@@ -1,27 +1,27 @@
-<div id="deposit-modal" class="modal fade" tabindex="-1" role="dialog">
+<div class="modal fade" id="deposit-modal" role="dialog" tabindex="-1">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Deposit</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button aria-label="Close" class="close" data-dismiss="modal" type="button">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body p-4">
 
-      	<p class="mb-3 mt-1 explainer-mini text-uppercase ">
-      		Choose account
-      	</p>
-      	<div id="account-chooser" class="list-group">
-      		<button href="#" class="list-group-item list-group-item-action">
-      			PBZ Account 1
-      		</button>
-      		<button href="#" class="list-group-item list-group-item-action">
-      			Revolut Card Acc
-      		</button>
-      		<button href="#" class="list-group-item list-group-item-action">
-      			My Account Test
-      		</button>
+        <p class="mb-3 mt-1 explainer-mini text-uppercase ">
+          Choose account
+        </p>
+        <div class="list-group" id="account-chooser">
+          <button class="list-group-item list-group-item-action" href="#">
+            PBZ Account 1
+          </button>
+          <button class="list-group-item list-group-item-action" href="#">
+            Revolut Card Acc
+          </button>
+          <button class="list-group-item list-group-item-action" href="#">
+            My Account Test
+          </button>
           <button (click)="addPaymentOptionClicked()" class="btn btn-primary text-uppercase mt-3 btn-action-a">
             <i class="fas fa-plus-square mr-2"></i>
             Add new payment method
@@ -33,14 +33,14 @@
             <div class="input-group-prepend">
               <span class="input-group-text">$</span>
             </div>
-            <input class="form-control enter-amount" placeholder="Amount" type="number" name=""/>
+            <input class="form-control enter-amount" name="" placeholder="Amount" type="number"/>
           </div>
         </div>
         <div class="mt-3 float-right">
-          <button type="button" class="btn btn-secondary mr-3" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Deposit</button>
+          <button class="btn btn-secondary mr-3" data-dismiss="modal" type="button">Close</button>
+          <button class="btn btn-primary" type="button">Deposit</button>
         </div>
-        
+
       </div>
     </div>
   </div>

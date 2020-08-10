@@ -8,9 +8,9 @@ describe('VerifySignOfferComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ VerifySignOfferComponent ]
+      declarations: [VerifySignOfferComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

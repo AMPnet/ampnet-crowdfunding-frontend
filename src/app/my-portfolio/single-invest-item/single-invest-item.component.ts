@@ -1,7 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { PortfolioRoot } from '../portfolio.models';
-import { prettyCurrency, centsToBaseCurrencyUnit } from 'src/app/utilities/currency-util';
+import { centsToBaseCurrencyUnit, prettyCurrency } from 'src/app/utilities/currency-util';
 
 @Component({
   selector: 'app-single-invest-item',
@@ -9,23 +9,21 @@ import { prettyCurrency, centsToBaseCurrencyUnit } from 'src/app/utilities/curre
   styleUrls: ['./single-invest-item.component.css']
 })
 export class SingleInvestItemComponent implements OnInit {
-
   @Input() investment: PortfolioRoot;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router) {
+  }
 
   ngOnInit() {
-    this.investment.project.currency = prettyCurrency(this.investment.project.currency)
-    this.investment.investment = centsToBaseCurrencyUnit(this.investment.investment)
+    this.investment.project.currency = prettyCurrency(this.investment.project.currency);
+    this.investment.investment = centsToBaseCurrencyUnit(this.investment.investment);
   }
 
   onClickedItem() {
-    this.router.navigate(['dash', 'my_portfolio', this.investment.project.uuid, "in_portfolio"]);
+    this.router.navigate(['dash', 'my_portfolio', this.investment.project.uuid, 'in_portfolio']);
   }
 
   getImageAsURL() {
-    console.log(this.investment.project)
-    return "url(" + (<any>this.investment.project).image_url + ")"
+    return `url(${(<any>this.investment.project).image_url})`;
   }
-
 }

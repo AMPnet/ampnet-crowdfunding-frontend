@@ -8,9 +8,9 @@ describe('RevenueShareComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RevenueShareComponent ]
+      declarations: [RevenueShareComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

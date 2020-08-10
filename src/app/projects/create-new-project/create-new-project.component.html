@@ -15,42 +15,42 @@
           Please make sure these parameters are finalized <i>before</i> creating the project.
         </div>
       </div>
-      
+
     </div>
   </div>
-  <form [formGroup]="createProjectForm" class="mb-5" >
+  <form [formGroup]="createProjectForm" class="mb-5">
     <div class="explainer-mini  mb-2 mt-3">Project name</div>
-    <input formControlName="name" type="text" class="w-100 p-4 form-control " name="" id="">
+    <input class="w-100 p-4 form-control " formControlName="name" id="" name="" type="text">
 
     <div class="explainer-mini  mb-2 mt-3">Project location</div>
 
     <div class="explainer-mini  mb-2 mt-3">Start date</div>
-    <input formControlName="startDate" type="date" class="w-100 p-4 form-control" name="" id="start-date">
+    <input class="w-100 p-4 form-control" formControlName="startDate" id="start-date" name="" type="date">
 
     <div class="explainer-mini  mb-2 mt-3">End date</div>
-    <input formControlName="endDate" type="date" class="w-100 p-4 form-control" name="" id="end-date">
+    <input class="w-100 p-4 form-control" formControlName="endDate" id="end-date" name="" type="date">
 
     <div class="explainer-mini  mb-2 mt-3">Expected funding</div>
-    <input formControlName="expectedFunding" 
-    type="text" class="w-100 p-4 form-control" id="expected-funding-input">
+    <input class="w-100 p-4 form-control"
+           formControlName="expectedFunding" id="expected-funding-input" type="text">
 
     <div class="explainer-mini  mb-2 mt-3">Minimum investment per user</div>
     <div class="input-group">
-      <input formControlName="minPerUser" 
-      type="text" class=" p-4 form-control" id="min-per-user-input">
+      <input class=" p-4 form-control"
+             formControlName="minPerUser" id="min-per-user-input" type="text">
     </div>
 
     <div class="explainer-mini  mb-2 mt-3">Maximum investment per user</div>
     <div class="input-group">
-      <input formControlName="maxPerUser" type="text" 
-      class=" p-4 form-control" name="" id="max-per-user-input">
+      <input class=" p-4 form-control" formControlName="maxPerUser"
+             id="max-per-user-input" name="" type="text">
     </div>
 
-    <button type="submit" (click)="submitForm()"
-        class="btn btn-primary float-right mt-3 mb-5 pt-3 pb-3 pl-5 pr-5 "
-        (click)="submitButtonClicked()">
-        <i class="mr-3 fas fa-plus"></i>
-          Create
+    <button (click)="submitForm()" (click)="submitButtonClicked()"
+            class="btn btn-primary float-right mt-3 mb-5 pt-3 pb-3 pl-5 pr-5 "
+            type="submit">
+      <i class="mr-3 fas fa-plus"></i>
+      Create
     </button>
   </form>
 </div>

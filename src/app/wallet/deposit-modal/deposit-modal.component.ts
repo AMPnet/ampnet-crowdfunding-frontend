@@ -11,16 +11,16 @@ declare var $: any;
 })
 export class DepositModalComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router) {
+  }
 
   ngOnInit() {
   }
 
   addPaymentOptionClicked() {
-     $('#deposit-modal').modal('toggle');
-     this.router.navigate(['dash', 'payment_options', 'new']);
+    $('#deposit-modal').modal('toggle');
+    this.router.navigate(['dash', 'payment_options', 'new']);
   }
-
 
 
 }

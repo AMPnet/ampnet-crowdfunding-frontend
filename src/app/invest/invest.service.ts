@@ -7,19 +7,20 @@ import { API } from '../utilities/endpoint-manager';
 })
 export class InvestService {
 
-  private projectEndpoint = "/project";
+  private projectEndpoint = '/project';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   generateInvestTransaction(projectID: number, amount: number) {
     return this.http.get(API.generateComplexRoute(this.projectEndpoint, [
       projectID.toString()
     ]), {
       params: {
-        "amount": amount.toString()
+        'amount': amount.toString()
       },
       headers: {
-        "Authorization" : API.tokenHeaders().headers.Authorization
+        'Authorization': API.tokenHeaders().headers.Authorization
       }
     });
   }
@@ -27,6 +28,6 @@ export class InvestService {
   generateInvestApprovalTransaction(projectID: number) {
     return this.http.get(API.generateComplexRoute(this.projectEndpoint, [
       projectID.toString()
-    ]), API.tokenHeaders())
+    ]), API.tokenHeaders());
   }
 }

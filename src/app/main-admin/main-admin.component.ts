@@ -5,7 +5,7 @@ import { displayBackendError } from '../utilities/error-handler';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import * as QRCode from 'qrcode';
 import * as Uppy from 'uppy';
-import "bootstrap-select"
+import 'bootstrap-select';
 
 declare var _: any;
 declare var $: any;
@@ -20,7 +20,7 @@ export class MainAdminComponent implements OnInit {
 
   constructor(private issuingAuthService: IssuingAuthorityService, private userService: UserService) { }
 
-  userUUID = "";
+  userUUID = '';
 
   ngOnInit() {
 
@@ -31,10 +31,10 @@ export class MainAdminComponent implements OnInit {
     }, err => {
       SpinnerUtil.hideSpinner();
       displayBackendError(err);
-    })
+    });
 
-    let mintReceiptUppy =  Uppy.Core({
-      id: "payment-receipt-upload-uppy",
+    const mintReceiptUppy =  Uppy.Core({
+      id: 'payment-receipt-upload-uppy',
       restrictions: {
         maxFileSize: null,
         maxNumberOfFiles: 1,
@@ -45,26 +45,26 @@ export class MainAdminComponent implements OnInit {
 
     setTimeout(() => {
       mintReceiptUppy.use(Uppy.Dashboard, {
-        target: document.getElementById("receipt-upload-area-mint"),
+        target: document.getElementById('receipt-upload-area-mint'),
         height: 150,
         inline: true,
         hideUploadButton: true,
-        width: $("#admin-root").width()
+        width: $('#admin-root').width()
       });
-    }, 300)
-    
-    $("#user-picker").selectpicker()
+    }, 300);
+
+    $('#user-picker').selectpicker();
   }
 
   mintButtonClicked() {
     SpinnerUtil.showSpinner();
     this.issuingAuthService.mintTokens(50000, this.userUUID).subscribe((res: any) => {
       SpinnerUtil.hideSpinner();
-      QRCode.toCanvas(document.getElementById("mint-burn-sign-canvas"), JSON.stringify(res), console.log);
+      QRCode.toCanvas(document.getElementById('mint-burn-sign-canvas'), JSON.stringify(res));
     }, err => {
       SpinnerUtil.hideSpinner();
       displayBackendError(err);
-    })
+    });
   }
 
 }

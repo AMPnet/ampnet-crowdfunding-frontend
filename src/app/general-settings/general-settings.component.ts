@@ -18,16 +18,16 @@ export class GeneralSettingsComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private fb: FormBuilder) { 
-    
+    private fb: FormBuilder) {
+
   }
 
   ngOnInit() {
-    SpinnerUtil.showSpinner()
-    this.userService.getOwnProfile().subscribe((res:any) => {
+    SpinnerUtil.showSpinner();
+    this.userService.getOwnProfile().subscribe((res: any) => {
       this.user = res;
-      SpinnerUtil.hideSpinner()
-    }, hideSpinnerAndDisplayError)
+      SpinnerUtil.hideSpinner();
+    }, hideSpinnerAndDisplayError);
   }
 
   updateInfoClicked() {

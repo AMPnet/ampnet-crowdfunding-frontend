@@ -9,25 +9,25 @@ import { UserStatusStorage } from '../user-status-storage';
 })
 export class PlatformBankAccountService {
 
-  endpoint = "/wallet/bank-account"
+  endpoint = '/wallet/bank-account';
 
   constructor(private http: HttpClient) { }
 
   getBankAccounts() {
-    return this.http.get(API.generateRoute(this.endpoint), API.tokenHeaders())
+    return this.http.get(API.generateRoute(this.endpoint), API.tokenHeaders());
   }
 
   createBankAccount(iban: String, bankCode: String, alias: String) {
     return this.http.post(API.generateRoute(this.endpoint), {
-      "iban": iban,
-      "bank_code": bankCode,
-      "alias": alias
-    }, API.tokenHeaders())
+      'iban': iban,
+      'bank_code': bankCode,
+      'alias': alias
+    }, API.tokenHeaders());
   }
 
   deleteBankAccount(id: number) {
     return this.http.delete(API.generateComplexRoute(this.endpoint, [
       id.toString()
-    ]), API.tokenHeaders())
+    ]), API.tokenHeaders());
   }
 }

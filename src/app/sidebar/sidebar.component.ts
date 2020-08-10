@@ -14,25 +14,26 @@ import { SpinnerUtil } from '../utilities/spinner-utilities';
 })
 export class SidebarComponent implements OnInit {
 
-  isAdmin: boolean
-  hasWalletActive: boolean = true
-  hasBankingInfo: boolean = true
-  hasVerifiedProfile: boolean = true
+  isAdmin: boolean;
+  hasWalletActive = true;
+  hasBankingInfo = true;
+  hasVerifiedProfile = true;
 
-  constructor(private router: Router, private userService: UserService) { }
+  constructor(private router: Router, private userService: UserService) {
+  }
 
   ngOnInit() {
     $('#main-menu li').on('click', () => {
       NavbarComponent.toggleSidebar(false);
     });
-    this.getProfile()
+    this.getProfile();
   }
 
   getProfile() {
-    SpinnerUtil.showSpinner()
+    SpinnerUtil.showSpinner();
     this.userService.getOwnProfile().subscribe((res: any) => {
-      this.isAdmin = (res.role == 'ADMIN')
-    }, hideSpinnerAndDisplayError)
+      this.isAdmin = (res.role == 'ADMIN');
+    }, hideSpinnerAndDisplayError);
   }
 
   logOutClicked() {

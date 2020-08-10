@@ -8,9 +8,9 @@ describe('ExchangeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ExchangeComponent ]
+      declarations: [ExchangeComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

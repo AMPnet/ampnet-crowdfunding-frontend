@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DepositServiceService } from './deposit-service.service';
-import { hideSpinnerAndDisplayError, displayBackendError } from '../utilities/error-handler';
+import { displayBackendError, hideSpinnerAndDisplayError } from '../utilities/error-handler';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { DepositModel } from './deposit-model';
 import swal from 'sweetalert2';
@@ -17,47 +17,48 @@ export class DepositComponent implements OnInit {
   depositModel: DepositModel;
   masterIban: string;
 
-  projectUUID: string = ""
+  projectUUID = '';
 
-  constructor(private depositService: DepositServiceService) { }
+  constructor(private depositService: DepositServiceService) {
+  }
 
   ngOnInit() {
     SpinnerUtil.showSpinner();
     this.getMasterIban();
     this.depositService.getMyPendingDeposit().subscribe((res: DepositModel) => {
-      SpinnerUtil.hideSpinner()
+      SpinnerUtil.hideSpinner();
       this.depositModel = res;
     }, err => {
-      SpinnerUtil.hideSpinner()
-      if(err.status = 404) {
-        this.generateDepositInfo()
+      SpinnerUtil.hideSpinner();
+      if (err.status = 404) {
+        this.generateDepositInfo();
       } else {
-        displayBackendError(err)
+        displayBackendError(err);
       }
-    })
+    });
   }
 
   generateDepositInfo() {
-    SpinnerUtil.showSpinner()
+    SpinnerUtil.showSpinner();
     this.depositService.createDeposit().subscribe((res: DepositModel) => {
-      SpinnerUtil.hideSpinner()
-      this.depositModel = res
+      SpinnerUtil.hideSpinner();
+      this.depositModel = res;
     }, err => {
-      SpinnerUtil.hideSpinner()
-      console.log(err)
-      if(err.error.err_code == "0509") {
-        swal("", "You already have an existing deposit. Please wait until it's approved", "info")
+      SpinnerUtil.hideSpinner();
+
+      if (err.error.err_code === '0509') {
+        swal('', 'You already have an existing deposit. Please wait until it\'s approved', 'info');
       } else {
-        displayBackendError(err)
+        displayBackendError(err);
       }
-    })
+    });
   }
 
   getMasterIban() {
     this.depositService.getPlatformBankAccounts().subscribe((res: any) => {
-      this.masterIban = res.bank_accounts[0].iban
+      this.masterIban = res.bank_accounts[0].iban;
     }, err => {
-      hideSpinnerAndDisplayError(err)
+      hideSpinnerAndDisplayError(err);
     });
   }
 }

@@ -1,12 +1,12 @@
-import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { SingleOrganizationModel } from 'src/app/models/single-organization-model';
 import { OrganizationService } from '../organization-service';
 import { displayBackendError } from 'src/app/utilities/error-handler';
-import { API } from 'src/app/utilities/endpoint-manager';
 import { Router } from '@angular/router';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { OrgInviteModel } from './org-invite-model';
 import swal from 'sweetalert2';
+
 @Component({
   selector: 'app-manage-organizations',
   templateUrl: './manage-organizations.component.html',
@@ -32,20 +32,20 @@ export class ManageOrganizationsComponent implements OnInit {
     this.fetchPersonalOrgs();
     this.fetchOrgInvites();
   }
-  
+
   fetchPersonalOrgs() {
     SpinnerUtil.showSpinner();
     this.organizationService.getPersonalOrganizations().subscribe((res: any) => {
-      this.organizations = res.organizations
+      this.organizations = res.organizations;
       SpinnerUtil.hideSpinner();
     }, err => {
       SpinnerUtil.hideSpinner();
       displayBackendError(err);
-    })
+    });
   }
 
   detailsClicked(id: number) {
-    this.router.navigate(['organization_details', id])
+    this.router.navigate(['organization_details', id]);
   }
 
   fetchOrgInvites() {
@@ -56,19 +56,19 @@ export class ManageOrganizationsComponent implements OnInit {
     }, err => {
       SpinnerUtil.hideSpinner();
       displayBackendError(err);
-    })
+    });
   }
 
   acceptInvite(orgID: number) {
     SpinnerUtil.showSpinner();
     this.organizationService.acceptInvite(orgID).subscribe(res => {
       SpinnerUtil.hideSpinner();
-      swal("Success", "Accepted invitation to organization", "success");
+      swal('Success', 'Accepted invitation to organization', 'success');
       this.refreshState();
     }, err => {
       SpinnerUtil.hideSpinner();
       displayBackendError(err);
     });
-  } 
+  }
 
 }

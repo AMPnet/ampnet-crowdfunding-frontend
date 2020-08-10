@@ -8,15 +8,14 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class WalletActivationComponent implements OnInit {
 
-  activationType = "users"
-  
+  activationType = 'users';
+
   constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      console.log(params)
-      this.activationType = params.type
-    })
+      this.activationType = params.type;
+    });
   }
 
 }

@@ -1,11 +1,11 @@
 <div *ngIf="!updatingInfo">
     <div *ngIf="(user != undefined) && (!user.verified)" class="container root-content-container">
         <div *ngIf="!user.verified">
-            <h5 class="explainer-mini" >Update user information</h5>
+            <h5 class="explainer-mini">Update user information</h5>
             <app-onboarding></app-onboarding>
         </div>
     </div>
-    
+
     <div *ngIf="(user != undefined) && (user.verified)" class="container root-content-container">
         <div class="row">
             <div class="col-md-3">
@@ -27,12 +27,12 @@
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="mt-4">
-                    <div class="explainer-mini">Approved by admin</div>
-                    {{user.enabled}}
+                <div class="mt-4" style="width: fit-content; text-align: center;">
+                    <div class="explainer-mini">Approved</div>
+                    <i class="fa" [class]="user.enabled ? 'fa-check' : 'fa-close'"></i>
                 </div>
             </div>
-        </div>        
+        </div>
         <button (click)="updateInfoClicked()" class="btn btn-primary p-3 mt-5 w-100">Update user information</button>
     </div>
 </div>

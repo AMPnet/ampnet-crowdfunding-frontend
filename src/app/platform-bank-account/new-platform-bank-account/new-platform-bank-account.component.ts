@@ -5,7 +5,7 @@ import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { PlatformBankAccountService } from './../platform-bank-account.service';
 import { hideSpinnerAndDisplayError } from '../../utilities/error-handler';
 
-declare var $: any
+declare var $: any;
 
 @Component({
   selector: 'app-new-platform-bank-account',
@@ -17,9 +17,9 @@ export class NewPlatformBankAccountComponent implements OnInit {
   creditCardNavTab: JQuery;
   bankAccountNavTab: JQuery;
 
-  hasNoBankAccounts: boolean
+  hasNoBankAccounts: boolean;
 
-  bankCodes: BankCodeModel[]
+  bankCodes: BankCodeModel[];
 
   constructor(private router: Router,
     private route: ActivatedRoute,
@@ -28,33 +28,33 @@ export class NewPlatformBankAccountComponent implements OnInit {
   ngOnInit() {
     this.checkStatusAndSetText();
 
-    let file = require("../../../assets/hr-bic.json")
+    const file = require('../../../assets/hr-bic.json');
     this.bankCodes = file.list;
   }
 
   ngAfterViewInit() {
-    $("select").selectpicker()
+    $('select').selectpicker();
   }
 
   checkStatusAndSetText() {
-    let status = this.route.snapshot.queryParams.status;
-    this.hasNoBankAccounts = (status == "empty")
+    const status = this.route.snapshot.queryParams.status;
+    this.hasNoBankAccounts = (status == 'empty');
   }
 
   addNewBankAccountClicked() {
-    let iban: string = (<string>$("#platform-iban-holder").val()).replace(/ /g, '')
-    let bankCode: string = (<string>$("#platform-bankcode-holder").val())
-    if(bankCode.length == 0) {
-      bankCode = "N/A"
+    const iban: string = (<string>$('#platform-iban-holder').val()).replace(/ /g, '');
+    let bankCode: string = (<string>$('#platform-bankcode-holder').val());
+    if (bankCode.length == 0) {
+      bankCode = 'N/A';
     }
-    let alias: string =  (<string>$("#platform-alias-holder").val())
+    const alias: string =  (<string>$('#platform-alias-holder').val());
 
-    SpinnerUtil.showSpinner()
+    SpinnerUtil.showSpinner();
     this.service.createBankAccount(iban, bankCode, alias).subscribe(res => {
-      SpinnerUtil.hideSpinner()
-      this.router.navigate(["dash", "admin", "platform_bank_account"])
+      SpinnerUtil.hideSpinner();
+      this.router.navigate(['dash', 'admin', 'platform_bank_account']);
     }, err => {
-      hideSpinnerAndDisplayError(err)
-    })
+      hideSpinnerAndDisplayError(err);
+    });
   }
 }

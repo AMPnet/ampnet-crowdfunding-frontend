@@ -9,29 +9,29 @@ import { UserStatusStorage } from '../user-status-storage';
 })
 export class PaymentService {
 
-  endpoint = "/user/bank-account"
+  endpoint = '/user/bank-account';
 
   constructor(private http: HttpClient) { }
 
   getMyBankAccounts() {
-    let bankData = this.http.get(API.generateRoute(this.endpoint), API.tokenHeaders())
+    const bankData = this.http.get(API.generateRoute(this.endpoint), API.tokenHeaders());
     bankData.subscribe((res: PaymentModels) => {
-      UserStatusStorage.bankData = res
-    })
-    return bankData
+      UserStatusStorage.bankData = res;
+    });
+    return bankData;
   }
 
   createBankAccount(iban: String, bankCode: String, alias: String) {
     return this.http.post(API.generateRoute(this.endpoint), {
-      "iban": iban,
-      "bank_code": bankCode,
-      "alias": alias
-    }, API.tokenHeaders())
+      'iban': iban,
+      'bank_code': bankCode,
+      'alias': alias
+    }, API.tokenHeaders());
   }
 
   deleteBankAccount(id: number) {
     return this.http.delete(API.generateComplexRoute(this.endpoint, [
       id.toString()
-    ]), API.tokenHeaders())
+    ]), API.tokenHeaders());
   }
 }

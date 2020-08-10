@@ -1,7 +1,5 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { TxHistoryModel, TxHistoryType } from '../../models/TransactionHistoryModel';
-import * as _ from 'lodash';
-
 
 
 @Component({
@@ -13,18 +11,18 @@ export class WalletTxHistoryComponent implements OnInit, AfterViewInit {
 
   txHistoryModel: TxHistoryModel[] = [];
 
-  constructor() { 
+  constructor() {
 
   }
 
   ngOnInit() {
-    let model = [{
+    const model = [{
       amount: 100,
       date: new Date(),
       position: 1,
       type: TxHistoryType.Deposit
     }];
-    let repet = Array(4).fill(model);
+    const repet = Array(4).fill(model);
     this.txHistoryModel = repet;
   }
 

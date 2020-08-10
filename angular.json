@@ -9,7 +9,7 @@
       "projectType": "application",
       "prefix": "app",
       "schematics": {},
-      "targets": {
+      "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
@@ -39,6 +39,12 @@
               "node_modules/wowjs/dist/wow.min.js",
               "node_modules/@fortawesome/fontawesome-free/js/all.min.js",
               "node_modules/bootstrap-select/dist/js/bootstrap-select.min.js"
+            ],
+            "allowedCommonJsDependencies": [
+              "lodash",
+              "bootstrap-select",
+              "js-base64",
+              "@arkane-network/arkane-connect"
             ]
           },
           "configurations": {
@@ -112,7 +118,7 @@
     "ampnet-frontend-e2e": {
       "root": "e2e/",
       "projectType": "application",
-      "targets": {
+      "architect": {
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
@@ -137,5 +143,8 @@
       }
     }
   },
-  "defaultProject": "ampnet-frontend"
+  "defaultProject": "ampnet-frontend",
+  "cli": {
+    "analytics": "76102ae2-5c77-4aae-adf9-834e9cfa29ae"
+  }
 }

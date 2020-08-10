@@ -9,10 +9,10 @@ describe('WithdrawModalComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ WithdrawModalComponent ],
-      imports: [ RouterTestingModule ]
+      declarations: [WithdrawModalComponent],
+      imports: [RouterTestingModule]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

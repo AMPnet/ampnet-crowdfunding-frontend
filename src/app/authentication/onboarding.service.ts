@@ -3,22 +3,22 @@ import { HttpClient } from '@angular/common/http';
 import { API } from '../utilities/endpoint-manager';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class OnboardingService {
+    endpoint = '/user/identyum/token';
+    verifyEndpoint = '/user/me/verify';
 
-  endpoint: string = "/user/identyum/token";
-  verifyEndpoint: string = "/user/me/verify";
+    constructor(private http: HttpClient) {
+    }
 
-  constructor(private http: HttpClient) { }
+    getSessionID() {
+        return this.http.get(API.generateRoute(this.endpoint));
+    }
 
-  getSessionID() {
-    return this.http.get(API.generateRoute(this.endpoint));
-  }
-
-  verifyUser(webSessionUUID: string) {
-    return this.http.post(API.generateRoute(this.verifyEndpoint), {
-      "user_session_uuid": webSessionUUID
-    }, API.tokenHeaders())
-  }
+    verifyUser(sessionState: string) {
+        return this.http.post(API.generateRoute(this.verifyEndpoint), {
+            'session_state': sessionState
+        }, API.tokenHeaders());
+    }
 }

@@ -1,58 +1,59 @@
 <div (click)="onClickedItem()" class="card-holder cursor-pointer">
   <div class="card-left-holder pb-3">
     <div class="card-img-holder">
-      <img class="w-100 h-100 card-img-base"
-      src="{{component.headerImageUrl}}" alt="">
+      <img alt=""
+           class="w-100 h-100 card-img-base" src="{{component.headerImageUrl}}">
     </div>
     <div class="card-progress-holder">
-        
-        <div class="p explainer-mini text-uppercase mb-2 mt-2">
-          
-          <div class="float-right required-funding req-funding-{{component.offerID}}">{{component.currency}}{{component.fundingRequired}}</div>
+
+      <div class="p explainer-mini text-uppercase mb-2 mt-2">
+
+        <div
+          class="float-right required-funding req-funding-{{component.offerID}}">{{component.currency}}{{component.fundingRequired}}</div>
+      </div>
+      <div class="w-100">
+        <div class="progress w-100">
+          <div [style.width.%]="(component.currentFunding / component.fundingRequired) * 100" class="progress-bar"
+               role="progressbar"></div>
         </div>
-        <div class="w-100">
-            <div class="progress w-100">
-                <div class="progress-bar" role="progressbar" 
-                [style.width.%] = "(component.currentFunding / component.fundingRequired) * 100"></div>
-            </div>
-        </div>
-        
-        <div class="mt-2 d-flex flex-row justify-content-between gray-text">
-          <div class="mt-2">
-            <div class=" ">
-              {{component.currency}}{{component.currentFunding}}
-            </div>
-            <div class="mt-1 explainer-mini">
-              <i class="fas fa-chart-bar mr-2"></i>
-              Raised
-            </div>
+      </div>
+
+      <div class="mt-2 d-flex flex-row justify-content-between gray-text">
+        <div class="mt-2">
+          <div class=" ">
+            {{component.currency}}{{component.currentFunding}}
           </div>
-          <div class="mt-2">
-            <div class="">{{component.endDate}}</div>
-            <div class="explainer-mini mt-1">
-              <i class="fas fa-clock mr-2"></i>
-              Deadline
-            </div>
+          <div class="mt-1 explainer-mini">
+            <i class="fas fa-chart-bar mr-2"></i>
+            Raised
           </div>
         </div>
+        <div class="mt-2">
+          <div class="">{{component.endDate}}</div>
+          <div class="explainer-mini mt-1">
+            <i class="fas fa-clock mr-2"></i>
+            Deadline
+          </div>
+        </div>
+      </div>
     </div>
   </div>
   <div class="card-content-holder">
     <div class="card-content-text-holder">
-        <div class="h3 text-uppercase gray-text">
-            {{component.title}}
-          </div>
-          <div class="explainer-mini text-uppercase">Expected yearly return:</div>
-          <hr>
-          <div class="p gray-text mb-3" [innerHTML]="component.description">
-              
-          </div>
+      <div class="h3 text-uppercase gray-text">
+        {{component.title}}
+      </div>
+      <div class="explainer-mini text-uppercase">Expected yearly return:</div>
+      <hr>
+      <div [innerHTML]="component.description" class="p gray-text mb-3">
+
+      </div>
     </div>
     <div class="card-content-actions-holder">
-        <button class="btn btn-primary w-100 invest-button">
-          <i class="fas fa-eye mr-2"></i>
-          See more
-        </button>
+      <button class="btn btn-primary w-100 invest-button">
+        <i class="fas fa-eye mr-2"></i>
+        See more
+      </button>
     </div>
   </div>
 </div>

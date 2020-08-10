@@ -14,45 +14,45 @@ import swal from 'sweetalert2';
 })
 export class ProjectActivationComponent implements OnInit {
 
-  projects: ProjectActivationModel[]
+  projects: ProjectActivationModel[];
 
   constructor(private activationService: WalletActivationService,
     private broadService: BroadcastService) { }
 
   ngOnInit() {
-    this.fetchWalletToActivate()
+    this.fetchWalletToActivate();
   }
 
   fetchWalletToActivate() {
-    SpinnerUtil.showSpinner()
+    SpinnerUtil.showSpinner();
     this.activationService
-      .getUnactivatedWallets("project").subscribe((res: any) => {
+      .getUnactivatedWallets('project').subscribe((res: any) => {
       this.projects = res.projects;
-      SpinnerUtil.hideSpinner()
-      
-    }, displayBackendError)
+      SpinnerUtil.hideSpinner();
+
+    }, displayBackendError);
   }
 
   activateProjectClicked(uuid: string) {
 
     this.activationService.getActivationData(uuid).subscribe(async (res: any) => {
-      let arkaneConnect = new ArkaneConnect('AMPnet', {
+      const arkaneConnect = new ArkaneConnect('AMPnet', {
         environment: 'staging'
-      })
-    
-      let account = await arkaneConnect.flows.getAccount(SecretType.AETERNITY)
-      let sigRes = await arkaneConnect.createSigner(WindowMode.POPUP).sign({
+      });
+
+      const account = await arkaneConnect.flows.getAccount(SecretType.AETERNITY);
+      const sigRes = await arkaneConnect.createSigner(WindowMode.POPUP).sign({
         walletId: account.wallets[0].id,
         data: res.tx,
         type: SignatureRequestType.AETERNITY_RAW
-      })
+      });
       this.broadService.broadcastSignedTx(sigRes.result.signedTransaction, res.tx_id)
         .subscribe(res => {
-          SpinnerUtil.hideSpinner()
-          swal("", "Success", "success")
-        }, hideSpinnerAndDisplayError)
+          SpinnerUtil.hideSpinner();
+          swal('', 'Success', 'success');
+        }, hideSpinnerAndDisplayError);
 
-    }, hideSpinnerAndDisplayError)
+    }, hideSpinnerAndDisplayError);
 
   }
 

@@ -17,13 +17,13 @@ import { MustMatch } from './confirm-password-validator';
     styleUrls: ['./sign-up.component.css']
 })
 export class SignUpComponent implements OnInit {
-
     emailSignupForm: FormGroup;
+    countries: CountryModel[];
 
     constructor(
         private signUpService: SignUpService,
         private router: Router,
-        private authService: SocialAuthService,
+        private socialAuthService: SocialAuthService,
         private route: ActivatedRoute,
         private loginService: LogInModalService,
         private formBuilder: FormBuilder
@@ -39,8 +39,6 @@ export class SignUpComponent implements OnInit {
         });
     }
 
-    countries: CountryModel[];
-
     ngOnInit() {
     }
 
@@ -52,55 +50,41 @@ export class SignUpComponent implements OnInit {
         this.performSocialSignup(FacebookLoginProvider.PROVIDER_ID);
     }
 
-    performSocialSignup(provider: string) {
+    async performSocialSignup(provider: string) {
         SpinnerUtil.showSpinner();
 
-        const that = this;
-        const afterSignout: () => void = function () {
-            that.authService.signIn(provider).then(res => {
-
-                that.signUpService.performSocialSignup(res.provider,
-                    res.authToken).subscribe(usr => {
-
-                    SpinnerUtil.hideSpinner();
-                    usr['auth'] = res.authToken;
-                    usr['provider'] = res.provider;
-
-                    that.loginService.performSocialLogin(GoogleLoginProvider.PROVIDER_ID, res.authToken)
-                        .subscribe(res => {
-                            localStorage.setItem('access_token', (<any>res).access_token);
-                            that.router.navigate(['/dash']);
-                        }, displayBackendError);
-
-
-                }, err => {
-
-                    SpinnerUtil.hideSpinner();
-                    swal('', err.error.message, 'warning');
-
-                });
-            }).catch(err => {
+        this.socialAuthService.signIn(provider).then(SocialRes => {
+            this.signUpService.performSocialSignup(SocialRes.provider, SocialRes.authToken).subscribe(usr => {
                 SpinnerUtil.hideSpinner();
-                swal('', err, 'warning');
+
+                usr['auth'] = SocialRes.authToken;
+                usr['provider'] = SocialRes.provider;
+
+                this.loginService.performSocialLogin(GoogleLoginProvider.PROVIDER_ID, SocialRes.authToken)
+                    .subscribe(LoginRes => {
+                        localStorage.setItem('access_token', (<any>LoginRes).access_token);
+                        this.router.navigate(['/dash']);
+                    }, displayBackendError);
+            }, err => {
+                SpinnerUtil.hideSpinner();
+                swal('', err.error.message, 'warning');
             });
-        };
-        afterSignout();
+        }).catch(err => {
+            SpinnerUtil.hideSpinner();
+            swal('', err, 'warning');
+        });
     }
 
     onSubmitEmailForm(formData) {
         SpinnerUtil.showSpinner();
         const values = this.emailSignupForm.value;
-        this.signUpService.performEmailSignup(
-            values.email,
-            values.firstName,
-            values.lastName,
-            values.password
-        ).subscribe((res: any) => {
-            swal('', 'Sign-up successful!', 'success');
-            this.loginService.performEmailLogin(values.email, values.password).subscribe((res: any) => {
-                localStorage.setItem('access_token', res.access_token);
-                this.router.navigate(['/dash']);
+        this.signUpService.performEmailSignup(values.email, values.firstName, values.lastName, values.password)
+            .subscribe((_: any) => {
+                swal('', 'Sign-up successful!', 'success');
+                this.loginService.performEmailLogin(values.email, values.password).subscribe((res: any) => {
+                    localStorage.setItem('access_token', res.access_token);
+                    this.router.navigate(['/dash']);
+                }, hideSpinnerAndDisplayError);
             }, hideSpinnerAndDisplayError);
-        }, hideSpinnerAndDisplayError);
     }
 }

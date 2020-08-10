@@ -1,13 +1,13 @@
 .wallet-container {
-  padding-top: 20px;
-  background: #fff;
+    padding-top: 20px;
+    background: #fff;
 }
 
 .row-eq-height {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
 }
 
 /*.button-container .btn {
@@ -21,39 +21,39 @@
 }*/
 
 .button-container button {
-  height: 60px;
+    height: 60px;
 }
 
 .no-init-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  padding-top: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding-top: 30%;
 }
 
 .no-init-msg {
-  text-align: center;
-  font-size: 15px;
-  text-transform: uppercase;
-  font-weight: bold;
+    text-align: center;
+    font-size: 15px;
+    text-transform: uppercase;
+    font-weight: bold;
 }
 
 .no-init-btn {
-  margin-top: 30px;
-  font-size: 16px;
-  font-weight: bold;
-  letter-spacing: 0;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-left: 30px;
-  padding-right: 30px;
-  text-transform: uppercase;
+    margin-top: 30px;
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 0;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+    text-transform: uppercase;
 }
 
 .pairing-code-holder input {
-  font-size: 45px;
-  width: 65px;
-  text-align: center;
+    font-size: 45px;
+    width: 65px;
+    text-align: center;
 }

@@ -1,26 +1,26 @@
 #invest-input-group input {
-  border: 0;
-  font-size: 35px;
-  text-align: center;
+    border: 0;
+    font-size: 35px;
+    text-align: center;
 }
 
 #invest-input-group .input-group-prepend {
-  border: none;
+    border: none;
 }
 
 #invest-button {
-  padding: 14px;
+    padding: 14px;
 }
 
 .w-33 {
-  width: 33%;
+    width: 33%;
 }
 
 .main-text {
-  color: #444;
+    color: #444;
 }
 
 .stats-card {
-  border: none;
-  background-color: transparent;
+    border: none;
+    background-color: transparent;
 }

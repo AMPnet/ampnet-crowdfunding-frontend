@@ -1,41 +1,41 @@
 <div class="root root-content-container">
-  <div class="row button-holder-activation">
-    <div class="col-4">
-      <div [class.active]="activationType == 'users'" routerLink="/dash/activation/users" 
-      class="btn btn-primary w-100 py-3 cursor-pointer">
-        <i class="fas fa-user mr-2"></i>
-        Users
-      </div>
+    <div class="row button-holder-activation">
+        <div class="col-4">
+            <div [class.active]="activationType ===  'users'" class="btn btn-primary w-100 py-3 cursor-pointer"
+                 routerLink="/dash/activation/users">
+                <i class="fas fa-user mr-2"></i>
+                Users
+            </div>
+        </div>
+        <div class="col-4">
+            <div [class.active]="activationType ===  'groups'" class="btn btn-primary w-100 py-3 cursor-pointer"
+                 routerLink="/dash/activation/groups">
+                <i class="fas fa-users mr-2"></i>
+                Groups
+            </div>
+        </div>
+        <div class="col-4">
+            <div [class.active]="activationType ===  'projects'" class="btn btn-primary w-100 py-3 cursor-pointer explainer-mini"
+                 routerLink="/dash/activation/projects">
+                <i class="fas fa-solar-panel mr-2"></i>
+                Projects
+            </div>
+        </div>
     </div>
-    <div class="col-4">
-      <div [class.active]="activationType == 'groups'" routerLink="/dash/activation/groups" 
-      class="btn btn-primary w-100 py-3 cursor-pointer">
-        <i class="fas fa-users mr-2"></i>
-        Groups
-      </div>
-    </div>
-    <div class="col-4">
-      <div [class.active]="activationType == 'projects'" routerLink="/dash/activation/projects" 
-      class="btn btn-primary w-100 py-3 cursor-pointer explainer-mini">
-        <i class="fas fa-solar-panel mr-2"></i>
-        Projects
-      </div>
-    </div>
-  </div>
 
-  <div class="row pt-4">
-    <div class="col-md-12" *ngIf="activationType == 'users'">
-      <app-user-activation></app-user-activation>
+    <div class="row pt-4">
+        <div *ngIf="activationType ===  'users'" class="col-md-12">
+            <app-user-activation></app-user-activation>
+        </div>
+
+        <div *ngIf="activationType ===  'projects'" class="col-md-12">
+            <app-project-activation></app-project-activation>
+        </div>
+
+        <div *ngIf="activationType ===  'groups'" class="col-md-12">
+            <app-group-activation></app-group-activation>
+        </div>
     </div>
-  
-    <div class="col-md-12" *ngIf="activationType == 'projects'">
-      <app-project-activation></app-project-activation>
-    </div>
-  
-    <div class="col-md-12" *ngIf="activationType == 'groups'">
-      <app-group-activation></app-group-activation>
-    </div>
-  </div>
-  
+
 
 </div>

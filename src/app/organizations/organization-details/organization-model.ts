@@ -18,7 +18,8 @@ export interface DocumentModel {
 }
 
 export interface WalletModel {
-    id; number;
+    id;
+    number;
     hash: string;
     type: string;
     balance: number;

@@ -3,8 +3,8 @@
     object-fit: cover;
 }
 
-@media(min-width: 800px) {
-	.pairing-text {
-		width: 50%;
-	}
+@media (min-width: 800px) {
+    .pairing-text {
+        width: 50%;
+    }
 }

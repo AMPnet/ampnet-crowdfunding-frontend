@@ -8,41 +8,41 @@ import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 
 @Component({
-  selector: 'app-sidebar',
-  templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.css']
+    selector: 'app-sidebar',
+    templateUrl: './sidebar.component.html',
+    styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent implements OnInit {
 
-  isAdmin: boolean;
-  hasWalletActive = true;
-  hasBankingInfo = true;
-  hasVerifiedProfile = true;
+    isAdmin: boolean;
+    hasWalletActive = true;
+    hasBankingInfo = true;
+    hasVerifiedProfile = true;
 
-  constructor(private router: Router, private userService: UserService) {
-  }
+    constructor(private router: Router, private userService: UserService) {
+    }
 
-  ngOnInit() {
-    $('#main-menu li').on('click', () => {
-      NavbarComponent.toggleSidebar(false);
-    });
-    this.getProfile();
-  }
+    ngOnInit() {
+        $('#main-menu li').on('click', () => {
+            NavbarComponent.toggleSidebar(false);
+        });
+        this.getProfile();
+    }
 
-  getProfile() {
-    SpinnerUtil.showSpinner();
-    this.userService.getOwnProfile().subscribe((res: any) => {
-      this.isAdmin = (res.role == 'ADMIN');
-    }, hideSpinnerAndDisplayError);
-  }
+    getProfile() {
+        SpinnerUtil.showSpinner();
+        this.userService.getOwnProfile().subscribe((res: any) => {
+            this.isAdmin = (res.role === 'ADMIN');
+        }, hideSpinnerAndDisplayError);
+    }
 
-  logOutClicked() {
-    localStorage.removeItem('access_token');
-    this.router.navigate(['']);
-  }
+    logOutClicked() {
+        localStorage.removeItem('access_token');
+        this.router.navigate(['']);
+    }
 
-  contactUsClicked() {
-    window.location.href = 'mailto://info@ampnet.io';
-  }
+    contactUsClicked() {
+        window.location.href = 'mailto://info@ampnet.io';
+    }
 
 }

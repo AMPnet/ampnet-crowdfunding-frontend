@@ -1,47 +1,47 @@
 .name-proposal-holder input {
-	border: none;
-	font-size: 30px;
+    border: none;
+    font-size: 30px;
 }
 
 .name-proposal-holder input:focus {
-	border: none;
-	box-shadow: none;
+    border: none;
+    box-shadow: none;
 }
 
 .description-proposal-holder textarea {
-	border: none;
-	padding: 0px;
-	height: 35vh;
-	font-size: 20px;
+    border: none;
+    padding: 0px;
+    height: 35vh;
+    font-size: 20px;
 }
 
 .description-proposal-holder textarea:focus {
-	box-shadow: none;
+    box-shadow: none;
 }
 
 .contract-holder {
-	border-left : 1px solid rgba(0,0,0,0.1);
-	border-right : 1px solid rgba(0,0,0,0.1);
-	border-bottom : 1px solid rgba(0,0,0,0.1);
-	transform: all 0.3s;
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    transform: all 0.3s;
 }
 
 .template-contract-holder ul:hover {
-	cursor: pointer;
+    cursor: pointer;
 }
 
 .nav-item:hover {
-	cursor: pointer;
+    cursor: pointer;
 }
 
-@media(max-width: 800px) {
-	#next-button {
-		width: 100%;
-	}
+@media (max-width: 800px) {
+    #next-button {
+        width: 100%;
+    }
 }
 
-@media(min-width: 800px) {
-	#next-button {
-		width: 25%;
-	}
+@media (min-width: 800px) {
+    #next-button {
+        width: 25%;
+    }
 }

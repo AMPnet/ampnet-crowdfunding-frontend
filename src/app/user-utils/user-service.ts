@@ -11,7 +11,8 @@ export class UserService {
 
     private endpoint = '/user/me';
 
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient) {
+    }
 
     public getOwnProfile() {
         const userResponse = this.http.get(API.generateRoute(this.endpoint), API.tokenHeaders());
@@ -20,5 +21,4 @@ export class UserService {
         });
         return userResponse;
     }
-
 }

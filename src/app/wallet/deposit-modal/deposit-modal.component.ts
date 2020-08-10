@@ -5,22 +5,22 @@ declare var $: any;
 
 
 @Component({
-  selector: 'app-deposit-modal',
-  templateUrl: './deposit-modal.component.html',
-  styleUrls: ['./deposit-modal.component.css']
+    selector: 'app-deposit-modal',
+    templateUrl: './deposit-modal.component.html',
+    styleUrls: ['./deposit-modal.component.css']
 })
 export class DepositModalComponent implements OnInit {
 
-  constructor(private router: Router) {
-  }
+    constructor(private router: Router) {
+    }
 
-  ngOnInit() {
-  }
+    ngOnInit() {
+    }
 
-  addPaymentOptionClicked() {
-    $('#deposit-modal').modal('toggle');
-    this.router.navigate(['dash', 'payment_options', 'new']);
-  }
+    addPaymentOptionClicked() {
+        $('#deposit-modal').modal('toggle');
+        this.router.navigate(['dash', 'payment_options', 'new']);
+    }
 
 
 }

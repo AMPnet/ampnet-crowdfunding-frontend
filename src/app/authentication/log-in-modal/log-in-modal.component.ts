@@ -14,7 +14,6 @@ declare var $: any;
     styleUrls: ['./log-in-modal.component.css']
 })
 export class LogInModalComponent implements OnInit {
-
     email: string;
     password: string;
 
@@ -40,8 +39,8 @@ export class LogInModalComponent implements OnInit {
         SpinnerUtil.showSpinner();
         this.auth.signIn(provider).then(res => {
             this.loginService.performSocialLogin(res.provider, res.authToken)
-                .subscribe(res => {
-                    localStorage.setItem('access_token', (<any>res).access_token);
+                .subscribe(backendResponse => {
+                    localStorage.setItem('access_token', (<any>backendResponse).access_token);
                     SpinnerUtil.hideSpinner();
                     this.router.navigate(['dash']);
                 }, err => {
@@ -75,5 +74,4 @@ export class LogInModalComponent implements OnInit {
         $('#log-in-modal').modal('toggle');
         this.router.navigate(['/dash']);
     }
-
 }

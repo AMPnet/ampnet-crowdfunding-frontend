@@ -5,9 +5,9 @@ export function displayBackendError(resp: any) {
 
     const error = resp.error;
 
-    if (error.description != undefined) {
+    if (error.description !== undefined) {
         swal('', error.description, 'warning');
-    } else if (error.message != undefined) {
+    } else if (error.message !== undefined) {
         swal('', error.message, 'warning');
     } else {
         swal('', 'An unknown error occurred.', 'error');

@@ -1,59 +1,69 @@
 <div id="top-container">
-  <div class="content-container">
+    <div class="content-container">
 
-    <div class="card p-5 m-auto mt-5">
-      <div id="card-content">
+        <div class="card p-5 m-auto mt-5">
+            <div id="card-content">
 
 
-        <h5 class="w-100 text-center text-uppercase mb-3">Validate and fill missing data</h5>
-        
-        <form [formGroup]="submissionForm">
-          <div class="form-group mt-2">
-            <label class="explainer-mini text-uppercase" for="exampleInputEmail1">First name</label>
-            <input formControlName="firstName" type="text" class="form-control" id="first-name-input" aria-describedby="emailHelp"
-              placeholder="Enter first name" value="{{firstName}}">
-          </div>
+                <h5 class="w-100 text-center text-uppercase mb-3">Validate and fill missing data</h5>
 
-          <div class="form-group mt-2">
-            <label class="explainer-mini text-uppercase" for="exampleInputEmail1">Last name</label>
-            <input formControlName="lastName" type="text" class="form-control" id="last-name-input" 
-              aria-describedby="emailHelp" placeholder="Enter last name" value="{{lastName}}">
-          </div>
+                <form [formGroup]="submissionForm">
+                    <div class="form-group mt-2">
+                        <label class="explainer-mini text-uppercase" for="exampleInputEmail1">First name</label>
+                        <input aria-describedby="emailHelp" class="form-control" formControlName="firstName"
+                               id="first-name-input"
+                               placeholder="Enter first name"
+                               type="text" value="{{firstName}}">
+                    </div>
 
-          <div class="form-group mt-2">
-            <label class="explainer-mini text-uppercase" for="exampleInputEmail1">Email address</label>
-            <input formControlName="email" type="email" class="form-control" id="email-input" 
-              aria-describedby="emailHelp" placeholder="Enter email" value="{{email}}">
-            <small id="emailHelp" class="form-text text-muted">We'll never share your email without explicit
-              permission.</small>
-          </div>
+                    <div class="form-group mt-2">
+                        <label class="explainer-mini text-uppercase" for="exampleInputEmail1">Last name</label>
+                        <input aria-describedby="emailHelp" class="form-control" formControlName="lastName"
+                               id="last-name-input"
+                               placeholder="Enter last name" type="text" value="{{lastName}}">
+                    </div>
 
-          <div class="form-group mt-2">
-            <label class="explainer-mini text-uppercase" for="exampleInputEmail1">Phone number</label>
-            <input formControlName="phoneNumber" type="number" class="form-control" id="phone-input" 
-              aria-describedby="emailHelp" placeholder="Enter phone number" value="{{phoneNumber}}">
-            <small id="emailHelp" class="form-text text-muted">We'll never share your phone number without explicit
-              permission.</small>
-          </div>
-  
-          <label class="explainer-mini text-uppercase" for="exampleInputPassword1">
-            SELECT COUNTRY
-          </label>
-          <select formControlName="country" class="custom-select mb-3">
-            <option *ngFor="let country of countries; let i = index" [value]="i">
-              {{country.nicename}}
-            </option>
-          </select>
-          <div class="form-check">
-            <input formControlName="tosCheck" id="terms-conditions-check" type="checkbox" class="form-check-input" id="exampleCheck1">
-            <label class="form-check-label" for="exampleCheck1">
-              <p>I agree with the <a href="http://google.com">Terms and Conditions</a></p>
-            </label>
-          </div>
-          <input [disabled]="!submissionForm.valid" type="submit" (click)="submitButtonClicked()" type="submit" class="btn btn-primary mt-3  text-uppercase float-right col-md-6 w-100 btn-action-a">
-        </form>
-        
-      </div>
+                    <div class="form-group mt-2">
+                        <label class="explainer-mini text-uppercase" for="exampleInputEmail1">Email address</label>
+                        <input aria-describedby="emailHelp" class="form-control" formControlName="email"
+                               id="email-input"
+                               placeholder="Enter email" type="email" value="{{email}}">
+                        <small class="form-text text-muted" id="emailHelp">We'll never share your email without explicit
+                            permission.</small>
+                    </div>
+
+                    <div class="form-group mt-2">
+                        <label class="explainer-mini text-uppercase" for="exampleInputEmail1">Phone number</label>
+                        <input aria-describedby="emailHelp" class="form-control" formControlName="phoneNumber"
+                               id="phone-input"
+                               placeholder="Enter phone number" type="number" value="{{phoneNumber}}">
+                        <small class="form-text text-muted" id="emailHelp">We'll never share your phone number without
+                            explicit
+                            permission.</small>
+                    </div>
+
+                    <label class="explainer-mini text-uppercase" for="exampleInputPassword1">
+                        SELECT COUNTRY
+                    </label>
+                    <select class="custom-select mb-3" formControlName="country">
+                        <option *ngFor="let country of countries; let i = index" [value]="i">
+                            {{country.nicename}}
+                        </option>
+                    </select>
+                    <div class="form-check">
+                        <input class="form-check-input" formControlName="tosCheck" id="terms-conditions-check"
+                               id="exampleCheck1" type="checkbox">
+                        <label class="form-check-label" for="exampleCheck1">
+                            <p>I agree with the <a href="http://google.com">Terms and Conditions</a></p>
+                        </label>
+                    </div>
+                    <input (click)="submitButtonClicked()" [disabled]="!submissionForm.valid"
+                           class="btn btn-primary mt-3  text-uppercase float-right col-md-6 w-100 btn-action-a"
+                           type="submit"
+                           type="submit">
+                </form>
+
+            </div>
+        </div>
     </div>
-  </div>
 </div>

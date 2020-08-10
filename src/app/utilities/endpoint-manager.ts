@@ -1,4 +1,3 @@
-
 export module API {
 
     export const APIURL = 'https://api.ampnet.io';
@@ -15,7 +14,7 @@ export module API {
     export function tokenHeaders() {
         return {
             headers: {
-                'Authorization' : 'Bearer ' + localStorage.getItem('access_token')
+                'Authorization': 'Bearer ' + localStorage.getItem('access_token')
             }
         };
     }

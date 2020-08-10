@@ -1,20 +1,20 @@
 #account-chooser button:hover {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .enter-amount {
-  height: 70px;
-  font-size: 2rem;
-  border: none;
+    height: 70px;
+    font-size: 2rem;
+    border: none;
 }
 
 .enter-amount:focus {
-  outline: none;
-  box-shadow: none;
+    outline: none;
+    box-shadow: none;
 }
 
 .enter-amount .input-group-prepend .input-group-text {
-  border: none !important;
-  background: white;
-  font-size: 2rem;
+    border: none !important;
+    background: white;
+    font-size: 2rem;
 }

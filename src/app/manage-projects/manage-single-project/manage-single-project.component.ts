@@ -30,13 +30,10 @@ export class ManageSingleProjectComponent implements OnInit {
         'Ecological permit',
         'Development certificate'
     ];
-
-    private news: NewsLink[] = [];
-
     project: ProjectModel;
     wallet: WalletModel;
-
     qrCodeData: String = '';
+    private news: NewsLink[] = [];
 
     constructor(private projectService: ProjectService,
                 private manageProjectsService: ManageProjectsService,
@@ -89,7 +86,7 @@ export class ManageSingleProjectComponent implements OnInit {
                         type: SignatureRequestType.AETERNITY_RAW
                     });
                     this.broadService.broadcastSignedTx(sigRes.result.signedTransaction, res.tx_id)
-                        .subscribe(res => {
+                        .subscribe(_res => {
                             SpinnerUtil.hideSpinner();
                             swal('', 'Success', 'success');
                             this.ngOnInit();
@@ -158,6 +155,52 @@ export class ManageSingleProjectComponent implements OnInit {
         });
     }
 
+    updateProject() {
+
+        const projectName = $('#project-name').val();
+        const projectDescription = $('#project-description').val();
+        const locationName = $('#location-name').val();
+
+        const updatedProject = this.project;
+        updatedProject.name = projectName;
+        updatedProject.description = projectDescription;
+        updatedProject.location_text = locationName;
+
+        SpinnerUtil.showSpinner();
+        this.projectService.updateProject(
+            updatedProject.uuid,
+            updatedProject.name,
+            updatedProject.description,
+            updatedProject.location,
+            updatedProject.roi,
+            updatedProject.active
+        ).subscribe(res => {
+            SpinnerUtil.hideSpinner();
+            this.getProject(() => {
+            });
+        }, hideSpinnerAndDisplayError);
+    }
+
+    public deleteFile(index: number): any {
+        swal({
+            text: 'Are you sure you want to delete this file? This action cannot be reversed',
+            confirmButtonText: 'Yes',
+            showCancelButton: true,
+            cancelButtonText: 'No'
+        }).then(() => {
+            SpinnerUtil.showSpinner();
+            this.manageProjectsService
+                .deleteDocument(this.project.uuid, index).subscribe(res => {
+                SpinnerUtil.hideSpinner();
+                this.getProject(() => {
+                });
+            }, err => {
+                SpinnerUtil.hideSpinner();
+                displayBackendError(err);
+            });
+        });
+    }
+
     private setUpUppy(id: string, allowedFileTypes: string[]): Uppy.Core.Uppy {
         return Uppy.Core({
             id: id,
@@ -199,7 +242,7 @@ export class ManageSingleProjectComponent implements OnInit {
     }
 
     private setUploadAreas() {
-        const imageUppy = this.setUpUppy('image-upload-project', ['image/*'],);
+        const imageUppy = this.setUpUppy('image-upload-project', ['image/*'], );
         this.configureUppy(imageUppy, '#drag-drop-area-img');
 
         const filesUppy = Uppy.Core({
@@ -247,53 +290,6 @@ export class ManageSingleProjectComponent implements OnInit {
                 ]
             });
             $('.note-editor').attr('id', 'note-custom');
-        });
-    }
-
-
-    updateProject() {
-
-        const projectName = $('#project-name').val();
-        const projectDescription = $('#project-description').val();
-        const locationName = $('#location-name').val();
-
-        const updatedProject = this.project;
-        updatedProject.name = projectName;
-        updatedProject.description = projectDescription;
-        updatedProject.location_text = locationName;
-
-        SpinnerUtil.showSpinner();
-        this.projectService.updateProject(
-            updatedProject.uuid,
-            updatedProject.name,
-            updatedProject.description,
-            updatedProject.location,
-            updatedProject.roi,
-            updatedProject.active
-        ).subscribe(res => {
-            SpinnerUtil.hideSpinner();
-            this.getProject(() => {
-            });
-        }, hideSpinnerAndDisplayError);
-    }
-
-    public deleteFile(index: number): any {
-        swal({
-            text: 'Are you sure you want to delete this file? This action cannot be reversed',
-            confirmButtonText: 'Yes',
-            showCancelButton: true,
-            cancelButtonText: 'No'
-        }).then(() => {
-            SpinnerUtil.showSpinner();
-            this.manageProjectsService
-                .deleteDocument(this.project.uuid, index).subscribe(res => {
-                SpinnerUtil.hideSpinner();
-                this.getProject(() => {
-                });
-            }, err => {
-                SpinnerUtil.hideSpinner();
-                displayBackendError(err);
-            });
         });
     }
 }

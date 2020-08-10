@@ -5,17 +5,17 @@ import { Observable } from 'rxjs';
 import { API } from '../utilities/endpoint-manager';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class CountryService {
 
-  private endpoint = '/countries';
+    private endpoint = '/countries';
 
-  constructor(
-    private http: HttpClient) {
-  }
+    constructor(
+        private http: HttpClient) {
+    }
 
-  getCountries(): Observable<CountriesModel> {
-    return this.http.get<CountriesModel>(API.generateRoute(this.endpoint));
-  }
+    getCountries(): Observable<CountriesModel> {
+        return this.http.get<CountriesModel>(API.generateRoute(this.endpoint));
+    }
 }

@@ -5,33 +5,33 @@ import { WalletModel } from '../models/WalletModel';
 import { UserStatusStorage } from '../user-status-storage';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class WalletService {
 
-  private endpoint = '/wallet/wallet';
+    private endpoint = '/wallet/wallet';
 
-  constructor(private http: HttpClient) {
-  }
+    constructor(private http: HttpClient) {
+    }
 
-  initWallet(address: string) {
-    return this.http.post<WalletModel>(API.generateRoute(this.endpoint), {
-      'public_key': address
-    }, API.tokenHeaders());
-  }
+    initWallet(address: string) {
+        return this.http.post<WalletModel>(API.generateRoute(this.endpoint), {
+            'public_key': address
+        }, API.tokenHeaders());
+    }
 
-  getWallet() {
-    const walletResponse = this.http.get<WalletModel>(API.generateRoute(this.endpoint), API.tokenHeaders());
-    walletResponse.subscribe((res: WalletModel) => {
-      UserStatusStorage.walletData = res;
+    getWallet() {
+        const walletResponse = this.http.get<WalletModel>(API.generateRoute(this.endpoint), API.tokenHeaders());
+        walletResponse.subscribe((res: WalletModel) => {
+            UserStatusStorage.walletData = res;
 
-    });
-    return walletResponse;
-  }
+        });
+        return walletResponse;
+    }
 
-  getInfoFromPairingCode(pairingCode: string) {
-    return this.http.get(API.generateComplexRoute(this.endpoint, [
-      'pair', pairingCode
-    ]), API.tokenHeaders());
-  }
+    getInfoFromPairingCode(pairingCode: string) {
+        return this.http.get(API.generateComplexRoute(this.endpoint, [
+            'pair', pairingCode
+        ]), API.tokenHeaders());
+    }
 }

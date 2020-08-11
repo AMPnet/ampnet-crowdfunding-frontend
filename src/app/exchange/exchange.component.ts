@@ -7,60 +7,60 @@ import { PortfolioRoot } from '../my-portfolio/portfolio.models';
 import numeral from 'numeral';
 
 @Component({
-  selector: 'app-exchange',
-  templateUrl: './exchange.component.html',
-  styleUrls: ['./exchange.component.css']
+    selector: 'app-exchange',
+    templateUrl: './exchange.component.html',
+    styleUrls: ['./exchange.component.css']
 })
 export class ExchangeComponent implements OnInit {
 
-  portfolio: PortfolioRoot[];
-  selectedProjectIndex = -1;
-  remainingShares = '';
-  personalShares = '';
-  totalShares = '';
-  sharesForSale = '';
-  pricePaidFor = '';
-  suggestedSalePrice = '';
+    portfolio: PortfolioRoot[];
+    selectedProjectIndex = -1;
+    remainingShares = '';
+    personalShares = '';
+    totalShares = '';
+    sharesForSale = '';
+    pricePaidFor = '';
+    suggestedSalePrice = '';
 
-  constructor(private portfolioService: PortfolioService) {
-  }
+    constructor(private portfolioService: PortfolioService) {
+    }
 
-  ngOnInit() {
-    SpinnerUtil.showSpinner();
+    ngOnInit() {
+        SpinnerUtil.showSpinner();
 
-    this.portfolioService.getPortfolio().subscribe((res: any) => {
-      this.portfolio = res.portfolio;
-      SpinnerUtil.hideSpinner();
+        this.portfolioService.getPortfolio().subscribe((res: any) => {
+            this.portfolio = res.portfolio;
+            SpinnerUtil.hideSpinner();
 
-      setTimeout(() => {
-        (<any>$('select')).selectpicker();
+            setTimeout(() => {
+                (<any>$('select')).selectpicker();
 
-      }, 200);
+            }, 200);
 
-    }, hideSpinnerAndDisplayError);
+        }, hideSpinnerAndDisplayError);
 
 
-  }
+    }
 
-  onChangeSelect(item: any) {
-    this.selectedProjectIndex = item;
-    const folioItem = this.portfolio[item];
-    this.personalShares = this.numeralFormat(folioItem.investment);
-    this.totalShares = this.numeralFormat(folioItem.project.expected_funding);
+    onChangeSelect(item: any) {
+        this.selectedProjectIndex = item;
+        const folioItem = this.portfolio[item];
+        this.personalShares = this.numeralFormat(folioItem.investment);
+        this.totalShares = this.numeralFormat(folioItem.project.expected_funding);
 
-  }
+    }
 
-  onChangeInput(value: number) {
-    const folioItem = this.portfolio[this.selectedProjectIndex];
+    onChangeInput(value: number) {
+        const folioItem = this.portfolio[this.selectedProjectIndex];
 
-    this.remainingShares = this.numeralFormat(folioItem.investment - value);
-    this.sharesForSale = this.numeralFormat(value);
-    this.pricePaidFor = this.numeralFormat(value / 100);
-    this.suggestedSalePrice = this.numeralFormat((value / 100) * 0.7);
-  }
+        this.remainingShares = this.numeralFormat(folioItem.investment - value);
+        this.sharesForSale = this.numeralFormat(value);
+        this.pricePaidFor = this.numeralFormat(value / 100);
+        this.suggestedSalePrice = this.numeralFormat((value / 100) * 0.7);
+    }
 
-  numeralFormat(input: number): string {
-    return numeral(input).format('0,0');
-  }
+    numeralFormat(input: number): string {
+        return numeral(input).format('0,0');
+    }
 
 }

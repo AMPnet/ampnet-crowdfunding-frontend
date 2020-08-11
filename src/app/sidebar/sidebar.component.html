@@ -1,83 +1,83 @@
 <div id="sidebar">
 
-  <div class="mt-2 mb-4">
-    <img id="logo-image" src="../../assets/genervestlogo.png">
-  </div>
+    <div class="mt-2 mb-4">
+        <img id="logo-image" src="../../assets/genervestlogo.png">
+    </div>
 
-  <ul class="list-unstyled components" id="main-menu">
-    <p class="menu-header ml-4 mb-3 mt-3 ">MENU</p>
-    <li routerLink="offers" routerLinkActive="side-active">
-      <i class="menu-icon fas fa-align-left"></i>
-      <span>Offers</span>
-    </li>
-    <li routerLink="my_portfolio" routerLinkActive="side-active">
-      <i class="menu-icon fas fa-user"></i>
-      <span>My Portfolio</span>
-    </li>
-    <li routerLink="wallet" routerLinkActive="side-active">
-      <i class="menu-icon fas fa-wallet"></i>
-      <span>Wallet <i *ngIf="!hasWalletActive" class="ml-2 fas fa-exclamation-circle" style="color: orange;"></i></span>
-    </li>
-    <li *ngIf="hasWalletActive" routerLink="manage_groups" routerLinkActive="side-active">
-      <i class="menu-icon fas fa-layer-group"></i>
-      <span>Investment groups</span>
-    </li>
-    <li routerLink="exchange" routerLinkActive="side-active">
-      <i class="menu-icon fas fa-store"></i>
-      <span>Project market</span>
-    </li>
-  </ul>
+    <ul class="list-unstyled components" id="main-menu">
+        <p class="menu-header ml-4 mb-3 mt-3 ">MENU</p>
+        <li routerLink="offers" routerLinkActive="side-active">
+            <i class="menu-icon fas fa-align-left"></i>
+            <span>Offers</span>
+        </li>
+        <li routerLink="my_portfolio" routerLinkActive="side-active">
+            <i class="menu-icon fas fa-user"></i>
+            <span>My Portfolio</span>
+        </li>
+        <li routerLink="wallet" routerLinkActive="side-active">
+            <i class="menu-icon fas fa-wallet"></i>
+            <span>Wallet <i *ngIf="!hasWalletActive" class="ml-2 fas fa-exclamation-circle" style="color: orange;"></i></span>
+        </li>
+        <li *ngIf="hasWalletActive" routerLink="manage_groups" routerLinkActive="side-active">
+            <i class="menu-icon fas fa-layer-group"></i>
+            <span>Investment groups</span>
+        </li>
+        <li routerLink="exchange" routerLinkActive="side-active">
+            <i class="menu-icon fas fa-store"></i>
+            <span>Project market</span>
+        </li>
+    </ul>
 
 
-  <ul class="list-unstyled components text-white" id="main-menu">
-    <p class="menu-header ml-4 mb-3 mt-3 ">SETTINGS</p>
-    <li routerLink="general_settings" routerLinkActive="side-active">
-      <i class="menu-icon fas fa-user-cog"></i>
-      <span>User Profile</span>
-    </li>
-    <li routerLink="payment_options" routerLinkActive="side-active">
-      <i class="menu-icon fas fa-credit-card"></i>
-      <span>Payments
+    <ul class="list-unstyled components text-white" id="main-menu">
+        <p class="menu-header ml-4 mb-3 mt-3 ">SETTINGS</p>
+        <li routerLink="general_settings" routerLinkActive="side-active">
+            <i class="menu-icon fas fa-user-cog"></i>
+            <span>User Profile</span>
+        </li>
+        <li routerLink="payment_options" routerLinkActive="side-active">
+            <i class="menu-icon fas fa-credit-card"></i>
+            <span>Payments
 				<i *ngIf="!hasBankingInfo" class="ml-2 fas fa-exclamation-circle" style="color: orange;"></i>
 			</span>
-    </li>
-  </ul>
+        </li>
+    </ul>
 
-  <p *ngIf="isAdmin" class="menu-header ml-4 mb-3 mt-3 ">ADMIN</p>
-  <ul *ngIf="isAdmin" class="list-unstyled components" id="main-menu">
-    <li routerLink="manage_withdrawals" routerLinkActive="side-active">
-      <i class="menu-icon fas fa-arrow-circle-up "></i>
-      <span>Withdrawals</span>
-    </li>
-    <li routerLink="manage_deposits" routerLinkActive="side-active">
-      <i class="menu-icon fas fa-arrow-circle-down "></i>
-      <span>Deposits</span>
-    </li>
-    <li routerLink="activation/users" routerLinkActive="side-active">
-      <i class="menu-icon fas fa-flag-checkered"></i>
-      <span>Activations</span>
-    </li>
-    <li routerLink="admin/platform_bank_account" routerLinkActive="side-active">
-      <i class="menu-icon fas fa-university"></i>
-      <span>Bank account</span>
-    </li>
-    <li routerLink="ownership" routerLinkActive="side-active">
-      <i class="menu-icon fas fa-handshake"></i>
-      <span>Platform roles</span>
-    </li>
-  </ul>
+    <p *ngIf="isAdmin" class="menu-header ml-4 mb-3 mt-3 ">ADMIN</p>
+    <ul *ngIf="isAdmin" class="list-unstyled components" id="main-menu">
+        <li routerLink="manage_withdrawals" routerLinkActive="side-active">
+            <i class="menu-icon fas fa-arrow-circle-up "></i>
+            <span>Withdrawals</span>
+        </li>
+        <li routerLink="manage_deposits" routerLinkActive="side-active">
+            <i class="menu-icon fas fa-arrow-circle-down "></i>
+            <span>Deposits</span>
+        </li>
+        <li routerLink="activation/users" routerLinkActive="side-active">
+            <i class="menu-icon fas fa-flag-checkered"></i>
+            <span>Activations</span>
+        </li>
+        <li routerLink="admin/platform_bank_account" routerLinkActive="side-active">
+            <i class="menu-icon fas fa-university"></i>
+            <span>Bank account</span>
+        </li>
+        <li routerLink="ownership" routerLinkActive="side-active">
+            <i class="menu-icon fas fa-handshake"></i>
+            <span>Platform roles</span>
+        </li>
+    </ul>
 
 
-  <div class="dropdown-divider" id="divider-menu"></div>
+    <div class="dropdown-divider" id="divider-menu"></div>
 
-  <ul class="list-unstyled components" id="main-menu">
-    <li (click)="contactUsClicked()" routerLinkActive="side-active">
-      <i class="menu-icon fas fa-envelope-open"></i>
-      <span>Contact Us</span>
-    </li>
-    <li (click)="logOutClicked()" routerLinkActive="side-active">
-      <i class="menu-icon fas fa-sign-out-alt"></i>
-      <span>Log Out</span>
-    </li>
-  </ul>
+    <ul class="list-unstyled components" id="main-menu">
+        <li (click)="contactUsClicked()" routerLinkActive="side-active">
+            <i class="menu-icon fas fa-envelope-open"></i>
+            <span>Contact Us</span>
+        </li>
+        <li (click)="logOutClicked()" routerLinkActive="side-active">
+            <i class="menu-icon fas fa-sign-out-alt"></i>
+            <span>Log Out</span>
+        </li>
+    </ul>
 </div>

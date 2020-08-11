@@ -11,3 +11,10 @@ npm install
 # start WebApp connected to demo backend
 npm start
 ```
+
+## Testing
+
+```sh
+# before any commit, fix linter issues
+npm run lint-fix
+```

@@ -1,43 +1,52 @@
 <app-header [onlyLogo]="true"></app-header>
 <div id="top-container">
-  <div class="content-container">
+    <div class="content-container">
 
-    <div class="card p-5 m-auto mt-5">
-      <div id="card-content">
+        <div class="card p-5 m-auto mt-5">
+            <div id="card-content">
 
-        <div class="row">
-          <div class="col-md-6">
-            <button (click)="performGoogleSignup()" class="btn btn-primary w-100 btn-action-a mt-1 btn-color-google">Sign Up with
-              Google</button>
-          </div>
-          <div class="col-md-6">
-            <button (click)="performFacebookSignup()" class="btn btn-primary float-right w-100 btn-action-a mt-1 btn-color-facebook">
-              Sign Up with Facebook
-            </button>
-          </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <button (click)="performGoogleSignup()"
+                                class="btn btn-primary w-100 btn-action-a mt-1 btn-color-google">Sign Up with
+                            Google
+                        </button>
+                    </div>
+                    <div class="col-md-6">
+                        <button (click)="performFacebookSignup()"
+                                class="btn btn-primary float-right w-100 btn-action-a mt-1 btn-color-facebook">
+                            Sign Up with Facebook
+                        </button>
+                    </div>
+                </div>
+
+                <div class="w-100 dropdown-divider mt-3"></div>
+                <form (ngSubmit)="onSubmitEmailForm(emailSignupForm.value)" [formGroup]="emailSignupForm"
+                      id="emailForm">
+                    <input class="form-control mt-3 p-4"
+                           formControlName="email" id="email"
+                           placeholder="Email"
+                           type="text">
+                    <input class="form-control mt-3 p-4" formControlName="firstName" id="email"
+                           placeholder="First name" type="text">
+                    <input class="form-control mt-3 p-4" formControlName="lastName" id="email" placeholder="Last name"
+                           type="text">
+                    <input class="form-control mt-3 p-4" formControlName="password" placeholder="Password"
+                           type="password">
+                    <small class="form-text text-muted mt-2">
+                        Password must be 8 characters or longer.
+                    </small>
+                    <input class="form-control mt-3 p-4" formControlName="confirmPassword"
+                           placeholder="Confirm password"
+                           type="password">
+                    <button [disabled]="emailSignupForm.invalid" class="btn btn-primary w-100 mt-3 py-3" type="submit">
+                        <i class="fas fa-paper-plane mr-2"></i>
+                        Submit
+                    </button>
+                </form>
+
+            </div>
         </div>
-
-        <div class="w-100 dropdown-divider mt-3"></div>
-        <form id="emailForm" [formGroup]="emailSignupForm" (ngSubmit)="onSubmitEmailForm(emailSignupForm.value)">
-          <input class="form-control mt-3 p-4" 
-            formControlName="email" type="text" 
-            placeholder="Email" 
-            id="email">
-          <input class="form-control mt-3 p-4" formControlName="firstName" type="text" placeholder="First name" id="email">
-          <input class="form-control mt-3 p-4" formControlName="lastName" type="text" placeholder="Last name" id="email">
-          <input type="password" formControlName="password" class="form-control mt-3 p-4" placeholder="Password">
-          <small class="form-text text-muted mt-2">
-            Password must be 8 characters or longer.
-          </small>
-          <input type="password" formControlName="confirmPassword" class="form-control mt-3 p-4" placeholder="Confirm password">
-          <button [disabled]="emailSignupForm.invalid" type="submit" class="btn btn-primary w-100 mt-3 py-3">
-            <i class="fas fa-paper-plane mr-2"></i>
-            Submit
-          </button>
-        </form>
-        
-      </div>
     </div>
-  </div>
 </div>
 <ngx-spinner></ngx-spinner>

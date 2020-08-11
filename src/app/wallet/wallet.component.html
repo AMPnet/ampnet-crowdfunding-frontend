@@ -1,68 +1,69 @@
 <div *ngIf="checkComplete">
-  <div class="container root-content-container">
+    <div class="container root-content-container">
 
-    <div *ngIf="(wallet == undefined)" class="row">
-      <div class="col-md-12 gray-text d-flex justify-content-center">
-        <div class="text-justify">
-          <h4 class="mb-3">
-            <i class="fas fa-wallet mr-3"></i>
-            Your private, secure wallet
-          </h4>
-          We're commited to making sure your funds are as
-          safe as they can possibly be when using our platform. To do this,
-          we prevent the management of your money by anyone other than you.
-          <br><br>
-          This is why we use a third-party secure wallet to store
-          your money and approve investments into projects. To start
-          the process of initializing your wallet - click on the button below.
-        </div>
-      </div>
-      <div class="col-md-12 mt-5 text-center">
-        <button (click)="setUpArkane()" class="btn btn-primary py-3 mt-3 w-100">
-          <i class="fas fa-plus mr-3"></i>
-          Initialize secure wallet
-        </button>
-      </div>
-      <div class="col-md-12 mt-5 text-center explainer-mini">
-        Advanced users: This platform is powered by blockchain technology. A "wallet" is
-        a keystorage service used for signing transactions. If you're an advanced user and would
-        like to sign transactions yourself, click <u>here</u>
-      </div>
-    </div>
-
-    <div *ngIf="wallet != undefined" class="">
-      <div class="row">
-
-        <div class="col-md-12">
-          <div *ngIf="wallet.balance == 0" class="alert alert-info w-100 mt-3">
-            Your wallet is empty. Deposit funds to get started!
-          </div>
-          <div *ngIf="wallet.hash == undefined" class="alert alert-info w-100 mt-3">
-            Your wallet is pending approval from admin. You can deposit funds while pending approval.
-          </div>
+        <div *ngIf="(wallet ===  undefined)" class="row">
+            <div class="col-md-12 gray-text d-flex justify-content-center">
+                <div class="text-justify">
+                    <h4 class="mb-3">
+                        <i class="fas fa-wallet mr-3"></i>
+                        Your private, secure wallet
+                    </h4>
+                    We're commited to making sure your funds are as
+                    safe as they can possibly be when using our platform. To do this,
+                    we prevent the management of your money by anyone other than you.
+                    <br><br>
+                    This is why we use a third-party secure wallet to store
+                    your money and approve investments into projects. To start
+                    the process of initializing your wallet - click on the button below.
+                </div>
+            </div>
+            <div class="col-md-12 mt-5 text-center">
+                <button (click)="setUpArkane()" class="btn btn-primary py-3 mt-3 w-100">
+                    <i class="fas fa-plus mr-3"></i>
+                    Initialize secure wallet
+                </button>
+            </div>
+            <div class="col-md-12 mt-5 text-center explainer-mini">
+                Advanced users: This platform is powered by blockchain technology. A "wallet" is
+                a keystorage service used for signing transactions. If you're an advanced user and would
+                like to sign transactions yourself, click <u>here</u>
+            </div>
         </div>
 
-        <div class="col-md-12 mt-3 mb-5">
+        <div *ngIf="wallet !== undefined" class="">
+            <div class="row">
+
+                <div class="col-md-12">
+                    <div *ngIf="wallet.balance ===  0" class="alert alert-info w-100 mt-3">
+                        Your wallet is empty. Deposit funds to get started!
+                    </div>
+                    <div *ngIf="wallet.hash ===  undefined" class="alert alert-info w-100 mt-3">
+                        Your wallet is pending approval from admin. You can deposit funds while pending approval.
+                    </div>
+                </div>
+
+                <div class="col-md-12 mt-3 mb-5">
 					<span class="h1 text-center">
 						<div class="explainer-mini float-right mb-2 w-100">Balance</div>
-						<div *ngIf="wallet.balance != undefined" class=" ">{{wallet.currency}}{{wallet.balance}}.00</div>
+						<div *ngIf="wallet.balance !== undefined" class=" ">{{wallet.currency}}{{wallet.balance}}
+                            .00</div>
 					</span>
-        </div>
-        <div class="col-md-6 mt-3">
-          <button class="btn btn-primary w-100 py-3" routerLink="deposit">
-            <i class="fas fa-arrow-circle-down mr-2"></i>
-            Deposit
-          </button>
-        </div>
-        <div class="col-md-6 mt-3">
-          <button class="btn btn-primary w-100 py-3" routerLink="withdraw">
-            <i class="fas fa-arrow-circle-up mr-2"></i>
-            Withdraw
-          </button>
+                </div>
+                <div class="col-md-6 mt-3">
+                    <button class="btn btn-primary w-100 py-3" routerLink="deposit">
+                        <i class="fas fa-arrow-circle-down mr-2"></i>
+                        Deposit
+                    </button>
+                </div>
+                <div class="col-md-6 mt-3">
+                    <button class="btn btn-primary w-100 py-3" routerLink="withdraw">
+                        <i class="fas fa-arrow-circle-up mr-2"></i>
+                        Withdraw
+                    </button>
+                </div>
+
+            </div>
         </div>
 
-      </div>
     </div>
-
-  </div>
 </div>

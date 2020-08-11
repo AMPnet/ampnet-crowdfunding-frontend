@@ -1,12 +1,12 @@
 <div *ngIf="!updatingInfo">
-    <div *ngIf="(user != undefined) && (!user.verified)" class="container root-content-container">
+    <div *ngIf="(user !== undefined) && (!user.verified)" class="container root-content-container">
         <div *ngIf="!user.verified">
             <h5 class="explainer-mini">Update user information</h5>
             <app-onboarding></app-onboarding>
         </div>
     </div>
 
-    <div *ngIf="(user != undefined) && (user.verified)" class="container root-content-container">
+    <div *ngIf="(user !== undefined) && (user.verified)" class="container root-content-container">
         <div class="row">
             <div class="col-md-3">
                 <div class="mt-4">
@@ -29,7 +29,7 @@
             <div class="col-md-3">
                 <div class="mt-4" style="width: fit-content; text-align: center;">
                     <div class="explainer-mini">Approved</div>
-                    <i class="fa" [class]="user.enabled ? 'fa-check' : 'fa-close'"></i>
+                    <i [class]="user.enabled ? 'fa-check' : 'fa-close'" class="fa"></i>
                 </div>
             </div>
         </div>

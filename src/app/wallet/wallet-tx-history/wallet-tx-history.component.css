@@ -1,8 +1,8 @@
 .history-row {
-  font-size: 14px;
-  color: #555;
+    font-size: 14px;
+    color: #555;
 }
 
 .history-row:hover {
-  cursor: pointer;
+    cursor: pointer;
 }

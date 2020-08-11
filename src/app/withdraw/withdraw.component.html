@@ -1,71 +1,71 @@
 <div class="root root-content-container">
-  <div
-    *ngIf="(banks != undefined) && (banks.length > 0) && (pendingWithdrawal == undefined)"
-    class="row">
-    <div class="col-md-12">
-      <div class="explainer-mini text-uppercase">
-        Withdrawal
-      </div>
-      <input class="w-100 mt-3 py-4 form-control  p-4" id="withdraw-amount"
-             name="" placeholder="Enter withdrawal amount" type="number">
+    <div
+            *ngIf="(banks !== undefined) && (banks.length > 0) && (pendingWithdrawal ===  undefined)"
+            class="row">
+        <div class="col-md-12">
+            <div class="explainer-mini text-uppercase">
+                Withdrawal
+            </div>
+            <input class="w-100 mt-3 py-4 form-control  p-4" id="withdraw-amount"
+                   name="" placeholder="Enter withdrawal amount" type="number">
 
-      <div class="explainer-mini text-uppercase mt-4">
-        Choose bank account
-      </div>
+            <div class="explainer-mini text-uppercase mt-4">
+                Choose bank account
+            </div>
 
-      <ul class=" list-group mt-3">
-        <li (click)="changeActiveAccount(i)"
-            *ngFor="let bank of banks; let i = index"
-            class="list-group-item cursor-pointer hover-bg  gray-text">
-          {{bank.iban}}
-          <span *ngIf="bank.alias"> - {{bank.alias}}</span>
-          <span *ngIf="activeBankAccount == i" class="float-right">
+            <ul class=" list-group mt-3">
+                <li (click)="changeActiveAccount(i)"
+                    *ngFor="let bank of banks; let i = index"
+                    class="list-group-item cursor-pointer hover-bg  gray-text">
+                    {{bank.iban}}
+                    <span *ngIf="bank.alias"> - {{bank.alias}}</span>
+                    <span *ngIf="activeBankAccount ===  i" class="float-right">
             <i class="fas fa-check-circle"></i>
           </span>
-        </li>
-      </ul>
+                </li>
+            </ul>
 
+        </div>
     </div>
-  </div>
 
-  <div *ngIf="pendingWithdrawal != undefined" class="row">
+    <div *ngIf="pendingWithdrawal !== undefined" class="row">
 
-    <div class="col-md-12 text-center mt-5 explainer-mini">
-      You have a pending withdrawal. <br> Please approve it to have money deposited into your account
-    </div>
-    <div class="col-md-12 mt-3">
-      <div class="card">
-        <div class="card-body">
+        <div class="col-md-12 text-center mt-5 explainer-mini">
+            You have a pending withdrawal. <br> Please approve it to have money deposited into your account
+        </div>
+        <div class="col-md-12 mt-3">
+            <div class="card">
+                <div class="card-body">
 
           <span class="card-text mt-2">
             <div class="explainer-mini">Withdrawal amount</div>
-            {{withdrawAmount}}€
+              {{withdrawAmount}}€
           </span>
-          <span (click)="deleteWithdrawal()" class="float-right cursor-pointer">
+                    <span (click)="deleteWithdrawal()" class="float-right cursor-pointer">
             <i class="fas fa-trash"></i>
           </span>
+                </div>
+            </div>
         </div>
-      </div>
+
     </div>
 
-  </div>
+    <button (click)="generateWithdrawClicked()" class="btn btn-primary py-3 mt-3 w-100">
+        <i class="fas fa-check-circle mr-2"></i>
+        <span *ngIf="pendingWithdrawal ===  undefined">Withdraw money</span>
+        <span *ngIf="pendingWithdrawal !== undefined">Confirm withdrawal</span>
+    </button>
 
-  <button (click)="generateWithdrawClicked()" class="btn btn-primary py-3 mt-3 w-100">
-    <i class="fas fa-check-circle mr-2"></i>
-    <span *ngIf="pendingWithdrawal == undefined">Withdraw money</span>
-    <span *ngIf="pendingWithdrawal != undefined">Confirm withdrawal</span>
-  </button>
-
-  <!-- NO BANK EXISTS -->
-  <div *ngIf="(banks != undefined) && (banks.length == 0)" class="row">
-    <div class="col-md-12 text-center h6 mt-5">
-      You cannot withdraw money without an active bank account
+    <!-- NO BANK EXISTS -->
+    <div *ngIf="(banks !== undefined) && (banks.length ===  0)" class="row">
+        <div class="col-md-12 text-center h6 mt-5">
+            You cannot withdraw money without an active bank account
+        </div>
+        <div class="col-md-12 mt-5">
+            <button class="btn btn-primary py-3 w-100" routerLink="/dash/payment_options/new">
+                <i class="fas fa-piggy-bank mr-2"></i>
+                Add bank account
+            </button>
+        </div>
     </div>
-    <div class="col-md-12 mt-5">
-      <button class="btn btn-primary py-3 w-100" routerLink="/dash/payment_options/new">
-        <i class="fas fa-piggy-bank mr-2"></i>
-        Add bank account
-      </button>
-    </div>
-  </div>
 </div>

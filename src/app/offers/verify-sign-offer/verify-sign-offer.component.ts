@@ -11,61 +11,61 @@ import { BroadcastService } from 'src/app/broadcast/broadcast-service';
 import swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-verify-sign-offer',
-  templateUrl: './verify-sign-offer.component.html',
-  styleUrls: ['./verify-sign-offer.component.css']
+    selector: 'app-verify-sign-offer',
+    templateUrl: './verify-sign-offer.component.html',
+    styleUrls: ['./verify-sign-offer.component.css']
 })
 export class VerifySignOfferComponent implements OnInit {
 
-  projectID: string;
-  investAmount: number;
-  project: ProjectModel;
+    projectID: string;
+    investAmount: number;
+    project: ProjectModel;
 
-  constructor(private route: ActivatedRoute, private projectService: ProjectService,
-              private offerService: OffersService, private broadcastService: BroadcastService) {
-  }
+    constructor(private route: ActivatedRoute, private projectService: ProjectService,
+                private offerService: OffersService, private broadcastService: BroadcastService) {
+    }
 
-  ngOnInit() {
-    this.projectID = this.route.snapshot.params.offerID;
-    this.investAmount = this.route.snapshot.params.investAmount;
-    this.getProject();
-  }
+    ngOnInit() {
+        this.projectID = this.route.snapshot.params.offerID;
+        this.investAmount = this.route.snapshot.params.investAmount;
+        this.getProject();
+    }
 
-  getProject() {
-    SpinnerUtil.showSpinner();
-    this.projectService.getProject(this.projectID).subscribe((res: any) => {
-      SpinnerUtil.hideSpinner();
-      this.project = res;
-      this.project.currency = prettyCurrency(res.currency);
-    }, err => {
-      SpinnerUtil.hideSpinner();
-      displayBackendError(err);
-    });
-  }
-
-  verifyAndSign() {
-    SpinnerUtil.showSpinner();
-    this.offerService.generateTransactionToGreenvest(this.project.uuid, baseCurrencyUnitToCents(this.investAmount))
-      .subscribe(async (res: any) => {
-        SpinnerUtil.hideSpinner();
-
-        const arkaneConnect = new ArkaneConnect('AMPnet', {environment: 'staging'});
-        const acc = await arkaneConnect.flows.getAccount(SecretType.AETERNITY);
-        const sigRes = await arkaneConnect.createSigner(WindowMode.POPUP).sign({
-          walletId: acc.wallets[0].id,
-          data: res.tx,
-          type: SignatureRequestType.AETERNITY_RAW
-        });
-        this.broadcastService.broadcastSignedTx(sigRes.result.signedTransaction, res.tx_id)
-          .subscribe(res => {
-            swal('', 'Successful investment. Allow up to 5 min for investment to become visible', 'success');
+    getProject() {
+        SpinnerUtil.showSpinner();
+        this.projectService.getProject(this.projectID).subscribe((res: any) => {
             SpinnerUtil.hideSpinner();
-          }, hideSpinnerAndDisplayError);
+            this.project = res;
+            this.project.currency = prettyCurrency(res.currency);
+        }, err => {
+            SpinnerUtil.hideSpinner();
+            displayBackendError(err);
+        });
+    }
 
-      }, err => {
-        displayBackendError(err);
-        SpinnerUtil.hideSpinner();
-      });
-  }
+    verifyAndSign() {
+        SpinnerUtil.showSpinner();
+        this.offerService.generateTransactionToGreenvest(this.project.uuid, baseCurrencyUnitToCents(this.investAmount))
+            .subscribe(async (res: any) => {
+                SpinnerUtil.hideSpinner();
+
+                const arkaneConnect = new ArkaneConnect('AMPnet', {environment: 'staging'});
+                const acc = await arkaneConnect.flows.getAccount(SecretType.AETERNITY);
+                const sigRes = await arkaneConnect.createSigner(WindowMode.POPUP).sign({
+                    walletId: acc.wallets[0].id,
+                    data: res.tx,
+                    type: SignatureRequestType.AETERNITY_RAW
+                });
+                this.broadcastService.broadcastSignedTx(sigRes.result.signedTransaction, res.tx_id)
+                    .subscribe(_ => {
+                        swal('', 'Successful investment. Allow up to 5 min for investment to become visible', 'success');
+                        SpinnerUtil.hideSpinner();
+                    }, hideSpinnerAndDisplayError);
+
+            }, err => {
+                displayBackendError(err);
+                SpinnerUtil.hideSpinner();
+            });
+    }
 }
 

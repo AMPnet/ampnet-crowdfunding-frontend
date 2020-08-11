@@ -1,41 +1,43 @@
 <div class="root root-content-container">
-  <div class="row">
-    <div class="col-md-12">
-        <div class="explainer-mini text-uppercase">Manage deposits</div>
-    </div>
-    <div class="col-md-12 mt-3">
-      <input class="w-100 form-control p-4 " 
-      placeholder="Enter code in the deposit description field" type="text" name="" id="deposit-code-input">
-      <button (click)="getDepositInfoClicked()" class="btn btn-primary py-3 mt-3 w-100">
-        <i class="fas fa-info-circle mr-2"></i>
-        Get deposit info
-      </button>
-    </div>
-    <div class="col-md-12 mt-3">
-      <hr>
-    </div>
-    <div class="col-md-12 mt-3">
-      <div class="explainer-mini text-uppercase">Unapproved deposits</div>
-    </div>
-    <div *ngIf="unapprovedDeposits != undefined" class="col-md-12">
-      <ul class="list-group mt-3">
-        <li class="list-group-item gray-text" 
-        *ngFor="let deposit of unapprovedDeposits; let i = index">
-          <span class="float-left explainer-mini">{{deposit.deposit.reference}} ({{deposit.user.email}})</span>
-          <span class="float-right cursor-pointer" (click)="deleteDeposit(deposit.deposit.id)">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="explainer-mini text-uppercase">Manage deposits</div>
+        </div>
+        <div class="col-md-12 mt-3">
+            <input class="w-100 form-control p-4 "
+                   id="deposit-code-input" name="" placeholder="Enter code in the deposit description field"
+                   type="text">
+            <button (click)="getDepositInfoClicked()" class="btn btn-primary py-3 mt-3 w-100">
+                <i class="fas fa-info-circle mr-2"></i>
+                Get deposit info
+            </button>
+        </div>
+        <div class="col-md-12 mt-3">
+            <hr>
+        </div>
+        <div class="col-md-12 mt-3">
+            <div class="explainer-mini text-uppercase">Unapproved deposits</div>
+        </div>
+        <div *ngIf="unapprovedDeposits !== undefined" class="col-md-12">
+            <ul class="list-group mt-3">
+                <li *ngFor="let deposit of unapprovedDeposits; let i = index"
+                    class="list-group-item gray-text">
+                    <span class="float-left explainer-mini">{{deposit.deposit.reference}} ({{deposit.user.email}}
+                        )</span>
+                    <span (click)="deleteDeposit(deposit.deposit.id)" class="float-right cursor-pointer">
             <i class="fas fa-trash-alt"></i>
           </span>
-          <a class="float-right mr-4 cursor-pointer" href="mailto:{{deposit.user.email}}">
-            <i class="fas fa-envelope"></i>
-          </a>
-          <span class="float-right mr-4 cursor-pointer" (click)="contactPhoneClicked(i)">
+                    <a class="float-right mr-4 cursor-pointer" href="mailto:{{deposit.user.email}}">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                    <span (click)="contactPhoneClicked(i)" class="float-right mr-4 cursor-pointer">
             <i class="fas fa-phone"></i>
           </span>
-        </li>
-      </ul>
-      <div *ngIf="unapprovedDeposits.length == 0" class="text-center mt-5 explainer-mini">
-        No unapproved deposits
-      </div>
+                </li>
+            </ul>
+            <div *ngIf="unapprovedDeposits.length ===  0" class="text-center mt-5 explainer-mini">
+                No unapproved deposits
+            </div>
+        </div>
     </div>
-  </div>
 </div>

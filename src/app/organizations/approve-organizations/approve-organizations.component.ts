@@ -31,12 +31,6 @@ export class ApproveOrganizationsComponent implements OnInit {
         });
     }
 
-    private filterAndAttachOrgsAwaitingApproval(orgs: SingleOrgModel[]) {
-        this.orgsAwaitingApproval = orgs.filter((org) => {
-            return !org.approved && (org.wallet_hash !== undefined);
-        });
-    }
-
     approveOrgClicked(id: number) {
         SpinnerUtil.showSpinner();
         this.orgService.approveOrganization(id).subscribe(res => {
@@ -46,6 +40,12 @@ export class ApproveOrganizationsComponent implements OnInit {
         }, err => {
             SpinnerUtil.hideSpinner();
             displayBackendError(err);
+        });
+    }
+
+    private filterAndAttachOrgsAwaitingApproval(orgs: SingleOrgModel[]) {
+        this.orgsAwaitingApproval = orgs.filter((org) => {
+            return !org.approved && (org.wallet_hash !== undefined);
         });
     }
 }

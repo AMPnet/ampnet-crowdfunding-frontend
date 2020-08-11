@@ -1,29 +1,29 @@
 <div class="root root-content-container">
-  <div class="row">
-    <div class="col-md-12">
-      <div class="explainer-mini text-uppercase">Manage withdrawals</div>
-    </div>
-    <div class="col-md-12 mt-3">
-    
-      <ul *ngIf="withdrawals != undefined" class="list-group">
-        <li *ngFor="let withdrawal of withdrawals" 
-        class="list-group-item cursor-pointer  gray-text explainer-mini"
-          routerLink="{{withdrawal.id}}">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="explainer-mini text-uppercase">Manage withdrawals</div>
+        </div>
+        <div class="col-md-12 mt-3">
+
+            <ul *ngIf="withdrawals !== undefined" class="list-group">
+                <li *ngFor="let withdrawal of withdrawals"
+                    class="list-group-item cursor-pointer  gray-text explainer-mini"
+                    routerLink="{{withdrawal.id}}">
           <span class="float-left ">
             {{withdrawal.user.first_name}} {{withdrawal.user.last_name}} ({{withdrawal.user.email}})
           </span>
-          <span class="float-right  ">
+                    <span class="float-right  ">
               €{{withdrawal.amount}}
           </span>
-        </li>
-      </ul>
-    </div>
-    
-    <div *ngIf="withdrawals != undefined" class="col-md-12 mt-3">
-      <div *ngIf="withdrawals.length == 0" class="text-center explainer-mini text-uppercase">
-        No pending withdrawals
-      </div>
-    </div>
+                </li>
+            </ul>
+        </div>
 
-  </div>
+        <div *ngIf="withdrawals !== undefined" class="col-md-12 mt-3">
+            <div *ngIf="withdrawals.length ===  0" class="text-center explainer-mini text-uppercase">
+                No pending withdrawals
+            </div>
+        </div>
+
+    </div>
 </div>

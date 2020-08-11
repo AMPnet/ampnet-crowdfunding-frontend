@@ -12,7 +12,8 @@ export class OrganizationService {
     private inviteEndpoint = '/invites';
     private projectEndpoint = '/public/project/organization';
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) {
+    }
 
     createOrganization(name: string, legalInfo: string) {
         return this.http.post(API.generateRoute(this.endpoint), {
@@ -50,7 +51,7 @@ export class OrganizationService {
 
     getAllOrganizations() {
         return this.http.get(API.generateRoute(this.endpoint),
-        API.tokenHeaders());
+            API.tokenHeaders());
     }
 
     approveOrganization(orgID: number) {
@@ -71,14 +72,14 @@ export class OrganizationService {
 
     getMyInvitations() {
         return this.http.get(API.generateComplexRoute(this.inviteEndpoint, ['me']),
-        API.tokenHeaders());
+            API.tokenHeaders());
     }
 
     acceptInvite(orgID: number) {
         return this.http.post(API.generateComplexRoute(this.inviteEndpoint,
             [
                 'me', orgID.toString(), 'accept'
-            ]), { }, API.tokenHeaders()
+            ]), {}, API.tokenHeaders()
         );
     }
 

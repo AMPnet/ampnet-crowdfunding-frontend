@@ -1,159 +1,165 @@
-<div id="core-root-manager" class="container root-content-container">
+<div class="container root-content-container" id="core-root-manager">
 
-  <!-- Wallet exists -->
-  <div *ngIf="wallet != undefined" class="row row-eq-height">
-    <h5 class="text-uppercase mb-3 col-md-8">Manage your project</h5>
-    <div class="col-md-4">
-      <button routerLink="/dash/offers/{{project.id}}" class="btn btn-primary w-100 py-3 float-right">
-        <i class="fas fa-anchor mr-2"></i>
-        Preview project
-      </button>
-    </div>
+    <!-- Wallet exists -->
+    <div *ngIf="wallet !== undefined" class="row row-eq-height">
+        <h5 class="text-uppercase mb-3 col-md-8">Manage your project</h5>
+        <div class="col-md-4">
+            <button class="btn btn-primary w-100 py-3 float-right" routerLink="/dash/offers/{{project.id}}">
+                <i class="fas fa-anchor mr-2"></i>
+                Preview project
+            </button>
+        </div>
 
-    <div class="col-md-12 mt-3 mb-5">
-      <button routerLink="revenue_share" class="w-100 btn btn-info py-3">
-        <i class="fas fa-money-bill-wave mr-2"></i>
-        Manage payments
-      </button>
-    </div>
+        <div class="col-md-12 mt-3 mb-5">
+            <button class="w-100 btn btn-info py-3" routerLink="revenue_share">
+                <i class="fas fa-money-bill-wave mr-2"></i>
+                Manage payments
+            </button>
+        </div>
 
-    <div class="col-md-8">
-      <div class="explainer-mini text-uppercase mb-2">Project status</div>
-      <span *ngIf="project.active">
+        <div class="col-md-8">
+            <div class="explainer-mini text-uppercase mb-2">Project status</div>
+            <span *ngIf="project.active">
         <i class="fas fa-check-circle mr-2"></i>
         Public
       </span>
-      <span *ngIf="!project.active">
+            <span *ngIf="!project.active">
         <i class="fas fa-toggle-off mr-2"></i>
         Hidden
       </span>
-    </div>
-    <div class="col-md-4">
-      <button (click)="toggleProjectStatusClicked()" class="btn btn-info float-right h-100 w-100">
+        </div>
+        <div class="col-md-4">
+            <button (click)="toggleProjectStatusClicked()" class="btn btn-info float-right h-100 w-100">
         <span *ngIf="project.active">
           <i class="fas fa-eye-slash mr-2"></i>
           Hide project
         </span>
-        <span *ngIf="!project.active">
+                <span *ngIf="!project.active">
           <i class="fas fa-eye mr-2"></i>
           Show project
         </span>
-      </button>
-    </div>
+            </button>
+        </div>
 
-    <div class="col-md-12 mb-2 mt-5">
-      <div class="explainer-mini text-uppercase">Name</div>
-    </div>
+        <div class="col-md-12 mb-2 mt-5">
+            <div class="explainer-mini text-uppercase">Name</div>
+        </div>
 
-    <div class="input-group mb-3 col-md-12">
-      <input id="project-name" type="text" class="form-control p-4 " aria-label="Username" aria-describedby="basic-addon1"
-        value="{{project.name}}">
-    </div>
+        <div class="input-group mb-3 col-md-12">
+            <input aria-describedby="basic-addon1" aria-label="Username" class="form-control p-4 " id="project-name"
+                   type="text"
+                   value="{{project.name}}">
+        </div>
 
-    <div class="col-md-12 mb-2">
-      <div class="explainer-mini text-uppercase">Description</div>
-    </div>
-    <div class="input-group mb-3 col-md-12">
-      <textarea id="project-description" style="border-radius: 5px!important;" class="form-control p-4" name="" cols="30" rows="10">{{project.description}}</textarea>
-    </div>
+        <div class="col-md-12 mb-2">
+            <div class="explainer-mini text-uppercase">Description</div>
+        </div>
+        <div class="input-group mb-3 col-md-12">
+            <textarea class="form-control p-4" cols="30" id="project-description" name=""
+                      rows="10" style="border-radius: 5px!important;">{{project.description}}</textarea>
+        </div>
 
-    <div class="col-md-12 mb-2">
-      <div class="explainer-mini text-uppercase">Project tags</div>
-    </div>
+        <div class="col-md-12 mb-2">
+            <div class="explainer-mini text-uppercase">Project tags</div>
+        </div>
 
-    <div class="input-group mb-3 col-md-12">
-    </div>
+        <div class="input-group mb-3 col-md-12">
+        </div>
 
-    <div *ngIf="project.location != undefined" class="col-md-12">
-      <iframe width="100%" height="450" frameborder="0" style="border:0"
-src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJ8UNwBh-9oRQR3Y1mdkU1Nic&key=AIzaSyBuLWPhp0M-h1AbUUa_Nbn75IkiBw0oieQ" allowfullscreen></iframe>
-    </div>
+        <div *ngIf="project.location !== undefined" class="col-md-12">
+            <iframe allowfullscreen frameborder="0" height="450"
+                    src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJ8UNwBh-9oRQR3Y1mdkU1Nic&key=AIzaSyBuLWPhp0M-h1AbUUa_Nbn75IkiBw0oieQ"
+                    style="border:0"
+                    width="100%"></iframe>
+        </div>
 
-=
+        =
 
-    <div class="col-md-12 mt-5 mb-5">
-      <button (click)="updateProject()" class="btn btn-primary w-100 py-3 float-right">
-        <i class="fas fa-check mr-3"></i>
-        <span>Update</span>
-      </button>
-    </div>
+        <div class="col-md-12 mt-5 mb-5">
+            <button (click)="updateProject()" class="btn btn-primary w-100 py-3 float-right">
+                <i class="fas fa-check mr-3"></i>
+                <span>Update</span>
+            </button>
+        </div>
 
-    <div class="col-md-12">
-      <hr>
-    </div>
+        <div class="col-md-12">
+            <hr>
+        </div>
 
-    <p class="explainer-mini text-uppercase col-sm-12">Project image</p>
+        <p class="explainer-mini text-uppercase col-sm-12">Project image</p>
 
-    <div *ngIf="project != undefined" class="col-md-6">
-      <img *ngIf="project.main_image != null" class=" img-fluid" src="{{project.main_image}}" alt="">
-      <div *ngIf="project.main_image == null" class="w-100 text-center mt-5">
-        Project has no image set
-      </div>
-    </div>
+        <div *ngIf="project !== undefined" class="col-md-6">
+            <img *ngIf="project.main_image !== null" alt="" class=" img-fluid" src="{{project.main_image}}">
+            <div *ngIf="project.main_image ===  null" class="w-100 text-center mt-5">
+                Project has no image set
+            </div>
+        </div>
 
-    <div class="col-md-6" id="drag-drop-area-img"></div>
+        <div class="col-md-6" id="drag-drop-area-img"></div>
 
-    <div class="col-md-12">
-      <hr>
-    </div>
+        <div class="col-md-12">
+            <hr>
+        </div>
 
-    <p class="explainer-mini text-uppercase col-md-12 mt-3">Project files</p>
+        <p class="explainer-mini text-uppercase col-md-12 mt-3">Project files</p>
 
-    <div class="col-md-12">
-      <div id="files-upload-uppy"></div>
-    </div>
+        <div class="col-md-12">
+            <div id="files-upload-uppy"></div>
+        </div>
 
-    <div *ngIf="files.length == 0" class="col-md-12 mt-3">
-      <div class="border p-5 text-center">
-        No files added
-      </div>
-    </div>
+        <div *ngIf="files.length ===  0" class="col-md-12 mt-3">
+            <div class="border p-5 text-center">
+                No files added
+            </div>
+        </div>
 
-    <div *ngFor="let file of project.documents; let i = index" class="col-md-6 mt-3">
-      <div class="card">
-        <div class="card-body d-flex flex-row justify-content-between">
-          <div class="w-75" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{file.name}}</div>
-          <span class="float-right">
-            <span class="mr-3 cursor-pointer gray-text" (click)="deleteFile(file.id)">
+        <div *ngFor="let file of project.documents; let i = index" class="col-md-6 mt-3">
+            <div class="card">
+                <div class="card-body d-flex flex-row justify-content-between">
+                    <div class="w-75"
+                         style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{file.name}}</div>
+                    <span class="float-right">
+            <span (click)="deleteFile(file.id)" class="mr-3 cursor-pointer gray-text">
               <i class="fas fa-trash"></i>
             </span>
             <a class="cursor-pointer gray-text" href="{{file.link}}">
               <i class="fas fa-file-download"></i>
             </a>
           </span>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
 
-    <div class="col-md-12">
-      <hr>
-    </div>
+        <div class="col-md-12">
+            <hr>
+        </div>
 
-    <p class="explainer-mini text-uppercase col-md-8 mt-3">Project news</p>
+        <p class="explainer-mini text-uppercase col-md-8 mt-3">Project news</p>
 
-    <div class="col-md-8">
-      <input type="text" class="form-control w-100" id="newsLink"
-        placeholder="News link (e.g. https://portal.com/news)">
-    </div>
-    <div class="col-md-4">
-      <button (click)="addNewsLink()" class="w-100 btn btn-primary h-100">
-        <i class="fas fa-plus mr-2"></i>
-        Add news
-      </button>
-    </div>
+        <div class="col-md-8">
+            <input class="form-control w-100" id="newsLink" placeholder="News link (e.g. https://portal.com/news)"
+                   type="text">
+        </div>
+        <div class="col-md-4">
+            <button (click)="addNewsLink()" class="w-100 btn btn-primary h-100">
+                <i class="fas fa-plus mr-2"></i>
+                Add news
+            </button>
+        </div>
 
-    <div class="col-md-12 mt-3">
-      <ul class="list-group">
-        <li *ngFor="let item of project.news" class="list-group-item d-flex flex-row justify-content-between">
-          <a href="{{item}}" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis" class="w-75">
-            {{item}}
-          </a>
-          <div class="cursor-pointer" (click)="deleteNewsClicked(item)">
-            <i class="fas fa-trash"></i>
-          </div>
-        </li>
-      </ul>
-    </div>
+        <div class="col-md-12 mt-3">
+            <ul class="list-group">
+                <li *ngFor="let item of project.news" class="list-group-item d-flex flex-row justify-content-between">
+                    <a class="w-75" href="{{item}}"
+                       style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis">
+                        {{item}}
+                    </a>
+                    <div (click)="deleteNewsClicked(item)" class="cursor-pointer">
+                        <i class="fas fa-trash"></i>
+                    </div>
+                </li>
+            </ul>
+        </div>
 
-  </div>
+    </div>
 </div>

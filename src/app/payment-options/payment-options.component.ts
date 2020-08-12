@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PaymentService } from './payment.service';
+import { PaymentService } from '../shared/services/user/payment.service';
 import { BankAccountModel } from './bank-account-model';
 import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
@@ -12,12 +12,10 @@ import { Router } from '@angular/router';
     styleUrls: ['./payment-options.component.css']
 })
 export class PaymentOptionsComponent implements OnInit {
-
     banks: BankAccountModel[];
 
     constructor(private paymentService: PaymentService,
                 private router: Router) {
-
     }
 
     ngOnInit() {
@@ -45,5 +43,4 @@ export class PaymentOptionsComponent implements OnInit {
             this.getBankAccounts();
         }, hideSpinnerAndDisplayError);
     }
-
 }

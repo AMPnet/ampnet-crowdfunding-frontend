@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { PaymentService } from '../payment-options/payment.service';
+import { PaymentService } from '../shared/services/user/payment.service';
 import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { BankAccountModel } from '../payment-options/bank-account-model';
 import { WithdrawService } from './withdraw.service';
 import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
-import { BroadcastService } from '../broadcast/broadcast-service';
+import { BroadcastService } from '../shared/services/wallet/broadcast.service';
 import swal from 'sweetalert2';
 import { baseCurrencyUnitToCents, centsToBaseCurrencyUnit } from '../utilities/currency-util';
 import numeral from 'numeral';

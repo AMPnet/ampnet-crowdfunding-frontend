@@ -4,7 +4,7 @@ import { WalletActivationService } from '../wallet-activation.service';
 import { ProjectActivationModel } from './project-activation.model';
 import { displayBackendError, hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
 import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
-import { BroadcastService } from 'src/app/broadcast/broadcast-service';
+import { BroadcastService } from 'src/app/shared/services/wallet/broadcast.service';
 import swal from 'sweetalert2';
 
 @Component({

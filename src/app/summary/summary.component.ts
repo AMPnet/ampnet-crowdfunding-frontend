@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SummaryService } from './summary.service';
+import { SummaryService } from '../shared/services/summary.service';
 import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
 import { BlockchainSummary } from './blockchain-summary';
 import { SpinnerUtil } from '../utilities/spinner-utilities';

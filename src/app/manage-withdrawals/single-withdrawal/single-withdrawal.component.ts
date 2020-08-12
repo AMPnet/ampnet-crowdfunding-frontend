@@ -5,7 +5,7 @@ import { ManageWithdrawModel } from '../manage-withdraw-model';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { WithdrawCooperativeService } from 'src/app/manage-withdrawals/withdraw.cooperative.service';
 import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
-import { BroadcastService } from 'src/app/broadcast/broadcast-service';
+import { BroadcastService } from 'src/app/shared/services/wallet/broadcast.service';
 import swal from 'sweetalert2';
 
 declare var $: any;

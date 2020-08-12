@@ -7,7 +7,7 @@ import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { OffersService } from '../offers.service';
 import { baseCurrencyUnitToCents, prettyCurrency } from 'src/app/utilities/currency-util';
 import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
-import { BroadcastService } from 'src/app/broadcast/broadcast-service';
+import { BroadcastService } from 'src/app/shared/services/wallet/broadcast.service';
 import swal from 'sweetalert2';
 
 @Component({

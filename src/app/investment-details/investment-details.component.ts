@@ -7,7 +7,7 @@ import { InvestmentsInProject } from '../my-portfolio/portfolio.models';
 import { prettyDate } from '../utilities/date-format-util';
 import { centsToBaseCurrencyUnit } from '../utilities/currency-util';
 import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
-import { BroadcastService } from 'src/app/broadcast/broadcast-service';
+import { BroadcastService } from 'src/app/shared/services/wallet/broadcast.service';
 import swal from 'sweetalert2';
 
 @Component({

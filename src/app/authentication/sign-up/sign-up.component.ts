@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CountryModel } from 'src/app/models/countries/CountryModel';
-import { SignUpService } from './sign-up.service';
+import { SignUpService } from '../../shared/services/user/sign-up.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import swal from 'sweetalert2';

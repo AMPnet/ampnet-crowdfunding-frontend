@@ -3,19 +3,17 @@ import { API } from '../utilities/endpoint-manager';
 import { Injectable } from '@angular/core';
 import { UserModel } from '../models/user-model';
 import { UserStatusStorage } from '../user-status-storage';
+import { BackendApiService } from '../shared/services/backend-api.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class UserService {
-
-    private endpoint = '/user/me';
-
-    constructor(private http: HttpClient) {
+    constructor(private http: BackendApiService) {
     }
 
     public getOwnProfile() {
-        const userResponse = this.http.get(API.generateRoute(this.endpoint), API.tokenHeaders());
+        const userResponse = this.http.get('/api/user/me');
         userResponse.subscribe((res: UserModel) => {
             UserStatusStorage.personalData = res;
         });

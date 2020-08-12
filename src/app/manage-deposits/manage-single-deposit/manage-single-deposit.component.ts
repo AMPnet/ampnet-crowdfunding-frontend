@@ -9,7 +9,7 @@ import { API } from 'src/app/utilities/endpoint-manager';
 import * as numeral from 'numeral';
 import { DepositCooperativeService } from '../deposit.cooperative.service';
 import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
-import { BroadcastService } from 'src/app/broadcast/broadcast-service';
+import { BroadcastService } from 'src/app/shared/services/wallet/broadcast.service';
 import swal from 'sweetalert2';
 import { autonumericCurrency, baseCurrencyUnitToCents, stripCurrencyData } from 'src/app/utilities/currency-util';
 import MicroModal from 'micromodal';

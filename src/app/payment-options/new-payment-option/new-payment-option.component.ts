@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { PaymentService } from '../payment.service';
+import { PaymentService } from '../../shared/services/user/payment.service';
 import { displayBackendError } from 'src/app/utilities/error-handler';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';

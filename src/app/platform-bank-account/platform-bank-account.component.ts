@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
-import { PlatformBankAccountService } from './platform-bank-account.service';
+import { PlatformBankAccountService } from '../shared/services/wallet/platform-bank-account.service';
 import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
 import { BankAccountModel } from '../payment-options/bank-account-model';
 

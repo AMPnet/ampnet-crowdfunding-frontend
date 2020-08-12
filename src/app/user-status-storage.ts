@@ -1,9 +1,9 @@
 import { UserModel } from './models/user-model';
-import { WalletModel } from './models/WalletModel';
-import { PaymentModels } from './models/payment-model';
+import { UserBankAccount } from './shared/services/user/payment.service';
+import { Wallet } from './wallet/wallet.service';
 
 export class UserStatusStorage {
     static personalData: UserModel;
-    static walletData: WalletModel;
-    static bankData: PaymentModels;
+    static walletData: Wallet;
+    static bankData: UserBankAccount[];
 }

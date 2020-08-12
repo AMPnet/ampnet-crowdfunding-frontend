@@ -11,7 +11,7 @@ import { WalletModel } from '../../organizations/organization-details/organizati
 import { API } from 'src/app/utilities/endpoint-manager';
 import { validURL } from '../../utilities/link-valid-util';
 import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
-import { BroadcastService } from 'src/app/broadcast/broadcast-service';
+import { BroadcastService } from 'src/app/shared/services/wallet/broadcast.service';
 import { NewsLink } from './news-link-model';
 
 declare var _: any;

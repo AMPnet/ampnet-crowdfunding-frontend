@@ -1,21 +1,24 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { CountriesModel } from '../models/countries/CountryModel';
-import { Observable } from 'rxjs';
-import { API } from '../utilities/endpoint-manager';
+import { BackendApiService } from '../shared/services/backend-api.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class CountryService {
-
-    private endpoint = '/countries';
-
-    constructor(
-        private http: HttpClient) {
+    constructor(private http: BackendApiService) {
     }
 
-    getCountries(): Observable<CountriesModel> {
-        return this.http.get<CountriesModel>(API.generateRoute(this.endpoint));
+    getCountries() {
+        return this.http.get<Country[]>('/api/countries');
     }
+}
+
+export class Country {
+    id: number;
+    iso: string;
+    name: string;
+    nicename: string;
+    iso3: string;
+    numcode: number;
+    phonecode: number;
 }

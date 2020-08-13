@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { LogInModalService } from './log-in-modal.service';
+import { LogInModalService } from '../../shared/services/user/log-in-modal.service';
 import swal from 'sweetalert2';
 import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthService } from 'angularx-social-login';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';

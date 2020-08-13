@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { OrganizationService } from '../organization-service';
+import { OrganizationService } from '../../shared/services/user/organization-service';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { displayBackendError } from 'src/app/utilities/error-handler';
-import { BroadcastService } from 'src/app/shared/services/wallet/broadcast.service';
+import { BroadcastService } from 'src/app/shared/services/broadcast.service';
 import swal from 'sweetalert2';
 import { OrganizationModel, WalletModel } from './organization-model';
 import { MemberModel } from '../member-model';

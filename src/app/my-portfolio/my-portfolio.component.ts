@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { PortfolioService } from './portfolio.service';
+import { Portfolio, PortfolioService, PortfolioStats } from '../shared/services/wallet/portfolio.service';
 import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
-import { PortfolioRoot, PortfolioStats } from './portfolio.models';
-import { WalletService } from '../wallet/wallet.service';
+import { WalletService } from '../shared/services/wallet/wallet.service';
 import { centsToBaseCurrencyUnit } from '../utilities/currency-util';
 
 
@@ -14,7 +13,7 @@ import { centsToBaseCurrencyUnit } from '../utilities/currency-util';
 })
 export class MyPortfolioComponent implements OnInit {
     hasWallet = false;
-    portfolio: PortfolioRoot[];
+    portfolio: Portfolio[];
     stats: PortfolioStats;
     roi = 0;
 
@@ -29,9 +28,9 @@ export class MyPortfolioComponent implements OnInit {
     getTransactions() {
         SpinnerUtil.showSpinner();
 
-        this.walletService.getWallet().subscribe((walletRes: any) => {
+        this.walletService.getWallet().subscribe(walletRes => {
             if (walletRes.hash !== undefined) { // Check if wallet was activated by admin
-                this.portfolioService.getPortfolioStats().subscribe((portfolioStatsRes: any) => {
+                this.portfolioService.getPortfolioStats().subscribe((portfolioStatsRes) => {
                     this.hasWallet = true;
                     this.stats = portfolioStatsRes;
                     this.stats.investments = centsToBaseCurrencyUnit(this.stats.investments);
@@ -39,7 +38,7 @@ export class MyPortfolioComponent implements OnInit {
                         this.roi = ((this.stats.earnings + this.stats.investments) / (this.stats.investments) - 1) * 100;
                     }
                     SpinnerUtil.showSpinner();
-                    this.portfolioService.getPortfolio().subscribe((portfolioRes: any) => {
+                    this.portfolioService.getPortfolio().subscribe((portfolioRes) => {
                         this.portfolio = portfolioRes.portfolio;
                         SpinnerUtil.hideSpinner();
                     }, hideSpinnerAndDisplayError);

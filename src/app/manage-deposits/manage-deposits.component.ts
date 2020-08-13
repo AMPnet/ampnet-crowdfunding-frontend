@@ -4,7 +4,7 @@ import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { DepositModel } from '../deposit/deposit-model';
 import swal from 'sweetalert2';
-import { DepositCooperativeService } from './deposit.cooperative.service';
+import { DepositCooperativeService } from '../shared/services/wallet/deposit.cooperative.service';
 
 declare var $: any;
 

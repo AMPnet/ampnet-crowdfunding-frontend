@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { OrganizationService } from '../organization-service';
+import { OrganizationService } from '../../shared/services/user/organization-service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import swal from 'sweetalert2';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';

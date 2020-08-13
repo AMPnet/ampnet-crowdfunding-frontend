@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { CountryModel } from 'src/app/models/countries/CountryModel';
 import { SignUpService } from '../../shared/services/user/sign-up.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import swal from 'sweetalert2';
 import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthService } from 'angularx-social-login';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
-import { LogInModalService } from '../log-in-modal/log-in-modal.service';
+import { LogInModalService } from '../../shared/services/user/log-in-modal.service';
 import { displayBackendError, hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
 import { MustMatch } from './confirm-password-validator';
+import { Country } from '../../shared/services/country.service';
 
 
 @Component({
@@ -18,7 +18,7 @@ import { MustMatch } from './confirm-password-validator';
 })
 export class SignUpComponent implements OnInit {
     emailSignupForm: FormGroup;
-    countries: CountryModel[];
+    countries: Country[];
 
     constructor(
         private signUpService: SignUpService,

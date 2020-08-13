@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { WalletActivationService } from '../wallet-activation.service';
+import { User, WalletActivationService } from '../../shared/services/wallet/wallet-activation.service';
 import { hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
-import { UserActivationModel } from './user-activation.model';
-import { BroadcastService } from 'src/app/shared/services/wallet/broadcast.service';
+import { BroadcastService } from 'src/app/shared/services/broadcast.service';
 import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
 import swal from 'sweetalert2';
 
@@ -13,8 +12,7 @@ import swal from 'sweetalert2';
     styleUrls: ['./user-activation.component.css']
 })
 export class UserActivationComponent implements OnInit {
-
-    users: UserActivationModel[];
+    users: User[];
 
     constructor(private activationService: WalletActivationService, private broadService: BroadcastService) {
     }
@@ -22,12 +20,10 @@ export class UserActivationComponent implements OnInit {
     ngOnInit() {
         SpinnerUtil.showSpinner();
 
-        this.activationService.getUnactivatedWallets('user').subscribe((res: any) => {
+        this.activationService.getUnactivatedUserWallets().subscribe((res) => {
             this.users = res.users;
             SpinnerUtil.hideSpinner();
-
         }, hideSpinnerAndDisplayError);
-
     }
 
     async activateUserClicked(id: number) {

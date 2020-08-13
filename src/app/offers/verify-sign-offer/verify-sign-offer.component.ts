@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { ProjectModel } from 'src/app/projects/create-new-project/project-model';
+import { ProjectModel } from 'src/app/projects/project-model';
 import { ActivatedRoute } from '@angular/router';
-import { ProjectService } from 'src/app/projects/project-service';
+import { ProjectService } from 'src/app/shared/services/project/project-service';
 import { displayBackendError, hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
-import { OffersService } from '../offers.service';
+import { OffersService } from '../../shared/services/project/offers.service';
 import { baseCurrencyUnitToCents, prettyCurrency } from 'src/app/utilities/currency-util';
 import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
-import { BroadcastService } from 'src/app/shared/services/wallet/broadcast.service';
+import { BroadcastService } from 'src/app/shared/services/broadcast.service';
 import swal from 'sweetalert2';
 
 @Component({

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { OrganizationService } from '../organization-service';
+import { OrganizationService } from '../../shared/services/user/organization-service';
 import { displayBackendError } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import swal from 'sweetalert2';

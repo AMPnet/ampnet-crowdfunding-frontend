@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { WalletService } from './wallet.service';
-import { WalletModel } from '../models/WalletModel';
+import { WalletService } from '../shared/services/wallet/wallet.service';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { displayBackendError } from '../utilities/error-handler';
 import { centsToBaseCurrencyUnit, prettyCurrency } from '../utilities/currency-util';
 import * as numeral from 'numeral';
 import { ArkaneConnect, SecretType } from '@arkane-network/arkane-connect';
+import { WalletDetails } from '../shared/services/wallet/wallet-activation.service';
 
 declare var $: any;
 
@@ -15,7 +15,7 @@ declare var $: any;
     styleUrls: ['./wallet.component.css']
 })
 export class WalletComponent implements OnInit {
-    wallet: WalletModel;
+    wallet: WalletDetails;
     checkComplete = false;
     arkaneConnect: ArkaneConnect;
 

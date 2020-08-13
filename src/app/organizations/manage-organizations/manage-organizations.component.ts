@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { SingleOrganizationModel } from 'src/app/models/single-organization-model';
-import { OrganizationService } from '../organization-service';
+import { OrganizationService } from '../../shared/services/user/organization-service';
 import { displayBackendError } from 'src/app/utilities/error-handler';
 import { Router } from '@angular/router';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';

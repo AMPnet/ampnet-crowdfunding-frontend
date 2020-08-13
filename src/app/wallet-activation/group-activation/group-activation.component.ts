@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { WalletActivationService } from '../wallet-activation.service';
+import { Organization, WalletActivationService } from '../../shared/services/wallet/wallet-activation.service';
 import { displayBackendError, hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
-import { GroupActivationModel } from './group-activation.model';
 import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
-import { BroadcastService } from 'src/app/shared/services/wallet/broadcast.service';
+import { BroadcastService } from 'src/app/shared/services/broadcast.service';
 import swal from 'sweetalert2';
 
 @Component({
@@ -13,8 +12,7 @@ import swal from 'sweetalert2';
     styleUrls: ['./group-activation.component.css']
 })
 export class GroupActivationComponent implements OnInit {
-
-    groups: GroupActivationModel[];
+    groups: Organization[];
 
     constructor(private activationService: WalletActivationService,
                 private broadService: BroadcastService) {
@@ -26,16 +24,13 @@ export class GroupActivationComponent implements OnInit {
 
     fetchWalletToActivate() {
         SpinnerUtil.showSpinner();
-        this.activationService
-            .getUnactivatedWallets('organization').subscribe((res: any) => {
+        this.activationService.getUnactivatedOrganizationWallets().subscribe((res) => {
             this.groups = res.organizations;
             SpinnerUtil.hideSpinner();
-
         }, displayBackendError);
     }
 
     activateGroupClicked(uuid: string) {
-
         this.activationService.getActivationData(uuid).subscribe(async (res: any) => {
             const arkaneConnect = new ArkaneConnect('AMPnet', {
                 environment: 'staging'
@@ -56,7 +51,5 @@ export class GroupActivationComponent implements OnInit {
                 }, hideSpinnerAndDisplayError);
 
         }, hideSpinnerAndDisplayError);
-
     }
-
 }

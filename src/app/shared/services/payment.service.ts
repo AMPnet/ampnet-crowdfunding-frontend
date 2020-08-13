@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { API } from '../../../utilities/endpoint-manager';
-import { UserStatusStorage } from '../../../user-status-storage';
-import { BackendApiService } from '../backend-api.service';
+import { UserStatusStorage } from '../../user-status-storage';
+import { BackendApiService } from './backend-api.service';
 
 @Injectable({
     providedIn: 'root'
@@ -21,7 +20,7 @@ export class PaymentService {
     }
 
     createBankAccount(iban: String, bankCode: String, alias: String) {
-        return this.http.post<UserBankAccount>(API.generateRoute(this.endpoint),
+        return this.http.post<UserBankAccount>(this.endpoint,
             <CreateUserBankAccountData>{
                 iban: iban,
                 bank_code: bankCode,

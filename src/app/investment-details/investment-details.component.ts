@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PortfolioService } from '../my-portfolio/portfolio.service';
+import { PortfolioService } from '../shared/services/wallet/portfolio.service';
 import { ActivatedRoute } from '@angular/router';
 import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
@@ -7,7 +7,7 @@ import { InvestmentsInProject } from '../my-portfolio/portfolio.models';
 import { prettyDate } from '../utilities/date-format-util';
 import { centsToBaseCurrencyUnit } from '../utilities/currency-util';
 import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
-import { BroadcastService } from 'src/app/shared/services/wallet/broadcast.service';
+import { BroadcastService } from 'src/app/shared/services/broadcast.service';
 import swal from 'sweetalert2';
 
 @Component({
@@ -71,7 +71,7 @@ export class InvestmentDetailsComponent implements OnInit {
         if (this.investment.transactions.length > 0) {
             const transaction = this.investment.transactions[0];
             this.portfolioService.isInvestmentCancelable(transaction.to_tx_hash, transaction.from_tx_hash)
-                .subscribe((res: any) => {
+                .subscribe((res) => {
                     this.isCancelable = res.can_cancel;
                 });
         }

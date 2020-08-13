@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { RevenueShareService } from './revenue-share.service';
+import { RevenueShareService } from '../../shared/services/wallet/revenue-share.service';
 import { ActivatedRoute } from '@angular/router';
 import { WalletModel } from 'src/app/organizations/organization-details/organization-model';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { displayBackendError } from 'src/app/utilities/error-handler';
 import { prettyCurrency } from 'src/app/utilities/currency-util';
 import * as numeral from 'numeral';
-import { ProjectService } from 'src/app/projects/project-service';
-import { ProjectModel } from 'src/app/projects/create-new-project/project-model';
+import { ProjectService } from 'src/app/shared/services/project/project-service';
+import { ProjectModel } from 'src/app/projects/project-model';
 
 @Component({
     selector: 'app-revenue-share',

@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { OfferDetailDocModel, OfferDetailDocType } from '../../models/OfferDetailDocModel';
 import * as _ from 'lodash';
-import { OffersService } from '../offers.service';
+import { OffersService } from '../../shared/services/project/offers.service';
 import { ActivatedRoute } from '@angular/router';
 import { displayBackendError, hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
-import { ProjectService } from 'src/app/projects/project-service';
+import { ProjectService } from 'src/app/shared/services/project/project-service';
 import { prettyDate } from 'src/app/utilities/date-format-util';
 import swal from 'sweetalert2';
-import { NewsPreviewService } from 'src/app/news-preview/news-preview.service';
+import { NewsPreviewService } from 'src/app/shared/services/news-preview.service';
 import numeral from 'numeral';
 import { centsToBaseCurrencyUnit, prettyCurrency } from 'src/app/utilities/currency-util';
 import { Meta } from '@angular/platform-browser';
-import { UserService } from 'src/app/user-utils/user-service';
+import { UserService } from 'src/app/shared/services/user/user-service';
 import { NewsLink } from '../../manage-projects/manage-single-project/news-link-model';
 import { SingleOfferModel } from './single-offer-model';
 

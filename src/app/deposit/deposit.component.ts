@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { DepositServiceService } from './deposit-service.service';
+import { Deposit, DepositServiceService } from '../shared/services/wallet/deposit-service.service';
 import { displayBackendError, hideSpinnerAndDisplayError } from '../utilities/error-handler';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { DepositModel } from './deposit-model';
 import swal from 'sweetalert2';
+import { PlatformBankAccountService } from '../shared/services/wallet/platform-bank-account.service';
 
 declare var $: any;
 
@@ -13,24 +14,24 @@ declare var $: any;
     styleUrls: ['./deposit.component.css']
 })
 export class DepositComponent implements OnInit {
-
-    depositModel: DepositModel;
+    depositModel: Deposit;
     masterIban: string;
 
     projectUUID = '';
 
-    constructor(private depositService: DepositServiceService) {
+    constructor(private depositService: DepositServiceService,
+                private bankAccountService: PlatformBankAccountService) {
     }
 
     ngOnInit() {
         SpinnerUtil.showSpinner();
         this.getMasterIban();
-        this.depositService.getMyPendingDeposit().subscribe((res: DepositModel) => {
+        this.depositService.getMyPendingDeposit().subscribe(res => {
             SpinnerUtil.hideSpinner();
             this.depositModel = res;
         }, err => {
             SpinnerUtil.hideSpinner();
-            if (err.status = 404) {
+            if (err.status === 404) {
                 this.generateDepositInfo();
             } else {
                 displayBackendError(err);
@@ -40,7 +41,7 @@ export class DepositComponent implements OnInit {
 
     generateDepositInfo() {
         SpinnerUtil.showSpinner();
-        this.depositService.createDeposit().subscribe((res: DepositModel) => {
+        this.depositService.createDeposit().subscribe(res => {
             SpinnerUtil.hideSpinner();
             this.depositModel = res;
         }, err => {
@@ -55,7 +56,7 @@ export class DepositComponent implements OnInit {
     }
 
     getMasterIban() {
-        this.depositService.getPlatformBankAccounts().subscribe((res: any) => {
+        this.bankAccountService.getBankAccounts().subscribe(res => {
             this.masterIban = res.bank_accounts[0].iban;
         }, err => {
             hideSpinnerAndDisplayError(err);

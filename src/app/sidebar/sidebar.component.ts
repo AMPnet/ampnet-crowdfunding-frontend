@@ -3,7 +3,7 @@ import { NavbarComponent } from '../navbar/navbar.component';
 import { Router } from '@angular/router';
 
 import * as $ from 'jquery';
-import { UserService } from '../user-utils/user-service';
+import { UserService } from '../shared/services/user/user-service';
 import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PaymentService } from '../shared/services/user/payment.service';
+import { PaymentService } from '../shared/services/payment.service';
 import { BankAccountModel } from './bank-account-model';
 import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
 import { SpinnerUtil } from '../utilities/spinner-utilities';

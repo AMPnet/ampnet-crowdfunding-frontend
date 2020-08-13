@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import 'bootstrap-select';
-import { PortfolioService } from '../my-portfolio/portfolio.service';
+import { PortfolioService } from '../shared/services/wallet/portfolio.service';
 import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { PortfolioRoot } from '../my-portfolio/portfolio.models';

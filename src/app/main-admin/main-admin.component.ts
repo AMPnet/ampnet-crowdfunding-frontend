@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { IssuingAuthorityService } from './issuing-authority.service';
-import { UserService } from '../user-utils/user-service';
+import { IssuingAuthorityService } from '../shared/services/issuing-authority.service';
+import { UserService } from '../shared/services/user/user-service';
 import { displayBackendError } from '../utilities/error-handler';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import * as QRCode from 'qrcode';

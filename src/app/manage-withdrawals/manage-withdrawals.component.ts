@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { ManageWithdrawModel } from './manage-withdraw-model';
-import { WithdrawCooperativeService } from './withdraw.cooperative.service';
+import { WithdrawCooperativeService } from '../shared/services/wallet/withdraw.cooperative.service';
 
 @Component({
     selector: 'app-manage-withdrawals',

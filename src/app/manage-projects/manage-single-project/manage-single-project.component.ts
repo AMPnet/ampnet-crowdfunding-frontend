@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import * as Uppy from 'uppy';
 import swal from 'sweetalert2';
-import { ManageProjectsService } from '../manage-projects-service';
+import { ManageProjectsService } from '../../shared/services/project/manage-projects-service';
 import { ActivatedRoute } from '@angular/router';
-import { ProjectService } from 'src/app/projects/project-service';
-import { ProjectModel } from '../../projects/create-new-project/project-model';
+import { ProjectService } from 'src/app/shared/services/project/project-service';
+import { ProjectModel } from '../../projects/project-model';
 import { displayBackendError, hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { WalletModel } from '../../organizations/organization-details/organization-model';
 import { API } from 'src/app/utilities/endpoint-manager';
 import { validURL } from '../../utilities/link-valid-util';
 import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
-import { BroadcastService } from 'src/app/shared/services/wallet/broadcast.service';
+import { BroadcastService } from 'src/app/shared/services/broadcast.service';
 import { NewsLink } from './news-link-model';
 
 declare var _: any;
@@ -68,11 +68,6 @@ export class ManageSingleProjectComponent implements OnInit {
 
     createInitQRCODE() {
         this.projectService.generateTransactionToCreateProjectWallet(this.project.uuid).subscribe((res: any) => {
-
-            const qrCodeData = {
-                'tx_data': res,
-                'base_url': API.APIURL
-            };
             swal('', 'Verify the project creation with your blockchain wallet. You will be prompted now!', 'info')
                 .then(async () => {
                     const arkaneConnect = new ArkaneConnect('AMPnet', {
@@ -101,12 +96,12 @@ export class ManageSingleProjectComponent implements OnInit {
         SpinnerUtil.showSpinner();
         const linkHolder = $('#newsLink').val();
         if (validURL(linkHolder)) {
-            this.manageProjectsService.addNewsToProject(this.project, linkHolder).subscribe(res => {
-                this.getProject(() => {
+            this.manageProjectsService.addNewsToProject(this.project, linkHolder)
+                .subscribe(updatedProject => {
+                    this.project = updatedProject;
+                }, err => {
+                    displayBackendError(err);
                 });
-            }, err => {
-                displayBackendError(err);
-            });
         } else {
             swal('', 'Link invalid! The news link ' + linkHolder + ' is not a valid link');
         }
@@ -114,7 +109,7 @@ export class ManageSingleProjectComponent implements OnInit {
 
     deleteNewsClicked(link: string) {
         SpinnerUtil.showSpinner();
-        this.manageProjectsService.deleteNewsFromProject(this.project.uuid, link).subscribe(res => {
+        this.manageProjectsService.deleteNewsFromProject(this.project, link).subscribe(res => {
             SpinnerUtil.hideSpinner();
             this.getProject(() => {
             });
@@ -242,7 +237,7 @@ export class ManageSingleProjectComponent implements OnInit {
     }
 
     private setUploadAreas() {
-        const imageUppy = this.setUpUppy('image-upload-project', ['image/*'], );
+        const imageUppy = this.setUpUppy('image-upload-project', ['image/*']);
         this.configureUppy(imageUppy, '#drag-drop-area-img');
 
         const filesUppy = Uppy.Core({

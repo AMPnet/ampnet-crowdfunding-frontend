@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { API } from '../../utilities/endpoint-manager';
 import { HttpClient } from '@angular/common/http';
 import { TokenModel } from 'src/app/models/auth/TokenModel';
 

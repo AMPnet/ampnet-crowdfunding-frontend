@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../user-utils/user-service';
+import { UserService } from '../shared/services/user/user-service';
 import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
 import { UserModel } from '../models/user-model';
 import { OwnershipService } from '../shared/services/wallet/ownership.service';
-import { BroadcastService } from '../shared/services/wallet/broadcast.service';
+import { BroadcastService } from '../shared/services/broadcast.service';
 import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import swal from 'sweetalert2';

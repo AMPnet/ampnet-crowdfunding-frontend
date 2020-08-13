@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { OrganizationService } from '../organizations/organization-service';
+import { OrganizationService } from '../shared/services/user/organization-service';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { displayBackendError } from '../utilities/error-handler';
-import { ProjectModel } from '../projects/create-new-project/project-model';
+import { ProjectModel } from '../projects/project-model';
 
 
 declare var _: any;
@@ -14,7 +14,6 @@ declare var _: any;
     styleUrls: ['./manage-projects.component.css']
 })
 export class ManageProjectsComponent implements OnInit {
-
     manageProjectsModel: ProjectModel[];
 
     @Input() groupID: string;
@@ -33,7 +32,7 @@ export class ManageProjectsComponent implements OnInit {
 
     getProjectsForGroup() {
         SpinnerUtil.showSpinner();
-        this.orgService.getAllProjectsForOrganization(this.groupID).subscribe((res: any) => {
+        this.orgService.getAllProjectsForOrganization(this.groupID).subscribe((res) => {
             SpinnerUtil.hideSpinner();
 
             this.manageProjectsModel = res.projects;
@@ -42,6 +41,4 @@ export class ManageProjectsComponent implements OnInit {
             displayBackendError(err);
         });
     }
-
-
 }

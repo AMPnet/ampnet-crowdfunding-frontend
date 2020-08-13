@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CountryService } from 'src/app/countries/country.service';
+import { CountryService } from 'src/app/shared/services/country.service';
 import { CountryModel } from 'src/app/models/countries/CountryModel';
 import swal from 'sweetalert2';
-import { FillDataService } from './fill-data.service';
-import { LogInModalService } from '../../log-in-modal/log-in-modal.service';
+import { FillDataService } from '../../../shared/services/user/fill-data.service';
+import { LogInModalService } from '../../../shared/services/user/log-in-modal.service';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 
 @Component({

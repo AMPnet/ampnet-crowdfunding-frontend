@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
-import { WalletActivationService } from '../wallet-activation.service';
-import { ProjectActivationModel } from './project-activation.model';
+import { Project, WalletActivationService } from '../../shared/services/wallet/wallet-activation.service';
 import { displayBackendError, hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
 import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
-import { BroadcastService } from 'src/app/shared/services/wallet/broadcast.service';
+import { BroadcastService } from 'src/app/shared/services/broadcast.service';
 import swal from 'sweetalert2';
 
 @Component({
@@ -13,8 +12,7 @@ import swal from 'sweetalert2';
     styleUrls: ['./project-activation.component.css']
 })
 export class ProjectActivationComponent implements OnInit {
-
-    projects: ProjectActivationModel[];
+    projects: Project[];
 
     constructor(private activationService: WalletActivationService,
                 private broadService: BroadcastService) {
@@ -26,11 +24,9 @@ export class ProjectActivationComponent implements OnInit {
 
     fetchWalletToActivate() {
         SpinnerUtil.showSpinner();
-        this.activationService
-            .getUnactivatedWallets('project').subscribe((res: any) => {
+        this.activationService.getUnactivatedProjectWallets().subscribe((res) => {
             this.projects = res.projects;
             SpinnerUtil.hideSpinner();
-
         }, displayBackendError);
     }
 

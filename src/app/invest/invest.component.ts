@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import numeral from 'numeral';
-import { WalletService } from '../wallet/wallet.service';
-import { InvestService } from './invest.service';
+import { WalletService } from '../shared/services/wallet/wallet.service';
 import { displayBackendError } from '../utilities/error-handler';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
-import { WalletModel } from '../models/WalletModel';
-import { ProjectModel } from '../projects/create-new-project/project-model';
-import { ProjectService } from '../projects/project-service';
+import { ProjectModel } from '../projects/project-model';
+import { ProjectService } from '../shared/services/project/project-service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { autonumericCurrency, centsToBaseCurrencyUnit, prettyCurrency, stripCurrencyData } from '../utilities/currency-util';
+import { WalletDetails } from '../shared/services/wallet/wallet-activation.service';
 
 declare var $: any;
 
@@ -24,7 +23,7 @@ export class InvestComponent implements OnInit {
     yearlyReturn: string;
     projectStake: string;
     breakevenPeriod: string;
-    wallet: WalletModel;
+    wallet: WalletDetails;
     project: ProjectModel;
     expectedROI: number;
 
@@ -34,8 +33,9 @@ export class InvestComponent implements OnInit {
     INVEST_HIGH_MSG = '<b>Investment amount too high</b>. The maximum investment is ';
     WALLET_LOW_MSG = '<b>You don\'t have enough funds on your wallet</b>. Please deposit funds in the wallet tab.';
 
-    constructor(private walletService: WalletService, private investService: InvestService,
-                private projectService: ProjectService, private route: ActivatedRoute,
+    constructor(private walletService: WalletService,
+                private projectService: ProjectService,
+                private route: ActivatedRoute,
                 private router: Router) {
     }
 

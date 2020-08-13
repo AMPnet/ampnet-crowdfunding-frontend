@@ -3,9 +3,9 @@ import { ActivatedRoute } from '@angular/router';
 import { hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
 import { ManageWithdrawModel } from '../manage-withdraw-model';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
-import { WithdrawCooperativeService } from 'src/app/manage-withdrawals/withdraw.cooperative.service';
+import { WithdrawCooperativeService } from 'src/app/shared/services/wallet/withdraw.cooperative.service';
 import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
-import { BroadcastService } from 'src/app/shared/services/wallet/broadcast.service';
+import { BroadcastService } from 'src/app/shared/services/broadcast.service';
 import swal from 'sweetalert2';
 
 declare var $: any;

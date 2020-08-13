@@ -64,16 +64,33 @@
             </div>
 
             <br>
-            <span>TEST</span>
+            <div class="col-md-12 mt-3 mb-5">
+					<span class="h4 text-left">
+						<div class="explainer-mini float-right mb-2 w-100">Transaction History</div>
+					</span>
 
-            <div *ngIf="transactions.transactions != undefined">
-                <ul class="div" *ngFor="let transaction of transactions.transactions">
-                <li> {{ transaction.amount }}</li>
+                <div *ngIf="transactions != undefined">
 
-                </ul>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">Date</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">State</th>
+                            <th scope="col">Amount</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let transaction of transactions.transactions">
+                            <td>{{ transaction.date | date }}</td>
+                            <td>{{ transaction.type }}</td>
+                            <td>{{ transaction.state }}</td>
+                            <td>{{ transaction.amount | currency }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-
         </div>
-
     </div>
 </div>

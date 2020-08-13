@@ -11,7 +11,7 @@ export interface Transaction {
     to_tx_hash: string;
     amount: number;
     type: string;
-    date: Date;
+    date: string;
     state: string;
 }
 

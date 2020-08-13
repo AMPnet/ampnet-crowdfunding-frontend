@@ -19,7 +19,10 @@ export class WalletComponent implements OnInit {
     checkComplete = false;
     arkaneConnect: ArkaneConnect;
 
-    transactions: TransactionList;
+    page = 1;
+    pageSize = 4;
+    transactions;
+
 
     constructor(private walletService: WalletService) {
     }
@@ -68,8 +71,8 @@ export class WalletComponent implements OnInit {
     getTransactionHistory() {
         SpinnerUtil.showSpinner();
         this.walletService.getTransactionHistory().subscribe((res: TransactionList) => {
-            console.log('Transactions: ', res);
             this.transactions = res;
+
         });
     }
 }

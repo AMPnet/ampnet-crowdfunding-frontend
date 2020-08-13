@@ -7,6 +7,7 @@ import { centsToBaseCurrencyUnit, prettyCurrency } from '../utilities/currency-u
 import * as numeral from 'numeral';
 import { ArkaneConnect, SecretType } from '@arkane-network/arkane-connect';
 
+
 declare var $: any;
 
 @Component({
@@ -18,12 +19,11 @@ export class WalletComponent implements OnInit {
     wallet: WalletModel;
     checkComplete = false;
     arkaneConnect: ArkaneConnect;
-
-    page = 1;
-    pageSize = 5;
+    tablePage = 1;
+    tablePageSize = 10;
+    transactionItems = 0;
     transactionHistory: Transaction[] = [];
     transactionHistoryPage: Transaction[] = [];
-    collectionSize = 0;
 
     constructor(private walletService: WalletService) {
     }
@@ -73,14 +73,14 @@ export class WalletComponent implements OnInit {
         SpinnerUtil.showSpinner();
         this.walletService.getTransactionHistory().subscribe((res: TransactionList) => {
             this.transactionHistory = res.transactions;
-            this.collectionSize = this.transactionHistory.length;
+            this.transactionItems = this.transactionHistory.length;
             this.refreshTransactionHistory();
         });
     }
 
     refreshTransactionHistory() {
         this.transactionHistoryPage = this.transactionHistory
-            .map((country, i) => ({id: i + 1, ...country}))
-            .slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize);
+            .map((transaction, i) => ({id: i + 1, ...transaction}))
+            .slice((this.tablePage - 1) * this.tablePageSize, (this.tablePage - 1) * this.tablePageSize + this.tablePageSize);
     }
 }

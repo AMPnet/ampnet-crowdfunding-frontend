@@ -57,3 +57,32 @@
     width: 65px;
     text-align: center;
 }
+
+ngb-pagination ::ng-deep ul > li:not(.active) > a {
+    background-color: transparent !important;
+    color: rgba(0, 0, 0, 0.15);
+}
+
+ngb-pagination ::ng-deep ul > li.active > a {
+    background-color: #cacaca !important;
+    color: rgba(0, 0, 0, 0.15);
+    outline: none;
+}
+
+ngb-pagination ::ng-deep .page-link {
+    background-color: #f6f6f6 !important;
+    color: #262626 !important;
+}
+
+ngb-pagination ::ng-deep .page-item.active .page-link:focus, .page-link:not(:disabled):not(.disabled):active:focus {
+    box-shadow: 0 0 0 0.1rem dimgrey;
+}
+
+ngb-pagination ::ng-deep .page-link:not(:disabled):not(.disabled):active:focus {
+    box-shadow: 0 0 0 0.1rem dimgrey;
+}
+
+.page-link:focus {
+    box-shadow: none !important;
+    border-color: transparent !important;
+}

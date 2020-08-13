@@ -177,7 +177,7 @@ export function jwtOptionsFactory() {
         HttpClientModule,
         SocialLoginModule,
         NgxSpinnerModule,
-        NgbModule,
+        NgbModule
     ],
     providers: [
         socialAuthServiceConfig

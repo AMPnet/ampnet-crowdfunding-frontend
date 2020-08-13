@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { WalletService } from './wallet.service';
-import { WalletModel } from '../models/WalletModel';
+import { TransactionList, WalletModel } from '../models/WalletModel';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { displayBackendError } from '../utilities/error-handler';
 import { centsToBaseCurrencyUnit, prettyCurrency } from '../utilities/currency-util';
@@ -19,11 +19,14 @@ export class WalletComponent implements OnInit {
     checkComplete = false;
     arkaneConnect: ArkaneConnect;
 
+    transactions: TransactionList;
+
     constructor(private walletService: WalletService) {
     }
 
     ngOnInit() {
         this.getUserWallet();
+        this.getTransactionHistory();
     }
 
     setUpArkane() {
@@ -62,4 +65,11 @@ export class WalletComponent implements OnInit {
         });
     }
 
+    getTransactionHistory() {
+        SpinnerUtil.showSpinner();
+        this.walletService.getTransactionHistory().subscribe((res: TransactionList) => {
+            console.log('Transactions: ', res);
+            this.transactions = res;
+        });
+    }
 }

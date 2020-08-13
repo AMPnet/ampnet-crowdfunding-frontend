@@ -61,8 +61,18 @@
                         Withdraw
                     </button>
                 </div>
-
             </div>
+
+            <br>
+            <span>TEST</span>
+
+            <div *ngIf="transactions.transactions != undefined">
+                <ul class="div" *ngFor="let transaction of transactions.transactions">
+                <li> {{ transaction.amount }}</li>
+
+                </ul>
+            </div>
+
         </div>
 
     </div>

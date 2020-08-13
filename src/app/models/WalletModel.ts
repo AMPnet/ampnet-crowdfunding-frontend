@@ -6,13 +6,17 @@ export class WalletModel {
     activated_at: string;
 }
 
-export class TransactionModel {
-    id: number;
-    sender: string;
-    receiver: string;
+export interface Transaction {
+    from_tx_hash: string;
+    to_tx_hash: string;
     amount: number;
-    currency: string;
     type: string;
-    txHash: string;
-    timestamp: string;
+    date: Date;
+    state: string;
 }
+
+export interface TransactionList {
+    transactions: Transaction[];
+}
+
+

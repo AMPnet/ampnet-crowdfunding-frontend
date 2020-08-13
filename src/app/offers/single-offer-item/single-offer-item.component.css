@@ -54,6 +54,7 @@
 @media (max-width: 800px) {
     .card-holder {
         flex-direction: column;
+        padding-bottom: 3rem !important;
     }
 
     .card-content-text-holder {

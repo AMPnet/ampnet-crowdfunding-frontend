@@ -1,4 +1,5 @@
-@font-face {
+/* Stilovi prije redizajna */
+/* @font-face {
     font-family: 'MaisonNeue';
     src: url(assets/MaisonNeueExtended-Light.otf) format("opentype")
 }
@@ -11,10 +12,45 @@
 * {
     font-family: 'MaisonNeue', sans-serif;
     font-weight: 400;
+} */
+
+/* h1, h2, h3, h4, h5, h6 {
+    font-weight: 500;
+} */
+
+/* @media (max-width: 800px) {
+    .root-content-container {
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+        padding-top: 1rem !important;
+        padding-bottom: 1rem !important;
+    }
 }
 
+@media (min-width: 800px) {
+    .root-content-container {
+        padding-left: 2rem !important;
+        padding-bottom: 2rem !important;
+        padding-right: 2rem !important;
+        padding-top: 2rem !important;
+    }
+} */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+
+* {
+    font-family: 'Inter', sans-serif !important;
+}
+
+@media (min-width: 1400px) {
+    .container {
+        padding: 2rem 0 !important;
+    }
+}
+
+
 h1, h2, h3, h4, h5, h6 {
-    font-weight: 500;
+    font-weight: 400 !important;
 }
 
 
@@ -26,6 +62,9 @@ body {
     background-color: #fcfcfc;
     font-size: 16px !important;
     overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
 }
 
 .card {
@@ -100,32 +139,13 @@ body {
     background-color: #494 !important;
 }
 
-
-@media (max-width: 800px) {
-    .root-content-container {
-        padding-left: 1rem !important;
-        padding-right: 1rem !important;
-        padding-top: 1rem !important;
-        padding-bottom: 1rem !important;
-    }
-}
-
-@media (min-width: 800px) {
-    .root-content-container {
-        padding-left: 2rem !important;
-        padding-bottom: 2rem !important;
-        padding-right: 2rem !important;
-        padding-top: 2rem !important;
-    }
-}
-
 .root-content-container {
     background-size: rgb(244, 247, 250);
 }
 
-. {
+/* . {
     font-weight: 200 !important;
-}
+} */
 
 .cursor-pointer {
     cursor: pointer !important;

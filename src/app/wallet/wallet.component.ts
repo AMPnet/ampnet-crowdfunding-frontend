@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { WalletService } from './wallet.service';
-import { TransactionList, WalletModel } from '../models/WalletModel';
+import { Transaction, TransactionList, WalletModel } from '../models/WalletModel';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { displayBackendError } from '../utilities/error-handler';
 import { centsToBaseCurrencyUnit, prettyCurrency } from '../utilities/currency-util';
@@ -20,9 +20,10 @@ export class WalletComponent implements OnInit {
     arkaneConnect: ArkaneConnect;
 
     page = 1;
-    pageSize = 4;
-    transactions;
-
+    pageSize = 5;
+    transactionHistory: Transaction[] = [];
+    transactionHistoryPage: Transaction[] = [];
+    collectionSize = 0;
 
     constructor(private walletService: WalletService) {
     }
@@ -71,8 +72,15 @@ export class WalletComponent implements OnInit {
     getTransactionHistory() {
         SpinnerUtil.showSpinner();
         this.walletService.getTransactionHistory().subscribe((res: TransactionList) => {
-            this.transactions = res;
-
+            this.transactionHistory = res.transactions;
+            this.collectionSize = this.transactionHistory.length;
+            this.refreshTransactionHistory();
         });
+    }
+
+    refreshTransactionHistory() {
+        this.transactionHistoryPage = this.transactionHistory
+            .map((country, i) => ({id: i + 1, ...country}))
+            .slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize);
     }
 }

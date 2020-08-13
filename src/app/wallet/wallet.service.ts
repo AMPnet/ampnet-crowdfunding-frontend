@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { API } from '../utilities/endpoint-manager';
-import { Transaction, TransactionList, WalletModel } from '../models/WalletModel';
+import { TransactionList, WalletModel } from '../models/WalletModel';
 import { UserStatusStorage } from '../user-status-storage';
 
 @Injectable({

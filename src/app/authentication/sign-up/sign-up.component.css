@@ -33,8 +33,10 @@ h1 {
 }
 
 #emailForm input {
-    box-shadow: none !important;
-    border: 1px solid #D8D8D8 !important;
+    /* box-shadow: none !important;
+    border: 1px solid #D8D8D8 !important; */
+
+    box-shadow: inset 0 0 0 1px #D8D8D8 !important;
 }
 
 #emailForm input::placeholder {

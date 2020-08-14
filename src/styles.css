@@ -245,6 +245,12 @@ body {
     }
 }
 
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1162px !important;
+    }
+}
+
 input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;

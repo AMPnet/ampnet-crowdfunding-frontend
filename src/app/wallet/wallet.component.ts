@@ -7,7 +7,6 @@ import { centsToBaseCurrencyUnit, prettyCurrency } from '../utilities/currency-u
 import * as numeral from 'numeral';
 import { ArkaneConnect, SecretType } from '@arkane-network/arkane-connect';
 
-
 declare var $: any;
 
 @Component({

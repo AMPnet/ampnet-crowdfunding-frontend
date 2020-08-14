@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { API } from '../utilities/endpoint-manager';
 import { TransactionList, WalletModel } from '../models/WalletModel';
 import { UserStatusStorage } from '../user-status-storage';
+import { map } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -22,12 +23,13 @@ export class WalletService {
     }
 
     getWallet() {
-        const walletResponse = this.http.get<WalletModel>(API.generateRoute(this.endpoint), API.tokenHeaders());
-        walletResponse.subscribe((res: WalletModel) => {
-            UserStatusStorage.walletData = res;
-
-        });
-        return walletResponse;
+        return this.http.get<WalletModel>(API.generateRoute(this.endpoint), API.tokenHeaders())
+            .pipe(
+                map(res => {
+                    UserStatusStorage.walletData = res;
+                    return res;
+                })
+            );
     }
 
     getInfoFromPairingCode(pairingCode: string) {
@@ -37,12 +39,13 @@ export class WalletService {
     }
 
     getTransactionHistory() {
-        const transactionResponse = this.http.get<TransactionList>(
-            API.generateRoute(this.transactionHistoryEndpoint),
-            API.tokenHeaders());
-        transactionResponse.subscribe((res: TransactionList) => {
-            UserStatusStorage.transactionData = res;
-        });
-        return transactionResponse;
+        return this.http.get<TransactionList>(
+            API.generateRoute(this.transactionHistoryEndpoint), API.tokenHeaders())
+            .pipe(
+                map(res => {
+                    UserStatusStorage.transactionData = res;
+                    return res;
+                })
+            );
     }
 }

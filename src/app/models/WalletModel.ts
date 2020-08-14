@@ -18,5 +18,3 @@ export interface Transaction {
 export interface TransactionList {
     transactions: Transaction[];
 }
-
-

@@ -33,5 +33,3 @@ export function centsToBaseCurrencyUnit(cents: number) {
 export function baseCurrencyUnitToCents(base: number) {
     return Math.floor(base * 100);
 }
-
-

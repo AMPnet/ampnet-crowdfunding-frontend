@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { UserStatusStorage } from '../../../user-status-storage';
 import { BackendApiService } from '../backend-api.service';
-import { WalletDetails } from './wallet-activation.service';
+import { WalletDetails, TransactionInfo } from './wallet-cooperative/wallet-cooperative-wallet.service';
 
 @Injectable({
     providedIn: 'root'
@@ -19,7 +19,7 @@ export class WalletService {
             });
     }
 
-    getWallet() {
+    getUserWallet() {
         const walletResponse = this.http.get<WalletDetails>(this.endpoint);
         walletResponse.subscribe((res) => UserStatusStorage.walletData = res);
 
@@ -28,6 +28,14 @@ export class WalletService {
 
     getInfoFromPairingCode(pairingCode: string) {
         return this.http.get<WalletPairInfo>(`${this.endpoint}/pair/${pairingCode}`);
+    }
+
+    createProjectWallet(projectID: string) {
+        return this.http.get<TransactionInfo>(`/api/wallet/wallet/project/${projectID}/transaction`);
+    }
+
+    getProjectWallet(projectID: string) {
+        return this.http.get<WalletDetails>(`/api/wallet/public/wallet/project/${projectID}`);
     }
 }
 

@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
 import { ManageWithdrawModel } from '../manage-withdraw-model';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
-import { WithdrawCooperativeService } from 'src/app/shared/services/wallet/withdraw.cooperative.service';
+import { WalletCooperativeWithdrawService } from 'src/app/shared/services/wallet/wallet-cooperative/wallet-cooperative-withdraw.service';
 import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
 import { BroadcastService } from 'src/app/shared/services/broadcast.service';
 import swal from 'sweetalert2';
@@ -20,7 +20,7 @@ export class SingleWithdrawalComponent implements OnInit, AfterViewInit {
     withdrawal: ManageWithdrawModel;
 
     constructor(private route: ActivatedRoute,
-                private withdrawCooperativeService: WithdrawCooperativeService,
+                private withdrawCooperativeService: WalletCooperativeWithdrawService,
                 private broadcastService: BroadcastService) {
     }
 

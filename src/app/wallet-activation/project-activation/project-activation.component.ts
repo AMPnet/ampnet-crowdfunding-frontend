@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
-import { Project, WalletActivationService } from '../../shared/services/wallet/wallet-activation.service';
+import { Project, WalletCooperativeWalletService } from '../../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
 import { displayBackendError, hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
 import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
 import { BroadcastService } from 'src/app/shared/services/broadcast.service';
@@ -14,7 +14,7 @@ import swal from 'sweetalert2';
 export class ProjectActivationComponent implements OnInit {
     projects: Project[];
 
-    constructor(private activationService: WalletActivationService,
+    constructor(private activationService: WalletCooperativeWalletService,
                 private broadService: BroadcastService) {
     }
 
@@ -32,7 +32,7 @@ export class ProjectActivationComponent implements OnInit {
 
     activateProjectClicked(uuid: string) {
 
-        this.activationService.getActivationData(uuid).subscribe(async (res: any) => {
+        this.activationService.activateWallet(uuid).subscribe(async (res: any) => {
             const arkaneConnect = new ArkaneConnect('AMPnet', {
                 environment: 'staging'
             });

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../shared/services/user/user-service';
 import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
 import { UserModel } from '../models/user-model';
-import { OwnershipService } from '../shared/services/wallet/ownership.service';
+import { WalletCooperativeOwnershipService } from '../shared/services/wallet/wallet-cooperative/wallet-cooperative-ownership.service';
 import { BroadcastService } from '../shared/services/broadcast.service';
 import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
@@ -18,7 +18,7 @@ export class OwnershipComponent implements OnInit {
     user: UserModel;
 
     constructor(private userService: UserService,
-                private ownershipService: OwnershipService,
+                private ownershipService: WalletCooperativeOwnershipService,
                 private broadcastService: BroadcastService) {
     }
 
@@ -32,7 +32,7 @@ export class OwnershipComponent implements OnInit {
 
         const platformManagerAddress: any = $('#platform-manager-address').val();
 
-        this.ownershipService.getPlatformManagerTransaction(platformManagerAddress).subscribe(res => {
+        this.ownershipService.executePlatformManagerTransaction(platformManagerAddress).subscribe(res => {
             this.confirmAndBroadcastTransaction(res);
         }, hideSpinnerAndDisplayError);
     }
@@ -41,7 +41,7 @@ export class OwnershipComponent implements OnInit {
 
         const tokenIssuerAddress: any = $('#token-issuer-address').val();
 
-        this.ownershipService.getTokenIssuerTransaction(tokenIssuerAddress).subscribe(res => {
+        this.ownershipService.executeTokenIssuerTransaction(tokenIssuerAddress).subscribe(res => {
             this.confirmAndBroadcastTransaction(res);
         }, hideSpinnerAndDisplayError);
     }

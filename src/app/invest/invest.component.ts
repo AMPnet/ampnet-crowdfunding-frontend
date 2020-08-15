@@ -7,7 +7,7 @@ import { ProjectModel } from '../projects/project-model';
 import { ProjectService } from '../shared/services/project/project-service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { autonumericCurrency, centsToBaseCurrencyUnit, prettyCurrency, stripCurrencyData } from '../utilities/currency-util';
-import { WalletDetails } from '../shared/services/wallet/wallet-activation.service';
+import { WalletDetails } from '../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
 
 declare var $: any;
 
@@ -17,7 +17,6 @@ declare var $: any;
     styleUrls: ['./invest.component.css']
 })
 export class InvestComponent implements OnInit {
-
     inputValue: string;
 
     yearlyReturn: string;
@@ -47,7 +46,7 @@ export class InvestComponent implements OnInit {
 
     getWalletBalance() {
         SpinnerUtil.showSpinner();
-        this.walletService.getWallet().subscribe(res => {
+        this.walletService.getUserWallet().subscribe(res => {
             this.wallet = res;
             this.wallet.currency = prettyCurrency(res.currency);
             this.wallet.balance = numeral(centsToBaseCurrencyUnit(res.balance)).format('0,0');

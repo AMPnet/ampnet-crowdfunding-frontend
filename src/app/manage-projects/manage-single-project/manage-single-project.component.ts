@@ -3,16 +3,15 @@ import * as Uppy from 'uppy';
 import swal from 'sweetalert2';
 import { ManageProjectsService } from '../../shared/services/project/manage-projects-service';
 import { ActivatedRoute } from '@angular/router';
-import { ProjectService } from 'src/app/shared/services/project/project-service';
-import { ProjectModel } from '../../projects/project-model';
+import { ProjectModel, ProjectService } from 'src/app/shared/services/project/project-service';
 import { displayBackendError, hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
-import { WalletModel } from '../../organizations/organization-details/organization-model';
 import { API } from 'src/app/utilities/endpoint-manager';
 import { validURL } from '../../utilities/link-valid-util';
 import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
 import { BroadcastService } from 'src/app/shared/services/broadcast.service';
-import { NewsLink } from './news-link-model';
+import { WalletDetails } from '../../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
+import { WalletService } from '../../shared/services/wallet/wallet.service';
 
 declare var _: any;
 declare var $: any;
@@ -31,11 +30,11 @@ export class ManageSingleProjectComponent implements OnInit {
         'Development certificate'
     ];
     project: ProjectModel;
-    wallet: WalletModel;
+    wallet: WalletDetails;
     qrCodeData: String = '';
-    private news: NewsLink[] = [];
 
     constructor(private projectService: ProjectService,
+                private walletService: WalletService,
                 private manageProjectsService: ManageProjectsService,
                 private route: ActivatedRoute,
                 private broadService: BroadcastService) {
@@ -49,7 +48,7 @@ export class ManageSingleProjectComponent implements OnInit {
         this.getProject(() => {
             SpinnerUtil.showSpinner();
 
-            this.projectService.getProjectWallet(this.project.uuid).subscribe((res: WalletModel) => {
+            this.walletService.getProjectWallet(this.project.uuid).subscribe(res => {
                 SpinnerUtil.hideSpinner();
                 this.wallet = res;
                 setTimeout(() => {
@@ -57,7 +56,7 @@ export class ManageSingleProjectComponent implements OnInit {
                 }, 300);
             }, err => {
                 if (err.status === 404) { // 0501 meaning - "Missing wallet for org"
-                    this.createInitQRCODE();
+                    this.createProjectWallet();
                 } else {
                     displayBackendError(err);
                 }
@@ -66,8 +65,8 @@ export class ManageSingleProjectComponent implements OnInit {
         });
     }
 
-    createInitQRCODE() {
-        this.projectService.generateTransactionToCreateProjectWallet(this.project.uuid).subscribe((res: any) => {
+    createProjectWallet() {
+        this.walletService.createProjectWallet(this.project.uuid).subscribe(res => {
             swal('', 'Verify the project creation with your blockchain wallet. You will be prompted now!', 'info')
                 .then(async () => {
                     const arkaneConnect = new ArkaneConnect('AMPnet', {

@@ -7,6 +7,7 @@ import * as moment from 'moment';
 import { ProjectService } from '../shared/services/project/project-service';
 import { ActivatedRoute } from '@angular/router';
 import { centsToBaseCurrencyUnit } from '../utilities/currency-util';
+import { WalletService } from '../shared/services/wallet/wallet.service';
 
 @Component({
     selector: 'app-offers',
@@ -22,7 +23,7 @@ export class OffersComponent implements OnInit {
     isOverview = false;
 
     constructor(private offersService: OffersService,
-                private projectService: ProjectService,
+                private walletService: WalletService,
                 private route: ActivatedRoute
     ) {
 
@@ -34,7 +35,6 @@ export class OffersComponent implements OnInit {
         if (this.route.snapshot.params.isOverview) {
             this.isOverview = true;
         }
-
     }
 
     getAllOffers() {
@@ -73,7 +73,7 @@ export class OffersComponent implements OnInit {
             return;
         }
         const component = this.components[index];
-        this.projectService.getProjectWallet(component.offerID).subscribe((res: any) => {
+        this.walletService.getProjectWallet(component.offerID).subscribe((res: any) => {
             this.components[index].currentFunding = centsToBaseCurrencyUnit(res.balance);
             this.components[index].currency = res.currency;
             this.getProjectBalances(index + 1);

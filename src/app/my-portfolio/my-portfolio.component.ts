@@ -28,7 +28,7 @@ export class MyPortfolioComponent implements OnInit {
     getTransactions() {
         SpinnerUtil.showSpinner();
 
-        this.walletService.getWallet().subscribe(walletRes => {
+        this.walletService.getUserWallet().subscribe(walletRes => {
             if (walletRes.hash !== undefined) { // Check if wallet was activated by admin
                 this.portfolioService.getPortfolioStats().subscribe((portfolioStatsRes) => {
                     this.hasWallet = true;

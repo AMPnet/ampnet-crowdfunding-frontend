@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BackendApiService } from '../backend-api.service';
-import { ProjectModel } from '../../../projects/project-model';
-import { Wallet, WalletActivationService, WalletDetails } from '../wallet/wallet-activation.service';
+import { WalletDetails } from '../wallet/wallet-cooperative/wallet-cooperative-wallet.service';
 
 @Injectable({
     'providedIn': 'root'
@@ -14,13 +13,7 @@ export class ProjectService {
         return this.http.post<ProjectModel>('/api/project/project', projectData);
     }
 
-    getProjectWallet(projectID: string) {
-        return this.http.get<WalletDetails>(`/api/wallet/public/wallet/project/${projectID}`);
-    }
 
-    generateTransactionToCreateProjectWallet(projectID: string) {
-        return this.http.get(`/api/wallet/wallet/project/${projectID}/transaction`);
-    }
 
     getProject(projectID: string) {
         return this.http.get(`/api/public/project/${projectID}`);

@@ -1,22 +1,14 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { API } from '../utilities/endpoint-manager';
+import { BackendApiService } from './backend-api.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class NewsPreviewService {
-
-    private linkEndpoint = '/link/preview';
-
-    constructor(private http: HttpClient) {
+    constructor(private http: BackendApiService) {
     }
 
     getLinkPreview(url: string) {
-        return this.http.get(API.generateRoute(this.linkEndpoint), {
-            params: {
-                'url': url
-            }
-        });
+        return this.http.get('/api/link/preview', {url: url});
     }
 }

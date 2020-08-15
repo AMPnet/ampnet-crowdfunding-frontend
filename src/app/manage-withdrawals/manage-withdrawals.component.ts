@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { ManageWithdrawModel } from './manage-withdraw-model';
-import { WithdrawCooperativeService } from '../shared/services/wallet/withdraw.cooperative.service';
+import { WalletCooperativeWithdrawService } from '../shared/services/wallet/wallet-cooperative/wallet-cooperative-withdraw.service';
 
 @Component({
     selector: 'app-manage-withdrawals',
@@ -13,7 +13,7 @@ export class ManageWithdrawalsComponent implements OnInit {
 
     withdrawals: ManageWithdrawModel[];
 
-    constructor(private withdrawCooperativeService: WithdrawCooperativeService) {
+    constructor(private withdrawCooperativeService: WalletCooperativeWithdrawService) {
     }
 
     ngOnInit() {

@@ -6,8 +6,7 @@ import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { displayBackendError } from 'src/app/utilities/error-handler';
 import { prettyCurrency } from 'src/app/utilities/currency-util';
 import * as numeral from 'numeral';
-import { ProjectService } from 'src/app/shared/services/project/project-service';
-import { ProjectModel } from 'src/app/projects/project-model';
+import { ProjectModel, ProjectService } from 'src/app/shared/services/project/project-service';
 
 @Component({
     selector: 'app-revenue-share',

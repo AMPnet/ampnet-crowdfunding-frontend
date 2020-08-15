@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { User, WalletActivationService } from '../../shared/services/wallet/wallet-activation.service';
+import { CooperativeUser, WalletCooperativeWalletService } from '../../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
 import { hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { BroadcastService } from 'src/app/shared/services/broadcast.service';
@@ -12,9 +12,9 @@ import swal from 'sweetalert2';
     styleUrls: ['./user-activation.component.css']
 })
 export class UserActivationComponent implements OnInit {
-    users: User[];
+    users: CooperativeUser[];
 
-    constructor(private activationService: WalletActivationService, private broadService: BroadcastService) {
+    constructor(private activationService: WalletCooperativeWalletService, private broadService: BroadcastService) {
     }
 
     ngOnInit() {
@@ -29,7 +29,7 @@ export class UserActivationComponent implements OnInit {
     async activateUserClicked(id: number) {
         SpinnerUtil.showSpinner();
 
-        this.activationService.getActivationData(id).subscribe(async (res: any) => {
+        this.activationService.activateWallet(id).subscribe(async (res: any) => {
             const arkaneConnect = new ArkaneConnect('AMPnet', {
                 environment: 'staging'
             });

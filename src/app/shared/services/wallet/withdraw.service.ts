@@ -34,3 +34,26 @@ export class WithdrawService {
         return this.http.delete(`${this.endpoint}/${id}`);
     }
 }
+
+export interface Withdraw {
+    id: number;
+    owner: string;
+    amount: number;
+    approved_tx_hash?: string;
+    approved_at?: Date;
+    burned_tx_hash?: any;
+    burned_by?: any;
+    burned_at?: any;
+    bank_account: string;
+    created_at: Date;
+    document_response?: WithdrawDocument;
+}
+
+export interface WithdrawDocument {
+    id: number;
+    link: string;
+    name: string;
+    type: string;
+    size: number;
+    created_at: Date;
+}

@@ -5,7 +5,6 @@ import { OffersService } from '../../shared/services/project/offers.service';
 import { ActivatedRoute } from '@angular/router';
 import { displayBackendError, hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
-import { ProjectService } from 'src/app/shared/services/project/project-service';
 import { prettyDate } from 'src/app/utilities/date-format-util';
 import swal from 'sweetalert2';
 import { NewsPreviewService } from 'src/app/shared/services/news-preview.service';
@@ -15,6 +14,7 @@ import { Meta } from '@angular/platform-browser';
 import { UserService } from 'src/app/shared/services/user/user-service';
 import { NewsLink } from '../../manage-projects/manage-single-project/news-link-model';
 import { SingleOfferModel } from './single-offer-model';
+import { WalletService } from '../../shared/services/wallet/wallet.service';
 
 @Component({
     selector: 'app-offer-details',
@@ -34,7 +34,7 @@ export class OfferDetailsComponent implements OnInit {
 
     constructor(private offerService: OffersService,
                 private newsPreviewService: NewsPreviewService,
-                private projectService: ProjectService,
+                private walletService: WalletService,
                 private route: ActivatedRoute,
                 private userService: UserService,
                 private meta: Meta) {
@@ -126,8 +126,8 @@ export class OfferDetailsComponent implements OnInit {
             this.setUpNewsPreviews(this.offerModel.news);
             this.setMetaTags();
             SpinnerUtil.showSpinner();
-            this.projectService.getProjectWallet(offerID).subscribe((walletRes: any) => {
-                this.offerModel.current_funding = centsToBaseCurrencyUnit(walletRes.balance);
+            this.walletService.getProjectWallet(offerID).subscribe(wallet => {
+                this.offerModel.current_funding = centsToBaseCurrencyUnit(wallet.balance);
                 this.fundedPercentage = 100 * (this.offerModel.current_funding) / (this.offerModel.expected_funding);
                 this.structureProjectData();
                 SpinnerUtil.hideSpinner();

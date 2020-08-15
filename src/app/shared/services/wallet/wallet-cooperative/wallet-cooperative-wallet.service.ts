@@ -1,39 +1,39 @@
 import { Injectable } from '@angular/core';
-import { BackendApiService } from '../backend-api.service';
+import { BackendApiService } from '../../backend-api.service';
 
 @Injectable({
     'providedIn': 'root'
 })
-export class WalletActivationService {
+export class WalletCooperativeWalletService {
     private endpoint = '/api/wallet/cooperative/wallet';
 
     constructor(private http: BackendApiService) {
     }
 
     getUnactivatedUserWallets() {
-        return this.http.get<UnactivatedUserWalletResponse>(`${this.endpoint}/user`);
+        return this.http.get<CooperativeUserWallet>(`${this.endpoint}/user`);
     }
 
     getUnactivatedOrganizationWallets() {
-        return this.http.get<UnactivatedOrganizationWalletResponse>(`${this.endpoint}/organization`);
+        return this.http.get<CooperativeOrganizationWallet>(`${this.endpoint}/organization`);
     }
 
     getUnactivatedProjectWallets() {
-        return this.http.get<UnactivatedOrganizationProjectResponse>(`${this.endpoint}/project`);
+        return this.http.get<CooperativeProjectWallet>(`${this.endpoint}/project`);
     }
 
-    getActivationData(walletID: string) {
-        return this.http.post<ActivationDataResponse>(`${this.endpoint}/${walletID}/transaction`, {});
+    activateWallet(walletID: string) {
+        return this.http.post<TransactionInfo>(`${this.endpoint}/${walletID}/transaction`, {});
     }
 }
 
-export interface UnactivatedUserWalletResponse {
-    users: User[];
+export interface CooperativeUserWallet {
+    users: CooperativeUser[];
     page: number;
     total_pages: number;
 }
 
-export interface User {
+interface CooperativeUser {
     user: {
         uuid: string;
         email: string;
@@ -56,13 +56,13 @@ export interface Wallet {
     balance?: any;
 }
 
-export interface UnactivatedOrganizationWalletResponse {
+interface CooperativeOrganizationWallet {
     organizations: Organization[];
     page: number;
     total_pages: number;
 }
 
-export interface Organization {
+interface Organization {
     organization: {
         uuid: string;
         name: string;
@@ -72,13 +72,13 @@ export interface Organization {
     wallet: Wallet;
 }
 
-export interface UnactivatedOrganizationProjectResponse {
-    projects: Project[];
+interface CooperativeProjectWallet {
+    projects: CooperativeProject[];
     page: number;
     total_pages: number;
 }
 
-export interface Project {
+interface CooperativeProject {
     project: {
         uuid: string;
         name: string;
@@ -107,7 +107,7 @@ export interface WalletDetails {
     balance?: any;
 }
 
-export interface ActivationDataResponse {
+export interface TransactionInfo {
     tx: string;
     tx_id: number;
     info: {

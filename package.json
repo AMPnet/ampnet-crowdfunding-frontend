@@ -68,7 +68,6 @@
     "@angular/compiler-cli": "^10.1.0-next.4",
     "@angular/core": "^10.1.0-next.4",
     "@angular/language-service": "^10.1.0-next.4",
-    "@nativescript/schematics": "^10.0.2",
     "@types/angular": "^1.6.50",
     "@types/bootstrap": "^4.1.2",
     "@types/cleave.js": "^1.4.0",

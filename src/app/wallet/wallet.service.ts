@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { API } from '../utilities/endpoint-manager';
 import { TransactionList, WalletModel } from '../models/WalletModel';
 import { UserStatusStorage } from '../user-status-storage';
-import { map } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -11,7 +11,7 @@ import { map } from 'rxjs/operators';
 export class WalletService {
 
     private endpoint = '/wallet/wallet';
-    private transactionHistoryEndpoint = '/wallet//portfolio/transactions';
+    private transactionHistoryEndpoint = '/wallet/portfolio/transactions';
 
     constructor(private http: HttpClient) {
     }
@@ -25,9 +25,8 @@ export class WalletService {
     getWallet() {
         return this.http.get<WalletModel>(API.generateRoute(this.endpoint), API.tokenHeaders())
             .pipe(
-                map(res => {
+                tap(res => {
                     UserStatusStorage.walletData = res;
-                    return res;
                 })
             );
     }
@@ -42,9 +41,8 @@ export class WalletService {
         return this.http.get<TransactionList>(
             API.generateRoute(this.transactionHistoryEndpoint), API.tokenHeaders())
             .pipe(
-                map(res => {
+                tap(res => {
                     UserStatusStorage.transactionData = res;
-                    return res;
                 })
             );
     }

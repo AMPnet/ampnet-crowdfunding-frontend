@@ -61,9 +61,39 @@
                         Withdraw
                     </button>
                 </div>
-
+            </div>
+            <br>
+            <div class="col-md-12 mt-3 mb-5">
+					<span class="h4 text-left">
+						<div class="explainer-mini float-right mb-2 w-100">Transaction History</div>
+					</span>
+                <div *ngIf="transactionHistory != undefined">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">Date</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">State</th>
+                            <th scope="col">Amount</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let transaction of transactionHistoryPage">
+                            <td>{{ transaction.date | date }}</td>
+                            <td>{{ transaction.type }}</td>
+                            <td>{{ transaction.state }}</td>
+                            <td>{{ transaction.amount / 100 | currency:'EUR' }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="d-flex justify-content-between p-2">
+                        <ngb-pagination [collectionSize]="transactionItems" [(page)]="tablePage"
+                                        [pageSize]="tablePageSize"
+                                        (pageChange)="refreshTransactionHistory()">
+                        </ngb-pagination>
+                    </div>
+                </div>
             </div>
         </div>
-
     </div>
 </div>

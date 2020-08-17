@@ -72,6 +72,8 @@ import 'zone.js/dist/zone'; // Included with Angular CLI.
 import * as process from 'process';
 window['process'] = process;
 
+import '@angular/localize/init';
+
 /***************************************************************************************************
  * APPLICATION IMPORTS
  */

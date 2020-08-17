@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RevenueShareComponent } from './revenue-share.component';
+import { ManagePaymentsComponent } from './manage-payments.component';
 
 describe('RevenueShareComponent', () => {
-  let component: RevenueShareComponent;
-  let fixture: ComponentFixture<RevenueShareComponent>;
+  let component: ManagePaymentsComponent;
+  let fixture: ComponentFixture<ManagePaymentsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [RevenueShareComponent]
+      declarations: [ManagePaymentsComponent]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RevenueShareComponent);
+    fixture = TestBed.createComponent(ManagePaymentsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

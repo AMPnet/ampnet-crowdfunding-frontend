@@ -5,7 +5,7 @@ import { API } from 'src/app/utilities/endpoint-manager';
 @Injectable({
   providedIn: 'root'
 })
-export class RevenueShareService {
+export class ManagePaymentsService {
 
   private walletEndpoint = '/wallet/public/wallet/project';
   private revenueShareEndpoint = '/wallet/revenue/payout/project';

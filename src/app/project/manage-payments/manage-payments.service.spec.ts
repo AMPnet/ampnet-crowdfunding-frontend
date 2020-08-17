@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { RevenueShareService } from './revenue-share.service';
+import { ManagePaymentsService } from './manage-payments.service';
 
 describe('RevenueShareService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: RevenueShareService = TestBed.get(RevenueShareService);
+    const service: ManagePaymentsService = TestBed.get(ManagePaymentsService);
     expect(service).toBeTruthy();
   });
 });

@@ -32,7 +32,7 @@ import { ManageProjectsComponent } from './manage-projects/manage-projects.compo
 import { ManageSingleProjectComponent } from './manage-projects/manage-single-project/manage-single-project.component';
 import { ApproveOrganizationsComponent } from './organizations/approve-organizations/approve-organizations.component';
 import { VerifySignOfferComponent } from './offers/verify-sign-offer/verify-sign-offer.component';
-import { RevenueShareComponent } from './project/revenue-share/revenue-share.component';
+import { ManagePaymentsComponent } from './project/manage-payments/manage-payments.component';
 import { ManageWithdrawalsComponent } from './manage-withdrawals/manage-withdrawals.component';
 import { SingleWithdrawalComponent } from './manage-withdrawals/single-withdrawal/single-withdrawal.component';
 import { ManageDepositsComponent } from './manage-deposits/manage-deposits.component';
@@ -46,6 +46,7 @@ import { PlatformBankAccountComponent } from './platform-bank-account/platform-b
 import { NewPlatformBankAccountComponent } from './platform-bank-account/new-platform-bank-account/new-platform-bank-account.component';
 import { ExchangeComponent } from './exchange/exchange.component';
 import { OwnershipComponent } from './ownership/ownership.component';
+import { RevenueShareComponent } from './revenue-share/revenue-share.component';
 
 // Defines public routes accessible to everyone
 // (landing page, login, register, contact help, etc...)
@@ -95,7 +96,8 @@ const routes: Routes = [
       {path: 'manage_groups/:groupID/manage_project/:projectID', component: ManageSingleProjectComponent},
       {path: 'approve_organizations', component: ApproveOrganizationsComponent},
       {path: 'offers/:offerID/invest/:investAmount/verify_sign', component: VerifySignOfferComponent},
-      {path: 'manage_groups/:groupID/manage_project/:projectID/revenue_share', component: RevenueShareComponent},
+      {path: 'manage_groups/:groupID/manage_project/:projectID/manage_payments', component: ManagePaymentsComponent },
+      {path: 'manage_groups/:groupID/manage_project/:projectID/manage_payments/revenue_share', component: RevenueShareComponent },
       {path: 'manage_withdrawals', component: ManageWithdrawalsComponent},
       {path: 'manage_withdrawals/:ID', component: SingleWithdrawalComponent},
       {path: 'manage_deposits', component: ManageDepositsComponent},
@@ -107,7 +109,7 @@ const routes: Routes = [
       {path: 'admin/platform_bank_account', component: PlatformBankAccountComponent},
       {path: 'admin/platform_bank_account/new', component: NewPlatformBankAccountComponent},
       {path: 'exchange', component: ExchangeComponent},
-      {path: 'ownership', component: OwnershipComponent}
+      {path: 'ownership', component: OwnershipComponent},
     ]
   }
 ];

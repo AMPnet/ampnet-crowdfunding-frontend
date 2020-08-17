@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RevenueShareService } from './revenue-share.service';
+import { ManagePaymentsService } from './manage-payments.service';
 import { ActivatedRoute } from '@angular/router';
 import { WalletModel } from 'src/app/organizations/organization-details/organization-model';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
@@ -10,16 +10,16 @@ import { ProjectService } from 'src/app/projects/project-service';
 import { ProjectModel } from 'src/app/projects/create-new-project/project-model';
 
 @Component({
-  selector: 'app-revenue-share',
-  templateUrl: './revenue-share.component.html',
-  styleUrls: ['./revenue-share.component.css']
+  selector: 'app-manage-payments',
+  templateUrl: './manage-payments.component.html',
+  styleUrls: ['./manage-payments.component.css']
 })
-export class RevenueShareComponent implements OnInit {
+export class ManagePaymentsComponent implements OnInit {
 
   projectWallet: WalletModel;
   projectModel: ProjectModel;
 
-  constructor(private revShareService: RevenueShareService,
+  constructor(private managePaymentsService: ManagePaymentsService,
               private route: ActivatedRoute, private projectService: ProjectService) {
   }
 
@@ -46,7 +46,7 @@ export class RevenueShareComponent implements OnInit {
 
 
     SpinnerUtil.showSpinner();
-    this.revShareService.getProjectWallet(projectID).subscribe((res: any) => {
+    this.managePaymentsService.getProjectWallet(projectID).subscribe((res: any) => {
       SpinnerUtil.hideSpinner();
       this.projectWallet = res;
       this.projectWallet.currency = prettyCurrency(res.currency);

@@ -5,10 +5,6 @@ import { Pipe, PipeTransform } from '@angular/core';
     name: 'currencyDefault'
 })
 export class CurrencyDefaultPipe extends CurrencyPipe implements PipeTransform {
-    constructor() {
-        super('en');
-    }
-
     transform(
         value: any,
         code = 'EUR',

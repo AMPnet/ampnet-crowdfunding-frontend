@@ -118,7 +118,7 @@ export class OfferDetailsComponent implements OnInit {
         this.offerService.getOfferByID(offerID).subscribe((res: SingleOfferModel) => {
             SpinnerUtil.hideSpinner();
 
-            if (res.current_funding == undefined) {
+            if (res.current_funding === undefined) {
                 res.current_funding = 0;
             }
             this.fundedPercentage = (res.current_funding / res.expected_funding) * 100;
@@ -126,8 +126,8 @@ export class OfferDetailsComponent implements OnInit {
             this.setUpNewsPreviews(this.offerModel.news);
             this.setMetaTags();
             SpinnerUtil.showSpinner();
-            this.projectService.getProjectWallet(offerID).subscribe((res: any) => {
-                this.offerModel.current_funding = centsToBaseCurrencyUnit(res.balance);
+            this.projectService.getProjectWallet(offerID).subscribe((walletRes: any) => {
+                this.offerModel.current_funding = centsToBaseCurrencyUnit(walletRes.balance);
                 this.fundedPercentage = 100 * (this.offerModel.current_funding) / (this.offerModel.expected_funding);
                 this.structureProjectData();
                 SpinnerUtil.hideSpinner();
@@ -147,7 +147,5 @@ export class OfferDetailsComponent implements OnInit {
     }
 
     structureProjectData() {
-
     }
-
 }

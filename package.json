@@ -5,8 +5,8 @@
     "ng": "ng",
     "start": "ng serve --disable-host-check",
     "test": "ng test",
-    "lint": "ng lint",
-    "e2e": "ng e2e",
+    "lint": "tslint \"src/**/*.ts\" --project tsconfig.json -s node_modules/tslint-stylish -t stylish",
+    "lint-fix": "tslint --fix \"src/**/*.ts\" --project tsconfig.json -s node_modules/tslint-stylish -t stylish",
     "deploy-prod": "sh ./deploy.sh",
     "build-prod": "ng build --prod --extract-css=false"
   },
@@ -48,6 +48,7 @@
     "ngx-disqus": "^2.4.0",
     "ngx-spinner": "^6.1.2",
     "popper.js": "^1.15.0",
+    "process": "^0.11.10",
     "qrcode": "^1.4.0",
     "redux": "^4.0.1",
     "reflect-metadata": "~0.1.8",
@@ -85,6 +86,7 @@
     "protractor": "~5.4.0",
     "ts-node": "~7.0.0",
     "tslint": "~5.11.0",
+    "tslint-stylish": "^2.1.0",
     "typescript": "3.9.7"
   }
 }

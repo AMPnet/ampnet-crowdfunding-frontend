@@ -1,57 +1,57 @@
 <div class="container root-content-container">
-  <h5 class=" gray-text"><b>Create a new project</b></h5>
-  <div class="mt-3 mb-3 w-100">
-    <div class="alert alert-info text-left">
-      <div class="ml-4">
-        Once a project is created, the following parameters cannot be changed:
-        <ul class="mt-3">
-          <li>Start date</li>
-          <li>End Data</li>
-          <li>Minimum Funding Per User</li>
-          <li>Maximum Funding Par User</li>
-          <li>Expected Funding</li>
-        </ul>
-        <div class="mt-3">
-          Please make sure these parameters are finalized <i>before</i> creating the project.
+    <h5 class=" gray-text"><b>Create a new project</b></h5>
+    <div class="mt-3 mb-3 w-100">
+        <div class="alert alert-info text-left">
+            <div class="ml-4">
+                Once a project is created, the following parameters cannot be changed:
+                <ul class="mt-3">
+                    <li>Start date</li>
+                    <li>End Data</li>
+                    <li>Minimum Funding Per User</li>
+                    <li>Maximum Funding Par User</li>
+                    <li>Expected Funding</li>
+                </ul>
+                <div class="mt-3">
+                    Please make sure these parameters are finalized <i>before</i> creating the project.
+                </div>
+            </div>
+
         </div>
-      </div>
-
     </div>
-  </div>
-  <form [formGroup]="createProjectForm" class="mb-5">
-    <div class="explainer-mini  mb-2 mt-3">Project name</div>
-    <input class="w-100 p-4 form-control " formControlName="name" id="" name="" type="text">
+    <form [formGroup]="createProjectForm" class="mb-5">
+        <div class="explainer-mini  mb-2 mt-3">Project name</div>
+        <input class="w-100 p-4 form-control " formControlName="name" id="" name="" type="text">
 
-    <div class="explainer-mini  mb-2 mt-3">Project location</div>
+        <div class="explainer-mini  mb-2 mt-3">Project location</div>
 
-    <div class="explainer-mini  mb-2 mt-3">Start date</div>
-    <input class="w-100 p-4 form-control" formControlName="startDate" id="start-date" name="" type="date">
+        <div class="explainer-mini  mb-2 mt-3">Start date</div>
+        <input class="w-100 p-4 form-control" formControlName="startDate" id="start-date" name="" type="date">
 
-    <div class="explainer-mini  mb-2 mt-3">End date</div>
-    <input class="w-100 p-4 form-control" formControlName="endDate" id="end-date" name="" type="date">
+        <div class="explainer-mini  mb-2 mt-3">End date</div>
+        <input class="w-100 p-4 form-control" formControlName="endDate" id="end-date" name="" type="date">
 
-    <div class="explainer-mini  mb-2 mt-3">Expected funding</div>
-    <input class="w-100 p-4 form-control"
-           formControlName="expectedFunding" id="expected-funding-input" type="text">
+        <div class="explainer-mini  mb-2 mt-3">Expected funding</div>
+        <input class="w-100 p-4 form-control"
+               formControlName="expectedFunding" id="expected-funding-input" type="text">
 
-    <div class="explainer-mini  mb-2 mt-3">Minimum investment per user</div>
-    <div class="input-group">
-      <input class=" p-4 form-control"
-             formControlName="minPerUser" id="min-per-user-input" type="text">
-    </div>
+        <div class="explainer-mini  mb-2 mt-3">Minimum investment per user</div>
+        <div class="input-group">
+            <input class=" p-4 form-control"
+                   formControlName="minPerUser" id="min-per-user-input" type="text">
+        </div>
 
-    <div class="explainer-mini  mb-2 mt-3">Maximum investment per user</div>
-    <div class="input-group">
-      <input class=" p-4 form-control" formControlName="maxPerUser"
-             id="max-per-user-input" name="" type="text">
-    </div>
+        <div class="explainer-mini  mb-2 mt-3">Maximum investment per user</div>
+        <div class="input-group">
+            <input class=" p-4 form-control" formControlName="maxPerUser"
+                   id="max-per-user-input" name="" type="text">
+        </div>
 
-    <button (click)="submitForm()" (click)="submitButtonClicked()"
-            class="btn btn-primary float-right mt-3 mb-5 pt-3 pb-3 pl-5 pr-5 "
-            type="submit">
-      <i class="mr-3 fas fa-plus"></i>
-      Create
-    </button>
-  </form>
+        <button (click)="submitForm()" (click)="submitButtonClicked()"
+                class="btn btn-primary float-right mt-3 mb-5 pt-3 pb-3 pl-5 pr-5 "
+                type="submit">
+            <i class="mr-3 fas fa-plus"></i>
+            Create
+        </button>
+    </form>
 </div>
 

@@ -3,13 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { API } from '../utilities/endpoint-manager';
 
 @Injectable({
-    'providedIn' : 'root'
+    'providedIn': 'root'
 })
 export class WalletActivationService {
 
     private endpoint = '/wallet/cooperative/wallet';
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) {
+    }
 
     getUnactivatedWallets(type: string) {
         return this.http.get(API.generateComplexRoute(this.endpoint, [

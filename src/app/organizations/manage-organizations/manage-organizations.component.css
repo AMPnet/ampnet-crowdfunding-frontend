@@ -1,10 +1,10 @@
 .hover-bg:hover {
     background-color: #69be94;
-    color: white!important;
+    color: white !important;
 }
 
 .group-display-card:hover {
-    background-color: #69be94!important;
+    background-color: #69be94 !important;
     color: white;
     transition: all 0.2s;
 }

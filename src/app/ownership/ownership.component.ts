@@ -9,59 +9,60 @@ import { SpinnerUtil } from '../utilities/spinner-utilities';
 import swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-ownership',
-  templateUrl: './ownership.component.html',
-  styleUrls: ['./ownership.component.css']
+    selector: 'app-ownership',
+    templateUrl: './ownership.component.html',
+    styleUrls: ['./ownership.component.css']
 })
 export class OwnershipComponent implements OnInit {
 
-  user: UserModel;
+    user: UserModel;
 
-  constructor(private userService: UserService,
-    private ownershipService: OwnershipService,
-    private broadcastService: BroadcastService) { }
+    constructor(private userService: UserService,
+                private ownershipService: OwnershipService,
+                private broadcastService: BroadcastService) {
+    }
 
-  ngOnInit() {
-    this.userService.getOwnProfile().subscribe((res: any) => {
-      this.user = res;
-    }, hideSpinnerAndDisplayError);
-  }
+    ngOnInit() {
+        this.userService.getOwnProfile().subscribe((res: any) => {
+            this.user = res;
+        }, hideSpinnerAndDisplayError);
+    }
 
-  changePlatformManagerClicked() {
+    changePlatformManagerClicked() {
 
-    const platformManagerAddress: any = $('#platform-manager-address').val();
+        const platformManagerAddress: any = $('#platform-manager-address').val();
 
-    this.ownershipService.getPlatformManagerTransaction(platformManagerAddress).subscribe(res => {
-      this.confirmAndBroadcastTransaction(res);
-    }, hideSpinnerAndDisplayError);
-  }
+        this.ownershipService.getPlatformManagerTransaction(platformManagerAddress).subscribe(res => {
+            this.confirmAndBroadcastTransaction(res);
+        }, hideSpinnerAndDisplayError);
+    }
 
-  changeTokenIssuerClicked() {
+    changeTokenIssuerClicked() {
 
-    const tokenIssuerAddress: any = $('#token-issuer-address').val();
+        const tokenIssuerAddress: any = $('#token-issuer-address').val();
 
-    this.ownershipService.getTokenIssuerTransaction(tokenIssuerAddress).subscribe(res => {
-      this.confirmAndBroadcastTransaction(res);
-    }, hideSpinnerAndDisplayError);
-  }
+        this.ownershipService.getTokenIssuerTransaction(tokenIssuerAddress).subscribe(res => {
+            this.confirmAndBroadcastTransaction(res);
+        }, hideSpinnerAndDisplayError);
+    }
 
-  async confirmAndBroadcastTransaction(res: any) {
-    const arkaneConnect = new ArkaneConnect('AMPnet', {
-      environment: 'staging'
-    });
+    async confirmAndBroadcastTransaction(res: any) {
+        const arkaneConnect = new ArkaneConnect('AMPnet', {
+            environment: 'staging'
+        });
 
-    const account = await arkaneConnect.flows.getAccount(SecretType.AETERNITY);
+        const account = await arkaneConnect.flows.getAccount(SecretType.AETERNITY);
 
-    const sigRes = await arkaneConnect.createSigner(WindowMode.POPUP).sign({
-      walletId: account.wallets[0].id,
-      data: res.tx,
-      type: SignatureRequestType.AETERNITY_RAW
-    });
-    this.broadcastService.broadcastSignedTx(sigRes.result.signedTransaction, res.tx_id)
-      .subscribe(res => {
-        SpinnerUtil.hideSpinner();
-        swal('', 'Success', 'success');
-      }, hideSpinnerAndDisplayError);
-  }
+        const sigRes = await arkaneConnect.createSigner(WindowMode.POPUP).sign({
+            walletId: account.wallets[0].id,
+            data: res.tx,
+            type: SignatureRequestType.AETERNITY_RAW
+        });
+        this.broadcastService.broadcastSignedTx(sigRes.result.signedTransaction, res.tx_id)
+            .subscribe(_ => {
+                SpinnerUtil.hideSpinner();
+                swal('', 'Success', 'success');
+            }, hideSpinnerAndDisplayError);
+    }
 
 }

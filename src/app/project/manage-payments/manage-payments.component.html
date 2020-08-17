@@ -1,37 +1,43 @@
-<div *ngIf="(projectWallet != undefined) && (projectModel != undefined)" class="root root-content-container">
-  <div class="row">
-    <div class="col-md-12 mb-3">
-      <h4>{{projectModel.name}}</h4>
-    </div>
-    <div class="col-md-12">
-      <div class="card w-100 h-100">
-        <div class="card-body">
-          <div class="card-title">
-            <div class="d-flex flex-column justify-content-between w-100">
-              <div class="explainer-mini mb-3">Project wallet</div>
-              <div class="row w-100">
-                <div class="col-md-6">
-                  <button class="btn btn-primary w-100 py-3">
-                    <i class="fas fa-arrow-circle-down mr-2"></i>
-                    Deposit
-                  </button>
-                </div>
-                <div class="col-md-6">
-                  <button class="btn btn-primary w-100 py-3">
-                    <i class="fas fa-arrow-circle-up mr-2"></i>
-                    Withdraw
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <hr>
-          </div>
-          <div class="card-text">
-            <h5>Balance</h5>
-            <h5>{{projectWallet.currency}}{{projectWallet.balance}}</h5>
-          </div>
+<div *ngIf="(projectWallet !== undefined) && (projectModel !== undefined)" class="root root-content-container">
+    <div class="row">
+        <div class="col-md-12 mb-3">
+            <h4>{{projectModel.name}}</h4>
         </div>
+        <div class="col-md-12">
+            <div class="card w-100 h-100">
+                <div class="card-body">
+                    <div class="card-title">
+                        <div class="d-flex flex-column justify-content-between w-100">
+                            <div class="explainer-mini mb-3">Project wallet</div>
+                            <div class="row w-100">
+                                <div class="col-md-6">
+                                    <button class="btn btn-primary w-100 py-3">
+                                        <i class="fas fa-arrow-circle-down mr-2"></i>
+                                        Deposit
+                                    </button>
+                                </div>
+                                <div class="col-md-6">
+                                    <button class="btn btn-primary w-100 py-3">
+                                        <i class="fas fa-arrow-circle-up mr-2"></i>
+                                        Withdraw
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr>
+                    </div>
+                    <div class="card-text">
+                        <h5>Balance</h5>
+                        <h5>{{projectWallet.currency}}{{projectWallet.balance}}</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <hr>
+        </div>
+<<<<<<< HEAD:src/app/project/manage-payments/manage-payments.component.html
       </div>
     </div>
     <div class="col-md-12">
@@ -49,6 +55,20 @@
         <i class="fas fa-chart-pie mr-2"></i>
         Start payout
       </button>
+=======
+        <div class="col-md-12">
+            <h5>Revenue share</h5>
+        </div>
+        <div class="col-md-12">
+            <div class="explainer-mini mt-2 mb-2">Enter amount of money to be paid out to investors</div>
+            <input class="form-control px-3 py-3" id="" name="" type="numer">
+        </div>
+        <div class="col-md-12 mt-3">
+            <button class="btn btn-danger btn-action-a px-5 float-right">
+                <i class="fas fa-chart-pie mr-2"></i>
+                Start payout
+            </button>
+        </div>
+>>>>>>> master:src/app/project/revenue-share/revenue-share.component.html
     </div>
-  </div>
 </div>

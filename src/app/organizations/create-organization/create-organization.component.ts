@@ -9,61 +9,61 @@ import { validateEmail } from 'src/app/utilities/email-util';
 declare var $: any;
 
 @Component({
-  selector: 'app-create-organization',
-  templateUrl: './create-organization.component.html',
-  styleUrls: ['./create-organization.component.css']
+    selector: 'app-create-organization',
+    templateUrl: './create-organization.component.html',
+    styleUrls: ['./create-organization.component.css']
 })
 export class CreateOrganizationComponent implements OnInit {
 
-  newOrganizationForm: FormGroup;
+    newOrganizationForm: FormGroup;
 
-  constructor(
-    private organizationService: OrganizationService,
-    private fb: FormBuilder,
-    private router: Router) {
+    constructor(
+        private organizationService: OrganizationService,
+        private fb: FormBuilder,
+        private router: Router) {
 
-    this.newOrganizationForm = fb.group({
-      name: ['', Validators.minLength(3)],
-      type: ['', Validators.required]
-    });
-  }
-
-  ngOnInit() {
-  }
-
-  submitButtonClicked() {
-    SpinnerUtil.showSpinner();
-    const controls = this.newOrganizationForm.controls;
-    this.organizationService.createOrganization(controls['name'].value, controls['type'].value)
-      .subscribe((res: any) => {
-        SpinnerUtil.hideSpinner();
-        swal('', 'Successfully created a new organization', 'success');
-
-        this.fetchAndCheckInvites().forEach((invite) => {
-          this.organizationService.inviteUser(res.id, invite).subscribe((eres) => {
-          }, err => {
-            console.log(err);
-          });
+        this.newOrganizationForm = fb.group({
+            name: ['', Validators.minLength(3)],
+            type: ['', Validators.required]
         });
+    }
 
-        this.router.navigate(['/dash', 'manage_groups', res.uuid]);
-      }, err => {
-        SpinnerUtil.hideSpinner();
-        swal('', err.error.message, 'warning').then(() => {
-          this.router.navigate(['/dash', 'manage_groups']);
-        }, () => {
-          this.router.navigate(['/dash', 'manage_groups']);
-        });
-      });
-  }
+    ngOnInit() {
+    }
 
-  fetchAndCheckInvites(): string[] {
-    return (<string>$('#invite-users-email').val()).split(',')
-      .map((invite) => {
-        return invite.trim();
-      }).filter((trimmed) => {
-        return validateEmail(trimmed);
-      });
-  }
+    submitButtonClicked() {
+        SpinnerUtil.showSpinner();
+        const controls = this.newOrganizationForm.controls;
+        this.organizationService.createOrganization(controls['name'].value, controls['type'].value)
+            .subscribe((res: any) => {
+                SpinnerUtil.hideSpinner();
+                swal('', 'Successfully created a new organization', 'success');
+
+                this.fetchAndCheckInvites().forEach((invite) => {
+                    this.organizationService.inviteUser(res.id, invite).subscribe((eres) => {
+                    }, err => {
+                        console.log(err);
+                    });
+                });
+
+                this.router.navigate(['/dash', 'manage_groups', res.uuid]);
+            }, err => {
+                SpinnerUtil.hideSpinner();
+                swal('', err.error.message, 'warning').then(() => {
+                    this.router.navigate(['/dash', 'manage_groups']);
+                }, () => {
+                    this.router.navigate(['/dash', 'manage_groups']);
+                });
+            });
+    }
+
+    fetchAndCheckInvites(): string[] {
+        return (<string>$('#invite-users-email').val()).split(',')
+            .map((invite) => {
+                return invite.trim();
+            }).filter((trimmed) => {
+                return validateEmail(trimmed);
+            });
+    }
 
 }

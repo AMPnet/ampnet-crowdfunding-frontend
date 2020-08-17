@@ -5,27 +5,27 @@ import { ManageWithdrawModel } from './manage-withdraw-model';
 import { WithdrawCooperativeService } from './withdraw.cooperative.service';
 
 @Component({
-  selector: 'app-manage-withdrawals',
-  templateUrl: './manage-withdrawals.component.html',
-  styleUrls: ['./manage-withdrawals.component.css']
+    selector: 'app-manage-withdrawals',
+    templateUrl: './manage-withdrawals.component.html',
+    styleUrls: ['./manage-withdrawals.component.css']
 })
 export class ManageWithdrawalsComponent implements OnInit {
 
-  withdrawals: ManageWithdrawModel[];
+    withdrawals: ManageWithdrawModel[];
 
-  constructor(private withdrawCooperativeService: WithdrawCooperativeService) {
-  }
+    constructor(private withdrawCooperativeService: WithdrawCooperativeService) {
+    }
 
-  ngOnInit() {
-    this.getApprovedWithdrawals();
-  }
+    ngOnInit() {
+        this.getApprovedWithdrawals();
+    }
 
-  getApprovedWithdrawals() {
-    SpinnerUtil.showSpinner();
-    return this.withdrawCooperativeService.getApprovedWithdrawals().subscribe((res: any) => {
-      SpinnerUtil.hideSpinner();
-      this.withdrawals = res.withdraws;
-    }, hideSpinnerAndDisplayError);
-  }
+    getApprovedWithdrawals() {
+        SpinnerUtil.showSpinner();
+        return this.withdrawCooperativeService.getApprovedWithdrawals().subscribe((res: any) => {
+            SpinnerUtil.hideSpinner();
+            this.withdrawals = res.withdraws;
+        }, hideSpinnerAndDisplayError);
+    }
 
 }

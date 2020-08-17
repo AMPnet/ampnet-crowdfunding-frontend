@@ -1,46 +1,46 @@
 
 #top-container {
-  background: url("../../../assets/africa.jpg");
-  padding-top: 50px;
-  padding-bottom: 100px;
-  background-repeat: no-repeat;
-  background-size: cover;
+    background: url("../../../assets/africa.jpg");
+    padding-top: 50px;
+    padding-bottom: 100px;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
-.content-container{
-  padding-top: 75px;
+.content-container {
+    padding-top: 75px;
 }
 
 .card {
-  margin-left: 10px!important;
-  margin-right: 10px!important;
+    margin-left: 10px !important;
+    margin-right: 10px !important;
 }
 
-@media(min-width: 1100px) {
-  .card {
-    width: 50%;
-    margin: auto!important;
-  }
+@media (min-width: 1100px) {
+    .card {
+        width: 50%;
+        margin: auto !important;
+    }
 }
 
 #submit-button {
-  height: 60px!important;
+    height: 60px !important;
 }
 
 .ng-invalid.ng-dirty:not(form) {
-  border-right: 10px solid #ff4040!important;
-  border-left: 10px solid #ff4040!important;
-  /* border-top: 1px solid #ff4040!important;
-  border-bottom: 1px solid #ff4040!important; */
+    border-right: 10px solid #ff4040 !important;
+    border-left: 10px solid #ff4040 !important;
+    /* border-top: 1px solid #ff4040!important;
+    border-bottom: 1px solid #ff4040!important; */
 }
 
-.ng-valid.ng-dirty:not(form)  {
-  border-right: 10px solid #94da8d!important;
-  border-left: 10px solid #94da8d!important;
-  /* border-top: 1px solid #94da8d!important;
-  border-bottom: 1px solid #94da8d!important; */
+.ng-valid.ng-dirty:not(form) {
+    border-right: 10px solid #94da8d !important;
+    border-left: 10px solid #94da8d !important;
+    /* border-top: 1px solid #94da8d!important;
+    border-bottom: 1px solid #94da8d!important; */
 }
 
 .form-control {
-  border-radius: 10px!important;
+    border-radius: 10px !important;
 }

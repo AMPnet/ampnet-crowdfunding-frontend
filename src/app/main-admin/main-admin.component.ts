@@ -12,59 +12,60 @@ declare var $: any;
 
 
 @Component({
-  selector: 'app-main-admin',
-  templateUrl: './main-admin.component.html',
-  styleUrls: ['./main-admin.component.css']
+    selector: 'app-main-admin',
+    templateUrl: './main-admin.component.html',
+    styleUrls: ['./main-admin.component.css']
 })
 export class MainAdminComponent implements OnInit {
 
-  constructor(private issuingAuthService: IssuingAuthorityService, private userService: UserService) { }
+    userUUID = '';
 
-  userUUID = '';
+    constructor(private issuingAuthService: IssuingAuthorityService, private userService: UserService) {
+    }
 
-  ngOnInit() {
+    ngOnInit() {
 
-    SpinnerUtil.showSpinner();
-    this.userService.getOwnProfile().subscribe((res: any) => {
-      SpinnerUtil.hideSpinner();
-      this.userUUID = res.uuid;
-    }, err => {
-      SpinnerUtil.hideSpinner();
-      displayBackendError(err);
-    });
+        SpinnerUtil.showSpinner();
+        this.userService.getOwnProfile().subscribe((res: any) => {
+            SpinnerUtil.hideSpinner();
+            this.userUUID = res.uuid;
+        }, err => {
+            SpinnerUtil.hideSpinner();
+            displayBackendError(err);
+        });
 
-    const mintReceiptUppy =  Uppy.Core({
-      id: 'payment-receipt-upload-uppy',
-      restrictions: {
-        maxFileSize: null,
-        maxNumberOfFiles: 1,
-        minNumberOfFiles: 1,
-        allowedFileTypes: null
-      }
-    });
+        const mintReceiptUppy = Uppy.Core({
+            id: 'payment-receipt-upload-uppy',
+            restrictions: {
+                maxFileSize: null,
+                maxNumberOfFiles: 1,
+                minNumberOfFiles: 1,
+                allowedFileTypes: null
+            }
+        });
 
-    setTimeout(() => {
-      mintReceiptUppy.use(Uppy.Dashboard, {
-        target: document.getElementById('receipt-upload-area-mint'),
-        height: 150,
-        inline: true,
-        hideUploadButton: true,
-        width: $('#admin-root').width()
-      });
-    }, 300);
+        setTimeout(() => {
+            mintReceiptUppy.use(Uppy.Dashboard, {
+                target: document.getElementById('receipt-upload-area-mint'),
+                height: 150,
+                inline: true,
+                hideUploadButton: true,
+                width: $('#admin-root').width()
+            });
+        }, 300);
 
-    $('#user-picker').selectpicker();
-  }
+        $('#user-picker').selectpicker();
+    }
 
-  mintButtonClicked() {
-    SpinnerUtil.showSpinner();
-    this.issuingAuthService.mintTokens(50000, this.userUUID).subscribe((res: any) => {
-      SpinnerUtil.hideSpinner();
-      QRCode.toCanvas(document.getElementById('mint-burn-sign-canvas'), JSON.stringify(res));
-    }, err => {
-      SpinnerUtil.hideSpinner();
-      displayBackendError(err);
-    });
-  }
+    mintButtonClicked() {
+        SpinnerUtil.showSpinner();
+        this.issuingAuthService.mintTokens(50000, this.userUUID).subscribe((res: any) => {
+            SpinnerUtil.hideSpinner();
+            QRCode.toCanvas(document.getElementById('mint-burn-sign-canvas'), JSON.stringify(res));
+        }, err => {
+            SpinnerUtil.hideSpinner();
+            displayBackendError(err);
+        });
+    }
 
 }

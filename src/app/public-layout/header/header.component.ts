@@ -2,21 +2,22 @@ import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+    selector: 'app-header',
+    templateUrl: './header.component.html',
+    styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit, AfterViewInit {
 
-  @Input() onlyLogo = false;
+    @Input() onlyLogo = false;
 
-  constructor() { }
+    constructor() {
+    }
 
-  ngOnInit() {
-  }
+    ngOnInit() {
+    }
 
-  ngAfterViewInit() {
+    ngAfterViewInit() {
 
-  }
+    }
 
 }

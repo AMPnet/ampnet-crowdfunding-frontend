@@ -8,53 +8,48 @@ import { centsToBaseCurrencyUnit } from '../utilities/currency-util';
 
 
 @Component({
-  selector: 'app-my-portfolio',
-  templateUrl: './my-portfolio.component.html',
-  styleUrls: ['./my-portfolio.component.css']
+    selector: 'app-my-portfolio',
+    templateUrl: './my-portfolio.component.html',
+    styleUrls: ['./my-portfolio.component.css']
 })
 export class MyPortfolioComponent implements OnInit {
+    hasWallet = false;
+    portfolio: PortfolioRoot[];
+    stats: PortfolioStats;
+    roi = 0;
 
-  constructor(private portfolioService: PortfolioService,
-    private walletService: WalletService) { }
+    constructor(private portfolioService: PortfolioService,
+                private walletService: WalletService) {
+    }
 
+    ngOnInit() {
+        this.getTransactions();
+    }
 
-  hasWallet = false;
-  portfolio: PortfolioRoot[];
-  stats: PortfolioStats;
-  roi = 0;
+    getTransactions() {
+        SpinnerUtil.showSpinner();
 
-  ngOnInit() {
-    this.getTransactions();
-  }
+        this.walletService.getWallet().subscribe((walletRes: any) => {
+            if (walletRes.hash !== undefined) { // Check if wallet was activated by admin
+                this.portfolioService.getPortfolioStats().subscribe((portfolioStatsRes: any) => {
+                    this.hasWallet = true;
+                    this.stats = portfolioStatsRes;
+                    this.stats.investments = centsToBaseCurrencyUnit(this.stats.investments);
+                    if (this.stats.investments > 0) {
+                        this.roi = ((this.stats.earnings + this.stats.investments) / (this.stats.investments) - 1) * 100;
+                    }
+                    SpinnerUtil.showSpinner();
+                    this.portfolioService.getPortfolio().subscribe((portfolioRes: any) => {
+                        this.portfolio = portfolioRes.portfolio;
+                        SpinnerUtil.hideSpinner();
+                    }, hideSpinnerAndDisplayError);
+                }, hideSpinnerAndDisplayError);
 
-  getTransactions() {
-    SpinnerUtil.showSpinner();
-
-    this.walletService.getWallet().subscribe((res: any) => {
-
-      if (res.hash != undefined) { // Check if wallet was activated by admin
-
-        this.portfolioService.getPortfolioStats().subscribe((res: any) => {
-          this.hasWallet = true;
-          this.stats = res;
-          this.stats.investments = centsToBaseCurrencyUnit(this.stats.investments);
-          if (this.stats.investments > 0) {
-            this.roi = ((this.stats.earnings + this.stats.investments) / (this.stats.investments) - 1) * 100;
-          }
-          SpinnerUtil.showSpinner();
-          this.portfolioService.getPortfolio().subscribe((res: any) => {
-            this.portfolio = res.portfolio;
+            } else {
+                SpinnerUtil.hideSpinner();
+            }
+        }, err => {
             SpinnerUtil.hideSpinner();
-          }, hideSpinnerAndDisplayError);
-        }, hideSpinnerAndDisplayError);
-
-      } else {
-        SpinnerUtil.hideSpinner();
-      }
-
-    }, err => {
-      SpinnerUtil.hideSpinner();
-    });
-  }
-
+        });
+    }
 }

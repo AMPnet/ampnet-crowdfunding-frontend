@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Deposit, DepositServiceService } from '../shared/services/wallet/deposit-service.service';
 import { displayBackendError, hideSpinnerAndDisplayError } from '../utilities/error-handler';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
-import { DepositModel } from './deposit-model';
 import swal from 'sweetalert2';
 import { PlatformBankAccountService } from '../shared/services/wallet/platform-bank-account.service';
 

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BackendApiService } from '../../backend-api.service';
+import { BackendHttpClient } from '../../backend-http-client.service';
 
 @Injectable({
     'providedIn': 'root'
@@ -7,7 +7,7 @@ import { BackendApiService } from '../../backend-api.service';
 export class WalletCooperativeWalletService {
     private endpoint = '/api/wallet/cooperative/wallet';
 
-    constructor(private http: BackendApiService) {
+    constructor(private http: BackendHttpClient) {
     }
 
     getUnactivatedUserWallets() {
@@ -22,7 +22,7 @@ export class WalletCooperativeWalletService {
         return this.http.get<CooperativeProjectWallet>(`${this.endpoint}/project`);
     }
 
-    activateWallet(walletID: string) {
+    activateWallet(walletID: string | number) {
         return this.http.post<TransactionInfo>(`${this.endpoint}/${walletID}/transaction`, {});
     }
 }
@@ -33,7 +33,7 @@ export interface CooperativeUserWallet {
     total_pages: number;
 }
 
-interface CooperativeUser {
+export interface CooperativeUser {
     user: {
         uuid: string;
         email: string;
@@ -57,12 +57,12 @@ export interface Wallet {
 }
 
 interface CooperativeOrganizationWallet {
-    organizations: Organization[];
+    organizations: OrganizationWallet[];
     page: number;
     total_pages: number;
 }
 
-interface Organization {
+export interface OrganizationWallet {
     organization: {
         uuid: string;
         name: string;
@@ -78,7 +78,7 @@ interface CooperativeProjectWallet {
     total_pages: number;
 }
 
-interface CooperativeProject {
+export interface CooperativeProject {
     project: {
         uuid: string;
         name: string;

@@ -1,18 +1,17 @@
 import { Injectable } from '@angular/core';
-import { BackendApiService } from '../backend-api.service';
+import { BackendHttpClient } from '../backend-http-client.service';
 
 
 @Injectable({
     providedIn: 'root'
 })
-export class SignUpService {
+export class SignupService {
     private endpoint = '/api/user/signup';
-    private checkEmailEndpoint = '/api/user/mail-check';
 
-    constructor(private http: BackendApiService) {
+    constructor(private http: BackendHttpClient) {
     }
 
-    performEmailSignup(email: string, firstName: string, lastName: string, password: string) {
+    signupEmail(email: string, firstName: string, lastName: string, password: string) {
         return this.http.post<User>(this.endpoint, <EmailSignupData>{
             signup_method: 'EMAIL',
             user_info: {
@@ -24,22 +23,12 @@ export class SignUpService {
         });
     }
 
-    performSocialSignup(provider: string, authToken: string) {
+    signupSocial(provider: string, authToken: string) {
         return this.http.post<User>(this.endpoint, <SocialSignupData>{
             signup_method: provider,
             user_info: {
                 token: authToken
             }
-        });
-    }
-
-    checkEmail(email: string, onComplete: (userExists: boolean) => void) {
-        return this.http.post(this.checkEmailEndpoint, {
-            'email': email
-        }).subscribe((res: any) => {
-            onComplete(res.userExists);
-        }, err => {
-            // TODO: Handle error
         });
     }
 }

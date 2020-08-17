@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BackendApiService } from '../backend-api.service';
+import { BackendHttpClient } from '../backend-http-client.service';
 
 
 @Injectable({
@@ -8,7 +8,7 @@ import { BackendApiService } from '../backend-api.service';
 export class DepositServiceService {
     private endpoint = '/api/wallet/deposit';
 
-    constructor(private http: BackendApiService) {
+    constructor(private http: BackendHttpClient) {
     }
 
     public createDeposit() {

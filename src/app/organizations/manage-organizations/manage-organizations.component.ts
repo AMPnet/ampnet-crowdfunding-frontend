@@ -1,10 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { SingleOrganizationModel } from 'src/app/models/single-organization-model';
-import { OrganizationService } from '../../shared/services/user/organization-service';
+import { Organization, OrganizationInvite, OrganizationService } from '../../shared/services/project/organization.service';
 import { displayBackendError } from 'src/app/utilities/error-handler';
 import { Router } from '@angular/router';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
-import { OrgInviteModel } from './org-invite-model';
 import swal from 'sweetalert2';
 
 @Component({
@@ -15,9 +13,9 @@ import swal from 'sweetalert2';
 export class ManageOrganizationsComponent implements OnInit {
 
     @Input()
-    organizations: SingleOrganizationModel[];
+    organizations: Organization[];
 
-    invitedToOrgs: OrgInviteModel[];
+    invitedToOrgs: OrganizationInvite[];
 
     constructor(
         private organizationService: OrganizationService,
@@ -36,7 +34,7 @@ export class ManageOrganizationsComponent implements OnInit {
 
     fetchPersonalOrgs() {
         SpinnerUtil.showSpinner();
-        this.organizationService.getPersonalOrganizations().subscribe((res: any) => {
+        this.organizationService.getPersonalOrganizations().subscribe(res => {
             this.organizations = res.organizations;
             SpinnerUtil.hideSpinner();
         }, err => {
@@ -51,7 +49,7 @@ export class ManageOrganizationsComponent implements OnInit {
 
     fetchOrgInvites() {
         SpinnerUtil.showSpinner();
-        this.organizationService.getMyInvitations().subscribe((res: any) => {
+        this.organizationService.getMyInvitations().subscribe(res => {
             SpinnerUtil.hideSpinner();
             this.invitedToOrgs = res.organization_invites;
         }, err => {

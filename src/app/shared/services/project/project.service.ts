@@ -1,26 +1,28 @@
 import { Injectable } from '@angular/core';
-import { BackendApiService } from '../backend-api.service';
-import { WalletDetails } from '../wallet/wallet-cooperative/wallet-cooperative-wallet.service';
+import { BackendHttpClient } from '../backend-http-client.service';
+import { DocumentModel, Organization } from './organization.service';
 
 @Injectable({
     'providedIn': 'root'
 })
 export class ProjectService {
-    constructor(private http: BackendApiService) {
+    constructor(private http: BackendHttpClient) {
     }
 
     createProject(projectData: CreateProjectData) {
-        return this.http.post<ProjectModel>('/api/project/project', projectData);
+        return this.http.post<Project>('/api/project/project', projectData);
     }
 
-
-
     getProject(projectID: string) {
-        return this.http.get(`/api/public/project/${projectID}`);
+        return this.http.get<Project>(`/api/project/public/project/${projectID}`);
     }
 
     updateProject(projectID: string, data: UpdateProjectData) {
-        return this.http.put(`/api/project/project/${projectID}`, data);
+        return this.http.put<Project>(`/api/project/project/${projectID}`, data);
+    }
+
+    getAllActiveProjects() {
+        return this.http.get<PageableProjectsResponse>('/api/public/project/active');
     }
 }
 
@@ -50,7 +52,7 @@ interface UpdateProjectData {
     news?: string[];
 }
 
-export interface ProjectModel {
+export interface Project {
     uuid: string;
     name: string;
     description: string;
@@ -65,8 +67,14 @@ export interface ProjectModel {
     max_per_user: number;
     main_image: string;
     news: string[];
-    documents: [string];
+    documents: DocumentModel[];
     gallery: [string];
     active: boolean;
     wallet_hash: string;
+}
+
+export interface PageableProjectsResponse {
+    projects: Project[];
+    page: number;
+    total_pages: number;
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { UserStatusStorage } from '../../user-status-storage';
-import { BackendApiService } from './backend-api.service';
+import { BackendHttpClient } from './backend-http-client.service';
 
 @Injectable({
     providedIn: 'root'
@@ -8,7 +8,7 @@ import { BackendApiService } from './backend-api.service';
 export class PaymentService {
     endpoint = '/api/user/bank-account';
 
-    constructor(private http: BackendApiService) {
+    constructor(private http: BackendHttpClient) {
     }
 
     getMyBankAccounts() {

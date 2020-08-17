@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { BackendApiService } from '../backend-api.service';
-import { User } from './sign-up.service';
+import { BackendHttpClient } from '../backend-http-client.service';
+import { User } from './signup.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class OnboardingService {
-    constructor(private http: BackendApiService) {
+    constructor(private http: BackendHttpClient) {
     }
 
     getSessionID() {

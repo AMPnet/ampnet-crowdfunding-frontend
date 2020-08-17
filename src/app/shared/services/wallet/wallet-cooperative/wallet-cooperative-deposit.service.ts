@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BackendApiService } from '../../backend-api.service';
+import { BackendHttpClient } from '../../backend-http-client.service';
 import { TransactionInfo } from './wallet-cooperative-wallet.service';
 
 @Injectable({
@@ -8,7 +8,7 @@ import { TransactionInfo } from './wallet-cooperative-wallet.service';
 export class WalletCooperativeDepositService {
     private endpoint = '/api/wallet/cooperative/deposit';
 
-    constructor(private http: BackendApiService) {
+    constructor(private http: BackendHttpClient) {
     }
 
     getDeposit(reference: string) {
@@ -17,8 +17,8 @@ export class WalletCooperativeDepositService {
         });
     }
 
-    generateDepositApprovalURL(id: number, amount: number) {
-        return `${this.endpoint}/approve?amount=${amount}`;
+    generateDepositApprovalURL(origin: string, id: number, amount: number) {
+        return `${origin}${this.endpoint}/approve?amount=${amount}`;
     }
 
     getUnapprovedDeposits() {

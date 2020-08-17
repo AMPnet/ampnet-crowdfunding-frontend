@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { RevenueShareService } from '../../shared/services/wallet/revenue-share.service';
 import { ActivatedRoute } from '@angular/router';
-import { WalletModel } from 'src/app/organizations/organization-details/organization-model';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { displayBackendError } from 'src/app/utilities/error-handler';
 import { prettyCurrency } from 'src/app/utilities/currency-util';
 import * as numeral from 'numeral';
-import { ProjectModel, ProjectService } from 'src/app/shared/services/project/project-service';
+import { Project, ProjectService } from 'src/app/shared/services/project/project.service';
+import { WalletService } from '../../shared/services/wallet/wallet.service';
+import { WalletDetails } from '../../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
 
 @Component({
     selector: 'app-revenue-share',
@@ -14,16 +15,16 @@ import { ProjectModel, ProjectService } from 'src/app/shared/services/project/pr
     styleUrls: ['./revenue-share.component.css']
 })
 export class RevenueShareComponent implements OnInit {
-
-    projectWallet: WalletModel;
-    projectModel: ProjectModel;
+    projectWallet: WalletDetails;
+    project: Project;
 
     constructor(private revShareService: RevenueShareService,
-                private route: ActivatedRoute, private projectService: ProjectService) {
+                private walletService: WalletService,
+                private route: ActivatedRoute,
+                private projectService: ProjectService) {
     }
 
     ngOnInit() {
-
         const projID = this.route.snapshot.params.projectID;
 
         this.getProjectWallet(projID);
@@ -32,9 +33,9 @@ export class RevenueShareComponent implements OnInit {
 
     getProject(projectID: string) {
         SpinnerUtil.showSpinner();
-        this.projectService.getProject(projectID).subscribe((res: any) => {
+        this.projectService.getProject(projectID).subscribe(project => {
             SpinnerUtil.hideSpinner();
-            this.projectModel = res;
+            this.project = project;
         }, err => {
             SpinnerUtil.hideSpinner();
             displayBackendError(err);
@@ -42,10 +43,8 @@ export class RevenueShareComponent implements OnInit {
     }
 
     getProjectWallet(projectID: number) {
-
-
         SpinnerUtil.showSpinner();
-        this.revShareService.getProjectWallet(projectID).subscribe((res: any) => {
+        this.walletService.getProjectWallet(projectID).subscribe(res => {
             SpinnerUtil.hideSpinner();
             this.projectWallet = res;
             this.projectWallet.currency = prettyCurrency(res.currency);

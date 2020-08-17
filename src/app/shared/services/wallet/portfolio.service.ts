@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { BackendApiService } from '../backend-api.service';
-import { ProjectModel } from '../project/project-service';
+import { BackendHttpClient } from '../backend-http-client.service';
+import { Project } from '../project/project.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class PortfolioService {
-    constructor(private http: BackendApiService) {
+    constructor(private http: BackendHttpClient) {
     }
 
     getPortfolioStats() {
@@ -41,12 +41,12 @@ export interface PortfolioResponse {
 }
 
 export interface Portfolio {
-    project: ProjectModel;
+    project: Project;
     investment: number;
 }
 
 export interface InvestmentsInProject {
-    project: ProjectModel;
+    project: Project;
     transactions: TxData[];
 }
 

@@ -22,7 +22,7 @@ export class ManageWithdrawalsComponent implements OnInit {
 
     getApprovedWithdrawals() {
         SpinnerUtil.showSpinner();
-        return this.withdrawCooperativeService.getApprovedWithdrawals().subscribe((res: any) => {
+        return this.withdrawCooperativeService.getApprovedWithdrawals().subscribe(res => {
             SpinnerUtil.hideSpinner();
             this.withdrawals = res.withdraws;
         }, hideSpinnerAndDisplayError);

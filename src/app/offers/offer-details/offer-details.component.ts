@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { OfferDetailDocModel, OfferDetailDocType } from '../../models/OfferDetailDocModel';
 import * as _ from 'lodash';
-import { OffersService } from '../../shared/services/project/offers.service';
 import { ActivatedRoute } from '@angular/router';
 import { displayBackendError, hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
@@ -11,10 +10,11 @@ import { NewsPreviewService } from 'src/app/shared/services/news-preview.service
 import numeral from 'numeral';
 import { centsToBaseCurrencyUnit, prettyCurrency } from 'src/app/utilities/currency-util';
 import { Meta } from '@angular/platform-browser';
-import { UserService } from 'src/app/shared/services/user/user-service';
+import { UserService } from 'src/app/shared/services/user/user.service';
 import { NewsLink } from '../../manage-projects/manage-single-project/news-link-model';
 import { SingleOfferModel } from './single-offer-model';
 import { WalletService } from '../../shared/services/wallet/wallet.service';
+import { ProjectService } from '../../shared/services/project/project.service';
 
 @Component({
     selector: 'app-offer-details',
@@ -32,7 +32,7 @@ export class OfferDetailsComponent implements OnInit {
     userConfirmed = true;
     projectBalance = 0;
 
-    constructor(private offerService: OffersService,
+    constructor(private projectService: ProjectService,
                 private newsPreviewService: NewsPreviewService,
                 private walletService: WalletService,
                 private route: ActivatedRoute,
@@ -58,7 +58,7 @@ export class OfferDetailsComponent implements OnInit {
 
         if (!this.isOverview && !this.isPortfolio) {
             SpinnerUtil.showSpinner();
-            this.userService.getOwnProfile().subscribe((res: any) => {
+            this.userService.getOwnProfile().subscribe(res => {
                 this.userConfirmed = res.verified;
             }, hideSpinnerAndDisplayError);
         }
@@ -66,7 +66,7 @@ export class OfferDetailsComponent implements OnInit {
 
     setUpNewsPreviews(newsLinks: string[]) {
         newsLinks.forEach(link => {
-            this.newsPreviewService.getLinkPreview(link).subscribe((res: any) => {
+            this.newsPreviewService.getLinkPreview(link).subscribe(res => {
                 this.newsPreviews.push({
                     title: res.title,
                     description: res.description,
@@ -115,14 +115,10 @@ export class OfferDetailsComponent implements OnInit {
     getOfferDetails() {
         SpinnerUtil.showSpinner();
         const offerID = this.route.snapshot.params.id;
-        this.offerService.getOfferByID(offerID).subscribe((res: SingleOfferModel) => {
+        this.projectService.getProject(offerID).subscribe(res => {
             SpinnerUtil.hideSpinner();
 
-            if (res.current_funding === undefined) {
-                res.current_funding = 0;
-            }
-            this.fundedPercentage = (res.current_funding / res.expected_funding) * 100;
-            this.prettifyModel(res);
+            // this.prettifyModel(res);
             this.setUpNewsPreviews(this.offerModel.news);
             this.setMetaTags();
             SpinnerUtil.showSpinner();

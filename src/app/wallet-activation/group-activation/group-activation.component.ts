@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Organization, WalletCooperativeWalletService } from '../../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
+import {
+    OrganizationWallet,
+    WalletCooperativeWalletService
+} from '../../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
 import { displayBackendError, hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
@@ -12,7 +15,7 @@ import swal from 'sweetalert2';
     styleUrls: ['./group-activation.component.css']
 })
 export class GroupActivationComponent implements OnInit {
-    groups: Organization[];
+    groups: OrganizationWallet[];
 
     constructor(private activationService: WalletCooperativeWalletService,
                 private broadService: BroadcastService) {
@@ -31,7 +34,7 @@ export class GroupActivationComponent implements OnInit {
     }
 
     activateGroupClicked(uuid: string) {
-        this.activationService.activateWallet(uuid).subscribe(async (res: any) => {
+        this.activationService.activateWallet(uuid).subscribe(async res => {
             const arkaneConnect = new ArkaneConnect('AMPnet', {
                 environment: 'staging'
             });

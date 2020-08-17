@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BackendApiService } from '../../backend-api.service';
+import { BackendHttpClient } from '../../backend-http-client.service';
 import { TransactionInfo } from './wallet-cooperative-wallet.service';
 import { Withdraw } from '../withdraw.service';
 
@@ -9,7 +9,7 @@ import { Withdraw } from '../withdraw.service';
 export class WalletCooperativeWithdrawService {
     endpoint = '/wallet/cooperative/withdraw';
 
-    constructor(private http: BackendApiService) {
+    constructor(private http: BackendHttpClient) {
     }
 
     generateBurnWithdrawTx(withdrawID: number) {

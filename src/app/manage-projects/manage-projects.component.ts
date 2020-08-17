@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { OrganizationService } from '../shared/services/user/organization-service';
+import { OrganizationService } from '../shared/services/project/organization.service';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { displayBackendError } from '../utilities/error-handler';
-import { ProjectModel } from '../projects/project-model';
+import { Project } from '../shared/services/project/project.service';
 
 
 declare var _: any;
@@ -14,7 +14,7 @@ declare var _: any;
     styleUrls: ['./manage-projects.component.css']
 })
 export class ManageProjectsComponent implements OnInit {
-    manageProjectsModel: ProjectModel[];
+    manageProjectsModel: Project[];
 
     @Input() groupID: string;
 

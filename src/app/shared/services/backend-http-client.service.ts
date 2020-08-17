@@ -5,12 +5,12 @@ import { Observable } from 'rxjs';
 @Injectable({
     providedIn: 'root'
 })
-export class BackendApiService {
+export class BackendHttpClient {
     constructor(private http: HttpClient) {
     }
 
     get<T>(path: string, params?: object): Observable<T> {
-        const httpOptions = this.setHttpOptions();
+        const httpOptions = this.authHttpOptions();
         if (params !== undefined) {
             httpOptions['params'] = params;
         }
@@ -19,15 +19,15 @@ export class BackendApiService {
     }
 
     post<T>(path: string, body: object): Observable<T> {
-        return this.http.post<T>(path, body, this.setHttpOptions());
+        return this.http.post<T>(path, body, this.authHttpOptions());
     }
 
     put<T>(path: string, body: object): Observable<T> {
-        return this.http.put<T>(path, body, this.setHttpOptions());
+        return this.http.put<T>(path, body, this.authHttpOptions());
     }
 
     delete<T>(path: string, params?: object): Observable<T> {
-        const httpOptions = this.setHttpOptions();
+        const httpOptions = this.authHttpOptions();
         if (params !== undefined) {
             httpOptions['params'] = params;
         }
@@ -35,7 +35,7 @@ export class BackendApiService {
         return this.http.delete<T>(path, httpOptions);
     }
 
-    setHttpOptions() {
+    public authHttpOptions() {
         const httpOptions = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json'

@@ -1,41 +1,53 @@
 import { Injectable } from '@angular/core';
 import { UserStatusStorage } from '../../../user-status-storage';
-import { BackendApiService } from '../backend-api.service';
-import { WalletDetails, TransactionInfo } from './wallet-cooperative/wallet-cooperative-wallet.service';
+import { BackendHttpClient } from '../backend-http-client.service';
+import { TransactionInfo, WalletDetails } from './wallet-cooperative/wallet-cooperative-wallet.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class WalletService {
-    private endpoint = '/api/wallet/wallet';
-
-    constructor(private http: BackendApiService) {
+    constructor(private http: BackendHttpClient) {
     }
 
     initWallet(address: string) {
-        return this.http.post<WalletDetails>(this.endpoint,
+        return this.http.post<WalletDetails>('/api/wallet/wallet',
             <InitWalletData>{
                 public_key: address
             });
     }
 
     getUserWallet() {
-        const walletResponse = this.http.get<WalletDetails>(this.endpoint);
+        const walletResponse = this.http.get<WalletDetails>('/api/wallet/wallet');
         walletResponse.subscribe((res) => UserStatusStorage.walletData = res);
 
         return walletResponse;
     }
 
     getInfoFromPairingCode(pairingCode: string) {
-        return this.http.get<WalletPairInfo>(`${this.endpoint}/pair/${pairingCode}`);
+        return this.http.get<WalletPairInfo>(`/api/wallet/wallet/pair/${pairingCode}`);
     }
 
-    createProjectWallet(projectID: string) {
+    investToProject(projectID: string, investAmount: number) {
+        return this.http.post<TransactionInfo>(`/api/wallet/invest/project/${projectID}`, {
+            amount: investAmount.toString()
+        });
+    }
+
+    getProjectWallet(projectID: number | string) {
+        return this.http.get<WalletDetails>(`/api/wallet/public/wallet/project/${projectID}`);
+    }
+
+    getOrganizationWallet(orgID: string) {
+        return this.http.get<WalletDetails>(`/api/wallet/wallet/organization/${orgID}`);
+    }
+
+    createProjectWalletTransaction(projectID: string) {
         return this.http.get<TransactionInfo>(`/api/wallet/wallet/project/${projectID}/transaction`);
     }
 
-    getProjectWallet(projectID: string) {
-        return this.http.get<WalletDetails>(`/api/wallet/public/wallet/project/${projectID}`);
+    createOrganizationWalletTransaction(orgID: string) {
+        return this.http.get<TransactionInfo>(`/api/wallet/wallet/organization/${orgID}/transaction`);
     }
 }
 

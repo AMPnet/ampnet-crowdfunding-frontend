@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { ProjectModel } from 'src/app/projects/project-model';
 import { ActivatedRoute } from '@angular/router';
-import { ProjectService } from 'src/app/shared/services/project/project-service';
+import { Project, ProjectService } from 'src/app/shared/services/project/project.service';
 import { displayBackendError, hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
-import { OffersService } from '../../shared/services/project/offers.service';
 import { baseCurrencyUnitToCents, prettyCurrency } from 'src/app/utilities/currency-util';
 import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
 import { BroadcastService } from 'src/app/shared/services/broadcast.service';
 import swal from 'sweetalert2';
+import { WalletService } from '../../shared/services/wallet/wallet.service';
 
 @Component({
     selector: 'app-verify-sign-offer',
@@ -19,10 +18,12 @@ export class VerifySignOfferComponent implements OnInit {
 
     projectID: string;
     investAmount: number;
-    project: ProjectModel;
+    project: Project;
 
-    constructor(private route: ActivatedRoute, private projectService: ProjectService,
-                private offerService: OffersService, private broadcastService: BroadcastService) {
+    constructor(private route: ActivatedRoute,
+                private projectService: ProjectService,
+                private walletService: WalletService,
+                private broadcastService: BroadcastService) {
     }
 
     ngOnInit() {
@@ -33,7 +34,7 @@ export class VerifySignOfferComponent implements OnInit {
 
     getProject() {
         SpinnerUtil.showSpinner();
-        this.projectService.getProject(this.projectID).subscribe((res: any) => {
+        this.projectService.getProject(this.projectID).subscribe(res => {
             SpinnerUtil.hideSpinner();
             this.project = res;
             this.project.currency = prettyCurrency(res.currency);
@@ -45,8 +46,8 @@ export class VerifySignOfferComponent implements OnInit {
 
     verifyAndSign() {
         SpinnerUtil.showSpinner();
-        this.offerService.generateTransactionToGreenvest(this.project.uuid, baseCurrencyUnitToCents(this.investAmount))
-            .subscribe(async (res: any) => {
+        this.walletService.investToProject(this.project.uuid, baseCurrencyUnitToCents(this.investAmount))
+            .subscribe(async res => {
                 SpinnerUtil.hideSpinner();
 
                 const arkaneConnect = new ArkaneConnect('AMPnet', {environment: 'staging'});

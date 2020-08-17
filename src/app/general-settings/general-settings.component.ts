@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../shared/services/user/user-service';
+import { UserService } from '../shared/services/user/user.service';
 import { FormBuilder } from '@angular/forms';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
@@ -23,7 +23,7 @@ export class GeneralSettingsComponent implements OnInit {
 
     ngOnInit() {
         SpinnerUtil.showSpinner();
-        this.userService.getOwnProfile().subscribe((res: any) => {
+        this.userService.getOwnProfile().subscribe(res => {
             this.user = res;
             SpinnerUtil.hideSpinner();
         }, hideSpinnerAndDisplayError);

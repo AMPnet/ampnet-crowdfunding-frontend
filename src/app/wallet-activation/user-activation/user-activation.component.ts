@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { CooperativeUser, WalletCooperativeWalletService } from '../../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
+import {
+    CooperativeUser,
+    WalletCooperativeWalletService
+} from '../../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
 import { hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { BroadcastService } from 'src/app/shared/services/broadcast.service';
@@ -29,7 +32,7 @@ export class UserActivationComponent implements OnInit {
     async activateUserClicked(id: number) {
         SpinnerUtil.showSpinner();
 
-        this.activationService.activateWallet(id).subscribe(async (res: any) => {
+        this.activationService.activateWallet(id).subscribe(async res => {
             const arkaneConnect = new ArkaneConnect('AMPnet', {
                 environment: 'staging'
             });

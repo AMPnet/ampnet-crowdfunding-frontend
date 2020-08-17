@@ -33,7 +33,7 @@ export class SummaryComponent implements OnInit {
 
     private getUsers() {
         SpinnerUtil.showSpinner();
-        this.summaryService.getUsers().subscribe((res: any) => {
+        this.summaryService.getUsers().subscribe(res => {
             this.numberOfUsers = res.registered;
             this.completedRequests += 1;
             SpinnerUtil.hideSpinner();
@@ -42,7 +42,7 @@ export class SummaryComponent implements OnInit {
 
     private getActiveProjects() {
         SpinnerUtil.showSpinner();
-        this.summaryService.getNumberOfActiveProjects().subscribe((res: any) => {
+        this.summaryService.getNumberOfActiveProjects().subscribe(res => {
             this.numberOfActiveProjects = res.active_projects;
             this.completedRequests += 1;
             SpinnerUtil.hideSpinner();
@@ -51,7 +51,7 @@ export class SummaryComponent implements OnInit {
 
     private getBlockchainMiddlewareSummary() {
         SpinnerUtil.showSpinner();
-        this.summaryService.getBlockchainMiddlewareData().subscribe((res: any) => {
+        this.summaryService.getBlockchainMiddlewareData().subscribe(res => {
             SpinnerUtil.hideSpinner();
             this.completedRequests += 1;
             this.blockchainSummary = res;

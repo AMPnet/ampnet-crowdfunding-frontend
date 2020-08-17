@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BackendApiService } from '../backend-api.service';
+import { BackendHttpClient } from '../backend-http-client.service';
 
 @Injectable({
     providedIn: 'root'
@@ -7,7 +7,7 @@ import { BackendApiService } from '../backend-api.service';
 export class PlatformBankAccountService {
     endpoint = '/api/wallet/bank-account';
 
-    constructor(private http: BackendApiService) {
+    constructor(private http: BackendHttpClient) {
     }
 
     getBankAccounts() {
@@ -15,7 +15,7 @@ export class PlatformBankAccountService {
     }
 
     createBankAccount(iban: String, bankCode: String, alias: String) {
-        return this.http.post<BankAccount>(this.endpoint,
+        return this.http.post<PlatformBankAccount>(this.endpoint,
             <CreateWalletBankAccountData>{
                 iban: iban,
                 bank_code: bankCode,
@@ -28,7 +28,7 @@ export class PlatformBankAccountService {
     }
 }
 
-interface BankAccount {
+export interface PlatformBankAccount {
     id: number;
     iban: string;
     bank_code: string;
@@ -36,7 +36,7 @@ interface BankAccount {
 }
 
 interface WalletBankAccountsRes {
-    bank_accounts: BankAccount[];
+    bank_accounts: PlatformBankAccount[];
 }
 
 interface CreateWalletBankAccountData {

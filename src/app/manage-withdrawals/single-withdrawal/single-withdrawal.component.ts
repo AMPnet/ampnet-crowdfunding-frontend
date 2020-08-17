@@ -37,7 +37,7 @@ export class SingleWithdrawalComponent implements OnInit, AfterViewInit {
     getWithdrawal() {
         SpinnerUtil.showSpinner();
         const id = this.route.snapshot.params.ID;
-        this.withdrawCooperativeService.getApprovedWithdrawals().subscribe((res: any) => {
+        this.withdrawCooperativeService.getApprovedWithdrawals().subscribe(res => {
             SpinnerUtil.hideSpinner();
             const withdraws: [ManageWithdrawModel] = res.withdraws;
             this.withdrawal = withdraws.filter(item => {
@@ -48,7 +48,7 @@ export class SingleWithdrawalComponent implements OnInit, AfterViewInit {
 
     approveAndGenerateCodeClicked() {
         SpinnerUtil.showSpinner();
-        this.withdrawCooperativeService.generateBurnWithdrawTx(this.withdrawal.id).subscribe(async (res: any) => {
+        this.withdrawCooperativeService.generateBurnWithdrawTx(this.withdrawal.id).subscribe(async res => {
 
             const arkaneConnect = new ArkaneConnect('AMPnet', {
                 environment: 'staging'

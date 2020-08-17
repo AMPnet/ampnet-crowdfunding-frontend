@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { SignUpService } from '../../shared/services/user/sign-up.service';
+import { SignupService } from '../../shared/services/user/signup.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import swal from 'sweetalert2';
 import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthService } from 'angularx-social-login';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
-import { LogInModalService } from '../../shared/services/user/log-in-modal.service';
+import { LoginService } from '../../shared/services/user/login.service';
 import { displayBackendError, hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
 import { MustMatch } from './confirm-password-validator';
-import { Country } from '../../shared/services/country.service';
 
 
 @Component({
@@ -18,14 +17,13 @@ import { Country } from '../../shared/services/country.service';
 })
 export class SignUpComponent implements OnInit {
     emailSignupForm: FormGroup;
-    countries: Country[];
 
     constructor(
-        private signUpService: SignUpService,
+        private signUpService: SignupService,
         private router: Router,
         private socialAuthService: SocialAuthService,
         private route: ActivatedRoute,
-        private loginService: LogInModalService,
+        private loginService: LoginService,
         private formBuilder: FormBuilder
     ) {
         this.emailSignupForm = this.formBuilder.group({
@@ -54,13 +52,13 @@ export class SignUpComponent implements OnInit {
         SpinnerUtil.showSpinner();
 
         this.socialAuthService.signIn(provider).then(SocialRes => {
-            this.signUpService.performSocialSignup(SocialRes.provider, SocialRes.authToken).subscribe(usr => {
+            this.signUpService.signupSocial(SocialRes.provider, SocialRes.authToken).subscribe(usr => {
                 SpinnerUtil.hideSpinner();
 
                 usr['auth'] = SocialRes.authToken;
                 usr['provider'] = SocialRes.provider;
 
-                this.loginService.performSocialLogin(GoogleLoginProvider.PROVIDER_ID, SocialRes.authToken)
+                this.loginService.socialLogin(GoogleLoginProvider.PROVIDER_ID, SocialRes.authToken)
                     .subscribe(LoginRes => {
                         localStorage.setItem('access_token', (<any>LoginRes).access_token);
                         this.router.navigate(['/dash']);
@@ -78,10 +76,10 @@ export class SignUpComponent implements OnInit {
     onSubmitEmailForm(formData) {
         SpinnerUtil.showSpinner();
         const values = this.emailSignupForm.value;
-        this.signUpService.performEmailSignup(values.email, values.firstName, values.lastName, values.password)
+        this.signUpService.signupEmail(values.email, values.firstName, values.lastName, values.password)
             .subscribe((_: any) => {
                 swal('', 'Sign-up successful!', 'success');
-                this.loginService.performEmailLogin(values.email, values.password).subscribe((res: any) => {
+                this.loginService.emailLogin(values.email, values.password).subscribe(res => {
                     localStorage.setItem('access_token', res.access_token);
                     this.router.navigate(['/dash']);
                 }, hideSpinnerAndDisplayError);

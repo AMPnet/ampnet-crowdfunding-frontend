@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { OfferModel } from './OfferModel';
-import { OffersService } from '../shared/services/project/offers.service';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { displayBackendError } from '../utilities/error-handler';
 import * as moment from 'moment';
-import { ProjectService } from '../shared/services/project/project-service';
+import { Project, ProjectService } from '../shared/services/project/project.service';
 import { ActivatedRoute } from '@angular/router';
 import { centsToBaseCurrencyUnit } from '../utilities/currency-util';
 import { WalletService } from '../shared/services/wallet/wallet.service';
@@ -15,14 +14,13 @@ import { WalletService } from '../shared/services/wallet/wallet.service';
     styleUrls: ['./offers.component.css']
 })
 export class OffersComponent implements OnInit {
-
-    components: OfferModel[];
+    components: Project[];
     featuredComponents: OfferModel[];
     promotedOffer: OfferModel;
 
     isOverview = false;
 
-    constructor(private offersService: OffersService,
+    constructor(private projectService: ProjectService,
                 private walletService: WalletService,
                 private route: ActivatedRoute
     ) {
@@ -40,8 +38,8 @@ export class OffersComponent implements OnInit {
     getAllOffers() {
         SpinnerUtil.showSpinner();
 
-        this.offersService.getAllOffers().subscribe((res: any) => {
-            const projects: [any] = res.projects;
+        this.projectService.getAllActiveProjects().subscribe(res => {
+            const projects = res.projects;
             this.components = projects.map((proj) => {
                 return {
                     title: proj.name,
@@ -53,7 +51,6 @@ export class OffersComponent implements OnInit {
                     status: 'Active',
                     endDate: moment(proj.end_date).format('MMM Do, YYYY'),
                     offerID: proj.uuid,
-                    owner: proj.return_on_investment,
                     currency: ''
                 };
             });
@@ -73,7 +70,7 @@ export class OffersComponent implements OnInit {
             return;
         }
         const component = this.components[index];
-        this.walletService.getProjectWallet(component.offerID).subscribe((res: any) => {
+        this.walletService.getProjectWallet(component.offerID).subscribe(res => {
             this.components[index].currentFunding = centsToBaseCurrencyUnit(res.balance);
             this.components[index].currency = res.currency;
             this.getProjectBalances(index + 1);

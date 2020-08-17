@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { LogInModalService } from '../../shared/services/user/log-in-modal.service';
+import { LoginService } from '../../shared/services/user/login.service';
 import swal from 'sweetalert2';
 import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthService } from 'angularx-social-login';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
@@ -18,7 +18,7 @@ export class LogInModalComponent implements OnInit {
     password: string;
 
     constructor(private router: Router,
-                private loginService: LogInModalService,
+                private loginService: LoginService,
                 private auth: SocialAuthService) {
     }
 
@@ -38,7 +38,7 @@ export class LogInModalComponent implements OnInit {
     socialLoginClicked(provider: string) {
         SpinnerUtil.showSpinner();
         this.auth.signIn(provider).then(res => {
-            this.loginService.performSocialLogin(res.provider, res.authToken)
+            this.loginService.socialLogin(res.provider, res.authToken)
                 .subscribe(backendResponse => {
                     localStorage.setItem('access_token', (<any>backendResponse).access_token);
                     SpinnerUtil.hideSpinner();
@@ -55,7 +55,7 @@ export class LogInModalComponent implements OnInit {
 
     logInMailClicked() {
         SpinnerUtil.showSpinner();
-        this.loginService.performEmailLogin(this.email, this.password)
+        this.loginService.emailLogin(this.email, this.password)
             .subscribe(result => {
                 SpinnerUtil.hideSpinner();
                 localStorage.setItem('access_token', result.access_token);

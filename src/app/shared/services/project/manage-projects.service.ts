@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BackendApiService } from '../backend-api.service';
-import { ProjectModel } from './project-service';
+import { BackendHttpClient } from '../backend-http-client.service';
+import { Project } from './project.service';
 
 @Injectable({
     providedIn: 'root'
@@ -8,14 +8,14 @@ import { ProjectModel } from './project-service';
 export class ManageProjectsService {
     private endpoint = '/api/project/project';
 
-    constructor(private http: BackendApiService) {
+    constructor(private http: BackendHttpClient) {
     }
 
     deleteDocument(projectID: string, documentID: number) {
         return this.http.delete<void>(`${this.endpoint}/${projectID}/document/${documentID}`);
     }
 
-    addNewsToProject(project: ProjectModel, newsLink: string) {
+    addNewsToProject(project: Project, newsLink: string) {
         let currentNews = project.news;
         if (currentNews !== undefined) {
             currentNews.push(newsLink);
@@ -23,16 +23,16 @@ export class ManageProjectsService {
             currentNews = [newsLink];
         }
 
-        return this.http.put<ProjectModel>(`${this.endpoint}/${project.uuid}`,
+        return this.http.put<Project>(`${this.endpoint}/${project.uuid}`,
             <EditProjectData>{
                 news: currentNews
             });
     }
 
-    deleteNewsFromProject(project: ProjectModel, newsLink: string) {
+    deleteNewsFromProject(project: Project, newsLink: string) {
         const currentNews = project.news.filter(news => news !== newsLink);
 
-        return this.http.put<ProjectModel>(`${this.endpoint}/${project.uuid}`,
+        return this.http.put<Project>(`${this.endpoint}/${project.uuid}`,
             <EditProjectData>{
                 news: currentNews
             });

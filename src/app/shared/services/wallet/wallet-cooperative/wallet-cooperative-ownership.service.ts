@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BackendApiService } from '../../backend-api.service';
+import { BackendHttpClient } from '../../backend-http-client.service';
 import { TransactionInfo } from './wallet-cooperative-wallet.service';
 
 @Injectable({
@@ -8,7 +8,7 @@ import { TransactionInfo } from './wallet-cooperative-wallet.service';
 export class WalletCooperativeOwnershipService {
     ownershipEndpoint = '/api/wallet/cooperative/wallet/transfer/transaction';
 
-    constructor(private http: BackendApiService) {
+    constructor(private http: BackendHttpClient) {
     }
 
     executePlatformManagerTransaction(walletAddress: string) {

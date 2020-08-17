@@ -3,8 +3,7 @@ import numeral from 'numeral';
 import { WalletService } from '../shared/services/wallet/wallet.service';
 import { displayBackendError } from '../utilities/error-handler';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
-import { ProjectModel } from '../projects/project-model';
-import { ProjectService } from '../shared/services/project/project-service';
+import { Project, ProjectService } from '../shared/services/project/project.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { autonumericCurrency, centsToBaseCurrencyUnit, prettyCurrency, stripCurrencyData } from '../utilities/currency-util';
 import { WalletDetails } from '../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
@@ -23,7 +22,7 @@ export class InvestComponent implements OnInit {
     projectStake: string;
     breakevenPeriod: string;
     wallet: WalletDetails;
-    project: ProjectModel;
+    project: Project;
     expectedROI: number;
 
     investmentOutOfBoundsWarningMessage = '';
@@ -66,7 +65,7 @@ export class InvestComponent implements OnInit {
     getProject() {
         const id = this.route.snapshot.params.id;
         SpinnerUtil.showSpinner();
-        this.projectService.getProject(id).subscribe((res: any) => {
+        this.projectService.getProject(id).subscribe(res => {
             res.currency = prettyCurrency(res.currency);
             this.project = res;
 

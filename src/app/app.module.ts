@@ -168,7 +168,7 @@ export function jwtOptionsFactory() {
         NewPlatformBankAccountComponent,
         ExchangeComponent,
         OwnershipComponent,
-        CurrencyDefaultPipe
+        CurrencyDefaultPipe,
         RevenueShareComponent
     ],
     imports: [

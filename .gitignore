@@ -44,3 +44,6 @@ testem.log
 Thumbs.db
 
 yarn.lock
+
+# Node modules folder
+src/node_modules

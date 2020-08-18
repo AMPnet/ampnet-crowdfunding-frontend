@@ -52,7 +52,7 @@ import { ManageSingleProjectComponent } from './manage-projects/manage-single-pr
 import { ApproveOrganizationsComponent } from './organizations/approve-organizations/approve-organizations.component';
 import { NewsPreviewComponent } from './news-preview/news-preview.component';
 import { VerifySignOfferComponent } from './offers/verify-sign-offer/verify-sign-offer.component';
-import { RevenueShareComponent } from './project/revenue-share/revenue-share.component';
+import { ManagePaymentsComponent } from './project/manage-payments/manage-payments.component';
 import { ManageWithdrawalsComponent } from './manage-withdrawals/manage-withdrawals.component';
 import { SingleWithdrawalComponent } from './manage-withdrawals/single-withdrawal/single-withdrawal.component';
 import { DepositComponent } from './deposit/deposit.component';
@@ -71,6 +71,8 @@ import { NewPlatformBankAccountComponent } from './platform-bank-account/new-pla
 import { ExchangeComponent } from './exchange/exchange.component';
 import { OwnershipComponent } from './ownership/ownership.component';
 import { CurrencyDefaultPipe } from './pipes/currency-default-pipe';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { RevenueShareComponent } from './revenue-share/revenue-share.component';
 
 export function tokenGetter() {
     return localStorage.getItem('access_token');
@@ -148,7 +150,7 @@ export function jwtOptionsFactory() {
         ApproveOrganizationsComponent,
         NewsPreviewComponent,
         VerifySignOfferComponent,
-        RevenueShareComponent,
+        ManagePaymentsComponent,
         ManageWithdrawalsComponent,
         SingleWithdrawalComponent,
         DepositComponent,
@@ -167,6 +169,7 @@ export function jwtOptionsFactory() {
         ExchangeComponent,
         OwnershipComponent,
         CurrencyDefaultPipe
+        RevenueShareComponent
     ],
     imports: [
         BrowserModule,
@@ -177,7 +180,8 @@ export function jwtOptionsFactory() {
         ReactiveFormsModule,
         HttpClientModule,
         SocialLoginModule,
-        NgxSpinnerModule
+        NgxSpinnerModule,
+        NgbModule
     ],
     providers: [
         socialAuthServiceConfig,

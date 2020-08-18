@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { API } from '../utilities/endpoint-manager';
 import { Injectable } from '@angular/core';
-import { UserModel } from '../models/user-model';
 import { UserStatusStorage } from '../user-status-storage';
+import { tap } from 'rxjs/operators';
+import { UserModel } from '../models/user-model';
 
 @Injectable({
     providedIn: 'root'
@@ -15,10 +16,10 @@ export class UserService {
     }
 
     public getOwnProfile() {
-        const userResponse = this.http.get(API.generateRoute(this.endpoint), API.tokenHeaders());
-        userResponse.subscribe((res: UserModel) => {
-            UserStatusStorage.personalData = res;
-        });
-        return userResponse;
+        return this.http.get<UserModel>(API.generateRoute(this.endpoint), API.tokenHeaders())
+            .pipe(
+                tap(res => {
+                    UserStatusStorage.personalData = res;
+                }));
     }
 }

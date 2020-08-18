@@ -98,20 +98,32 @@
 					</span>
                 <div *ngIf="transactionHistory != undefined">
                     <table class="table table-striped">
-                        <thead>
-                        <tr>
-                            <th scope="col">Date</th>
-                            <th scope="col">Type</th>
-                            <th scope="col">State</th>
-                            <th scope="col">Amount</th>
-                        </tr>
-                        </thead>
                         <tbody>
                         <tr *ngFor="let transaction of transactionHistoryPage">
-                            <td>{{ transaction.date | date }}</td>
-                            <td>{{ transaction.type }}</td>
-                            <td>{{ transaction.state }}</td>
-                            <td>{{ transaction.amount / 100 | currency:'EUR' }}</td>
+                            <td class="icon-type-cell pr-0">
+                                <span class="icon-type">
+                                    <i class="fas mr-3 {{transaction.type | txIconType }}"></i>
+                                </span>
+                            </td>
+                            <td class="pl-1">
+                                <div>
+                                    
+                                    <span>
+                                        <div>
+                                            {{ transaction.type }}
+                                        </div>
+                                        {{ transaction.date | date }}
+                                    </span>
+                                </div>
+                            </td>
+                            <td *ngIf="transaction.state != 'MINED'">
+                                <i class="icon-type fas {{ transaction.state | txIconStatus }}"></i>
+                            </td>
+                            <td>
+                                <div class="currency-table-column" >
+                                    {{ transaction.amount / 100 | currency:'EUR' }}
+                                </div>
+                            </td>
                         </tr>
                         </tbody>
                     </table>

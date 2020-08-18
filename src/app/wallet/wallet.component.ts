@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { WalletService } from './wallet.service';
-import { WalletModel } from '../models/WalletModel';
+import { Transaction, TransactionList, WalletModel } from '../models/WalletModel';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { displayBackendError } from '../utilities/error-handler';
 import { centsToBaseCurrencyUnit, prettyCurrency } from '../utilities/currency-util';
 import * as numeral from 'numeral';
 import { ArkaneConnect, SecretType } from '@arkane-network/arkane-connect';
+import { TxIconType, TxIconStatus } from './wallet-icon.pipe'
 
 declare var $: any;
 
@@ -18,12 +19,18 @@ export class WalletComponent implements OnInit {
     wallet: WalletModel;
     checkComplete = false;
     arkaneConnect: ArkaneConnect;
+    tablePage = 1;
+    tablePageSize = 10;
+    transactionItems = 0;
+    transactionHistory: Transaction[] = [];
+    transactionHistoryPage: Transaction[] = [];
 
     constructor(private walletService: WalletService) {
     }
 
     ngOnInit() {
         this.getUserWallet();
+        this.getTransactionHistory();
     }
 
     setUpArkane() {
@@ -62,4 +69,22 @@ export class WalletComponent implements OnInit {
         });
     }
 
+    getTransactionHistory() {
+        SpinnerUtil.showSpinner();
+        this.walletService.getTransactionHistory().subscribe((res: TransactionList) => {
+            this.transactionHistory = res.transactions
+                .sort((a,b) => {
+                    return new Date(b.date).getTime() - new Date(a.date).getTime()
+                })
+            this.transactionItems = this.transactionHistory.length;
+            this.refreshTransactionHistory();
+        });
+    }
+
+    refreshTransactionHistory() {
+        this.transactionHistoryPage = this.transactionHistory
+            .map((transaction, i) => ({id: i + 1, ...transaction}))
+            .slice((this.tablePage - 1) * this.tablePageSize, (this.tablePage - 1) * this.tablePageSize + this.tablePageSize)
+            
+    }
 }

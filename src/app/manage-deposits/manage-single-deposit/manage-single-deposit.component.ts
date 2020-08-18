@@ -90,7 +90,7 @@ export class ManageSingleDepositComponent implements OnInit, AfterViewInit {
         SpinnerUtil.showSpinner();
         this.depositCooperativeService.getDeposit(id).subscribe(res => {
             this.depositModel = res;
-            this.depositModel.deposit.created_at = new Date(prettyDate(res.created_at));
+            this.depositModel.deposit.created_at = new Date(prettyDate(res.deposit.created_at.toISOString()));
             this.depositModel.deposit.amount = numeral(this.depositModel.deposit.amount).format(',');
             if (!this.depositModel.deposit.approved) {
                 setTimeout(() => {

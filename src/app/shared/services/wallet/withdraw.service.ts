@@ -6,8 +6,8 @@ import { TransactionInfo } from './wallet-cooperative/wallet-cooperative-wallet.
     providedIn: 'root'
 })
 export class WithdrawService {
-    endpoint = '/wallet/withdraw';
-    coopEndpoint = '/wallet/cooperative/withdraw';
+    endpoint = '/api/wallet/withdraw';
+    coopEndpoint = '/api/wallet/cooperative/withdraw';
 
     constructor(private http: BackendHttpClient) {
     }

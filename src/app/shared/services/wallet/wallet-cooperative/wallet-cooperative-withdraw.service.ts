@@ -40,7 +40,7 @@ interface UserWithdrawListResponse {
     total_pages: number;
 }
 
-interface UserWithdraw {
+export interface UserWithdraw {
     id: number;
     user: {
         uuid: string;

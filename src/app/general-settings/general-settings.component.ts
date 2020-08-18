@@ -3,7 +3,7 @@ import { UserService } from '../shared/services/user/user.service';
 import { FormBuilder } from '@angular/forms';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
-import { UserModel } from '../models/user-model';
+import { User } from '../shared/services/user/signup.service';
 
 @Component({
     selector: 'app-general-settings',
@@ -12,7 +12,7 @@ import { UserModel } from '../models/user-model';
 })
 export class GeneralSettingsComponent implements OnInit {
 
-    user: UserModel;
+    user: User;
     updatingInfo = false;
 
     constructor(

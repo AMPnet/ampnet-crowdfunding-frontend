@@ -56,7 +56,6 @@ export class WithdrawComponent implements OnInit {
     }
 
     async generateWithdrawClicked() {
-
         if (this.pendingWithdrawal !== undefined) {
             this.burnWithdraw();
             return;

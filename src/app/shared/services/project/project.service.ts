@@ -22,7 +22,7 @@ export class ProjectService {
     }
 
     getAllActiveProjects() {
-        return this.http.get<PageableProjectsResponse>('/api/public/project/active');
+        return this.http.get<PageableProjectsResponse>('/api/project/public/project/active');
     }
 }
 

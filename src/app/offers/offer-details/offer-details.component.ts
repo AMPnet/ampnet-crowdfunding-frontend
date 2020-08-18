@@ -14,7 +14,7 @@ import { UserService } from 'src/app/shared/services/user/user.service';
 import { NewsLink } from '../../manage-projects/manage-single-project/news-link-model';
 import { SingleOfferModel } from './single-offer-model';
 import { WalletService } from '../../shared/services/wallet/wallet.service';
-import { ProjectService } from '../../shared/services/project/project.service';
+import { Project, ProjectService } from '../../shared/services/project/project.service';
 
 @Component({
     selector: 'app-offer-details',
@@ -23,7 +23,7 @@ import { ProjectService } from '../../shared/services/project/project.service';
 })
 export class OfferDetailsComponent implements OnInit {
     docs: OfferDetailDocModel[];
-    offerModel: SingleOfferModel;
+    offerModel: Project;
     newsPreviews: NewsLink[];
     fundedPercentage = 0;
 
@@ -77,18 +77,12 @@ export class OfferDetailsComponent implements OnInit {
         });
     }
 
-    linkClicked(url: string) {
-        window.location.href = url;
-    }
-
-    prettifyModel(res: SingleOfferModel) {
+    prettifyModel(res: Project) {
         this.offerModel = res;
         this.offerModel.start_date = prettyDate(res.start_date);
         this.offerModel.end_date = prettyDate(res.end_date);
         this.offerModel.expected_funding = numeral(centsToBaseCurrencyUnit(res.expected_funding)).format('0,0');
         this.offerModel.currency = prettyCurrency(res.currency);
-        this.offerModel.investor_count = numeral(1270).format('0,0');
-        this.offerModel.current_funding = numeral(res.current_funding).format('0,0');
         this.offerModel.min_per_user = numeral(centsToBaseCurrencyUnit(res.min_per_user)).format('0,0');
         this.offerModel.max_per_user = numeral(centsToBaseCurrencyUnit(res.max_per_user)).format('0,0');
     }
@@ -115,17 +109,16 @@ export class OfferDetailsComponent implements OnInit {
     getOfferDetails() {
         SpinnerUtil.showSpinner();
         const offerID = this.route.snapshot.params.id;
-        this.projectService.getProject(offerID).subscribe(res => {
+        this.projectService.getProject(offerID).subscribe(project => {
             SpinnerUtil.hideSpinner();
 
-            // this.prettifyModel(res);
+            this.prettifyModel(project);
             this.setUpNewsPreviews(this.offerModel.news);
             this.setMetaTags();
             SpinnerUtil.showSpinner();
             this.walletService.getProjectWallet(offerID).subscribe(wallet => {
-                this.offerModel.current_funding = centsToBaseCurrencyUnit(wallet.balance);
-                this.fundedPercentage = 100 * (this.offerModel.current_funding) / (this.offerModel.expected_funding);
-                this.structureProjectData();
+                // this.offerModel.current_funding = centsToBaseCurrencyUnit(wallet.balance);
+                // this.fundedPercentage = 100 * (this.offerModel.current_funding) / (this.offerModel.expected_funding);
                 SpinnerUtil.hideSpinner();
             }, hideSpinnerAndDisplayError);
         }, err => {
@@ -140,8 +133,5 @@ export class OfferDetailsComponent implements OnInit {
                 displayBackendError(err);
             }
         });
-    }
-
-    structureProjectData() {
     }
 }

@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --disable-host-check",
+    "start": "ng serve --proxy-config proxy.conf.json --disable-host-check",
     "test": "ng test",
     "lint": "tslint \"src/**/*.ts\" --project tsconfig.json -s node_modules/tslint-stylish -t stylish",
     "lint-fix": "tslint --fix \"src/**/*.ts\" --project tsconfig.json -s node_modules/tslint-stylish -t stylish",

@@ -1,9 +1,11 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
-import { ManageWithdrawModel } from '../manage-withdraw-model';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
-import { WalletCooperativeWithdrawService } from 'src/app/shared/services/wallet/wallet-cooperative/wallet-cooperative-withdraw.service';
+import {
+    UserWithdraw,
+    WalletCooperativeWithdrawService
+} from 'src/app/shared/services/wallet/wallet-cooperative/wallet-cooperative-withdraw.service';
 import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
 import { BroadcastService } from 'src/app/shared/services/broadcast.service';
 import swal from 'sweetalert2';
@@ -17,7 +19,7 @@ declare var $: any;
 })
 export class SingleWithdrawalComponent implements OnInit, AfterViewInit {
 
-    withdrawal: ManageWithdrawModel;
+    withdrawal: UserWithdraw;
 
     constructor(private route: ActivatedRoute,
                 private withdrawCooperativeService: WalletCooperativeWithdrawService,
@@ -39,8 +41,7 @@ export class SingleWithdrawalComponent implements OnInit, AfterViewInit {
         const id = this.route.snapshot.params.ID;
         this.withdrawCooperativeService.getApprovedWithdrawals().subscribe(res => {
             SpinnerUtil.hideSpinner();
-            const withdraws: [ManageWithdrawModel] = res.withdraws;
-            this.withdrawal = withdraws.filter(item => {
+            this.withdrawal = res.withdraws.filter(item => {
                 return (item.id === id);
             })[0];
         }, hideSpinnerAndDisplayError);
@@ -88,5 +89,4 @@ export class SingleWithdrawalComponent implements OnInit, AfterViewInit {
         //   note: "Upload the payment reciept for the withdrawal in PDF format"
         // })
     }
-
 }

@@ -3,7 +3,7 @@ import { OfferModel } from './OfferModel';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { displayBackendError } from '../utilities/error-handler';
 import * as moment from 'moment';
-import { Project, ProjectService } from '../shared/services/project/project.service';
+import { ProjectService } from '../shared/services/project/project.service';
 import { ActivatedRoute } from '@angular/router';
 import { centsToBaseCurrencyUnit } from '../utilities/currency-util';
 import { WalletService } from '../shared/services/wallet/wallet.service';
@@ -14,7 +14,7 @@ import { WalletService } from '../shared/services/wallet/wallet.service';
     styleUrls: ['./offers.component.css']
 })
 export class OffersComponent implements OnInit {
-    components: Project[];
+    components: OfferModel[];
     featuredComponents: OfferModel[];
     promotedOffer: OfferModel;
 
@@ -42,15 +42,16 @@ export class OffersComponent implements OnInit {
             const projects = res.projects;
             this.components = projects.map((proj) => {
                 return {
+                    offerID: proj.uuid,
                     title: proj.name,
                     description: proj.description,
                     offeredBy: proj.name,
+                    status: 'Active',
                     fundingRequired: centsToBaseCurrencyUnit(proj.expected_funding),
                     currentFunding: 0,
                     headerImageUrl: proj.main_image,
-                    status: 'Active',
                     endDate: moment(proj.end_date).format('MMM Do, YYYY'),
-                    offerID: proj.uuid,
+                    owner: '',
                     currency: ''
                 };
             });

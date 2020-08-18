@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { DEFAULT_CURRENCY_CODE, NgModule } from '@angular/core';
 import { DisqusModule } from 'ngx-disqus';
 
 import { AppComponent } from './app.component';
@@ -70,6 +70,7 @@ import { PlatformBankAccountComponent } from './platform-bank-account/platform-b
 import { NewPlatformBankAccountComponent } from './platform-bank-account/new-platform-bank-account/new-platform-bank-account.component';
 import { ExchangeComponent } from './exchange/exchange.component';
 import { OwnershipComponent } from './ownership/ownership.component';
+import { CurrencyDefaultPipe } from './pipes/currency-default-pipe';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RevenueShareComponent } from './revenue-share/revenue-share.component';
 
@@ -167,6 +168,7 @@ export function jwtOptionsFactory() {
         NewPlatformBankAccountComponent,
         ExchangeComponent,
         OwnershipComponent,
+        CurrencyDefaultPipe,
         RevenueShareComponent
     ],
     imports: [
@@ -182,7 +184,10 @@ export function jwtOptionsFactory() {
         NgbModule
     ],
     providers: [
-        socialAuthServiceConfig
+        socialAuthServiceConfig,
+        {
+            provide: DEFAULT_CURRENCY_CODE, useValue: 'EUR',
+        }
     ],
     bootstrap: [AppComponent]
 })

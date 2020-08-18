@@ -82,3 +82,12 @@
         margin-top: 15px;
     }
 }
+
+.alert {
+    border-radius: unset !important;
+    margin-left: 15px;
+    margin-right: 15px;
+    text-align: left;
+    background-color: #F5C6B5;
+    color: #111111;
+}

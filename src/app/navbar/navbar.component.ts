@@ -11,7 +11,7 @@ export class NavbarComponent implements OnInit {
 
     sidebar: JQuery;
 
-    fullName: string;
+    /* fullName: string; */
 
     constructor(private userService: UserService) {
     }
@@ -25,39 +25,41 @@ export class NavbarComponent implements OnInit {
             sidebar.animate({
                 left: 0
             }, {
-                duration: 100, complete: () => {
+                /* Navbar animation removed due to bug which made menu dissapear  */
+                /* duration: 100, complete: () => {
                     navbar.animate({
                         'margin-left': '220px'
                     }, 220);
-                }
+                } */
             });
-
 
         } else {
             sidebar.animate({
                 left: '-240px'
             }, {
-                duration: 100, complete: () => {
+                /* Navbar animation removed due to bug which made menu dissapear  */
+                /* duration: 100, complete: () => {
                     navbar.animate({
                         'margin-left': '0px'
                     }, 220);
-                }
+                } */
             });
 
         }
     }
 
     ngOnInit() {
-        this.fetchUserData();
+        /* this.fetchUserData(); */
     }
 
-    fetchUserData() {
+    /* Fetching data for userName render */
+    /* fetchUserData() {
         this.userService.getOwnProfile().subscribe(res => {
             this.fullName = res['first_name'] + ' ' + res['last_name'];
         }, err => {
 
         });
-    }
+    } */
 
     menuButtonClicked() {
         this.sidebar = $('.sidebar-fixer');

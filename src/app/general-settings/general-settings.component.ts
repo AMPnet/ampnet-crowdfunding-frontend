@@ -25,7 +25,6 @@ export class GeneralSettingsComponent implements OnInit {
         SpinnerUtil.showSpinner();
         this.userService.getOwnProfile().subscribe((res: any) => {
             this.user = res;
-            console.log(this.user);
             SpinnerUtil.hideSpinner();
         }, hideSpinnerAndDisplayError);
     }

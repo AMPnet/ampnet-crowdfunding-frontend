@@ -39,7 +39,7 @@
 
           <span class="card-text mt-2">
             <div class="explainer-mini">Withdrawal amount</div>
-              {{withdrawAmount}}€
+              {{withdrawAmount | currencyDefault}}
           </span>
                     <span (click)="deleteWithdrawal()" class="float-right cursor-pointer">
             <i class="fas fa-trash"></i>

@@ -98,7 +98,19 @@ body {
 }
 
 .btn {
-    border-radius: 50px !important;
+    /* border-radius: 50px !important; */
+    border-radius: unset !important;
+    height: 64px;
+}
+
+img {
+    border-radius: unset !important;
+}
+
+@media (max-width: 800px) {
+    .btn {
+        height: 48px;
+    }
 }
 
 

@@ -1,26 +1,84 @@
-#invest-input-group input {
-    border: 0;
-    font-size: 35px;
-    text-align: center;
+.row {
+    color: #111111;
 }
 
-#invest-input-group .input-group-prepend {
-    border: none;
+.page-title, 
+.invest-text, 
+.min-investment,
+.invest-text-right a {
+    font-size: 12px;
 }
 
-#invest-button {
-    padding: 14px;
+.project-title {
+    font-size: 44px;
 }
 
-.w-33 {
-    width: 33%;
+.min-investment,
+.invest-text-right a {
+    color: #444444;
 }
 
-.main-text {
-    color: #444;
+.invest-text input {
+    border-radius: unset !important;
+    box-shadow: unset !important;
+    border: 1px solid #D8D8D8 !important;
 }
 
-.stats-card {
-    border: none;
-    background-color: transparent;
+.invest-text-right h1 {
+    font-size: 21px;
+    font-weight: 500;
+}
+
+.invest-text-right a {
+    text-decoration: underline;
+}
+
+.invest-button button {
+    border-radius: unset !important;
+}
+
+.invest-text input,
+.invest-button button {
+    height: 64px;
+}
+
+.invest-text p,
+.invest-text-right,
+.page-title {
+    font-weight: 500;
+}
+
+.page-title,
+.invest-text p,
+.invest-text-right p {
+    letter-spacing: 2px;
+}
+
+.invest-text-right {
+    text-align: right;
+}
+
+.invest-text-right p {
+    margin-top: -16px;
+    margin-bottom: 33px;
+}
+
+@media (max-width: 800px) {
+    .invest-text-right {
+        text-align: left;
+    }
+    
+    .invest-text-right p {
+        margin-top: 0px;
+    }
+
+    .project-title {
+        font-size: 36px;
+    }
+}
+
+@media (max-width: 1399px) {
+    .page-title {
+        margin-top: 15px;
+    }
 }

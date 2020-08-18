@@ -1,19 +1,55 @@
 <div *ngIf="(wallet !== undefined) && (project !== undefined)" class="container root-content-container">
     <div class="row">
-        <p class="col-md-12 mb-0 explainer-mini">Invest</p>
-        <h2 class="col-md-12 mb-5 mt-0 main-text">{{project.name}}</h2>
-        <div class="col-md-8 mb-3">
-            <b class=" explainer-mini">Available funds</b>
-            <h1 class="explainer-mini h2">{{wallet.currency}}{{wallet.balance}}.00</h1>
-        </div>
-        <div class="button-container col-md-4 mb-3">
-            <button class="py-3 btn btn-primary w-100 float-right" routerLink="/dash/wallet">
-                <i class="mr-2 fas fa-wallet"></i>
-                <span>Open wallet</span>
-            </button>
+        <p class="col-12 mt-3 mb-lg-4 ml-lg-3 page-title text-uppercase">
+            <i class="fas fa-long-arrow-alt-left mr-3"></i>
+            Invest in
+        </p>
+        <h2 class="col-12 mb-5 mt-5 text-uppercase project-title">
+            {{project.name}}
+            <div class="dropdown-divider mt-lg-3"></div>
+        </h2>
+        <div class="col-12 d-lg-flex align-items-center">
+            <div class="col-lg-6">
+                <div class="invest-text text-uppercase">
+                    <p>I want to invest</p>
+    
+                    <input (keyup)="inputChanged($event)"
+                           [(ngModel)]="inputValue"
+                           class="form-control mb-2" id="amount-input"
+                           placeholder="€0.00" style="font-size: 16px;">
+                        
+                </div>
+                
+    
+                <!-- <div *ngIf="investmentOutOfBoundsWarningMessage.length > 0"
+                     [innerHTML]="investmentOutOfBoundsWarningMessage"
+                     class="alert alert-danger mt-3">
+                </div> -->
+    
+                <div class="min-investment">
+                    <p>{{project.currency}}{{project.min_per_user}} Min investment</p>
+                </div>
+            </div>
+    
+            <div class="col-lg-4 invest-button mt-4 mt-lg-0">
+                <button (click)="investButtonClicked()"
+                        [disabled]="investmentOutOfBoundsWarningMessage.length > 0"
+                        class="btn btn-primary py-3 w-100 mb-2">
+                    <i class="fas fa-chart-pie mr-2"></i>
+                    Invest
+                </button>
+            </div>
+            
+            <div class="col-lg-2 invest-text-right mt-4 mt-lg-0">
+                <p class="text-uppercase" style="font-size: 12px;">Available funds</p>
+                <h1 class="mb-4">{{wallet.currency}}{{wallet.balance}}.00</h1>
+                <a routerLink="/dash/wallet">Open wallet</a>
+            </div>
         </div>
 
-        <div class="col-md-12 mt-3">
+        
+
+        <!-- <div class="col-md-12 mt-3">
             <div class="card">
                 <div class="card-body">
                     <div class="card-title explainer-mini">
@@ -31,26 +67,9 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
-
-        <div class="col-md-12 pt-3 pb-3">
-            <span class="explainer-mini text-uppercase">I want to invest</span>
-
-            <input (keyup)="inputChanged($event)"
-                   [(ngModel)]="inputValue"
-                   class="form-control h3 mt-3 invest-amount-input" id="amount-input"
-                   placeholder="€0.00" style="font-size: 20px; padding: 25px!important">
-
-            <div *ngIf="investmentOutOfBoundsWarningMessage.length > 0"
-                 [innerHTML]="investmentOutOfBoundsWarningMessage"
-                 class="alert alert-danger mt-3">
-
-            </div>
-
-        </div>
-
-        <div *ngIf="inputValue !== undefined" class="col-md-12">
+        <!-- <div *ngIf="inputValue !== undefined" class="col-md-12">
             <div *ngIf="investmentOutOfBoundsWarningMessage.length ===  0" class="card stats-card gray-text">
                 <div class="card-body">
                     <div class=" card-title">
@@ -80,17 +99,8 @@
                 </div>
             </div>
 
-        </div>
+        </div> -->
 
-        <div class="col-md-9"></div>
-        <div class="col-md-12 align-bottom mt-3">
-            <button (click)="investButtonClicked()"
-                    [disabled]="investmentOutOfBoundsWarningMessage.length > 0"
-                    class="btn btn-primary float-right align-bottom py-3 w-100">
-                <i class="fas fa-chart-pie mr-2"></i>
-                INVEST
-            </button>
-        </div>
     </div>
 
 </div>

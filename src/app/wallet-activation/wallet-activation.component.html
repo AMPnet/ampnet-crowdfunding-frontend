@@ -1,4 +1,4 @@
-<div class="root root-content-container">
+<div class="root container root-content-container">
     <div class="row button-holder-activation">
         <div class="col-4">
             <div [class.active]="activationType ===  'users'" class="btn btn-primary w-100 py-3 cursor-pointer"
@@ -15,7 +15,7 @@
             </div>
         </div>
         <div class="col-4">
-            <div [class.active]="activationType ===  'projects'" class="btn btn-primary w-100 py-3 cursor-pointer explainer-mini"
+            <div [class.active]="activationType ===  'projects'" class="btn btn-primary py-3 w-100 cursor-pointer explainer-mini"
                  routerLink="/dash/activation/projects">
                 <i class="fas fa-solar-panel mr-2"></i>
                 Projects

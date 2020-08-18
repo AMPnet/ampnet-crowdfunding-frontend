@@ -34,15 +34,25 @@ export class OnboardingComponent implements OnInit {
             };
             document.getElementsByTagName('head')[0].appendChild(loader);
             SpinnerUtil.hideSpinner();
-
             script.addEventListener('finished', (event) => {
                 SpinnerUtil.showSpinner();
                 this.onboardingService.verifyUser(res.session_state).subscribe(_ => {
-                    swal('', 'Success', 'success');
+                    swal({
+                        title: '',
+                        text: 'Success!',
+                        type: 'success'
+                    }).then(function () {
+                       this.reloadPage('/dash/general_settings');
+                    }.bind(this));
                     SpinnerUtil.hideSpinner();
                 }, hideSpinnerAndDisplayError);
             });
         }, hideSpinnerAndDisplayError);
+    }
+
+    reloadPage(uri: string) {
+        this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
+            this.router.navigate([uri]));
     }
 }
 

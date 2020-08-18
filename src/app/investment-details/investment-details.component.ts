@@ -78,7 +78,7 @@ export class InvestmentDetailsComponent implements OnInit {
     }
 
     showAlert() {
-        swal.fire({
+        swal({
             type: 'success',
             title: 'Transaction signed',
             text: 'Transaction is being processed...',

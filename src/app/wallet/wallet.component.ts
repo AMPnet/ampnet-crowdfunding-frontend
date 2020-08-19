@@ -73,9 +73,7 @@ export class WalletComponent implements OnInit {
         SpinnerUtil.showSpinner();
         this.walletService.getTransactionHistory().subscribe((res: TransactionList) => {
             this.transactionHistory = res.transactions
-                .sort((a,b) => {
-                    return new Date(b.date).getTime() - new Date(a.date).getTime()
-                })
+                .sort((a,b) => new Date(b.date).getTime() - new Date(a.date).getTime())
             this.transactionItems = this.transactionHistory.length;
             this.refreshTransactionHistory();
         });

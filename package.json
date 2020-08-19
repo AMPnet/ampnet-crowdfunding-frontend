@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --proxy-config proxy.conf.json --disable-host-check",
+    "start-prod-build": "docker build -f prod-build/Dockerfile -t ampnet-prod-proxy . && docker run -p 8080:80 --rm ampnet-prod-proxy:latest",
     "test": "ng test",
     "lint": "tslint \"src/**/*.ts\" --project tsconfig.json -s node_modules/tslint-stylish -t stylish",
     "lint-fix": "tslint --fix \"src/**/*.ts\" --project tsconfig.json -s node_modules/tslint-stylish -t stylish",

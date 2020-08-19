@@ -23,11 +23,9 @@ export class SingleOfferItemComponent implements OnInit {
         if (this.component.headerImageUrl === null) {
             this.component.headerImageUrl = '../../../assets/noimage.png';
         }
-        //Kod koji se koristi u kombinaciji s ispravnim formatom prikaza valute
-        /* setTimeout(() => {
+        setTimeout(() => {
             autonumericCurrency('.req-funding-' + this.component.offerID);
-        }, 300); */
-
+        }, 300);
     }
 
 

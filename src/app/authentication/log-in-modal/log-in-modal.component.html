@@ -4,38 +4,31 @@
             <div class="modal-body">
                 <div class="container root-content-container">
                     <h1>LOGIN</h1>
-                    
-
                     <div class="form-group">
-<!--                         <label class="explainer-mini" for="exampleInputEmail1">Email address</label> -->
                         <input [(ngModel)]="email" aria-describedby="emailHelp" class="form-control p-4"
                                id="exampleInputEmail1"
                                placeholder="Enter email" type="email">
                     </div>
                     <div class="form-group">
-   <!--                      <label class="explainer-mini" for="exampleInputPassword1">Password</label> -->
                         <input [(ngModel)]="password" class="form-control p-4" id="exampleInputPassword1"
                                placeholder="Password" type="password">
                     </div>
-                    <button
-                            (click)="logInMailClicked()"
+                    <button (click)="logInMailClicked()" 
                             class="btn btn-primary btn-action-a" type="submit">
                         Login
                     </button>
+                    
                     <div class="dropdown-divider mt-4 mb-4 mx-auto"></div>
 
-
-                    <button
-                            (click)="logInFacebookClicked()"
+                    <button (click)="logInFacebookClicked()" 
                             class="btn socials-facebook btn-action-a">
                         <i class="fab fa-facebook-square mr-2"></i>
                         <span class="">Login with Facebook</span>
                     </button>
-                    <button
-                            (click)="logInGoogleClicked()"
+                    <button (click)="logInGoogleClicked()" 
                             class="btn btn-action-a socials-google mt-3">
-                            <i class="fab fa-google mr-2"></i>
-                            <span class="">Login with Google</span>
+                        <i class="fab fa-google mr-2"></i>
+                        <span class="">Login with Google</span>
                     </button>
 
                 </div>

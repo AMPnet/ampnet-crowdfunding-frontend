@@ -29,7 +29,6 @@ export class SidebarComponent implements OnInit {
         });
         this.getProfile();
         this.fetchUserData();
-        console.log(this.userService)
     }
 
     getProfile() {
@@ -51,8 +50,6 @@ export class SidebarComponent implements OnInit {
     fetchUserData() {
         this.userService.getOwnProfile().subscribe(res => {
             this.fullName = res['first_name'] + ' ' + res['last_name'];
-        }, err => {
-
         });
     }
 

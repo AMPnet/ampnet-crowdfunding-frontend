@@ -242,7 +242,7 @@ export class ManageSingleProjectComponent implements OnInit {
     }
 
     private setUploadAreas() {
-        const imageUppy = this.setUpUppy('image-upload-project', ['image/*'], );
+        const imageUppy = this.setUpUppy('image-upload-project', ['image/*'],);
         this.configureUppy(imageUppy, '#drag-drop-area-img');
 
         const filesUppy = Uppy.Core({

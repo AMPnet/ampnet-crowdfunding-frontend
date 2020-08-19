@@ -62,7 +62,7 @@ export class WalletComponent implements OnInit {
             this.wallet.activated_at = res.activated_at;
             this.checkComplete = true;
             SpinnerUtil.hideSpinner();
-        }, err => {
+        }, () => {
             SpinnerUtil.hideSpinner();
             this.checkComplete = true;
         });

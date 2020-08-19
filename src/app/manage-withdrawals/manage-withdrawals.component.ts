@@ -12,10 +12,9 @@ import {
     styleUrls: ['./manage-withdrawals.component.css']
 })
 export class ManageWithdrawalsComponent implements OnInit {
-
     withdrawals: UserWithdraw[];
 
-    constructor(private withdrawCooperativeService: WalletCooperativeWithdrawService) {
+    constructor(private withdrawService: WalletCooperativeWithdrawService) {
     }
 
     ngOnInit() {
@@ -24,7 +23,7 @@ export class ManageWithdrawalsComponent implements OnInit {
 
     getApprovedWithdrawals() {
         SpinnerUtil.showSpinner();
-        return this.withdrawCooperativeService.getApprovedWithdrawals().subscribe(res => {
+        return this.withdrawService.getApprovedWithdrawals().subscribe(res => {
             SpinnerUtil.hideSpinner();
             this.withdrawals = res.withdraws;
         }, hideSpinnerAndDisplayError);

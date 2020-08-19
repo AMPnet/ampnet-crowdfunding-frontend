@@ -15,4 +15,9 @@ export class UserService {
         return this.http.get<User>('/api/user/me')
             .pipe(tap(user => UserStatusStorage.personalData = user));
     }
+
+
+    logout() {
+        return this.http.post<void>(`/api/user/logout`, {});
+    }
 }

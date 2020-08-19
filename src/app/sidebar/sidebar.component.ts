@@ -37,8 +37,10 @@ export class SidebarComponent implements OnInit {
     }
 
     logOutClicked() {
-        localStorage.removeItem('access_token');
-        this.router.navigate(['']);
+        return this.userService.logout().subscribe(() => {
+            localStorage.removeItem('access_token');
+            this.router.navigate(['']);
+        });
     }
 
     contactUsClicked() {

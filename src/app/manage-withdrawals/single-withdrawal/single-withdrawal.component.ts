@@ -27,7 +27,8 @@ export class SingleWithdrawalComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit() {
-        this.getWithdrawal();
+        const id = Number(this.route.snapshot.params.ID);
+        this.getWithdrawal(id);
     }
 
     ngAfterViewInit() {
@@ -36,14 +37,11 @@ export class SingleWithdrawalComponent implements OnInit, AfterViewInit {
         }, 300);
     }
 
-    getWithdrawal() {
+    getWithdrawal(id: number) {
         SpinnerUtil.showSpinner();
-        const id = this.route.snapshot.params.ID;
         this.withdrawCooperativeService.getApprovedWithdrawals().subscribe(res => {
             SpinnerUtil.hideSpinner();
-            this.withdrawal = res.withdraws.filter(item => {
-                return (item.id === id);
-            })[0];
+            this.withdrawal = res.withdraws.filter(item => item.id === id)[0];
         }, hideSpinnerAndDisplayError);
     }
 

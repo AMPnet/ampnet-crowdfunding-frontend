@@ -98,6 +98,7 @@ export class ManageSingleProjectComponent implements OnInit {
             this.manageProjectsService.addNewsToProject(this.project, linkHolder)
                 .subscribe(updatedProject => {
                     this.project = updatedProject;
+                    SpinnerUtil.hideSpinner();
                 }, err => {
                     displayBackendError(err);
                 });

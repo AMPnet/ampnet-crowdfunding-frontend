@@ -7,7 +7,7 @@ import { Withdraw } from '../withdraw.service';
     providedIn: 'root'
 })
 export class WalletCooperativeWithdrawService {
-    endpoint = '/wallet/cooperative/withdraw';
+    endpoint = '/api/wallet/cooperative/withdraw';
 
     constructor(private http: BackendHttpClient) {
     }

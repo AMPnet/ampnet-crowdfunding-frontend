@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Organization, OrganizationMember, OrganizationService } from '../../shared/services/project/organization.service';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
-import { displayBackendError } from 'src/app/utilities/error-handler';
+import { displayBackendError, hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
 import { BroadcastService } from 'src/app/shared/services/broadcast.service';
 import swal from 'sweetalert2';
 import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
@@ -43,7 +43,6 @@ export class OrganizationDetailsComponent implements OnInit {
                 SpinnerUtil.hideSpinner();
             });
         });
-
     }
 
     fetchDetails(onComplete: () => void) {

@@ -59,7 +59,7 @@
             <div class="col-md-4 mt-3">
                 <div>Your purchase price</div>
                 <div class="explainer-mini">
-                    {{pricePaidFor}}EUR
+                    {{pricePaidFor | currencyDefault}}
                 </div>
             </div>
             <div class="col-md-4 mt-3 text-center">
@@ -71,7 +71,7 @@
             <div class="col-md-4 mt-3 float-right">
                 <div class="text-right">Suggested discounted price</div>
                 <div class="explainer-mini text-right">
-                    {{suggestedSalePrice}}EUR
+                    {{suggestedSalePrice | currencyDefault}}
                 </div>
             </div>
         </div>

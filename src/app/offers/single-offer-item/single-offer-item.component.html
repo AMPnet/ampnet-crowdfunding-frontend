@@ -22,7 +22,7 @@
             <div class="mt-2 d-flex flex-row justify-content-between gray-text">
                 <div class="mt-2">
                     <div class=" ">
-                        {{component.currency}}{{component.currentFunding}}
+                        {{component.currentFunding | currencyDefault}}
                     </div>
                     <div class="mt-1 explainer-mini">
                         <i class="fas fa-chart-bar mr-2"></i>

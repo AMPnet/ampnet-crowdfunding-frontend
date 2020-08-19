@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { UserStatusStorage } from '../../../user-status-storage';
 import { BackendHttpClient } from '../backend-http-client.service';
 import { TransactionInfo, WalletDetails } from './wallet-cooperative/wallet-cooperative-wallet.service';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -49,6 +50,10 @@ export class WalletService {
     createOrganizationWalletTransaction(orgID: string) {
         return this.http.get<TransactionInfo>(`/api/wallet/wallet/organization/${orgID}/transaction`);
     }
+
+    getTransactionHistory() {
+        return this.http.get<UserTransactionResponse>('/api/wallet/portfolio/transactions');
+    }
 }
 
 interface InitWalletData {
@@ -58,4 +63,17 @@ interface InitWalletData {
 interface WalletPairInfo {
     code: string;
     public_key: string;
+}
+
+export interface UserTransaction {
+    from_tx_hash: string;
+    to_tx_hash: string;
+    amount: number;
+    type: string;
+    date: Date;
+    state: string;
+}
+
+interface UserTransactionResponse {
+    transactions: UserTransaction[];
 }

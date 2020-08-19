@@ -26,11 +26,6 @@ export class UserService {
 
     refreshUserToken() {
         return this.http.post<TokenModel>(API.generateRoute('/user/token/refresh'),
-            {'refresh_token': localStorage.getItem('refresh_token')}, API.tokenHeaders())
-            .pipe(
-                tap(data => {
-                    localStorage.setItem('access_token', data.access_token);
-                    localStorage.setItem('refresh_token', data.refresh_token);
-                }));
+            {'refresh_token': localStorage.getItem('refresh_token')}, API.tokenHeaders());
     }
 }

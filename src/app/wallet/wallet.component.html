@@ -1,32 +1,56 @@
 <div *ngIf="checkComplete">
     <div class="container root-content-container">
+        <p class="col-12 mt-3 mb-lg-4 page-title text-uppercase page-title">
+            <i class="fas fa-long-arrow-alt-left mr-3"></i>
+            wallet
+        </p>
 
         <div *ngIf="(wallet ===  undefined)" class="row">
-            <div class="col-md-12 gray-text d-flex justify-content-center">
-                <div class="text-justify">
-                    <h4 class="mb-3">
-                        <i class="fas fa-wallet mr-3"></i>
+            
+            <div class="content-left col-12 col-lg-6 mt-4 pl-md-5 pr-md-5">
+                <div class="wallet-warning mt-5 mb-5">
+                    <i class="fas fa-exclamation-triangle mr-2"></i>
+                    You must initialize your wallet to invest
+                </div>
+                <div>
+                    <h4 class="mb-3 text-uppercase">
                         Your private, secure wallet
                     </h4>
-                    We're commited to making sure your funds are as
-                    safe as they can possibly be when using our platform. To do this,
-                    we prevent the management of your money by anyone other than you.
-                    <br><br>
-                    This is why we use a third-party secure wallet to store
-                    your money and approve investments into projects. To start
-                    the process of initializing your wallet - click on the button below.
+                    <p>
+                        We're commited to making sure your funds are as safe as they can possibly be when 
+                        using our platform. <br> To do this, we prevent the management of your money by anyone 
+                        other than you.
+                    </p>
+                    <P>
+                        This is why we use a third-party secure wallet to store
+                        your money and approve investments into projects. To start
+                        the process of initializing your wallet - click on the button below.
+                    </P>
+                    
                 </div>
+                <div class="mt-4 text-center initialize-button">
+                    <button (click)="setUpArkane()" class="btn btn-primary mt-3 w-100">
+                        <i class="fas fa-plus mr-3"></i>
+                        Initialize secure wallet
+                    </button>
+                </div>
+
             </div>
-            <div class="col-md-12 mt-5 text-center">
-                <button (click)="setUpArkane()" class="btn btn-primary py-3 mt-3 w-100">
-                    <i class="fas fa-plus mr-3"></i>
-                    Initialize secure wallet
-                </button>
-            </div>
-            <div class="col-md-12 mt-5 text-center explainer-mini">
-                Advanced users: This platform is powered by blockchain technology. A "wallet" is
-                a keystorage service used for signing transactions. If you're an advanced user and would
-                like to sign transactions yourself, click <u>here</u>
+
+            <div class="content-right col-12 col-lg-5 mt-lg-4">
+                <svg width="1.2em" height="1.2em" viewBox="0 0 16 16" class="bi bi-lightning-fill mr-3" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09z"/>
+                </svg>
+                <div>
+                    <p>
+                        <span>Advanced users</span>
+                        <br>
+                        This platform is powered by blockchain technology. A "wallet" is
+                        a keystorage service used for signing transactions. If you're an advanced user and 
+                        would like to sign transactions yourself, <u>click here</u>
+                    </p>
+                    
+                </div>
             </div>
         </div>
 
@@ -34,32 +58,37 @@
             <div class="row">
 
                 <div class="col-md-12">
-                    <div *ngIf="wallet.balance ===  0" class="alert alert-info w-100 mt-3">
+                    <div *ngIf="wallet.balance ===  0" class="alert alert-info w-100 mt-4">
                         Your wallet is empty. Deposit funds to get started!
                     </div>
-                    <div *ngIf="wallet.hash ===  undefined" class="alert alert-info w-100 mt-3">
+                    <div *ngIf="wallet.hash ===  undefined" class="alert alert-info w-100 mt-4">
                         Your wallet is pending approval from admin. You can deposit funds while pending approval.
                     </div>
                 </div>
 
-                <div class="col-md-12 mt-3 mb-5">
-					<span class="h1 text-center">
-						<div class="explainer-mini float-right mb-2 w-100">Balance</div>
-						<div *ngIf="wallet.balance !== undefined" class=" ">{{wallet.currency}}{{wallet.balance}}
-                            .00</div>
-					</span>
-                </div>
-                <div class="col-md-6 mt-3">
-                    <button class="btn btn-primary w-100 py-3" routerLink="deposit">
-                        <i class="fas fa-arrow-circle-down mr-2"></i>
-                        Deposit
-                    </button>
-                </div>
-                <div class="col-md-6 mt-3">
-                    <button class="btn btn-primary w-100 py-3" routerLink="withdraw">
-                        <i class="fas fa-arrow-circle-up mr-2"></i>
-                        Withdraw
-                    </button>
+                <div class="col-lg-12  text-center text-md-left  mt-4 ">
+                    <div class="wallet-balance d-md-flex align-items-center pt-4 pb-4 pl-2">
+                        <div class="col-12 col-md-6 col-xl-8 balance-left">
+                            <span class="h1">
+                                <div class="balance-text text-uppercase mb-2">Balance</div>
+                                <div *ngIf="wallet.balance !== undefined" class="balance-amount">{{wallet.currency}}{{wallet.balance}}.00</div>
+                            </span>
+                        </div>
+                        <div class="col-12 col-md-3 col-xl-2 mt-4 mt-md-0 button-container">
+                            <button class="btn btn-primary w-100" routerLink="deposit">
+                                <i class="fas fa-arrow-circle-down mr-2"></i>
+                                Deposit
+                            </button>
+                        </div>
+                        <div class="col-12 col-md-3 col-xl-2 mt-4 mt-md-0 button-container">
+                            <button class="btn btn-primary w-100" routerLink="withdraw">
+                                <i class="fas fa-arrow-circle-up mr-2"></i>
+                                Withdraw
+                            </button>
+                        </div>
+                    </div>
+                    
+
                 </div>
             </div>
             <br>
@@ -69,24 +98,38 @@
 					</span>
                 <div *ngIf="transactionHistory != undefined">
                     <table class="table table-striped">
-                        <thead>
-                        <tr>
-                            <th scope="col">Date</th>
-                            <th scope="col">Type</th>
-                            <th scope="col">State</th>
-                            <th scope="col">Amount</th>
-                        </tr>
-                        </thead>
                         <tbody>
                         <tr *ngFor="let transaction of transactionHistoryPage">
-                            <td>{{ transaction.date | date }}</td>
-                            <td>{{ transaction.type }}</td>
-                            <td>{{ transaction.state }}</td>
-                            <td>{{ transaction.amount / 100 | currency:'EUR' }}</td>
+                            <td class="icon-type-cell pr-0">
+                                <span class="icon-type">
+                                    <i class="fas mr-3 {{transaction.type | txIconType }}"></i>
+                                </span>
+                            </td>
+                            <td class="pl-1">
+                                <div>
+                                    
+                                    <span>
+                                        <div>
+                                            {{ transaction.type }}
+                                        </div>
+                                        {{ transaction.date | date }}
+                                    </span>
+                                </div>
+                            </td>
+                            <td *ngIf="transaction.state != 'MINED'">
+                                <i class="icon-type fas {{ transaction.state | txIconStatus }}"></i>
+                            </td>
+                            <td>
+                                <div class="currency-table-column" >
+                                    <i *ngIf="transaction.type == 'DEPOSIT'; else negativeTx">+</i>
+                                    <ng-template #negativeTx> <i>-</i> </ng-template>
+                                    {{ transaction.amount / 100 | currency:'EUR' }}
+                                </div>
+                            </td>
                         </tr>
                         </tbody>
                     </table>
-                    <div class="d-flex justify-content-between p-2">
+                    <div class="d-flex justify-content-center p-2">
                         <ngb-pagination [collectionSize]="transactionItems" [(page)]="tablePage"
                                         [pageSize]="tablePageSize"
                                         (pageChange)="refreshTransactionHistory()">

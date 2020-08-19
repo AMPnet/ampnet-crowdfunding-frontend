@@ -69,9 +69,10 @@
 
 
     <div class="dropdown-divider" id="divider-menu"></div>
-
+    
     <ul class="list-unstyled components" id="main-menu">
-        <li (click)="contactUsClicked()" routerLinkActive="side-active">
+        <span class="full-name">{{fullName}}</span>
+        <li (click)="contactUsClicked()" routerLinkActive="side-active" class="mt-2">
             <i class="menu-icon fas fa-envelope-open"></i>
             <span>Contact Us</span>
         </li>

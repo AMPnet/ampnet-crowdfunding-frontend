@@ -18,6 +18,7 @@ export class SidebarComponent implements OnInit {
     hasWalletActive = true;
     hasBankingInfo = true;
     hasVerifiedProfile = true;
+    fullName: string;
 
     constructor(private router: Router, private userService: UserService) {
     }
@@ -27,6 +28,7 @@ export class SidebarComponent implements OnInit {
             NavbarComponent.toggleSidebar(false);
         });
         this.getProfile();
+        this.fetchUserData();
     }
 
     getProfile() {
@@ -45,6 +47,12 @@ export class SidebarComponent implements OnInit {
 
     contactUsClicked() {
         window.location.href = 'mailto://info@ampnet.io';
+    }
+
+    fetchUserData() {
+        this.userService.getOwnProfile().subscribe(res => {
+            this.fullName = res['first_name'] + ' ' + res['last_name'];
+        });
     }
 
 }

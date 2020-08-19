@@ -1,20 +1,18 @@
-@font-face {
-    font-family: 'MaisonNeue';
-    src: url(assets/MaisonNeueExtended-Light.otf) format("opentype")
-}
-
-@font-face {
-    font-family: 'GTSuper';
-    src: url(assets/GT-Super-Text-Regular.otf) format("opentype");
-}
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
 
 * {
-    font-family: 'MaisonNeue', sans-serif;
-    font-weight: 400;
+    font-family: 'Inter', sans-serif !important;
 }
 
+@media (min-width: 1400px) {
+    .container {
+        padding: 0 0 0 2rem !important;
+    }
+}
+
+
 h1, h2, h3, h4, h5, h6 {
-    font-weight: 500;
+    font-weight: 400 !important;
 }
 
 
@@ -26,14 +24,16 @@ body {
     background-color: #fcfcfc;
     font-size: 16px !important;
     overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
 }
 
 .card {
-    border-radius: 1rem !important;
+    border-radius: 2px !important;
 }
 
 .alert {
-    border-radius: 50px !important;
     text-align: center;
 }
 
@@ -59,7 +59,19 @@ body {
 }
 
 .btn {
-    border-radius: 50px !important;
+    /* border-radius: 50px !important; */
+    border-radius: unset !important;
+    height: 64px;
+}
+
+img {
+    border-radius: unset !important;
+}
+
+@media (max-width: 800px) {
+    .btn {
+        height: 48px;
+    }
 }
 
 
@@ -100,31 +112,8 @@ body {
     background-color: #494 !important;
 }
 
-
-@media (max-width: 800px) {
-    .root-content-container {
-        padding-left: 1rem !important;
-        padding-right: 1rem !important;
-        padding-top: 1rem !important;
-        padding-bottom: 1rem !important;
-    }
-}
-
-@media (min-width: 800px) {
-    .root-content-container {
-        padding-left: 2rem !important;
-        padding-bottom: 2rem !important;
-        padding-right: 2rem !important;
-        padding-top: 2rem !important;
-    }
-}
-
 .root-content-container {
-    background-size: rgb(244, 247, 250);
-}
-
-. {
-    font-weight: 200 !important;
+    padding: 20px;
 }
 
 .cursor-pointer {
@@ -158,47 +147,46 @@ body {
 }
 
 /* Spinner */
-.lds-ring {
-    display: inline-block;
-    position: relative;
-    width: 64px;
-    height: 64px;
-}
-
-.lds-ring div {
-    box-sizing: border-box;
-    display: block;
-    position: absolute;
-    width: 51px;
-    height: 51px;
-    margin: 6px;
-    border: 6px solid #fff;
-    border-radius: 50%;
-    animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-    border-color: #fff transparent transparent transparent;
-}
-
-.lds-ring div:nth-child(1) {
-    animation-delay: -0.45s;
-}
-
-.lds-ring div:nth-child(2) {
-    animation-delay: -0.3s;
-}
-
-.lds-ring div:nth-child(3) {
-    animation-delay: -0.15s;
-}
-
-@keyframes lds-ring {
-    0% {
-        transform: rotate(0deg);
+    .lds-ring {
+        display: inline-block;
+        position: relative;
+        width: 64px;
+        height: 64px;
     }
-    100% {
-        transform: rotate(360deg);
-    }
-}
 
+    .lds-ring div {
+        box-sizing: border-box;
+        display: block;
+        position: absolute;
+        width: 51px;
+        height: 51px;
+        margin: 6px;
+        border: 6px solid #fff;
+        border-radius: 50%;
+        animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+        border-color: #fff transparent transparent transparent;
+    }
+
+    .lds-ring div:nth-child(1) {
+        animation-delay: -0.45s;
+    }
+
+    .lds-ring div:nth-child(2) {
+        animation-delay: -0.3s;
+    }
+
+    .lds-ring div:nth-child(3) {
+        animation-delay: -0.15s;
+    }
+
+    @keyframes lds-ring {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
 /*End spinner*/
 
 .full-overlay {
@@ -225,6 +213,12 @@ body {
     }
 }
 
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1162px !important;
+    }
+}
+
 input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
@@ -240,12 +234,11 @@ input[type="number"] {
 
 .form-control {
     border: none !important;
-    border-radius: 50px !important;
-    box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.15) !important;
+    box-shadow: 0px 0px 6px 0px #00000025 !important;
 }
 
 .note-editor {
-    border-radius: 5px !important;
+    border-radius: 2px !important;
     border-color: transparent !important;
     box-shadow: 0px 0px 6px 0px #00000025 !important;
     padding: 1.5rem !important;

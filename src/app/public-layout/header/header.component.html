@@ -1,15 +1,15 @@
 <nav class="public-header navbar navbar-collapse navbar-dark bg-light pt-2">
-    <div class="ml-4">
+    <div class="ml-2 ml-md-4">
         <a class="navbar-brand" href="#">
             <img alt="" height="13" src="../../../assets/genervest-logo-dark.png">
         </a>
     </div>
     <div *ngIf="!onlyLogo" id="auth-buttons">
 		<span class="text-white">
-			<button class="btn btn-primary px-4 py-2 mr-4 " routerLink="/sign_up">Sign Up</button>
+			<button class="btn btn-primary px-4 py-2 mr-md-5 mr-3 signup-button" routerLink="/sign_up">Sign Up</button>
 		</span>
         <span>
-			<a class="mr-4 cursor-pointer " data-target="#log-in-modal" data-toggle="modal">Log In</a>
+			<a class="mr-md-4 cursor-pointer mr-2 ml-2 ml-md-0 " data-target="#log-in-modal" data-toggle="modal">Log In</a>
 		</span>
     </div>
 </nav>

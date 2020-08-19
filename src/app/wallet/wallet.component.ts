@@ -43,7 +43,7 @@ export class WalletComponent implements OnInit {
 
     startWalletInit(addr: string) {
         SpinnerUtil.showSpinner();
-        this.walletService.initWallet(addr).subscribe(res => {
+        this.walletService.initWallet(addr).subscribe(() => {
             SpinnerUtil.hideSpinner();
             this.getUserWallet();
         }, err => {
@@ -71,7 +71,8 @@ export class WalletComponent implements OnInit {
     getTransactionHistory() {
         SpinnerUtil.showSpinner();
         this.walletService.getTransactionHistory().subscribe(res => {
-            this.transactionHistory = res.transactions;
+            this.transactionHistory = res.transactions
+                .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
             this.transactionItems = this.transactionHistory.length;
             this.refreshTransactionHistory();
         });

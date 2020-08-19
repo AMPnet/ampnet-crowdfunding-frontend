@@ -97,7 +97,7 @@ const routes: Routes = [
       {path: 'approve_organizations', component: ApproveOrganizationsComponent},
       {path: 'offers/:offerID/invest/:investAmount/verify_sign', component: VerifySignOfferComponent},
       {path: 'manage_groups/:groupID/manage_project/:projectID/manage_payments', component: ManagePaymentsComponent },
-      {path: 'manage_groups/:groupID/manage_project/:projectID/manage_payments/revenue_share', component: RevenueShareComponent },
+      {path: 'manage_groups/:groupID/manage_project/:projectID/manage_payments/revenue_share/:amount', component: RevenueShareComponent },
       {path: 'manage_withdrawals', component: ManageWithdrawalsComponent},
       {path: 'manage_withdrawals/:ID', component: SingleWithdrawalComponent},
       {path: 'manage_deposits', component: ManageDepositsComponent},

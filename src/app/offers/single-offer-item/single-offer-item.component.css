@@ -1,16 +1,64 @@
 .card-holder {
     width: 100%;
     display: flex;
-    box-shadow: 0px 1px 8px 3px rgba(0, 0, 0, 0.08);
     transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
     padding-bottom: 10px;
     border-radius: 2px;
-    background: #fefefe;
+    background: #F7F7F7;
+}
+
+.card-holder:hover {
+    box-shadow: unset !important;
+}
+
+.progress ,.progress .progress-bar {
+    height: 4px;
+    border-radius: unset;
+
+}
+
+.card-img-base {
+    box-shadow: unset;
+}
+
+.card-progress-holder .h3,
+.card-content-text-holder .h3,
+.card-content-text-holder .explainer-mini,
+.raised-info span {
+    color: #111111;
+}
+
+.raised-info,
+.card-content-text-holder .p {
+    color: #444444 !important;
+}
+
+.raised-info {
+    font-size: 14px;
+}
+
+.raised-info span {
+    font-weight: 700;
+}
+
+.ends-info {
+    font-size: 12px;
+}
+
+.card-content-text-holder .explainer-mini {
+    font-size: 12px;
+    letter-spacing: 0.1rem;
+    font-weight: 500;
 }
 
 @media (max-width: 800px) {
     .card-holder {
         flex-direction: column;
+        padding-bottom: 3rem !important;
+    }
+
+    .card-content-text-holder {
+        height: 150px;
     }
 
     .card-progress-holder {
@@ -27,6 +75,18 @@
     .card-holder {
         padding-bottom: 1.5em;
     }
+
+    .card-content-text-holder .h3 {
+        font-size: 24px;
+        font-weight: 400;
+    }
+
+    .card-content-text-holder .p {
+        font-size: 14px;
+        height: 85px;
+        line-height: 1.4rem;
+        overflow: hidden;
+    }
 }
 
 .card-holder:hover {
@@ -34,11 +94,34 @@
 }
 
 @media (min-width: 800px) {
+    .card-holder{
+        max-height: 400px;
+    }
+    
     .card-content-holder {
         width: 40%;
         padding-top: 3em;
         padding-left: 3em;
         padding-right: 3em;
+    }
+    .card-progress-holder {
+        width: 55%;
+    }
+
+    .card-content-text-holder .h3 {
+        font-size: 36px;
+        font-weight: 400;
+    }
+
+    .card-content-text-holder .p {
+        font-size: 16px;
+        height: 100px;
+        line-height: 1.6rem;
+        overflow: hidden;
+    }
+
+    .card-content-text-holder {
+        height: 260px;
     }
 }
 
@@ -46,7 +129,7 @@
     .card-left-holder {
         width: 60%;
         height: 100%;
-        padding-left: 1.5em;
+        padding-left: 3em;
         padding-top: 50px;
     }
 
@@ -81,11 +164,9 @@ img {
 }
 
 .card-content-text-holder {
-    height: 290px;
     word-wrap: break-word;
     overflow: hidden;
     text-overflow: ellipsis;
-    margin-bottom: 20px;
 }
 
 .card-content-actions-holder {
@@ -94,7 +175,5 @@ img {
 }
 
 .invest-button {
-    position: absolute;
-    bottom: 0;
-    left: 0;
+    height: 48px;
 }

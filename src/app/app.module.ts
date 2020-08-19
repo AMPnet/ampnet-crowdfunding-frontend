@@ -73,6 +73,7 @@ import { OwnershipComponent } from './ownership/ownership.component';
 import { CurrencyDefaultPipe } from './pipes/currency-default-pipe';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RevenueShareComponent } from './revenue-share/revenue-share.component';
+import { TxIconType, TxIconStatus } from './wallet/wallet-icon.pipe';
 
 export function tokenGetter() {
     return localStorage.getItem('access_token');
@@ -169,7 +170,9 @@ export function jwtOptionsFactory() {
         ExchangeComponent,
         OwnershipComponent,
         CurrencyDefaultPipe,
-        RevenueShareComponent
+        RevenueShareComponent,
+        TxIconType,
+        TxIconStatus
     ],
     imports: [
         BrowserModule,

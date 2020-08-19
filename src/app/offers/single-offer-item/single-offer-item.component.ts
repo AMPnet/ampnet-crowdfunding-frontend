@@ -3,6 +3,7 @@ import { OfferModel } from '../OfferModel';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProjectService } from 'src/app/projects/project-service';
 import { autonumericCurrency, prettyCurrency } from 'src/app/utilities/currency-util';
+import { CurrencyDefaultPipe } from '../../pipes/currency-default-pipe'
 
 @Component({
     selector: 'app-single-offer-item',
@@ -26,7 +27,6 @@ export class SingleOfferItemComponent implements OnInit {
         setTimeout(() => {
             autonumericCurrency('.req-funding-' + this.component.offerID);
         }, 300);
-
     }
 
 

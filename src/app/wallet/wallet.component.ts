@@ -6,6 +6,7 @@ import { displayBackendError } from '../utilities/error-handler';
 import { centsToBaseCurrencyUnit, prettyCurrency } from '../utilities/currency-util';
 import * as numeral from 'numeral';
 import { ArkaneConnect, SecretType } from '@arkane-network/arkane-connect';
+import { TxIconType, TxIconStatus } from './wallet-icon.pipe'
 
 declare var $: any;
 
@@ -71,7 +72,8 @@ export class WalletComponent implements OnInit {
     getTransactionHistory() {
         SpinnerUtil.showSpinner();
         this.walletService.getTransactionHistory().subscribe((res: TransactionList) => {
-            this.transactionHistory = res.transactions;
+            this.transactionHistory = res.transactions
+                .sort((a,b) => new Date(b.date).getTime() - new Date(a.date).getTime())
             this.transactionItems = this.transactionHistory.length;
             this.refreshTransactionHistory();
         });
@@ -80,6 +82,7 @@ export class WalletComponent implements OnInit {
     refreshTransactionHistory() {
         this.transactionHistoryPage = this.transactionHistory
             .map((transaction, i) => ({id: i + 1, ...transaction}))
-            .slice((this.tablePage - 1) * this.tablePageSize, (this.tablePage - 1) * this.tablePageSize + this.tablePageSize);
+            .slice((this.tablePage - 1) * this.tablePageSize, (this.tablePage - 1) * this.tablePageSize + this.tablePageSize)
+            
     }
 }

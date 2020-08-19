@@ -11,7 +11,7 @@
             <div class="mt-2">
                 <div class="mt-2 mb-2 raised-info">
                     <div class=" ">
-                        <span>{{component.currency}} {{component.currentFunding}} </span>raised of {{component.currency}} {{component.fundingRequired}} goal
+                        <span>{{component.currentFunding | currencyDefault }} </span>raised of {{component.fundingRequired | currencyDefault }} goal
                     </div>
                 </div>
             </div>

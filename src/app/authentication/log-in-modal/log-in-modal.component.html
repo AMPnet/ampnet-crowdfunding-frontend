@@ -5,13 +5,17 @@
                 <div class="container root-content-container">
                     <h1>LOGIN</h1>
                     <div class="form-group">
-                        <input [(ngModel)]="email" aria-describedby="emailHelp" class="form-control p-4"
-                               id="exampleInputEmail1"
-                               placeholder="Enter email" type="email">
+                        <input [(ngModel)]="email" aria-describedby="emailHelp" 
+                            (keyup.enter)="logInMailClicked()"
+                            class="form-control p-4"
+                            id="exampleInputEmail1"
+                            placeholder="Enter email" type="email">
                     </div>
                     <div class="form-group">
-                        <input [(ngModel)]="password" class="form-control p-4" id="exampleInputPassword1"
-                               placeholder="Password" type="password">
+                        <input [(ngModel)]="password" class="form-control p-4" 
+                            (keyup.enter)="logInMailClicked()"
+                            id="exampleInputPassword1"
+                            placeholder="Password" type="password">
                     </div>
                     <button (click)="logInMailClicked()" 
                             class="btn btn-primary btn-action-a" type="submit">

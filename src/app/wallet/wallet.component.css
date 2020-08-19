@@ -190,3 +190,7 @@ td {
 .icon-type-cell {
     width: 20px;
 }
+
+.page-item.active .page-link {
+    background-color: red!important;
+}

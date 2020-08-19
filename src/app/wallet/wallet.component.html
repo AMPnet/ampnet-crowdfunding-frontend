@@ -121,13 +121,15 @@
                             </td>
                             <td>
                                 <div class="currency-table-column" >
+                                    <i *ngIf="transaction.type == 'DEPOSIT'; else negativeTx">+</i>
+                                    <ng-template #negativeTx> <i>-</i> </ng-template>
                                     {{ transaction.amount / 100 | currency:'EUR' }}
                                 </div>
                             </td>
                         </tr>
                         </tbody>
                     </table>
-                    <div class="d-flex justify-content-between p-2">
+                    <div class="d-flex justify-content-center p-2">
                         <ngb-pagination [collectionSize]="transactionItems" [(page)]="tablePage"
                                         [pageSize]="tablePageSize"
                                         (pageChange)="refreshTransactionHistory()">

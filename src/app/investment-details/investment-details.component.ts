@@ -57,7 +57,7 @@ export class InvestmentDetailsComponent implements OnInit {
                 });
                 this.broadcastService.broadcastSignedTx(sigRes.result.signedTransaction, res.tx_id)
                     .subscribe(_ => {
-                        swal('', 'Successful investment. Allow up to 5 min for investment to become visible', 'success');
+                        this.showAlert();
                         SpinnerUtil.hideSpinner();
                     }, err => {
                         hideSpinnerAndDisplayError(err);
@@ -75,5 +75,16 @@ export class InvestmentDetailsComponent implements OnInit {
                     this.isCancelable = res.can_cancel;
                 });
         }
+    }
+
+    showAlert() {
+        swal({
+            type: 'success',
+            title: 'Transaction signed',
+            text: 'Transaction is being processed...',
+            footer: 'Check your transaction status<a href="/dash/wallet">&nbsp;here</a>'
+        });
+        // This is a hack to fix bug in Sweet Alert lib -> always displays dropdown
+        swal.getContent().getElementsByClassName('swal2-select').item(0).remove();
     }
 }

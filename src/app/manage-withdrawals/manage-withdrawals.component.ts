@@ -3,6 +3,7 @@ import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { ManageWithdrawModel } from './manage-withdraw-model';
 import { WithdrawCooperativeService } from './withdraw.cooperative.service';
+import { centsToBaseCurrencyUnit } from '../utilities/currency-util';
 
 @Component({
     selector: 'app-manage-withdrawals',
@@ -24,7 +25,10 @@ export class ManageWithdrawalsComponent implements OnInit {
         SpinnerUtil.showSpinner();
         return this.withdrawCooperativeService.getApprovedWithdrawals().subscribe((res: any) => {
             SpinnerUtil.hideSpinner();
-            this.withdrawals = res.withdraws;
+            this.withdrawals = res.withdraws.map(x => {
+                x.amount = centsToBaseCurrencyUnit(x.amount);
+                return x;
+            })
         }, hideSpinnerAndDisplayError);
     }
 

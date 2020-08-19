@@ -6,6 +6,7 @@ import { UserActivationModel } from './user-activation.model';
 import { BroadcastService } from 'src/app/broadcast/broadcast-service';
 import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
 import swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-user-activation',
@@ -16,7 +17,9 @@ export class UserActivationComponent implements OnInit {
 
     users: UserActivationModel[];
 
-    constructor(private activationService: WalletActivationService, private broadService: BroadcastService) {
+    constructor(private activationService: WalletActivationService,
+                private broadService: BroadcastService,
+                private router: Router) {
     }
 
     ngOnInit() {
@@ -47,8 +50,15 @@ export class UserActivationComponent implements OnInit {
             this.broadService.broadcastSignedTx(sigRes.result.signedTransaction, res.tx_id)
                 .subscribe(_ => {
                     SpinnerUtil.hideSpinner();
-                    swal('', 'Success', 'success');
+                    swal('', 'Success', 'success').then(() => {
+                        this.reloadPage('/dash/activation/users');
+                    });
                 }, hideSpinnerAndDisplayError);
         }, hideSpinnerAndDisplayError);
+    }
+
+    reloadPage(uri: string) {
+        this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
+            this.router.navigate([uri]));
     }
 }

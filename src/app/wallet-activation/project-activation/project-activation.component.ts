@@ -6,6 +6,7 @@ import { displayBackendError, hideSpinnerAndDisplayError } from 'src/app/utiliti
 import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
 import { BroadcastService } from 'src/app/broadcast/broadcast-service';
 import swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-project-activation',
@@ -17,7 +18,8 @@ export class ProjectActivationComponent implements OnInit {
     projects: ProjectActivationModel[];
 
     constructor(private activationService: WalletActivationService,
-                private broadService: BroadcastService) {
+                private broadService: BroadcastService,
+                private router: Router) {
     }
 
     ngOnInit() {
@@ -50,11 +52,17 @@ export class ProjectActivationComponent implements OnInit {
             this.broadService.broadcastSignedTx(sigRes.result.signedTransaction, res.tx_id)
                 .subscribe(_ => {
                     SpinnerUtil.hideSpinner();
-                    swal('', 'Success', 'success');
+                    swal('', 'Success', 'success').then(() => {
+                        this.reloadPage('/dash/activation/projects');
+                    });
                 }, hideSpinnerAndDisplayError);
 
         }, hideSpinnerAndDisplayError);
 
     }
 
+    reloadPage(uri: string) {
+        this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
+            this.router.navigate([uri]));
+    }
 }

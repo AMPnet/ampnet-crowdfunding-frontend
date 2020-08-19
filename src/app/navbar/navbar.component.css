@@ -28,9 +28,7 @@
 }
 
 @media (min-width: 800px) {
-    /* .navbar {
-        margin-left: 220px !important;
-    } */
+
     .navbar {
         display: none;
     }

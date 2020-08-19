@@ -1,41 +1,3 @@
-/* Stilovi prije redizajna */
-/* @font-face {
-    font-family: 'MaisonNeue';
-    src: url(assets/MaisonNeueExtended-Light.otf) format("opentype")
-}
-
-@font-face {
-    font-family: 'GTSuper';
-    src: url(assets/GT-Super-Text-Regular.otf) format("opentype");
-}
-
-* {
-    font-family: 'MaisonNeue', sans-serif;
-    font-weight: 400;
-} */
-
-/* h1, h2, h3, h4, h5, h6 {
-    font-weight: 500;
-} */
-
-/* @media (max-width: 800px) {
-    .root-content-container {
-        padding-left: 1rem !important;
-        padding-right: 1rem !important;
-        padding-top: 1rem !important;
-        padding-bottom: 1rem !important;
-    }
-}
-
-@media (min-width: 800px) {
-    .root-content-container {
-        padding-left: 2rem !important;
-        padding-bottom: 2rem !important;
-        padding-right: 2rem !important;
-        padding-top: 2rem !important;
-    }
-} */
-
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
 
 * {
@@ -151,13 +113,8 @@ img {
 }
 
 .root-content-container {
-    /* background: rgb(244, 247, 250); */
     padding: 20px;
 }
-
-/* . {
-    font-weight: 200 !important;
-} */
 
 .cursor-pointer {
     cursor: pointer !important;
@@ -190,47 +147,46 @@ img {
 }
 
 /* Spinner */
-.lds-ring {
-    display: inline-block;
-    position: relative;
-    width: 64px;
-    height: 64px;
-}
-
-.lds-ring div {
-    box-sizing: border-box;
-    display: block;
-    position: absolute;
-    width: 51px;
-    height: 51px;
-    margin: 6px;
-    border: 6px solid #fff;
-    border-radius: 50%;
-    animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-    border-color: #fff transparent transparent transparent;
-}
-
-.lds-ring div:nth-child(1) {
-    animation-delay: -0.45s;
-}
-
-.lds-ring div:nth-child(2) {
-    animation-delay: -0.3s;
-}
-
-.lds-ring div:nth-child(3) {
-    animation-delay: -0.15s;
-}
-
-@keyframes lds-ring {
-    0% {
-        transform: rotate(0deg);
+    .lds-ring {
+        display: inline-block;
+        position: relative;
+        width: 64px;
+        height: 64px;
     }
-    100% {
-        transform: rotate(360deg);
-    }
-}
 
+    .lds-ring div {
+        box-sizing: border-box;
+        display: block;
+        position: absolute;
+        width: 51px;
+        height: 51px;
+        margin: 6px;
+        border: 6px solid #fff;
+        border-radius: 50%;
+        animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+        border-color: #fff transparent transparent transparent;
+    }
+
+    .lds-ring div:nth-child(1) {
+        animation-delay: -0.45s;
+    }
+
+    .lds-ring div:nth-child(2) {
+        animation-delay: -0.3s;
+    }
+
+    .lds-ring div:nth-child(3) {
+        animation-delay: -0.15s;
+    }
+
+    @keyframes lds-ring {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
 /*End spinner*/
 
 .full-overlay {

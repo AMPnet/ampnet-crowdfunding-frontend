@@ -7,7 +7,27 @@
 
                 <h1>SIGNUP</h1>
 
-                
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <button (click)="performFacebookSignup()"
+                                class="btn w-100 btn-action-a mt-1 socials-facebook">
+                                <i class="fab fa-facebook-square mr-3"></i>
+                                <span>Signup with Facebook</span>
+                            
+                        </button>
+                    </div>
+                    <div class="col-md-6">
+                        <button (click)="performGoogleSignup()"
+                                class="btn w-100 btn-action-a mt-4 mt-md-0 socials-google">
+                                <i class="fab fa-google mr-3"></i>
+                                <span>Signup with Google</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="dropdown-divider"></div>
+
                 <form (ngSubmit)="onSubmitEmailForm(emailSignupForm.value)" [formGroup]="emailSignupForm"
                       id="emailForm">
                     <input class="form-control mt-3 p-4"
@@ -31,26 +51,6 @@
                         Submit
                     </button>
                 </form>
-
-                <div class="dropdown-divider"></div>
-
-                <div class="row">
-                    <div class="col-md-6">
-                        <button (click)="performFacebookSignup()"
-                                class="btn w-100 btn-action-a mt-1 socials-facebook">
-                                <i class="fab fa-facebook-square mr-3"></i>
-                                <span>Signup with Facebook</span>
-                            
-                        </button>
-                    </div>
-                    <div class="col-md-6">
-                        <button (click)="performGoogleSignup()"
-                                class="btn w-100 btn-action-a mt-4 mt-md-0 socials-google">
-                                <i class="fab fa-google mr-3"></i>
-                                <span>Signup with Google</span>
-                        </button>
-                    </div>
-                </div>
 
             </div>
         </div>

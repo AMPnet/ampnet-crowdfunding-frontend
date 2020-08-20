@@ -6,7 +6,6 @@ import { displayBackendError, hideSpinnerAndDisplayError } from 'src/app/utiliti
 import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
 import { BroadcastService } from 'src/app/broadcast/broadcast-service';
 import swal from 'sweetalert2';
-import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-project-activation',
@@ -18,8 +17,7 @@ export class ProjectActivationComponent implements OnInit {
     projects: ProjectActivationModel[];
 
     constructor(private activationService: WalletActivationService,
-                private broadService: BroadcastService,
-                private router: Router) {
+                private broadService: BroadcastService) {
     }
 
     ngOnInit() {

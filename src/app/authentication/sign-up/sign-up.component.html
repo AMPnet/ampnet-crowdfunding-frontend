@@ -5,22 +5,29 @@
         <div class="card p-5 m-auto mt-5">
             <div id="card-content">
 
+                <h1>SIGNUP</h1>
+
+
                 <div class="row">
                     <div class="col-md-6">
-                        <button (click)="performGoogleSignup()"
-                                class="btn btn-primary w-100 btn-action-a mt-1 btn-color-google">Sign Up with
-                            Google
+                        <button (click)="performFacebookSignup()"
+                                class="btn w-100 btn-action-a mt-1 socials-facebook">
+                                <i class="fab fa-facebook-square mr-3"></i>
+                                <span>Signup with Facebook</span>
+                            
                         </button>
                     </div>
                     <div class="col-md-6">
-                        <button (click)="performFacebookSignup()"
-                                class="btn btn-primary float-right w-100 btn-action-a mt-1 btn-color-facebook">
-                            Sign Up with Facebook
+                        <button (click)="performGoogleSignup()"
+                                class="btn w-100 btn-action-a mt-4 mt-md-0 socials-google">
+                                <i class="fab fa-google mr-3"></i>
+                                <span>Signup with Google</span>
                         </button>
                     </div>
                 </div>
 
-                <div class="w-100 dropdown-divider mt-3"></div>
+                <div class="dropdown-divider"></div>
+
                 <form (ngSubmit)="onSubmitEmailForm(emailSignupForm.value)" [formGroup]="emailSignupForm"
                       id="emailForm">
                     <input class="form-control mt-3 p-4"
@@ -33,7 +40,7 @@
                            type="text">
                     <input class="form-control mt-3 p-4" formControlName="password" placeholder="Password"
                            type="password">
-                    <small class="form-text text-muted mt-2">
+                    <small class="form-text text-muted mt-2 mb-2">
                         Password must be 8 characters or longer.
                     </small>
                     <input class="form-control mt-3 p-4" formControlName="confirmPassword"

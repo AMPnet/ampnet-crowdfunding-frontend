@@ -42,7 +42,7 @@ export class OnboardingComponent implements OnInit {
                         text: 'Success!',
                         type: 'success'
                     }).then(function () {
-                       this.reloadPage('/dash/general_settings');
+                        this.reloadPage('/dash/general_settings');
                     }.bind(this));
                     SpinnerUtil.hideSpinner();
                 }, hideSpinnerAndDisplayError);

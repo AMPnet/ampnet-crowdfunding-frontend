@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { WalletActivationService } from '../wallet-activation.service';
-import { hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
+import { displayBackendError, hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { UserActivationModel } from './user-activation.model';
 import { BroadcastService } from 'src/app/broadcast/broadcast-service';
 import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
 import swal from 'sweetalert2';
-import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-user-activation',
@@ -18,19 +17,21 @@ export class UserActivationComponent implements OnInit {
     users: UserActivationModel[];
 
     constructor(private activationService: WalletActivationService,
-                private broadService: BroadcastService,
-                private router: Router) {
+                private broadService: BroadcastService) {
     }
 
     ngOnInit() {
-        SpinnerUtil.showSpinner();
+        this.fetchWalletToActivate();
+    }
 
-        this.activationService.getUnactivatedWallets('user').subscribe((res: any) => {
+    fetchWalletToActivate() {
+        SpinnerUtil.showSpinner();
+        this.activationService
+            .getUnactivatedWallets('user').subscribe((res: any) => {
             this.users = res.users;
             SpinnerUtil.hideSpinner();
 
-        }, hideSpinnerAndDisplayError);
-
+        }, displayBackendError);
     }
 
     async activateUserClicked(id: number) {
@@ -51,14 +52,9 @@ export class UserActivationComponent implements OnInit {
                 .subscribe(_ => {
                     SpinnerUtil.hideSpinner();
                     swal('', 'Success', 'success').then(() => {
-                        this.reloadPage('/dash/activation/users');
+                        this.fetchWalletToActivate();
                     });
                 }, hideSpinnerAndDisplayError);
         }, hideSpinnerAndDisplayError);
-    }
-
-    reloadPage(uri: string) {
-        this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
-            this.router.navigate([uri]));
     }
 }

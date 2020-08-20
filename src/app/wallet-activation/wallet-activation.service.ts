@@ -23,6 +23,4 @@ export class WalletActivationService {
             walletID.toString(), 'transaction'
         ]), {}, API.tokenHeaders());
     }
-
-
 }

@@ -53,16 +53,10 @@ export class ProjectActivationComponent implements OnInit {
                 .subscribe(_ => {
                     SpinnerUtil.hideSpinner();
                     swal('', 'Success', 'success').then(() => {
-                        this.reloadPage('/dash/activation/projects');
+                        this.fetchWalletToActivate();
                     });
                 }, hideSpinnerAndDisplayError);
 
         }, hideSpinnerAndDisplayError);
-
-    }
-
-    reloadPage(uri: string) {
-        this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
-            this.router.navigate([uri]));
     }
 }

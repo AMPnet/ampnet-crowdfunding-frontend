@@ -6,7 +6,6 @@ import { GroupActivationModel } from './group-activation.model';
 import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
 import { BroadcastService } from 'src/app/broadcast/broadcast-service';
 import swal from 'sweetalert2';
-import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-group-activation',
@@ -18,8 +17,7 @@ export class GroupActivationComponent implements OnInit {
     groups: GroupActivationModel[];
 
     constructor(private activationService: WalletActivationService,
-                private broadService: BroadcastService,
-                private router: Router) {
+                private broadService: BroadcastService) {
     }
 
     ngOnInit() {
@@ -53,16 +51,11 @@ export class GroupActivationComponent implements OnInit {
                 .subscribe(_ => {
                     SpinnerUtil.hideSpinner();
                     swal('', 'Success', 'success').then(() => {
-                        this.reloadPage('/dash/activation/groups');
+                        this.fetchWalletToActivate();
                     });
                 }, hideSpinnerAndDisplayError);
 
         }, hideSpinnerAndDisplayError);
 
-    }
-
-    reloadPage(uri: string) {
-        this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
-            this.router.navigate([uri]));
     }
 }

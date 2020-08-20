@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ManagePaymentsService } from './manage-payments.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { WalletModel } from 'src/app/organizations/organization-details/organization-model';
@@ -16,6 +16,7 @@ import { ProjectModel } from 'src/app/projects/create-new-project/project-model'
 })
 export class ManagePaymentsComponent implements OnInit {
 
+    @Input() revenueShareAmount;
     projectWallet: WalletModel;
     projectModel: ProjectModel;
 
@@ -29,6 +30,7 @@ export class ManagePaymentsComponent implements OnInit {
         const projID = this.route.snapshot.params.projectID;
         this.getProjectWallet(projID);
         this.getProject(projID);
+        console.log(this.revenueShareAmount);
     }
 
     getProject(projectID: string) {
@@ -59,10 +61,7 @@ export class ManagePaymentsComponent implements OnInit {
         const projID = this.route.snapshot.params.projectID;
         const orgID = this.route.snapshot.params.groupID;
 
-        console.log(projID);
-        console.log(orgID);
-
-        this.router.navigate(['/dash', 'manage_groups', orgID.toString(), 'manage_project',
-            projID.uuid, 'manage_payments', 'revenue_share', 1]);
+        this.router.navigate(['/dash', 'manage_groups', orgID.toString(),
+            'manage_project', projID, 'manage_payments', 'revenue_share', this.revenueShareAmount]);
     }
 }

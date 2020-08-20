@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { API } from '../utilities/endpoint-manager';
+import { ProjectModel } from './create-new-project/project-model';
 
 @Injectable({
     'providedIn': 'root'
@@ -59,7 +60,7 @@ export class ProjectService {
     }
 
     getProject(projectID: string) {
-        return this.http.get(API.generateComplexRoute(this.publicEndpoint, [
+        return this.http.get<ProjectModel>(API.generateComplexRoute(this.publicEndpoint, [
             projectID.toString()
         ]));
     }

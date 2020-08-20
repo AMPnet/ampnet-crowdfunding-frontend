@@ -37,7 +37,7 @@ export class SingleWithdrawalComponent implements OnInit, AfterViewInit {
 
     getWithdrawal() {
         SpinnerUtil.showSpinner();
-        const id = parseInt(this.route.snapshot.params.ID)
+        const id = parseInt(this.route.snapshot.params.ID);
         this.withdrawCooperativeService.getApprovedWithdrawals().subscribe((res: any) => {
             SpinnerUtil.hideSpinner();
             const withdraws: [ManageWithdrawModel] = res.withdraws;

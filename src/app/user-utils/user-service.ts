@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { UserStatusStorage } from '../user-status-storage';
 import { tap } from 'rxjs/operators';
 import { UserModel } from '../models/user-model';
+import { TokenModel } from '../models/auth/TokenModel';
 
 @Injectable({
     providedIn: 'root'
@@ -21,5 +22,10 @@ export class UserService {
                 tap(res => {
                     UserStatusStorage.personalData = res;
                 }));
+    }
+
+    refreshUserToken() {
+        return this.http.post<TokenModel>(API.generateRoute('/user/token/refresh'),
+            {'refresh_token': localStorage.getItem('refresh_token')}, API.tokenHeaders());
     }
 }

@@ -4,6 +4,8 @@ import { OnboardingService } from '../onboarding.service';
 import swal from 'sweetalert2';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
+import { TokenModel } from '../../models/auth/TokenModel';
+import { UserService } from '../../user-utils/user-service';
 
 @Component({
     selector: 'app-onboarding',
@@ -15,7 +17,8 @@ export class OnboardingComponent implements OnInit {
 
     constructor(
         private router: Router,
-        private onboardingService: OnboardingService) {
+        private onboardingService: OnboardingService,
+        private userService: UserService) {
     }
 
     ngOnInit() {
@@ -42,6 +45,11 @@ export class OnboardingComponent implements OnInit {
                         text: 'Success!',
                         type: 'success'
                     }).then(function () {
+                        this.userService.refreshUserToken()
+                            .subscribe((data: TokenModel) => {
+                                localStorage.setItem('access_token', data.access_token);
+                                localStorage.setItem('refresh_token', data.refresh_token);
+                            });
                         this.reloadPage('/dash/general_settings');
                     }.bind(this));
                     SpinnerUtil.hideSpinner();

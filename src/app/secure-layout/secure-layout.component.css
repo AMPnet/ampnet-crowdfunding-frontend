@@ -40,13 +40,8 @@
 #main-container {
     display: flex;
     flex-direction: column;
-    background: url("../../assets/bg-sec-main.png");
-    background-repeat: no-repeat;
-    background-size: auto;
     min-height: calc(100vh - 50px);
     margin-top: 50px;
-    background-position-x: right;
-    background-position-y: top;
 }
 
 .footer {

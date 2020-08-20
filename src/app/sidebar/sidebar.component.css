@@ -32,7 +32,7 @@ a {
     padding-top: 12px;
     padding-bottom: 12px;
     transition: all 0.1s;
-    color: #777;
+    color: #444444;
     font-weight: 500 !important;
     letter-spacing: normal;
 }
@@ -52,7 +52,7 @@ a {
 
 .side-active {
     background: #fff0d9;
-    color: #1E4B3A !important;
+    color: #111111 !important;
     border-left: 3px solid #9a7402;
 }
 
@@ -78,4 +78,9 @@ a {
 .menu-header {
     font-size: 13px;
     color: #DEA546;
+}
+
+.full-name {
+    padding-left: 24px;
+    font-size: 12px;
 }

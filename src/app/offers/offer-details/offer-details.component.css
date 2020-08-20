@@ -1,62 +1,158 @@
-.breadcrumb {
-    background: #fff;
+ .offer-right-container {
+    background-color: #F7F7F7;
+ }
+
+ .offer-right-text, .offer-right-socials {
+     margin: 0 auto;
+ }
+
+ .progress {
+    max-width: 244px;
 }
 
-.breadcrumb a {
-    color: #333;
+.progress, .progress-bar {
+    height: 4px;
 }
 
-#invest-button {
-    background: #59D097;
+.invest-button-holder {
+    margin-top: 40px;
 }
 
-.header-image {
-    height: 45vh;
-    object-fit: cover;
+.offer-return {
+    margin-top: 40px;
 }
 
-.documentHolder:hover {
-    cursor: pointer;
+.offer-right-text span {
+    font-weight: 700;
+    color: #111111;
 }
 
-.document-holder .card {
-    margin-bottom: 20px;
-    border: none;
-    box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease-in-out;
-
+.offer-desc {
+    margin-top: 40px;
+    font-size: 16px;
+    color: #444444;
+    line-height: 1.6rem;
 }
 
-.document-holder .card:hover {
-    cursor: pointer;
-    box-shadow: -4px 10px 15px rgba(0, 0, 0, 0.1);
-    transform: scale(1.03);
+.offer-docs {
+    font-size: 14px;
+    color: #444444;
 }
 
-.info-holder p {
+.offer-docs a {
+    color: #DEA546;
+}
+
+.offer-docs a {
+    font-size: 24px;
+}
+
+.offer-right-socials span {
+    text-transform: uppercase;
+    color: #111111;
     font-size: 12px;
-    color: #777;
-    font-weight: bold;
-    vertical-align: middle;
 }
 
-.info-holder i {
-    height: 10px;
-    color: #777;
-    font-weight: bold;
-    vertical-align: middle;
+.offer-right-socials div {
+    color: #444444;
 }
+
+.page-title {
+    font-size: 12px;
+    font-weight: 500;
+    color: #111111;
+    letter-spacing: 2px;
+}
+
+.offer-title {
+    font-size: 36px;
+    color: #111111;
+    text-transform: uppercase;
+}
+
+.offer-location {
+    font-size: 12px;
+}
+
+.offer-right-text {
+    font-size: 14px;
+}
+
+@media (min-width: 800px) {
+    .offer-left {
+        max-width: 686px;
+        padding-right: 0;
+    }
+
+    .offer-right {
+        padding-left: 0;
+    }
+
+    .col-md-9 {
+        padding: 0 6px;
+    }
+
+    .offer-left .header-image {
+        max-height: 330px;
+        margin-top: -16px;
+    }
+    .offer-desc {
+        max-width: 550px;
+    }
+ }
 
 @media (max-width: 800px) {
+    .col-12 {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+    .offer-title {
+        font-size: 24px;
+    }
+
+    .progress-text p {
+        margin-bottom: 8px !important;
+    }
+
+    .offer-return {
+        margin-top: 32px;
+    }
+
+    .offer-right-text .dropdown-divider {
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+
+    .offer-right-text {
+        font-size: 12px;
+    }
+
+    .progress-text {
+        font-size: 14px;
+    }
+
+    .offer-desc {
+        font-size: 14px;
+        line-height: 1.5rem;
+    }
+
+    .offer-right-socials span {
+        margin-right: 28px;
+    }
+
+    .offer-right-socials div {
+        margin-right: 37px;
+    }
+
     .invest-button-holder {
-        margin-top: 2em;
+        margin-top: 32px;
+        padding-bottom: 32px;
     }
 }
 
-.news-holder-image {
-    height: 100%;
-    width: 120px;
-    object-fit: cover;
-    border-top-left-radius: 20px;
-    border-bottom-left-radius: 20px;
-}
+@media (min-width: 1399px) {
+    .page-title {
+        margin-top: 0 !important;
+    }
+ }

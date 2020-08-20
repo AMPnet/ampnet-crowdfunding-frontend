@@ -21,8 +21,8 @@ export class ManageProjectsComponent implements OnInit {
     @Input() groupID: string;
 
     constructor(private router: Router, 
-        private orgService: OrganizationService,
-        private projectService: ProjectService) {
+                private orgService: OrganizationService,
+                private projectService: ProjectService) {
     }
 
     onUserClicked() {
@@ -63,6 +63,4 @@ export class ManageProjectsComponent implements OnInit {
             displayBackendError(err);
         });
     }
-
-
 }

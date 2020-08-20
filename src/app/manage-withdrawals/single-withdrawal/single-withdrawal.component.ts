@@ -44,7 +44,7 @@ export class SingleWithdrawalComponent implements OnInit, AfterViewInit {
             this.withdrawal = withdraws.filter(item => {
                 return (item.id === id);
             })[0];
-            this.withdrawal.amount = centsToBaseCurrencyUnit(this.withdrawal.amount)
+            this.withdrawal.amount = centsToBaseCurrencyUnit(this.withdrawal.amount);
         }, hideSpinnerAndDisplayError);
     }
 

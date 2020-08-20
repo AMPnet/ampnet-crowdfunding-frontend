@@ -140,6 +140,6 @@ export class OrganizationDetailsComponent implements OnInit {
             this.orgMembers = members;
         }, err => {
             displayBackendError(err);
-        });
+        }, () => SpinnerUtil.hideSpinner());
     }
 }

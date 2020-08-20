@@ -28,7 +28,7 @@ export class ManageWithdrawalsComponent implements OnInit {
             this.withdrawals = res.withdraws.map(x => {
                 x.amount = centsToBaseCurrencyUnit(x.amount);
                 return x;
-            })
+            });
         }, hideSpinnerAndDisplayError);
     }
 

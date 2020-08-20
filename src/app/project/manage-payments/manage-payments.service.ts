@@ -25,4 +25,9 @@ export class ManagePaymentsService {
         }, API.tokenHeaders());
     }
 
+    public generateTransactionForRevenuePayout(projectID: string, amount: number) {
+        return this.http.post(API.generateComplexRoute(this.revenueShareEndpoint, [
+            projectID
+        ]), {'amount': amount}, API.tokenHeaders());
+    }
 }

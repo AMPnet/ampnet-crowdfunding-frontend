@@ -28,9 +28,7 @@ export class ManageSingleDepositComponent implements OnInit, AfterViewInit {
 
     constructor(private route: ActivatedRoute,
                 private depositCooperativeService: DepositCooperativeService,
-                private broadService: BroadcastService,
-    ) {
-
+                private broadService: BroadcastService) {
     }
 
     ngOnInit() {
@@ -140,5 +138,4 @@ export class ManageSingleDepositComponent implements OnInit, AfterViewInit {
             this.getDeposit();
         });
     }
-
 }

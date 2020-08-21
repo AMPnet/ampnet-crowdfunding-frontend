@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ProjectService } from '../projects/project-service';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
-import { stripCurrencyData } from '../utilities/currency-util';
+import { autonumericCurrency, stripCurrencyData } from '../utilities/currency-util';
 import swal from 'sweetalert2';
 import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
 import { ManagePaymentsService } from '../project/manage-payments/manage-payments.service';
@@ -17,7 +17,8 @@ import { BroadcastService } from '../broadcast/broadcast-service';
 export class RevenueShareComponent implements OnInit {
     @Input() projectName: string;
     @Input() amountInvested: number;
-    @ViewChild('modalPopupWindow') modalPopupWindow: ElementRef;
+    @Input() amountInvestedConfirm: number;
+    @ViewChild('modalConfirmPopupDialog') modalPopupDialog: ElementRef;
 
     projectID: string;
 
@@ -29,6 +30,7 @@ export class RevenueShareComponent implements OnInit {
 
     ngOnInit() {
         this.fetchDataFromRoute();
+        this.formatConfirmPopupInputField();
     }
 
     fetchDataFromRoute() {
@@ -48,12 +50,11 @@ export class RevenueShareComponent implements OnInit {
             });
     }
 
-
     confirmButtonClicked() {
-        const depositAmount = parseInt(stripCurrencyData(String(this.amountInvested)), 10);
-        const depositConfirmAmount = parseInt(stripCurrencyData(String($('#revenue-confirm-amount').val())), 10);
+        const revenueAmountInvested = parseInt(stripCurrencyData(String(this.amountInvested)), 10);
+        const revenueAmountInvestedConfirm = parseInt(stripCurrencyData(String(this.amountInvestedConfirm)), 10);
 
-        if (depositAmount !== depositConfirmAmount) {
+        if (revenueAmountInvested !== revenueAmountInvestedConfirm) {
             swal('', 'The revenue share amounts don\'t match. Please check the proper amount and try again!',
                 'error').then(() => {
                 (<any>$('#modal-confirm-revenue')).modal('hide');
@@ -61,14 +62,14 @@ export class RevenueShareComponent implements OnInit {
             });
             return;
         }
-        this.generateTransactionForRevenuePayout();
+        this.generateTransactionForRevenuePayout(revenueAmountInvestedConfirm);
     }
 
-    generateTransactionForRevenuePayout() {
+    generateTransactionForRevenuePayout(amountInvested: number) {
         SpinnerUtil.showSpinner();
-        this.managePaymentService.generateTransactionForRevenuePayout(this.projectID, this.amountInvested)
+        this.managePaymentService.generateTransactionForRevenuePayout(this.projectID, amountInvested)
             .subscribe(async (res: any) => {
-                this.closePopupWindow();
+                this.closeConfirmPopupDialog();
                 const arkaneConnect = new ArkaneConnect('AMPnet', {environment: 'staging'});
                 const acc = await arkaneConnect.flows.getAccount(SecretType.AETERNITY);
                 const sigRes = await arkaneConnect.createSigner(WindowMode.POPUP).sign({
@@ -78,9 +79,9 @@ export class RevenueShareComponent implements OnInit {
                 });
                 this.broadcastService.broadcastSignedTx(sigRes.result.signedTransaction, res.tx_id)
                     .subscribe(_ => {
-                        swal('', 'Successful revenue payout. Allow up to 5 min for investment to become visible', 'success');
+                        swal('', 'Successful revenue payout!', 'success');
                         SpinnerUtil.hideSpinner();
-                        this.closePopupWindow();
+                        this.closeConfirmPopupDialog();
                     }, err => {
                         hideSpinnerAndDisplayError(err);
                     });
@@ -89,7 +90,11 @@ export class RevenueShareComponent implements OnInit {
             });
     }
 
-    closePopupWindow() {
-        this.modalPopupWindow.nativeElement.click();
+    closeConfirmPopupDialog() {
+        this.modalPopupDialog.nativeElement.click();
+    }
+
+    formatConfirmPopupInputField() {
+        autonumericCurrency('#revenue-confirm-amount');
     }
 }

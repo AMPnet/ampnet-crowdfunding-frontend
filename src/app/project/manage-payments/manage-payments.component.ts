@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { WalletModel } from 'src/app/organizations/organization-details/organization-model';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { displayBackendError } from 'src/app/utilities/error-handler';
-import { prettyCurrency } from 'src/app/utilities/currency-util';
+import { autonumericCurrency, prettyCurrency } from 'src/app/utilities/currency-util';
 import * as numeral from 'numeral';
 import { ProjectService } from 'src/app/projects/project-service';
 import { ProjectModel } from 'src/app/projects/create-new-project/project-model';
@@ -30,7 +30,6 @@ export class ManagePaymentsComponent implements OnInit {
         const projID = this.route.snapshot.params.projectID;
         this.getProjectWallet(projID);
         this.getProject(projID);
-        console.log(this.revenueShareAmount);
     }
 
     getProject(projectID: string) {
@@ -51,6 +50,7 @@ export class ManagePaymentsComponent implements OnInit {
             this.projectWallet = res;
             this.projectWallet.currency = prettyCurrency(res.currency);
             this.projectWallet.balance = numeral(res.balance).format('0,0');
+            autonumericCurrency('#revenueShareAmount');
         }, err => {
             SpinnerUtil.hideSpinner();
             displayBackendError(err);

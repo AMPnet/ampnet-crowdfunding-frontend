@@ -1,8 +1,8 @@
-## Production build testing
+## Serving production build
 
-This is procedure to test production build locally while using remote backend. In short, we 
+This is procedure to serve production build locally while using remote backend. In short, we 
 generate production build in `dist/ampnet-frontend` directory and serve it through
-NGINX proxy which redirects backend API routes to production remote backend (api.ampnet.io).
+NGINX proxy which redirects backend API routes to production remote backend (api.ampnet.io). 
  
 ### Setup
 
@@ -10,9 +10,15 @@ Generate production build:
 ```
 ng build --prod
 ```
-This command will generate static files to `dist/ampnet-frontend` directory.
 
-Run this command to serve these files on http://localhost:8080
+Build Docker image:
 ```
-npm run start-prod-build
+docker build --no-cache -f prod-build/Dockerfile -t ampnet-crowdfunding-frontend:local .
 ```
+
+Run Docker container:
+```
+docker run --rm -p 8080:80 -e BACKEND_URL=https://api.ampnet.io ampnet-crowdfunding-frontend:local
+```
+
+The application, connected to https://api.ampnet.io backend, will be served at http://localhost:8080.

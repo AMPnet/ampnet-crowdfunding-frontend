@@ -54,7 +54,5 @@ export class ProjectActivationComponent implements OnInit {
                 }, hideSpinnerAndDisplayError);
 
         }, hideSpinnerAndDisplayError);
-
     }
-
 }

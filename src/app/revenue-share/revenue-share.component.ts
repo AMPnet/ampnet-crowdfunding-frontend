@@ -68,8 +68,7 @@ export class RevenueShareComponent implements OnInit {
         SpinnerUtil.showSpinner();
         this.managePaymentService.generateTransactionForRevenuePayout(this.projectID, this.amountInvested)
             .subscribe(async (res: any) => {
-                SpinnerUtil.hideSpinner();
-
+                this.closePopupWindow();
                 const arkaneConnect = new ArkaneConnect('AMPnet', {environment: 'staging'});
                 const acc = await arkaneConnect.flows.getAccount(SecretType.AETERNITY);
                 const sigRes = await arkaneConnect.createSigner(WindowMode.POPUP).sign({

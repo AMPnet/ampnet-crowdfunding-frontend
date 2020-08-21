@@ -14,9 +14,27 @@
     <div class="col-lg-12 mb-3">
         <ul class="list-group">
             <li *ngFor="let project of manageProjectsModel"
-                class="list-group-item hover-bg cursor-pointer explainer-mini"
-                routerLink="manage_project/{{project.uuid}}">
-                {{project.name}}
+                class="list-group-item explainer-mini">
+
+                <span class="float-left hover-bg cursor-pointer"
+                    routerLink="manage_project/{{project.uuid}}">
+                    {{project.name}}
+                </span>
+
+                <span 
+                    *ngIf="project.active" 
+                    (click)="toggleProject(project.uuid)" 
+                    class="float-right hover-fg cursor-pointer">
+                    
+                    <i class="fas fa-eye"></i>
+                </span>
+                <span 
+                    *ngIf="!project.active" 
+                    (click)="toggleProject(project.uuid)" 
+                    class="float-right hover-fg cursor-pointer">
+                    
+                    <i class="fas fa-eye-slash"></i>
+                </span>
             </li>
         </ul>
     </div>

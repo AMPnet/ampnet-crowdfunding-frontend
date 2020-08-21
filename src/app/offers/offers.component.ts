@@ -14,17 +14,13 @@ import { centsToBaseCurrencyUnit } from '../utilities/currency-util';
     styleUrls: ['./offers.component.css']
 })
 export class OffersComponent implements OnInit {
-
-    components: OfferModel[];
-    featuredComponents: OfferModel[];
-    promotedOffer: OfferModel;
-
     isOverview = false;
+    components: OfferModel[];
+    tags = ['Chip1', 'Chip2', 'Chip3'];
 
     constructor(private offersService: OffersService,
                 private projectService: ProjectService,
-                private route: ActivatedRoute
-    ) {
+                private route: ActivatedRoute) {
 
     }
 
@@ -34,7 +30,6 @@ export class OffersComponent implements OnInit {
         if (this.route.snapshot.params.isOverview) {
             this.isOverview = true;
         }
-
     }
 
     getAllOffers() {
@@ -54,12 +49,12 @@ export class OffersComponent implements OnInit {
                     endDate: moment(proj.end_date).format('MMM Do, YYYY'),
                     offerID: proj.uuid,
                     owner: proj.return_on_investment,
-                    currency: ''
+                    currency: '',
+                    tags: this.tags // TODO Remove hardcoded
                 };
             });
             if (projects.length > 0) {
                 this.getProjectBalances(0);
-
             }
             SpinnerUtil.hideSpinner();
         }, err => {
@@ -81,5 +76,4 @@ export class OffersComponent implements OnInit {
             displayBackendError(err);
         });
     }
-
 }

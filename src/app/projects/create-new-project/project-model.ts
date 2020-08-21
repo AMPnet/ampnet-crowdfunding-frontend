@@ -1,5 +1,6 @@
 export interface ProjectModel {
-
+    return_on_investment: string;
+    tags: string[];
     uuid: string;
     name: string;
     description: string;

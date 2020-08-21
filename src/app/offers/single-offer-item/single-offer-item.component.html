@@ -11,11 +11,12 @@
             <div class="mt-2">
                 <div class="mt-2 mb-2 raised-info">
                     <div class=" ">
-                        <span>{{component.currentFunding | currencyDefault }} </span>raised of {{component.fundingRequired | currencyDefault }} goal
+                        <span>{{component.currentFunding | currencyDefault }} </span>raised
+                        of {{component.fundingRequired | currencyDefault }} goal
                     </div>
                 </div>
             </div>
-            
+
             <div>
                 <div class="progress">
                     <div [style.width.%]="(component.currentFunding / component.fundingRequired) * 100"
@@ -28,14 +29,25 @@
                 <div>Ends {{component.endDate}}</div>
             </div>
 
-            
         </div>
     </div>
+
     <div class="card-content-holder">
         <div class="card-content-text-holder">
             <div class="h3 text-uppercase gray-text mb-3 d-none d-lg-block">
                 {{component.title}}
             </div>
+
+<!--            Chip tags-->
+            <div class="container">
+                <div class="row">
+                    <mat-chip-list *ngFor="let tag of component.tags" aria-label="Tags selection">
+                        <mat-chip>{{tag}}</mat-chip>
+                    </mat-chip-list>
+                </div>
+            </div>
+            <br>
+
             <div class="explainer-mini text-uppercase mb-4">Expected yearly return:</div>
             <div [innerHTML]="component.description" class="p gray-text">
             </div>

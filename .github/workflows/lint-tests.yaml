@@ -1,11 +1,4 @@
-name: Project build
-on:
-  push:
-    branches:
-      - pipeline
-  pull_request:
-    branches:
-      - master
+name: Lint & Test
 
 jobs:
   build:
@@ -36,12 +29,3 @@ jobs:
 
       - name: Run tests
         run: npm run test:ci
-
-      - name: Generate production build
-        run: npm run build-prod
-
-#      - name: push to docker hub
-#        env :
-#          DOCKER_HUB_TOKEN : ${{ secrets.HEROKU_TOKEN }}
-#        run : |
-#          docker login --username=_ --password $HEROKU_TOKEN $HEROKU_REGISTRY_URL

@@ -7,11 +7,13 @@ import * as moment from 'moment';
 import { ProjectService } from '../projects/project-service';
 import { ActivatedRoute } from '@angular/router';
 import { centsToBaseCurrencyUnit } from '../utilities/currency-util';
+import { OffersFilterServiceService } from './offers-filter-service.service';
 
 @Component({
     selector: 'app-offers',
     templateUrl: './offers.component.html',
-    styleUrls: ['./offers.component.css']
+    styleUrls: ['./offers.component.css'],
+    providers: [OffersFilterServiceService]
 })
 export class OffersComponent implements OnInit {
     isOverview = false;

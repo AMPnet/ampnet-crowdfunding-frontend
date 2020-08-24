@@ -1,0 +1,39 @@
+name: Project build
+on:
+  push:
+    branches:
+      - pipeline
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Cache node modules
+        uses: actions/cache@v1
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: Node ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name : push to staging server with ssh
+        run : |
+          npm ci --debug
+          npm run lint:ci
+          npm run test:ci
+          npm run build-prod
+
+#      - name: push to docker hub
+#        env :
+#          DOCKER_HUB_TOKEN : ${{ secrets.HEROKU_TOKEN }}
+#        run : |
+#          docker login --username=_ --password $HEROKU_TOKEN $HEROKU_REGISTRY_URL

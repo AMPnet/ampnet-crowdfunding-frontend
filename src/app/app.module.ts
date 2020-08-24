@@ -75,8 +75,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RevenueShareComponent } from './revenue-share/revenue-share.component';
 import { TxIconType, TxIconStatus } from './wallet/wallet-icon.pipe';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatChipsModule } from '@angular/material/chips';
-
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatChipsModule} from '@angular/material/chips';
+import {MatIconModule} from '@angular/material/icon';
+import { OfferFilterComponent } from './offers/offer-filter/offer-filter.component';
 
 export function tokenGetter() {
     return localStorage.getItem('access_token');
@@ -175,7 +177,8 @@ export function jwtOptionsFactory() {
         CurrencyDefaultPipe,
         RevenueShareComponent,
         TxIconType,
-        TxIconStatus
+        TxIconStatus,
+        OfferFilterComponent
     ],
     imports: [
         BrowserModule,
@@ -189,7 +192,9 @@ export function jwtOptionsFactory() {
         NgxSpinnerModule,
         NgbModule,
         BrowserAnimationsModule,
-        MatChipsModule
+        MatFormFieldModule,
+        MatChipsModule,
+        MatIconModule
     ],
     providers: [
         socialAuthServiceConfig,

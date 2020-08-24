@@ -6,7 +6,10 @@
 
 <div *ngIf="components !== undefined" [class.overview-modifier]="isOverview"
      class="container root-content-container pt-md-0 pt-3">
-     <h1 class="offers-title">OFFERS</h1>
+    <h1 class="offers-title">OFFERS</h1>
+
+    <app-offer-filter></app-offer-filter>
+
     <div class="row" id="component-container">
         <div *ngFor="let component of components" class="col-md-12 wow fadeIn mt-md-3">
             <div class="mb-md-5">

@@ -84,6 +84,7 @@ export class InvestmentDetailsComponent implements OnInit {
             footer: 'Check your transaction status<a href="/dash/wallet">&nbsp;here</a>'
         });
         // This is a hack to fix bug in Sweet Alert lib -> always displays dropdown
+        // TODO: This is deprecated and needs to be fixed.
         swal.getContent().getElementsByClassName('swal2-select').item(0).remove();
     }
 }

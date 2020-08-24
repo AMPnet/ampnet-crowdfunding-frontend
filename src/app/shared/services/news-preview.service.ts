@@ -13,7 +13,7 @@ export class NewsPreviewService {
     }
 }
 
-interface LinkPreview {
+export interface LinkPreview {
     title: string;
     description: string;
     image: {

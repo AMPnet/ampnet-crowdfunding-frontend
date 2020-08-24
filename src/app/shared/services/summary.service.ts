@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { BackendHttpClient } from './backend-http-client.service';
 
 @Injectable({
     'providedIn': 'root'
 })
 export class SummaryService {
-    constructor(private http: HttpClient) {
+    constructor(private http: BackendHttpClient) {
     }
 
     getUsers() {

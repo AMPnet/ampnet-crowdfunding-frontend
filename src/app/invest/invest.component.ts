@@ -29,7 +29,8 @@ export class InvestComponent implements OnInit {
 
     INVEST_LOW_MSG = '<i class="fas fa-exclamation-triangle mr-3"></i><b>Investment amount too low</b>. The minimum investment is ';
     INVEST_HIGH_MSG = '<i class="fas fa-exclamation-triangle mr-3"></i><b>Investment amount too high</b>. The maximum investment is ';
-    WALLET_LOW_MSG = '<i class="fas fa-exclamation-triangle mr-3"></i><b>You don\'t have enough funds on your wallet</b>. Please deposit funds in the wallet tab.';
+    WALLET_LOW_MSG = '<i class="fas fa-exclamation-triangle mr-3"></i>' +
+        '<b>You don\'t have enough funds on your wallet</b>. Please deposit funds in the wallet tab.';
 
     constructor(private walletService: WalletService,
                 private projectService: ProjectService,

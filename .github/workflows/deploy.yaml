@@ -37,10 +37,10 @@ jobs:
       - name: Generate production build
         run: npm run build-prod
 
-      - name: push to docker hub
+      - name: Push to docker hub
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: |
           docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-          sh ./deploy-docker-image.sh
+          sh prod-build/deploy-docker-image.sh

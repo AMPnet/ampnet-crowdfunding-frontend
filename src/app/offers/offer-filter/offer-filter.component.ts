@@ -33,10 +33,18 @@ export class OfferFilterComponent implements OnInit {
                     return;
                 }
                 this.tagsList.push(tag);
-                this.projectService.getProjectByTags(this.tagsList)
-                    .subscribe(data => {
-                        console.log(data);
-                    });
+                this.getProjectByTags(this.tagsList);
+            });
+    }
+
+    getProjectByTags(tags: Tag[]) {
+        const tagsString = [];
+        for (const tag of tags) {
+            tagsString.push(tag.name);
+        }
+        this.projectService.getProjectByTags(tagsString)
+            .subscribe(data => {
+                console.log(data);
             });
     }
 }

@@ -54,7 +54,8 @@ export class OffersComponent implements OnInit {
                     endDate: moment(proj.end_date).format('MMM Do, YYYY'),
                     offerID: proj.uuid,
                     owner: proj.return_on_investment,
-                    currency: ''
+                    currency: '',
+                    roi: proj.roi
                 };
             });
             if (projects.length > 0) {

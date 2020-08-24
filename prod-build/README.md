@@ -13,12 +13,12 @@ ng build --prod
 
 Build Docker image:
 ```
-docker build --no-cache -f prod-build/Dockerfile -t ampnet-crowdfunding-frontend:local .
+docker build --no-cache -f prod-build/Dockerfile -t ampnet/ampnet-crowdfunding-frontend:local .
 ```
 
 Run Docker container:
 ```
-docker run --rm -p 8080:80 -e BACKEND_URL=https://api.ampnet.io ampnet-crowdfunding-frontend:local
+docker run --rm -p 8080:80 -e BACKEND_URL=https://api.ampnet.io ampnet/ampnet-crowdfunding-frontend:local
 ```
 
 The application, connected to https://api.ampnet.io backend, will be served at http://localhost:8080.

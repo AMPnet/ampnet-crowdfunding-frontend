@@ -7,10 +7,10 @@ events {
 http {
     server {
         listen 80;
-        server_name  localhost;
+        server_name _;
 
-        root   /usr/share/nginx/html;
-        index  index.html index.htm;
+        root /usr/share/nginx/html;
+        index index.html index.htm;
         include /etc/nginx/mime.types;
 
         location /api {

@@ -1,12 +1,11 @@
 {
   "name": "ampnet-crowdfunding-frontend",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --proxy-config proxy.conf.json --disable-host-check",
     "test": "ng test",
     "lint-fix": "tslint --fix \"src/**/*.ts\" --project tsconfig.json -s node_modules/tslint-stylish -t stylish",
-    "deploy-prod": "sh ./deploy.sh",
     "deploy-docker-image": "sh prod-build/deploy-docker-image.sh",
     "build-prod": "ng build --prod --extract-css=false",
     "lint:ci": "tslint \"src/**/*.ts\" --project tsconfig.json -s node_modules/tslint-stylish -t stylish",

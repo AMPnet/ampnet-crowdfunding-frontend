@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Script for deploying experimental versions of the app from a local machine.
+
 APP_VERSION=$(npm run env | grep ^npm_package_version= | cut -d "=" -f 2)
 IMAGE_NAME="ampnet/ampnet-crowdfunding-frontend:${APP_VERSION}"
 

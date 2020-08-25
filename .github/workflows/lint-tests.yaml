@@ -1,7 +1,5 @@
 name: Lint & Test
-on:
-  pull_request:
-    types: [assigned, opened, synchronize, reopened]
+on: pull_request
 
 jobs:
   build:

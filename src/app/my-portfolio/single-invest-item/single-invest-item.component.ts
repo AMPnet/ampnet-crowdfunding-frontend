@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { PortfolioRoot } from '../portfolio.models';
 import { centsToBaseCurrencyUnit, prettyCurrency } from 'src/app/utilities/currency-util';
+import { Portfolio } from '../../shared/services/wallet/portfolio.service';
 
 @Component({
     selector: 'app-single-invest-item',
@@ -9,7 +9,7 @@ import { centsToBaseCurrencyUnit, prettyCurrency } from 'src/app/utilities/curre
     styleUrls: ['./single-invest-item.component.css']
 })
 export class SingleInvestItemComponent implements OnInit {
-    @Input() investment: PortfolioRoot;
+    @Input() investment: Portfolio;
 
     constructor(private router: Router) {
     }

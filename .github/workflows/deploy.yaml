@@ -1,0 +1,53 @@
+name: Deployment
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Cache node modules
+        uses: actions/cache@v1
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: Node ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install dependencies
+        run: npm ci --debug
+
+      - name: Run linter
+        run: npm run lint:ci
+
+      - name: Run tests
+        run: npm run test:ci
+
+      - name: Generate production build
+        run: npm run build-prod
+
+      - name: Push to docker hub
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        run: |
+          echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
+          APP_VERSION=$(npm run env | grep ^npm_package_version= | cut -d "=" -f 2)
+          IMAGE_NAME="ampnet/ampnet-crowdfunding-frontend"
+          IMAGE_VERSION_TAG="${IMAGE_NAME}:${APP_VERSION}"
+          IMAGE_LATEST_TAG="${IMAGE_NAME}:latest"
+
+          docker build --no-cache -f prod-build/Dockerfile -t "${IMAGE_VERSION_TAG}" -t "${IMAGE_LATEST_TAG}" .
+          docker image push "${IMAGE_VERSION_TAG}"
+          docker image push "${IMAGE_LATEST_TAG}"

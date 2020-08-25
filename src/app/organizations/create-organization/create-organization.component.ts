@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { OrganizationService } from '../organization-service';
+import { OrganizationService } from '../../shared/services/project/organization.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import swal from 'sweetalert2';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
@@ -35,18 +35,19 @@ export class CreateOrganizationComponent implements OnInit {
         SpinnerUtil.showSpinner();
         const controls = this.newOrganizationForm.controls;
         this.organizationService.createOrganization(controls['name'].value, controls['type'].value)
-            .subscribe((res: any) => {
+            .subscribe(organization => {
                 SpinnerUtil.hideSpinner();
                 swal('', 'Successfully created a new organization', 'success');
 
                 this.fetchAndCheckInvites().forEach((invite) => {
-                    this.organizationService.inviteUser(res.id, invite).subscribe((eres) => {
-                    }, err => {
-                        console.log(err);
-                    });
+                    this.organizationService.inviteUser(organization.uuid, invite)
+                        .subscribe(() => {
+                        }, err => {
+                            console.log(err);
+                        });
                 });
 
-                this.router.navigate(['/dash', 'manage_groups', res.uuid]);
+                this.router.navigate(['/dash', 'manage_groups', organization.uuid]);
             }, err => {
                 SpinnerUtil.hideSpinner();
                 swal('', err.error.message, 'warning').then(() => {

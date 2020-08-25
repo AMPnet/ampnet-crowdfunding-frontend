@@ -4,6 +4,7 @@ import { OrganizationService } from '../organizations/organization-service';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { displayBackendError } from '../utilities/error-handler';
 import { ProjectModel } from '../projects/create-new-project/project-model';
+import { ProjectService } from '../projects/project-service';
 
 
 declare var _: any;
@@ -19,7 +20,9 @@ export class ManageProjectsComponent implements OnInit {
 
     @Input() groupID: string;
 
-    constructor(private router: Router, private orgService: OrganizationService) {
+    constructor(private router: Router, 
+                private orgService: OrganizationService,
+                private projectService: ProjectService) {
     }
 
     onUserClicked() {
@@ -43,5 +46,21 @@ export class ManageProjectsComponent implements OnInit {
         });
     }
 
-
+    toggleProject(uuid: string) {
+        SpinnerUtil.showSpinner();
+        let project = this.manageProjectsModel.filter(x => x.uuid == uuid)[0]
+        this.projectService.updateProject(
+            project.uuid,
+            project.name,     
+            project.description,
+            project.location,
+            project.roi,
+            !project.active
+        ).subscribe(res => {
+            this.getProjectsForGroup()
+        }, err => {
+            SpinnerUtil.hideSpinner();
+            displayBackendError(err);
+        });
+    }
 }

@@ -1,11 +1,12 @@
 import { Tag } from './offer-filter/office-filter-model';
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { ReplaySubject } from 'rxjs';
+import * as _ from 'underscore';
 
 @Injectable({providedIn: 'root'})
 export class OffersFilterServiceService {
     tagsList: Tag[] = [];
-    tagsListEmitter = new Subject<Tag[]>();
+    tagsListSubject = new ReplaySubject<Tag[]>();
 
     removeTag(tag: Tag): void {
         const index = this.tagsList.indexOf(tag);
@@ -15,16 +16,21 @@ export class OffersFilterServiceService {
         this.activateEmitter();
     }
 
-    addTag(tag: Tag): void {
-        // Check if tag already on the list
-        if (this.tagsList.some((item) => item.name === tag.name)) {
-            return;
+    addTag(...tags: Tag[]): void {
+        const newTagList = this.tagsList.slice();
+
+        if (newTagList.findIndex((item) =>
+            item.name === tags[0].name) < 0) {
+            newTagList.push(...tags);
         }
-        this.tagsList.push(tag);
-        this.activateEmitter();
+
+        if (!_.isEqual(newTagList, this.tagsList)) {
+            this.tagsList = newTagList;
+            this.activateEmitter();
+        }
     }
 
     activateEmitter() {
-        this.tagsListEmitter.next(this.tagsList);
+        this.tagsListSubject.next(this.tagsList);
     }
 }

@@ -5,10 +5,10 @@ import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { displayBackendError } from '../utilities/error-handler';
 import * as moment from 'moment';
 import { ProjectService } from '../projects/project-service';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { centsToBaseCurrencyUnit } from '../utilities/currency-util';
 import { OffersFilterServiceService } from './offers-filter-service.service';
-import { Tag } from '@angular/compiler/src/i18n/serializers/xml_helper';
+import { Tag } from './offer-filter/office-filter-model';
 
 @Component({
     selector: 'app-offers',
@@ -20,32 +20,49 @@ export class OffersComponent implements OnInit {
     isOverview = false;
     components: OfferModel[];
     tags = ['Chip1', 'Chip2', 'Chip3'];
-    tagsList: Tag[] = [];
     routeParamsSubscription;
 
     constructor(private offersService: OffersService,
                 private projectService: ProjectService,
                 private route: ActivatedRoute,
+                private router: Router,
                 private offersFilterService: OffersFilterServiceService) {
     }
 
     ngOnInit() {
         this.getAllOffers();
 
-        this.routeParamsSubscription = this.route.params.subscribe((params: Params) => {
-            console.log('Params: ' + params.toString());
+        this.routeParamsSubscription = this.route.queryParams.subscribe(data => {
+            console.log(data.tags);
+            console.log(data.tags.split(','));
+
+            if (data.tags) {
+                const tags = data.tags.split(',').map(tagName => <Tag>{name: tagName});
+                this.offersFilterService.addTag(...tags);
+            }
         });
+
+        this.offersFilterService.tagsListSubject
+            .subscribe(tags => {
+                this.router.navigate([], {
+                    relativeTo: this.route,
+                    queryParams: {
+                        tags: tags.map(tag => tag.name).join(',')
+                    },
+                    queryParamsHandling: 'merge',
+                });
+            });
 
         if (this.route.snapshot.params.isOverview) {
             this.isOverview = true;
         }
-        this.getFilterTags();
+        // this.getTagFilteredProjects();
     }
 
-    getAllOffers() {
+    getAllOffers(tags?: Tag[]) {
         SpinnerUtil.showSpinner();
 
-        this.offersService.getAllOffers().subscribe((res: any) => {
+        this.offersService.getAllOffers(tags).subscribe((res: any) => {
             const projects: [any] = res.projects;
             this.components = projects.map((proj) => {
                 return {
@@ -73,10 +90,11 @@ export class OffersComponent implements OnInit {
         });
     }
 
-    getFilterTags() {
-        this.offersFilterService.tagsListEmitter.subscribe(tags => {
-            console.log('data : ' + tags);
-            this.tagsList.push(...tags);
+    getTagFilteredProjects() {
+        this.offersFilterService.tagsListSubject.subscribe(tags => {
+            for (let i = 0; i < tags.length; i++) {
+                // console.log(tags[i].name);
+            }
         });
     }
 

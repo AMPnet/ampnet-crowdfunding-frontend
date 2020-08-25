@@ -24,7 +24,7 @@ export class OfferFilterComponent implements OnInit {
     }
 
     getFilterTags(): void {
-        this.offersFilterService.tagsListEmitter.subscribe(tags => {
+        this.offersFilterService.tagsListSubject.subscribe(tags => {
             this.tagsList = [];
             // @ts-ignore
             this.tagsList.push(...tags);

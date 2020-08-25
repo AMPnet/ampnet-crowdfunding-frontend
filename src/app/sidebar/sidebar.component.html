@@ -67,6 +67,38 @@
         </li>
     </ul>
 
+    <p *ngIf="isTokenIssuer" class="menu-header ml-4 mb-3 mt-3 ">TOKEN ISSUER</p>
+    <ul *ngIf="isTokenIssuer" class="list-unstyled components" id="main-menu">
+        <li routerLink="manage_withdrawals" routerLinkActive="side-active">
+            <i class="menu-icon fas fa-arrow-circle-up "></i>
+            <span>Withdrawals</span>
+        </li>
+        <li routerLink="manage_deposits" routerLinkActive="side-active">
+            <i class="menu-icon fas fa-arrow-circle-down "></i>
+            <span>Deposits</span>
+        </li>
+        <li routerLink="admin/platform_bank_account" routerLinkActive="side-active">
+            <i class="menu-icon fas fa-university"></i>
+            <span>Bank account</span>
+        </li>
+        <li routerLink="ownership" routerLinkActive="side-active">
+            <i class="menu-icon fas fa-handshake"></i>
+            <span>Platform roles</span>
+        </li>
+    </ul>
+
+    <p *ngIf="isPlatformManager" class="menu-header ml-4 mb-3 mt-3 ">PLATFORM MANAGER</p>
+    <ul *ngIf="isPlatformManager" class="list-unstyled components" id="main-menu">
+        <li routerLink="activation/users" routerLinkActive="side-active">
+            <i class="menu-icon fas fa-flag-checkered"></i>
+            <span>Activations</span>
+        </li>
+        <li routerLink="ownership" routerLinkActive="side-active">
+            <i class="menu-icon fas fa-handshake"></i>
+            <span>Platform roles</span>
+        </li>
+    </ul>
+
 
     <div class="dropdown-divider" id="divider-menu"></div>
     

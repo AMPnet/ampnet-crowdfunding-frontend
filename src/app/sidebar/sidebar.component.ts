@@ -15,6 +15,8 @@ import { SpinnerUtil } from '../utilities/spinner-utilities';
 export class SidebarComponent implements OnInit {
 
     isAdmin: boolean;
+    isPlatformManager : boolean;
+    isTokenIssuer: boolean;
     hasWalletActive = true;
     hasBankingInfo = true;
     hasVerifiedProfile = true;
@@ -35,6 +37,8 @@ export class SidebarComponent implements OnInit {
         SpinnerUtil.showSpinner();
         this.userService.getOwnProfile().subscribe((res: any) => {
             this.isAdmin = (res.role === 'ADMIN');
+            this.isPlatformManager = (res.role === 'PLATFORM_MANAGER');
+            this.isTokenIssuer = (res.role === 'TOKEN_ISSUER');
         }, hideSpinnerAndDisplayError);
     }
 

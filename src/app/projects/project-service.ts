@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { API } from '../utilities/endpoint-manager';
+import { Tag } from '../offers/offer-filter/office-filter-model';
 
 @Injectable({
     'providedIn': 'root'
@@ -77,6 +78,19 @@ export class ProjectService {
             'tags': null,
             'news': null
         }, API.tokenHeaders());
+    }
+
+    getProjectByTags(tags: Tag[]) {
+        const params = new HttpParams()
+            .set('tags', 'chip1');
+        console.log(tags);
+        // const paramsList = [];
+        // for (let i = 0; i < tags.length; i++) {
+        //     const params = new HttpParams().set('tags', tags[i].name);
+        //     paramsList.push(params);
+        // }
+
+        return this.http.get('https://api.ampnet.io/public/project/', {params: params});
     }
 }
 

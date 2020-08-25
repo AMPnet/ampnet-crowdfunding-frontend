@@ -41,6 +41,7 @@ export class LogInModalComponent implements OnInit {
             this.loginService.socialLogin(res.provider, res.authToken)
                 .subscribe(backendResponse => {
                     localStorage.setItem('access_token', (<any>backendResponse).access_token);
+                    localStorage.setItem('refresh_token', (<any>backendResponse).refresh_token);
                     SpinnerUtil.hideSpinner();
                     this.router.navigate(['dash']);
                 }, err => {
@@ -59,6 +60,7 @@ export class LogInModalComponent implements OnInit {
             .subscribe(result => {
                 SpinnerUtil.hideSpinner();
                 localStorage.setItem('access_token', result.access_token);
+                localStorage.setItem('refresh_token', result.refresh_token);
                 this.navigateToDash();
             }, (err) => {
                 SpinnerUtil.hideSpinner();

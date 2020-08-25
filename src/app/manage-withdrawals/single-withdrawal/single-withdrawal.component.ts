@@ -9,6 +9,7 @@ import {
 import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
 import { BroadcastService } from 'src/app/shared/services/broadcast.service';
 import swal from 'sweetalert2';
+import { centsToBaseCurrencyUnit } from '../../utilities/currency-util';
 
 declare var $: any;
 
@@ -18,7 +19,6 @@ declare var $: any;
     styleUrls: ['./single-withdrawal.component.css']
 })
 export class SingleWithdrawalComponent implements OnInit, AfterViewInit {
-
     withdrawal: UserWithdraw;
 
     constructor(private route: ActivatedRoute,
@@ -42,6 +42,7 @@ export class SingleWithdrawalComponent implements OnInit, AfterViewInit {
         this.withdrawCooperativeService.getApprovedWithdrawals().subscribe(res => {
             SpinnerUtil.hideSpinner();
             this.withdrawal = res.withdraws.filter(item => item.id === id)[0];
+            this.withdrawal.amount = centsToBaseCurrencyUnit(this.withdrawal.amount);
         }, hideSpinnerAndDisplayError);
     }
 

@@ -5,6 +5,7 @@ import {
     UserWithdraw,
     WalletCooperativeWithdrawService
 } from '../shared/services/wallet/wallet-cooperative/wallet-cooperative-withdraw.service';
+import { centsToBaseCurrencyUnit } from '../utilities/currency-util';
 
 @Component({
     selector: 'app-manage-withdrawals',
@@ -25,8 +26,10 @@ export class ManageWithdrawalsComponent implements OnInit {
         SpinnerUtil.showSpinner();
         return this.withdrawService.getApprovedWithdrawals().subscribe(res => {
             SpinnerUtil.hideSpinner();
-            this.withdrawals = res.withdraws;
+            this.withdrawals = res.withdraws.map(x => {
+                x.amount = centsToBaseCurrencyUnit(x.amount);
+                return x;
+            });
         }, hideSpinnerAndDisplayError);
     }
-
 }

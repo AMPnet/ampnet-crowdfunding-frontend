@@ -5,9 +5,10 @@ import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { displayBackendError } from '../utilities/error-handler';
 import * as moment from 'moment';
 import { ProjectService } from '../projects/project-service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 import { centsToBaseCurrencyUnit } from '../utilities/currency-util';
 import { OffersFilterServiceService } from './offers-filter-service.service';
+import { Tag } from '@angular/compiler/src/i18n/serializers/xml_helper';
 
 @Component({
     selector: 'app-offers',
@@ -19,19 +20,26 @@ export class OffersComponent implements OnInit {
     isOverview = false;
     components: OfferModel[];
     tags = ['Chip1', 'Chip2', 'Chip3'];
+    tagsList: Tag[] = [];
+    routeParamsSubscription;
 
     constructor(private offersService: OffersService,
                 private projectService: ProjectService,
-                private route: ActivatedRoute) {
-
+                private route: ActivatedRoute,
+                private offersFilterService: OffersFilterServiceService) {
     }
 
     ngOnInit() {
         this.getAllOffers();
 
+        this.routeParamsSubscription = this.route.params.subscribe((params: Params) => {
+            console.log('Params: ' + params.toString());
+        });
+
         if (this.route.snapshot.params.isOverview) {
             this.isOverview = true;
         }
+        this.getFilterTags();
     }
 
     getAllOffers() {
@@ -51,7 +59,7 @@ export class OffersComponent implements OnInit {
                     endDate: moment(proj.end_date).format('MMM Do, YYYY'),
                     offerID: proj.uuid,
                     owner: proj.return_on_investment,
-                    currency: '',
+                    currency: proj.currency,
                     tags: this.tags // TODO Remove hardcoded
                 };
             });
@@ -62,6 +70,13 @@ export class OffersComponent implements OnInit {
         }, err => {
             displayBackendError(err);
             SpinnerUtil.hideSpinner();
+        });
+    }
+
+    getFilterTags() {
+        this.offersFilterService.tagsListEmitter.subscribe(tags => {
+            console.log('data : ' + tags);
+            this.tagsList.push(...tags);
         });
     }
 

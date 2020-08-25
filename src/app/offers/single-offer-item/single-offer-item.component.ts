@@ -12,7 +12,6 @@ import { Tag } from '../offer-filter/office-filter-model';
     styleUrls: ['./single-offer-item.component.css'],
 })
 export class SingleOfferItemComponent implements OnInit {
-    tagSelected = new EventEmitter<string>();
     @Input() public component: OfferModel;
 
     constructor(private router: Router,
@@ -41,6 +40,6 @@ export class SingleOfferItemComponent implements OnInit {
 
     onOfferTagClicked(tagName: string) {
         const selectedTag: Tag = {name: tagName};
-        this.offersFilterService.tagSelected.emit(selectedTag);
+        this.offersFilterService.addTag(selectedTag);
     }
 }

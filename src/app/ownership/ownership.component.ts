@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../user-utils/user-service';
+import { UserService } from '../shared/services/user/user.service';
 import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
-import { UserModel } from '../models/user-model';
-import { OwnershipService } from './ownership.service';
-import { BroadcastService } from '../broadcast/broadcast-service';
+import { WalletCooperativeOwnershipService } from '../shared/services/wallet/wallet-cooperative/wallet-cooperative-ownership.service';
+import { BroadcastService } from '../shared/services/broadcast.service';
 import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import swal from 'sweetalert2';
+import { TransactionInfo } from '../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
+import { User } from '../shared/services/user/signup.service';
 
 @Component({
     selector: 'app-ownership',
@@ -15,15 +16,15 @@ import swal from 'sweetalert2';
 })
 export class OwnershipComponent implements OnInit {
 
-    user: UserModel;
+    user: User;
 
     constructor(private userService: UserService,
-                private ownershipService: OwnershipService,
+                private ownershipService: WalletCooperativeOwnershipService,
                 private broadcastService: BroadcastService) {
     }
 
     ngOnInit() {
-        this.userService.getOwnProfile().subscribe((res: any) => {
+        this.userService.getOwnProfile().subscribe(res => {
             this.user = res;
         }, hideSpinnerAndDisplayError);
     }
@@ -32,7 +33,7 @@ export class OwnershipComponent implements OnInit {
 
         const platformManagerAddress: any = $('#platform-manager-address').val();
 
-        this.ownershipService.getPlatformManagerTransaction(platformManagerAddress).subscribe(res => {
+        this.ownershipService.executePlatformManagerTransaction(platformManagerAddress).subscribe(res => {
             this.confirmAndBroadcastTransaction(res);
         }, hideSpinnerAndDisplayError);
     }
@@ -41,12 +42,12 @@ export class OwnershipComponent implements OnInit {
 
         const tokenIssuerAddress: any = $('#token-issuer-address').val();
 
-        this.ownershipService.getTokenIssuerTransaction(tokenIssuerAddress).subscribe(res => {
-            this.confirmAndBroadcastTransaction(res);
+        this.ownershipService.executeTokenIssuerTransaction(tokenIssuerAddress).subscribe(async res => {
+            await this.confirmAndBroadcastTransaction(res);
         }, hideSpinnerAndDisplayError);
     }
 
-    async confirmAndBroadcastTransaction(res: any) {
+    async confirmAndBroadcastTransaction(res: TransactionInfo) {
         const arkaneConnect = new ArkaneConnect('AMPnet', {
             environment: 'staging'
         });

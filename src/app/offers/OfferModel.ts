@@ -10,5 +10,5 @@ export interface OfferModel {
     endDate: string;
     owner: string;
     currency: string;
-    tags: string[];
+    tags?: string[];
 }

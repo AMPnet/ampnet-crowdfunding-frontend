@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { OfferModel } from './OfferModel';
-import { OffersService } from './offers.service';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { displayBackendError } from '../utilities/error-handler';
 import * as moment from 'moment';
-import { ProjectService } from '../projects/project-service';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { centsToBaseCurrencyUnit } from '../utilities/currency-util';
+import { WalletService } from '../shared/services/wallet/wallet.service';
 import { OffersFilterServiceService } from './offers-filter-service.service';
 import { Tag } from './offer-filter/office-filter-model';
+import { ProjectService } from '../shared/services/project/project.service';
 
 @Component({
     selector: 'app-offers',
@@ -17,13 +17,16 @@ import { Tag } from './offer-filter/office-filter-model';
     providers: [OffersFilterServiceService]
 })
 export class OffersComponent implements OnInit {
-    isOverview = false;
     components: OfferModel[];
+    featuredComponents: OfferModel[];
+    promotedOffer: OfferModel;
+
+    isOverview = false;
     tags = ['Chip1', 'Chip2', 'Chip3'];
     routeParamsSubscription;
 
-    constructor(private offersService: OffersService,
-                private projectService: ProjectService,
+    constructor(private projectService: ProjectService,
+                private walletService: WalletService,
                 private route: ActivatedRoute,
                 private router: Router,
                 private offersFilterService: OffersFilterServiceService) {
@@ -56,28 +59,27 @@ export class OffersComponent implements OnInit {
         if (this.route.snapshot.params.isOverview) {
             this.isOverview = true;
         }
-        // this.getTagFilteredProjects();
     }
 
     getAllOffers(tags?: Tag[]) {
         SpinnerUtil.showSpinner();
 
-        this.offersService.getAllOffers(tags).subscribe((res: any) => {
-            const projects: [any] = res.projects;
+        this.projectService.getAllActiveProjects(tags).subscribe(res => {
+            const projects = res.projects;
             this.components = projects.map((proj) => {
                 return {
+                    offerID: proj.uuid,
                     title: proj.name,
                     description: proj.description,
                     offeredBy: proj.name,
+                    status: 'Active',
                     fundingRequired: centsToBaseCurrencyUnit(proj.expected_funding),
                     currentFunding: 0,
                     headerImageUrl: proj.main_image,
-                    status: 'Active',
                     endDate: moment(proj.end_date).format('MMM Do, YYYY'),
-                    offerID: proj.uuid,
-                    owner: proj.return_on_investment,
-                    currency: proj.currency,
-                    tags: this.tags // TODO Remove hardcoded
+                    owner: '',
+                    currency: '',
+                    tags: this.tags
                 };
             });
             if (projects.length > 0) {
@@ -103,7 +105,7 @@ export class OffersComponent implements OnInit {
             return;
         }
         const component = this.components[index];
-        this.projectService.getProjectWallet(component.offerID).subscribe((res: any) => {
+        this.walletService.getProjectWallet(component.offerID).subscribe(res => {
             this.components[index].currentFunding = centsToBaseCurrencyUnit(res.balance);
             this.components[index].currency = res.currency;
             this.getProjectBalances(index + 1);

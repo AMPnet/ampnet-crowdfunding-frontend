@@ -1,15 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { PaymentService } from '../payment-options/payment.service';
+import { PaymentService, UserBankAccount } from '../shared/services/payment.service';
 import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
-import { BankAccountModel } from '../payment-options/bank-account-model';
-import { WithdrawService } from './withdraw.service';
+import { Withdraw, WithdrawService } from '../shared/services/wallet/withdraw.service';
 import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
-import { BroadcastService } from '../broadcast/broadcast-service';
+import { BroadcastService } from '../shared/services/broadcast.service';
 import swal from 'sweetalert2';
 import { baseCurrencyUnitToCents, centsToBaseCurrencyUnit } from '../utilities/currency-util';
 import numeral from 'numeral';
-import { WithdrawalModel } from './withdrawal-model';
 
 declare var $: any;
 
@@ -19,11 +17,9 @@ declare var $: any;
     styleUrls: ['./withdraw.component.css']
 })
 export class WithdrawComponent implements OnInit {
-
     activeBankAccount = 0;
-    banks: BankAccountModel[];
-
-    pendingWithdrawal: WithdrawalModel;
+    banks: UserBankAccount[];
+    pendingWithdrawal: Withdraw;
 
     withdrawAmount = '';
 
@@ -39,7 +35,7 @@ export class WithdrawComponent implements OnInit {
 
     getBankAccounts() {
         SpinnerUtil.showSpinner();
-        this.paymentService.getMyBankAccounts().subscribe((res: any) => {
+        this.paymentService.getMyBankAccounts().subscribe(res => {
             SpinnerUtil.hideSpinner();
             this.banks = res.bank_accounts;
         }, hideSpinnerAndDisplayError);
@@ -47,7 +43,7 @@ export class WithdrawComponent implements OnInit {
 
     getMyPendingWithdraw() {
         SpinnerUtil.showSpinner();
-        this.withdrawService.getMyPendingWithdraw().subscribe((res: any) => {
+        this.withdrawService.getMyPendingWithdraw().subscribe(res => {
             this.pendingWithdrawal = res;
             this.withdrawAmount = numeral(
                 centsToBaseCurrencyUnit(this.pendingWithdrawal.amount)
@@ -60,7 +56,6 @@ export class WithdrawComponent implements OnInit {
     }
 
     async generateWithdrawClicked() {
-
         if (this.pendingWithdrawal !== undefined) {
             this.burnWithdraw();
             return;
@@ -69,7 +64,7 @@ export class WithdrawComponent implements OnInit {
         const amount: any = $('#withdraw-amount').val();
         const iban = this.banks[this.activeBankAccount].iban;
         const centAmount = baseCurrencyUnitToCents(amount);
-        this.withdrawService.createWithdrawRequest(centAmount, iban).subscribe((res: any) => {
+        this.withdrawService.createWithdrawRequest(centAmount, iban).subscribe(res => {
             this.pendingWithdrawal = res;
             SpinnerUtil.hideSpinner();
         }, hideSpinnerAndDisplayError);
@@ -78,7 +73,7 @@ export class WithdrawComponent implements OnInit {
 
     burnWithdraw() {
         SpinnerUtil.showSpinner();
-        this.withdrawService.generateApproveWithdrawTx(this.pendingWithdrawal.id).subscribe(async (res: any) => {
+        this.withdrawService.generateApproveWithdrawTx(this.pendingWithdrawal.id).subscribe(async res => {
 
             const arkaneConnect = new ArkaneConnect('AMPnet', {
                 environment: 'staging'

@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { WalletService } from './wallet.service';
-import { Transaction, TransactionList, WalletModel } from '../models/WalletModel';
+import { UserTransaction, WalletService } from '../shared/services/wallet/wallet.service';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { displayBackendError } from '../utilities/error-handler';
 import { centsToBaseCurrencyUnit, prettyCurrency } from '../utilities/currency-util';
 import * as numeral from 'numeral';
 import { ArkaneConnect, SecretType } from '@arkane-network/arkane-connect';
-import { TxIconType, TxIconStatus } from './wallet-icon.pipe'
+import { WalletDetails } from '../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
 
 declare var $: any;
 
@@ -16,14 +15,14 @@ declare var $: any;
     styleUrls: ['./wallet.component.css']
 })
 export class WalletComponent implements OnInit {
-    wallet: WalletModel;
+    wallet: WalletDetails;
     checkComplete = false;
     arkaneConnect: ArkaneConnect;
     tablePage = 1;
     tablePageSize = 10;
     transactionItems = 0;
-    transactionHistory: Transaction[] = [];
-    transactionHistoryPage: Transaction[] = [];
+    transactionHistory: UserTransaction[] = [];
+    transactionHistoryPage: UserTransaction[] = [];
 
     constructor(private walletService: WalletService) {
     }
@@ -44,7 +43,7 @@ export class WalletComponent implements OnInit {
 
     startWalletInit(addr: string) {
         SpinnerUtil.showSpinner();
-        this.walletService.initWallet(addr).subscribe(res => {
+        this.walletService.initWallet(addr).subscribe(() => {
             SpinnerUtil.hideSpinner();
             this.getUserWallet();
         }, err => {
@@ -56,7 +55,7 @@ export class WalletComponent implements OnInit {
 
     getUserWallet() {
         SpinnerUtil.showSpinner();
-        this.walletService.getWallet().subscribe(res => {
+        this.walletService.getUserWallet().subscribe(res => {
             this.wallet = res;
             this.wallet.currency = prettyCurrency(res.currency);
             this.wallet.balance = numeral(centsToBaseCurrencyUnit(res.balance)).format('0,0');
@@ -71,9 +70,9 @@ export class WalletComponent implements OnInit {
 
     getTransactionHistory() {
         SpinnerUtil.showSpinner();
-        this.walletService.getTransactionHistory().subscribe((res: TransactionList) => {
+        this.walletService.getTransactionHistory().subscribe(res => {
             this.transactionHistory = res.transactions
-                .sort((a,b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+                .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
             this.transactionItems = this.transactionHistory.length;
             this.refreshTransactionHistory();
         });
@@ -82,7 +81,6 @@ export class WalletComponent implements OnInit {
     refreshTransactionHistory() {
         this.transactionHistoryPage = this.transactionHistory
             .map((transaction, i) => ({id: i + 1, ...transaction}))
-            .slice((this.tablePage - 1) * this.tablePageSize, (this.tablePage - 1) * this.tablePageSize + this.tablePageSize)
-            
+            .slice((this.tablePage - 1) * this.tablePageSize, (this.tablePage - 1) * this.tablePageSize + this.tablePageSize);
     }
 }

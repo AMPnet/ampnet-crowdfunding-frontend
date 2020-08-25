@@ -1,10 +1,10 @@
-import { Component, EventEmitter, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { OfferModel } from '../OfferModel';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ProjectService } from 'src/app/projects/project-service';
 import { autonumericCurrency, prettyCurrency } from 'src/app/utilities/currency-util';
 import { OffersFilterServiceService } from '../offers-filter-service.service';
 import { Tag } from '../offer-filter/office-filter-model';
+import { ProjectService } from 'src/app/shared/services/project/project.service';
 
 @Component({
     selector: 'app-single-offer-item',

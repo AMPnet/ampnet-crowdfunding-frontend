@@ -2,9 +2,11 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
-import { DepositModel } from '../deposit/deposit-model';
 import swal from 'sweetalert2';
-import { DepositCooperativeService } from './deposit.cooperative.service';
+import {
+    DepositSearchResponse,
+    WalletCooperativeDepositService
+} from '../shared/services/wallet/wallet-cooperative/wallet-cooperative-deposit.service';
 
 declare var $: any;
 
@@ -14,10 +16,10 @@ declare var $: any;
     styleUrls: ['./manage-deposits.component.css']
 })
 export class ManageDepositsComponent implements OnInit, AfterViewInit {
+    unapprovedDeposits: DepositSearchResponse[];
 
-    unapprovedDeposits: [DepositModel];
-
-    constructor(private router: Router, private depositCooperativeService: DepositCooperativeService) {
+    constructor(private router: Router,
+                private depositCooperativeService: WalletCooperativeDepositService) {
     }
 
     ngOnInit() {
@@ -34,7 +36,7 @@ export class ManageDepositsComponent implements OnInit, AfterViewInit {
 
     getUnapprovedDeposits() {
         SpinnerUtil.showSpinner();
-        this.depositCooperativeService.getUnapprovedDeposits().subscribe((res: any) => {
+        this.depositCooperativeService.getUnapprovedDeposits().subscribe(res => {
             this.unapprovedDeposits = res.deposits;
             SpinnerUtil.hideSpinner();
         }, hideSpinnerAndDisplayError);
@@ -52,5 +54,4 @@ export class ManageDepositsComponent implements OnInit, AfterViewInit {
     contactPhoneClicked(index: number) {
         swal('Contact phone', '095 354 6106', 'info');
     }
-
 }

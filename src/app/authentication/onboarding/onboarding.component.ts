@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { OnboardingService } from '../onboarding.service';
+import { OnboardingService } from '../../shared/services/user/onboarding.service';
 import swal from 'sweetalert2';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
 import { TokenModel } from '../../models/auth/TokenModel';
-import { UserService } from '../../user-utils/user-service';
+import { UserService } from '../../shared/services/user/user.service';
 
 @Component({
     selector: 'app-onboarding',

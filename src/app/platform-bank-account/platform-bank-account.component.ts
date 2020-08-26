@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
-import { PlatformBankAccountService } from './platform-bank-account.service';
+import { PlatformBankAccount, PlatformBankAccountService } from '../shared/services/wallet/platform-bank-account.service';
 import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
-import { BankAccountModel } from '../payment-options/bank-account-model';
 
 @Component({
     selector: 'app-platform-bank-account',
@@ -11,8 +10,7 @@ import { BankAccountModel } from '../payment-options/bank-account-model';
     styleUrls: ['./platform-bank-account.component.css']
 })
 export class PlatformBankAccountComponent implements OnInit {
-
-    banks: BankAccountModel[];
+    banks: PlatformBankAccount[];
 
     constructor(
         private service: PlatformBankAccountService,
@@ -25,7 +23,7 @@ export class PlatformBankAccountComponent implements OnInit {
 
     getBankAccounts() {
         SpinnerUtil.showSpinner();
-        this.service.getBankAccounts().subscribe((res: any) => {
+        this.service.getBankAccounts().subscribe(res => {
             SpinnerUtil.hideSpinner();
             if (res.bank_accounts.length === 0) {
                 this.router.navigate(['dash', 'admin', 'platform_bank_account', 'new'], {

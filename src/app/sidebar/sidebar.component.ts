@@ -3,7 +3,7 @@ import { NavbarComponent } from '../navbar/navbar.component';
 import { Router } from '@angular/router';
 
 import * as $ from 'jquery';
-import { UserService } from '../user-utils/user-service';
+import { UserService } from '../shared/services/user/user.service';
 import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 
@@ -35,7 +35,7 @@ export class SidebarComponent implements OnInit {
 
     getProfile() {
         SpinnerUtil.showSpinner();
-        this.userService.getOwnProfile().subscribe((res: any) => {
+        this.userService.getOwnProfile().subscribe(res => {
             this.isAdmin = (res.role === 'ADMIN');
             this.isPlatformManager = (res.role === 'PLATFORM_MANAGER');
             this.isTokenIssuer = (res.role === 'TOKEN_ISSUER');
@@ -43,8 +43,10 @@ export class SidebarComponent implements OnInit {
     }
 
     logOutClicked() {
-        localStorage.removeItem('access_token');
-        this.router.navigate(['']);
+        return this.userService.logout().subscribe(() => {
+            localStorage.removeItem('access_token');
+            this.router.navigate(['']);
+        });
     }
 
     contactUsClicked() {

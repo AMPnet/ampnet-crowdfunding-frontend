@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import 'bootstrap-select';
-import { PortfolioService } from '../my-portfolio/portfolio.service';
+import { Portfolio, PortfolioService } from '../shared/services/wallet/portfolio.service';
 import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
-import { PortfolioRoot } from '../my-portfolio/portfolio.models';
 import numeral from 'numeral';
 
 @Component({
@@ -13,7 +12,7 @@ import numeral from 'numeral';
 })
 export class ExchangeComponent implements OnInit {
 
-    portfolio: PortfolioRoot[];
+    portfolio: Portfolio[];
     selectedProjectIndex = -1;
     remainingShares = '';
     personalShares = '';
@@ -28,7 +27,7 @@ export class ExchangeComponent implements OnInit {
     ngOnInit() {
         SpinnerUtil.showSpinner();
 
-        this.portfolioService.getPortfolio().subscribe((res: any) => {
+        this.portfolioService.getPortfolio().subscribe(res => {
             this.portfolio = res.portfolio;
             SpinnerUtil.hideSpinner();
 

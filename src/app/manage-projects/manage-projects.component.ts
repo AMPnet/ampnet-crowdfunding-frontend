@@ -1,10 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { OrganizationService } from '../organizations/organization-service';
+import { OrganizationService } from '../shared/services/project/organization.service';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { displayBackendError } from '../utilities/error-handler';
-import { ProjectModel } from '../projects/create-new-project/project-model';
-import { ProjectService } from '../projects/project-service';
+import { Project, ProjectService } from '../shared/services/project/project.service';
 
 
 declare var _: any;
@@ -15,12 +14,11 @@ declare var _: any;
     styleUrls: ['./manage-projects.component.css']
 })
 export class ManageProjectsComponent implements OnInit {
-
-    manageProjectsModel: ProjectModel[];
+    manageProjectsModel: Project[];
 
     @Input() groupID: string;
 
-    constructor(private router: Router, 
+    constructor(private router: Router,
                 private orgService: OrganizationService,
                 private projectService: ProjectService) {
     }
@@ -36,7 +34,7 @@ export class ManageProjectsComponent implements OnInit {
 
     getProjectsForGroup() {
         SpinnerUtil.showSpinner();
-        this.orgService.getAllProjectsForOrganization(this.groupID).subscribe((res: any) => {
+        this.orgService.getAllProjectsForOrganization(this.groupID).subscribe((res) => {
             SpinnerUtil.hideSpinner();
 
             this.manageProjectsModel = res.projects;
@@ -48,16 +46,12 @@ export class ManageProjectsComponent implements OnInit {
 
     toggleProject(uuid: string) {
         SpinnerUtil.showSpinner();
-        let project = this.manageProjectsModel.filter(x => x.uuid == uuid)[0]
-        this.projectService.updateProject(
-            project.uuid,
-            project.name,     
-            project.description,
-            project.location,
-            project.roi,
-            !project.active
-        ).subscribe(res => {
-            this.getProjectsForGroup()
+        const project = this.manageProjectsModel.filter(x => x.uuid === uuid)[0];
+
+        this.projectService.updateProject(project.uuid, {
+            active: !project.active
+        }).subscribe(() => {
+            this.getProjectsForGroup();
         }, err => {
             SpinnerUtil.hideSpinner();
             displayBackendError(err);

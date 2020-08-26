@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PaymentService } from './payment.service';
-import { BankAccountModel } from './bank-account-model';
+import { PaymentService, UserBankAccount } from '../shared/services/payment.service';
 import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { Router } from '@angular/router';
@@ -12,12 +11,10 @@ import { Router } from '@angular/router';
     styleUrls: ['./payment-options.component.css']
 })
 export class PaymentOptionsComponent implements OnInit {
-
-    banks: BankAccountModel[];
+    banks: UserBankAccount[];
 
     constructor(private paymentService: PaymentService,
                 private router: Router) {
-
     }
 
     ngOnInit() {
@@ -26,7 +23,7 @@ export class PaymentOptionsComponent implements OnInit {
 
     getBankAccounts() {
         SpinnerUtil.showSpinner();
-        this.paymentService.getMyBankAccounts().subscribe((res: any) => {
+        this.paymentService.getMyBankAccounts().subscribe(res => {
             SpinnerUtil.hideSpinner();
             if (res.bank_accounts.length === 0) {
                 this.router.navigate(['dash', 'payment_options', 'new'], {
@@ -45,5 +42,4 @@ export class PaymentOptionsComponent implements OnInit {
             this.getBankAccounts();
         }, hideSpinnerAndDisplayError);
     }
-
 }

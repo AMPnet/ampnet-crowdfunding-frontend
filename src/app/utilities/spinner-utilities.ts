@@ -9,6 +9,6 @@ export class SpinnerUtil {
     }
 
     public static hideSpinner() {
-        $('#spinner-overlay').fadeOut(300);  
+        $('#spinner-overlay').fadeOut(300);
     }
 }

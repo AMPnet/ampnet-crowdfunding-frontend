@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../user-utils/user-service';
+import { UserService } from '../shared/services/user/user.service';
 import { FormBuilder } from '@angular/forms';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
-import { UserModel } from '../models/user-model';
+import { User } from '../shared/services/user/signup.service';
 
 @Component({
     selector: 'app-general-settings',
@@ -12,7 +12,7 @@ import { UserModel } from '../models/user-model';
 })
 export class GeneralSettingsComponent implements OnInit {
 
-    user: UserModel;
+    user: User;
     updatingInfo = false;
 
     constructor(
@@ -23,7 +23,7 @@ export class GeneralSettingsComponent implements OnInit {
 
     ngOnInit() {
         SpinnerUtil.showSpinner();
-        this.userService.getOwnProfile().subscribe((res: any) => {
+        this.userService.getOwnProfile().subscribe(res => {
             this.user = res;
             SpinnerUtil.hideSpinner();
         }, hideSpinnerAndDisplayError);

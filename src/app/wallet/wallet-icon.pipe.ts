@@ -4,39 +4,39 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class TxIconType implements PipeTransform {
 
     transform(type: string): string {
-        switch(type) {
-            case "DEPOSIT": {
-                return "fa-arrow-down"
+        switch (type) {
+            case 'DEPOSIT': {
+                return 'fa-arrow-down';
             }
-            case "WITHDRAW": {
-                return "fa-arrow-up"
+            case 'WITHDRAW': {
+                return 'fa-arrow-up';
             }
-            case "INVEST": {
-                return "fa-coins"
+            case 'INVEST': {
+                return 'fa-coins';
             }
             default: {
-                return "fa-question-circle"
+                return 'fa-question-circle';
             }
         }
     }
 }
 
-@Pipe({ name: 'txIconStatus' }) 
+@Pipe({ name: 'txIconStatus' })
 export class TxIconStatus implements PipeTransform {
 
     transform(type: string): string {
-        switch(type) {
-            case "MINED": {
-                return "fa-check-circle"
+        switch (type) {
+            case 'MINED': {
+                return 'fa-check-circle';
             }
-            case "PENDING": {
-                return "fa-spinner fa-spin"
+            case 'PENDING': {
+                return 'fa-spinner fa-spin';
             }
-            case "FAILED": {
-                return "fa-cross"
+            case 'FAILED': {
+                return 'fa-cross';
             }
             default: {
-                return "fa-question-circle"
+                return 'fa-question-circle';
             }
         }
     }

@@ -6,7 +6,7 @@
                 {{organization.name}}
             </div>
             <div class="col-md-4">
-                <button *ngIf="orgWallet.hash !== undefined"
+                <button *ngIf="orgWallet !== undefined && orgWallet.hash !== undefined"
                         class="btn btn-primary py-2 w-100"
                         routerLink="create_project">
                     <i class="fas fa-plus-circle mr-2"></i>

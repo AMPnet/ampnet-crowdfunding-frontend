@@ -17,7 +17,7 @@ export class SidebarComponent implements OnInit {
     isAdmin: boolean;
     hasWalletActive = true;
     hasBankingInfo = true;
-    hasVerifiedProfile: boolean = true;
+    hasVerifiedProfile = true;
     fullName: string;
 
     constructor(private router: Router, private userService: UserService) {

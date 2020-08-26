@@ -21,6 +21,7 @@ export class OffersComponent implements OnInit, OnDestroy {
     featuredComponents: OfferModel[];
     promotedOffer: OfferModel;
     isOverview = false;
+    hasTags = false;
 
     constructor(private projectService: ProjectService,
                 private walletService: WalletService,
@@ -45,6 +46,9 @@ export class OffersComponent implements OnInit, OnDestroy {
                 const queryParams: { [key: string]: string } = {};
                 if (tags.length !== 0) {
                     queryParams.tags = tags.map(tag => tag).join(',');
+                    this.hasTags = true;
+                } else {
+                    this.hasTags = false;
                 }
                 this.router.navigate([], {
                     relativeTo: this.route,

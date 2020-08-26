@@ -15,7 +15,6 @@ import { ProjectTagFilterService } from '../../services/project/project-tag-filt
 
 
 export class ProjectTagFilterComponent implements OnInit, OnDestroy {
-    visible = true;
     selectable = true;
     removable = true;
     separatorKeysCodes: number[] = [ENTER, COMMA];

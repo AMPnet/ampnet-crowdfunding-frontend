@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { OfferDetailDocModel, OfferDetailDocType } from '../../models/OfferDetailDocModel';
 import * as _ from 'lodash';
 import { ActivatedRoute } from '@angular/router';
@@ -12,7 +12,6 @@ import { centsToBaseCurrencyUnit, prettyCurrency } from 'src/app/utilities/curre
 import { Meta } from '@angular/platform-browser';
 import { UserService } from 'src/app/shared/services/user/user.service';
 import { NewsLink } from '../../manage-projects/manage-single-project/news-link-model';
-import { SingleOfferModel } from './single-offer-model';
 import { WalletService } from '../../shared/services/wallet/wallet.service';
 import { Project, ProjectService } from '../../shared/services/project/project.service';
 

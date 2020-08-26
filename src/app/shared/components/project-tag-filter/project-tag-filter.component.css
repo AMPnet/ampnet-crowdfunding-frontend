@@ -1,11 +1,13 @@
 .mat-form-field{
     min-width:100%;
-    padding-left: 15px;
-    padding-right: 15px;
-    margin-bottom: 5px;
+    padding-left: 3px;
+    padding-right: 3px;
+    margin-bottom: 3px;
 }
 .mat-chip {
     padding-bottom: 15px;
     margin-bottom: 15px;
     margin-right: 5px;
+    margin-top: 15px;
+    padding-top: 15px;
 }

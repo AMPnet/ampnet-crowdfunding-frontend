@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { ProjectService } from '../../shared/services/project/project.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { displayBackendError } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { autonumericCurrency, baseCurrencyUnitToCents, stripCurrencyData } from 'src/app/utilities/currency-util';
+import { ProjectTagFilterService } from '../../shared/services/project/project-tag-filter.service';
 
 declare var $: any;
 
@@ -14,13 +15,14 @@ declare var $: any;
     templateUrl: './create-new-project.component.html',
     styleUrls: ['./create-new-project.component.css']
 })
-export class CreateNewProjectComponent implements OnInit, AfterViewInit {
+export class CreateNewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
     createProjectForm: FormGroup;
 
     constructor(private projectService: ProjectService,
                 private fb: FormBuilder,
                 private activatedRoute: ActivatedRoute,
-                private router: Router) {
+                private router: Router,
+                private projectTagFilterService: ProjectTagFilterService) {
         this.createProjectForm = this.fb.group({
             'name': [' ', Validators.required],
             'description': [' ', Validators.required],
@@ -58,7 +60,8 @@ export class CreateNewProjectComponent implements OnInit, AfterViewInit {
             currency: 'EUR',
             min_per_user: baseCurrencyUnitToCents(parseInt(stripCurrencyData(formValue.minPerUser), 10)),
             max_per_user: baseCurrencyUnitToCents(parseInt(stripCurrencyData(formValue.maxPerUser), 10)),
-            active: false
+            active: false,
+            tags: this.projectTagFilterService.tagsList
         }).subscribe(res => {
             SpinnerUtil.hideSpinner();
             this.router.navigate(['/dash', 'manage_groups', orgID.toString(), 'manage_project', res.uuid]);
@@ -80,5 +83,9 @@ export class CreateNewProjectComponent implements OnInit, AfterViewInit {
     }
 
     submitButtonClicked() {
+    }
+
+    ngOnDestroy(): void {
+        this.projectTagFilterService.clearAllTags();
     }
 }

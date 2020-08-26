@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
@@ -7,10 +7,6 @@ import { map, startWith } from 'rxjs/operators';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { ProjectTagFilterService } from '../../services/project/project-tag-filter.service';
 
-export interface Tag {
-    name: string;
-}
-
 @Component({
     selector: 'app-chips-filter',
     templateUrl: './project-tag-filter.component.html',
@@ -18,18 +14,15 @@ export interface Tag {
 })
 
 
-export class ProjectTagFilterComponent implements OnInit {
+export class ProjectTagFilterComponent implements OnInit, OnDestroy {
     visible = true;
     selectable = true;
     removable = true;
     separatorKeysCodes: number[] = [ENTER, COMMA];
     tagsCtrl = new FormControl();
     filteredTags: Observable<string[]>;
-    tags: string[] = ['Lemon'];
-    allTags: string[] = ['Apple', 'Lemon', 'Lime', 'Orange', 'Strawberry'];
-    projectTags: string[];
-
-    tagsList: Tag[] = [];
+    projectTags: string[] = [];
+    allTags: string[] = [];
 
     @ViewChild('tagInput') tagInput: ElementRef<HTMLInputElement>;
     @ViewChild('auto') matAutocomplete: MatAutocomplete;
@@ -40,19 +33,26 @@ export class ProjectTagFilterComponent implements OnInit {
             map((tag: string | null) => tag ? this._filter(tag) : this.allTags.slice()));
     }
 
-    remove(tag: Tag): void {
+    remove(tag: string): void {
         this.projectTagFilterService.removeTag(tag);
     }
 
     ngOnInit(): void {
-        this.getFilterTags();
+        this.getAllTags();
+        this.getSelectedProjectTags();
     }
 
-    getFilterTags(): void {
+    getAllTags(): void {
+        this.projectTagFilterService.getAllProjectTags()
+            .subscribe(data => {
+                this.allTags.push(...data.tags);
+            });
+    }
+
+    getSelectedProjectTags(): void {
         this.projectTagFilterService.tagsListSubject.subscribe(tags => {
-            this.tagsList = [];
-            // @ts-ignore
-            this.tagsList.push(...tags);
+            this.projectTags = [];
+            this.projectTags.push(...tags);
         });
     }
 
@@ -60,9 +60,9 @@ export class ProjectTagFilterComponent implements OnInit {
         const input = event.input;
         const value = event.value;
 
-        // Add our fruit
+        // Add tag
         if ((value || '').trim()) {
-            this.tags.push(value.trim());
+            this.projectTagFilterService.addTag(value.trim());
         }
 
         // Reset the input value
@@ -74,15 +74,17 @@ export class ProjectTagFilterComponent implements OnInit {
     }
 
     selected(event: MatAutocompleteSelectedEvent): void {
-        this.tags.push(event.option.viewValue);
+        this.projectTagFilterService.addTag(event.option.viewValue);
         this.tagInput.nativeElement.value = '';
         this.tagsCtrl.setValue(null);
     }
 
     private _filter(value: string): string[] {
         const filterValue = value.toLowerCase();
-
         return this.allTags.filter(fruit => fruit.toLowerCase().indexOf(filterValue) === 0);
     }
-}
 
+    ngOnDestroy(): void {
+        this.projectTagFilterService.clearAllTags();
+    }
+}

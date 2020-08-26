@@ -3,7 +3,6 @@ import { OfferModel } from '../OfferModel';
 import { ActivatedRoute, Router } from '@angular/router';
 import { autonumericCurrency, prettyCurrency } from 'src/app/utilities/currency-util';
 import { ProjectService } from 'src/app/shared/services/project/project.service';
-import { Tag } from '../../shared/components/project-tag-filter/project-tag-filter.component';
 import { ProjectTagFilterService } from '../../shared/services/project/project-tag-filter.service';
 
 @Component({
@@ -39,7 +38,6 @@ export class SingleOfferItemComponent implements OnInit {
     }
 
     onOfferTagClicked(tagName: string) {
-        const selectedTag: Tag = {name: tagName};
-        this.offersFilterService.addTag(selectedTag);
+        this.offersFilterService.addTag(tagName);
     }
 }

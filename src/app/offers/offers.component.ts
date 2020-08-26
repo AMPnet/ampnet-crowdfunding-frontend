@@ -8,7 +8,6 @@ import { centsToBaseCurrencyUnit } from '../utilities/currency-util';
 import { WalletService } from '../shared/services/wallet/wallet.service';
 import { ProjectService } from '../shared/services/project/project.service';
 import { SubSink } from 'subsink';
-import { Tag } from '../shared/components/project-tag-filter/project-tag-filter.component';
 import { ProjectTagFilterService } from '../shared/services/project/project-tag-filter.service';
 
 @Component({
@@ -21,9 +20,7 @@ export class OffersComponent implements OnInit, OnDestroy {
     components: OfferModel[];
     featuredComponents: OfferModel[];
     promotedOffer: OfferModel;
-
     isOverview = false;
-    tags = ['chip1', 'chip2', 'chip3'];
 
     constructor(private projectService: ProjectService,
                 private walletService: WalletService,
@@ -38,7 +35,7 @@ export class OffersComponent implements OnInit, OnDestroy {
 
         this.subs.sink = this.route.queryParams.subscribe(data => {
             if (data.tags) {
-                const tags = data.tags.split(',').map(tagName => <Tag>{name: tagName});
+                const tags = data.tags.split(',').map(tag => tag).join(',');
                 this.projectTagFilterService.addTag(...tags);
             }
         });
@@ -47,7 +44,7 @@ export class OffersComponent implements OnInit, OnDestroy {
             .subscribe(tags => {
                 const queryParams: { [key: string]: string } = {};
                 if (tags.length !== 0) {
-                    queryParams.tags = tags.map(tag => tag.name).join(',');
+                    queryParams.tags = tags.map(tag => tag).join(',');
                 }
                 this.router.navigate([], {
                     relativeTo: this.route,
@@ -61,7 +58,7 @@ export class OffersComponent implements OnInit, OnDestroy {
         }
     }
 
-    getAllOffers(tags?: Tag[]) {
+    getAllOffers(tags?: string[]) {
         SpinnerUtil.showSpinner();
 
         if (tags === undefined) {
@@ -83,7 +80,7 @@ export class OffersComponent implements OnInit, OnDestroy {
                     endDate: moment(proj.end_date).format('MMM Do, YYYY'),
                     owner: '',
                     currency: '',
-                    tags: this.tags
+                    tags: proj.tags
                 };
             });
             if (projects.length > 0) {

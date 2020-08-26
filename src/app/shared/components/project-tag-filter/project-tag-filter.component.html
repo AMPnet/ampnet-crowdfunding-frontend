@@ -1,11 +1,11 @@
 <div class="container">
-    <mat-form-field  class="example-chip-list">
+    <mat-form-field class="example-chip-list">
         <mat-chip-list #chipList aria-label="Chip selection">
-            <mat-chip *ngFor="let tag of tagsList"
+            <mat-chip *ngFor="let tag of projectTags"
                       [selectable]="selectable"
                       [removable]="removable"
                       (removed)="remove(tag)">
-                {{tag.name}}
+                {{tag}}
                 <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
             </mat-chip>
             <input
@@ -18,8 +18,8 @@
                     (matChipInputTokenEnd)="add($event)">
         </mat-chip-list>
         <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-            <mat-option *ngFor="let fruit of filteredTags | async" [value]="fruit">
-                {{fruit}}
+            <mat-option *ngFor="let tag of filteredTags | async" [value]="tag">
+                {{tag}}
             </mat-option>
         </mat-autocomplete>
     </mat-form-field>

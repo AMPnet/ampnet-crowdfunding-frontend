@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Tag } from '../../components/project-tag-filter/project-tag-filter.component';
 import { ReplaySubject } from 'rxjs';
 import _ from 'lodash';
 import { BackendHttpClient } from '../backend-http-client.service';
@@ -12,10 +11,10 @@ export class ProjectTagFilterService {
     constructor(private http: BackendHttpClient) {
     }
 
-    tagsList: Tag[] = [];
-    tagsListSubject = new ReplaySubject<Tag[]>();
+    tagsList: string[] = [];
+    tagsListSubject = new ReplaySubject<string[]>();
 
-    removeTag(tag: Tag): void {
+    removeTag(tag: string): void {
         const index = this.tagsList.indexOf(tag);
         if (index >= 0) {
             this.tagsList.splice(index, 1);
@@ -23,11 +22,10 @@ export class ProjectTagFilterService {
         this.activateEmitter();
     }
 
-    addTag(...tags: Tag[]): void {
+    addTag(...tags: string[]): void {
         const newTagList = this.tagsList.slice();
 
-        if (newTagList.findIndex((item) =>
-            item.name === tags[0].name) < 0) {
+        if (newTagList.findIndex((item) => item === tags[0]) < 0) {
             newTagList.push(...tags);
         }
 
@@ -42,13 +40,12 @@ export class ProjectTagFilterService {
     }
 
     getAllProjectTags() {
-        return this.http.get<ProjectTagsResponse>('/api/project/public/project/tags')
-            .subscribe(data => {
-                for (let i = 0; i < data.tags.length; i++) {
-                    const tag = data[i].name;
-                    this.addTag(tag);
-                }
-            });
+        return this.http.get<ProjectTagsResponse>('/api/project/public/project/tags');
+    }
+
+    clearAllTags() {
+        this.tagsList = [];
+        this.activateEmitter();
     }
 }
 

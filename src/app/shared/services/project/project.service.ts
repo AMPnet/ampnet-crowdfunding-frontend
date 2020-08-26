@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BackendHttpClient } from '../backend-http-client.service';
 import { DocumentModel } from './organization.service';
-import { Tag } from '../../components/project-tag-filter/project-tag-filter.component';
 
 @Injectable({
     'providedIn': 'root'
@@ -22,10 +21,10 @@ export class ProjectService {
         return this.http.put<Project>(`/api/project/project/${projectID}`, data);
     }
 
-    getAllActiveProjects(tags?: Tag[]) {
+    getAllActiveProjects(tags?: string[]) {
         if (tags !== undefined && tags.length > 0) {
             return this.http.get<PageableProjectsResponse>('/api/project/public/project?tags=' +
-                tags.map(tag => tag.name).join(','));
+                tags.map(tag => tag).join(','));
         }
         return this.http.get<PageableProjectsResponse>('/api/project/public/project/active');
     }
@@ -53,7 +52,7 @@ interface UpdateProjectData {
     location?: { lat: number; long: number; };
     roi?: { from: number; to: number; };
     active?: boolean;
-    tags?: string;
+    tags?: string[];
     news?: string[];
 }
 

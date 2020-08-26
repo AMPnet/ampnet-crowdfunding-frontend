@@ -12,7 +12,7 @@ jobs:
         node-version: [12.x]
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
 #      - name: Cache node modules
 #        uses: actions/cache@v1
 #        with:
@@ -54,10 +54,13 @@ jobs:
 
       - name: Sync feature with master
         run: |
-          git config user.email "githubactions@ampnet.io"
-          git config user.name "AMPnet GitHub Actions"
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+
+          git checkout master
+          git pull origin master
 
           git checkout feature
-          git pull feature
+          git pull origin feature
           git merge --no-edit master
-          git push feature
+          git push origin feature

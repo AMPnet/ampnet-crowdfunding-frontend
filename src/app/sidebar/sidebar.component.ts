@@ -17,7 +17,7 @@ export class SidebarComponent implements OnInit {
     isAdmin: boolean;
     hasWalletActive = true;
     hasBankingInfo = true;
-    hasVerifiedProfile = true;
+    hasVerifiedProfile: boolean = true;
     fullName: string;
 
     constructor(private router: Router, private userService: UserService) {
@@ -52,6 +52,7 @@ export class SidebarComponent implements OnInit {
     fetchUserData() {
         this.userService.getOwnProfile().subscribe(res => {
             this.fullName = res['first_name'] + ' ' + res['last_name'];
+            this.hasVerifiedProfile = res['verified'];
         });
     }
 

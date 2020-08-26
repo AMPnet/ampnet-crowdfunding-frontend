@@ -37,6 +37,7 @@ export class ProjectTagFilterService {
 
     activateEmitter() {
         this.tagsListSubject.next(this.tagsList);
+        console.log('tagListSize: ', this.tagsList.length);
     }
 
     getAllProjectTags() {

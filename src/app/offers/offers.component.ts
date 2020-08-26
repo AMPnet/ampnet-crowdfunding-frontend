@@ -31,7 +31,6 @@ export class OffersComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.projectTagFilterService.getAllProjectTags();
         this.getAllOffers();
 
         this.subs.sink = this.route.queryParams.subscribe(data => {

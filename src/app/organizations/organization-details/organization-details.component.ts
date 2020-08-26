@@ -124,6 +124,6 @@ export class OrganizationDetailsComponent implements OnInit {
                 onComplete();
             }, err => {
                 displayBackendError(err);
-            });
+            }, () => SpinnerUtil.hideSpinner());
     }
 }

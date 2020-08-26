@@ -12,6 +12,8 @@ import { BroadcastService } from 'src/app/shared/services/broadcast.service';
 import { WalletDetails } from '../../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
 import { WalletService } from '../../shared/services/wallet/wallet.service';
 import { BackendHttpClient } from '../../shared/services/backend-http-client.service';
+import { ProjectTagFilterService } from '../../shared/services/project/project-tag-filter.service';
+import { Tag } from '../../shared/components/project-tag-filter/project-tag-filter.component';
 
 declare var $: any;
 
@@ -21,7 +23,6 @@ declare var $: any;
     styleUrls: ['./manage-single-project.component.css']
 })
 export class ManageSingleProjectComponent implements OnInit {
-
     public files: string[] = [
         'Building permit',
         'Working permit',
@@ -37,7 +38,8 @@ export class ManageSingleProjectComponent implements OnInit {
                 private http: BackendHttpClient,
                 private manageProjectsService: ManageProjectsService,
                 private route: ActivatedRoute,
-                private broadService: BroadcastService) {
+                private broadService: BroadcastService,
+                private projectTagFilterService: ProjectTagFilterService) {
     }
 
     ngOnInit() {
@@ -126,11 +128,21 @@ export class ManageSingleProjectComponent implements OnInit {
         this.projectService.getProject(id).subscribe((res: Project) => {
             SpinnerUtil.hideSpinner();
             this.project = res;
+            this.getProjectTags();
             onComplete();
         }, err => {
             SpinnerUtil.hideSpinner();
             displayBackendError(err);
         });
+    }
+
+    getProjectTags() {
+        // Todo create and emit tagList instead of emitting one tag at the time
+        for (let i = 0; i < this.project.tags.length; i++) {
+            const tag = <Tag>{};
+            tag.name = this.project.tags[i];
+            this.projectTagFilterService.addTag(tag);
+        }
     }
 
     toggleProjectStatusClicked() {
@@ -162,7 +174,9 @@ export class ManageSingleProjectComponent implements OnInit {
             description: updatedProject.description,
             location: updatedProject.location,
             roi: updatedProject.roi,
-            active: updatedProject.active
+            active: updatedProject.active,
+            tags: this.projectTagFilterService.tagsList.map(tag => tag.name).join(',')
+
         }).subscribe(() => {
             SpinnerUtil.hideSpinner();
             this.getProject(() => {

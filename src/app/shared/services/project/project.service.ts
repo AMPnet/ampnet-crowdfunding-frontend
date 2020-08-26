@@ -53,7 +53,7 @@ interface UpdateProjectData {
     location?: { lat: number; long: number; };
     roi?: { from: number; to: number; };
     active?: boolean;
-    tags?: string[];
+    tags?: string;
     news?: string[];
 }
 
@@ -76,6 +76,7 @@ export interface Project {
     gallery: [string];
     active: boolean;
     wallet_hash: string;
+    tags?: string[];
 }
 
 export interface PageableProjectsResponse {

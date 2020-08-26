@@ -23,7 +23,7 @@ export class OffersComponent implements OnInit, OnDestroy {
     promotedOffer: OfferModel;
 
     isOverview = false;
-    tags = ['Chip1', 'Chip2', 'Chip3'];
+    tags = ['chip1', 'chip2', 'chip3'];
 
     constructor(private projectService: ProjectService,
                 private walletService: WalletService,

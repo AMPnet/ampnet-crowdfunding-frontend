@@ -1,5 +1,5 @@
 <div class="container">
-    <mat-form-field class="example-chip-list">
+    <mat-form-field  class="example-chip-list">
         <mat-chip-list #chipList aria-label="Chip selection">
             <mat-chip *ngFor="let tag of tagsList"
                       [selectable]="selectable"
@@ -9,7 +9,7 @@
                 <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
             </mat-chip>
             <input
-                    placeholder="New fruit..."
+                    placeholder="Project tags..."
                     #tagInput
                     [formControl]="tagsCtrl"
                     [matAutocomplete]="auto"

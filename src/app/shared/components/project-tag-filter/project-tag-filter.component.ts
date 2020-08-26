@@ -27,6 +27,7 @@ export class ProjectTagFilterComponent implements OnInit {
     filteredTags: Observable<string[]>;
     tags: string[] = ['Lemon'];
     allTags: string[] = ['Apple', 'Lemon', 'Lime', 'Orange', 'Strawberry'];
+    projectTags: string[];
 
     tagsList: Tag[] = [];
 

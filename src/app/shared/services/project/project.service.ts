@@ -23,6 +23,10 @@ export class ProjectService {
     }
 
     getAllActiveProjects(tags?: Tag[]) {
+        if (tags !== undefined && tags.length > 0) {
+            return this.http.get<PageableProjectsResponse>('/api/project/public/project?tags=' +
+                tags.map(tag => tag.name).join(','));
+        }
         return this.http.get<PageableProjectsResponse>('/api/project/public/project/active');
     }
 }

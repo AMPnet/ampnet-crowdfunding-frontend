@@ -36,9 +36,6 @@ export class OffersComponent implements OnInit {
         this.getAllOffers();
 
         this.routeParamsSubscription = this.route.queryParams.subscribe(data => {
-            console.log(data.tags);
-            console.log(data.tags.split(','));
-
             if (data.tags) {
                 const tags = data.tags.split(',').map(tagName => <Tag>{name: tagName});
                 this.offersFilterService.addTag(...tags);
@@ -47,13 +44,15 @@ export class OffersComponent implements OnInit {
 
         this.offersFilterService.tagsListSubject
             .subscribe(tags => {
+                const queryParams: { [key: string]: string } = {};
+                if (tags.length !== 0) {
+                    queryParams.tags = tags.map(tag => tag.name).join(',');
+                }
                 this.router.navigate([], {
                     relativeTo: this.route,
-                    queryParams: {
-                        tags: tags.map(tag => tag.name).join(',')
-                    },
-                    queryParamsHandling: 'merge',
+                    queryParams: queryParams
                 });
+                this.getAllOffers(tags);
             });
 
         if (this.route.snapshot.params.isOverview) {
@@ -63,6 +62,10 @@ export class OffersComponent implements OnInit {
 
     getAllOffers(tags?: Tag[]) {
         SpinnerUtil.showSpinner();
+
+        if (tags === undefined) {
+            tags = [];
+        }
 
         this.projectService.getAllActiveProjects(tags).subscribe(res => {
             const projects = res.projects;
@@ -89,14 +92,6 @@ export class OffersComponent implements OnInit {
         }, err => {
             displayBackendError(err);
             SpinnerUtil.hideSpinner();
-        });
-    }
-
-    getTagFilteredProjects() {
-        this.offersFilterService.tagsListSubject.subscribe(tags => {
-            for (let i = 0; i < tags.length; i++) {
-                // console.log(tags[i].name);
-            }
         });
     }
 

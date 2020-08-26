@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { ProjectService } from '../project-service';
+import { ProjectService } from '../../shared/services/project/project.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -46,27 +46,20 @@ export class CreateNewProjectComponent implements OnInit, AfterViewInit {
 
         SpinnerUtil.showSpinner();
 
-        this.projectService.createProject(
-            orgID,
-            formValue.name,
-            formValue.description,
-            {
-                'lat': 0,
-                'long': 0
-            },
-            formValue.colloqual,
-            {
-                'from': 2.1,
-                'to': 5.3
-            },
-            formValue.startDate,
-            formValue.endDate,
-            baseCurrencyUnitToCents(parseInt(stripCurrencyData(formValue.expectedFunding), 10)),
-            'EUR',
-            baseCurrencyUnitToCents(parseInt(stripCurrencyData(formValue.minPerUser), 10)),
-            baseCurrencyUnitToCents(parseInt(stripCurrencyData(formValue.maxPerUser), 10)),
-            false
-        ).subscribe((res: any) => {
+        this.projectService.createProject({
+            organization_uuid: orgID,
+            name: formValue.name,
+            description: formValue.description,
+            location: {lat: 0, long: 0},
+            roi: {from: 2.1, to: 5.3},
+            start_date: formValue.startDate,
+            end_date: formValue.endDate,
+            expected_funding: baseCurrencyUnitToCents(parseInt(stripCurrencyData(formValue.expectedFunding), 10)),
+            currency: 'EUR',
+            min_per_user: baseCurrencyUnitToCents(parseInt(stripCurrencyData(formValue.minPerUser), 10)),
+            max_per_user: baseCurrencyUnitToCents(parseInt(stripCurrencyData(formValue.maxPerUser), 10)),
+            active: false
+        }).subscribe(res => {
             SpinnerUtil.hideSpinner();
             this.router.navigate(['/dash', 'manage_groups', orgID.toString(), 'manage_project', res.uuid]);
         }, err => {

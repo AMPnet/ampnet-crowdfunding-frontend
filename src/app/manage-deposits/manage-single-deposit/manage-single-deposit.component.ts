@@ -3,16 +3,18 @@ import * as Uppy from 'uppy';
 import { ActivatedRoute } from '@angular/router';
 import { hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
-import { DepositCoreModel } from 'src/app/deposit/deposit-model';
 import { prettyDate } from 'src/app/utilities/date-format-util';
-import { API } from 'src/app/utilities/endpoint-manager';
 import * as numeral from 'numeral';
-import { DepositCooperativeService } from '../deposit.cooperative.service';
+import {
+    DepositSearchResponse,
+    WalletCooperativeDepositService
+} from '../../shared/services/wallet/wallet-cooperative/wallet-cooperative-deposit.service';
 import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
-import { BroadcastService } from 'src/app/broadcast/broadcast-service';
+import { BroadcastService } from 'src/app/shared/services/broadcast.service';
 import swal from 'sweetalert2';
 import { autonumericCurrency, baseCurrencyUnitToCents, stripCurrencyData } from 'src/app/utilities/currency-util';
 import MicroModal from 'micromodal';
+import { BackendHttpClient } from '../../shared/services/backend-http-client.service';
 
 declare var $: any;
 
@@ -23,11 +25,12 @@ declare var $: any;
 })
 export class ManageSingleDepositComponent implements OnInit, AfterViewInit {
 
-    depositModel: DepositCoreModel;
+    depositModel: DepositSearchResponse;
     paymentUppy: Uppy.Core.Uppy;
 
     constructor(private route: ActivatedRoute,
-                private depositCooperativeService: DepositCooperativeService,
+                private http: BackendHttpClient,
+                private depositCooperativeService: WalletCooperativeDepositService,
                 private broadService: BroadcastService,
     ) {
 
@@ -61,7 +64,7 @@ export class ManageSingleDepositComponent implements OnInit, AfterViewInit {
     generateSignerAndSign() {
         SpinnerUtil.showSpinner();
 
-        this.depositCooperativeService.generateDepositMintTx(this.depositModel.deposit.id).subscribe(async (res: any) => {
+        this.depositCooperativeService.generateDepositMintTx(this.depositModel.deposit.id).subscribe(async res => {
             SpinnerUtil.hideSpinner();
             const arkaneConnect = new ArkaneConnect('AMPnet', {
                 environment: 'staging'
@@ -85,9 +88,9 @@ export class ManageSingleDepositComponent implements OnInit, AfterViewInit {
     getDeposit() {
         const id = this.route.snapshot.params.ID;
         SpinnerUtil.showSpinner();
-        this.depositCooperativeService.getDeposit(id).subscribe((res: any) => {
+        this.depositCooperativeService.getDeposit(id).subscribe(res => {
             this.depositModel = res;
-            this.depositModel.deposit.created_at = prettyDate(res.created_at);
+            this.depositModel.deposit.created_at = new Date(prettyDate(res.deposit.created_at.toISOString()));
             this.depositModel.deposit.amount = numeral(this.depositModel.deposit.amount).format(',');
             if (!this.depositModel.deposit.approved) {
                 setTimeout(() => {
@@ -122,6 +125,7 @@ export class ManageSingleDepositComponent implements OnInit, AfterViewInit {
         }
 
         const depositApprovalURL = this.depositCooperativeService.generateDepositApprovalURL(
+            location.origin,
             this.depositModel.deposit.id,
             baseCurrencyUnitToCents(depositAmount)
         );
@@ -130,7 +134,7 @@ export class ManageSingleDepositComponent implements OnInit, AfterViewInit {
             endpoint: depositApprovalURL,
             fieldName: 'file',
             headers: {
-                'Authorization': API.tokenHeaders().headers.Authorization
+                'Authorization': this.http.authHttpOptions().headers.get('Authorization')
             }
         });
 

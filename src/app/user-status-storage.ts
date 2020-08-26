@@ -1,10 +1,9 @@
-import { UserModel } from './models/user-model';
-import { Transaction, TransactionList, WalletModel } from './models/WalletModel';
-import { PaymentModels } from './models/payment-model';
+import { UserBankAccount } from './shared/services/payment.service';
+import { WalletDetails } from './shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
+import { User } from './shared/services/user/signup.service';
 
 export class UserStatusStorage {
-    static personalData: UserModel;
-    static walletData: WalletModel;
-    static bankData: PaymentModels;
-    static transactionData: TransactionList;
+    static personalData: User;
+    static walletData: WalletDetails;
+    static bankData: UserBankAccount[];
 }

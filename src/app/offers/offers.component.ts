@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { OfferModel } from './OfferModel';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { displayBackendError } from '../utilities/error-handler';
@@ -6,43 +6,44 @@ import * as moment from 'moment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { centsToBaseCurrencyUnit } from '../utilities/currency-util';
 import { WalletService } from '../shared/services/wallet/wallet.service';
-import { OffersFilterServiceService } from './offers-filter-service.service';
-import { Tag } from './offer-filter/office-filter-model';
 import { ProjectService } from '../shared/services/project/project.service';
+import { SubSink } from 'subsink';
+import { Tag } from '../shared/components/project-tag-filter/project-tag-filter.component';
+import { ProjectTagFilterService } from '../shared/services/project/project-tag-filter.service';
 
 @Component({
     selector: 'app-offers',
     templateUrl: './offers.component.html',
     styleUrls: ['./offers.component.css'],
-    providers: [OffersFilterServiceService]
 })
-export class OffersComponent implements OnInit {
+export class OffersComponent implements OnInit, OnDestroy {
+    private subs = new SubSink();
     components: OfferModel[];
     featuredComponents: OfferModel[];
     promotedOffer: OfferModel;
 
     isOverview = false;
     tags = ['Chip1', 'Chip2', 'Chip3'];
-    routeParamsSubscription;
 
     constructor(private projectService: ProjectService,
                 private walletService: WalletService,
                 private route: ActivatedRoute,
                 private router: Router,
-                private offersFilterService: OffersFilterServiceService) {
+                private projectTagFilterService: ProjectTagFilterService) {
     }
 
     ngOnInit() {
+        this.projectTagFilterService.getAllProjectTags();
         this.getAllOffers();
 
-        this.routeParamsSubscription = this.route.queryParams.subscribe(data => {
+        this.subs.sink = this.route.queryParams.subscribe(data => {
             if (data.tags) {
                 const tags = data.tags.split(',').map(tagName => <Tag>{name: tagName});
-                this.offersFilterService.addTag(...tags);
+                this.projectTagFilterService.addTag(...tags);
             }
         });
 
-        this.offersFilterService.tagsListSubject
+        this.subs.sink = this.projectTagFilterService.tagsListSubject
             .subscribe(tags => {
                 const queryParams: { [key: string]: string } = {};
                 if (tags.length !== 0) {
@@ -107,5 +108,9 @@ export class OffersComponent implements OnInit {
         }, err => {
             displayBackendError(err);
         });
+    }
+
+    ngOnDestroy(): void {
+        this.subs.unsubscribe();
     }
 }

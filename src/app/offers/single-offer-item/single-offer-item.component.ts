@@ -2,9 +2,9 @@ import { Component, Input, OnInit } from '@angular/core';
 import { OfferModel } from '../OfferModel';
 import { ActivatedRoute, Router } from '@angular/router';
 import { autonumericCurrency, prettyCurrency } from 'src/app/utilities/currency-util';
-import { OffersFilterServiceService } from '../offers-filter-service.service';
-import { Tag } from '../offer-filter/office-filter-model';
 import { ProjectService } from 'src/app/shared/services/project/project.service';
+import { Tag } from '../../shared/components/project-tag-filter/project-tag-filter.component';
+import { ProjectTagFilterService } from '../../shared/services/project/project-tag-filter.service';
 
 @Component({
     selector: 'app-single-offer-item',
@@ -17,7 +17,7 @@ export class SingleOfferItemComponent implements OnInit {
     constructor(private router: Router,
                 private projectService: ProjectService,
                 private route: ActivatedRoute,
-                private offersFilterService: OffersFilterServiceService) {
+                private offersFilterService: ProjectTagFilterService) {
     }
 
     ngOnInit() {

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BackendHttpClient } from '../backend-http-client.service';
 import { DocumentModel } from './organization.service';
-import { Tag } from '../../../offers/offer-filter/office-filter-model';
+import { Tag } from '../../components/project-tag-filter/project-tag-filter.component';
 
 @Injectable({
     'providedIn': 'root'

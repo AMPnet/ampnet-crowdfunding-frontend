@@ -1,10 +1,17 @@
-import { Tag } from './offer-filter/office-filter-model';
 import { Injectable } from '@angular/core';
+import { Tag } from '../../components/project-tag-filter/project-tag-filter.component';
 import { ReplaySubject } from 'rxjs';
-import * as _ from 'underscore';
+import _ from 'lodash';
+import { BackendHttpClient } from '../backend-http-client.service';
 
-@Injectable({providedIn: 'root'})
-export class OffersFilterServiceService {
+@Injectable({
+    providedIn: 'root'
+})
+export class ProjectTagFilterService {
+
+    constructor(private http: BackendHttpClient) {
+    }
+
     tagsList: Tag[] = [];
     tagsListSubject = new ReplaySubject<Tag[]>();
 
@@ -33,4 +40,18 @@ export class OffersFilterServiceService {
     activateEmitter() {
         this.tagsListSubject.next(this.tagsList);
     }
+
+    getAllProjectTags() {
+        return this.http.get<ProjectTagsResponse>('/api/project/public/project/tags')
+            .subscribe(data => {
+                for (let i = 0; i < data.tags.length; i++) {
+                    const tag = data[i].name;
+                    this.addTag(tag);
+                }
+            });
+    }
+}
+
+interface ProjectTagsResponse {
+    tags: string[];
 }

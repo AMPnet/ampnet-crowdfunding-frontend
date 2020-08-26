@@ -72,7 +72,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatIconModule} from '@angular/material/icon';
-import { OfferFilterComponent } from './offers/offer-filter/offer-filter.component';
+import { MatOptionModule } from '@angular/material/core';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { ProjectTagFilterComponent } from './shared/components/project-tag-filter/project-tag-filter.component';
 
 export function tokenGetter() {
     return localStorage.getItem('access_token');
@@ -166,7 +168,7 @@ export function jwtOptionsFactory() {
         RevenueShareComponent,
         TxIconType,
         TxIconStatus,
-        OfferFilterComponent
+        ProjectTagFilterComponent
     ],
     imports: [
         BrowserModule,
@@ -182,7 +184,9 @@ export function jwtOptionsFactory() {
         BrowserAnimationsModule,
         MatFormFieldModule,
         MatChipsModule,
-        MatIconModule
+        MatIconModule,
+        MatOptionModule,
+        MatAutocompleteModule
     ],
     providers: [
         socialAuthServiceConfig,

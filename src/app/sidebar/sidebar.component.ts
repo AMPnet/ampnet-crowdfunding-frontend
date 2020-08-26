@@ -15,7 +15,7 @@ import { SpinnerUtil } from '../utilities/spinner-utilities';
 export class SidebarComponent implements OnInit {
 
     isAdmin: boolean;
-    isPlatformManager : boolean;
+    isPlatformManager: boolean;
     isTokenIssuer: boolean;
     hasWalletActive = true;
     hasBankingInfo = true;

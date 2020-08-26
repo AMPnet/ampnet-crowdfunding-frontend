@@ -61,5 +61,5 @@ jobs:
           git reset --hard HEAD
 
           git checkout feature
-          git merge --no-edit master
+          git merge --no-edit --allow-unrelated-histories master
           git push

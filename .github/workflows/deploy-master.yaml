@@ -54,10 +54,10 @@ jobs:
 
       - name: Sync feature with master
         run: |
-          git config --global user.email "githubactions@ampnet.io"
-          git config --global user.name "AMPnet GitHub Actions"
+          git config user.email "githubactions@ampnet.io"
+          git config user.name "AMPnet GitHub Actions"
 
           git checkout feature
-          git pull origin/feature
-          git merge --no-edit origin/master
-          git push origin/feature
+          git pull feature
+          git merge --no-edit master
+          git push feature

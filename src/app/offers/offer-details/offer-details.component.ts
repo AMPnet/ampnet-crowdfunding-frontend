@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { OfferDetailDocModel, OfferDetailDocType } from '../../models/OfferDetailDocModel';
 import * as _ from 'lodash';
 import { ActivatedRoute } from '@angular/router';
@@ -15,6 +15,7 @@ import { NewsLink } from '../../manage-projects/manage-single-project/news-link-
 import { SingleOfferModel } from './single-offer-model';
 import { WalletService } from '../../shared/services/wallet/wallet.service';
 import { Project, ProjectService } from '../../shared/services/project/project.service';
+import * as L from 'leaflet';
 
 @Component({
     selector: 'app-offer-details',
@@ -31,6 +32,12 @@ export class OfferDetailsComponent implements OnInit {
     isPortfolio = false;
     userConfirmed = true;
     projectBalance = 0;
+    private map;
+    mapMarker;
+    mapLat: number;
+    mapLong: number;
+    mapFetched = false;
+    locationDefined = true;
 
     constructor(private projectService: ProjectService,
                 private newsPreviewService: NewsPreviewService,
@@ -85,6 +92,9 @@ export class OfferDetailsComponent implements OnInit {
         this.offerModel.currency = prettyCurrency(res.currency);
         this.offerModel.min_per_user = numeral(centsToBaseCurrencyUnit(res.min_per_user)).format('0,0');
         this.offerModel.max_per_user = numeral(centsToBaseCurrencyUnit(res.max_per_user)).format('0,0');
+        /* if (this.offerModel.location.lat === undefined) {
+            this.locationDefined = false;
+        } */
     }
 
     setMetaTags() {
@@ -133,5 +143,20 @@ export class OfferDetailsComponent implements OnInit {
                 displayBackendError(err);
             }
         });
+    }
+
+    fetchMap() {
+        if (!this.mapFetched) {
+            setTimeout(() => {
+                this.map = L.map("display-map").setView(
+                    [this.offerModel.location.lat, this.offerModel.location.long], 12);
+                L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", 
+                { attribution:
+                    '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                }).addTo(this.map);
+                this.mapMarker = L.marker([this.offerModel.location.lat, this.offerModel.location.long]).addTo(this.map);
+            },500)
+            this.mapFetched = true;
+        }
     }
 }

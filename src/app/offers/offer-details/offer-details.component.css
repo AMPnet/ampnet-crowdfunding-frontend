@@ -72,6 +72,7 @@
 
 .offer-location {
     font-size: 12px;
+    cursor: pointer;
 }
 
 .offer-right-text {
@@ -156,3 +157,21 @@
         margin-top: 0 !important;
     }
  }
+
+ .map-container {
+    height: 450px;
+}
+  
+.map-frame,
+#display-map {
+    height: 100%;
+}
+
+.modal-dialog {
+    max-width: 700px;
+}
+
+.modal-header {
+    border: none;
+    padding-bottom: 0;
+}

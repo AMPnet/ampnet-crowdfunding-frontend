@@ -92,9 +92,9 @@ export class OfferDetailsComponent implements OnInit {
         this.offerModel.currency = prettyCurrency(res.currency);
         this.offerModel.min_per_user = numeral(centsToBaseCurrencyUnit(res.min_per_user)).format('0,0');
         this.offerModel.max_per_user = numeral(centsToBaseCurrencyUnit(res.max_per_user)).format('0,0');
-        /* if (this.offerModel.location.lat === undefined) {
+        if (this.offerModel.location.lat === undefined) {
             this.locationDefined = false;
-        } */
+        }
     }
 
     setMetaTags() {
@@ -148,14 +148,14 @@ export class OfferDetailsComponent implements OnInit {
     fetchMap() {
         if (!this.mapFetched) {
             setTimeout(() => {
-                this.map = L.map("display-map").setView(
+                this.map = L.map('display-map').setView(
                     [this.offerModel.location.lat, this.offerModel.location.long], 12);
-                L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", 
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
                 { attribution:
                     '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 }).addTo(this.map);
                 this.mapMarker = L.marker([this.offerModel.location.lat, this.offerModel.location.long]).addTo(this.map);
-            },500)
+            }, 500);
             this.mapFetched = true;
         }
     }

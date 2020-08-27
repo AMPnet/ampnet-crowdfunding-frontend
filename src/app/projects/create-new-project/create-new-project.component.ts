@@ -19,8 +19,8 @@ export class CreateNewProjectComponent implements OnInit, AfterViewInit {
     createProjectForm: FormGroup;
     private map;
     mapMarker;
-    mapLat : number;
-    mapLong : number;
+    mapLat: number;
+    mapLong: number;
 
     constructor(private projectService: ProjectService,
                 private fb: FormBuilder,
@@ -75,21 +75,19 @@ export class CreateNewProjectComponent implements OnInit, AfterViewInit {
     }
 
     private initMap(): void {
-        this.map = L.map("map").setView([37.97404469468311, 23.71933726268805], 12);
-        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        this.map = L.map('map').setView([37.97404469468311, 23.71933726268805], 12);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution:
             '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(this.map);
-
-        this.map.on("click", e => {
+        this.map.on('click', e => {
         if (this.mapMarker) {
             this.map.removeLayer(this.mapMarker);
         }
         this.mapMarker = L.marker([e.latlng.lat, e.latlng.lng]).addTo(this.map);
-        
         this.mapLat = e.latlng.lat;
         this.mapLong = e.latlng.lng;
-        });   
+        });
       }
 
     ngOnInit() {

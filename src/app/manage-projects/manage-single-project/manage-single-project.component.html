@@ -1,5 +1,4 @@
 <div class="container root-content-container" id="core-root-manager">
-
     <!-- Wallet exists -->
     <div *ngIf="wallet !== undefined" class="row row-eq-height">
         <h5 class="text-uppercase mb-3 col-md-8">Manage your project</h5>
@@ -67,13 +66,14 @@
         </div>
 
         <div *ngIf="project.location !== undefined" class="col-md-12">
-            <iframe allowfullscreen frameborder="0" height="450"
-                    src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJ8UNwBh-9oRQR3Y1mdkU1Nic&key=AIzaSyBuLWPhp0M-h1AbUUa_Nbn75IkiBw0oieQ"
-                    style="border:0"
-                    width="100%"></iframe>
+            <div class="map-container">
+                <div class="map-frame">
+                    <div id="update-map">
+                    </div>
+                </div>
+            </div>
+            
         </div>
-
-        =
 
         <div class="col-md-12 mt-5 mb-5">
             <button (click)="updateProject()" class="btn btn-primary w-100 py-3 float-right">

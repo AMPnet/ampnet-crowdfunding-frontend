@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { displayBackendError } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { autonumericCurrency, baseCurrencyUnitToCents, stripCurrencyData } from 'src/app/utilities/currency-util';
+import * as L from 'leaflet';
 
 declare var $: any;
 
@@ -16,6 +17,10 @@ declare var $: any;
 })
 export class CreateNewProjectComponent implements OnInit, AfterViewInit {
     createProjectForm: FormGroup;
+    private map;
+    mapMarker;
+    mapLat : number;
+    mapLong : number;
 
     constructor(private projectService: ProjectService,
                 private fb: FormBuilder,
@@ -50,7 +55,7 @@ export class CreateNewProjectComponent implements OnInit, AfterViewInit {
             organization_uuid: orgID,
             name: formValue.name,
             description: formValue.description,
-            location: {lat: 0, long: 0},
+            location: {lat: this.mapLat, long: this.mapLong},
             roi: {from: 2.1, to: 5.3},
             start_date: formValue.startDate,
             end_date: formValue.endDate,
@@ -62,11 +67,30 @@ export class CreateNewProjectComponent implements OnInit, AfterViewInit {
         }).subscribe(res => {
             SpinnerUtil.hideSpinner();
             this.router.navigate(['/dash', 'manage_groups', orgID.toString(), 'manage_project', res.uuid]);
+            console.log(location);
         }, err => {
             SpinnerUtil.hideSpinner();
             displayBackendError(err);
         });
     }
+
+    private initMap(): void {
+        this.map = L.map("map").setView([37.97404469468311, 23.71933726268805], 12);
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+            attribution:
+            '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(this.map);
+
+        this.map.on("click", e => {
+        if (this.mapMarker) {
+            this.map.removeLayer(this.mapMarker);
+        }
+        this.mapMarker = L.marker([e.latlng.lat, e.latlng.lng]).addTo(this.map);
+        
+        this.mapLat = e.latlng.lat;
+        this.mapLong = e.latlng.lng;
+        });   
+      }
 
     ngOnInit() {
         $(document).ready(() => {
@@ -77,6 +101,7 @@ export class CreateNewProjectComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit() {
+        this.initMap();
     }
 
     submitButtonClicked() {

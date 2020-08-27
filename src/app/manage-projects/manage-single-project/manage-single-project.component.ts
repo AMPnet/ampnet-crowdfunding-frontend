@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import * as Uppy from 'uppy';
 import swal from 'sweetalert2';
 import { ManageProjectsService } from '../../shared/services/project/manage-projects.service';
@@ -12,6 +12,7 @@ import { BroadcastService } from 'src/app/shared/services/broadcast.service';
 import { WalletDetails } from '../../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
 import { WalletService } from '../../shared/services/wallet/wallet.service';
 import { BackendHttpClient } from '../../shared/services/backend-http-client.service';
+import * as L from 'leaflet';
 
 declare var $: any;
 
@@ -20,7 +21,7 @@ declare var $: any;
     templateUrl: './manage-single-project.component.html',
     styleUrls: ['./manage-single-project.component.css']
 })
-export class ManageSingleProjectComponent implements OnInit {
+export class ManageSingleProjectComponent implements OnInit, AfterViewInit {
 
     public files: string[] = [
         'Building permit',
@@ -31,6 +32,10 @@ export class ManageSingleProjectComponent implements OnInit {
     project: Project;
     wallet: WalletDetails;
     qrCodeData: String = '';
+    private map;
+    mapMarker;
+    mapLat : number;
+    mapLong : number;
 
     constructor(private projectService: ProjectService,
                 private walletService: WalletService,
@@ -43,6 +48,35 @@ export class ManageSingleProjectComponent implements OnInit {
     ngOnInit() {
         this.fetchAllData();
     }
+
+    ngAfterViewInit() {
+        setTimeout(() => {
+            this.initMap();
+        }, 2500)
+    }
+
+    private initMap(): void {
+        if(this.project.location.lat !== undefined) {
+            this.map = L.map("update-map").setView([this.project.location.lat, this.project.location.long], 12);
+        } else {
+            this.map = L.map("update-map").setView([37.97404469468311, 23.71933726268805], 12);
+        }
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+            attribution:
+            '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(this.map);
+        this.mapMarker = L.marker([this.project.location.lat, this.project.location.long]).addTo(this.map);
+
+        this.map.on("click", e => {
+        if (this.mapMarker) {
+            this.map.removeLayer(this.mapMarker);
+        }
+        this.mapMarker = L.marker([e.latlng.lat, e.latlng.lng]).addTo(this.map);
+        
+        this.mapLat = e.latlng.lat;
+        this.mapLong = e.latlng.lng;
+        });   
+      }
 
     fetchAllData() {
         this.getProject(() => {
@@ -155,6 +189,7 @@ export class ManageSingleProjectComponent implements OnInit {
         updatedProject.name = projectName;
         updatedProject.description = projectDescription;
         updatedProject.location_text = locationName;
+        updatedProject.location = {lat: this.mapLat, long: this.mapLong};
 
         SpinnerUtil.showSpinner();
         this.projectService.updateProject(updatedProject.uuid, {
@@ -166,6 +201,7 @@ export class ManageSingleProjectComponent implements OnInit {
         }).subscribe(() => {
             SpinnerUtil.hideSpinner();
             this.getProject(() => {
+                console.log(updatedProject.location)
             });
         }, hideSpinnerAndDisplayError);
     }

@@ -12,17 +12,15 @@ export class ProjectTagFilterService {
     }
 
     tagsList: string[] = [];
-    tagsListSubject = new ReplaySubject<string[]>();
+    tagsListSubject = new ReplaySubject<string[]>(1);
+
 
     removeTag(tag: string): void {
-        const index = this.tagsList.indexOf(tag);
-        if (index >= 0) {
-            this.tagsList.splice(index, 1);
-        }
+        this.tagsList = this.tagsList.filter(currentTag => currentTag !== tag);
         this.activateEmitter();
     }
 
-    addTag(...tags: string[]): void {
+    addTags(...tags: string[]): void {
         const newTagList = this.tagsList.slice();
 
         if (newTagList.findIndex((item) => item === tags[0]) < 0) {
@@ -36,8 +34,8 @@ export class ProjectTagFilterService {
     }
 
     activateEmitter() {
+        console.log('activateEmitter()');
         this.tagsListSubject.next(this.tagsList);
-        console.log('tagListSize: ', this.tagsList.length);
     }
 
     getAllProjectTags() {
@@ -45,8 +43,9 @@ export class ProjectTagFilterService {
     }
 
     clearAllTags() {
+        console.log('clearAllTags()');
         this.tagsList = [];
-        this.activateEmitter();
+        // this.activateEmitter();
     }
 }
 

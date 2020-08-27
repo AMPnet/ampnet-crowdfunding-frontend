@@ -6,6 +6,7 @@ import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material
 import { map, startWith } from 'rxjs/operators';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { ProjectTagFilterService } from '../../services/project/project-tag-filter.service';
+import { SubSink } from 'subsink';
 
 @Component({
     selector: 'app-chips-filter',
@@ -22,9 +23,9 @@ export class ProjectTagFilterComponent implements OnInit, OnDestroy {
     filteredTags: Observable<string[]>;
     projectTags: string[] = [];
     allTags: string[] = [];
-
     @ViewChild('tagInput') tagInput: ElementRef<HTMLInputElement>;
     @ViewChild('auto') matAutocomplete: MatAutocomplete;
+    private subs: SubSink;
 
     constructor(private projectTagFilterService: ProjectTagFilterService) {
         this.filteredTags = this.tagsCtrl.valueChanges.pipe(
@@ -37,6 +38,7 @@ export class ProjectTagFilterComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
+        this.subs = new SubSink();
         this.getAllTags();
         this.getSelectedProjectTags();
     }
@@ -49,7 +51,10 @@ export class ProjectTagFilterComponent implements OnInit, OnDestroy {
     }
 
     getSelectedProjectTags(): void {
-        this.projectTagFilterService.tagsListSubject.subscribe(tags => {
+        this.subs.sink = this.projectTagFilterService.tagsListSubject.subscribe(tags => {
+            if (tags === undefined) {
+                return;
+            }
             this.projectTags = [];
             this.projectTags.push(...tags);
         });
@@ -61,7 +66,7 @@ export class ProjectTagFilterComponent implements OnInit, OnDestroy {
 
         // Add tag
         if ((value || '').trim()) {
-            this.projectTagFilterService.addTag(value.trim());
+            this.projectTagFilterService.addTags(value.trim());
         }
 
         // Reset the input value
@@ -73,17 +78,18 @@ export class ProjectTagFilterComponent implements OnInit, OnDestroy {
     }
 
     selected(event: MatAutocompleteSelectedEvent): void {
-        this.projectTagFilterService.addTag(event.option.viewValue);
+        this.projectTagFilterService.addTags(event.option.viewValue);
         this.tagInput.nativeElement.value = '';
         this.tagsCtrl.setValue(null);
     }
 
     private _filter(value: string): string[] {
         const filterValue = value.toLowerCase();
-        return this.allTags.filter(fruit => fruit.toLowerCase().indexOf(filterValue) === 0);
+        return this.allTags.filter(tag => tag.toLowerCase().indexOf(filterValue) === 0);
     }
 
     ngOnDestroy(): void {
         this.projectTagFilterService.clearAllTags();
+        this.subs.unsubscribe();
     }
 }

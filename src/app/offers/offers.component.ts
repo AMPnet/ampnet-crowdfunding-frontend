@@ -16,7 +16,7 @@ import { ProjectTagFilterService } from '../shared/services/project/project-tag-
     styleUrls: ['./offers.component.css'],
 })
 export class OffersComponent implements OnInit, OnDestroy {
-    private subs = new SubSink();
+    private subs: SubSink;
     components: OfferModel[];
     featuredComponents: OfferModel[];
     promotedOffer: OfferModel;
@@ -31,20 +31,24 @@ export class OffersComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.getAllOffers();
-
+        this.projectTagFilterService.activateEmitter();
+        this.subs = new SubSink();
         this.subs.sink = this.route.queryParams.subscribe(data => {
+            console.log('ngOnInit() data: ', data);
             if (data.tags) {
-                const tags = data.tags.split(',').map(tag => tag).join(',');
-                this.projectTagFilterService.addTag(...tags);
+                const tags = data.tags.split(',');
+                console.log('tagsInQueryParams: ', tags);
+                this.projectTagFilterService.addTags(...tags);
+                console.log('projectTagFilterService.tagsList: ', this.projectTagFilterService.tagsList);
             }
         });
 
         this.subs.sink = this.projectTagFilterService.tagsListSubject
             .subscribe(tags => {
+                console.log('tagsListSubject.subscribe tags: ', tags);
                 const queryParams: { [key: string]: string } = {};
                 if (tags.length !== 0) {
-                    queryParams.tags = tags.map(tag => tag).join(',');
+                    queryParams.tags = tags.join(',');
                     this.hasTags = true;
                 } else {
                     this.hasTags = false;
@@ -62,6 +66,7 @@ export class OffersComponent implements OnInit, OnDestroy {
     }
 
     getAllOffers(tags?: string[]) {
+        console.log('getAllOffers() tags: ', tags);
         SpinnerUtil.showSpinner();
 
         if (tags === undefined) {
@@ -111,6 +116,8 @@ export class OffersComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
+        this.projectTagFilterService.clearAllTags();
         this.subs.unsubscribe();
+        console.log('unsubscribe');
     }
 }

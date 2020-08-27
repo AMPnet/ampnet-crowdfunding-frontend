@@ -38,6 +38,6 @@ export class SingleOfferItemComponent implements OnInit {
     }
 
     onOfferTagClicked(tagName: string) {
-        this.offersFilterService.addTag(tagName);
+        this.offersFilterService.addTags(tagName);
     }
 }

@@ -178,6 +178,8 @@ img {
     height: 48px;
 }
 
-.mat-chip {
-    margin-right: 10px;
+.mat-chip-list {
+    padding-bottom: 3px;
+    padding-top: 3px;
+    margin: 3px 3px 3px 3px;
 }

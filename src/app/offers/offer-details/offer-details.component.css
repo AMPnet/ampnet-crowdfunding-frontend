@@ -156,3 +156,9 @@
         margin-top: 0 !important;
     }
  }
+
+ .mat-chip {
+     padding-bottom: 5px;
+     padding-top: 5px;
+     margin: 8px 8px 8px 8px;
+ }

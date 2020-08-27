@@ -127,7 +127,7 @@ export class ManageSingleProjectComponent implements OnInit {
         this.projectService.getProject(id).subscribe((res: Project) => {
             SpinnerUtil.hideSpinner();
             this.project = res;
-            this.projectTagFilterService.addTag(...this.project.tags);
+            this.projectTagFilterService.addTags(...this.project.tags);
             onComplete();
         }, err => {
             SpinnerUtil.hideSpinner();

@@ -10,4 +10,5 @@ export interface OfferModel {
     endDate: string;
     owner: string;
     currency: string;
+    roi: { from: number, to: number };
 }

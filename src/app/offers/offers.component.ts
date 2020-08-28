@@ -52,7 +52,8 @@ export class OffersComponent implements OnInit {
                     headerImageUrl: proj.main_image,
                     endDate: moment(proj.end_date).format('MMM Do, YYYY'),
                     owner: '',
-                    currency: ''
+                    currency: '',
+                    roi: proj.roi
                 };
             });
             if (projects.length > 0) {

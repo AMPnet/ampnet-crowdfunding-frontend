@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { OrganizationService } from '../organizations/organization-service';
+import { OrganizationService } from '../shared/services/project/organization.service';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { displayBackendError } from '../utilities/error-handler';
-import { ProjectModel } from '../projects/create-new-project/project-model';
+import { Project, ProjectService } from '../shared/services/project/project.service';
 
 
 declare var _: any;
@@ -14,12 +14,13 @@ declare var _: any;
     styleUrls: ['./manage-projects.component.css']
 })
 export class ManageProjectsComponent implements OnInit {
-
-    manageProjectsModel: ProjectModel[];
+    manageProjectsModel: Project[];
 
     @Input() groupID: string;
 
-    constructor(private router: Router, private orgService: OrganizationService) {
+    constructor(private router: Router,
+                private orgService: OrganizationService,
+                private projectService: ProjectService) {
     }
 
     onUserClicked() {
@@ -33,7 +34,7 @@ export class ManageProjectsComponent implements OnInit {
 
     getProjectsForGroup() {
         SpinnerUtil.showSpinner();
-        this.orgService.getAllProjectsForOrganization(this.groupID).subscribe((res: any) => {
+        this.orgService.getAllProjectsForOrganization(this.groupID).subscribe((res) => {
             SpinnerUtil.hideSpinner();
 
             this.manageProjectsModel = res.projects;
@@ -43,5 +44,17 @@ export class ManageProjectsComponent implements OnInit {
         });
     }
 
+    toggleProject(uuid: string) {
+        SpinnerUtil.showSpinner();
+        const project = this.manageProjectsModel.filter(x => x.uuid === uuid)[0];
 
+        this.projectService.updateProject(project.uuid, {
+            active: !project.active
+        }).subscribe(() => {
+            this.getProjectsForGroup();
+        }, err => {
+            SpinnerUtil.hideSpinner();
+            displayBackendError(err);
+        });
+    }
 }

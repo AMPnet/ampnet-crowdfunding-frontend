@@ -7,7 +7,6 @@ import { UserStatusStorage } from '../user-status-storage';
     styleUrls: ['./complete-onboarding.component.css']
 })
 export class CompleteOnboardingComponent implements OnInit {
-
     isVerified: boolean;
     hasWallet: boolean;
 
@@ -18,5 +17,4 @@ export class CompleteOnboardingComponent implements OnInit {
         this.isVerified = UserStatusStorage.personalData.verified;
         this.hasWallet = UserStatusStorage.walletData !== undefined;
     }
-
 }

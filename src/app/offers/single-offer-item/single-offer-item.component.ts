@@ -1,9 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { OfferModel } from '../OfferModel';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ProjectService } from 'src/app/projects/project-service';
+import { ProjectService } from 'src/app/shared/services/project/project.service';
 import { autonumericCurrency, prettyCurrency } from 'src/app/utilities/currency-util';
-import { CurrencyDefaultPipe } from '../../pipes/currency-default-pipe'
 
 @Component({
     selector: 'app-single-offer-item',

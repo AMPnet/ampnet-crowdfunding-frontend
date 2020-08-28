@@ -15,7 +15,8 @@ export function autonumericCurrency(selector: string, currencySymbol: string = '
         currencySymbol: currencySymbol,
         decimalCharacter: ',',
         digitGroupSeparator: '.',
-        decimalPlaces: 0
+        decimalPlaces: 0,
+        modifyValueOnWheel: false
     });
 }
 

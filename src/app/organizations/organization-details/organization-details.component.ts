@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { OrganizationService } from '../organization-service';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { displayBackendError } from 'src/app/utilities/error-handler';
-import { BroadcastService } from 'src/app/broadcast/broadcast-service';
 import swal from 'sweetalert2';
-import { OrganizationModel, WalletModel } from './organization-model';
-import { MemberModel } from '../member-model';
-import { API } from 'src/app/utilities/endpoint-manager';
 import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
+import { WalletService } from '../../shared/services/wallet/wallet.service';
+import { WalletDetails } from '../../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
+import { Organization, OrganizationMember, OrganizationService } from '../../shared/services/project/organization.service';
+import { BroadcastService } from '../../shared/services/broadcast.service';
 
 declare var $: any;
 
@@ -22,17 +21,16 @@ export class OrganizationDetailsComponent implements OnInit {
     orgWalletInitialized: boolean;
     txData: string;
     txID: number;
-    organization: OrganizationModel;
-    orgWallet: WalletModel;
-    emailInviteInput: any;
-    orgMembers: MemberModel[];
+    organization: Organization;
+    orgWallet: WalletDetails;
+    orgMembers: OrganizationMember[];
 
     qrCodeData: String = '';
 
-    constructor(
-        private activeRoute: ActivatedRoute,
-        private organizationService: OrganizationService,
-        private broadcastService: BroadcastService) {
+    constructor(private activeRoute: ActivatedRoute,
+                private organizationService: OrganizationService,
+                private walletService: WalletService,
+                private broadcastService: BroadcastService) {
     }
 
     ngOnInit() {
@@ -41,15 +39,16 @@ export class OrganizationDetailsComponent implements OnInit {
             this.getOrganizationWallet(() => {
                 SpinnerUtil.hideSpinner();
             });
-            this.getOrgMembers();
+            this.getOrgMembers(() => {
+                SpinnerUtil.hideSpinner();
+            });
         });
-
     }
 
     fetchDetails(onComplete: () => void) {
         const routeParams = this.activeRoute.snapshot.params;
-        this.organizationService.getSingleOrganization(routeParams.id).subscribe((res: OrganizationModel) => {
-            this.organization = res;
+        this.organizationService.getSingleOrganization(routeParams.id).subscribe(org => {
+            this.organization = org;
             onComplete();
         }, err => {
             SpinnerUtil.hideSpinner();
@@ -58,8 +57,8 @@ export class OrganizationDetailsComponent implements OnInit {
     }
 
     getOrganizationWallet(onComplete: () => void) {
-        const routeParams = this.activeRoute.snapshot.params;
-        this.organizationService.getOrganizationWallet(routeParams.id).subscribe((res: WalletModel) => {
+        const walletID = this.activeRoute.snapshot.params.id;
+        this.walletService.getOrganizationWallet(walletID).subscribe(res => {
             this.orgWallet = res;
             onComplete();
         }, err => {
@@ -77,10 +76,9 @@ export class OrganizationDetailsComponent implements OnInit {
     }
 
     initializeWalletClicked() {
+        // TODO: remove this if unused
         const orgID = this.activeRoute.snapshot.params.id;
-
     }
-
 
     inviteClicked() {
         SpinnerUtil.showSpinner();
@@ -94,30 +92,15 @@ export class OrganizationDetailsComponent implements OnInit {
         });
     }
 
-    signTxClicked() {
-        const signed = $('#signedTxData').val();
-
-        this.broadcastService.broadcastSignedTx(signed, this.txID).subscribe(res => {
-            alert(JSON.stringify(res));
-        }, err => {
-            console.log(err);
-        });
-    }
-
     async createOrgWalletClicked() {
         const arkaneConnect = new ArkaneConnect('AMPnet', {environment: 'staging'});
         const account = await arkaneConnect.flows.getAccount(SecretType.AETERNITY);
 
-        this.organizationService.getTransactionForCreationOfOrgWallet(this.organization.uuid).subscribe(async (res: any) => {
-
+        this.walletService.createOrganizationWalletTransaction(this.organization.uuid).subscribe(async res => {
             this.orgWalletInitialized = false;
             this.txData = JSON.stringify(res.tx);
             this.txID = res.tx_id;
 
-            const qrCodeData = {
-                'tx_data': res,
-                'base_url': API.APIURL
-            };
             const sigRes = await arkaneConnect.createSigner(WindowMode.POPUP).sign({
                 walletId: account.wallets[0].id,
                 data: res.tx,
@@ -133,13 +116,14 @@ export class OrganizationDetailsComponent implements OnInit {
 
     }
 
-    getOrgMembers() {
+    getOrgMembers(onComplete: () => void) {
         SpinnerUtil.showSpinner();
-        this.organizationService.getMembersForOrganization(this.organization.uuid).subscribe((res: any) => {
-            const members: MemberModel[] = res.members;
-            this.orgMembers = members;
-        }, err => {
-            displayBackendError(err);
-        });
+        this.organizationService.getMembersForOrganization(this.organization.uuid)
+            .subscribe(res => {
+                this.orgMembers = res.members;
+                onComplete();
+            }, err => {
+                displayBackendError(err);
+            }, () => SpinnerUtil.hideSpinner());
     }
 }

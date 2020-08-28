@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
-import { ManageWithdrawModel } from './manage-withdraw-model';
-import { WithdrawCooperativeService } from './withdraw.cooperative.service';
+import {
+    UserWithdraw,
+    WalletCooperativeWithdrawService
+} from '../shared/services/wallet/wallet-cooperative/wallet-cooperative-withdraw.service';
+import { centsToBaseCurrencyUnit } from '../utilities/currency-util';
 
 @Component({
     selector: 'app-manage-withdrawals',
@@ -10,10 +13,9 @@ import { WithdrawCooperativeService } from './withdraw.cooperative.service';
     styleUrls: ['./manage-withdrawals.component.css']
 })
 export class ManageWithdrawalsComponent implements OnInit {
+    withdrawals: UserWithdraw[];
 
-    withdrawals: ManageWithdrawModel[];
-
-    constructor(private withdrawCooperativeService: WithdrawCooperativeService) {
+    constructor(private withdrawService: WalletCooperativeWithdrawService) {
     }
 
     ngOnInit() {
@@ -22,10 +24,12 @@ export class ManageWithdrawalsComponent implements OnInit {
 
     getApprovedWithdrawals() {
         SpinnerUtil.showSpinner();
-        return this.withdrawCooperativeService.getApprovedWithdrawals().subscribe((res: any) => {
+        return this.withdrawService.getApprovedWithdrawals().subscribe(res => {
             SpinnerUtil.hideSpinner();
-            this.withdrawals = res.withdraws;
+            this.withdrawals = res.withdraws.map(x => {
+                x.amount = centsToBaseCurrencyUnit(x.amount);
+                return x;
+            });
         }, hideSpinnerAndDisplayError);
     }
-
 }

@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { WalletActivationService } from '../wallet-activation.service';
-import { displayBackendError, hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
+import { hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
-import { UserActivationModel } from './user-activation.model';
-import { BroadcastService } from 'src/app/broadcast/broadcast-service';
+import { BroadcastService } from 'src/app/shared/services/broadcast.service';
 import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
 import swal from 'sweetalert2';
+import {
+    CooperativeUser,
+    WalletCooperativeWalletService
+} from '../../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
+
 
 @Component({
     selector: 'app-user-activation',
@@ -13,10 +16,9 @@ import swal from 'sweetalert2';
     styleUrls: ['./user-activation.component.css']
 })
 export class UserActivationComponent implements OnInit {
+    users: CooperativeUser[];
 
-    users: UserActivationModel[];
-
-    constructor(private activationService: WalletActivationService,
+    constructor(private activationService: WalletCooperativeWalletService,
                 private broadService: BroadcastService) {
     }
 
@@ -26,18 +28,17 @@ export class UserActivationComponent implements OnInit {
 
     fetchWalletToActivate() {
         SpinnerUtil.showSpinner();
-        this.activationService
-            .getUnactivatedWallets('user').subscribe((res: any) => {
-            this.users = res.users;
-            SpinnerUtil.hideSpinner();
-
-        }, displayBackendError);
+        this.activationService.getUnactivatedUserWallets()
+            .subscribe((res) => {
+                this.users = res.users;
+                SpinnerUtil.hideSpinner();
+            }, hideSpinnerAndDisplayError);
     }
 
     async activateUserClicked(id: number) {
         SpinnerUtil.showSpinner();
 
-        this.activationService.getActivationData(id).subscribe(async (res: any) => {
+        this.activationService.activateWallet(id).subscribe(async res => {
             const arkaneConnect = new ArkaneConnect('AMPnet', {
                 environment: 'staging'
             });

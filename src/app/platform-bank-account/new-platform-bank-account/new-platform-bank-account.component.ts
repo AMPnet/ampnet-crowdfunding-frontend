@@ -2,7 +2,7 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { BankCodeModel } from 'src/app/payment-options/new-payment-option/bank-code-model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
-import { PlatformBankAccountService } from './../platform-bank-account.service';
+import { PlatformBankAccountService } from '../../shared/services/wallet/platform-bank-account.service';
 import { hideSpinnerAndDisplayError } from '../../utilities/error-handler';
 
 declare var $: any;

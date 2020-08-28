@@ -2,8 +2,11 @@ import swal from 'sweetalert2';
 import { SpinnerUtil } from './spinner-utilities';
 
 export function displayBackendError(resp: any) {
-
     const error = resp.error;
+
+    if (error === null) {
+        return;
+    }
 
     if (error.description !== undefined) {
         swal('', error.description, 'warning');

@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { WalletActivationService } from '../wallet-activation.service';
+import {
+    OrganizationWallet,
+    WalletCooperativeWalletService
+} from '../../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
 import { displayBackendError, hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
-import { GroupActivationModel } from './group-activation.model';
 import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
-import { BroadcastService } from 'src/app/broadcast/broadcast-service';
+import { BroadcastService } from 'src/app/shared/services/broadcast.service';
 import swal from 'sweetalert2';
 
 @Component({
@@ -13,10 +15,9 @@ import swal from 'sweetalert2';
     styleUrls: ['./group-activation.component.css']
 })
 export class GroupActivationComponent implements OnInit {
+    groups: OrganizationWallet[];
 
-    groups: GroupActivationModel[];
-
-    constructor(private activationService: WalletActivationService,
+    constructor(private activationService: WalletCooperativeWalletService,
                 private broadService: BroadcastService) {
     }
 
@@ -26,17 +27,14 @@ export class GroupActivationComponent implements OnInit {
 
     fetchWalletToActivate() {
         SpinnerUtil.showSpinner();
-        this.activationService
-            .getUnactivatedWallets('organization').subscribe((res: any) => {
+        this.activationService.getUnactivatedOrganizationWallets().subscribe((res) => {
             this.groups = res.organizations;
             SpinnerUtil.hideSpinner();
-
         }, displayBackendError);
     }
 
     activateGroupClicked(uuid: string) {
-
-        this.activationService.getActivationData(uuid).subscribe(async (res: any) => {
+        this.activationService.activateWallet(uuid).subscribe(async res => {
             const arkaneConnect = new ArkaneConnect('AMPnet', {
                 environment: 'staging'
             });
@@ -56,6 +54,5 @@ export class GroupActivationComponent implements OnInit {
                 }, hideSpinnerAndDisplayError);
 
         }, hideSpinnerAndDisplayError);
-
     }
 }

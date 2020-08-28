@@ -36,9 +36,11 @@
             <div class="h3 text-uppercase gray-text mb-3 d-none d-lg-block">
                 {{component.title}}
             </div>
-            <div class="explainer-mini text-uppercase mb-4">Expected yearly return:</div>
-            <div [innerHTML]="component.description" class="p gray-text">
+            <div class="explainer-mini text-uppercase mb-4">
+                Expected yearly return: 
+                <span class="roi-info">{{component.roi.from}}% - {{component.roi.to}}%</span>
             </div>
+            <div [innerHTML]="component.description" class="p gray-text"></div>
         </div>
         <div class="card-content-actions-holder">
             <button class="btn btn-primary w-100 invest-button">

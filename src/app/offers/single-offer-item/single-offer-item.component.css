@@ -177,3 +177,7 @@ img {
 .invest-button {
     height: 48px;
 }
+
+.roi-info {
+    font-weight: 700;
+}

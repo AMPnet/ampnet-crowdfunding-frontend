@@ -23,10 +23,10 @@ export class UserActivationComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.fetchWalletToActivate();
+        this.fetchUnactivatedUserWallets();
     }
 
-    fetchWalletToActivate() {
+    fetchUnactivatedUserWallets() {
         SpinnerUtil.showSpinner();
         this.activationService.getUnactivatedUserWallets()
             .subscribe((res) => {
@@ -53,7 +53,7 @@ export class UserActivationComponent implements OnInit {
                 .subscribe(_ => {
                     SpinnerUtil.hideSpinner();
                     swal('', 'Success', 'success').then(() => {
-                        this.fetchWalletToActivate();
+                        this.fetchUnactivatedUserWallets();
                     });
                 }, hideSpinnerAndDisplayError);
         }, hideSpinnerAndDisplayError);

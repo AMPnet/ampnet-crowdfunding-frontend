@@ -1,0 +1,59 @@
+<<<<<<< HEAD:.github/workflows/deploy-feature.yaml
+name: Deployment - Alpha version
+on:
+  push:
+    branches:
+      - feature
+=======
+name: Deployment - Production version
+on:
+  push:
+    branches:
+      - release
+>>>>>>> 09c2f1a1612eee5ab18fb8b872b8242d9d66cbf0:.github/workflows/deploy-release.yaml
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Cache node modules
+        uses: actions/cache@v1
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: Node ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install dependencies
+        run: npm ci --debug
+
+      - name: Run linter
+        run: npm run lint:ci
+
+      - name: Run tests
+        run: npm run test:ci
+
+      - name: Generate production build
+        run: npm run build-prod
+
+      - name: Push to docker hub
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        run: |
+          echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
+          APP_VERSION=$(npm run env | grep ^npm_package_version= | cut -d "=" -f 2)
+          IMAGE_NAME="ampnet/ampnet-crowdfunding-frontend"
+          IMAGE_ALPHA_TAG="${IMAGE_NAME}:alpha"
+
+          docker build --no-cache -f prod-build/Dockerfile -t "${IMAGE_ALPHA_TAG}" .
+          docker image push "${IMAGE_ALPHA_TAG}"

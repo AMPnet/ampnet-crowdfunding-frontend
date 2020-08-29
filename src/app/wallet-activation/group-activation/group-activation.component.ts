@@ -22,10 +22,10 @@ export class GroupActivationComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.fetchWalletToActivate();
+        this.fetchUnactivatedUserWallets();
     }
 
-    fetchWalletToActivate() {
+    fetchUnactivatedUserWallets() {
         SpinnerUtil.showSpinner();
         this.activationService.getUnactivatedOrganizationWallets().subscribe((res) => {
             this.groups = res.organizations;
@@ -49,7 +49,7 @@ export class GroupActivationComponent implements OnInit {
                 .subscribe(_ => {
                     SpinnerUtil.hideSpinner();
                     swal('', 'Success', 'success').then(() => {
-                        this.fetchWalletToActivate();
+                        this.fetchUnactivatedUserWallets();
                     });
                 }, hideSpinnerAndDisplayError);
 

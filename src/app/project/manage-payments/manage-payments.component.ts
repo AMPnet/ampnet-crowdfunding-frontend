@@ -26,42 +26,42 @@ export class ManagePaymentsComponent implements OnInit {
     }
 
     ngOnInit() {
-
         const projID = this.route.snapshot.params.projectID;
         this.getProjectWallet(projID);
         this.getProject(projID);
     }
 
     getProject(projectID: string) {
+        console.log('GetProject');
         SpinnerUtil.showSpinner();
-        this.projectService.getProject(projectID).subscribe((res: any) => {
-            SpinnerUtil.hideSpinner();
-            this.project = res;
-        }, err => {
-            SpinnerUtil.hideSpinner();
-            displayBackendError(err);
-        });
+        this.projectService.getProject(projectID)
+            .subscribe((res) => {
+                this.project = res;
+            }, err => {
+                displayBackendError(err);
+            })
+            .add(SpinnerUtil.hideSpinner);
     }
 
     getProjectWallet(projectID: number) {
         SpinnerUtil.showSpinner();
-        this.walletService.getProjectWallet(projectID).subscribe(res => {
-            SpinnerUtil.hideSpinner();
-            this.projectWallet = res;
-            this.projectWallet.currency = prettyCurrency(res.currency);
-            this.projectWallet.balance = numeral(res.balance).format('0,0');
-            autonumericCurrency('#revenueShareAmount');
-        }, err => {
-            SpinnerUtil.hideSpinner();
-            displayBackendError(err);
-        });
+        this.walletService.getProjectWallet(projectID)
+            .subscribe(res => {
+                this.projectWallet = res;
+                this.projectWallet.currency = prettyCurrency(res.currency);
+                this.projectWallet.balance = numeral(res.balance).format('0,0');
+                autonumericCurrency('#revenueShareAmount');
+            }, err => {
+                displayBackendError(err);
+            })
+            .add(SpinnerUtil.hideSpinner);
     }
 
     startPayout() {
         const projID = this.route.snapshot.params.projectID;
         const orgID = this.route.snapshot.params.groupID;
 
-        this.router.navigate(['/dash', 'manage_groups', orgID.toString(),
-            'manage_project', projID, 'manage_payments', 'revenue_share', this.revenueShareAmount]);
+        this.router.navigate([
+            `/dash/manage_groups/${orgID}/manage_project/${projID}/manage_payments/revenue_share/${this.revenueShareAmount}`]);
     }
 }

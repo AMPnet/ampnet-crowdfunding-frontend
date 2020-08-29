@@ -1,13 +1,13 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ProjectService } from '../projects/project-service';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
 import { autonumericCurrency, stripCurrencyData } from '../utilities/currency-util';
 import swal from 'sweetalert2';
 import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
-import { ManagePaymentsService } from '../project/manage-payments/manage-payments.service';
-import { BroadcastService } from '../broadcast/broadcast-service';
+import { ProjectService } from '../shared/services/project/project.service';
+import { BroadcastService } from '../shared/services/broadcast.service';
+import { RevenueShareService } from '../shared/services/wallet/revenue-share.service';
 
 @Component({
     selector: 'app-revenue-share',
@@ -24,8 +24,8 @@ export class RevenueShareComponent implements OnInit {
 
     constructor(private route: ActivatedRoute,
                 private projectService: ProjectService,
-                private managePaymentService: ManagePaymentsService,
-                private broadcastService: BroadcastService) {
+                private broadcastService: BroadcastService,
+                private revenueShareService: RevenueShareService) {
     }
 
     ngOnInit() {
@@ -67,7 +67,7 @@ export class RevenueShareComponent implements OnInit {
 
     generateTransactionForRevenuePayout(amountInvested: number) {
         SpinnerUtil.showSpinner();
-        this.managePaymentService.generateTransactionForRevenuePayout(this.projectID, amountInvested)
+        this.revenueShareService.generateRevenueShareTx(this.projectID, amountInvested)
             .subscribe(async (res: any) => {
                 this.closeConfirmPopupDialog();
                 const arkaneConnect = new ArkaneConnect('AMPnet', {environment: 'staging'});

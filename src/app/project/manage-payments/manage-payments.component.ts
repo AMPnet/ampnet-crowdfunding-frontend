@@ -1,13 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ManagePaymentsService } from './manage-payments.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { WalletModel } from 'src/app/organizations/organization-details/organization-model';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { displayBackendError } from 'src/app/utilities/error-handler';
 import { autonumericCurrency, prettyCurrency } from 'src/app/utilities/currency-util';
 import * as numeral from 'numeral';
-import { ProjectService } from 'src/app/projects/project-service';
-import { ProjectModel } from 'src/app/projects/create-new-project/project-model';
+import { Project, ProjectService } from '../../shared/services/project/project.service';
+import { WalletService } from '../../shared/services/wallet/wallet.service';
+import { WalletDetails } from '../../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
 
 @Component({
     selector: 'app-manage-payments',
@@ -17,16 +16,17 @@ import { ProjectModel } from 'src/app/projects/create-new-project/project-model'
 export class ManagePaymentsComponent implements OnInit {
 
     @Input() revenueShareAmount;
-    projectWallet: WalletModel;
-    projectModel: ProjectModel;
+    projectWallet: WalletDetails;
+    project: Project;
 
-    constructor(private managePaymentsService: ManagePaymentsService,
+    constructor(private walletService: WalletService,
                 private route: ActivatedRoute,
                 private router: Router,
                 private projectService: ProjectService) {
     }
 
     ngOnInit() {
+
         const projID = this.route.snapshot.params.projectID;
         this.getProjectWallet(projID);
         this.getProject(projID);
@@ -36,7 +36,7 @@ export class ManagePaymentsComponent implements OnInit {
         SpinnerUtil.showSpinner();
         this.projectService.getProject(projectID).subscribe((res: any) => {
             SpinnerUtil.hideSpinner();
-            this.projectModel = res;
+            this.project = res;
         }, err => {
             SpinnerUtil.hideSpinner();
             displayBackendError(err);
@@ -45,7 +45,7 @@ export class ManagePaymentsComponent implements OnInit {
 
     getProjectWallet(projectID: number) {
         SpinnerUtil.showSpinner();
-        this.managePaymentsService.getProjectWallet(projectID).subscribe((res: any) => {
+        this.walletService.getProjectWallet(projectID).subscribe(res => {
             SpinnerUtil.hideSpinner();
             this.projectWallet = res;
             this.projectWallet.currency = prettyCurrency(res.currency);

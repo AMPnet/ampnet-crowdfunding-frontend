@@ -36,21 +36,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ConfirmEmailComponent } from './authentication/confirm-email/confirm-email.component';
 import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from 'angularx-social-login';
-import { FillDataComponent } from './authentication/sign-up/fill-data/fill-data.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { CreateOrganizationComponent } from './organizations/create-organization/create-organization.component';
 import { GeneralSettingsComponent } from './general-settings/general-settings.component';
 import { ManageOrganizationsComponent } from './organizations/manage-organizations/manage-organizations.component';
 import { OrganizationDetailsComponent } from './organizations/organization-details/organization-details.component';
 import { CreateNewProjectComponent } from './projects/create-new-project/create-new-project.component';
-import { MainAdminComponent } from './main-admin/main-admin.component';
 import { OnboardingComponent } from './authentication/onboarding/onboarding.component';
-import { ManageUsersComponent } from './organizations/manage-users/manage-users.component';
-import { DetailsComponent } from './organizations/manage-users/details/details.component';
 import { ManageProjectsComponent } from './manage-projects/manage-projects.component';
 import { ManageSingleProjectComponent } from './manage-projects/manage-single-project/manage-single-project.component';
-import { ApproveOrganizationsComponent } from './organizations/approve-organizations/approve-organizations.component';
-import { NewsPreviewComponent } from './news-preview/news-preview.component';
 import { VerifySignOfferComponent } from './offers/verify-sign-offer/verify-sign-offer.component';
 import { ManagePaymentsComponent } from './project/manage-payments/manage-payments.component';
 import { ManageWithdrawalsComponent } from './manage-withdrawals/manage-withdrawals.component';
@@ -136,20 +130,14 @@ export function jwtOptionsFactory() {
         NewPaymentOptionComponent,
         WithdrawModalComponent,
         ConfirmEmailComponent,
-        FillDataComponent,
         CreateOrganizationComponent,
         GeneralSettingsComponent,
         ManageOrganizationsComponent,
         OrganizationDetailsComponent,
         CreateNewProjectComponent,
-        MainAdminComponent,
         OnboardingComponent,
-        ManageUsersComponent,
-        DetailsComponent,
         ManageProjectsComponent,
         ManageSingleProjectComponent,
-        ApproveOrganizationsComponent,
-        NewsPreviewComponent,
         VerifySignOfferComponent,
         ManagePaymentsComponent,
         ManageWithdrawalsComponent,

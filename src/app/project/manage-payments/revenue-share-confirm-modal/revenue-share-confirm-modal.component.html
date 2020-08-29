@@ -1,0 +1,34 @@
+<div class="alert-box">
+    <div class="modal-header">
+        <h4 class="modal-title">{{ title }}</h4>
+        <button type="button"
+                class="close"
+                aria-label="Close" (click)="_bsModalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="modal-body">
+            <label for="revenue-confirm-amount">
+                Amount
+            </label>
+            <input [(ngModel)]="amountInvestedConfirm"
+                   class="form-control px-4 py-4"
+                   id="revenue-confirm-amount"
+                   type="text">
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button (click)="onCancel()"
+                class="btn btn-secondary px-5 py-2"
+                data-dismiss="modal"
+                type="button">Cancel
+        </button>
+        <button (click)="onConfirm()"
+                class="btn btn-primary px-5 py-2"
+                type="button">
+            <i class="fas fa-check-circle mr-2"></i>
+            Confirm
+        </button>
+    </div>
+</div>

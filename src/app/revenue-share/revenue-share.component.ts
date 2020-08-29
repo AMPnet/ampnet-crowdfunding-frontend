@@ -1,13 +1,16 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
-import { autonumericCurrency, stripCurrencyData } from '../utilities/currency-util';
+import { stripCurrencyData } from '../utilities/currency-util';
 import swal from 'sweetalert2';
 import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
 import { ProjectService } from '../shared/services/project/project.service';
 import { BroadcastService } from '../shared/services/broadcast.service';
 import { RevenueShareService } from '../shared/services/wallet/revenue-share.service';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+// tslint:disable-next-line:max-line-length
+import { RevenueShareConfirmModalComponent } from '../project/manage-payments/revenue-share-confirm-modal/revenue-share-confirm-modal.component';
 
 @Component({
     selector: 'app-revenue-share',
@@ -15,22 +18,21 @@ import { RevenueShareService } from '../shared/services/wallet/revenue-share.ser
     styleUrls: ['./revenue-share.component.css']
 })
 export class RevenueShareComponent implements OnInit {
-    @Input() projectName: string;
-    @Input() amountInvested: number;
-    @Input() amountInvestedConfirm: number;
-    @ViewChild('modalConfirmPopupDialog') modalPopupDialog: ElementRef;
-
     projectID: string;
+    projectName: string;
+    amountInvested: number;
+    amountInvestedConfirm: number;
+    modalRef: BsModalRef;
 
     constructor(private route: ActivatedRoute,
                 private projectService: ProjectService,
                 private broadcastService: BroadcastService,
-                private revenueShareService: RevenueShareService) {
+                private revenueShareService: RevenueShareService,
+                private modalService: BsModalService) {
     }
 
     ngOnInit() {
         this.fetchDataFromRoute();
-        this.formatConfirmPopupInputField();
     }
 
     fetchDataFromRoute() {
@@ -50,26 +52,10 @@ export class RevenueShareComponent implements OnInit {
             });
     }
 
-    confirmButtonClicked() {
-        const revenueAmountInvested = parseInt(stripCurrencyData(String(this.amountInvested)), 10);
-        const revenueAmountInvestedConfirm = parseInt(stripCurrencyData(String(this.amountInvestedConfirm)), 10);
-
-        if (revenueAmountInvested !== revenueAmountInvestedConfirm) {
-            swal('', 'The revenue share amounts don\'t match. Please check the proper amount and try again!',
-                'error').then(() => {
-                (<any>$('#modal-confirm-revenue')).modal('hide');
-                location.reload();
-            });
-            return;
-        }
-        this.generateTransactionForRevenuePayout(revenueAmountInvestedConfirm);
-    }
-
     generateTransactionForRevenuePayout(amountInvested: number) {
         SpinnerUtil.showSpinner();
         this.revenueShareService.generateRevenueShareTx(this.projectID, amountInvested)
             .subscribe(async (res) => {
-                this.closeConfirmPopupDialog();
                 const arkaneConnect = new ArkaneConnect('AMPnet', {environment: 'staging'});
                 const acc = await arkaneConnect.flows.getAccount(SecretType.AETERNITY);
                 const sigRes = await arkaneConnect.createSigner(WindowMode.POPUP).sign({
@@ -81,7 +67,6 @@ export class RevenueShareComponent implements OnInit {
                     .subscribe(_ => {
                         swal('', 'Successful revenue payout!', 'success');
                         SpinnerUtil.hideSpinner();
-                        this.closeConfirmPopupDialog();
                     }, err => {
                         hideSpinnerAndDisplayError(err);
                     });
@@ -90,11 +75,25 @@ export class RevenueShareComponent implements OnInit {
             });
     }
 
-    closeConfirmPopupDialog() {
-        this.modalPopupDialog.nativeElement.click();
+    showRevenueConfirmModal() {
+        this.modalRef = this.modalService.show(RevenueShareConfirmModalComponent);
+        this.modalRef.content.onConfirmClicked.subscribe(amount => {
+            this.amountInvestedConfirm = amount;
+            this.checkInvestedConfirmedAmount();
+        });
     }
 
-    formatConfirmPopupInputField() {
-        autonumericCurrency('#revenue-confirm-amount');
+    checkInvestedConfirmedAmount() {
+        const revenueAmountInvested = parseInt(stripCurrencyData(String(this.amountInvested)), 10);
+        const revenueAmountInvestedConfirm = parseInt(stripCurrencyData(String(this.amountInvestedConfirm)), 10);
+
+        if (revenueAmountInvested !== revenueAmountInvestedConfirm) {
+            swal('', 'The revenue share amounts don\'t match. Please check the proper amount and try again!',
+                'error').then(() => {
+                location.reload();
+            });
+            return;
+        }
+        this.generateTransactionForRevenuePayout(revenueAmountInvestedConfirm);
     }
 }

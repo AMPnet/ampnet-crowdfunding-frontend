@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, TemplateRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { displayBackendError } from 'src/app/utilities/error-handler';
@@ -7,6 +7,8 @@ import * as numeral from 'numeral';
 import { Project, ProjectService } from '../../shared/services/project/project.service';
 import { WalletService } from '../../shared/services/wallet/wallet.service';
 import { WalletDetails } from '../../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { RevenueShareConfirmModalComponent } from './revenue-share-confirm-modal/revenue-share-confirm-modal.component';
 
 @Component({
     selector: 'app-manage-payments',
@@ -18,11 +20,13 @@ export class ManagePaymentsComponent implements OnInit {
     @Input() revenueShareAmount;
     projectWallet: WalletDetails;
     project: Project;
+    modalRef: BsModalRef;
 
     constructor(private walletService: WalletService,
                 private route: ActivatedRoute,
                 private router: Router,
-                private projectService: ProjectService) {
+                private projectService: ProjectService,
+                private modalService: BsModalService) {
     }
 
     ngOnInit() {
@@ -31,8 +35,8 @@ export class ManagePaymentsComponent implements OnInit {
         this.getProject(projID);
     }
 
+
     getProject(projectID: string) {
-        console.log('GetProject');
         SpinnerUtil.showSpinner();
         this.projectService.getProject(projectID)
             .subscribe((res) => {

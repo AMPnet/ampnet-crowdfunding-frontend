@@ -12,7 +12,6 @@ import { centsToBaseCurrencyUnit, prettyCurrency } from 'src/app/utilities/curre
 import { Meta } from '@angular/platform-browser';
 import { UserService } from 'src/app/shared/services/user/user.service';
 import { NewsLink } from '../../manage-projects/manage-single-project/news-link-model';
-import { SingleOfferModel } from './single-offer-model';
 import { WalletService } from '../../shared/services/wallet/wallet.service';
 import { Project, ProjectService } from '../../shared/services/project/project.service';
 
@@ -133,5 +132,19 @@ export class OfferDetailsComponent implements OnInit {
                 displayBackendError(err);
             }
         });
+    }
+
+    copyProjectDetailsUrl() {
+        const selBox = document.createElement('textarea');
+        selBox.style.position = 'fixed';
+        selBox.style.left = '0';
+        selBox.style.top = '0';
+        selBox.style.opacity = '0';
+        selBox.value = window.location.href;
+        document.body.appendChild(selBox);
+        selBox.focus();
+        selBox.select();
+        document.execCommand('copy');
+        document.body.removeChild(selBox);
     }
 }

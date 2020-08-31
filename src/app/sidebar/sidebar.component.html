@@ -10,19 +10,19 @@
             <i class="menu-icon fas fa-align-left"></i>
             <span>Offers</span>
         </li>
-        <li routerLink="my_portfolio" routerLinkActive="side-active" [ngClass]="{'unverified-user-disabled': !hasVerifiedProfile}">
+        <li routerLink="my_portfolio" routerLinkActive="side-active" [class.unverified-user-disabled]="!hasVerifiedProfile">
             <i class="menu-icon fas fa-user"></i>
             <span>My Portfolio</span>
         </li>
-        <li routerLink="wallet" routerLinkActive="side-active" [ngClass]="{'unverified-user-disabled': !hasVerifiedProfile}">
+        <li routerLink="wallet" routerLinkActive="side-active" [class.unverified-user-disabled]="!hasVerifiedProfile">
             <i class="menu-icon fas fa-wallet"></i>
             <span>Wallet <i *ngIf="!hasWalletActive" class="ml-2 fas fa-exclamation-circle" style="color: orange;"></i></span>
         </li>
-        <li *ngIf="hasWalletActive" routerLink="manage_groups" routerLinkActive="side-active" [ngClass]="{'unverified-user-disabled': !hasVerifiedProfile}">
+        <li *ngIf="hasWalletActive" routerLink="manage_groups" routerLinkActive="side-active" [class.unverified-user-disabled]="!hasVerifiedProfile">
             <i class="menu-icon fas fa-layer-group"></i>
             <span>Investment groups</span>
         </li>
-        <li routerLink="exchange" routerLinkActive="side-active" [ngClass]="{'unverified-user-disabled': !hasVerifiedProfile}">
+        <li routerLink="exchange" routerLinkActive="side-active" [class.unverified-user-disabled]="!hasVerifiedProfile">
             <i class="menu-icon fas fa-store"></i>
             <span>Project market</span>
         </li>

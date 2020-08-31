@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, TemplateRef } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { displayBackendError } from 'src/app/utilities/error-handler';
@@ -7,8 +7,6 @@ import * as numeral from 'numeral';
 import { Project, ProjectService } from '../../shared/services/project/project.service';
 import { WalletService } from '../../shared/services/wallet/wallet.service';
 import { WalletDetails } from '../../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { RevenueShareConfirmModalComponent } from './revenue-share-confirm-modal/revenue-share-confirm-modal.component';
 
 @Component({
     selector: 'app-manage-payments',
@@ -20,13 +18,11 @@ export class ManagePaymentsComponent implements OnInit {
     @Input() revenueShareAmount;
     projectWallet: WalletDetails;
     project: Project;
-    modalRef: BsModalRef;
 
     constructor(private walletService: WalletService,
                 private route: ActivatedRoute,
                 private router: Router,
-                private projectService: ProjectService,
-                private modalService: BsModalService) {
+                private projectService: ProjectService) {
     }
 
     ngOnInit() {
@@ -34,7 +30,6 @@ export class ManagePaymentsComponent implements OnInit {
         this.getProjectWallet(projID);
         this.getProject(projID);
     }
-
 
     getProject(projectID: string) {
         SpinnerUtil.showSpinner();
@@ -67,5 +62,10 @@ export class ManagePaymentsComponent implements OnInit {
 
         this.router.navigate([
             `/dash/manage_groups/${orgID}/manage_project/${projID}/manage_payments/revenue_share/${this.revenueShareAmount}`]);
+    }
+
+    onRevenueShareAmountChange(revenueShareAmount) {
+        (<HTMLInputElement>document.getElementById('buttonStartPayout'))
+            .disabled = revenueShareAmount === undefined || (revenueShareAmount.replace( /\D+/g, '')) <= 0;
     }
 }

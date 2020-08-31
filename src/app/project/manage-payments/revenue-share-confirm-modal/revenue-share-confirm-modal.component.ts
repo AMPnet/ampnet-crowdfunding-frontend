@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Subject } from 'rxjs';
 import { autonumericCurrency } from '../../../utilities/currency-util';
 
@@ -17,17 +17,17 @@ export class RevenueShareConfirmModalComponent implements OnInit {
     constructor(private _bsModalRef: BsModalRef) {
     }
 
-    public ngOnInit(): void {
+    ngOnInit(): void {
         this.onConfirmClicked = new Subject();
         autonumericCurrency('#revenue-confirm-amount');
     }
 
-    public onConfirm(): void {
+    onConfirm(): void {
         this.onConfirmClicked.next(this.amountInvestedConfirm);
         this._bsModalRef.hide();
     }
 
-    public onCancel(): void {
+    onCancel(): void {
         this._bsModalRef.hide();
     }
 }

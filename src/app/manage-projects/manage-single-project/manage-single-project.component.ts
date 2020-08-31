@@ -13,7 +13,6 @@ import { BackendHttpClient } from '../../shared/services/backend-http-client.ser
 import { ManageProjectsService } from '../../shared/services/project/manage-projects.service';
 import { BroadcastService } from '../../shared/services/broadcast.service';
 
-declare var _: any;
 declare var $: any;
 
 @Component({

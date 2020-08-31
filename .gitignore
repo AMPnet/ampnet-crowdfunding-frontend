@@ -14,7 +14,7 @@ src/**/*.js
 
 # IDEs and editors
 .idea/*
-!.idea/codeStyles/
+!.idea/codeStyles/codeStyleConfig.xml
 .project
 .classpath
 .c9/

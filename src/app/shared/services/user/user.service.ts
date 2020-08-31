@@ -18,6 +18,16 @@ export class UserService {
 
 
     logout() {
-        return this.http.post<void>(`/api/user/logout`, {});
+        return this.http.post<void>(`/api/user/logout`, {})
+            .pipe(tap(() => {
+                localStorage.removeItem('access_token');
+                localStorage.removeItem('refresh_token');
+            }));
+    }
+
+    refreshUserToken() {
+        return this.http.post<void>('/api/user/token/refresh', {
+            'refresh_token': localStorage.getItem('refresh_token')
+        });
     }
 }

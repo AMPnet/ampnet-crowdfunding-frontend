@@ -1,0 +1,10 @@
+<div class="container">
+  <div *ngIf="(wallet ===  undefined)" 
+       class="wallet-init-reminder">
+    <p>
+      Thanks for verifying profile. 
+      In order to manage funds you need to have your wallet initialised. 
+      Please initialise your wallet <span class="reminder-link" routerLink="wallet">here</span>.
+    </p>
+  </div>
+</div>

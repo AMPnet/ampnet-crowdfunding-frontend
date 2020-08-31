@@ -79,19 +79,17 @@ export class RevenueShareComponent implements OnInit {
         this.modalRef = this.modalService.show(RevenueShareConfirmModalComponent);
         this.modalRef.content.onConfirmClicked.subscribe(amount => {
             this.amountInvestedConfirm = amount;
-            this.checkInvestedConfirmedAmount();
+            this.makeRevenuePayoutIfAmountsMatch();
         });
     }
 
-    checkInvestedConfirmedAmount() {
+    makeRevenuePayoutIfAmountsMatch() {
         const revenueAmountInvested = parseInt(stripCurrencyData(String(this.amountInvested)), 10);
         const revenueAmountInvestedConfirm = parseInt(stripCurrencyData(String(this.amountInvestedConfirm)), 10);
 
         if (revenueAmountInvested !== revenueAmountInvestedConfirm) {
             swal('', 'The revenue share amounts don\'t match. Please check the proper amount and try again!',
-                'error').then(() => {
-                location.reload();
-            });
+                'error');
             return;
         }
         this.generateTransactionForRevenuePayout(revenueAmountInvestedConfirm);

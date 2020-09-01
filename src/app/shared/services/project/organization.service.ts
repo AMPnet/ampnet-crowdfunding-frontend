@@ -50,6 +50,10 @@ export class OrganizationService {
     getMembersForOrganization(orgID: string) {
         return this.http.get<OrganizationMembersResponse>(`/api/project/organization/${orgID}/members`);
     }
+
+    removeMemberFromOrganization(orgID: string, memberID: string) {
+        return this.http.delete<void>(`/api/project/organization/${orgID}/members/${memberID}`, {});
+    }
 }
 
 export interface Organization {

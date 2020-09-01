@@ -61,8 +61,8 @@
                 <ul class="list-group">
                     <li *ngFor="let member of orgMembers" class="list-group-item">
                         <span class="float-left">{{member.first_name}} {{member.last_name}}</span>
-                        <span class="float-right">
-              <i class="fas fa-trash cursor-pointer"></i> 
+                        <span class="float-right" (click)="deleteMember(organization.uuid, member.uuid)">
+                            <i class="fas fa-trash cursor-pointer"></i>
             </span>
                     </li>
                 </ul>

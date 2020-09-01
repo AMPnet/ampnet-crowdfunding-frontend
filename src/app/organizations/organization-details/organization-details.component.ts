@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
-import { displayBackendError } from 'src/app/utilities/error-handler';
+import { displayBackendError, hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
 import swal from 'sweetalert2';
 import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
 import { WalletService } from '../../shared/services/wallet/wallet.service';
@@ -30,7 +30,8 @@ export class OrganizationDetailsComponent implements OnInit {
     constructor(private activeRoute: ActivatedRoute,
                 private organizationService: OrganizationService,
                 private walletService: WalletService,
-                private broadcastService: BroadcastService) {
+                private broadcastService: BroadcastService,
+                private router: Router) {
     }
 
     ngOnInit() {
@@ -125,5 +126,26 @@ export class OrganizationDetailsComponent implements OnInit {
             }, err => {
                 displayBackendError(err);
             }, () => SpinnerUtil.hideSpinner());
+    }
+
+    deleteMember(orgID: string, memberID: string) {
+        SpinnerUtil.showSpinner();
+        this.organizationService.removeMemberFromOrganization(orgID, memberID)
+            .subscribe(() => {
+                    SpinnerUtil.hideSpinner();
+                    swal({
+                        title: '',
+                        text: 'Success!',
+                        type: 'success'
+                    }).then(function () {
+                        this.reloadPage('/dash/manage_groups/' + this.organization.uuid);
+                    }.bind(this));
+                },
+                hideSpinnerAndDisplayError);
+    }
+
+    reloadPage(uri: string) {
+        this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
+            this.router.navigate([uri]));
     }
 }

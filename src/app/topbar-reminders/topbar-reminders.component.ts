@@ -1,26 +1,27 @@
-import { Component, OnInit } from '@angular/core';
-import { WalletService } from '../shared/services/wallet/wallet.service';
-import { WalletDetails } from '../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { TopbarService } from '../shared/services/topbar.service';
 
 @Component({
   selector: 'app-topbar-reminders',
   templateUrl: './topbar-reminders.component.html',
   styleUrls: ['./topbar-reminders.component.css']
 })
-export class TopbarRemindersComponent implements OnInit {
-  wallet: WalletDetails;
+export class TopbarRemindersComponent implements OnInit, OnDestroy {
   isWalletInit = true;
+  walletSub: Subscription;
 
-  constructor(private walletService: WalletService) { }
-
-  ngOnInit() {
-    this.getUserWallet();
+  constructor(private topbarService: TopbarService) {
+    this.walletSub = this.topbarService.getWalletState().subscribe(res => {
+      this.isWalletInit = res;
+      console.log(this.isWalletInit)
+    })
+    
   }
 
-  getUserWallet() {
-    this.walletService.getUserWallet().subscribe(res => {
-        this.wallet = res;
-    });
-}
+  ngOnInit() {}
 
+  ngOnDestroy() {
+    this.walletSub.unsubscribe();
+  }
 }

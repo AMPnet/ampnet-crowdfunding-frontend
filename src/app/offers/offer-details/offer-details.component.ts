@@ -12,9 +12,9 @@ import { centsToBaseCurrencyUnit, prettyCurrency } from 'src/app/utilities/curre
 import { Meta } from '@angular/platform-browser';
 import { UserService } from 'src/app/shared/services/user/user.service';
 import { NewsLink } from '../../manage-projects/manage-single-project/news-link-model';
-import { SingleOfferModel } from './single-offer-model';
 import { WalletService } from '../../shared/services/wallet/wallet.service';
 import { Project, ProjectService } from '../../shared/services/project/project.service';
+import { FacebookService, InitParams, UIParams, UIResponse } from 'ngx-facebook';
 
 @Component({
     selector: 'app-offer-details',
@@ -38,7 +38,17 @@ export class OfferDetailsComponent implements OnInit {
                 private route: ActivatedRoute,
                 private userService: UserService,
                 private meta: Meta,
-                private router: Router) {
+                private router: Router,
+                private fb: FacebookService) {
+
+        const initParams: InitParams = {
+            // Todo we need to create FacebookApp to get AppID
+            appId: '241902920447787',
+            xfbml: true,
+            version: 'v2.8'
+        };
+
+        fb.init(initParams);
     }
 
     ngOnInit() {
@@ -138,5 +148,18 @@ export class OfferDetailsComponent implements OnInit {
 
     backToOffersScreen() {
         this.router.navigate(['dash/offers']);
+    }
+
+    shareUrlOnFacebook() {
+        const params: UIParams = {
+            // tslint:disable-next-line:max-line-length
+            // TODO change hardcoded href, also we need to add this Site URL to a newly created FacebookApp (Settings - Basic - WebSite) in order to work
+            href: 'https://demo.ampnet.io/' + this.router.url,
+            method: 'share',
+        };
+
+        this.fb.ui(params)
+            .then((res: UIResponse) => console.log(res))
+            .catch((e: any) => console.error(e));
     }
 }

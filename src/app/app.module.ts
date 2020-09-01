@@ -68,6 +68,8 @@ import { CurrencyDefaultPipe } from './pipes/currency-default-pipe';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RevenueShareComponent } from './revenue-share/revenue-share.component';
 import { TxIconType, TxIconStatus } from './wallet/wallet-icon.pipe';
+import { FacebookModule } from 'ngx-facebook';
+
 
 export function tokenGetter() {
     return localStorage.getItem('access_token');
@@ -172,7 +174,8 @@ export function jwtOptionsFactory() {
         HttpClientModule,
         SocialLoginModule,
         NgxSpinnerModule,
-        NgbModule
+        NgbModule,
+        FacebookModule.forRoot()
     ],
     providers: [
         socialAuthServiceConfig,

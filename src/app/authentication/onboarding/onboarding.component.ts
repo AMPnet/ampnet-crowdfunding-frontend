@@ -45,8 +45,10 @@ export class OnboardingComponent implements OnInit {
                         type: 'success'
                     }).then(function () {
                         this.userService.refreshUserToken()
-                            .subscribe(() => SpinnerUtil.hideSpinner());
-                        this.reloadPage('/dash/general_settings');
+                            .subscribe(() => {
+                                SpinnerUtil.hideSpinner();
+                                this.reloadPage('/dash/general_settings');
+                            });
                     }.bind(this));
                     SpinnerUtil.hideSpinner();
                 }, hideSpinnerAndDisplayError);

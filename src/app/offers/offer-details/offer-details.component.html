@@ -15,7 +15,7 @@
         </div>
         <!-- Page title -->
         <div class="col-12 mb-lg-4 ml-lg-3 page-title order-first d-none d-lg-block">
-            <p>
+            <p (click)="backToOffersScreen()" style="cursor: pointer">
                 <i class="fas fa-long-arrow-alt-left mr-3"></i>
                 OFFER DETAILS
             </p>
@@ -49,7 +49,7 @@
             <div class="offer-right-container">
                 <!-- Page title for mobile -->
                 <div class="col-12 pt-3 pt-md-3 ml-4 page-title d-lg-none d-block">
-                    <p>
+                    <p (click)="backToOffersScreen()">
                         <i class="fas fa-long-arrow-alt-left mr-3"></i>
                         OFFER DETAILS
                     </p>
@@ -170,6 +170,7 @@
                 </div>
 
             </div>
+
 
             <!-- Offer socials share -->
             <div class="offer-right-socials col-lg-9 mt-4">

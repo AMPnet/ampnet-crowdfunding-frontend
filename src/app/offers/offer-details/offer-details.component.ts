@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { OfferDetailDocModel, OfferDetailDocType } from '../../models/OfferDetailDocModel';
 import * as _ from 'lodash';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { displayBackendError, hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { prettyDate } from 'src/app/utilities/date-format-util';
@@ -36,7 +36,8 @@ export class OfferDetailsComponent implements OnInit {
                 private walletService: WalletService,
                 private route: ActivatedRoute,
                 private userService: UserService,
-                private meta: Meta) {
+                private meta: Meta,
+                private router: Router) {
     }
 
     ngOnInit() {
@@ -146,5 +147,9 @@ export class OfferDetailsComponent implements OnInit {
         selBox.select();
         document.execCommand('copy');
         document.body.removeChild(selBox);
+    }
+
+    backToOffersScreen() {
+        this.router.navigate(['dash/offers']);
     }
 }

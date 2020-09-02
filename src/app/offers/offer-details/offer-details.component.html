@@ -80,12 +80,12 @@ class="wow fadeIn" style="background: #fdfdfd">
                     <!-- Offer progress -->
                     <div class="progress-text">
                         <p class="mt-lg-5 mt-4">
-                            <span>{{wallet.balance | currencyDefault}}</span> raised of
+                            <span>{{wallet?.balance | currencyDefault}}</span> raised of
                             <span>{{project.expected_funding | currencyDefault}}</span> goal
                         </p>
                     </div>
                     <div class="progress">
-                        <div [style.width.%]="(wallet.balance / project.expected_funding) * 100" class="progress-bar"
+                        <div [style.width.%]="(wallet?.balance / project.expected_funding) * 100" class="progress-bar"
                         role="progressbar">
                         </div>
                     </div>

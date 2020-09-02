@@ -1,23 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import * as $ from 'jquery';
-import { UserService } from '../shared/services/user/user.service';
+import { sidebarWidth } from '../utilities/app-const';
 
 @Component({
     selector: 'app-navbar',
     templateUrl: './navbar.component.html',
     styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent implements OnInit {
-
+export class NavbarComponent {
     sidebar: JQuery;
 
-    constructor(private userService: UserService) {
-    }
-
     public static toggleSidebar(toVisible: boolean) {
-
         const sidebar = $('.sidebar-fixer');
-        const navbar = $('.navbar');
 
         if (toVisible) {
             sidebar.animate({
@@ -26,18 +20,13 @@ export class NavbarComponent implements OnInit {
 
         } else {
             sidebar.animate({
-                left: '-240px'
+                left: sidebarWidth
             });
-
         }
-    }
-
-    ngOnInit() {
     }
 
     menuButtonClicked() {
         this.sidebar = $('.sidebar-fixer');
-
         NavbarComponent.toggleSidebar(this.sidebar.position().left < 0);
     }
 }

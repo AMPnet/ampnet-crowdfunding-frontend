@@ -18,7 +18,7 @@
             <i class="menu-icon fas fa-wallet"></i>
             <span>Wallet <i *ngIf="!hasWalletActive" class="ml-2 fas fa-exclamation-circle" style="color: orange;"></i></span>
         </li>
-        <li *ngIf="hasWalletActive" routerLink="manage_groups" routerLinkActive="side-active">
+        <li *ngIf="hasWalletActive" (click)="closeSideBar()" routerLink="manage_groups" routerLinkActive="side-active">
             <i class="menu-icon fas fa-layer-group"></i>
             <span>Investment groups</span>
         </li>
@@ -45,23 +45,23 @@
 
     <p *ngIf="isAdmin" class="menu-header ml-4 mb-3 mt-3 ">ADMIN</p>
     <ul *ngIf="isAdmin" class="list-unstyled components" id="main-menu">
-        <li routerLink="manage_withdrawals" routerLinkActive="side-active">
+        <li routerLink="manage_withdrawals" (click)="closeSideBar()" routerLinkActive="side-active">
             <i class="menu-icon fas fa-arrow-circle-up "></i>
             <span>Withdrawals</span>
         </li>
-        <li routerLink="manage_deposits" routerLinkActive="side-active">
+        <li routerLink="manage_deposits" (click)="closeSideBar()" routerLinkActive="side-active">
             <i class="menu-icon fas fa-arrow-circle-down "></i>
             <span>Deposits</span>
         </li>
-        <li routerLink="activation/users" routerLinkActive="side-active">
+        <li routerLink="activation/users" (click)="closeSideBar()" routerLinkActive="side-active">
             <i class="menu-icon fas fa-flag-checkered"></i>
             <span>Activations</span>
         </li>
-        <li routerLink="admin/platform_bank_account" routerLinkActive="side-active">
+        <li routerLink="admin/platform_bank_account" (click)="closeSideBar()" routerLinkActive="side-active">
             <i class="menu-icon fas fa-university"></i>
             <span>Bank account</span>
         </li>
-        <li routerLink="ownership" routerLinkActive="side-active">
+        <li routerLink="ownership" (click)="closeSideBar()" routerLinkActive="side-active">
             <i class="menu-icon fas fa-handshake"></i>
             <span>Platform roles</span>
         </li>
@@ -69,19 +69,19 @@
 
     <p *ngIf="isTokenIssuer" class="menu-header ml-4 mb-3 mt-3 ">TOKEN ISSUER</p>
     <ul *ngIf="isTokenIssuer" class="list-unstyled components" id="main-menu">
-        <li routerLink="manage_withdrawals" routerLinkActive="side-active">
+        <li routerLink="manage_withdrawals" (click)="closeSideBar()" routerLinkActive="side-active">
             <i class="menu-icon fas fa-arrow-circle-up "></i>
             <span>Withdrawals</span>
         </li>
-        <li routerLink="manage_deposits" routerLinkActive="side-active">
+        <li routerLink="manage_deposits" (click)="closeSideBar()" routerLinkActive="side-active">
             <i class="menu-icon fas fa-arrow-circle-down "></i>
             <span>Deposits</span>
         </li>
-        <li routerLink="admin/platform_bank_account" routerLinkActive="side-active">
+        <li routerLink="admin/platform_bank_account" (click)="closeSideBar()" routerLinkActive="side-active">
             <i class="menu-icon fas fa-university"></i>
             <span>Bank account</span>
         </li>
-        <li routerLink="ownership" routerLinkActive="side-active">
+        <li routerLink="ownership" (click)="closeSideBar()" routerLinkActive="side-active">
             <i class="menu-icon fas fa-handshake"></i>
             <span>Platform roles</span>
         </li>
@@ -89,11 +89,11 @@
 
     <p *ngIf="isPlatformManager" class="menu-header ml-4 mb-3 mt-3 ">PLATFORM MANAGER</p>
     <ul *ngIf="isPlatformManager" class="list-unstyled components" id="main-menu">
-        <li routerLink="activation/users" routerLinkActive="side-active">
+        <li routerLink="activation/users" (click)="closeSideBar()" routerLinkActive="side-active">
             <i class="menu-icon fas fa-flag-checkered"></i>
             <span>Activations</span>
         </li>
-        <li routerLink="ownership" routerLinkActive="side-active">
+        <li routerLink="ownership" (click)="closeSideBar()" routerLinkActive="side-active">
             <i class="menu-icon fas fa-handshake"></i>
             <span>Platform roles</span>
         </li>
@@ -101,7 +101,6 @@
 
 
     <div class="dropdown-divider" id="divider-menu"></div>
-    
     <ul class="list-unstyled components" id="main-menu">
         <span class="full-name">{{fullName}}</span>
         <li (click)="contactUsClicked()" routerLinkActive="side-active" class="mt-2">

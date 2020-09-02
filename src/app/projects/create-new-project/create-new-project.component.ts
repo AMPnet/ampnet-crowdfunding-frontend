@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ProjectService } from '../../shared/services/project/project.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
@@ -6,7 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { displayBackendError } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { autonumericCurrency, baseCurrencyUnitToCents, stripCurrencyData } from 'src/app/utilities/currency-util';
-import * as L from 'leaflet';
+import { LocationMapService } from 'src/app/shared/services/location-map.service';
 
 declare var $: any;
 
@@ -15,17 +15,14 @@ declare var $: any;
     templateUrl: './create-new-project.component.html',
     styleUrls: ['./create-new-project.component.css']
 })
-export class CreateNewProjectComponent implements OnInit, AfterViewInit {
+export class CreateNewProjectComponent implements OnInit {
     createProjectForm: FormGroup;
-    private map;
-    mapMarker;
-    mapLat: number;
-    mapLong: number;
 
     constructor(private projectService: ProjectService,
                 private fb: FormBuilder,
                 private activatedRoute: ActivatedRoute,
-                private router: Router) {
+                private router: Router,
+                private mapService: LocationMapService) {
         this.createProjectForm = this.fb.group({
             'name': [' ', Validators.required],
             'description': [' ', Validators.required],
@@ -55,7 +52,7 @@ export class CreateNewProjectComponent implements OnInit, AfterViewInit {
             organization_uuid: orgID,
             name: formValue.name,
             description: formValue.description,
-            location: {lat: this.mapLat, long: this.mapLong},
+            location: {lat: this.mapService.mapLat, long: this.mapService.mapLong},
             roi: {from: 2.1, to: 5.3},
             start_date: formValue.startDate,
             end_date: formValue.endDate,
@@ -74,32 +71,12 @@ export class CreateNewProjectComponent implements OnInit, AfterViewInit {
         });
     }
 
-    private initMap(): void {
-        this.map = L.map('map').setView([37.97404469468311, 23.71933726268805], 12);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution:
-            '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(this.map);
-        this.map.on('click', e => {
-        if (this.mapMarker) {
-            this.map.removeLayer(this.mapMarker);
-        }
-        this.mapMarker = L.marker([e.latlng.lat, e.latlng.lng]).addTo(this.map);
-        this.mapLat = e.latlng.lat;
-        this.mapLong = e.latlng.lng;
-        });
-      }
-
     ngOnInit() {
         $(document).ready(() => {
             autonumericCurrency('#min-per-user-input');
             autonumericCurrency('#max-per-user-input');
             autonumericCurrency('#expected-funding-input');
         });
-    }
-
-    ngAfterViewInit() {
-        this.initMap();
     }
 
     submitButtonClicked() {

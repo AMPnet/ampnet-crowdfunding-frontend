@@ -15,7 +15,8 @@ import { NewsLink } from '../../manage-projects/manage-single-project/news-link-
 import { SingleOfferModel } from './single-offer-model';
 import { WalletService } from '../../shared/services/wallet/wallet.service';
 import { Project, ProjectService } from '../../shared/services/project/project.service';
-import * as L from 'leaflet';
+import leaflet from 'leaflet';
+import { LocationMapService } from 'src/app/shared/services/location-map.service';
 
 @Component({
     selector: 'app-offer-details',
@@ -32,11 +33,7 @@ export class OfferDetailsComponent implements OnInit {
     isPortfolio = false;
     userConfirmed = true;
     projectBalance = 0;
-    private map;
-    mapMarker;
-    mapLat: number;
-    mapLong: number;
-    mapFetched = false;
+    
     locationDefined = true;
 
     constructor(private projectService: ProjectService,
@@ -45,7 +42,8 @@ export class OfferDetailsComponent implements OnInit {
                 private route: ActivatedRoute,
                 private userService: UserService,
                 private meta: Meta,
-                private router: Router) {
+                private router: Router,
+                private mapService: LocationMapService) {
     }
 
     ngOnInit() {
@@ -144,21 +142,6 @@ export class OfferDetailsComponent implements OnInit {
                 displayBackendError(err);
             }
         });
-    }
-
-    fetchMap() {
-        if (!this.mapFetched) {
-            setTimeout(() => {
-                this.map = L.map('display-map').setView(
-                    [this.offerModel.location.lat, this.offerModel.location.long], 12);
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-                { attribution:
-                    '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                }).addTo(this.map);
-                this.mapMarker = L.marker([this.offerModel.location.lat, this.offerModel.location.long]).addTo(this.map);
-            }, 500);
-            this.mapFetched = true;
-        }
     }
 
     backToOffersScreen() {

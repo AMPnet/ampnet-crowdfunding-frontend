@@ -8,12 +8,3 @@
         width: 50%;
     }
 }
-
-.map-container {
-    height: 450px;
-}
-  
-.map-frame,
-#update-map {
-    height: 100%;
-}

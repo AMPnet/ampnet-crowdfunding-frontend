@@ -52,7 +52,7 @@ export class OrganizationService {
     }
 
     removeMemberFromOrganization(orgID: string, memberID: string) {
-        return this.http.delete<void>(`/api/project/organization/${orgID}/members/${memberID}`, {});
+        return this.http.delete<void>(`/api/project/organization/${orgID}/members/${memberID}`);
     }
 }
 

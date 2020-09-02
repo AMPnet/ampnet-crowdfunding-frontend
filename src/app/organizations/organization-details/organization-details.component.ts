@@ -132,20 +132,16 @@ export class OrganizationDetailsComponent implements OnInit {
         SpinnerUtil.showSpinner();
         this.organizationService.removeMemberFromOrganization(orgID, memberID)
             .subscribe(() => {
-                    SpinnerUtil.hideSpinner();
                     swal({
                         title: '',
                         text: 'Success!',
                         type: 'success'
                     }).then(function () {
-                        this.reloadPage('/dash/manage_groups/' + this.organization.uuid);
+                        this.getOrgMembers(() => {
+                            SpinnerUtil.hideSpinner();
+                        });
                     }.bind(this));
                 },
                 hideSpinnerAndDisplayError);
-    }
-
-    reloadPage(uri: string) {
-        this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
-            this.router.navigate([uri]));
     }
 }

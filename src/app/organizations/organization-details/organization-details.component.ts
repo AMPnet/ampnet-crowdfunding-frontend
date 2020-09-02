@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { displayBackendError, hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
 import swal from 'sweetalert2';
@@ -22,7 +22,7 @@ export class OrganizationDetailsComponent implements OnInit {
     txData: string;
     txID: number;
     organization: Organization;
-    orgWallet: WalletDetails;
+    orgWallet?: WalletDetails;
     orgMembers: OrganizationMember[];
 
     qrCodeData: String = '';
@@ -30,55 +30,38 @@ export class OrganizationDetailsComponent implements OnInit {
     constructor(private activeRoute: ActivatedRoute,
                 private organizationService: OrganizationService,
                 private walletService: WalletService,
-                private broadcastService: BroadcastService,
-                private router: Router) {
+                private broadcastService: BroadcastService) {
     }
 
     ngOnInit() {
-        SpinnerUtil.showSpinner();
-        this.fetchDetails(() => {
-            this.getOrganizationWallet(() => {
-                SpinnerUtil.hideSpinner();
-            });
-            this.getOrgMembers(() => {
-                SpinnerUtil.hideSpinner();
-            });
-        });
-    }
-
-    fetchDetails(onComplete: () => void) {
-        const routeParams = this.activeRoute.snapshot.params;
-        this.organizationService.getSingleOrganization(routeParams.id).subscribe(org => {
+        const orgID = this.activeRoute.snapshot.params.id;
+        this.organizationService.getSingleOrganization(orgID).subscribe(org => {
             this.organization = org;
-            onComplete();
         }, err => {
-            SpinnerUtil.hideSpinner();
             displayBackendError(err);
         });
-    }
 
-    getOrganizationWallet(onComplete: () => void) {
-        const walletID = this.activeRoute.snapshot.params.id;
-        this.walletService.getOrganizationWallet(walletID).subscribe(res => {
+        this.walletService.getOrganizationWallet(orgID).subscribe(res => {
             this.orgWallet = res;
-            onComplete();
         }, err => {
             if (err.status === '404') { // Organization wallet doesn't exist
-                this.initializeWalletClicked();
+                this.orgWallet = null;
             } else if (err.error.err_code === '0851') {
-                swal('', 'The organization is being created. This can take up to a minute. Please check again later.', 'info').then(() => {
-                    window.history.back();
-                });
+                swal('', 'The organization is being created. This can take up to a minute. Please check again later.', 'info')
+                    .then(() => {
+                        window.history.back();
+                    });
             } else {
                 displayBackendError(err);
             }
-            onComplete();
         });
-    }
 
-    initializeWalletClicked() {
-        // TODO: remove this if unused
-        const orgID = this.activeRoute.snapshot.params.id;
+        this.organizationService.getMembersForOrganization(orgID)
+            .subscribe(res => {
+                this.orgMembers = res.members;
+            }, err => {
+                displayBackendError(err);
+            });
     }
 
     inviteClicked() {
@@ -117,17 +100,6 @@ export class OrganizationDetailsComponent implements OnInit {
 
     }
 
-    getOrgMembers(onComplete: () => void) {
-        SpinnerUtil.showSpinner();
-        this.organizationService.getMembersForOrganization(this.organization.uuid)
-            .subscribe(res => {
-                this.orgMembers = res.members;
-                onComplete();
-            }, err => {
-                displayBackendError(err);
-            }, () => SpinnerUtil.hideSpinner());
-    }
-
     deleteMember(orgID: string, memberID: string) {
         SpinnerUtil.showSpinner();
         this.organizationService.removeMemberFromOrganization(orgID, memberID)
@@ -137,9 +109,11 @@ export class OrganizationDetailsComponent implements OnInit {
                         text: 'Success!',
                         type: 'success'
                     }).then(function () {
-                        this.getOrgMembers(() => {
-                            SpinnerUtil.hideSpinner();
-                        });
+                        this.organizationService.getMembersForOrganization(orgID)
+                            .subscribe(res => {
+                                this.orgMembers = res.members;
+                                SpinnerUtil.hideSpinner();
+                            }, hideSpinnerAndDisplayError);
                     }.bind(this));
                 },
                 hideSpinnerAndDisplayError);

@@ -1,20 +1,19 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import * as Uppy from 'uppy';
 import { ActivatedRoute } from '@angular/router';
+import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
+import MicroModal from 'micromodal';
+import * as numeral from 'numeral';
+import { BroadcastService } from 'src/app/shared/services/broadcast.service';
+import { autonumericCurrency, baseCurrencyUnitToCents, stripCurrencyData } from 'src/app/utilities/currency-util';
 import { hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
-import { prettyDate } from 'src/app/utilities/date-format-util';
-import * as numeral from 'numeral';
+import swal from 'sweetalert2';
+import * as Uppy from 'uppy';
+import { BackendHttpClient } from '../../shared/services/backend-http-client.service';
 import {
     DepositSearchResponse,
     WalletCooperativeDepositService
 } from '../../shared/services/wallet/wallet-cooperative/wallet-cooperative-deposit.service';
-import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
-import { BroadcastService } from 'src/app/shared/services/broadcast.service';
-import swal from 'sweetalert2';
-import { autonumericCurrency, baseCurrencyUnitToCents, stripCurrencyData } from 'src/app/utilities/currency-util';
-import MicroModal from 'micromodal';
-import { BackendHttpClient } from '../../shared/services/backend-http-client.service';
 
 declare var $: any;
 
@@ -24,7 +23,6 @@ declare var $: any;
     styleUrls: ['./manage-single-deposit.component.css']
 })
 export class ManageSingleDepositComponent implements OnInit, AfterViewInit {
-
     depositModel: DepositSearchResponse;
     paymentUppy: Uppy.Core.Uppy;
 
@@ -37,14 +35,10 @@ export class ManageSingleDepositComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit() {
-
         this.getDeposit();
-
     }
 
     ngAfterViewInit() {
-
-
     }
 
     createUploadArea() {
@@ -90,7 +84,7 @@ export class ManageSingleDepositComponent implements OnInit, AfterViewInit {
         SpinnerUtil.showSpinner();
         this.depositCooperativeService.getDeposit(id).subscribe(res => {
             this.depositModel = res;
-            this.depositModel.deposit.created_at = new Date(prettyDate(res.deposit.created_at.toISOString()));
+
             this.depositModel.deposit.amount = numeral(this.depositModel.deposit.amount).format(',');
             if (!this.depositModel.deposit.approved) {
                 setTimeout(() => {
@@ -104,7 +98,6 @@ export class ManageSingleDepositComponent implements OnInit, AfterViewInit {
             setTimeout(() => {
                 autonumericCurrency('#deposit-amount');
                 autonumericCurrency('#deposit-confirm-amount');
-
             }, 200);
 
             SpinnerUtil.hideSpinner();
@@ -118,9 +111,9 @@ export class ManageSingleDepositComponent implements OnInit, AfterViewInit {
         if (depositAmount !== depositConfirmAmount) {
             swal('', 'The deposit amounts don\'t match. Please check the proper deposit amount and try again!',
                 'error').then(() => {
-                (<any>$('#modal-confirm-deposit')).modal('hide');
-                location.reload();
-            });
+                    (<any>$('#modal-confirm-deposit')).modal('hide');
+                    location.reload();
+                });
             return;
         }
 
@@ -144,5 +137,4 @@ export class ManageSingleDepositComponent implements OnInit, AfterViewInit {
             this.getDeposit();
         });
     }
-
 }

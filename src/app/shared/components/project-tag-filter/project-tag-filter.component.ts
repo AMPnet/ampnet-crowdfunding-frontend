@@ -16,6 +16,8 @@ import { SubSink } from 'subsink';
 
 
 export class ProjectTagFilterComponent implements OnInit, OnDestroy {
+    @ViewChild('tagInput') tagInput: ElementRef<HTMLInputElement>;
+    @ViewChild('auto') matAutocomplete: MatAutocomplete;
     selectable = true;
     removable = true;
     separatorKeysCodes: number[] = [ENTER, COMMA];
@@ -23,8 +25,6 @@ export class ProjectTagFilterComponent implements OnInit, OnDestroy {
     filteredTags: Observable<string[]>;
     projectTags: string[] = [];
     allTags: string[] = [];
-    @ViewChild('tagInput') tagInput: ElementRef<HTMLInputElement>;
-    @ViewChild('auto') matAutocomplete: MatAutocomplete;
     private subs: SubSink;
 
     constructor(private projectTagFilterService: ProjectTagFilterService) {
@@ -51,13 +51,15 @@ export class ProjectTagFilterComponent implements OnInit, OnDestroy {
     }
 
     getSelectedProjectTags(): void {
-        this.subs.sink = this.projectTagFilterService.tagsListSubject.subscribe(tags => {
-            if (tags === undefined) {
-                return;
-            }
-            this.projectTags = [];
-            this.projectTags.push(...tags);
-        });
+        this.subs.sink = this.projectTagFilterService.tagsListSubject
+            .subscribe(tags => {
+                if (tags === undefined) {
+                    this.projectTagFilterService.clearAllTags();
+                    return;
+                }
+                this.projectTags = [];
+                this.projectTags.push(...tags);
+            });
     }
 
     add(event: MatChipInputEvent): void {

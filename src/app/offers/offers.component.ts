@@ -39,7 +39,7 @@ export class OffersComponent implements OnInit, OnDestroy {
                 const tags = data.tags.split(',');
                 console.log('tagsInQueryParams: ', tags);
                 this.projectTagFilterService.addTags(...tags);
-                console.log('projectTagFilterService.tagsList: ', this.projectTagFilterService.tagsList);
+                console.log('projectTagFilterService.tagsList: ', this.projectTagFilterService.projectTags);
             }
         });
 

@@ -157,7 +157,7 @@ export class ManageSingleProjectComponent implements OnInit {
         updatedProject.name = projectName;
         updatedProject.description = projectDescription;
         updatedProject.location_text = locationName;
-        updatedProject.tags = this.projectTagFilterService.tagsList;
+        updatedProject.tags = this.projectTagFilterService.projectTags;
 
         SpinnerUtil.showSpinner();
         this.projectService.updateProject(updatedProject.uuid, {

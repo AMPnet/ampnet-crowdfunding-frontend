@@ -61,7 +61,7 @@ export class CreateNewProjectComponent implements OnInit, AfterViewInit, OnDestr
             min_per_user: baseCurrencyUnitToCents(parseInt(stripCurrencyData(formValue.minPerUser), 10)),
             max_per_user: baseCurrencyUnitToCents(parseInt(stripCurrencyData(formValue.maxPerUser), 10)),
             active: false,
-            tags: this.projectTagFilterService.tagsList
+            tags: this.projectTagFilterService.projectTags
         }).subscribe(res => {
             SpinnerUtil.hideSpinner();
             this.router.navigate(['/dash', 'manage_groups', orgID.toString(), 'manage_project', res.uuid]);

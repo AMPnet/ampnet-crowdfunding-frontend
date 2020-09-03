@@ -11,31 +11,30 @@ export class ProjectTagFilterService {
     constructor(private http: BackendHttpClient) {
     }
 
-    tagsList: string[] = [];
+    projectTags: string[] = [];
     tagsListSubject = new ReplaySubject<string[]>(1);
 
-
     removeTag(tag: string): void {
-        this.tagsList = this.tagsList.filter(currentTag => currentTag !== tag);
+        this.projectTags = this.projectTags.filter(currentTag => currentTag !== tag);
         this.activateEmitter();
     }
 
     addTags(...tags: string[]): void {
-        const newTagList = this.tagsList.slice();
+        const newTagList = this.projectTags.slice();
 
         if (newTagList.findIndex((item) => item === tags[0]) < 0) {
             newTagList.push(...tags);
         }
 
-        if (!_.isEqual(newTagList, this.tagsList)) {
-            this.tagsList = newTagList;
+        if (!_.isEqual(newTagList, this.projectTags)) {
+            this.projectTags = newTagList;
             this.activateEmitter();
         }
     }
 
     activateEmitter() {
         console.log('activateEmitter()');
-        this.tagsListSubject.next(this.tagsList);
+        this.tagsListSubject.next(this.projectTags);
     }
 
     getAllProjectTags() {
@@ -44,8 +43,8 @@ export class ProjectTagFilterService {
 
     clearAllTags() {
         console.log('clearAllTags()');
-        this.tagsList = [];
-        // this.activateEmitter();
+        this.projectTags = [];
+        this.activateEmitter();
     }
 }
 

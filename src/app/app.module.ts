@@ -160,7 +160,7 @@ export function jwtOptionsFactory() {
         CurrencyDefaultPipe,
         RevenueShareComponent,
         TxIconType,
-        TxIconStatus
+        TxIconStatus,
     ],
     imports: [
         BrowserModule,

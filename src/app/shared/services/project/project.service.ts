@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BackendHttpClient } from '../backend-http-client.service';
 import { DocumentModel, Organization } from './organization.service';
+import { Wallet } from '../wallet/wallet-cooperative/wallet-cooperative-wallet.service';
 
 @Injectable({
     'providedIn': 'root'
@@ -74,7 +75,7 @@ export interface Project {
 }
 
 export interface PageableProjectsResponse {
-    projects: Project[];
+    projects_with_wallet: { project: Project, wallet: Wallet}[];
     page: number;
     total_pages: number;
 }

@@ -37,7 +37,7 @@ export class ManageProjectsComponent implements OnInit {
         this.orgService.getAllProjectsForOrganization(this.groupID).subscribe((res) => {
             SpinnerUtil.hideSpinner();
 
-            this.manageProjectsModel = res.projects;
+            this.manageProjectsModel = res.projects_with_wallet.map(pww => pww.project);
         }, err => {
             SpinnerUtil.hideSpinner();
             displayBackendError(err);

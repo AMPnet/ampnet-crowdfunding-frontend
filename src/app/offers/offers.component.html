@@ -4,23 +4,24 @@
     <app-header></app-header>
 </div>
 
-<div *ngIf="components !== undefined" [class.overview-modifier]="isOverview"
-     class="container root-content-container pt-md-0 pt-3">
-     <h1 class="offers-title">OFFERS</h1>
-    <div class="row" id="component-container">
-        <div *ngFor="let component of components" class="col-md-12 wow fadeIn mt-md-3">
-            <div class="mb-md-5">
-                <app-single-offer-item
-                        [component]=component></app-single-offer-item>
+<ng-container *ngIf="(projects$ | async) as projects">
+    <div *ngIf="projects !== undefined" [class.overview-modifier]="isOverview"
+         class="container root-content-container pt-md-0 pt-3">
+        <h1 class="offers-title">OFFERS</h1>
+        <div class="row" id="component-container">
+            <div *ngFor="let project of projects" class="col-md-12 wow fadeIn mt-md-3">
+                <div class="mb-md-5">
+                    <app-single-offer-item [project]=project></app-single-offer-item>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<div *ngIf="(components !== undefined) && (components.length ===  0)">
-    <div class="root root-content-container">
-        <div class="d-flex justify-content-center">
-            No projects currently available for crowdfunding.
+    <div *ngIf="(projects !== undefined) && (projects.length === 0)">
+        <div class="root root-content-container">
+            <div class="d-flex justify-content-center">
+                No projects currently available for crowdfunding.
+            </div>
         </div>
     </div>
-</div>
+</ng-container>

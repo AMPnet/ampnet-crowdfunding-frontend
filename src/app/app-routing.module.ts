@@ -44,59 +44,62 @@ import { RevenueShareComponent } from './revenue-share/revenue-share.component';
 import { ManagePaymentsComponent } from './project/manage-payments/manage-payments.component';
 
 const routes: Routes = [
-  {
-    path: '', component: PublicLayoutComponent,
-    children: [
-      {path: '', component: LandingPageComponent},
-      {path: 'sign_up', component: SignUpComponent},
-      {path: 'confirm_email', component: ConfirmEmailComponent},
-      {path: 'overview/:isOverview', component: OffersComponent},
-      {path: 'overview/:id/:isOverview', component: OfferDetailsComponent},
-      {path: 'onboarding', component: OnboardingComponent},
-    ]
-  },
-  {path: 'summary', component: SummaryComponent},
-  {
-    path: 'dash', component: SecureLayoutComponent,
-    canActivate: [AuthGuard],
-    children: [
-      {path: '', component: OffersComponent},
-      {path: 'wallet', component: WalletComponent},
-      {path: 'offers', component: OffersComponent},
-      {path: 'offers/:id', component: OfferDetailsComponent},
-      {path: 'offers/:id/invest', component: InvestComponent},
-      {path: 'my_portfolio', component: MyPortfolioComponent},
-      {path: 'my_portfolio/:id/:inPortfolio', component: InvestmentDetailsComponent},
-      {path: 'payment_options', component: PaymentOptionsComponent},
-      {path: 'my_portfolio/investment_details/new_proposal', component: NewProposalComponent},
-      {path: 'finish_new_proposal', component: FinishNewProposalComponent},
-      {path: 'my_portfolio/investment_details/proposal_details', component: ProposalDetailsComponent},
-      {path: 'wallet/tx_overview', component: TxOverviewComponent},
-      {path: 'payment_options/new', component: NewPaymentOptionComponent},
-      {path: 'manage_groups/new', component: CreateOrganizationComponent},
-      {path: 'general_settings', component: GeneralSettingsComponent},
-      {path: 'manage_groups', component: ManageOrganizationsComponent},
-      {path: 'manage_groups/:id', component: OrganizationDetailsComponent},
-      {path: 'manage_groups/:orgId/create_project', component: CreateNewProjectComponent},
-      {path: 'manage_groups/:id/projects', component: ManageProjectsComponent},
-      {path: 'manage_groups/:groupID/manage_project/:projectID', component: ManageSingleProjectComponent},
-      {path: 'offers/:offerID/invest/:investAmount/verify_sign', component: VerifySignOfferComponent},
-      {path: 'manage_groups/:groupID/manage_project/:projectID/manage_payments', component: ManagePaymentsComponent },
-      {path: 'manage_groups/:groupID/manage_project/:projectID/manage_payments/revenue_share/:amount', component: RevenueShareComponent },
-      {path: 'manage_withdrawals', component: ManageWithdrawalsComponent},
-      {path: 'manage_withdrawals/:ID', component: SingleWithdrawalComponent},
-      {path: 'manage_deposits', component: ManageDepositsComponent},
-      {path: 'manage_deposits/:ID', component: ManageSingleDepositComponent},
-      {path: 'wallet/deposit', component: DepositComponent},
-      {path: 'wallet/withdraw', component: WithdrawComponent},
-      {path: 'activation/:type', component: WalletActivationComponent},
-      {path: 'complete_onboarding', component: CompleteOnboardingComponent},
-      {path: 'admin/platform_bank_account', component: PlatformBankAccountComponent},
-      {path: 'admin/platform_bank_account/new', component: NewPlatformBankAccountComponent},
-      {path: 'exchange', component: ExchangeComponent},
-      {path: 'ownership', component: OwnershipComponent},
-    ]
-  }
+    {
+        path: '', component: PublicLayoutComponent,
+        children: [
+            {path: '', component: LandingPageComponent},
+            {path: 'sign_up', component: SignUpComponent},
+            {path: 'confirm_email', component: ConfirmEmailComponent},
+            {path: 'overview/:isOverview', component: OffersComponent},
+            {path: 'overview/:id/:isOverview', component: OfferDetailsComponent},
+            {path: 'onboarding', component: OnboardingComponent},
+        ]
+    },
+    {path: 'summary', component: SummaryComponent},
+    {
+        path: 'dash', component: SecureLayoutComponent,
+        canActivate: [AuthGuard],
+        children: [
+            {path: '', component: OffersComponent},
+            {path: 'wallet', component: WalletComponent},
+            {path: 'offers', component: OffersComponent},
+            {path: 'offers/:id', component: OfferDetailsComponent},
+            {path: 'offers/:id/invest', component: InvestComponent},
+            {path: 'my_portfolio', component: MyPortfolioComponent},
+            {path: 'my_portfolio/:id/:inPortfolio', component: InvestmentDetailsComponent},
+            {path: 'payment_options', component: PaymentOptionsComponent},
+            {path: 'my_portfolio/investment_details/new_proposal', component: NewProposalComponent},
+            {path: 'finish_new_proposal', component: FinishNewProposalComponent},
+            {path: 'my_portfolio/investment_details/proposal_details', component: ProposalDetailsComponent},
+            {path: 'wallet/tx_overview', component: TxOverviewComponent},
+            {path: 'payment_options/new', component: NewPaymentOptionComponent},
+            {path: 'manage_groups/new', component: CreateOrganizationComponent},
+            {path: 'general_settings', component: GeneralSettingsComponent},
+            {path: 'manage_groups', component: ManageOrganizationsComponent},
+            {path: 'manage_groups/:id', component: OrganizationDetailsComponent},
+            {path: 'manage_groups/:orgId/create_project', component: CreateNewProjectComponent},
+            {path: 'manage_groups/:id/projects', component: ManageProjectsComponent},
+            {path: 'manage_groups/:groupID/manage_project/:projectID', component: ManageSingleProjectComponent},
+            {path: 'offers/:offerID/invest/:investAmount/verify_sign', component: VerifySignOfferComponent},
+            {path: 'manage_groups/:groupID/manage_project/:projectID/manage_payments', component: ManagePaymentsComponent},
+            {
+                path: 'manage_groups/:groupID/manage_project/:projectID/manage_payments/revenue_share/:amount',
+                component: RevenueShareComponent
+            },
+            {path: 'manage_withdrawals', component: ManageWithdrawalsComponent},
+            {path: 'manage_withdrawals/:ID', component: SingleWithdrawalComponent},
+            {path: 'manage_deposits', component: ManageDepositsComponent},
+            {path: 'manage_deposits/:ID', component: ManageSingleDepositComponent},
+            {path: 'wallet/deposit', component: DepositComponent},
+            {path: 'wallet/withdraw', component: WithdrawComponent},
+            {path: 'activation/:type', component: WalletActivationComponent},
+            {path: 'complete_onboarding', component: CompleteOnboardingComponent},
+            {path: 'admin/platform_bank_account', component: PlatformBankAccountComponent},
+            {path: 'admin/platform_bank_account/new', component: NewPlatformBankAccountComponent},
+            {path: 'exchange', component: ExchangeComponent},
+            {path: 'ownership', component: OwnershipComponent},
+        ]
+    }
 ];
 
 @NgModule({

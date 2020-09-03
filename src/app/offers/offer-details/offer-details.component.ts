@@ -17,6 +17,9 @@ import { WalletService } from '../../shared/services/wallet/wallet.service';
 import { Project, ProjectService } from '../../shared/services/project/project.service';
 import leaflet from 'leaflet';
 import { LocationMapService } from 'src/app/shared/services/location-map.service';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal'
+import { MapModalComponent } from 'src/app/location-map/map-modal/map-modal.component';
+import { map } from 'jquery';
 
 @Component({
     selector: 'app-offer-details',
@@ -28,12 +31,11 @@ export class OfferDetailsComponent implements OnInit {
     offerModel: Project;
     newsPreviews: NewsLink[];
     fundedPercentage = 0;
-
+    bsModalRef: BsModalRef;
     isOverview = false;
     isPortfolio = false;
     userConfirmed = true;
     projectBalance = 0;
-    
     locationDefined = true;
 
     constructor(private projectService: ProjectService,
@@ -43,7 +45,8 @@ export class OfferDetailsComponent implements OnInit {
                 private userService: UserService,
                 private meta: Meta,
                 private router: Router,
-                private mapService: LocationMapService) {
+                private mapService: LocationMapService,
+                private modalService: BsModalService) {
     }
 
     ngOnInit() {
@@ -146,5 +149,15 @@ export class OfferDetailsComponent implements OnInit {
 
     backToOffersScreen() {
         this.router.navigate(['dash/offers']);
+    }
+
+    openModal() {
+        this.bsModalRef = this.modalService.show(MapModalComponent, {
+            initialState: {
+                projectLat: this.offerModel.location.lat,
+                projectLong: this.offerModel.location.long
+            }
+        });
+        this.bsModalRef.setClass("modal-lg");
     }
 }

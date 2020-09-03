@@ -1,3 +1,8 @@
+.modal-header {
+    border: none;
+    padding-bottom: 0;
+}
+
 .map-container {
     height: 450px;
 }

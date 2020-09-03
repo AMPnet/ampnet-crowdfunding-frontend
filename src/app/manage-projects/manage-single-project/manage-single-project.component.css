@@ -8,3 +8,7 @@
         width: 50%;
     }
 }
+
+.modal-dialog {
+    max-width: 700px !important;
+}

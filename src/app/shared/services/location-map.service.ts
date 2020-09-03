@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-import { ProjectService } from './project/project.service';
-import { ActivatedRoute } from '@angular/router';
 import leaflet from 'leaflet';
 
 @Injectable({
@@ -12,8 +10,7 @@ export class LocationMapService {
   mapLat: number;
   mapLong: number;
 
-  constructor(private projectService: ProjectService,
-              private route: ActivatedRoute,) { }
+  constructor() {}
 
   getMap(map) {
     this.map = map;
@@ -30,7 +27,7 @@ export class LocationMapService {
   } 
 
   getMapViewOnEdit(projectLat: number, projectLong: number) {
-    this.getMapPreview(projectLat, projectLong)
+    this.getMapPreview(projectLat, projectLong);
     this.editMapCords();
   }
 

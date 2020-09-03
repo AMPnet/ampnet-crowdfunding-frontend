@@ -19,7 +19,7 @@ declare var $: any;
 @Component({
     selector: 'app-manage-single-project',
     templateUrl: './manage-single-project.component.html',
-    styleUrls: ['./manage-single-project.component.css']
+    styleUrls: ['./manage-single-project.component.css'],
 })
 export class ManageSingleProjectComponent implements OnInit, AfterViewInit {
 
@@ -134,6 +134,7 @@ export class ManageSingleProjectComponent implements OnInit, AfterViewInit {
         this.projectService.getProject(id).subscribe((res: Project) => {
             SpinnerUtil.hideSpinner();
             this.project = res;
+            
             onComplete();
         }, err => {
             SpinnerUtil.hideSpinner();

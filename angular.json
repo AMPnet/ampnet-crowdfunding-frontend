@@ -29,7 +29,8 @@
               "node_modules/@fortawesome/fontawesome-free/css/all.css",
               "node_modules/bootstrap-select/dist/css/bootstrap-select.min.css",
               "node_modules/uppy/dist/uppy.min.css",
-              "node_modules/@chenfengyuan/datepicker/dist/datepicker.min.css"
+              "node_modules/@chenfengyuan/datepicker/dist/datepicker.min.css",
+              "node_modules/leaflet/dist/leaflet.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",

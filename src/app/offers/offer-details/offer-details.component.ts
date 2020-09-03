@@ -22,7 +22,7 @@ import { MapModalComponent } from 'src/app/location-map/map-modal/map-modal.comp
 @Component({
     selector: 'app-offer-details',
     templateUrl: './offer-details.component.html',
-    styleUrls: ['./offer-details.component.css']
+    styleUrls: ['./offer-details.component.css'],
 })
 export class OfferDetailsComponent implements OnInit {
     docs: OfferDetailDocModel[];

@@ -12,8 +12,12 @@ export class LocationMapService {
 
   constructor() {}
 
-  getMap(map) {
-    this.map = map;
+  getMap() {
+    this.map = leaflet.map('map').setView([37.97404469468311, 23.71933726268805], 12);
+    leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution:
+      '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(this.map);
   }
 
   getMapCords(mapLat: number, mapLong: number) {
@@ -24,7 +28,7 @@ export class LocationMapService {
   getMapPreview(projectLat: number, projectLong: number) {
     this.map.setView([projectLat, projectLong, 12]);
     this.mapMarker = leaflet.marker([projectLat, projectLong]).addTo(this.map);
-  } 
+  }
 
   getMapViewOnEdit(projectLat: number, projectLong: number) {
     this.getMapPreview(projectLat, projectLong);

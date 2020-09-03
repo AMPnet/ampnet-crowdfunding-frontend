@@ -44,12 +44,12 @@ export class ManageSingleProjectComponent implements OnInit, AfterViewInit {
 
     ngOnInit() {
         this.fetchAllData();
+        setTimeout(() => {
+            this.mapService.getMapViewOnEdit(this.project.location.lat, this.project.location.long);
+        }, 2000);
     }
 
     ngAfterViewInit() {
-        setTimeout(() => {
-            this.mapService.getMapViewOnEdit(this.project.location.lat, this.project.location.long);
-        }, 1500);
     }
 
     fetchAllData() {

@@ -15,11 +15,9 @@ import { NewsLink } from '../../manage-projects/manage-single-project/news-link-
 import { SingleOfferModel } from './single-offer-model';
 import { WalletService } from '../../shared/services/wallet/wallet.service';
 import { Project, ProjectService } from '../../shared/services/project/project.service';
-import leaflet from 'leaflet';
 import { LocationMapService } from 'src/app/shared/services/location-map.service';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal'
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { MapModalComponent } from 'src/app/location-map/map-modal/map-modal.component';
-import { map } from 'jquery';
 
 @Component({
     selector: 'app-offer-details',
@@ -158,6 +156,6 @@ export class OfferDetailsComponent implements OnInit {
                 projectLong: this.offerModel.location.long
             }
         });
-        this.bsModalRef.setClass("modal-lg");
+        this.bsModalRef.setClass('modal-lg modal-dialog-centered');
     }
 }

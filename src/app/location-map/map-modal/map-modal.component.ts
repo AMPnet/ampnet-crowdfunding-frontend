@@ -10,7 +10,6 @@ import { LocationMapService } from 'src/app/shared/services/location-map.service
 export class MapModalComponent implements OnInit, AfterViewInit {
   projectLat: number;
   projectLong: number;
-  
 
   constructor(public bsModalRef: BsModalRef,
               private mapService: LocationMapService) { }
@@ -21,6 +20,6 @@ export class MapModalComponent implements OnInit, AfterViewInit {
     this.mapService.getMapPreview(this.projectLat, this.projectLong);
     setTimeout(() => {
       this.mapService.map.invalidateSize();
-    },10)
+    }, 10);
   }
 }

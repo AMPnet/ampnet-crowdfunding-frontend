@@ -70,7 +70,7 @@ import { RevenueShareComponent } from './revenue-share/revenue-share.component';
 import { TxIconType, TxIconStatus } from './wallet/wallet-icon.pipe';
 import { LocationMapComponent } from './location-map/location-map.component';
 import { MapModalComponent } from './location-map/map-modal/map-modal.component';
-import { ModalModule } from 'ngx-bootstrap/modal'
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 export function tokenGetter() {
     return localStorage.getItem('access_token');

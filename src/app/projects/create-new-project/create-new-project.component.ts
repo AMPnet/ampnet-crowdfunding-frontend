@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ProjectService } from '../../shared/services/project/project.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
@@ -15,7 +15,7 @@ declare var $: any;
     templateUrl: './create-new-project.component.html',
     styleUrls: ['./create-new-project.component.css']
 })
-export class CreateNewProjectComponent implements OnInit {
+export class CreateNewProjectComponent implements OnInit, AfterViewInit {
     createProjectForm: FormGroup;
 
     constructor(private projectService: ProjectService,
@@ -64,7 +64,6 @@ export class CreateNewProjectComponent implements OnInit {
         }).subscribe(res => {
             SpinnerUtil.hideSpinner();
             this.router.navigate(['/dash', 'manage_groups', orgID.toString(), 'manage_project', res.uuid]);
-            console.log(location);
         }, err => {
             SpinnerUtil.hideSpinner();
             displayBackendError(err);
@@ -77,6 +76,10 @@ export class CreateNewProjectComponent implements OnInit {
             autonumericCurrency('#max-per-user-input');
             autonumericCurrency('#expected-funding-input');
         });
+    }
+
+    ngAfterViewInit() {
+        this.mapService.getMapViewOnEdit(37.97404469468311, 23.71933726268805);
     }
 
     submitButtonClicked() {

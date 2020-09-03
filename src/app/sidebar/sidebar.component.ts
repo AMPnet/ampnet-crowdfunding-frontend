@@ -5,7 +5,6 @@ import * as $ from 'jquery';
 import { UserService } from '../shared/services/user/user.service';
 import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
-import { sidebarWidth } from '../utilities/app-const';
 
 @Component({
     selector: 'app-sidebar',
@@ -56,13 +55,6 @@ export class SidebarComponent implements OnInit {
     fetchUserData() {
         this.userService.getOwnProfile().subscribe(res => {
             this.fullName = res['first_name'] + ' ' + res['last_name'];
-        });
-    }
-
-    closeSideBar() {
-        const sidebar = $('.sidebar-fixer');
-        sidebar.animate({
-            left: sidebarWidth
         });
     }
 }

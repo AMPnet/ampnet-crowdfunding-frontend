@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import * as $ from 'jquery';
-import { sidebarWidth } from '../utilities/app-const';
 
 @Component({
     selector: 'app-navbar',
@@ -20,7 +19,7 @@ export class NavbarComponent {
 
         } else {
             sidebar.animate({
-                left: sidebarWidth
+                left: '-240px'
             });
         }
     }

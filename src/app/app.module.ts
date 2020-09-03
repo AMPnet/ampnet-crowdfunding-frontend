@@ -67,9 +67,9 @@ import { CurrencyDefaultPipe } from './pipes/currency-default-pipe';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RevenueShareComponent } from './revenue-share/revenue-share.component';
 import { TxIconStatus, TxIconType } from './wallet/wallet-icon.pipe';
+import { ModalModule } from 'ngx-bootstrap/modal';
 // tslint:disable-next-line:max-line-length
 import { RevenueShareConfirmModalComponent } from './project/manage-payments/revenue-share-confirm-modal/revenue-share-confirm-modal.component';
-import { ModalModule } from 'ngx-bootstrap/modal';
 
 export function tokenGetter() {
     return localStorage.getItem('access_token');

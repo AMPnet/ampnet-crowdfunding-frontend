@@ -46,7 +46,7 @@ export class InvestComponent implements OnInit {
 
     getWalletBalance() {
         SpinnerUtil.showSpinner();
-        this.walletService.getUserWallet().subscribe(res => {
+        this.walletService.walletChange$.subscribe(res => {
             this.wallet = res;
             this.wallet.currency = prettyCurrency(res.currency);
             this.wallet.balance = numeral(centsToBaseCurrencyUnit(res.balance)).format('0,0');

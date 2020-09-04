@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { Router } from '@angular/router';
 
@@ -31,6 +31,9 @@ export class SidebarComponent implements OnInit {
         });
         this.getProfile();
         this.fetchUserData();
+        this.userService.currentState.subscribe(state => {
+            this.hasVerifiedProfile = state;
+        });
     }
 
     getProfile() {

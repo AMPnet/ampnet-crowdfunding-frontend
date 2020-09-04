@@ -35,8 +35,6 @@ export class OnboardingComponent implements OnInit {
             loader.src = 'https://web-components.stage.identyum.com/flow-manager/component';
             loader.onload = () => {
             };
-            /*Todo: Console log to check userService data! */
-            console.log(this.userService)
             document.getElementsByTagName('head')[0].appendChild(loader);
             SpinnerUtil.hideSpinner();
             script.addEventListener('finished', (event) => {
@@ -54,6 +52,7 @@ export class OnboardingComponent implements OnInit {
                             });
                         this.reloadPage('/dash/general_settings');
                     }.bind(this));
+                    this.userService.isUserVerified(true);
                     SpinnerUtil.hideSpinner();
                 }, hideSpinnerAndDisplayError);
             });

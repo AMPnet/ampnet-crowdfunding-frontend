@@ -3,12 +3,18 @@ import { UserStatusStorage } from '../../../user-status-storage';
 import { BackendHttpClient } from '../backend-http-client.service';
 import { tap } from 'rxjs/operators';
 import { User } from './signup.service';
+import { Subject } from 'rxjs';
+import { OnboardingService } from './onboarding.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class UserService {
-    constructor(private http: BackendHttpClient) {
+    private userVerifiedSubject = new Subject<boolean>();
+    currentState = this.userVerifiedSubject.asObservable();
+
+    constructor(private http: BackendHttpClient,
+                private onboardingService: OnboardingService) {
     }
 
     getOwnProfile() {
@@ -16,6 +22,9 @@ export class UserService {
             .pipe(tap(user => UserStatusStorage.personalData = user));
     }
 
+    isUserVerified(state: boolean) {
+        this.userVerifiedSubject.next(state);
+    }
 
     logout() {
         return this.http.post<void>(`/api/user/logout`, {});

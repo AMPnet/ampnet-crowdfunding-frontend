@@ -14,7 +14,7 @@ declare var _: any;
     styleUrls: ['./manage-projects.component.css']
 })
 export class ManageProjectsComponent implements OnInit {
-    manageProjectsModel: Project[];
+    projects: Project[];
 
     @Input() groupID: string;
 
@@ -37,7 +37,7 @@ export class ManageProjectsComponent implements OnInit {
         this.orgService.getAllProjectsForOrganization(this.groupID).subscribe((res) => {
             SpinnerUtil.hideSpinner();
 
-            this.manageProjectsModel = res.projects_with_wallet.map(pww => pww.project);
+            this.projects = res.projects;
         }, err => {
             SpinnerUtil.hideSpinner();
             displayBackendError(err);
@@ -46,7 +46,7 @@ export class ManageProjectsComponent implements OnInit {
 
     toggleProject(uuid: string) {
         SpinnerUtil.showSpinner();
-        const project = this.manageProjectsModel.filter(x => x.uuid === uuid)[0];
+        const project = this.projects.filter(x => x.uuid === uuid)[0];
 
         this.projectService.updateProject(project.uuid, {
             active: !project.active

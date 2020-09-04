@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Project } from 'src/app/shared/services/project/project.service';
+import { ProjectWallet } from 'src/app/shared/services/project/project.service';
 import { WalletService } from '../../shared/services/wallet/wallet.service';
 import { Observable } from 'rxjs';
-import { WalletDetails } from '../../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
+import { MiddlewareService, ProjectWalletInfo } from '../../shared/services/middleware/middleware.service';
 
 @Component({
     selector: 'app-single-offer-item',
@@ -11,24 +11,25 @@ import { WalletDetails } from '../../shared/services/wallet/wallet-cooperative/w
     styleUrls: ['./single-offer-item.component.css']
 })
 export class SingleOfferItemComponent implements OnInit {
-    @Input() project: Project;
-    projectWallet$: Observable<WalletDetails>;
+    @Input() projectWallet: ProjectWallet;
+    projectWallet$: Observable<ProjectWalletInfo>;
 
     constructor(private router: Router,
                 private walletService: WalletService,
+                private middlewareService: MiddlewareService,
                 private route: ActivatedRoute) {
     }
 
     ngOnInit() {
-        this.project.main_image = this.project.main_image ?? '../../../assets/noimage.png';
-        this.projectWallet$ = this.walletService.getProjectWallet(this.project.uuid);
+        this.projectWallet.project.main_image = this.projectWallet.project.main_image ?? '../../../assets/noimage.png';
+        this.projectWallet$ = this.middlewareService.getProjectWalletInfo(this.projectWallet.wallet.hash);
     }
 
     onClickedItem() {
         if (this.route.snapshot.params.isOverview) {
-            this.router.navigate(['overview', this.project.uuid, 'discover']);
+            this.router.navigate(['overview', this.projectWallet.project.uuid, 'discover']);
         } else {
-            this.router.navigate(['dash', 'offers', this.project.uuid]);
+            this.router.navigate(['dash', 'offers', this.projectWallet.project.uuid]);
         }
     }
 }

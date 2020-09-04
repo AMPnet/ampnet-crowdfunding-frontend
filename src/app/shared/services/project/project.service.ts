@@ -75,7 +75,12 @@ export interface Project {
 }
 
 export interface PageableProjectsResponse {
-    projects_with_wallet: { project: Project, wallet: Wallet}[];
+    projects_with_wallet: ProjectWallet[];
     page: number;
     total_pages: number;
+}
+
+export interface ProjectWallet {
+    project: Project;
+    wallet: Wallet;
 }

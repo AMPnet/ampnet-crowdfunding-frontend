@@ -21,12 +21,17 @@ export class WalletService {
         return this.http.post<WalletDetails>('/api/wallet/wallet',
             <InitWalletData>{
                 public_key: address
-            }).pipe(this.tapWalletChange);
+            }).pipe(this.tapWalletChange.bind(this));
     }
 
     getUserWallet() {
+        /* const walletResponse = this.http.get<WalletDetails>('/api/wallet/wallet');
+        walletResponse.subscribe((res) => UserStatusStorage.walletData = res);
+
+        return walletResponse; */
+
         return this.http.get<WalletDetails>('/api/wallet/wallet')
-            .pipe(this.tapWalletChange);
+            .pipe(this.tapWalletChange.bind(this));
     }
 
     tapWalletChange(source: Observable<WalletDetails>) {
@@ -34,13 +39,7 @@ export class WalletService {
             tap(wallet => {
                 UserStatusStorage.walletData = wallet;
                 this.walletChangeSubject.next(wallet);
-            }, err => {
-                if (err.status === 404) {
-                    this.walletChangeSubject.next(null);
-                    console.log("test");
-                } 
-            }
-            )
+            })
         )
     }
 

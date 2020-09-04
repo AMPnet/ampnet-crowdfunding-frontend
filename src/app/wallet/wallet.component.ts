@@ -58,13 +58,16 @@ export class WalletComponent implements OnInit {
 
     getUserWallet() {
         SpinnerUtil.showSpinner();
+        /* This part is breaking, walletChange doesnt show data! */
+        /* this.walletService.getUserWallet(); */
         this.walletService.getUserWallet().subscribe(res => {
-            this.wallet = res;
+            /* this.wallet.uuid = res.uuid;
+            this.wallet.activation_data = res.activation_data;
             this.wallet.currency = prettyCurrency(res.currency);
             this.wallet.balance = numeral(centsToBaseCurrencyUnit(res.balance)).format('0,0');
             this.wallet.activated_at = res.activated_at;
-            this.checkComplete = true;
-            console.log(res);
+            this.checkComplete = true; */
+            console.log("test" + res);
             SpinnerUtil.hideSpinner();
         }, err => {
             SpinnerUtil.hideSpinner();

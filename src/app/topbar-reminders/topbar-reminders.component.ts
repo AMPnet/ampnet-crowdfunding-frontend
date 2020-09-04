@@ -23,9 +23,6 @@ export class TopbarRemindersComponent implements OnInit, OnDestroy {
       this.walletService.walletChange$.subscribe(res => {
           console.log(res);
       })
-      /* this.walletService.walletChange$.subscribe(res => {
-          console.log(res);
-      }) */
   }
 
   ngOnDestroy() {

@@ -25,11 +25,6 @@ export class WalletService {
     }
 
     getUserWallet() {
-        /* const walletResponse = this.http.get<WalletDetails>('/api/wallet/wallet');
-        walletResponse.subscribe((res) => UserStatusStorage.walletData = res);
-
-        return walletResponse; */
-
         return this.http.get<WalletDetails>('/api/wallet/wallet')
             .pipe(this.tapWalletChange);
     }

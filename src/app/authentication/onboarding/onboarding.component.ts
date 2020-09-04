@@ -4,7 +4,6 @@ import { OnboardingService } from '../../shared/services/user/onboarding.service
 import swal from 'sweetalert2';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
-import { TokenModel } from '../../models/auth/TokenModel';
 import { UserService } from '../../shared/services/user/user.service';
 
 @Component({
@@ -46,11 +45,10 @@ export class OnboardingComponent implements OnInit {
                         type: 'success'
                     }).then(function () {
                         this.userService.refreshUserToken()
-                            .subscribe((data: TokenModel) => {
-                                localStorage.setItem('access_token', data.access_token);
-                                localStorage.setItem('refresh_token', data.refresh_token);
+                            .subscribe(() => {
+                                SpinnerUtil.hideSpinner();
+                                this.reloadPage('/dash/general_settings');
                             });
-                        this.reloadPage('/dash/general_settings');
                     }.bind(this));
                     SpinnerUtil.hideSpinner();
                 }, hideSpinnerAndDisplayError);

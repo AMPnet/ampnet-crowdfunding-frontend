@@ -52,7 +52,7 @@ export class RevenueShareComponent implements OnInit {
             });
     }
 
-    generateTransactionForRevenuePayout(amountInvested: number) {
+    generateTransaction(amountInvested: number) {
         SpinnerUtil.showSpinner();
         this.revenueShareService.generateRevenueShareTx(this.projectID, amountInvested)
             .subscribe(async (res) => {
@@ -79,11 +79,11 @@ export class RevenueShareComponent implements OnInit {
         this.modalRef = this.modalService.show(RevenueShareConfirmModalComponent);
         this.modalRef.content.onConfirmClicked.subscribe(amount => {
             this.amountInvestedConfirm = amount;
-            this.makeRevenuePayoutIfAmountsMatch();
+            this.makeRevenuePayout();
         });
     }
 
-    makeRevenuePayoutIfAmountsMatch() {
+    makeRevenuePayout() {
         const revenueAmountInvested = parseInt(stripCurrencyData(String(this.amountInvested)), 10);
         const revenueAmountInvestedConfirm = parseInt(stripCurrencyData(String(this.amountInvestedConfirm)), 10);
 
@@ -92,6 +92,6 @@ export class RevenueShareComponent implements OnInit {
                 'error');
             return;
         }
-        this.generateTransactionForRevenuePayout(revenueAmountInvestedConfirm);
+        this.generateTransaction(revenueAmountInvestedConfirm);
     }
 }

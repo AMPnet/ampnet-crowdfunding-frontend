@@ -18,7 +18,7 @@ export class WalletCooperativeDepositService {
     }
 
     generateDepositApprovalURL(origin: string, id: number, amount: number) {
-        return `${origin}${this.endpoint}/approve?amount=${amount}`;
+        return `${origin}${this.endpoint}/${id}/approve?amount=${amount}`;
     }
 
     getUnapprovedDeposits() {

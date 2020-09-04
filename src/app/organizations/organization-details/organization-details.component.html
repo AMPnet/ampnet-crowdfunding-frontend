@@ -6,7 +6,7 @@
                 {{organization.name}}
             </div>
             <div class="col-md-4">
-                <button *ngIf="orgWallet !== undefined && orgWallet.hash !== undefined"
+                <button *ngIf="orgWallet !== null && orgWallet.hash !== undefined"
                         class="btn btn-primary py-2 w-100"
                         routerLink="create_project">
                     <i class="fas fa-plus-circle mr-2"></i>
@@ -16,7 +16,7 @@
         </div>
     </div>
 
-    <div *ngIf="orgWallet ===  undefined" class="row">
+    <div *ngIf="orgWallet === null" class="row">
         <div class="pt-5 w-100">
             <div class="explainer-mini pb-3 text-center mb-4">
                 You must create the wallet for the organization. This will allow you to create projects and add members.
@@ -28,9 +28,9 @@
         </div>
     </div>
 
-    <div *ngIf="orgWallet !== undefined">
+    <div *ngIf="orgWallet !== null">
         <div class="row mt-3">
-            <div *ngIf="orgWallet.hash ===  undefined" class="col-md-12">
+            <div *ngIf="orgWallet.hash === undefined" class="col-md-12">
                 <div class="alert alert-warning">
                     This group is pending approval from admin. During this time, you can't create new projects.
                 </div>
@@ -61,8 +61,8 @@
                 <ul class="list-group">
                     <li *ngFor="let member of orgMembers" class="list-group-item">
                         <span class="float-left">{{member.first_name}} {{member.last_name}}</span>
-                        <span class="float-right">
-              <i class="fas fa-trash cursor-pointer"></i> 
+                        <span class="float-right" (click)="deleteMember(organization.uuid, member.uuid)">
+                            <i class="fas fa-trash cursor-pointer"></i>
             </span>
                     </li>
                 </ul>
@@ -73,6 +73,4 @@
             </div>
         </div>
     </div>
-
-
 </div>

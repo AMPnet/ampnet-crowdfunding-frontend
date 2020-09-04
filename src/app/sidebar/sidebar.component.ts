@@ -31,7 +31,7 @@ export class SidebarComponent implements OnInit {
         });
         this.getProfile();
         this.fetchUserData();
-        this.userService.currentState.subscribe(state => {
+        this.userService.getVerifiedState().subscribe(state => {
             this.hasVerifiedProfile = state;
         });
     }

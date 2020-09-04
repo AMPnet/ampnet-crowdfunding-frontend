@@ -28,12 +28,10 @@ export class UserService {
 
     refreshUserToken() {
         return this.http.post<TokenModel>('/api/user/token/refresh', {
-            'refresh_token': localStorage.getItem('refresh_token')
-        })
-            .pipe(tap((data) => {
-                localStorage.setItem('access_token', data.access_token);
-                localStorage.setItem('refresh_token', data.refresh_token);
-                console.log('Refresh trigger!');
-            }));
+            refresh_token: localStorage.getItem('refresh_token')
+        }).pipe(tap((data) => {
+            localStorage.setItem('access_token', data.access_token);
+            localStorage.setItem('refresh_token', data.refresh_token);
+        }));
     }
 }

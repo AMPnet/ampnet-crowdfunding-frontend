@@ -13,7 +13,7 @@
                         </div>
                         <div>
                             <div class="explainer-mini">Date created</div>
-                            <div>{{depositModel.deposit.created_at}}</div>
+                            <div>{{depositModel.deposit.created_at | date:'mediumDate'}}</div>
                         </div>
                         <div>
                             <div class="explainer-mini">Reference</div>
@@ -58,8 +58,7 @@
 
 <!-- Modal -->
 <div aria-hidden="true" aria-labelledby="exampleModalCenterTitle" class="modal fade" id="modal-confirm-deposit"
-     role="dialog"
-     tabindex="-1">
+    role="dialog" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">

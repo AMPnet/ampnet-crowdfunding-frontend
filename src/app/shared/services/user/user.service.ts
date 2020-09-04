@@ -4,7 +4,6 @@ import { BackendHttpClient } from '../backend-http-client.service';
 import { tap } from 'rxjs/operators';
 import { User } from './signup.service';
 import { Subject } from 'rxjs';
-import { OnboardingService } from './onboarding.service';
 
 @Injectable({
     providedIn: 'root'
@@ -13,8 +12,7 @@ export class UserService {
     private userVerifiedSubject = new Subject<boolean>();
     currentState = this.userVerifiedSubject.asObservable();
 
-    constructor(private http: BackendHttpClient,
-                private onboardingService: OnboardingService) {
+    constructor(private http: BackendHttpClient) {
     }
 
     getOwnProfile() {

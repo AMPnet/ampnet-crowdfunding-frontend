@@ -54,9 +54,6 @@ export class OnboardingComponent implements OnInit {
                                 this.reloadPage('/dash/general_settings');
                             });
                     }.bind(this));
-                    this.http.get<User>('/api/user/me').subscribe(user => {
-                        this.userService.userChangeSubject.next(user);
-                    });
                     SpinnerUtil.hideSpinner();
                 }, hideSpinnerAndDisplayError);
             });

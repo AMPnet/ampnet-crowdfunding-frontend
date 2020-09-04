@@ -46,6 +46,7 @@ export class UserService {
         }).pipe(tap((data) => {
             localStorage.setItem('access_token', data.access_token);
             localStorage.setItem('refresh_token', data.refresh_token);
+            return this.getOwnProfile().pipe(this.tapUserChange);
         }));
     }
 }

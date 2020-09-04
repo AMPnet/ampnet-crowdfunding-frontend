@@ -31,17 +31,17 @@ export class SidebarComponent implements OnInit {
         });
         this.getProfile();
         this.fetchUserData();
-        this.userService.getVerifiedState().subscribe(state => {
-            this.hasVerifiedProfile = state;
+        this.userService.userChange$.subscribe(user => {
+            this.hasVerifiedProfile = user.verified;
         });
     }
 
     getProfile() {
         SpinnerUtil.showSpinner();
-        this.userService.getOwnProfile().subscribe(res => {
-            this.isAdmin = (res.role === 'ADMIN');
-            this.isPlatformManager = (res.role === 'PLATFORM_MANAGER');
-            this.isTokenIssuer = (res.role === 'TOKEN_ISSUER');
+        this.userService.userChange$.subscribe(user => {
+            this.isAdmin = (user.role === 'ADMIN');
+            this.isPlatformManager = (user.role === 'PLATFORM_MANAGER');
+            this.isTokenIssuer = (user.role === 'TOKEN_ISSUER');
         }, hideSpinnerAndDisplayError);
     }
 

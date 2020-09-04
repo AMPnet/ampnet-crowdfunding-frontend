@@ -6,6 +6,8 @@ import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
 import { TokenModel } from '../../models/auth/TokenModel';
 import { UserService } from '../../shared/services/user/user.service';
+import { User } from '../../shared/services/user/signup.service';
+import { BackendHttpClient } from 'src/app/shared/services/backend-http-client.service';
 
 @Component({
     selector: 'app-onboarding',
@@ -14,11 +16,13 @@ import { UserService } from '../../shared/services/user/user.service';
 })
 export class OnboardingComponent implements OnInit {
     hasClientToken = false;
+    test;
 
     constructor(
         private router: Router,
         private onboardingService: OnboardingService,
-        private userService: UserService) {
+        private userService: UserService,
+        private http: BackendHttpClient) {
     }
 
     ngOnInit() {
@@ -52,7 +56,9 @@ export class OnboardingComponent implements OnInit {
                             });
                         this.reloadPage('/dash/general_settings');
                     }.bind(this));
-                    this.userService.isUserVerified(true);
+                    this.http.get<User>('/api/user/me').subscribe(user => {
+                        this.userService.userChangeSubject.next(user);
+                    });
                     SpinnerUtil.hideSpinner();
                 }, hideSpinnerAndDisplayError);
             });

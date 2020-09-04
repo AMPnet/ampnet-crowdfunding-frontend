@@ -3,28 +3,32 @@ import { UserStatusStorage } from '../../../user-status-storage';
 import { BackendHttpClient } from '../backend-http-client.service';
 import { tap } from 'rxjs/operators';
 import { User } from './signup.service';
-import { Subject, Observable } from 'rxjs';
+import { Observable, ReplaySubject } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
 })
 export class UserService {
-    private userVerifiedSubject = new Subject<boolean>();
+    userChange$: Observable<User>;
+
+    userChangeSubject = new ReplaySubject<User>();
 
     constructor(private http: BackendHttpClient) {
+        this.userChange$ = this.userChangeSubject.asObservable();
     }
 
     getOwnProfile() {
         return this.http.get<User>('/api/user/me')
-            .pipe(tap(user => UserStatusStorage.personalData = user));
+            .pipe(this.tapUserChange.bind(this));
     }
 
-    isUserVerified(state: boolean) {
-        this.userVerifiedSubject.next(state);
-    }
-
-    getVerifiedState(): Observable<boolean> {
-        return this.userVerifiedSubject.asObservable();
+    private tapUserChange(source: Observable<User>) {
+        return source.pipe(
+            tap(user => {
+                UserStatusStorage.personalData = user;
+                this.userChangeSubject.next(user);
+            })
+        );
     }
 
     logout() {

@@ -39,6 +39,8 @@ export class WalletService {
             tap(wallet => {
                 UserStatusStorage.walletData = wallet;
                 this.walletChangeSubject.next(wallet);
+            }, err => {
+                this.walletChangeSubject.next(null);
             })
         )
     }

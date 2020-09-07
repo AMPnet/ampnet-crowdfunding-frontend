@@ -51,7 +51,7 @@ export class ManageSingleDepositComponent implements OnInit, AfterViewInit {
             height: 300,
             width: $('.root-content-container').width(),
             note: 'Upload payment reciept for deposit',
-            hideUploadButton: true
+            hideUploadButton: true,
         });
     }
 

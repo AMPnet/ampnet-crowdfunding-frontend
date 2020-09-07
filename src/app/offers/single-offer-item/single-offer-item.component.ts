@@ -1,8 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { OfferModel } from '../OfferModel';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ProjectService } from 'src/app/shared/services/project/project.service';
-import { autonumericCurrency, prettyCurrency } from 'src/app/utilities/currency-util';
+import { ProjectWallet } from 'src/app/shared/services/project/project.service';
+import { WalletService } from '../../shared/services/wallet/wallet.service';
+import { Observable } from 'rxjs';
+import { MiddlewareService, ProjectWalletInfo } from '../../shared/services/middleware/middleware.service';
 
 @Component({
     selector: 'app-single-offer-item',
@@ -10,32 +11,25 @@ import { autonumericCurrency, prettyCurrency } from 'src/app/utilities/currency-
     styleUrls: ['./single-offer-item.component.css']
 })
 export class SingleOfferItemComponent implements OnInit {
-
-    @Input() public component: OfferModel;
+    @Input() projectWallet: ProjectWallet;
+    projectWallet$: Observable<ProjectWalletInfo>;
 
     constructor(private router: Router,
-                private projectService: ProjectService,
+                private walletService: WalletService,
+                private middlewareService: MiddlewareService,
                 private route: ActivatedRoute) {
     }
 
     ngOnInit() {
-        this.component.currency = prettyCurrency(this.component.currency);
-        if (this.component.headerImageUrl === null) {
-            this.component.headerImageUrl = '../../../assets/noimage.png';
-        }
-        setTimeout(() => {
-            autonumericCurrency('.req-funding-' + this.component.offerID);
-        }, 300);
+        this.projectWallet.project.main_image = this.projectWallet.project.main_image ?? '../../../assets/noimage.png';
+        this.projectWallet$ = this.middlewareService.getProjectWalletInfo(this.projectWallet.wallet.hash);
     }
-
 
     onClickedItem() {
         if (this.route.snapshot.params.isOverview) {
-
-            this.router.navigate(['overview', this.component.offerID, 'discover']);
+            this.router.navigate(['overview', this.projectWallet.project.uuid, 'discover']);
         } else {
-            this.router.navigate(['dash', 'offers', this.component.offerID]);
+            this.router.navigate(['dash', 'offers', this.projectWallet.project.uuid]);
         }
     }
-
 }

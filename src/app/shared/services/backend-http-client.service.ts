@@ -18,7 +18,7 @@ export class BackendHttpClient {
         return this.http.get<T>(path, httpOptions);
     }
 
-    post<T>(path: string, body: object): Observable<T> {
+    post<T>(path: string, body: any): Observable<T> {
         return this.http.post<T>(path, body, this.authHttpOptions());
     }
 
@@ -37,9 +37,7 @@ export class BackendHttpClient {
 
     public authHttpOptions() {
         const httpOptions = {
-            headers: new HttpHeaders({
-                'Content-Type': 'application/json'
-            })
+            headers: new HttpHeaders()
         };
 
         const accessToken = localStorage.getItem('access_token');

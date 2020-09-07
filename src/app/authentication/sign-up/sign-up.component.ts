@@ -81,6 +81,7 @@ export class SignUpComponent implements OnInit {
                 swal('', 'Sign-up successful!', 'success');
                 this.loginService.emailLogin(values.email, values.password).subscribe(res => {
                     localStorage.setItem('access_token', res.access_token);
+                    localStorage.setItem('refresh_token', res.refresh_token);
                     this.router.navigate(['/dash']);
                 }, hideSpinnerAndDisplayError);
             }, hideSpinnerAndDisplayError);

@@ -2,8 +2,6 @@
     <app-header></app-header>
 </div>
 
-
-
 <div *ngIf="project !== undefined" [class.container]="!isPortfolio"
 class="wow fadeIn" style="background: #fdfdfd">
     <div class="row">
@@ -168,9 +166,7 @@ class="wow fadeIn" style="background: #fdfdfd">
                         </div>
                     </div>
                 </div>
-
             </div>
-
 
             <!-- Offer socials share -->
             <div class="offer-right-socials col-lg-9 mt-4">
@@ -182,15 +178,14 @@ class="wow fadeIn" style="background: #fdfdfd">
                     <div class="cursor-pointer mr-lg-5">
                         <i class="fab fa-facebook-f"></i>
                     </div>
-                    <div class="cursor-pointer">
+                    <div class="cursor-pointer"
+                         (click)="copyProjectDetailsUrl()"
+                         ngbTooltip="Copied to clipboard."
+                         triggers="click:blur">
                         <i class="fas fa-link"></i>
                     </div>
                 </div>
-
             </div>
-
         </div>
-
-
     </div>
 </div>

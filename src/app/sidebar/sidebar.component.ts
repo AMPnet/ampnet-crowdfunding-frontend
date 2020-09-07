@@ -33,7 +33,6 @@ export class SidebarComponent implements OnInit {
     }
 
     getProfile() {
-        SpinnerUtil.showSpinner();
         this.userService.getOwnProfile().subscribe(res => {
             this.isAdmin = (res.role === 'ADMIN');
             this.isPlatformManager = (res.role === 'PLATFORM_MANAGER');

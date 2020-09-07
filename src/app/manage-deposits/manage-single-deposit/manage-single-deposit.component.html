@@ -22,7 +22,7 @@
                     </div>
                 </div>
             </div>
-            <div *ngIf="depositModel.approved" class="d-flex justify-content-center mt-5 text-center">
+            <div *ngIf="depositModel.deposit.approved" class="d-flex justify-content-center mt-5 text-center">
 
                 <div>
                     <div class="mb-5 mt-3">
@@ -30,7 +30,7 @@
                             Mint amount
                         </div>
                         <div class="gray-text h1 mt-3">
-                            {{depositModel.amount | currencyDefault}}
+                            {{depositModel.deposit.amount | currencyDefault}}
                         </div>
                         <div class="alert alert-danger mt-2 ">
                             Verify the amount of currency minted for this deposit! This action cannot be reverted!
@@ -41,10 +41,10 @@
                 </div>
 
             </div>
-            <div *ngIf="!depositModel.approved" class="explainer-mini mt-3 mb-2">
+            <div *ngIf="!depositModel.deposit.approved" class="explainer-mini mt-3 mb-2">
                 Deposit amount
             </div>
-            <input *ngIf="!depositModel.approved" class=" px-3 w-100 form-control py-4" id="deposit-amount" name="">
+            <input *ngIf="!depositModel.deposit.approved" class=" px-3 w-100 form-control py-4" id="deposit-amount" name="">
         </div>
         <div *ngIf="(depositModel !== undefined)" class="col-md-12 mt-3">
             <div id="payment-reciept-upload-target"></div>

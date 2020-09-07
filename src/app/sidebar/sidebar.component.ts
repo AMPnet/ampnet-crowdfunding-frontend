@@ -34,7 +34,6 @@ export class SidebarComponent implements OnInit {
     }
 
     getProfile() {
-        SpinnerUtil.showSpinner();
         this.userService.getOwnProfile().subscribe(res => {
             this.isAdmin = (res.role === 'ADMIN');
             this.isPlatformManager = (res.role === 'PLATFORM_MANAGER');
@@ -58,5 +57,4 @@ export class SidebarComponent implements OnInit {
             this.fullName = res['first_name'] + ' ' + res['last_name'];
         });
     }
-
 }

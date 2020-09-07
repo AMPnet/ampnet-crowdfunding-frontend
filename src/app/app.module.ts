@@ -69,6 +69,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RevenueShareComponent } from './revenue-share/revenue-share.component';
 import { UserStateReminderComponent } from './user-state-reminder/user-state-reminder.component';
 import { TxIconStatus, TxIconType } from './wallet/wallet-icon.pipe';
+import { FileValidator } from './shared/validators/file.validator';
+import { FileValueAccessorDirective } from './shared/directives/file-value-accessor.directive';
+import { SpinnerComponent } from './shared/components/spinner/spinner.component';
 
 export function tokenGetter() {
     return localStorage.getItem('access_token');
@@ -162,7 +165,10 @@ export function jwtOptionsFactory() {
         RevenueShareComponent,
         TxIconType,
         TxIconStatus,
-        UserStateReminderComponent
+        UserStateReminderComponent,
+        FileValidator,
+        FileValueAccessorDirective,
+        SpinnerComponent
     ],
     imports: [
         BrowserModule,

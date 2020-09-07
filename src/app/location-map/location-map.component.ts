@@ -1,5 +1,4 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { LocationMapService } from '../shared/services/location-map.service';
 import leaflet from 'leaflet';
 
 @Component({
@@ -8,23 +7,47 @@ import leaflet from 'leaflet';
     styleUrls: ['./location-map.component.css'],
 })
 export class LocationMapComponent implements OnInit, AfterViewInit {
-    private map;
+    map;
+    startingLocation = [37.97404469468311, 23.71933726268805];
+    mapMarker;
+    mapLat: number;
+    mapLong: number;
+    markerIcon = leaflet.icon({
+        iconUrl: 'marker-icon.png',
+        shadowUrl: '',
+    })
 
-    constructor(private mapService: LocationMapService) {}
-
-    private initMap() {
-        this.map = leaflet.map('map').setView([37.97404469468311, 23.71933726268805], 12);
-        leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution:
-        '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(this.map);
-    }
+    constructor() {}
 
     ngOnInit() {
         this.initMap();
-        this.mapService.getMap(this.map);
     }
 
     ngAfterViewInit() {
     }
+
+    private initMap() {
+        this.map = leaflet.map('map').setView([this.startingLocation], 12);
+        leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution:
+            '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(this.map);
+    }
+
+    editMapCoords(){
+        this.map.on('click', e => {
+            if (this.mapMarker) {
+                this.map.removeLayer(this.mapMarker);
+            }
+        this.mapMarker = leaflet.marker([e.latlng.lat, e.latlng.lng], {
+            icon: this.markerIcon
+            }).addTo(this.map);
+        this.mapLat = e.latlng.lat;
+        this.mapLong = e.latlng.lng;
+        });
+    }
+
+   
+
+    
 }

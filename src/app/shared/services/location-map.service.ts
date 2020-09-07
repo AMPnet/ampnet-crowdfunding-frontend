@@ -16,11 +16,11 @@ export class LocationMapService {
 
     constructor() {}
 
-    getMap(map) {
+    /* getMap(map) {
         this.map = map;
         console.log(this.map)
     }
-
+ */
     getMapCords(mapLat: number, mapLong: number) {
         this.mapLat = mapLat;
         this.mapLong = mapLong;

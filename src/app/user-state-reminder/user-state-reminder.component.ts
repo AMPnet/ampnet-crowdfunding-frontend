@@ -1,17 +1,14 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { TopbarService } from '../shared/services/topbar.service';
 import { WalletService } from '../shared/services/wallet/wallet.service';
-import { throwIfEmpty } from 'rxjs/operators';
 import { WalletDetails } from '../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
-import { timingSafeEqual } from 'crypto';
 
 @Component({
-  selector: 'app-topbar-reminders',
-  templateUrl: './topbar-reminders.component.html',
-  styleUrls: ['./topbar-reminders.component.css']
+  selector: 'app-user-state-reminder',
+  templateUrl: './user-state-reminder.component.html',
+  styleUrls: ['./user-state-reminder.component.css']
 })
-export class TopbarRemindersComponent implements OnInit, OnDestroy {
+export class UserStateReminderComponent implements OnInit, OnDestroy {
   isWalletInit = true;
   wallet: WalletDetails;
   walletChangeSub: Subscription;

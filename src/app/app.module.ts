@@ -67,7 +67,7 @@ import { OwnershipComponent } from './ownership/ownership.component';
 import { CurrencyDefaultPipe } from './pipes/currency-default-pipe';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RevenueShareComponent } from './revenue-share/revenue-share.component';
-import { TopbarRemindersComponent } from './topbar-reminders/topbar-reminders.component';
+import { UserStateReminderComponent } from './user-state-reminder/user-state-reminder.component';
 import { TxIconStatus, TxIconType } from './wallet/wallet-icon.pipe';
 
 export function tokenGetter() {
@@ -162,7 +162,7 @@ export function jwtOptionsFactory() {
         RevenueShareComponent,
         TxIconType,
         TxIconStatus,
-        TopbarRemindersComponent
+        UserStateReminderComponent
     ],
     imports: [
         BrowserModule,

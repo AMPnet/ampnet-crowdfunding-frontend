@@ -6,7 +6,6 @@ import { centsToBaseCurrencyUnit, prettyCurrency } from '../utilities/currency-u
 import * as numeral from 'numeral';
 import { ArkaneConnect, SecretType } from '@arkane-network/arkane-connect';
 import { WalletDetails } from '../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
-import { TopbarService } from '../shared/services/topbar.service';
 
 declare var $: any;
 
@@ -25,8 +24,7 @@ export class WalletComponent implements OnInit {
     transactionHistory: UserTransaction[] = [];
     transactionHistoryPage: UserTransaction[] = [];
 
-    constructor(private walletService: WalletService,
-                private topbarService: TopbarService) {
+    constructor(private walletService: WalletService) {
     }
 
     ngOnInit() {
@@ -53,7 +51,6 @@ export class WalletComponent implements OnInit {
             SpinnerUtil.hideSpinner();
             displayBackendError(err);
         });
-        this.topbarService.walletInInitProcess(true);
     }
 
     getUserWallet() {

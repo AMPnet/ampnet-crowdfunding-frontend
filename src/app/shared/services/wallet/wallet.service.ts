@@ -29,7 +29,7 @@ export class WalletService {
             .pipe(this.tapWalletChange.bind(this));
     }
 
-    tapWalletChange(source: Observable<WalletDetails>) {
+    private tapWalletChange(source: Observable<WalletDetails>) {
         return source.pipe(
             tap(wallet => {
                 UserStatusStorage.walletData = wallet;

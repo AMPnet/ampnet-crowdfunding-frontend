@@ -24,7 +24,7 @@ export class OwnershipComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.userService.userChange$.subscribe(user => {
+        this.userService.getOwnProfile().subscribe( (user: any)  => {
             this.user = user;
         }, hideSpinnerAndDisplayError);
     }

@@ -38,10 +38,10 @@ export class SidebarComponent implements OnInit {
 
     getProfile() {
         SpinnerUtil.showSpinner();
-        this.userService.userChange$.subscribe(user => {
-            this.isAdmin = (user.role === 'ADMIN');
-            this.isPlatformManager = (user.role === 'PLATFORM_MANAGER');
-            this.isTokenIssuer = (user.role === 'TOKEN_ISSUER');
+        this.userService.getOwnProfile().subscribe( (res: any)  => {
+            this.isAdmin = (res.role === 'ADMIN');
+            this.isPlatformManager = (res.role === 'PLATFORM_MANAGER');
+            this.isTokenIssuer = (res.role === 'TOKEN_ISSUER');
         }, hideSpinnerAndDisplayError);
     }
 

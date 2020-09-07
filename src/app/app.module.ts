@@ -167,14 +167,11 @@ export function jwtOptionsFactory() {
         RevenueShareComponent,
         TxIconType,
         TxIconStatus,
-<<<<<<< HEAD
         LocationMapComponent,
         MapModalComponent,
-=======
         FileValidator,
         FileValueAccessorDirective,
         SpinnerComponent
->>>>>>> master
     ],
     imports: [
         BrowserModule,

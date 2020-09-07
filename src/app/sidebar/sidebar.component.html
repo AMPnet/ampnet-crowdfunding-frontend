@@ -18,7 +18,7 @@
             <i class="menu-icon fas fa-wallet"></i>
             <span>Wallet <i *ngIf="!hasWalletActive" class="ml-2 fas fa-exclamation-circle" style="color: orange;"></i></span>
         </li>
-        <li *ngIf="hasWalletActive" routerLink="manage_groups" routerLinkActive="side-active">
+        <li [hidden]="!hasWalletActive" routerLink="manage_groups" routerLinkActive="side-active">
             <i class="menu-icon fas fa-layer-group"></i>
             <span>Investment groups</span>
         </li>
@@ -43,8 +43,8 @@
         </li>
     </ul>
 
-    <p *ngIf="isAdmin" class="menu-header ml-4 mb-3 mt-3 ">ADMIN</p>
-    <ul *ngIf="isAdmin" class="list-unstyled components" id="main-menu">
+    <p [hidden]="!isAdmin" class="menu-header ml-4 mb-3 mt-3 ">ADMIN</p>
+    <ul [hidden]="!isAdmin" class="list-unstyled components" id="main-menu">
         <li routerLink="manage_withdrawals" routerLinkActive="side-active">
             <i class="menu-icon fas fa-arrow-circle-up "></i>
             <span>Withdrawals</span>
@@ -67,8 +67,8 @@
         </li>
     </ul>
 
-    <p *ngIf="isTokenIssuer" class="menu-header ml-4 mb-3 mt-3 ">TOKEN ISSUER</p>
-    <ul *ngIf="isTokenIssuer" class="list-unstyled components" id="main-menu">
+    <p [hidden]="!isTokenIssuer" class="menu-header ml-4 mb-3 mt-3 ">TOKEN ISSUER</p>
+    <ul [hidden]="!isTokenIssuer" class="list-unstyled components" id="main-menu">
         <li routerLink="manage_withdrawals" routerLinkActive="side-active">
             <i class="menu-icon fas fa-arrow-circle-up "></i>
             <span>Withdrawals</span>
@@ -87,8 +87,8 @@
         </li>
     </ul>
 
-    <p *ngIf="isPlatformManager" class="menu-header ml-4 mb-3 mt-3 ">PLATFORM MANAGER</p>
-    <ul *ngIf="isPlatformManager" class="list-unstyled components" id="main-menu">
+    <p [hidden]="!isPlatformManager" class="menu-header ml-4 mb-3 mt-3 ">PLATFORM MANAGER</p>
+    <ul [hidden]="!isPlatformManager" class="list-unstyled components" id="main-menu">
         <li routerLink="activation/users" routerLinkActive="side-active">
             <i class="menu-icon fas fa-flag-checkered"></i>
             <span>Activations</span>
@@ -101,7 +101,7 @@
 
 
     <div class="dropdown-divider" id="divider-menu"></div>
-    
+
     <ul class="list-unstyled components" id="main-menu">
         <span class="full-name">{{fullName}}</span>
         <li (click)="contactUsClicked()" routerLinkActive="side-active" class="mt-2">

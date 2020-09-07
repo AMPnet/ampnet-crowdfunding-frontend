@@ -3,7 +3,7 @@ import { ProjectService, ProjectWallet } from '../shared/services/project/projec
 import { ActivatedRoute } from '@angular/router';
 import { WalletService } from '../shared/services/wallet/wallet.service';
 import { Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 @Component({
     selector: 'app-offers',

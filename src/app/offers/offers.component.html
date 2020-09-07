@@ -4,24 +4,28 @@
     <app-header></app-header>
 </div>
 
-<ng-container *ngIf="(projectsWallets$ | async) as projectsWallets">
-    <div [class.overview-modifier]="isOverview" *ngIf="projectsWallets !== undefined"
-         class="container root-content-container pt-md-0 pt-3">
-        <h1 class="offers-title">OFFERS</h1>
-        <div class="row" id="component-container">
-            <div *ngFor="let projectWallet of projectsWallets" style="visibility:hidden" class="col-md-12 fadeIn wow mt-md-3">
+<div class="container root-content-container pt-md-0 pt-3"
+     [class.overview-modifier]="isOverview">
+    <h1 class="offers-title">OFFERS</h1>
+    <ng-container *ngIf="(projectsWallets$ | async) as projectsWallets else loadingProjects">
+        <div class="row" id="component-container"
+             *ngIf="projectsWallets.length > 0">
+            <div *ngFor="let projectWallet of projectsWallets"
+                 style="visibility:hidden"
+                 class="col-md-12 fadeIn wow mt-md-3">
                 <div class="mb-md-5">
                     <app-single-offer-item [projectWallet]=projectWallet></app-single-offer-item>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div *ngIf="projectsWallets.length === 0">
-        <div class="root root-content-container">
-            <div class="d-flex justify-content-center">
-                No projects currently available for crowdfunding.
-            </div>
+        <div class="row justify-content-center"
+             *ngIf="projectsWallets.length === 0">
+            No projects currently available for crowdfunding.
         </div>
-    </div>
-</ng-container>
+    </ng-container>
+</div>
+
+<ng-template #loadingProjects>
+    <app-spinner type="overlay"></app-spinner>
+</ng-template>

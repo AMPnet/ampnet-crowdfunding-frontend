@@ -8,7 +8,7 @@ import { displayBackendError, hideSpinnerAndDisplayError } from 'src/app/utiliti
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import swal from 'sweetalert2';
 import { NewsLink } from '../../manage-projects/manage-single-project/news-link-model';
-import { ProjectService, Project } from '../../shared/services/project/project.service';
+import { Project, ProjectService } from '../../shared/services/project/project.service';
 import { WalletService } from '../../shared/services/wallet/wallet.service';
 import { Wallet } from 'src/app/shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
 
@@ -109,8 +109,8 @@ export class OfferDetailsComponent implements OnInit {
                 swal('Pending confirmation',
                     'The project is being verified - this should take up to 5 minutes. Please check later',
                     'info').then(() => {
-                        window.history.back();
-                    });
+                    window.history.back();
+                });
             } else {
                 displayBackendError(err);
             }

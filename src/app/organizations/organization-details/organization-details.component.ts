@@ -44,7 +44,7 @@ export class OrganizationDetailsComponent implements OnInit {
         this.walletService.getOrganizationWallet(orgID).subscribe(res => {
             this.orgWallet = res;
         }, err => {
-            if (err.status === '404') { // Organization wallet doesn't exist
+            if (err.status === 404) {
                 this.orgWallet = null;
             } else if (err.error.err_code === '0851') {
                 swal('', 'The organization is being created. This can take up to a minute. Please check again later.', 'info')

@@ -22,10 +22,10 @@ export class ProjectActivationComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.fetchWalletToActivate();
+        this.fetchUnactivatedUserWallets();
     }
 
-    fetchWalletToActivate() {
+    fetchUnactivatedUserWallets() {
         SpinnerUtil.showSpinner();
         this.activationService.getUnactivatedProjectWallets().subscribe((res) => {
             this.projects = res.projects;
@@ -49,11 +49,10 @@ export class ProjectActivationComponent implements OnInit {
             this.broadService.broadcastSignedTx(sigRes.result.signedTransaction, res.tx_id)
                 .subscribe(_ => {
                     SpinnerUtil.hideSpinner();
-                    swal('', 'Success', 'success');
+                    swal('', 'Success', 'success')
+                        .then(() => this.fetchUnactivatedUserWallets());
                 }, hideSpinnerAndDisplayError);
 
         }, hideSpinnerAndDisplayError);
-
     }
-
 }

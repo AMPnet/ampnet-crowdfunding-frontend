@@ -20,16 +20,18 @@ export class UserService {
 
     getOwnProfile() {
         return this.http.get<User>('/api/user/me')
-            .pipe(this.tapUserChange.bind(this));
+            .pipe(this.tapUserChange(this));
     }
 
-    private tapUserChange(source: Observable<User>) {
-        return source.pipe(
-            tap(user => {
-                UserStatusStorage.personalData = user;
-                this.userChangeSubject.next(user);
-            })
-        );
+    private tapUserChange(self: any) {
+        return function (source: Observable<User>) {
+            return source.pipe(
+                tap(user => {
+                    UserStatusStorage.personalData = user;
+                    self.userChangeSubject.next(user);
+                })
+            );
+        };
     }
 
     logout() {
@@ -46,7 +48,7 @@ export class UserService {
         }).pipe(tap((data) => {
             localStorage.setItem('access_token', data.access_token);
             localStorage.setItem('refresh_token', data.refresh_token);
-            return this.getOwnProfile().pipe(this.tapUserChange);
+            return this.getOwnProfile().pipe(this.tapUserChange(this));
         }));
     }
 }

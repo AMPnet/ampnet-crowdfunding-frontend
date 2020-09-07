@@ -32,6 +32,7 @@ export class SidebarComponent implements OnInit {
         this.fetchUserData();
         this.userService.userChange$.subscribe(user => {
             this.hasVerifiedProfile = user.verified;
+            console.log(this.hasVerifiedProfile);
         });
     }
 

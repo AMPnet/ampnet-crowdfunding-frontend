@@ -9,7 +9,7 @@
                 {{projectWallet.project.name}}
             </div>
 
-            <ng-container *ngIf="(projectWallet$ | async) as wallet">
+            <ng-container *ngIf="(projectWallet$ | async) as wallet else walletLoading">
                 <div style="visibility:hidden" class="fadeIn wow">
                     <div class="mt-2">
                         <div class="mt-2 mb-2 raised-info">
@@ -29,6 +29,12 @@
                     </div>
                 </div>
             </ng-container>
+
+            <ng-template #walletLoading>
+                <div class="spinner-border spinner-border-sm" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </ng-template>
 
             <div class="mt-2 ends-info">
                 <div>Ends on {{projectWallet.project.end_date | date:'mediumDate' }}</div>

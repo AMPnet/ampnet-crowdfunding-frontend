@@ -37,8 +37,12 @@ export class SidebarComponent implements OnInit {
     }
 
     getProfile() {
+<<<<<<< HEAD
         SpinnerUtil.showSpinner();
         this.userService.getOwnProfile().subscribe( (res: any)  => {
+=======
+        this.userService.getOwnProfile().subscribe(res => {
+>>>>>>> master
             this.isAdmin = (res.role === 'ADMIN');
             this.isPlatformManager = (res.role === 'PLATFORM_MANAGER');
             this.isTokenIssuer = (res.role === 'TOKEN_ISSUER');
@@ -62,5 +66,4 @@ export class SidebarComponent implements OnInit {
             this.hasVerifiedProfile = res['verified'];
         });
     }
-
 }

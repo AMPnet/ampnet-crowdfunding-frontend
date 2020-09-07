@@ -60,6 +60,7 @@ export class OfferDetailsComponent implements OnInit {
             SpinnerUtil.showSpinner();
             this.userService.getOwnProfile().subscribe((user: any) => {
                 this.userConfirmed = user.verified;
+                SpinnerUtil.hideSpinner();
             }, hideSpinnerAndDisplayError);
         }
     }

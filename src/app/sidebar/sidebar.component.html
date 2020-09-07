@@ -18,7 +18,7 @@
             <i class="menu-icon fas fa-wallet"></i>
             <span>Wallet <i *ngIf="!hasWalletActive" class="ml-2 fas fa-exclamation-circle" style="color: orange;"></i></span>
         </li>
-        <li *ngIf="hasWalletActive" routerLink="manage_groups" routerLinkActive="side-active" [class.unverified-user-disabled]="!hasVerifiedProfile">
+        <li [hidden]="!hasWalletActive" routerLink="manage_groups" routerLinkActive="side-active" [class.unverified-user-disabled]="!hasVerifiedProfile">
             <i class="menu-icon fas fa-layer-group"></i>
             <span>Investment groups</span>
         </li>

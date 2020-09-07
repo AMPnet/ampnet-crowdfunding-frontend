@@ -12,7 +12,6 @@ import { centsToBaseCurrencyUnit, prettyCurrency } from 'src/app/utilities/curre
 import { Meta } from '@angular/platform-browser';
 import { UserService } from 'src/app/shared/services/user/user.service';
 import { NewsLink } from '../../manage-projects/manage-single-project/news-link-model';
-import { SingleOfferModel } from './single-offer-model';
 import { WalletService } from '../../shared/services/wallet/wallet.service';
 import { Project, ProjectService } from '../../shared/services/project/project.service';
 import { LocationMapService } from 'src/app/shared/services/location-map.service';

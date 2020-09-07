@@ -1,28 +1,36 @@
 <div class="root-content-container">
     <form [formGroup]="newOrganizationForm">
         <div class="row">
-
-            <h5 class="explainer-mini text-uppercase gray-text col-md-12"><b>Create a new group</b></h5>
-
-            <div class="col-md-12">
-                <input class="form-control mt-3 p-4 w-100" formControlName="name" placeholder="Group name" type="text">
-            </div>
+            <h5 class="explainer-mini text-uppercase gray-text col-md-12">
+                <b>Create a new group</b>
+            </h5>
 
             <div class="col-md-12">
-                <input class="form-control p-4 w-100 mt-3" id="invite-users-email"
-                       placeholder="Invite users by mail (comma separated). e.g. (john@email.com, mark@email.com)"
+                <input class="form-control mt-3 p-4 w-100"
+                       formControlName="name"
+                       placeholder="Group name"
                        type="text">
             </div>
-            <div class="col-md-8"></div>
+
+            <div class="col-md-12">
+                <input class="form-control mt-3 p-4 w-100"
+                       formControlName="description"
+                       placeholder="Description"
+                       type="text">
+            </div>
+
+            <div class="col-md-12" id="uppy-attach-document" style="padding-top: 1rem"></div>
+            <input type="file" hidden formControlName="photo">
 
             <div class="col-md-4">
-                <button (click)="submitButtonClicked()" class="btn btn-primary w-100 float-right mt-3 py-3 px-5"
+                <button (click)="submitButtonClicked()"
+                        [disabled]="!newOrganizationForm.valid"
+                        class="btn btn-primary w-100 float-right mt-3 py-3 px-5"
                         type="submit">
                     <i class="mr-3 fas fa-plus"></i>
                     Create
                 </button>
             </div>
-
         </div>
     </form>
 </div>

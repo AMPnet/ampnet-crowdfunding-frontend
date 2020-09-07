@@ -1,39 +1,33 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { WalletService } from '../shared/services/wallet/wallet.service';
-import { WalletDetails } from '../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
+import { map } from 'rxjs/operators';
+import { UserService } from '../shared/services/user/user.service';
 
 @Component({
-  selector: 'app-user-state-reminder',
-  templateUrl: './user-state-reminder.component.html',
-  styleUrls: ['./user-state-reminder.component.css']
+    selector: 'app-user-state-reminder',
+    templateUrl: './user-state-reminder.component.html',
+    styleUrls: ['./user-state-reminder.component.css']
 })
-export class UserStateReminderComponent implements OnInit, OnDestroy {
-  isWalletInit = true;
-  wallet: WalletDetails;
-  walletChangeSub: Subscription;
+export class UserStateReminderComponent implements OnInit {
+    walletInitialized$: Observable<boolean>;
+    userVerified$: Observable<boolean>;
 
-  constructor(private walletService: WalletService) {
-    this.walletService.getUserWallet().subscribe( (res: any) => {
-        this.wallet = res;
-    });
-  }
+    constructor(private walletService: WalletService,
+                private userService: UserService) {
+    }
 
-  ngOnInit() {
-      this.showErrorMessage();
-  }
+    ngOnInit() {
+        this.walletService.getUserWallet().subscribe();
 
-  showErrorMessage() {
-    this.walletChangeSub = this.walletService.walletChange$.subscribe(res => {
-        if (res !== null) {
-            this.isWalletInit = true;
-        } else {
-            this.isWalletInit = false;
-        }
-      });
-  }
+        this.walletInitialized$ = this.walletService.walletChange$.pipe(
+            map(wallet => wallet !== null)
+        );
 
-  ngOnDestroy() {
-      this.walletChangeSub.unsubscribe();
-  }
+        this.userService.getOwnProfile().subscribe();
+
+        this.userVerified$ = this.userService.userChange$.pipe(
+            map(user => user.verified)
+        );
+    }
 }

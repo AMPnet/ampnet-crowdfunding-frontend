@@ -21,23 +21,25 @@ export class WalletService {
         return this.http.post<WalletDetails>('/api/wallet/wallet',
             <InitWalletData>{
                 public_key: address
-            }).pipe(this.tapWalletChange.bind(this));
+            }).pipe(this.tapWalletChange(this));
     }
 
     getUserWallet() {
         return this.http.get<WalletDetails>('/api/wallet/wallet')
-            .pipe(this.tapWalletChange.bind(this));
+            .pipe(this.tapWalletChange(this));
     }
 
-    private tapWalletChange(source: Observable<WalletDetails>) {
-        return source.pipe(
-            tap(wallet => {
-                UserStatusStorage.walletData = wallet;
-                this.walletChangeSubject.next(wallet);
-            }, err => {
-                this.walletChangeSubject.next(null);
-            })
-        );
+    private tapWalletChange(self: any) {
+        return function (source: Observable<WalletDetails>) {
+            return source.pipe(
+                tap(wallet => {
+                    UserStatusStorage.walletData = wallet;
+                    self.walletChangeSubject.next(wallet);
+                }, _ => {
+                    self.walletChangeSubject.next(null);
+                })
+            );
+        };
     }
 
     getInfoFromPairingCode(pairingCode: string) {

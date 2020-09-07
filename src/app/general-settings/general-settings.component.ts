@@ -23,7 +23,7 @@ export class GeneralSettingsComponent implements OnInit {
 
     ngOnInit() {
         SpinnerUtil.showSpinner();
-        this.userService.getOwnProfile().subscribe((user: any)  => {
+        this.userService.getOwnProfile().subscribe(user  => {
             this.user = user;
             SpinnerUtil.hideSpinner();
         }, hideSpinnerAndDisplayError);

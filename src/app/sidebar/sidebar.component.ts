@@ -38,7 +38,7 @@ export class SidebarComponent implements OnInit {
 
     getProfile() {
         SpinnerUtil.showSpinner();
-        this.userService.getOwnProfile().subscribe( (res: any)  => {
+        this.userService.getOwnProfile().subscribe(res  => {
             this.isAdmin = (res.role === 'ADMIN');
             this.isPlatformManager = (res.role === 'PLATFORM_MANAGER');
             this.isTokenIssuer = (res.role === 'TOKEN_ISSUER');

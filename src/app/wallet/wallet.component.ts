@@ -65,7 +65,6 @@ export class WalletComponent implements OnInit {
             this.wallet.balance = numeral(centsToBaseCurrencyUnit(res.balance)).format('0,0');
             this.wallet.activated_at = res.activated_at;
             this.checkComplete = true;
-            console.log(res);
             SpinnerUtil.hideSpinner();
         }, err => {
             SpinnerUtil.hideSpinner();

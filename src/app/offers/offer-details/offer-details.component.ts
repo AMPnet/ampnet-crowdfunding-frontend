@@ -12,7 +12,6 @@ import { centsToBaseCurrencyUnit, prettyCurrency } from 'src/app/utilities/curre
 import { Meta } from '@angular/platform-browser';
 import { UserService } from 'src/app/shared/services/user/user.service';
 import { NewsLink } from '../../manage-projects/manage-single-project/news-link-model';
-import { SingleOfferModel } from './single-offer-model';
 import { WalletService } from '../../shared/services/wallet/wallet.service';
 import { Project, ProjectService } from '../../shared/services/project/project.service';
 
@@ -31,6 +30,7 @@ export class OfferDetailsComponent implements OnInit {
     isPortfolio = false;
     userConfirmed = true;
     projectBalance = 0;
+    currentOfferUrl = window.location.href;
 
     constructor(private projectService: ProjectService,
                 private newsPreviewService: NewsPreviewService,
@@ -104,6 +104,14 @@ export class OfferDetailsComponent implements OnInit {
         this.meta.addTag({
             name: 'og:url',
             content: window.location.href
+        });
+        this.meta.addTag({
+            name: 'twitter:card',
+            content: this.offerModel.description
+        });
+        this.meta.addTag({
+            name: 'og:image',
+            content: this.offerModel.main_image
         });
     }
 

@@ -3,26 +3,26 @@
     <div class="mt-2 mb-4">
         <img id="logo-image" src="../../assets/genervestlogo.png">
     </div>
-
+    
     <ul class="list-unstyled components" id="main-menu">
         <p class="menu-header ml-4 mb-3 mt-3 ">MENU</p>
         <li routerLink="offers" routerLinkActive="side-active">
             <i class="menu-icon fas fa-align-left"></i>
             <span>Offers</span>
         </li>
-        <li routerLink="my_portfolio" routerLinkActive="side-active">
+        <li routerLink="my_portfolio" routerLinkActive="side-active" [class.unverified-user-disabled]="{'userVerified$ | async' : false}">
             <i class="menu-icon fas fa-user"></i>
             <span>My Portfolio</span>
         </li>
-        <li routerLink="wallet" routerLinkActive="side-active">
+        <li routerLink="wallet" routerLinkActive="side-active" [class.unverified-user-disabled]="{'userVerified$ | async' : false}">
             <i class="menu-icon fas fa-wallet"></i>
             <span>Wallet <i *ngIf="!hasWalletActive" class="ml-2 fas fa-exclamation-circle" style="color: orange;"></i></span>
         </li>
-        <li [hidden]="!hasWalletActive" routerLink="manage_groups" routerLinkActive="side-active">
+        <li [hidden]="!hasWalletActive" routerLink="manage_groups" routerLinkActive="side-active" [class.unverified-user-disabled]="{'userVerified$ | async' : false}">
             <i class="menu-icon fas fa-layer-group"></i>
             <span>Investment groups</span>
         </li>
-        <li routerLink="exchange" routerLinkActive="side-active">
+        <li routerLink="exchange" routerLinkActive="side-active" [class.unverified-user-disabled]="{'userVerified$ | async' : false}">
             <i class="menu-icon fas fa-store"></i>
             <span>Project market</span>
         </li>

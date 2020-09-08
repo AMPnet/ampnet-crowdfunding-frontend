@@ -5,6 +5,8 @@ import * as $ from 'jquery';
 import { UserService } from '../shared/services/user/user.service';
 import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
     selector: 'app-sidebar',
@@ -17,7 +19,7 @@ export class SidebarComponent implements OnInit {
     isTokenIssuer: boolean;
     hasWalletActive = true;
     hasBankingInfo = true;
-    hasVerifiedProfile = true;
+    userVerified$: Observable<boolean>;
     fullName: string;
 
     constructor(private router: Router,
@@ -30,6 +32,13 @@ export class SidebarComponent implements OnInit {
         });
         this.getProfile();
         this.fetchUserData();
+
+        this.userService.getOwnProfile().subscribe();
+
+        this.userVerified$ = this.userService.userChange$.pipe(
+            map(user => user.verified)
+        );
+        console.log(this.userVerified$);
     }
 
     getProfile() {

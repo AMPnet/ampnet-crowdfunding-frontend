@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { Router } from '@angular/router';
 import * as $ from 'jquery';
@@ -15,7 +15,7 @@ import { WalletService } from '../shared/services/wallet/wallet.service';
     templateUrl: './sidebar.component.html',
     styleUrls: ['./sidebar.component.css']
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent implements OnInit, AfterViewInit {
     userRole = UserRole;
 
     userChange$: Observable<User>;
@@ -27,10 +27,6 @@ export class SidebarComponent implements OnInit {
     }
 
     ngOnInit() {
-        $('#main-menu li').on('click', () => {
-            NavbarComponent.toggleSidebar(false);
-        });
-
         this.userService.getOwnProfile().subscribe();
         this.userChange$ = this.userService.userChange$;
 
@@ -38,6 +34,12 @@ export class SidebarComponent implements OnInit {
         this.walletInitialized$ = this.walletService.walletChange$.pipe(
             map(wallet => wallet !== null)
         );
+    }
+
+    ngAfterViewInit() {
+        $('#main-menu li').on('click', () => {
+            NavbarComponent.toggleSidebar(false);
+        });
     }
 
     logOutClicked() {

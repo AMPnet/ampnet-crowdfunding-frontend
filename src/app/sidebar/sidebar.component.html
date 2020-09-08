@@ -71,41 +71,37 @@
             </li>
         </ul>
 
-        <ng-container [hidden]="!(states.user?.role === userRole.TOKEN_ISSUER)">
-            <p class="menu-header ml-4 mb-3 mt-3 ">TOKEN ISSUER</p>
-            <ul class="list-unstyled components" id="main-menu">
-                <li routerLink="manage_withdrawals" routerLinkActive="side-active">
-                    <i class="menu-icon fas fa-arrow-circle-up "></i>
-                    <span>Withdrawals</span>
-                </li>
-                <li routerLink="manage_deposits" routerLinkActive="side-active">
-                    <i class="menu-icon fas fa-arrow-circle-down "></i>
-                    <span>Deposits</span>
-                </li>
-                <li routerLink="admin/platform_bank_account" routerLinkActive="side-active">
-                    <i class="menu-icon fas fa-university"></i>
-                    <span>Bank account</span>
-                </li>
-                <li routerLink="ownership" routerLinkActive="side-active">
-                    <i class="menu-icon fas fa-handshake"></i>
-                    <span>Platform roles</span>
-                </li>
-            </ul>
-        </ng-container>
+        <p [hidden]="!(states.user?.role === userRole.TOKEN_ISSUER)" class="menu-header ml-4 mb-3 mt-3 ">TOKEN ISSUER</p>
+        <ul [hidden]="!(states.user?.role === userRole.TOKEN_ISSUER)" class="list-unstyled components" id="main-menu">
+            <li routerLink="manage_withdrawals" routerLinkActive="side-active">
+                <i class="menu-icon fas fa-arrow-circle-up "></i>
+                <span>Withdrawals</span>
+            </li>
+            <li routerLink="manage_deposits" routerLinkActive="side-active">
+                <i class="menu-icon fas fa-arrow-circle-down "></i>
+                <span>Deposits</span>
+            </li>
+            <li routerLink="admin/platform_bank_account" routerLinkActive="side-active">
+                <i class="menu-icon fas fa-university"></i>
+                <span>Bank account</span>
+            </li>
+            <li routerLink="ownership" routerLinkActive="side-active">
+                <i class="menu-icon fas fa-handshake"></i>
+                <span>Platform roles</span>
+            </li>
+        </ul>
 
-        <ng-container [hidden]="!(states.user?.role === userRole.PLATFORM_MANAGER)">
-            <p class="menu-header ml-4 mb-3 mt-3 ">PLATFORM MANAGER</p>
-            <ul class="list-unstyled components" id="main-menu">
-                <li routerLink="activation/users" routerLinkActive="side-active">
-                    <i class="menu-icon fas fa-flag-checkered"></i>
-                    <span>Activations</span>
-                </li>
-                <li routerLink="ownership" routerLinkActive="side-active">
-                    <i class="menu-icon fas fa-handshake"></i>
-                    <span>Platform roles</span>
-                </li>
-            </ul>
-        </ng-container>
+        <p [hidden]="!(states.user?.role === userRole.PLATFORM_MANAGER)" class="menu-header ml-4 mb-3 mt-3 ">PLATFORM MANAGER</p>
+        <ul [hidden]="!(states.user?.role === userRole.PLATFORM_MANAGER)" class="list-unstyled components" id="main-menu">
+            <li routerLink="activation/users" routerLinkActive="side-active">
+                <i class="menu-icon fas fa-flag-checkered"></i>
+                <span>Activations</span>
+            </li>
+            <li routerLink="ownership" routerLinkActive="side-active">
+                <i class="menu-icon fas fa-handshake"></i>
+                <span>Platform roles</span>
+            </li>
+        </ul>
 
         <div class="dropdown-divider" id="divider-menu"></div>
 

@@ -38,7 +38,6 @@ export class SidebarComponent implements OnInit {
         this.userVerified$ = this.userService.userChange$.pipe(
             map(user => user.verified)
         );
-        console.log(this.userVerified$);
     }
 
     getProfile() {

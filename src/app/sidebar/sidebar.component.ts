@@ -7,6 +7,8 @@ import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { User, UserRole } from '../shared/services/user/signup.service';
+import { WalletService } from '../shared/services/wallet/wallet.service';
 
 @Component({
     selector: 'app-sidebar',
@@ -14,54 +16,33 @@ import { map } from 'rxjs/operators';
     styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent implements OnInit {
-    isAdmin: boolean;
-    isPlatformManager: boolean;
-    isTokenIssuer: boolean;
-    hasWalletActive = true;
-    hasBankingInfo = true;
-    userVerified$: Observable<boolean>;
-    fullName: string;
+    userRole = UserRole;
+
+    userChange$: Observable<User>;
+    walletInitialized$: Observable<boolean>;
 
     constructor(private router: Router,
-                private userService: UserService) {
+                private userService: UserService,
+                private walletService: WalletService) {
     }
 
     ngOnInit() {
         $('#main-menu li').on('click', () => {
             NavbarComponent.toggleSidebar(false);
         });
-        this.getProfile();
-        this.fetchUserData();
 
         this.userService.getOwnProfile().subscribe();
+        this.userChange$ = this.userService.userChange$;
 
-        this.userVerified$ = this.userService.userChange$.pipe(
-            map(user => user.verified)
+        this.walletService.getUserWallet().subscribe();
+        this.walletInitialized$ = this.walletService.walletChange$.pipe(
+            map(wallet => wallet !== null)
         );
-    }
-
-    getProfile() {
-        this.userService.getOwnProfile().subscribe(res => {
-            this.isAdmin = (res.role === 'ADMIN');
-            this.isPlatformManager = (res.role === 'PLATFORM_MANAGER');
-            this.isTokenIssuer = (res.role === 'TOKEN_ISSUER');
-        }, hideSpinnerAndDisplayError);
     }
 
     logOutClicked() {
         return this.userService.logout().subscribe(() => {
-            localStorage.removeItem('access_token');
             this.router.navigate(['']);
-        });
-    }
-
-    contactUsClicked() {
-        window.location.href = 'mailto://info@ampnet.io';
-    }
-
-    fetchUserData() {
-        this.userService.getOwnProfile().subscribe(res => {
-            this.fullName = res['first_name'] + ' ' + res['last_name'];
         });
     }
 }

@@ -1,116 +1,126 @@
 <div id="sidebar">
-
     <div class="mt-2 mb-4">
         <img id="logo-image" src="../../assets/genervestlogo.png">
     </div>
-    
-    <ul class="list-unstyled components" id="main-menu">
-        <p class="menu-header ml-4 mb-3 mt-3 ">MENU</p>
-        <li routerLink="offers" routerLinkActive="side-active">
-            <i class="menu-icon fas fa-align-left"></i>
-            <span>Offers</span>
-        </li>
-        <li routerLink="my_portfolio" routerLinkActive="side-active" [class.unverified-user-disabled]="!(userVerified$ | async)">
-            <i class="menu-icon fas fa-user"></i>
-            <span>My Portfolio</span>
-        </li>
-        <li routerLink="wallet" routerLinkActive="side-active" [class.unverified-user-disabled]="!(userVerified$ | async)">
-            <i class="menu-icon fas fa-wallet"></i>
-            <span>Wallet <i *ngIf="!hasWalletActive" class="ml-2 fas fa-exclamation-circle" style="color: orange;"></i></span>
-        </li>
-        <li [hidden]="!hasWalletActive" routerLink="manage_groups" routerLinkActive="side-active" [class.unverified-user-disabled]="!(userVerified$ | async)">
-            <i class="menu-icon fas fa-layer-group"></i>
-            <span>Investment groups</span>
-        </li>
-        <li routerLink="exchange" routerLinkActive="side-active" [class.unverified-user-disabled]="!(userVerified$ | async)">
-            <i class="menu-icon fas fa-store"></i>
-            <span>Project market</span>
-        </li>
-    </ul>
 
+    <ng-container *ngIf="{
+        user: userChange$ | async,
+        walletInitialized: walletInitialized$ | async
+    } as states">
+        <ul class="list-unstyled components" id="main-menu">
+            <p class="menu-header ml-4 mb-3 mt-3 ">MENU</p>
+            <li routerLink="offers" routerLinkActive="side-active">
+                <i class="menu-icon fas fa-align-left"></i>
+                <span>Offers</span>
+            </li>
+            <li routerLink="my_portfolio" routerLinkActive="side-active"
+                [class.unverified-user-disabled]="!states.user?.verified">
+                <i class="menu-icon fas fa-user"></i>
+                <span>My Portfolio</span>
+            </li>
+            <li routerLink="wallet" routerLinkActive="side-active"
+                [class.unverified-user-disabled]="!states.user?.verified">
+                <i class="menu-icon fas fa-wallet"></i>
+                <span>Wallet</span>
+            </li>
+            <li routerLink="manage_groups" routerLinkActive="side-active"
+                [class.unverified-user-disabled]="!states.user?.verified">
+                <i class="menu-icon fas fa-layer-group"></i>
+                <span>Investment groups</span>
+            </li>
+            <li routerLink="exchange" routerLinkActive="side-active"
+                [class.unverified-user-disabled]="!states.user?.verified">
+                <i class="menu-icon fas fa-store"></i>
+                <span>Project market</span>
+            </li>
+        </ul>
 
-    <ul class="list-unstyled components text-white" id="main-menu">
-        <p class="menu-header ml-4 mb-3 mt-3 ">SETTINGS</p>
-        <li routerLink="general_settings" routerLinkActive="side-active">
-            <i class="menu-icon fas fa-user-cog"></i>
-            <span>User Profile</span>
-        </li>
-        <li routerLink="payment_options" routerLinkActive="side-active">
-            <i class="menu-icon fas fa-credit-card"></i>
-            <span>Payments
-				<i *ngIf="!hasBankingInfo" class="ml-2 fas fa-exclamation-circle" style="color: orange;"></i>
-			</span>
-        </li>
-    </ul>
+        <ul class="list-unstyled components text-white" id="main-menu">
+            <p class="menu-header ml-4 mb-3 mt-3 ">SETTINGS</p>
+            <li routerLink="general_settings" routerLinkActive="side-active">
+                <i class="menu-icon fas fa-user-cog"></i>
+                <span>User Profile</span>
+            </li>
+            <li routerLink="payment_options" routerLinkActive="side-active">
+                <i class="menu-icon fas fa-credit-card"></i>
+                <span>Payments</span>
+            </li>
+        </ul>
 
-    <p [hidden]="!isAdmin" class="menu-header ml-4 mb-3 mt-3 ">ADMIN</p>
-    <ul [hidden]="!isAdmin" class="list-unstyled components" id="main-menu">
-        <li routerLink="manage_withdrawals" routerLinkActive="side-active">
-            <i class="menu-icon fas fa-arrow-circle-up "></i>
-            <span>Withdrawals</span>
-        </li>
-        <li routerLink="manage_deposits" routerLinkActive="side-active">
-            <i class="menu-icon fas fa-arrow-circle-down "></i>
-            <span>Deposits</span>
-        </li>
-        <li routerLink="activation/users" routerLinkActive="side-active">
-            <i class="menu-icon fas fa-flag-checkered"></i>
-            <span>Activations</span>
-        </li>
-        <li routerLink="admin/platform_bank_account" routerLinkActive="side-active">
-            <i class="menu-icon fas fa-university"></i>
-            <span>Bank account</span>
-        </li>
-        <li routerLink="ownership" routerLinkActive="side-active">
-            <i class="menu-icon fas fa-handshake"></i>
-            <span>Platform roles</span>
-        </li>
-    </ul>
+        <p [hidden]="!(states.user?.role === userRole.ADMIN)" class="menu-header ml-4 mb-3 mt-3 ">ADMIN</p>
+        <ul [hidden]="!(states.user?.role === userRole.ADMIN)" class="list-unstyled components" id="main-menu">
+            <li routerLink="manage_withdrawals" routerLinkActive="side-active">
+                <i class="menu-icon fas fa-arrow-circle-up "></i>
+                <span>Withdrawals</span>
+            </li>
+            <li routerLink="manage_deposits" routerLinkActive="side-active">
+                <i class="menu-icon fas fa-arrow-circle-down "></i>
+                <span>Deposits</span>
+            </li>
+            <li routerLink="activation/users" routerLinkActive="side-active">
+                <i class="menu-icon fas fa-flag-checkered"></i>
+                <span>Activations</span>
+            </li>
+            <li routerLink="admin/platform_bank_account" routerLinkActive="side-active">
+                <i class="menu-icon fas fa-university"></i>
+                <span>Bank account</span>
+            </li>
+            <li routerLink="ownership" routerLinkActive="side-active">
+                <i class="menu-icon fas fa-handshake"></i>
+                <span>Platform roles</span>
+            </li>
+        </ul>
 
-    <p [hidden]="!isTokenIssuer" class="menu-header ml-4 mb-3 mt-3 ">TOKEN ISSUER</p>
-    <ul [hidden]="!isTokenIssuer" class="list-unstyled components" id="main-menu">
-        <li routerLink="manage_withdrawals" routerLinkActive="side-active">
-            <i class="menu-icon fas fa-arrow-circle-up "></i>
-            <span>Withdrawals</span>
-        </li>
-        <li routerLink="manage_deposits" routerLinkActive="side-active">
-            <i class="menu-icon fas fa-arrow-circle-down "></i>
-            <span>Deposits</span>
-        </li>
-        <li routerLink="admin/platform_bank_account" routerLinkActive="side-active">
-            <i class="menu-icon fas fa-university"></i>
-            <span>Bank account</span>
-        </li>
-        <li routerLink="ownership" routerLinkActive="side-active">
-            <i class="menu-icon fas fa-handshake"></i>
-            <span>Platform roles</span>
-        </li>
-    </ul>
+        <ng-container [hidden]="!(states.user?.role === userRole.TOKEN_ISSUER)">
+            <p class="menu-header ml-4 mb-3 mt-3 ">TOKEN ISSUER</p>
+            <ul class="list-unstyled components" id="main-menu">
+                <li routerLink="manage_withdrawals" routerLinkActive="side-active">
+                    <i class="menu-icon fas fa-arrow-circle-up "></i>
+                    <span>Withdrawals</span>
+                </li>
+                <li routerLink="manage_deposits" routerLinkActive="side-active">
+                    <i class="menu-icon fas fa-arrow-circle-down "></i>
+                    <span>Deposits</span>
+                </li>
+                <li routerLink="admin/platform_bank_account" routerLinkActive="side-active">
+                    <i class="menu-icon fas fa-university"></i>
+                    <span>Bank account</span>
+                </li>
+                <li routerLink="ownership" routerLinkActive="side-active">
+                    <i class="menu-icon fas fa-handshake"></i>
+                    <span>Platform roles</span>
+                </li>
+            </ul>
+        </ng-container>
 
-    <p [hidden]="!isPlatformManager" class="menu-header ml-4 mb-3 mt-3 ">PLATFORM MANAGER</p>
-    <ul [hidden]="!isPlatformManager" class="list-unstyled components" id="main-menu">
-        <li routerLink="activation/users" routerLinkActive="side-active">
-            <i class="menu-icon fas fa-flag-checkered"></i>
-            <span>Activations</span>
-        </li>
-        <li routerLink="ownership" routerLinkActive="side-active">
-            <i class="menu-icon fas fa-handshake"></i>
-            <span>Platform roles</span>
-        </li>
-    </ul>
+        <ng-container [hidden]="!(states.user?.role === userRole.PLATFORM_MANAGER)">
+            <p class="menu-header ml-4 mb-3 mt-3 ">PLATFORM MANAGER</p>
+            <ul class="list-unstyled components" id="main-menu">
+                <li routerLink="activation/users" routerLinkActive="side-active">
+                    <i class="menu-icon fas fa-flag-checkered"></i>
+                    <span>Activations</span>
+                </li>
+                <li routerLink="ownership" routerLinkActive="side-active">
+                    <i class="menu-icon fas fa-handshake"></i>
+                    <span>Platform roles</span>
+                </li>
+            </ul>
+        </ng-container>
 
+        <div class="dropdown-divider" id="divider-menu"></div>
 
-    <div class="dropdown-divider" id="divider-menu"></div>
-
-    <ul class="list-unstyled components" id="main-menu">
-        <span class="full-name">{{fullName}}</span>
-        <li (click)="contactUsClicked()" routerLinkActive="side-active" class="mt-2">
-            <i class="menu-icon fas fa-envelope-open"></i>
-            <span>Contact Us</span>
-        </li>
-        <li (click)="logOutClicked()" routerLinkActive="side-active">
-            <i class="menu-icon fas fa-sign-out-alt"></i>
-            <span>Log Out</span>
-        </li>
-    </ul>
+        <ul class="list-unstyled components" id="main-menu">
+            <span class="full-name">{{ states.user?.first_name }} {{ states.user?.last_name }}</span>
+            <li routerLinkActive="side-active" class="mt-2">
+                <a href="mailto://info@ampnet.io" style="all: unset">
+                    <i class="menu-icon fas fa-envelope-open"></i>
+                    <span>Contact Us</span>
+                </a>
+            </li>
+            <li (click)="logOutClicked()" routerLinkActive="side-active">
+                <i class="menu-icon fas fa-sign-out-alt"></i>
+                <span>Log Out</span>
+            </li>
+        </ul>
+    </ng-container>
 </div>

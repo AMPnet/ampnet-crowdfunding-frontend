@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
 import leaflet from 'leaflet';
 
 @Component({
@@ -9,6 +9,7 @@ import leaflet from 'leaflet';
 export class LocationMapComponent implements OnInit, AfterViewInit {
     map;
     startingLocation = [37.97404469468311, 23.71933726268805];
+    @Input() mapCoords = [];
     mapMarker;
     mapLat: number;
     mapLong: number;
@@ -20,14 +21,19 @@ export class LocationMapComponent implements OnInit, AfterViewInit {
     constructor() {}
 
     ngOnInit() {
-        this.initMap();
+        
     }
 
     ngAfterViewInit() {
+        this.initMap();
+        /* setTimeout(() =>{
+            this.map.invalidateSize();
+        }, 10) */
+        
     }
 
     private initMap() {
-        this.map = leaflet.map('map').setView([this.startingLocation], 12);
+        this.map = leaflet.map('map').setView(this.startingLocation, 12);
         leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution:
             '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -39,11 +45,13 @@ export class LocationMapComponent implements OnInit, AfterViewInit {
             if (this.mapMarker) {
                 this.map.removeLayer(this.mapMarker);
             }
-        this.mapMarker = leaflet.marker([e.latlng.lat, e.latlng.lng], {
+        this.mapCoords = [e.latlng.lat, e.latlng.lng];
+        console.log(this.mapCoords);
+        /* this.mapMarker = leaflet.marker([e.latlng.lat, e.latlng.lng], {
             icon: this.markerIcon
             }).addTo(this.map);
         this.mapLat = e.latlng.lat;
-        this.mapLong = e.latlng.lng;
+        this.mapLong = e.latlng.lng; */
         });
     }
 

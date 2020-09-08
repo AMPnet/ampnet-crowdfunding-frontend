@@ -2,12 +2,3 @@
     border: none;
     padding-bottom: 0;
 }
-
-.map-container {
-    height: 450px;
-}
-  
-.map-frame,
-#display-map {
-    height: 100%;
-}

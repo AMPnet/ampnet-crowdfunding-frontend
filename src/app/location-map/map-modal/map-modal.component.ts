@@ -17,9 +17,9 @@ export class MapModalComponent implements OnInit, AfterViewInit {
     ngOnInit() {}
 
     ngAfterViewInit() {
-        this.mapService.getMapPreview(this.projectLat, this.projectLong);
+        /* this.mapService.getMapPreview(this.projectLat, this.projectLong);
         setTimeout(() => {
         this.mapService.map.invalidateSize();
-        }, 10);
+        }, 10); */
     }
 }

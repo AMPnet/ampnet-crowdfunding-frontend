@@ -20,7 +20,10 @@ export class UserService {
 
     getOwnProfile() {
         return this.http.get<User>('/api/user/me')
-            .pipe(this.tapUserChange(this));
+            .pipe(tap(user => {
+                UserStatusStorage.personalData = user;
+                this.userChangeSubject.next(user);
+            }));
     }
 
     logout() {
@@ -35,21 +38,11 @@ export class UserService {
         return this.http.post<TokenModel>('/api/user/token/refresh', {
             refresh_token: localStorage.getItem('refresh_token')
         }).pipe(
-            tap((data) => {
-                localStorage.setItem('access_token', data.access_token);
-                localStorage.setItem('refresh_token', data.refresh_token);
-                this.tapUserChange(this);
-            }));
-    }
-
-    private tapUserChange(self: any) {
-        return function (source: Observable<User>) {
-            return source.pipe(
-                tap(user => {
-                    UserStatusStorage.personalData = user;
-                    self.userChangeSubject.next(user);
-                })
-            );
-        };
+            tap(res => {
+                localStorage.setItem('access_token', res.access_token);
+                localStorage.setItem('refresh_token', res.refresh_token);
+            }),
+            tap(() => this.getOwnProfile().subscribe())
+        );
     }
 }

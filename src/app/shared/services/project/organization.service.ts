@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BackendHttpClient } from '../backend-http-client.service';
-import { PageableProjectsResponse } from './project.service';
+import { PageableProjectsResponse, Project } from './project.service';
+import { Wallet } from '../wallet/wallet-cooperative/wallet-cooperative-wallet.service';
 
 @Injectable({
     providedIn: 'root'
@@ -9,11 +10,20 @@ export class OrganizationService {
     constructor(private http: BackendHttpClient) {
     }
 
-    createOrganization(name: string, legalInfo: string) {
-        return this.http.post<Organization>('/api/project/organization', {
+    createOrganization(name: string, description: string, photo: File) {
+        const formData = new FormData();
+
+        const orgInfo = {
             name: name,
-            legal_info: legalInfo
-        });
+            description: description
+        };
+
+        formData.append('image', photo, 'image.png');
+        formData.append('request', new Blob([JSON.stringify(orgInfo)], {
+            type: 'application/json'
+        }), 'request.json');
+
+        return this.http.post<Organization>('/api/project/organization', formData);
     }
 
     getPersonalOrganizations() {
@@ -44,7 +54,7 @@ export class OrganizationService {
     }
 
     getAllProjectsForOrganization(orgID: string) {
-        return this.http.get<PageableProjectsResponse>(`/api/project/public/project/organization/${orgID}`);
+        return this.http.get<PageableOrganizationProjectsResponse>(`/api/project/public/project/organization/${orgID}`);
     }
 
     getMembersForOrganization(orgID: string) {
@@ -101,4 +111,10 @@ export interface OrganizationMember {
     last_name: string;
     role: string;
     member_since: Date;
+}
+
+export interface PageableOrganizationProjectsResponse {
+    projects: Project[];
+    page: number;
+    total_pages: number;
 }

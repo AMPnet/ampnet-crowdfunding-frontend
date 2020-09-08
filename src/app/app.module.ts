@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { DEFAULT_CURRENCY_CODE, NgModule } from '@angular/core';
 import { DisqusModule } from 'ngx-disqus';
+
 import { AppComponent } from './app.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -68,6 +69,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RevenueShareComponent } from './revenue-share/revenue-share.component';
 import { TxIconStatus, TxIconType } from './wallet/wallet-icon.pipe';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { FileValidator } from './shared/validators/file.validator';
+import { FileValueAccessorDirective } from './shared/directives/file-value-accessor.directive';
+import { SpinnerComponent } from './shared/components/spinner/spinner.component';
 // tslint:disable-next-line:max-line-length
 import { RevenueShareConfirmModalComponent } from './project/manage-payments/revenue-share-confirm-modal/revenue-share-confirm-modal.component';
 
@@ -162,6 +166,10 @@ export function jwtOptionsFactory() {
         CurrencyDefaultPipe,
         RevenueShareComponent,
         TxIconType,
+        TxIconStatus,
+        FileValidator,
+        FileValueAccessorDirective,
+        SpinnerComponent,
         TxIconStatus,
         RevenueShareConfirmModalComponent
     ],

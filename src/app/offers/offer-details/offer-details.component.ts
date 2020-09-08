@@ -1,20 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { OfferDetailDocModel, OfferDetailDocType } from '../../models/OfferDetailDocModel';
-import * as _ from 'lodash';
+import { Meta } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NewsPreviewService } from 'src/app/shared/services/news-preview.service';
+import { UserService } from 'src/app/shared/services/user/user.service';
+import { centsToBaseCurrencyUnit } from 'src/app/utilities/currency-util';
 import { displayBackendError, hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
-import { prettyDate } from 'src/app/utilities/date-format-util';
 import swal from 'sweetalert2';
-import { NewsPreviewService } from 'src/app/shared/services/news-preview.service';
-import numeral from 'numeral';
-import { centsToBaseCurrencyUnit, prettyCurrency } from 'src/app/utilities/currency-util';
-import { Meta } from '@angular/platform-browser';
-import { UserService } from 'src/app/shared/services/user/user.service';
 import { NewsLink } from '../../manage-projects/manage-single-project/news-link-model';
-import { SingleOfferModel } from './single-offer-model';
-import { WalletService } from '../../shared/services/wallet/wallet.service';
 import { Project, ProjectService } from '../../shared/services/project/project.service';
+import { WalletService } from '../../shared/services/wallet/wallet.service';
+import { Wallet } from 'src/app/shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
 
 @Component({
     selector: 'app-offer-details',
@@ -22,15 +18,13 @@ import { Project, ProjectService } from '../../shared/services/project/project.s
     styleUrls: ['./offer-details.component.css']
 })
 export class OfferDetailsComponent implements OnInit {
-    docs: OfferDetailDocModel[];
-    offerModel: Project;
+    project: Project;
+    wallet: Wallet;
     newsPreviews: NewsLink[];
-    fundedPercentage = 0;
 
     isOverview = false;
     isPortfolio = false;
     userConfirmed = true;
-    projectBalance = 0;
 
     constructor(private projectService: ProjectService,
                 private newsPreviewService: NewsPreviewService,
@@ -42,13 +36,7 @@ export class OfferDetailsComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.docs = _.fill(Array(5), {
-            docType: OfferDetailDocType.PDF,
-            title: 'Hello World',
-            src: new URL('http://google.com')
-        });
-        this.getOfferDetails();
-        this.newsPreviews = [];
+        this.generateProjectView();
 
         if (this.route.snapshot.params.isOverview) {
             this.isOverview = true;
@@ -61,6 +49,7 @@ export class OfferDetailsComponent implements OnInit {
             SpinnerUtil.showSpinner();
             this.userService.getOwnProfile().subscribe(res => {
                 this.userConfirmed = res.verified;
+                SpinnerUtil.hideSpinner();
             }, hideSpinnerAndDisplayError);
         }
     }
@@ -78,28 +67,18 @@ export class OfferDetailsComponent implements OnInit {
         });
     }
 
-    prettifyModel(res: Project) {
-        this.offerModel = res;
-        this.offerModel.start_date = prettyDate(res.start_date);
-        this.offerModel.end_date = prettyDate(res.end_date);
-        this.offerModel.expected_funding = numeral(centsToBaseCurrencyUnit(res.expected_funding)).format('0,0');
-        this.offerModel.currency = prettyCurrency(res.currency);
-        this.offerModel.min_per_user = numeral(centsToBaseCurrencyUnit(res.min_per_user)).format('0,0');
-        this.offerModel.max_per_user = numeral(centsToBaseCurrencyUnit(res.max_per_user)).format('0,0');
-    }
-
     setMetaTags() {
         this.meta.addTag({
             name: 'og:title',
-            content: this.offerModel.name
+            content: this.project.name
         });
         this.meta.addTag({
             name: 'og:description',
-            content: this.offerModel.description
+            content: this.project.description
         });
         this.meta.addTag({
             name: 'og:image:secure_url',
-            content: this.offerModel.main_image
+            content: this.project.main_image
         });
         this.meta.addTag({
             name: 'og:url',
@@ -107,23 +86,25 @@ export class OfferDetailsComponent implements OnInit {
         });
     }
 
-    getOfferDetails() {
-        SpinnerUtil.showSpinner();
-        const offerID = this.route.snapshot.params.id;
-        this.projectService.getProject(offerID).subscribe(project => {
-            SpinnerUtil.hideSpinner();
 
-            this.prettifyModel(project);
-            this.setUpNewsPreviews(this.offerModel.news);
+    generateProjectView() {
+        const projectID = this.route.snapshot.params.id;
+
+        this.projectService.getProject(projectID).subscribe(project => {
+            this.project = project;
+
+            this.project.expected_funding = centsToBaseCurrencyUnit(project.expected_funding);
+            this.project.min_per_user = centsToBaseCurrencyUnit(project.min_per_user);
+            this.project.max_per_user = centsToBaseCurrencyUnit(project.max_per_user);
+
+            this.setUpNewsPreviews(this.project.news);
             this.setMetaTags();
-            SpinnerUtil.showSpinner();
-            this.walletService.getProjectWallet(offerID).subscribe(wallet => {
-                // this.offerModel.current_funding = centsToBaseCurrencyUnit(wallet.balance);
-                // this.fundedPercentage = 100 * (this.offerModel.current_funding) / (this.offerModel.expected_funding);
-                SpinnerUtil.hideSpinner();
-            }, hideSpinnerAndDisplayError);
+        });
+
+        this.walletService.getProjectWallet(projectID).subscribe(wallet => {
+            wallet.balance = centsToBaseCurrencyUnit(wallet.balance || 0);
+            this.wallet = wallet;
         }, err => {
-            SpinnerUtil.hideSpinner();
             if (err.error.err_code === '0851') {
                 swal('Pending confirmation',
                     'The project is being verified - this should take up to 5 minutes. Please check later',
@@ -134,6 +115,20 @@ export class OfferDetailsComponent implements OnInit {
                 displayBackendError(err);
             }
         });
+    }
+
+    copyProjectDetailsUrl() {
+        const selBox = document.createElement('textarea');
+        selBox.style.position = 'fixed';
+        selBox.style.left = '0';
+        selBox.style.top = '0';
+        selBox.style.opacity = '0';
+        selBox.value = window.location.href;
+        document.body.appendChild(selBox);
+        selBox.focus();
+        selBox.select();
+        document.execCommand('copy');
+        document.body.removeChild(selBox);
     }
 
     backToOffersScreen() {

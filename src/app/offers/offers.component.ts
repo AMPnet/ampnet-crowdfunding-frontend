@@ -1,12 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { OfferModel } from './OfferModel';
-import { SpinnerUtil } from '../utilities/spinner-utilities';
-import { displayBackendError } from '../utilities/error-handler';
-import * as moment from 'moment';
-import { ProjectService } from '../shared/services/project/project.service';
+import { ProjectService, ProjectWallet } from '../shared/services/project/project.service';
 import { ActivatedRoute } from '@angular/router';
-import { centsToBaseCurrencyUnit } from '../utilities/currency-util';
 import { WalletService } from '../shared/services/wallet/wallet.service';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
     selector: 'app-offers',
@@ -14,71 +11,23 @@ import { WalletService } from '../shared/services/wallet/wallet.service';
     styleUrls: ['./offers.component.css']
 })
 export class OffersComponent implements OnInit {
-    components: OfferModel[];
-    featuredComponents: OfferModel[];
-    promotedOffer: OfferModel;
+    projectsWallets$: Observable<ProjectWallet[]>;
 
     isOverview = false;
 
     constructor(private projectService: ProjectService,
                 private walletService: WalletService,
-                private route: ActivatedRoute
+                private route: ActivatedRoute,
     ) {
-
     }
 
     ngOnInit() {
-        this.getAllOffers();
-
         if (this.route.snapshot.params.isOverview) {
             this.isOverview = true;
         }
+
+        this.projectsWallets$ = this.projectService.getAllActiveProjects().pipe(
+            map(res => res.projects_with_wallet)
+        );
     }
-
-    getAllOffers() {
-        SpinnerUtil.showSpinner();
-
-        this.projectService.getAllActiveProjects().subscribe(res => {
-            const projects = res.projects;
-            this.components = projects.map((proj) => {
-                return {
-                    offerID: proj.uuid,
-                    title: proj.name,
-                    description: proj.description,
-                    offeredBy: proj.name,
-                    status: 'Active',
-                    fundingRequired: centsToBaseCurrencyUnit(proj.expected_funding),
-                    currentFunding: 0,
-                    headerImageUrl: proj.main_image,
-                    endDate: moment(proj.end_date).format('MMM Do, YYYY'),
-                    owner: '',
-                    currency: '',
-                    roi: proj.roi
-                };
-            });
-            if (projects.length > 0) {
-                this.getProjectBalances(0);
-
-            }
-            SpinnerUtil.hideSpinner();
-        }, err => {
-            displayBackendError(err);
-            SpinnerUtil.hideSpinner();
-        });
-    }
-
-    getProjectBalances(index: number) {
-        if (index >= this.components.length) {
-            return;
-        }
-        const component = this.components[index];
-        this.walletService.getProjectWallet(component.offerID).subscribe(res => {
-            this.components[index].currentFunding = centsToBaseCurrencyUnit(res.balance);
-            this.components[index].currency = res.currency;
-            this.getProjectBalances(index + 1);
-        }, err => {
-            displayBackendError(err);
-        });
-    }
-
 }

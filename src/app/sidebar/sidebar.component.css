@@ -89,3 +89,14 @@ a {
     pointer-events: none;
     color: #e6e6e6 !important;
 }
+
+.app-version {
+    position: fixed;
+    bottom: 0;
+    font-style: italic;
+    font-size: smaller;
+}
+
+.app-version li {
+    padding-bottom: 0 !important;
+}

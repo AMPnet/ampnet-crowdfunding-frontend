@@ -25,7 +25,6 @@ export class UserStateReminderComponent implements OnInit {
         );
 
         this.userService.getOwnProfile().subscribe();
-
         this.userVerified$ = this.userService.userChange$.pipe(
             map(user => user.verified)
         );

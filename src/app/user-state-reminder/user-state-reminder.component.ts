@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { WalletService } from '../shared/services/wallet/wallet.service';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { UserService } from '../shared/services/user/user.service';
 
 @Component({
@@ -18,14 +18,13 @@ export class UserStateReminderComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.walletService.getUserWallet().subscribe();
-
-        this.walletInitialized$ = this.walletService.walletChange$.pipe(
+        this.walletInitialized$ = this.walletService.getUserWallet().pipe(
+            switchMap(_ => this.walletService.walletChange$),
             map(wallet => wallet !== null)
         );
 
-        this.userService.getOwnProfile().subscribe();
-        this.userVerified$ = this.userService.userChange$.pipe(
+        this.userVerified$ = this.userService.getOwnProfile().pipe(
+            switchMap(_ => this.userService.userChange$),
             map(user => user.verified)
         );
     }

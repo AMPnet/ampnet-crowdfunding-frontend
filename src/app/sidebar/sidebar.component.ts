@@ -3,10 +3,8 @@ import { NavbarComponent } from '../navbar/navbar.component';
 import { Router } from '@angular/router';
 import * as $ from 'jquery';
 import { UserService } from '../shared/services/user/user.service';
-import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
-import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { User, UserRole } from '../shared/services/user/signup.service';
 import { WalletService } from '../shared/services/wallet/wallet.service';
 
@@ -27,11 +25,12 @@ export class SidebarComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit() {
-        this.userService.getOwnProfile().subscribe();
-        this.userChange$ = this.userService.userChange$;
+        this.userChange$ = this.userService.getOwnProfile().pipe(
+            switchMap(_ => this.userService.userChange$)
+        );
 
-        this.walletService.getUserWallet().subscribe();
-        this.walletInitialized$ = this.walletService.walletChange$.pipe(
+        this.walletInitialized$ = this.walletService.getUserWallet().pipe(
+            switchMap(_ => this.walletService.walletChange$),
             map(wallet => wallet !== null)
         );
     }

@@ -71,7 +71,9 @@
             </li>
         </ul>
 
-        <p [hidden]="!(states.user?.role === userRole.TOKEN_ISSUER)" class="menu-header ml-4 mb-3 mt-3 ">TOKEN ISSUER</p>
+        <p [hidden]="!(states.user?.role === userRole.TOKEN_ISSUER)" class="menu-header ml-4 mb-3 mt-3 ">
+            TOKEN ISSUER
+        </p>
         <ul [hidden]="!(states.user?.role === userRole.TOKEN_ISSUER)" class="list-unstyled components" id="main-menu">
             <li routerLink="manage_withdrawals" routerLinkActive="side-active">
                 <i class="menu-icon fas fa-arrow-circle-up "></i>
@@ -91,8 +93,11 @@
             </li>
         </ul>
 
-        <p [hidden]="!(states.user?.role === userRole.PLATFORM_MANAGER)" class="menu-header ml-4 mb-3 mt-3 ">PLATFORM MANAGER</p>
-        <ul [hidden]="!(states.user?.role === userRole.PLATFORM_MANAGER)" class="list-unstyled components" id="main-menu">
+        <p [hidden]="!(states.user?.role === userRole.PLATFORM_MANAGER)" class="menu-header ml-4 mb-3 mt-3 ">
+            PLATFORM MANAGER
+        </p>
+        <ul [hidden]="!(states.user?.role === userRole.PLATFORM_MANAGER)"
+            class="list-unstyled components" id="main-menu">
             <li routerLink="activation/users" routerLinkActive="side-active">
                 <i class="menu-icon fas fa-flag-checkered"></i>
                 <span>Activations</span>

@@ -6,7 +6,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { displayBackendError } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { autonumericCurrency, baseCurrencyUnitToCents, stripCurrencyData } from 'src/app/utilities/currency-util';
-import { LocationMapService } from 'src/app/shared/services/location-map.service';
 
 declare var $: any;
 
@@ -21,8 +20,7 @@ export class CreateNewProjectComponent implements OnInit, AfterViewInit {
     constructor(private projectService: ProjectService,
                 private fb: FormBuilder,
                 private activatedRoute: ActivatedRoute,
-                private router: Router,
-                private mapService: LocationMapService) {
+                private router: Router) {
         this.createProjectForm = this.fb.group({
             'name': [' ', Validators.required],
             'description': [' ', Validators.required],
@@ -52,7 +50,7 @@ export class CreateNewProjectComponent implements OnInit, AfterViewInit {
             organization_uuid: orgID,
             name: formValue.name,
             description: formValue.description,
-            location: {lat: this.mapService.mapLat, long: this.mapService.mapLong},
+            location: {lat: 0, long: 0},
             roi: {from: 2.1, to: 5.3},
             start_date: formValue.startDate,
             end_date: formValue.endDate,
@@ -79,7 +77,7 @@ export class CreateNewProjectComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit() {
-        this.mapService.getMapViewOnEdit(37.97404469468311, 23.71933726268805);
+        
     }
 
     submitButtonClicked() {

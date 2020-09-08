@@ -11,7 +11,6 @@ import { NewsLink } from '../../manage-projects/manage-single-project/news-link-
 import { Project, ProjectService } from '../../shared/services/project/project.service';
 import { WalletService } from '../../shared/services/wallet/wallet.service';
 import { Wallet } from 'src/app/shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
-import { LocationMapService } from 'src/app/shared/services/location-map.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { MapModalComponent } from 'src/app/location-map/map-modal/map-modal.component';
 
@@ -37,7 +36,6 @@ export class OfferDetailsComponent implements OnInit {
                 private userService: UserService,
                 private meta: Meta,
                 private router: Router,
-                private mapService: LocationMapService,
                 private modalService: BsModalService) {
     }
 

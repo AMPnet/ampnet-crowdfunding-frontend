@@ -12,7 +12,6 @@ import { BroadcastService } from 'src/app/shared/services/broadcast.service';
 import { WalletDetails } from '../../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
 import { WalletService } from '../../shared/services/wallet/wallet.service';
 import { BackendHttpClient } from '../../shared/services/backend-http-client.service';
-import { LocationMapService } from 'src/app/shared/services/location-map.service';
 
 declare var $: any;
 
@@ -38,15 +37,11 @@ export class ManageSingleProjectComponent implements OnInit, AfterViewInit {
                 private http: BackendHttpClient,
                 private manageProjectsService: ManageProjectsService,
                 private route: ActivatedRoute,
-                private broadService: BroadcastService,
-                private mapService: LocationMapService) {
+                private broadService: BroadcastService) {
     }
 
     ngOnInit() {
         this.fetchAllData();
-        setTimeout(() => {
-            this.mapService.getMapViewOnEdit(this.project.location.lat, this.project.location.long);
-        }, 2000);
     }
 
     ngAfterViewInit() {
@@ -164,7 +159,7 @@ export class ManageSingleProjectComponent implements OnInit, AfterViewInit {
         updatedProject.name = projectName;
         updatedProject.description = projectDescription;
         updatedProject.location_text = locationName;
-        updatedProject.location = {lat: this.mapService.mapLat, long: this.mapService.mapLong};
+        updatedProject.location = {lat: 0, long: 0};
 
         SpinnerUtil.showSpinner();
         this.projectService.updateProject(updatedProject.uuid, {

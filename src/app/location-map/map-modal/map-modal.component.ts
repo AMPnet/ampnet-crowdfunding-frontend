@@ -1,6 +1,5 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
-import { LocationMapService } from 'src/app/shared/services/location-map.service';
 
 @Component({
     selector: 'app-map-modal',
@@ -11,8 +10,7 @@ export class MapModalComponent implements OnInit, AfterViewInit {
     projectLat: number;
     projectLong: number;
 
-    constructor(public bsModalRef: BsModalRef,
-                private mapService: LocationMapService) { }
+    constructor(public bsModalRef: BsModalRef) { }
 
     ngOnInit() {}
 

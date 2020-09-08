@@ -47,11 +47,9 @@ export class LocationMapComponent implements OnInit, AfterViewInit {
             }
         this.mapCoords = [e.latlng.lat, e.latlng.lng];
         console.log(this.mapCoords);
-        /* this.mapMarker = leaflet.marker([e.latlng.lat, e.latlng.lng], {
+        this.mapMarker = leaflet.marker(this.mapCoords, {
             icon: this.markerIcon
-            }).addTo(this.map);
-        this.mapLat = e.latlng.lat;
-        this.mapLong = e.latlng.lng; */
+        }).addTo(this.map);
         });
     }
 

@@ -38,9 +38,16 @@ export interface User {
     email: string;
     first_name: string;
     last_name: string;
-    role: string;
+    role: UserRole;
     enabled: boolean;
     verified: boolean;
+}
+
+export enum UserRole {
+    USER = 'USER',
+    ADMIN = 'ADMIN',
+    PLATFORM_MANAGER = 'PLATFORM_MANAGER',
+    TOKEN_ISSUER = 'TOKEN_ISSUER',
 }
 
 interface EmailSignupData {

@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { displayBackendError } from 'src/app/utilities/error-handler';
-import { autonumericCurrency, prettyCurrency } from 'src/app/utilities/currency-util';
+import { autonumericCurrency, centsToBaseCurrencyUnit, prettyCurrency } from 'src/app/utilities/currency-util';
 import * as numeral from 'numeral';
 import { Project, ProjectService } from '../../shared/services/project/project.service';
 import { WalletService } from '../../shared/services/wallet/wallet.service';
@@ -48,7 +48,7 @@ export class ManagePaymentsComponent implements OnInit {
             .subscribe(res => {
                 this.projectWallet = res;
                 this.projectWallet.currency = prettyCurrency(res.currency);
-                this.projectWallet.balance = numeral(res.balance).format('0,0');
+                this.projectWallet.balance = numeral(centsToBaseCurrencyUnit(res.balance)).format('0,0');
                 autonumericCurrency('#revenueShareAmount');
             }, err => {
                 displayBackendError(err);
@@ -66,6 +66,6 @@ export class ManagePaymentsComponent implements OnInit {
 
     onRevenueShareAmountChange(revenueShareAmount) {
         (<HTMLInputElement>document.getElementById('buttonStartPayout'))
-            .disabled = revenueShareAmount === undefined || (revenueShareAmount.replace( /\D+/g, '')) <= 0;
+            .disabled = revenueShareAmount === undefined || (revenueShareAmount.replace(/\D+/g, '')) <= 0;
     }
 }

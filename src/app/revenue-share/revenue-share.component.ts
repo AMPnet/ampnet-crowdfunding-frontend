@@ -2,13 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
-import { stripCurrencyData } from '../utilities/currency-util';
 import swal from 'sweetalert2';
 import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
 import { ProjectService } from '../shared/services/project/project.service';
 import { BroadcastService } from '../shared/services/broadcast.service';
 import { RevenueShareService } from '../shared/services/wallet/revenue-share.service';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalService } from 'ngx-bootstrap/modal';
 // tslint:disable-next-line:max-line-length
 import { RevenueShareConfirmModalComponent } from '../project/manage-payments/revenue-share-confirm-modal/revenue-share-confirm-modal.component';
 
@@ -22,7 +21,6 @@ export class RevenueShareComponent implements OnInit {
     projectName: string;
     amountInvested: number;
     amountInvestedConfirm: number;
-    modalRef: BsModalRef;
 
     constructor(private route: ActivatedRoute,
                 private projectService: ProjectService,
@@ -76,22 +74,10 @@ export class RevenueShareComponent implements OnInit {
     }
 
     showRevenueConfirmModal() {
-        this.modalRef = this.modalService.show(RevenueShareConfirmModalComponent);
-        this.modalRef.content.onConfirmClicked.subscribe(amount => {
-            this.amountInvestedConfirm = amount;
-            this.makeRevenuePayout();
+        this.modalService.show(RevenueShareConfirmModalComponent, {
+            initialState: {
+                amountInvestedConfirm: this.amountInvested
+            }
         });
-    }
-
-    makeRevenuePayout() {
-        const revenueAmountInvested = parseInt(stripCurrencyData(String(this.amountInvested)), 10);
-        const revenueAmountInvestedConfirm = parseInt(stripCurrencyData(String(this.amountInvestedConfirm)), 10);
-
-        if (revenueAmountInvested !== revenueAmountInvestedConfirm) {
-            swal('', 'The revenue share amounts don\'t match. Please check the proper amount and try again!',
-                'error');
-            return;
-        }
-        this.generateTransaction(revenueAmountInvestedConfirm);
     }
 }

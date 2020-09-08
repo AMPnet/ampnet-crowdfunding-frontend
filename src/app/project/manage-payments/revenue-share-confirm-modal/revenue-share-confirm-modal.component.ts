@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
-import { Subject } from 'rxjs';
-import { autonumericCurrency } from '../../../utilities/currency-util';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
     selector: 'app-revenue-share-confirm-modal',
@@ -11,23 +10,32 @@ import { autonumericCurrency } from '../../../utilities/currency-util';
 
 export class RevenueShareConfirmModalComponent implements OnInit {
     title = 'Confirm revenue share amount';
-    onConfirmClicked: Subject<number>;
-    amountInvestedConfirm: number;
+    amountInvestedConfirm: string;
+    frmRevenueAmountConfirm: FormGroup;
 
-    constructor(private _bsModalRef: BsModalRef) {
+    constructor(private bsModalRef: BsModalRef,
+                private fb: FormBuilder) {
+
+        this.frmRevenueAmountConfirm = fb.group({
+            amount: ['', [Validators.required]],
+        }, {validator: this.amountInvestedConfirm});
+
+        const controls = this.frmRevenueAmountConfirm.controls;
+        controls['amount'].valueChanges.subscribe(any => {
+            console.log('frmRevenueAmountConfirm: ' + this.amountInvestedConfirm + '|' + any);
+        });
     }
 
     ngOnInit(): void {
-        this.onConfirmClicked = new Subject();
-        autonumericCurrency('#revenue-confirm-amount');
+        // autonumericCurrency('#revenue-confirm-amount');
+        console.log(this.amountInvestedConfirm);
     }
 
     onConfirm(): void {
-        this.onConfirmClicked.next(this.amountInvestedConfirm);
-        this._bsModalRef.hide();
+        this.bsModalRef.hide();
     }
 
     onCancel(): void {
-        this._bsModalRef.hide();
+        this.bsModalRef.hide();
     }
 }

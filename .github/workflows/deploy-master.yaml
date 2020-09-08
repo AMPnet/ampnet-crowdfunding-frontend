@@ -58,4 +58,4 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             docker-compose -f /home/eugen/ampnet-docker-compose/docker-compose.yml pull frontend
-            docker-compose -f /home/eugen/ampnet-docker-compose/docker-compose.yml restart frontend
+            docker-compose -f /home/eugen/ampnet-docker-compose/docker-compose.yml up -d

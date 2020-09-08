@@ -49,3 +49,13 @@ jobs:
 
           docker build --no-cache -f prod-build/Dockerfile -t "${IMAGE_ALPHA_TAG}" .
           docker image push "${IMAGE_ALPHA_TAG}"
+
+      - name: Update image on staging
+        uses: appleboy/ssh-action@v0.1.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            docker-compose -f /home/eugen/ampnet-docker-compose/docker-compose.yml pull frontend
+            docker-compose -f /home/eugen/ampnet-docker-compose/docker-compose.yml up -d

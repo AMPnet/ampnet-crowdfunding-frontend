@@ -2,13 +2,11 @@
     <app-header></app-header>
 </div>
 
-
-
-<div *ngIf="offerModel !== undefined" [class.container]="!isPortfolio"
+<div *ngIf="project !== undefined" [class.container]="!isPortfolio"
 class="wow fadeIn" style="background: #fdfdfd">
     <div class="row">
         <!-- Closed project popup -->
-        <div *ngIf="!offerModel.active" class="col-lg-12 mb-3">
+        <div *ngIf="!project.active" class="col-lg-12 mb-3">
             <div class="alert alert-danger">
                 The project is not open for funding. If you wish to invest, please check project at a
                 later date.
@@ -23,17 +21,17 @@ class="wow fadeIn" style="background: #fdfdfd">
         </div>
         <div class="col-lg-7 offer-left order-last order-lg-second">
             <!-- Offer image -->
-            <div *ngIf="(offerModel !== undefined) && (!isPortfolio)"
+            <div *ngIf="(project !== undefined) && (!isPortfolio)"
                 class="wow fadeIn d-none d-lg-block">
-                <img class="header-image w-100" src="{{offerModel.main_image}}">
+                <img class="header-image w-100" src="{{project.main_image}}">
             </div>
             <!-- Offer desc -->
             <div class="offer-desc">
-                <div [innerHTML]="offerModel.description"></div>
+                <div [innerHTML]="project.description"></div>
             </div>
             <!-- Offer docs -->
             <div class="offer-docs mb-5 mb-lg-0">
-                <div *ngFor="let doc of offerModel.documents" class="w-100 mt-4">
+                <div *ngFor="let doc of project.documents" class="w-100 mt-4">
                     <div class="d-flex flex-row align-items-center">
                         <a href="{{doc.link}}">
                             <i class="fas fa-file-download mr-2"></i>
@@ -57,15 +55,15 @@ class="wow fadeIn" style="background: #fdfdfd">
                 </div>
 
                 <!-- Offer image for mobile -->
-            <div *ngIf="(offerModel !== undefined) && (!isPortfolio)"
+            <div *ngIf="(project !== undefined) && (!isPortfolio)"
             class="wow fadeIn d-lg-none d-block">
-                <img class="header-image w-100" src="{{offerModel.main_image}}">
+                <img class="header-image w-100" src="{{project.main_image}}">
             </div>
 
                 <div class="offer-right-text col-lg-9">
                     <!-- Offer title -->
                     <div *ngIf="!isPortfolio">
-                        <h3 class="pt-lg-5 pt-4 offer-title">{{offerModel.name}}</h3>
+                        <h3 class="pt-lg-5 pt-4 offer-title">{{project.name}}</h3>
                     </div>
 
                     <!-- Offer location -->
@@ -74,6 +72,7 @@ class="wow fadeIn" style="background: #fdfdfd">
                             <i class="fas fa-map-marker-alt mr-2"></i>
                             Show location
                         </p>
+                        {{project.location_text}}
                     </div>
                     <ng-template #locationUndefined>
                         <div class="mt-4 offer-location">
@@ -87,12 +86,12 @@ class="wow fadeIn" style="background: #fdfdfd">
                     <!-- Offer progress -->
                     <div class="progress-text">
                         <p class="mt-lg-5 mt-4">
-                            <span>{{offerModel.currency}}{{offerModel.current_funding}}</span> raised of
-                            <span>{{offerModel.currency}}{{offerModel.expected_funding}}</span> goal
+                            <span>{{wallet?.balance | currencyDefault}}</span> raised of
+                            <span>{{project.expected_funding | currencyDefault}}</span> goal
                         </p>
                     </div>
                     <div class="progress">
-                        <div [style.width.%]="fundedPercentage" class="progress-bar"
+                        <div [style.width.%]="(wallet?.balance / project.expected_funding) * 100" class="progress-bar"
                         role="progressbar">
                         </div>
                     </div>
@@ -108,13 +107,13 @@ class="wow fadeIn" style="background: #fdfdfd">
                         </button>
 
                         <div *ngIf="!isOverview">
-                            <button *ngIf="userConfirmed" [disabled]="!offerModel.active"
+                            <button *ngIf="userConfirmed" [disabled]="!project.active"
                                     class="btn btn-primary w-100 btn-action-a" id="invest-button"
                                     routerLink="invest">
                                 <i class="mr-2 fas fa-chart-pie"></i>
                                 Invest
                             </button>
-                            <button *ngIf="!userConfirmed" [disabled]="!offerModel.active"
+                            <button *ngIf="!userConfirmed" [disabled]="!project.active"
                                     class="btn btn-primary w-100 btn-action-a"
                                     id="invest-button"
                                     routerLink="/dash/general_settings">
@@ -126,25 +125,25 @@ class="wow fadeIn" style="background: #fdfdfd">
 
                     <!-- Offer return rate -->
                     <div class="offer-return">
-                        <span class="mr-2">{{offerModel.roi.from}}% - {{offerModel.roi.to}}%</span>Expected yearly return
+                        <span class="mr-2">{{project.roi.from}}% - {{project.roi.to}}%</span>Expected yearly return
                     </div>
                     <div class="dropdown-divider mt-lg-3"></div>
 
                     <!-- Offer min investment -->
                     <div class="mt-lg-3">
-                        <span class="mr-2">{{offerModel.currency}}{{offerModel.min_per_user}}</span>Min Investment
+                        <span class="mr-2">{{project.min_per_user | currencyDefault}}</span>Min Investment
                     </div>
                     <div class="dropdown-divider mt-lg-3"></div>
 
                     <!-- Offer max investment -->
                     <div class="mt-lg-3">
-                        <span class="mr-2">{{offerModel.currency}}{{offerModel.max_per_user}}</span>Max Investment
+                        <span class="mr-2">{{project.max_per_user | currencyDefault}}</span>Max Investment
                     </div>
                     <div class="dropdown-divider mt-lg-3"></div>
 
                     <!-- Offer funding period -->
                     <div class="mt-lg-3 pb-lg-5 pb-0">
-                        <span class="mr-2">Funding period</span>{{offerModel.start_date}} - {{offerModel.end_date}}
+                        <span class="mr-2">Funding period</span>{{project.start_date | date:'mediumDate'}} - {{project.end_date | date:'mediumDate'}}
                     </div>
 
                     <!-- Offer Invest btn for mobile -->
@@ -158,13 +157,13 @@ class="wow fadeIn" style="background: #fdfdfd">
                         </button>
 
                         <div *ngIf="!isOverview">
-                            <button *ngIf="userConfirmed" [disabled]="!offerModel.active"
+                            <button *ngIf="userConfirmed" [disabled]="!project.active"
                                     class="btn btn-primary w-100 btn-action-a" id="invest-button"
                                     routerLink="invest">
                                 <i class="mr-2 fas fa-chart-pie"></i>
                                 Invest
                             </button>
-                            <button *ngIf="!userConfirmed" [disabled]="!offerModel.active"
+                            <button *ngIf="!userConfirmed" [disabled]="!project.active"
                                     class="btn btn-primary w-100 btn-action-a"
                                     id="invest-button"
                                     routerLink="/dash/general_settings">
@@ -174,7 +173,6 @@ class="wow fadeIn" style="background: #fdfdfd">
                         </div>
                     </div>
                 </div>
-
             </div>
 
             <!-- Offer socials share -->
@@ -187,15 +185,14 @@ class="wow fadeIn" style="background: #fdfdfd">
                     <div class="cursor-pointer mr-lg-5">
                         <i class="fab fa-facebook-f"></i>
                     </div>
-                    <div class="cursor-pointer">
+                    <div class="cursor-pointer"
+                         (click)="copyProjectDetailsUrl()"
+                         ngbTooltip="Copied to clipboard."
+                         triggers="click:blur">
                         <i class="fas fa-link"></i>
                     </div>
                 </div>
-
             </div>
-
         </div>
-
-
     </div>
 </div>

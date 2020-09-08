@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { Router } from '@angular/router';
-
 import * as $ from 'jquery';
 import { UserService } from '../shared/services/user/user.service';
 import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
@@ -13,7 +12,6 @@ import { SpinnerUtil } from '../utilities/spinner-utilities';
     styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent implements OnInit {
-
     isAdmin: boolean;
     isPlatformManager: boolean;
     isTokenIssuer: boolean;
@@ -22,7 +20,8 @@ export class SidebarComponent implements OnInit {
     hasVerifiedProfile = true;
     fullName: string;
 
-    constructor(private router: Router, private userService: UserService) {
+    constructor(private router: Router,
+                private userService: UserService) {
     }
 
     ngOnInit() {

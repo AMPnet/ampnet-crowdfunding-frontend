@@ -16,9 +16,10 @@ import { BroadcastService } from '../../../shared/services/broadcast.service';
 })
 
 export class RevenueShareConfirmModalComponent implements OnInit {
-    amountInvestedConfirm: string;
-    confirmForm: FormGroup;
     projectID: string;
+    amountInvestedConfirm: string;
+
+    confirmForm: FormGroup;
 
     constructor(private bsModalRef: BsModalRef,
                 private formBuilder: FormBuilder,

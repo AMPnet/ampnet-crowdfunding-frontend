@@ -43,9 +43,7 @@ export class RevenueShareComponent implements OnInit {
             .subscribe(res => {
                 SpinnerUtil.hideSpinner();
                 this.projectName = res.name;
-            }, error => {
-                hideSpinnerAndDisplayError(error);
-            });
+            }, hideSpinnerAndDisplayError);
     }
 
     showRevenueConfirmModal() {

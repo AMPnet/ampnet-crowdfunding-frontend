@@ -167,17 +167,12 @@ export function jwtOptionsFactory() {
         CurrencyDefaultPipe,
         RevenueShareComponent,
         TxIconType,
-        TxIconStatus,
         UserStateReminderComponent,
         FileValidator,
         FileValueAccessorDirective,
-        SpinnerComponent,
-        SpinnerComponent,
-        TxIconStatus,
         RevenueShareConfirmModalComponent,
         SpinnerComponent,
         TxIconStatus,
-        RevenueShareConfirmModalComponent
     ],
     imports: [
         BrowserModule,

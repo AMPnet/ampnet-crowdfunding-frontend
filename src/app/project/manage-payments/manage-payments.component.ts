@@ -14,7 +14,6 @@ import { WalletDetails } from '../../shared/services/wallet/wallet-cooperative/w
     styleUrls: ['./manage-payments.component.css']
 })
 export class ManagePaymentsComponent implements OnInit {
-
     @Input() revenueShareAmount;
     projectWallet: WalletDetails;
     project: Project;
@@ -34,11 +33,7 @@ export class ManagePaymentsComponent implements OnInit {
     getProject(projectID: string) {
         SpinnerUtil.showSpinner();
         this.projectService.getProject(projectID)
-            .subscribe((res) => {
-                this.project = res;
-            }, err => {
-                displayBackendError(err);
-            })
+            .subscribe(res => this.project = res, displayBackendError)
             .add(SpinnerUtil.hideSpinner);
     }
 

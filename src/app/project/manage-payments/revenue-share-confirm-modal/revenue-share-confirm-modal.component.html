@@ -12,6 +12,7 @@
                 <div class="col-md-12">
                     <input class="form-control mt-3 p-4 w-100"
                            formControlName="amount"
+                           #amount
                            id="revenue-confirm-amount"
                            placeholder="Revenue share amount"
                            type="text">
@@ -20,14 +21,14 @@
                 <div class="col-md-4">
                     <button (click)="onConfirm()"
                             [disabled]="!frmRevenueAmountConfirm.valid"
-                            class="btn btn-primary w-100 float-right mt-3 py-3 px-5"
+                            class="btn btn-primary w-100 float-right mt-3 py-3 px-1"
                             type="submit">
                         Confirm
                     </button>
                 </div>
                 <div class="col-md-4">
                     <button (click)="onCancel()"
-                            class="btn btn-primary w-100 float-right mt-3 py-3 px-5"
+                            class="btn btn-primary w-100 float-right mt-3 py-3 px-1"
                             type="button">
                         Cancel
                     </button>

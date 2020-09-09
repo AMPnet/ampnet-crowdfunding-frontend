@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { autonumericCurrency } from '../../../utilities/currency-util';
 
 @Component({
     selector: 'app-revenue-share-confirm-modal',
@@ -14,20 +15,26 @@ export class RevenueShareConfirmModalComponent implements OnInit {
     frmRevenueAmountConfirm: FormGroup;
 
     constructor(private bsModalRef: BsModalRef,
-                private fb: FormBuilder) {
+                private formBuilder: FormBuilder) {
 
-        this.frmRevenueAmountConfirm = fb.group({
-            amount: ['', [Validators.required]],
-        }, {validator: this.amountInvestedConfirm});
+        this.frmRevenueAmountConfirm = formBuilder.group({
+            amount: ['', Validators.required, Validators.]
+        });
 
         const controls = this.frmRevenueAmountConfirm.controls;
-        controls['amount'].valueChanges.subscribe(any => {
-            console.log('frmRevenueAmountConfirm: ' + this.amountInvestedConfirm + '|' + any);
+        const amountField = controls['amount'];
+
+        amountField.valueChanges.subscribe(any => {
+            if (any === this.amountInvestedConfirm) {
+                console.log('True');
+            } else {
+                console.log('False');
+            }
         });
     }
 
     ngOnInit(): void {
-        // autonumericCurrency('#revenue-confirm-amount');
+        autonumericCurrency('#revenue-confirm-amount');
         console.log(this.amountInvestedConfirm);
     }
 

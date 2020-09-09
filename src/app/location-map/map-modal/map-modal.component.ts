@@ -7,10 +7,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
     styleUrls: ['./map-modal.component.css'],
 })
 export class MapModalComponent implements OnInit, AfterViewInit {
-    projectLat: number;
-    projectLong: number;
-
-    constructor(public bsModalRef: BsModalRef) { }
+    constructor() { }
 
     ngOnInit() {}
 

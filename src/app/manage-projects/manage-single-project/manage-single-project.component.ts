@@ -31,6 +31,9 @@ export class ManageSingleProjectComponent implements OnInit, AfterViewInit {
     project: Project;
     wallet: WalletDetails;
     qrCodeData: String = '';
+    mapLat: number;
+    mapLong: number;
+    projectCoords = [];
 
     constructor(private projectService: ProjectService,
                 private walletService: WalletService,
@@ -129,6 +132,7 @@ export class ManageSingleProjectComponent implements OnInit, AfterViewInit {
         this.projectService.getProject(id).subscribe((res: Project) => {
             SpinnerUtil.hideSpinner();
             this.project = res;
+            this.projectCoords = [this.project.location.lat, this.project.location.long];
             
             onComplete();
         }, err => {
@@ -159,7 +163,7 @@ export class ManageSingleProjectComponent implements OnInit, AfterViewInit {
         updatedProject.name = projectName;
         updatedProject.description = projectDescription;
         updatedProject.location_text = locationName;
-        updatedProject.location = {lat: 0, long: 0};
+        updatedProject.location = {lat: this.mapLat, long: this.mapLong};
 
         SpinnerUtil.showSpinner();
         this.projectService.updateProject(updatedProject.uuid, {
@@ -280,5 +284,10 @@ export class ManageSingleProjectComponent implements OnInit, AfterViewInit {
             });
             $('.note-editor').attr('id', 'note-custom');
         });
+    }
+
+    getMapCoords(e) {
+        this.mapLat = e[0];
+        this.mapLong = e[1];
     }
 }

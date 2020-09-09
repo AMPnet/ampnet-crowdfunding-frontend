@@ -16,6 +16,9 @@ declare var $: any;
 })
 export class CreateNewProjectComponent implements OnInit, AfterViewInit {
     createProjectForm: FormGroup;
+    mapLat: number;
+    mapLong: number;
+    projectCoords = [];
 
     constructor(private projectService: ProjectService,
                 private fb: FormBuilder,
@@ -50,7 +53,7 @@ export class CreateNewProjectComponent implements OnInit, AfterViewInit {
             organization_uuid: orgID,
             name: formValue.name,
             description: formValue.description,
-            location: {lat: 0, long: 0},
+            location: {lat: this.mapLat, long: this.mapLong},
             roi: {from: 2.1, to: 5.3},
             start_date: formValue.startDate,
             end_date: formValue.endDate,
@@ -66,6 +69,12 @@ export class CreateNewProjectComponent implements OnInit, AfterViewInit {
             SpinnerUtil.hideSpinner();
             displayBackendError(err);
         });
+        this.projectCoords = [this.mapLat, this.mapLong];
+    }
+
+    getMapCoords(e) {
+        this.mapLat = e[0];
+        this.mapLong = e[1];
     }
 
     ngOnInit() {
@@ -77,7 +86,6 @@ export class CreateNewProjectComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit() {
-        
     }
 
     submitButtonClicked() {

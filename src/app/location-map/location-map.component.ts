@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Input, Output, EventEmitter } from '@angular/core';
 import leaflet from 'leaflet';
 
 @Component({
@@ -7,16 +7,17 @@ import leaflet from 'leaflet';
     styleUrls: ['./location-map.component.css'],
 })
 export class LocationMapComponent implements OnInit, AfterViewInit {
+    @Output() getMapCoords = new EventEmitter();
+    @Input() movableMarker: boolean;
+    @Input() coordsSet = [];
     map;
     startingLocation = [37.97404469468311, 23.71933726268805];
-    @Input() mapCoords = [];
     mapMarker;
-    mapLat: number;
-    mapLong: number;
-    markerIcon = leaflet.icon({
+    /* markerIcon = leaflet.icon({
+        iconRetinaUrl: 'marker-icon-2x.png',
         iconUrl: 'marker-icon.png',
-        shadowUrl: '',
-    })
+        shadowUrl: 'marker-shadow.png',
+    }) */
 
     constructor() {}
 
@@ -26,18 +27,30 @@ export class LocationMapComponent implements OnInit, AfterViewInit {
 
     ngAfterViewInit() {
         this.initMap();
-        /* setTimeout(() =>{
+        setTimeout(() =>{
             this.map.invalidateSize();
-        }, 10) */
-        
+        }, 10)
+        console.log(this.coordsSet[0]);
     }
 
     private initMap() {
-        this.map = leaflet.map('map').setView(this.startingLocation, 12);
+        this.map = leaflet.map('map');
+        if ((this.coordsSet[0] != this.startingLocation[0]) && 
+            (this.coordsSet[1] != this.startingLocation[1])) {
+                this.map.setView(this.coordsSet, 12);
+                this.mapMarker = leaflet.marker(this.coordsSet).addTo(this.map);
+        } else {
+            this.map.setView(this.startingLocation, 12);
+            this.mapMarker = leaflet.marker(this.startingLocation).addTo(this.map);
+        }
         leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution:
             '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             }).addTo(this.map);
+        this.getMapCoords.emit(this.startingLocation);
+        if (this.movableMarker) {
+            this.editMapCoords();
+        }
     }
 
     editMapCoords(){
@@ -45,15 +58,8 @@ export class LocationMapComponent implements OnInit, AfterViewInit {
             if (this.mapMarker) {
                 this.map.removeLayer(this.mapMarker);
             }
-        this.mapCoords = [e.latlng.lat, e.latlng.lng];
-        console.log(this.mapCoords);
-        this.mapMarker = leaflet.marker(this.mapCoords, {
-            icon: this.markerIcon
-        }).addTo(this.map);
+        this.getMapCoords.emit([e.latlng.lat, e.latlng.lng]);
+        this.mapMarker = leaflet.marker([e.latlng.lat, e.latlng.lng]).addTo(this.map);
         });
     }
-
-   
-
-    
 }

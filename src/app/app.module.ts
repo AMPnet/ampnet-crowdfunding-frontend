@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { DEFAULT_CURRENCY_CODE, NgModule } from '@angular/core';
 import { DisqusModule } from 'ngx-disqus';
-
 import { AppComponent } from './app.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -73,9 +72,9 @@ import { FileValidator } from './shared/validators/file.validator';
 import { FileValueAccessorDirective } from './shared/directives/file-value-accessor.directive';
 import { SpinnerComponent } from './shared/components/spinner/spinner.component';
 import { UserStateReminderComponent } from './user-state-reminder/user-state-reminder.component';
-import { TooltipModule } from 'ngx-bootstrap/tooltip';
 // tslint:disable-next-line:max-line-length
 import { RevenueShareConfirmModalComponent } from './project/manage-payments/revenue-share-confirm-modal/revenue-share-confirm-modal.component';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 export function tokenGetter() {
     return localStorage.getItem('access_token');
@@ -173,6 +172,9 @@ export function jwtOptionsFactory() {
         FileValidator,
         FileValueAccessorDirective,
         SpinnerComponent,
+        SpinnerComponent,
+        TxIconStatus,
+        RevenueShareConfirmModalComponent,
         SpinnerComponent,
         TxIconStatus,
         RevenueShareConfirmModalComponent

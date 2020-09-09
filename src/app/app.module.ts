@@ -74,10 +74,6 @@ import { FileValueAccessorDirective } from './shared/directives/file-value-acces
 import { SpinnerComponent } from './shared/components/spinner/spinner.component';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
-export function tokenGetter() {
-    return localStorage.getItem('access_token');
-}
-
 const socialAuthServiceConfig = {
     provide: 'SocialAuthServiceConfig',
     useValue: {
@@ -94,15 +90,6 @@ const socialAuthServiceConfig = {
         ]
     } as SocialAuthServiceConfig
 };
-
-export function jwtOptionsFactory() {
-    return {
-        tokenGetter: () => {
-            return localStorage.getItem('access_token');
-        },
-        whitelistedDomains: ['localhost:4200']
-    };
-}
 
 @NgModule({
     declarations: [

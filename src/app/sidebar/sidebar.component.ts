@@ -8,6 +8,7 @@ import { map, switchMap } from 'rxjs/operators';
 import { User, UserRole } from '../shared/services/user/signup.service';
 import { WalletService } from '../shared/services/wallet/wallet.service';
 import { version } from '../../../package.json';
+import { UserAuthService } from '../shared/services/user/user-auth.service';
 
 
 @Component({
@@ -25,6 +26,7 @@ export class SidebarComponent implements OnInit, AfterViewInit {
 
     constructor(private router: Router,
                 private userService: UserService,
+                private userAuthService: UserAuthService,
                 private walletService: WalletService) {
     }
 
@@ -45,8 +47,8 @@ export class SidebarComponent implements OnInit, AfterViewInit {
         });
     }
 
-    logOutClicked() {
-        return this.userService.logout().subscribe(() => {
+    onLogout() {
+        return this.userAuthService.logout().subscribe(() => {
             this.router.navigate(['']);
         });
     }

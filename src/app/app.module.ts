@@ -71,9 +71,9 @@ import { UserStateReminderComponent } from './user-state-reminder/user-state-rem
 import { FileValidator } from './shared/validators/file.validator';
 import { FileValueAccessorDirective } from './shared/directives/file-value-accessor.directive';
 import { SpinnerComponent } from './shared/components/spinner/spinner.component';
-import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { TxIconType, TxIconStatus } from './wallet/wallet-icon.pipe';
 import { FacebookModule } from 'ngx-facebook';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 
 export function tokenGetter() {

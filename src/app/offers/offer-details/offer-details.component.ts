@@ -26,6 +26,7 @@ export class OfferDetailsComponent implements OnInit {
     isOverview = false;
     isPortfolio = false;
     userConfirmed = true;
+    currentOfferUrl = window.location.href;
 
     constructor(private projectService: ProjectService,
                 private newsPreviewService: NewsPreviewService,
@@ -37,12 +38,10 @@ export class OfferDetailsComponent implements OnInit {
                 private fb: FacebookService) {
 
         const initParams: InitParams = {
-            // Todo we need to create FacebookApp to get AppID
-            appId: '241902920447787',
+            appId: '611379136173563',
             xfbml: true,
-            version: 'v2.8'
+            version: 'v3.2'
         };
-
         fb.init(initParams);
     }
 
@@ -144,18 +143,5 @@ export class OfferDetailsComponent implements OnInit {
 
     backToOffersScreen() {
         this.router.navigate(['dash/offers']);
-    }
-
-    shareUrlOnFacebook() {
-        const params: UIParams = {
-            // tslint:disable-next-line:max-line-length
-            // TODO change hardcoded href, also we need to add this Site URL to a newly created FacebookApp (Settings - Basic - WebSite) in order to work
-            href: 'https://demo.ampnet.io/' + this.router.url,
-            method: 'share',
-        };
-
-        this.fb.ui(params)
-            .then((res: UIResponse) => console.log(res))
-            .catch((e: any) => console.error(e));
     }
 }

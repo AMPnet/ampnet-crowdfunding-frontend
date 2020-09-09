@@ -3,7 +3,7 @@
 </div>
 
 <div *ngIf="project !== undefined" [class.container]="!isPortfolio"
-class="wow fadeIn" style="background: #fdfdfd">
+     class="wow fadeIn" style="background: #fdfdfd">
     <div class="row">
         <!-- Closed project popup -->
         <div *ngIf="!project.active" class="col-lg-12 mb-3">
@@ -22,7 +22,7 @@ class="wow fadeIn" style="background: #fdfdfd">
         <div class="col-lg-7 offer-left order-last order-lg-second">
             <!-- Offer image -->
             <div *ngIf="(project !== undefined) && (!isPortfolio)"
-                class="wow fadeIn d-none d-lg-block">
+                 class="wow fadeIn d-none d-lg-block">
                 <img class="header-image w-100" src="{{project.main_image}}">
             </div>
             <!-- Offer desc -->
@@ -55,10 +55,10 @@ class="wow fadeIn" style="background: #fdfdfd">
                 </div>
 
                 <!-- Offer image for mobile -->
-            <div *ngIf="(project !== undefined) && (!isPortfolio)"
-            class="wow fadeIn d-lg-none d-block">
-                <img class="header-image w-100" src="{{project.main_image}}">
-            </div>
+                <div *ngIf="(project !== undefined) && (!isPortfolio)"
+                     class="wow fadeIn d-lg-none d-block">
+                    <img class="header-image w-100" src="{{project.main_image}}">
+                </div>
 
                 <div class="offer-right-text col-lg-9">
                     <!-- Offer title -->
@@ -84,7 +84,7 @@ class="wow fadeIn" style="background: #fdfdfd">
                     </div>
                     <div class="progress">
                         <div [style.width.%]="(wallet?.balance / project.expected_funding) * 100" class="progress-bar"
-                        role="progressbar">
+                             role="progressbar">
                         </div>
                     </div>
 
@@ -136,7 +136,8 @@ class="wow fadeIn" style="background: #fdfdfd">
 
                     <!-- Offer funding period -->
                     <div class="mt-lg-3 pb-lg-5 pb-0">
-                        <span class="mr-2">Funding period</span>{{project.start_date | date:'mediumDate'}} - {{project.end_date | date:'mediumDate'}}
+                        <span class="mr-2">Funding period</span>{{project.start_date | date:'mediumDate'}}
+                        - {{project.end_date | date:'mediumDate'}}
                     </div>
 
                     <!-- Offer Invest btn for mobile -->
@@ -176,7 +177,8 @@ class="wow fadeIn" style="background: #fdfdfd">
                         <i class="fab fa-twitter"></i>
                     </div>
                     <div class="cursor-pointer mr-lg-5">
-                        <i class="fab fa-facebook-f"></i>
+                        <a href="https://www.facebook.com/sharer/sharer.php?u={{currentOfferUrl}}" target="_blank"><i
+                                class="fab fa-facebook-f"></i></a>
                     </div>
                     <div class="cursor-pointer"
                          (click)="copyProjectDetailsUrl()"

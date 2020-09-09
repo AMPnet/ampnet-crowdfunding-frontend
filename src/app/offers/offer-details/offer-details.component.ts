@@ -25,7 +25,6 @@ export class OfferDetailsComponent implements OnInit {
     isOverview = false;
     isPortfolio = false;
     userConfirmed = true;
-    projectBalance = 0;
     currentOfferUrl = window.location.href;
 
     constructor(private projectService: ProjectService,
@@ -95,7 +94,6 @@ export class OfferDetailsComponent implements OnInit {
             content: this.project.main_image
         });
     }
-
 
     generateProjectView() {
         const projectID = this.route.snapshot.params.id;

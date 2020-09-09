@@ -71,7 +71,7 @@
                         <div class="col-12 col-md-6 col-xl-8 balance-left">
                             <span class="h1">
                                 <div class="balance-text text-uppercase mb-2">Balance</div>
-                                <div *ngIf="wallet.balance !== undefined" class="balance-amount">{{wallet.currency}}{{wallet.balance}}.00</div>
+                                <div *ngIf="wallet.balance !== undefined" class="balance-amount">{{ wallet.currency }}{{ wallet.balance }}.00</div>
                             </span>
                         </div>
                         <div class="col-12 col-md-3 col-xl-2 mt-4 mt-md-0 button-container">
@@ -102,7 +102,7 @@
                         <tr *ngFor="let transaction of transactionHistoryPage">
                             <td class="icon-type-cell pr-0">
                                 <span class="icon-type">
-                                    <i class="fas mr-3 {{transaction.type | txIconType }}"></i>
+                                    <i class="fas mr-3 {{ transaction.type | txIconType }}"></i>
                                 </span>
                             </td>
                             <td class="pl-1">

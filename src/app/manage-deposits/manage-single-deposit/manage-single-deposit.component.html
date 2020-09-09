@@ -9,15 +9,15 @@
                     <div class="d-flex justify-content-between">
                         <div>
                             <div class="explainer-mini">Name</div>
-                            <div>{{depositModel.user.first_name}} {{depositModel.user.last_name}}</div>
+                            <div>{{ depositModel.user.first_name }} {{ depositModel.user.last_name }}</div>
                         </div>
                         <div>
                             <div class="explainer-mini">Date created</div>
-                            <div>{{depositModel.deposit.created_at | date:'mediumDate'}}</div>
+                            <div>{{ depositModel.deposit.created_at | date:'mediumDate' }}</div>
                         </div>
                         <div>
                             <div class="explainer-mini">Reference</div>
-                            <div>{{depositModel.deposit.reference}}</div>
+                            <div>{{ depositModel.deposit.reference }}</div>
                         </div>
                     </div>
                 </div>

@@ -46,7 +46,7 @@ a {
 
 #main-menu li:hover {
     background: #DEA546;
-    color: #fff !important;
+    color: #fff;
     cursor: pointer;
 }
 
@@ -99,4 +99,10 @@ a {
 
 .app-version li {
     padding-bottom: 0 !important;
+    color: gray !important;
+}
+
+.app-version li:hover {
+    background: initial !important;
+    cursor: initial !important;
 }

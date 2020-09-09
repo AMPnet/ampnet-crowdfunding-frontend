@@ -25,7 +25,7 @@ export class OfferDetailsComponent implements OnInit {
     isOverview = false;
     isPortfolio = false;
     userConfirmed = true;
-    currentOfferUrl = window.location.href;
+    currentLocation =  encodeURIComponent(window.location.href);
 
     constructor(private projectService: ProjectService,
                 private newsPreviewService: NewsPreviewService,

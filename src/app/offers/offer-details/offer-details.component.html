@@ -2,12 +2,11 @@
     <app-header></app-header>
 </div>
 
-
-<div *ngIf="offerModel !== undefined" [class.container]="!isPortfolio"
-     class="wow fadeIn" style="background: #fdfdfd">
+<div *ngIf="project !== undefined" [class.container]="!isPortfolio"
+class="wow fadeIn" style="background: #fdfdfd">
     <div class="row">
         <!-- Closed project popup -->
-        <div *ngIf="!offerModel.active" class="col-lg-12 mb-3">
+        <div *ngIf="!project.active" class="col-lg-12 mb-3">
             <div class="alert alert-danger">
                 The project is not open for funding. If you wish to invest, please check project at a
                 later date.
@@ -22,17 +21,17 @@
         </div>
         <div class="col-lg-7 offer-left order-last order-lg-second">
             <!-- Offer image -->
-            <div *ngIf="(offerModel !== undefined) && (!isPortfolio)"
-                 class="wow fadeIn d-none d-lg-block">
-                <img class="header-image w-100" src="{{offerModel.main_image}}">
+            <div *ngIf="(project !== undefined) && (!isPortfolio)"
+                class="wow fadeIn d-none d-lg-block">
+                <img class="header-image w-100" src="{{project.main_image}}">
             </div>
             <!-- Offer desc -->
             <div class="offer-desc">
-                <div [innerHTML]="offerModel.description"></div>
+                <div [innerHTML]="project.description"></div>
             </div>
             <!-- Offer docs -->
             <div class="offer-docs mb-5 mb-lg-0">
-                <div *ngFor="let doc of offerModel.documents" class="w-100 mt-4">
+                <div *ngFor="let doc of project.documents" class="w-100 mt-4">
                     <div class="d-flex flex-row align-items-center">
                         <a href="{{doc.link}}">
                             <i class="fas fa-file-download mr-2"></i>
@@ -56,15 +55,15 @@
                 </div>
 
                 <!-- Offer image for mobile -->
-                <div *ngIf="(offerModel !== undefined) && (!isPortfolio)"
-                     class="wow fadeIn d-lg-none d-block">
-                    <img class="header-image w-100" src="{{offerModel.main_image}}">
-                </div>
+            <div *ngIf="(project !== undefined) && (!isPortfolio)"
+            class="wow fadeIn d-lg-none d-block">
+                <img class="header-image w-100" src="{{project.main_image}}">
+            </div>
 
                 <div class="offer-right-text col-lg-9">
                     <!-- Offer title -->
                     <div *ngIf="!isPortfolio">
-                        <h3 class="pt-lg-5 pt-4 offer-title">{{offerModel.name}}</h3>
+                        <h3 class="pt-lg-5 pt-4 offer-title">{{project.name}}</h3>
                     </div>
 
                     <!-- Offer location -->
@@ -73,19 +72,19 @@
                             <i class="fas fa-map-marker-alt mr-2"></i>
                             Show location
                         </p>
-                        {{offerModel.location_text}}
+                        {{project.location_text}}
                     </div>
 
                     <!-- Offer progress -->
                     <div class="progress-text">
                         <p class="mt-lg-5 mt-4">
-                            <span>{{offerModel.currency}}{{offerModel.current_funding}}</span> raised of
-                            <span>{{offerModel.currency}}{{offerModel.expected_funding}}</span> goal
+                            <span>{{wallet?.balance | currencyDefault}}</span> raised of
+                            <span>{{project.expected_funding | currencyDefault}}</span> goal
                         </p>
                     </div>
                     <div class="progress">
-                        <div [style.width.%]="fundedPercentage" class="progress-bar"
-                             role="progressbar">
+                        <div [style.width.%]="(wallet?.balance / project.expected_funding) * 100" class="progress-bar"
+                        role="progressbar">
                         </div>
                     </div>
 
@@ -101,13 +100,13 @@
                         </button>
 
                         <div *ngIf="!isOverview">
-                            <button *ngIf="userConfirmed" [disabled]="!offerModel.active"
+                            <button *ngIf="userConfirmed" [disabled]="!project.active"
                                     class="btn btn-primary w-100 btn-action-a" id="invest-button"
                                     routerLink="invest">
                                 <i class="mr-2 fas fa-chart-pie"></i>
                                 Invest
                             </button>
-                            <button *ngIf="!userConfirmed" [disabled]="!offerModel.active"
+                            <button *ngIf="!userConfirmed" [disabled]="!project.active"
                                     class="btn btn-primary w-100 btn-action-a"
                                     id="invest-button"
                                     routerLink="/dash/general_settings">
@@ -119,26 +118,25 @@
 
                     <!-- Offer return rate -->
                     <div class="offer-return">
-                        <span class="mr-2">{{offerModel.roi.from}}% - {{offerModel.roi.to}}%</span>Expected yearly
-                        return
+                        <span class="mr-2">{{project.roi.from}}% - {{project.roi.to}}%</span>Expected yearly return
                     </div>
                     <div class="dropdown-divider mt-lg-3"></div>
 
                     <!-- Offer min investment -->
                     <div class="mt-lg-3">
-                        <span class="mr-2">{{offerModel.currency}}{{offerModel.min_per_user}}</span>Min Investment
+                        <span class="mr-2">{{project.min_per_user | currencyDefault}}</span>Min Investment
                     </div>
                     <div class="dropdown-divider mt-lg-3"></div>
 
                     <!-- Offer max investment -->
                     <div class="mt-lg-3">
-                        <span class="mr-2">{{offerModel.currency}}{{offerModel.max_per_user}}</span>Max Investment
+                        <span class="mr-2">{{project.max_per_user | currencyDefault}}</span>Max Investment
                     </div>
                     <div class="dropdown-divider mt-lg-3"></div>
 
                     <!-- Offer funding period -->
                     <div class="mt-lg-3 pb-lg-5 pb-0">
-                        <span class="mr-2">Funding period</span>{{offerModel.start_date}} - {{offerModel.end_date}}
+                        <span class="mr-2">Funding period</span>{{project.start_date | date:'mediumDate'}} - {{project.end_date | date:'mediumDate'}}
                     </div>
 
                     <!-- Offer Invest btn for mobile -->
@@ -152,13 +150,13 @@
                         </button>
 
                         <div *ngIf="!isOverview">
-                            <button *ngIf="userConfirmed" [disabled]="!offerModel.active"
+                            <button *ngIf="userConfirmed" [disabled]="!project.active"
                                     class="btn btn-primary w-100 btn-action-a" id="invest-button"
                                     routerLink="invest">
                                 <i class="mr-2 fas fa-chart-pie"></i>
                                 Invest
                             </button>
-                            <button *ngIf="!userConfirmed" [disabled]="!offerModel.active"
+                            <button *ngIf="!userConfirmed" [disabled]="!project.active"
                                     class="btn btn-primary w-100 btn-action-a"
                                     id="invest-button"
                                     routerLink="/dash/general_settings">
@@ -170,19 +168,20 @@
                 </div>
             </div>
 
-
             <!-- Offer socials share -->
             <div class="offer-right-socials col-lg-9 mt-4">
                 <div class="d-flex flex-row align-items-center">
                     <span class="mr-lg-5">Share</span>
                     <div class="cursor-pointer mr-lg-5">
-                        <a href="https://twitter.com/intent/tweet?text={{currentOfferUrl}}" target="_blank"><i
-                                class="fab fa-twitter"></i></a>
+                        <i class="fab fa-twitter"></i>
                     </div>
                     <div class="cursor-pointer mr-lg-5">
                         <i class="fab fa-facebook-f"></i>
                     </div>
-                    <div class="cursor-pointer">
+                    <div class="cursor-pointer"
+                         (click)="copyProjectDetailsUrl()"
+                         ngbTooltip="Copied to clipboard."
+                         triggers="click:blur">
                         <i class="fas fa-link"></i>
                     </div>
                 </div>
@@ -190,253 +189,3 @@
         </div>
     </div>
 </div>
-
-<!-- 
-<div *ngIf="(offerModel !== undefined) && (!isPortfolio)"
-     class="header-image-container col-lg-12 ml-0 pl-0 pr-0 wow fadeIn">
-    <img class="header-image w-100" src="{{offerModel.main_image}}">
-</div>
-*****Reseno
-
-<div *ngIf="offerModel !== undefined" [class.container]="!isPortfolio" [class.root-content-container]="!isPortfolio"
-     class="wow fadeIn" style="background: #fdfdfd">
-    <div class="row row-eq-height"> ******Reseno
-
-        <div *ngIf="!offerModel.active" class="col-lg-12 mb-3">
-            <div class="alert alert-danger">
-                The project is not open for funding. If you wish to invest, please check project at a
-                later date.
-            </div>
-        </div>
-        *****Reseno
-
-        <div *ngIf="!isPortfolio" class="col-lg-8">
-            <h3 class="title gray-text">
-                <b>{{offerModel.name}}</b>
-            </h3>
-        </div>
-        ******Reseno
-
-        <div *ngIf="!isPortfolio" class="col-lg-4 mb-3 invest-button-holder">
-
-            <button *ngIf="isOverview" class="btn btn-primary w-100 btn-action-a float-right text-white"
-                    id="invest-button"
-                    routerLink="/sign_up">
-                <i class="mr-3 fas fa-chart-pie"></i>
-                <span>Sign Up & Invest</span>
-            </button>
-
-            <div *ngIf="!isOverview">
-                <button *ngIf="userConfirmed" [disabled]="!offerModel.active"
-                        class="btn btn-primary w-100 btn-action-a float-right text-white" id="invest-button"
-                        routerLink="invest">
-                    <i class="mr-3 fas fa-chart-pie"></i>
-                    <span>Invest</span>
-                </button>
-                <button *ngIf="!userConfirmed" [disabled]="!offerModel.active"
-                        class="btn btn-primary w-100 btn-action-a float-right text-white"
-                        id="invest-button"
-                        routerLink="/dash/general_settings">
-                    <i class="mr-3 fas fa-chart-pie"></i>
-                    <span>Verify Profile & Invest</span>
-                </button>
-            </div>
-        </div>
-        ******Reseno
-
-        <div class="col-lg-12">
-            <div class="card h-100">
-                <div class="card-body">
-                    <div class="card-title">
-                        <i class="fas fa-share-alt mr-3 explainer-mini"></i>
-                        <span class="explainer-mini">Share this project</span>
-                    </div>
-                    <div class="card-text d-flex flex-row justify-content-between">
-                        <div class="explainer-mini cursor-pointer" style="color: blue">
-                            Facebook
-                        </div>
-                        <div class="explainer-mini cursor-pointer" style="color: blue">
-                            Twitter
-                        </div>
-                        <div class="explainer-mini cursor-pointer">
-                            <i class="fas fa-link mr-2"></i>
-                            Link
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        ******Reseno
-
-        <div class="col-lg-8 p-3">
-            <div class="card text-justify h-100">
-                <div class="card-body">
-                    <div class="card-title explainer-mini">About</div>
-                    <div [innerHTML]="offerModel.description" class=" card-text">
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        ******Reseno
-
-        <div class="col-lg-4 p-3">
-            <div class="card h-100">
-                <div class="card-body">
-                    <div class="card-title explainer-mini">Info</div>
-                    <div class="card-text">
-                        <div class="mb-2 info-holder">
-                            <p class="mb-2  info-head-elem">
-                                <i class="mr-2 fas fa-map-marker-alt" height="14" width="14"></i>
-                                Location
-                            </p>
-                            {{offerModel.location_text}}
-                        </div>
-                        <div class="dropdown-divider"></div>
-                        ******Reseno
-
-                        <div class="mb-2 info-holder">
-                            <p class="mb-2  info-head-elem">
-                                <i class="mr-2 fas fa-chart-line"></i>
-                                Expected yearly return
-                            </p>
-                            {{offerModel.roi.from}}% - {{offerModel.roi.to}}%
-                        </div>
-                        <div class="dropdown-divider"></div>
-                        *******Reseno
-
-                        <div class="mb-3 info-holder">
-                            <p class="mb-2  info-head-elem">
-                                <i class="mr-2 fas fa-calendar-alt" height="14" width="14"></i>
-                                Begins
-                            </p>
-                            {{offerModel.start_date}}
-                        </div>
-                        <div class="dropdown-divider"></div>
-                        <div class="mb-3 info-holder">
-                            <p class="mb-2  info-head-elem">
-                                <i class="mr-2 fas fa-calendar-alt" height="14" width="14"></i>
-                                Ends
-                            </p>
-                            {{offerModel.end_date}}
-                        </div>
-                        <div class="dropdown-divider"></div>
-                        ******Reseno
-
-                        <div class="mb-3 info-holder">
-                            <p class="mb-2  info-head-elem">
-                                <i class="mr-2 fas fa-arrow-down" height="14" width="14"></i>
-                                Min Investment
-                            </p>
-                            {{offerModel.currency}}{{offerModel.min_per_user}}
-                        </div>
-                        <div class="dropdown-divider"></div>
-                        *****Reseno
-                        
-                        <div class="mb-3 info-holder">
-                            <p class="mb-2  info-head-elem">
-                                <i class="mr-2 fas fa-arrow-up" height="14" width="14"></i>
-                                Max Investment
-                            </p>
-                            {{offerModel.currency}}{{offerModel.max_per_user}}
-                        </div>
-                        ******Reseno
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-6 mt-3">
-            <div class="card h-100">
-                <div class="card-body">
-                    <div class="card-title explainer-mini">Documents</div>
-                    <div class="card-text">
-                        <div class="row px-2">
-                            <div *ngFor="let doc of offerModel.documents" class="w-100">
-                                <div class="col-lg-12 mt-2 gray-text d-flex flex-row justify-content-between">
-                                    <div class=" w-75"
-                                         style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                                        {{doc.name}}
-                                    </div>
-                                    <a class="float-right" href="{{doc.link}}">
-                                        <i class="fas fa-download"></i>
-                                    </a>
-                                </div>
-                                <hr>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        *****Reseno
-
-        <div class="col-lg-6 mt-3">
-            <div class="card h-100">
-                <div class="card-body">
-                    <div class="card-title explainer-mini">Status</div>
-                    <div class="card-text">
-                        <div class="row">
-                            <div class="col-lg-8">
-
-
-								<span class="explainer-mini gray-text">
-									<span *ngIf="offerModel.active" class="">
-										<i class="fas fa-toggle-on mr-3"></i>
-										Open for funding
-									</span>
-									<span *ngIf="!offerModel.active" class="explainer-mini">
-										<i class="fas fa-toggle-off"></i>
-										Closed for funding
-									</span>
-								</span>
-                            </div>
-
-                            <div class="col-lg-12 mt-2">
-                                <div class="progress">
-                                    <div [style.width.%]="fundedPercentage" class="progress-bar"
-                                         role="progressbar"
-                                    ></div>
-                                </div>
-                            </div>
-                            <div class="col-lg-12 mt-2">
-                                <b>{{offerModel.currency}}{{offerModel.current_funding}}</b> of
-                                <b>{{offerModel.currency}}{{offerModel.expected_funding}}</b> collected
-                            </div>
-                            ******Reseno
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-        <div *ngIf="newsPreviews.length > 0" class="col-lg-12 mt-3">
-            <ul class="list-group">
-                <a *ngFor="let news of newsPreviews" class="list-group-item p-0 mt-2 cursor-pointer gray-text"
-                   href="{{news.url}}"
-                   style="height: 120px; text-decoration: none">
-                    <div class="w-100 h-100 d-flex flex-row">
-                        <div style="width: 120px">
-                            <img alt="" class="news-holder-image" src="{{news.image}}" style="">
-                        </div>
-                        <div class="p-3 d-flex flex-column mb-0">
-                            <div class="explainer-mini mb-2 text-uppercase w-100"
-                                 style="overflow: hidden; text-overflow: ellipsis">{{news.title}}</div>
-                            <div style="overflow: hidden; text-overflow: ellipsis">{{news.description}}</div>
-                        </div>
-                    </div>
-                </a>
-            </ul>
-
-        </div>
-
-        <div class="col-lg-12 mt-3">
-            <disqus [identifier]="offerModel.uuid"></disqus>
-        </div>
-
-    </div>
-
-</div>
- -->

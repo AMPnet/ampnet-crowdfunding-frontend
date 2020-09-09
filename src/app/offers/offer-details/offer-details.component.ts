@@ -9,7 +9,6 @@ import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import swal from 'sweetalert2';
 import { NewsLink } from '../../manage-projects/manage-single-project/news-link-model';
 import { Project, ProjectService } from '../../shared/services/project/project.service';
-import { FacebookService, InitParams, UIParams, UIResponse } from 'ngx-facebook';
 import { WalletService } from '../../shared/services/wallet/wallet.service';
 import { Wallet } from 'src/app/shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
 
@@ -26,7 +25,7 @@ export class OfferDetailsComponent implements OnInit {
     isOverview = false;
     isPortfolio = false;
     userConfirmed = true;
-    currentOfferUrl = window.location.href;
+    currentLocation =  encodeURIComponent(window.location.href);
 
     constructor(private projectService: ProjectService,
                 private newsPreviewService: NewsPreviewService,
@@ -34,15 +33,7 @@ export class OfferDetailsComponent implements OnInit {
                 private route: ActivatedRoute,
                 private userService: UserService,
                 private meta: Meta,
-                private router: Router,
-                private fb: FacebookService) {
-
-        const initParams: InitParams = {
-            appId: '611379136173563',
-            xfbml: true,
-            version: 'v3.2'
-        };
-        fb.init(initParams);
+                private router: Router) {
     }
 
     ngOnInit() {

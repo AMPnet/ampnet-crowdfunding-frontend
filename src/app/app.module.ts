@@ -60,6 +60,7 @@ import { GroupActivationComponent } from './wallet-activation/group-activation/g
 import { ProjectActivationComponent } from './wallet-activation/project-activation/project-activation.component';
 import { CompleteOnboardingComponent } from './complete-onboarding/complete-onboarding.component';
 import { SummaryComponent } from './summary/summary.component';
+import { ModalModule } from 'ngx-bootstrap/modal';
 import { PlatformBankAccountComponent } from './platform-bank-account/platform-bank-account.component';
 import { NewPlatformBankAccountComponent } from './platform-bank-account/new-platform-bank-account/new-platform-bank-account.component';
 import { ExchangeComponent } from './exchange/exchange.component';
@@ -73,9 +74,8 @@ import { FileValueAccessorDirective } from './shared/directives/file-value-acces
 import { SpinnerComponent } from './shared/components/spinner/spinner.component';
 import { UserStateReminderComponent } from './user-state-reminder/user-state-reminder.component';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
-import { RevenueShareConfirmModalComponent } from './project/manage-payments/revenue-share-confirm-modal/revenue-share-confirm-modal.component';
-
 // tslint:disable-next-line:max-line-length
+import { RevenueShareConfirmModalComponent } from './project/manage-payments/revenue-share-confirm-modal/revenue-share-confirm-modal.component';
 
 export function tokenGetter() {
     return localStorage.getItem('access_token');

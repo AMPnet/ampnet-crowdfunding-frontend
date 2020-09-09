@@ -43,10 +43,12 @@ export class InvestComponent implements OnInit {
         this.getWalletBalance();
     }
 
-
     getWalletBalance() {
         SpinnerUtil.showSpinner();
         this.walletService.getUserWallet().subscribe(res => {
+            if (res === null) {
+                return;
+            }
             this.wallet = res;
             this.wallet.currency = prettyCurrency(res.currency);
             this.wallet.balance = numeral(centsToBaseCurrencyUnit(res.balance)).format('0,0');
@@ -56,7 +58,6 @@ export class InvestComponent implements OnInit {
                 SpinnerUtil.hideSpinner();
             }, 200);
             this.getProject();
-
         }, err => {
             SpinnerUtil.hideSpinner();
             displayBackendError(err);

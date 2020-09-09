@@ -6,12 +6,12 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class CurrencyDefaultPipe extends CurrencyPipe implements PipeTransform {
     transform(
-        value: any,
+        value: number,
         code = 'EUR',
         display = 'symbol',
         digitsInfo = '1.2-2',
         locale = 'en'
     ) {
-        return super.transform(value, code, display, digitsInfo, locale);
+        return super.transform(value / 100, code, display, digitsInfo, locale);
     }
 }

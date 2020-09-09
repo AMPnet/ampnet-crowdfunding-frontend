@@ -78,8 +78,8 @@ class="wow fadeIn" style="background: #fdfdfd">
                     <!-- Offer progress -->
                     <div class="progress-text">
                         <p class="mt-lg-5 mt-4">
-                            <span>{{wallet?.balance | currencyDefault}}</span> raised of
-                            <span>{{project.expected_funding | currencyDefault}}</span> goal
+                            <span>{{ wallet?.balance | currencyDefault }}</span> raised of
+                            <span>{{ project.expected_funding | currencyDefault }}</span> goal
                         </p>
                     </div>
                     <div class="progress">
@@ -124,19 +124,20 @@ class="wow fadeIn" style="background: #fdfdfd">
 
                     <!-- Offer min investment -->
                     <div class="mt-lg-3">
-                        <span class="mr-2">{{project.min_per_user | currencyDefault}}</span>Min Investment
+                        <span class="mr-2">{{ project.min_per_user | currencyDefault }}</span>Min Investment
                     </div>
                     <div class="dropdown-divider mt-lg-3"></div>
 
                     <!-- Offer max investment -->
                     <div class="mt-lg-3">
-                        <span class="mr-2">{{project.max_per_user | currencyDefault}}</span>Max Investment
+                        <span class="mr-2">{{ project.max_per_user | currencyDefault }}</span>Max Investment
                     </div>
                     <div class="dropdown-divider mt-lg-3"></div>
 
                     <!-- Offer funding period -->
                     <div class="mt-lg-3 pb-lg-5 pb-0">
-                        <span class="mr-2">Funding period</span>{{project.start_date | date:'mediumDate'}} - {{project.end_date | date:'mediumDate'}}
+                        <span class="mr-2">Funding period</span>
+                        {{project.start_date | date:'mediumDate'}} - {{project.end_date | date:'mediumDate'}}
                     </div>
 
                     <!-- Offer Invest btn for mobile -->

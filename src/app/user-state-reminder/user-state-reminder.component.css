@@ -1,0 +1,37 @@
+.wallet-init-reminder {
+    position: absolute;
+    top: -60px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    background-color: #FE6250;
+    color: #ffffff;
+}
+
+.wallet-init-reminder p {
+    margin: 0;
+    padding: 0.3rem 0;
+}
+
+.reminder-link {
+    font-weight: bold;
+    text-decoration: underline;
+    cursor: pointer;
+    outline: none;
+}
+
+@media (max-width: 720px) {
+    .container {
+        padding: 0;
+    }
+    
+    .wallet-init-reminder {
+        position: unset;
+    }
+
+    .wallet-init-reminder p {
+        font-size: 12px;
+        margin: 0;
+        padding: 0.3rem 0;
+    }
+}

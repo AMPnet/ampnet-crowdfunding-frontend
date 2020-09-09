@@ -1,59 +1,53 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { Router } from '@angular/router';
 import * as $ from 'jquery';
 import { UserService } from '../shared/services/user/user.service';
-import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
-import { SpinnerUtil } from '../utilities/spinner-utilities';
+import { Observable } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
+import { User, UserRole } from '../shared/services/user/signup.service';
+import { WalletService } from '../shared/services/wallet/wallet.service';
+import { version } from '../../../package.json';
+
 
 @Component({
     selector: 'app-sidebar',
     templateUrl: './sidebar.component.html',
     styleUrls: ['./sidebar.component.css']
 })
-export class SidebarComponent implements OnInit {
-    isAdmin: boolean;
-    isPlatformManager: boolean;
-    isTokenIssuer: boolean;
-    hasWalletActive = true;
-    hasBankingInfo = true;
-    hasVerifiedProfile = true;
-    fullName: string;
+export class SidebarComponent implements OnInit, AfterViewInit {
+    appVersion: string = version;
+
+    userRole = UserRole;
+
+    userChange$: Observable<User>;
+    walletInitialized$: Observable<boolean>;
 
     constructor(private router: Router,
-                private userService: UserService) {
+                private userService: UserService,
+                private walletService: WalletService) {
     }
 
     ngOnInit() {
+        this.userChange$ = this.userService.getOwnProfile().pipe(
+            switchMap(_ => this.userService.userChange$)
+        );
+
+        this.walletInitialized$ = this.walletService.getUserWallet().pipe(
+            switchMap(_ => this.walletService.walletChange$),
+            map(wallet => wallet !== null)
+        );
+    }
+
+    ngAfterViewInit() {
         $('#main-menu li').on('click', () => {
             NavbarComponent.toggleSidebar(false);
         });
-        this.getProfile();
-        this.fetchUserData();
-    }
-
-    getProfile() {
-        this.userService.getOwnProfile().subscribe(res => {
-            this.isAdmin = (res.role === 'ADMIN');
-            this.isPlatformManager = (res.role === 'PLATFORM_MANAGER');
-            this.isTokenIssuer = (res.role === 'TOKEN_ISSUER');
-        }, hideSpinnerAndDisplayError);
     }
 
     logOutClicked() {
         return this.userService.logout().subscribe(() => {
-            localStorage.removeItem('access_token');
             this.router.navigate(['']);
-        });
-    }
-
-    contactUsClicked() {
-        window.location.href = 'mailto://info@ampnet.io';
-    }
-
-    fetchUserData() {
-        this.userService.getOwnProfile().subscribe(res => {
-            this.fullName = res['first_name'] + ' ' + res['last_name'];
         });
     }
 }

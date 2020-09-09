@@ -4,19 +4,27 @@ import { BackendHttpClient } from '../backend-http-client.service';
 import { tap } from 'rxjs/operators';
 import { User } from './signup.service';
 import { TokenModel } from '../../../models/auth/TokenModel';
+import { Observable, ReplaySubject } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
 })
 export class UserService {
+    userChange$: Observable<User>;
+
+    private userChangeSubject = new ReplaySubject<User>(1);
+
     constructor(private http: BackendHttpClient) {
+        this.userChange$ = this.userChangeSubject.asObservable();
     }
 
     getOwnProfile() {
         return this.http.get<User>('/api/user/me')
-            .pipe(tap(user => UserStatusStorage.personalData = user));
+            .pipe(tap(user => {
+                UserStatusStorage.personalData = user;
+                this.userChangeSubject.next(user);
+            }));
     }
-
 
     logout() {
         return this.http.post<void>(`/api/user/logout`, {})
@@ -29,9 +37,12 @@ export class UserService {
     refreshUserToken() {
         return this.http.post<TokenModel>('/api/user/token/refresh', {
             refresh_token: localStorage.getItem('refresh_token')
-        }).pipe(tap((data) => {
-            localStorage.setItem('access_token', data.access_token);
-            localStorage.setItem('refresh_token', data.refresh_token);
-        }));
+        }).pipe(
+            tap(res => {
+                localStorage.setItem('access_token', res.access_token);
+                localStorage.setItem('refresh_token', res.refresh_token);
+            }),
+            tap(() => this.getOwnProfile().subscribe())
+        );
     }
 }

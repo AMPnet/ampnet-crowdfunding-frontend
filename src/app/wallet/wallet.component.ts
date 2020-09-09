@@ -56,13 +56,15 @@ export class WalletComponent implements OnInit {
     getUserWallet() {
         SpinnerUtil.showSpinner();
         this.walletService.getUserWallet().subscribe(res => {
-            this.wallet = res;
-            this.wallet.currency = prettyCurrency(res.currency);
-            this.wallet.balance = numeral(centsToBaseCurrencyUnit(res.balance)).format('0,0');
-            this.wallet.activated_at = res.activated_at;
+            if (res !== null) {
+                this.wallet = res;
+                this.wallet.currency = prettyCurrency(res.currency);
+                this.wallet.balance = numeral(centsToBaseCurrencyUnit(res.balance)).format('0,0');
+                this.wallet.activated_at = res.activated_at;
+            }
             this.checkComplete = true;
             SpinnerUtil.hideSpinner();
-        }, err => {
+        }, _ => {
             SpinnerUtil.hideSpinner();
             this.checkComplete = true;
         });

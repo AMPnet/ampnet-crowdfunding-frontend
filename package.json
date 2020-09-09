@@ -47,7 +47,7 @@
     "metascraper": "^5.4.3",
     "micromodal": "^0.4.6",
     "moment": "^2.24.0",
-    "ngx-bootstrap": "^5.6.1",
+    "ngx-bootstrap": "^6.1.0",
     "ngx-cookie-service": "^2.0.2",
     "ngx-disqus": "^2.4.0",
     "ngx-spinner": "^6.1.2",

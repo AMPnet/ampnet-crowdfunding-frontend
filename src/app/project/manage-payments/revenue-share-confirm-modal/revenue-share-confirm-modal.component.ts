@@ -16,9 +16,8 @@ import { BroadcastService } from '../../../shared/services/broadcast.service';
 })
 
 export class RevenueShareConfirmModalComponent implements OnInit {
-    title = 'Confirm revenue share amount';
     amountInvestedConfirm: string;
-    frmRevenueAmountConfirm: FormGroup;
+    confirmForm: FormGroup;
     projectID: string;
 
     constructor(private bsModalRef: BsModalRef,
@@ -29,7 +28,7 @@ export class RevenueShareConfirmModalComponent implements OnInit {
 
     ngOnInit(): void {
         autonumericCurrency('#revenue-confirm-amount');
-        this.frmRevenueAmountConfirm = this.formBuilder.group({
+        this.confirmForm = this.formBuilder.group({
             amount: ['', [Validators.required, Validators.pattern(this.amountInvestedConfirm)]]
         });
     }

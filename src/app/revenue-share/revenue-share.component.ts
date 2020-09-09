@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
-import swal from 'sweetalert2';
-import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
 import { ProjectService } from '../shared/services/project/project.service';
 import { BroadcastService } from '../shared/services/broadcast.service';
 import { RevenueShareService } from '../shared/services/wallet/revenue-share.service';
@@ -50,33 +48,11 @@ export class RevenueShareComponent implements OnInit {
             });
     }
 
-    generateTransaction(amountInvested: number) {
-        SpinnerUtil.showSpinner();
-        this.revenueShareService.generateRevenueShareTx(this.projectID, amountInvested)
-            .subscribe(async (res) => {
-                const arkaneConnect = new ArkaneConnect('AMPnet', {environment: 'staging'});
-                const acc = await arkaneConnect.flows.getAccount(SecretType.AETERNITY);
-                const sigRes = await arkaneConnect.createSigner(WindowMode.POPUP).sign({
-                    walletId: acc.wallets[0].id,
-                    data: res.tx,
-                    type: SignatureRequestType.AETERNITY_RAW
-                });
-                this.broadcastService.broadcastSignedTx(sigRes.result.signedTransaction, res.tx_id)
-                    .subscribe(_ => {
-                        swal('', 'Successful revenue payout!', 'success');
-                        SpinnerUtil.hideSpinner();
-                    }, err => {
-                        hideSpinnerAndDisplayError(err);
-                    });
-            }, err => {
-                hideSpinnerAndDisplayError(err);
-            });
-    }
-
     showRevenueConfirmModal() {
         this.modalService.show(RevenueShareConfirmModalComponent, {
             initialState: {
-                amountInvestedConfirm: this.amountInvested
+                amountInvestedConfirm: this.amountInvested,
+                projectID: this.projectID
             }
         });
     }

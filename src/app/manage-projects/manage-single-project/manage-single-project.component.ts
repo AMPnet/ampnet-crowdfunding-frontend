@@ -133,7 +133,8 @@ export class ManageSingleProjectComponent implements OnInit, AfterViewInit {
             SpinnerUtil.hideSpinner();
             this.project = res;
             this.projectCoords = [this.project.location.lat, this.project.location.long];
-            
+            this.mapLat = this.project.location.lat;
+            this.mapLong = this.project.location.long;
             onComplete();
         }, err => {
             SpinnerUtil.hideSpinner();

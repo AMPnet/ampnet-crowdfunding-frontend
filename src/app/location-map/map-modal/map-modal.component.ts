@@ -1,5 +1,6 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Output, EventEmitter } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-map-modal',
@@ -7,14 +8,12 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
     styleUrls: ['./map-modal.component.css'],
 })
 export class MapModalComponent implements OnInit, AfterViewInit {
-    constructor() { }
+    rerenderMap = new Observable();
+
+    constructor(private bsModalRef: BsModalRef) { }
 
     ngOnInit() {}
 
     ngAfterViewInit() {
-        /* this.mapService.getMapPreview(this.projectLat, this.projectLong);
-        setTimeout(() => {
-        this.mapService.map.invalidateSize();
-        }, 10); */
     }
 }

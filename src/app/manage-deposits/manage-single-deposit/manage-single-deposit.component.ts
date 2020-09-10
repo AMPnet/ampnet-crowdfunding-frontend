@@ -1,19 +1,19 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
+import * as Uppy from 'uppy';
 import { ActivatedRoute } from '@angular/router';
-import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
-import MicroModal from 'micromodal';
-import * as numeral from 'numeral';
-import { BroadcastService } from 'src/app/shared/services/broadcast.service';
-import { autonumericCurrency, baseCurrencyUnitToCents, stripCurrencyData } from 'src/app/utilities/currency-util';
 import { hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
-import swal from 'sweetalert2';
-import * as Uppy from 'uppy';
-import { BackendHttpClient } from '../../shared/services/backend-http-client.service';
+import * as numeral from 'numeral';
 import {
     DepositSearchResponse,
     WalletCooperativeDepositService
 } from '../../shared/services/wallet/wallet-cooperative/wallet-cooperative-deposit.service';
+import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
+import { BroadcastService } from 'src/app/shared/services/broadcast.service';
+import swal from 'sweetalert2';
+import { autonumericCurrency, baseCurrencyUnitToCents, stripCurrencyData } from 'src/app/utilities/currency-util';
+import MicroModal from 'micromodal';
+import { BackendHttpClient } from '../../shared/services/backend-http-client.service';
 
 declare var $: any;
 
@@ -29,9 +29,7 @@ export class ManageSingleDepositComponent implements OnInit, AfterViewInit {
     constructor(private route: ActivatedRoute,
                 private http: BackendHttpClient,
                 private depositCooperativeService: WalletCooperativeDepositService,
-                private broadService: BroadcastService,
-    ) {
-
+                private broadService: BroadcastService) {
     }
 
     ngOnInit() {
@@ -111,9 +109,9 @@ export class ManageSingleDepositComponent implements OnInit, AfterViewInit {
         if (depositAmount !== depositConfirmAmount) {
             swal('', 'The deposit amounts don\'t match. Please check the proper deposit amount and try again!',
                 'error').then(() => {
-                    (<any>$('#modal-confirm-deposit')).modal('hide');
-                    location.reload();
-                });
+                (<any>$('#modal-confirm-deposit')).modal('hide');
+                location.reload();
+            });
             return;
         }
 

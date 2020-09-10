@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { UserTransaction, WalletService } from '../shared/services/wallet/wallet.service';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { displayBackendError } from '../utilities/error-handler';
 import { centsToBaseCurrencyUnit, prettyCurrency } from '../utilities/currency-util';
 import * as numeral from 'numeral';
 import { ArkaneConnect, SecretType } from '@arkane-network/arkane-connect';
+import { UserTransaction, WalletService } from '../shared/services/wallet/wallet.service';
 import { WalletDetails } from '../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
 
 declare var $: any;

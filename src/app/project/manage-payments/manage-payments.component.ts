@@ -2,11 +2,12 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { displayBackendError } from 'src/app/utilities/error-handler';
-import { autonumericCurrency, centsToBaseCurrencyUnit, prettyCurrency } from 'src/app/utilities/currency-util';
+import { autonumericCurrency, centsToBaseCurrencyUnit, prettyCurrency, stripCurrencyData } from 'src/app/utilities/currency-util';
 import * as numeral from 'numeral';
 import { Project, ProjectService } from '../../shared/services/project/project.service';
 import { WalletService } from '../../shared/services/wallet/wallet.service';
 import { WalletDetails } from '../../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
     selector: 'app-manage-payments',
@@ -14,14 +15,20 @@ import { WalletDetails } from '../../shared/services/wallet/wallet-cooperative/w
     styleUrls: ['./manage-payments.component.css']
 })
 export class ManagePaymentsComponent implements OnInit {
-    @Input() revenueShareAmount;
     projectWallet: WalletDetails;
     project: Project;
+
+    revenueForm: FormGroup;
 
     constructor(private walletService: WalletService,
                 private route: ActivatedRoute,
                 private router: Router,
-                private projectService: ProjectService) {
+                private projectService: ProjectService,
+                private fb: FormBuilder) {
+
+        this.revenueForm = this.fb.group({
+            amount: ['', [Validators.required, this.amountValidator.bind(this)]]
+        });
     }
 
     ngOnInit() {
@@ -56,11 +63,18 @@ export class ManagePaymentsComponent implements OnInit {
         const orgID = this.route.snapshot.params.groupID;
 
         this.router.navigate([
-            `/dash/manage_groups/${orgID}/manage_project/${projID}/manage_payments/revenue_share/${this.revenueShareAmount}`]);
+            `/dash/manage_groups/${orgID}/manage_project/${projID}
+            /manage_payments/revenue_share/${this.revenueForm.controls['amount'].value}`]);
     }
 
-    onRevenueShareAmountChange(revenueShareAmount) {
-        (<HTMLInputElement>document.getElementById('buttonStartPayout'))
-            .disabled = revenueShareAmount === undefined || (revenueShareAmount.replace(/\D+/g, '')) <= 0;
+    private amountValidator(control: AbstractControl): { [key: string]: any } | null {
+        const inputAmount = Number(stripCurrencyData(control.value.toString()));
+        const walletBalance = Number(stripCurrencyData((this.projectWallet?.balance || 0).toString()));
+
+        if (inputAmount > walletBalance || inputAmount <= 0) {
+            return {inputAmountInvalid: true};
+        }
+
+        return null;
     }
 }

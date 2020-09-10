@@ -1,6 +1,5 @@
-import { Component, OnInit, AfterViewInit, Input, Output } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
-import { Subject } from 'rxjs';
 
 @Component({
     selector: 'app-map-modal',

@@ -17,9 +17,9 @@ export class LocationMapComponent implements AfterViewInit {
 
     ngAfterViewInit() {
         this.initMap();
-        /* setTimeout(() =>{
+        setTimeout( () => {
             this.map.invalidateSize();
-        }, 10) */
+        }, 10);
        /*  this.map.invalidateSize(); */
     }
 

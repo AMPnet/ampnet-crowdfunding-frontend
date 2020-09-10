@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { autonumericCurrency, stripCurrencyData } from '../../../utilities/currency-util';
+import { autonumericCurrency, stripCurrencyData } from '../../utilities/currency-util';
 import { BsModalRef } from 'ngx-bootstrap/modal';
-import { SpinnerUtil } from '../../../utilities/spinner-utilities';
+import { SpinnerUtil } from '../../utilities/spinner-utilities';
 import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
 import swal from 'sweetalert2';
-import { hideSpinnerAndDisplayError } from '../../../utilities/error-handler';
-import { RevenueShareService } from '../../../shared/services/wallet/revenue-share.service';
-import { BroadcastService } from '../../../shared/services/broadcast.service';
+import { hideSpinnerAndDisplayError } from '../../utilities/error-handler';
+import { RevenueShareService } from '../../shared/services/wallet/revenue-share.service';
+import { BroadcastService } from '../../shared/services/broadcast.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-revenue-share-confirm-modal',
@@ -16,12 +17,14 @@ import { BroadcastService } from '../../../shared/services/broadcast.service';
 })
 
 export class RevenueShareConfirmModalComponent implements OnInit {
+    orgID: string;
     projectID: string;
     amountInvestedConfirm: string;
 
     confirmForm: FormGroup;
 
-    constructor(private bsModalRef: BsModalRef,
+    constructor(private router: Router,
+                private bsModalRef: BsModalRef,
                 private formBuilder: FormBuilder,
                 private revenueShareService: RevenueShareService,
                 private broadcastService: BroadcastService) {
@@ -47,8 +50,10 @@ export class RevenueShareConfirmModalComponent implements OnInit {
                 });
                 this.broadcastService.broadcastSignedTx(sigRes.result.signedTransaction, res.tx_id)
                     .subscribe(_ => {
-                        swal('', 'Successful revenue payout!', 'success');
-                        SpinnerUtil.hideSpinner();
+                        swal('', 'Successful revenue payout!', 'success').then(() => {
+                            SpinnerUtil.hideSpinner();
+                            this.router.navigate([`/dash/manage_groups/${this.orgID}/manage_project/${this.projectID}`]);
+                        });
                     }, err => {
                         hideSpinnerAndDisplayError(err);
                     });

@@ -73,7 +73,7 @@ import { FileValueAccessorDirective } from './shared/directives/file-value-acces
 import { SpinnerComponent } from './shared/components/spinner/spinner.component';
 import { UserStateReminderComponent } from './user-state-reminder/user-state-reminder.component';
 // tslint:disable-next-line:max-line-length
-import { RevenueShareConfirmModalComponent } from './project/manage-payments/revenue-share-confirm-modal/revenue-share-confirm-modal.component';
+import { RevenueShareConfirmModalComponent } from './revenue-share/revenue-share-confirm-modal/revenue-share-confirm-modal.component';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 export function tokenGetter() {

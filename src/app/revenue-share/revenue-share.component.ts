@@ -7,7 +7,7 @@ import { BroadcastService } from '../shared/services/broadcast.service';
 import { RevenueShareService } from '../shared/services/wallet/revenue-share.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
 // tslint:disable-next-line:max-line-length
-import { RevenueShareConfirmModalComponent } from '../project/manage-payments/revenue-share-confirm-modal/revenue-share-confirm-modal.component';
+import { RevenueShareConfirmModalComponent } from './revenue-share-confirm-modal/revenue-share-confirm-modal.component';
 
 @Component({
     selector: 'app-revenue-share',
@@ -15,6 +15,7 @@ import { RevenueShareConfirmModalComponent } from '../project/manage-payments/re
     styleUrls: ['./revenue-share.component.css']
 })
 export class RevenueShareComponent implements OnInit {
+    orgID: string;
     projectID: string;
     projectName: string;
     amountInvested: number;
@@ -32,6 +33,7 @@ export class RevenueShareComponent implements OnInit {
     }
 
     fetchDataFromRoute() {
+        this.orgID = this.route.snapshot.params.projectID;
         this.projectID = this.route.snapshot.params.projectID;
         this.amountInvested = this.route.snapshot.params.amount;
         this.getProject(this.projectID);
@@ -49,8 +51,9 @@ export class RevenueShareComponent implements OnInit {
     showRevenueConfirmModal() {
         this.modalService.show(RevenueShareConfirmModalComponent, {
             initialState: {
-                amountInvestedConfirm: this.amountInvested,
-                projectID: this.projectID
+                orgID: this.orgID,
+                projectID: this.projectID,
+                amountInvestedConfirm: this.amountInvested
             }
         });
     }

@@ -19,10 +19,10 @@
                 OFFER DETAILS
             </p>
         </div>
-        <div class="col-lg-7 offer-left order-last order-lg-second">
+        <div class="col-lg-7 offer-left order-last order-lg-second"
+             *ngIf="(project !== undefined) && (!isPortfolio)">
             <!-- Offer image -->
-            <div *ngIf="(project !== undefined) && (!isPortfolio)"
-                 class="wow fadeIn d-none d-lg-block">
+            <div class="wow fadeIn d-lg-block">
                 <img class="header-image w-100" src="{{project.main_image}}">
             </div>
             <!-- Offer desc -->
@@ -44,6 +44,7 @@
                 </div>
             </div>
         </div>
+
         <div class="col-12 col-lg-5 offer-right order-second order-lg-last">
             <div class="offer-right-container">
                 <!-- Page title for mobile -->
@@ -170,11 +171,14 @@
             </div>
 
             <!-- Offer socials share -->
-            <div class="offer-right-socials col-lg-9 mt-4">
+            <div class="offer-right-socials col-lg-9">
                 <div class="d-flex flex-row align-items-center">
                     <span class="mr-lg-5">Share</span>
                     <div class="cursor-pointer mr-lg-5">
-                        <i class="fab fa-twitter"></i>
+                        <a href="https://twitter.com/intent/tweet?url={{ currentLocation }}"
+                           target="_blank">
+                            <i class="fab fa-twitter"></i>
+                        </a>
                     </div>
                     <div class="cursor-pointer mr-lg-5">
                         <a href="https://www.facebook.com/sharer/sharer.php?u={{ currentLocation }}"

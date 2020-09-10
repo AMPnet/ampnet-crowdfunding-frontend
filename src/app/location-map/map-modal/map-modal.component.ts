@@ -9,10 +9,13 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 export class MapModalComponent implements OnInit, AfterViewInit {
     @Input() projectCoords = [];
 
-    constructor(bsModalRef: BsModalRef) { }
+    constructor(private bsModalRef: BsModalRef) { }
 
     ngOnInit() {}
 
-    ngAfterViewInit() {
+    ngAfterViewInit() {}
+
+    closeModal() {
+        this.bsModalRef.hide();
     }
 }

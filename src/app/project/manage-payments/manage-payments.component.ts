@@ -61,10 +61,9 @@ export class ManagePaymentsComponent implements OnInit {
     startPayout() {
         const projID = this.route.snapshot.params.projectID;
         const orgID = this.route.snapshot.params.groupID;
+        const amount = this.revenueForm.controls['amount'].value;
 
-        this.router.navigate([
-            `/dash/manage_groups/${orgID}/manage_project/${projID}
-            /manage_payments/revenue_share/${this.revenueForm.controls['amount'].value}`]);
+        this.router.navigate([`/dash/manage_groups/${orgID}/manage_project/${projID}/manage_payments/revenue_share/${amount}`]);
     }
 
     private amountValidator(control: AbstractControl): { [key: string]: any } | null {

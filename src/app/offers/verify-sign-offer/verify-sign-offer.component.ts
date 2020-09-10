@@ -15,7 +15,6 @@ import { WalletService } from '../../shared/services/wallet/wallet.service';
     styleUrls: ['./verify-sign-offer.component.css']
 })
 export class VerifySignOfferComponent implements OnInit {
-
     projectID: string;
     investAmount: number;
     project: Project;
@@ -37,7 +36,6 @@ export class VerifySignOfferComponent implements OnInit {
         this.projectService.getProject(this.projectID).subscribe(res => {
             SpinnerUtil.hideSpinner();
             this.project = res;
-            this.project.currency = prettyCurrency(res.currency);
         }, err => {
             SpinnerUtil.hideSpinner();
             displayBackendError(err);
@@ -46,10 +44,8 @@ export class VerifySignOfferComponent implements OnInit {
 
     verifyAndSign() {
         SpinnerUtil.showSpinner();
-        this.walletService.investToProject(this.project.uuid, baseCurrencyUnitToCents(this.investAmount))
+        this.walletService.investToProject(this.project.uuid, this.investAmount)
             .subscribe(async res => {
-                SpinnerUtil.hideSpinner();
-
                 const arkaneConnect = new ArkaneConnect('AMPnet', {environment: 'staging'});
                 const acc = await arkaneConnect.flows.getAccount(SecretType.AETERNITY);
                 const sigRes = await arkaneConnect.createSigner(WindowMode.POPUP).sign({

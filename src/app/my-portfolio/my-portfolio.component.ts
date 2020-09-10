@@ -3,7 +3,6 @@ import { Portfolio, PortfolioService, PortfolioStats } from '../shared/services/
 import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { WalletService } from '../shared/services/wallet/wallet.service';
-import { centsToBaseCurrencyUnit } from '../utilities/currency-util';
 
 
 @Component({
@@ -33,7 +32,6 @@ export class MyPortfolioComponent implements OnInit {
                 this.portfolioService.getPortfolioStats().subscribe((portfolioStatsRes) => {
                     this.hasWallet = true;
                     this.stats = portfolioStatsRes;
-                    this.stats.investments = centsToBaseCurrencyUnit(this.stats.investments);
                     if (this.stats.investments > 0) {
                         this.roi = ((this.stats.earnings + this.stats.investments) / (this.stats.investments) - 1) * 100;
                     }

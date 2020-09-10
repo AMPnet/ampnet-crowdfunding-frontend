@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import * as Uppy from 'uppy';
 import swal from 'sweetalert2';
-import { ManageProjectsService } from '../../shared/services/project/manage-projects.service';
 import { ActivatedRoute } from '@angular/router';
-import { Project, ProjectService } from 'src/app/shared/services/project/project.service';
 import { displayBackendError, hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { validURL } from '../../utilities/link-valid-util';
 import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
-import { BroadcastService } from 'src/app/shared/services/broadcast.service';
 import { WalletDetails } from '../../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
+import { Project, ProjectService } from '../../shared/services/project/project.service';
 import { WalletService } from '../../shared/services/wallet/wallet.service';
 import { BackendHttpClient } from '../../shared/services/backend-http-client.service';
+import { ManageProjectsService } from '../../shared/services/project/manage-projects.service';
+import { BroadcastService } from '../../shared/services/broadcast.service';
 
 declare var $: any;
 

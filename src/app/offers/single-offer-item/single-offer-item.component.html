@@ -2,11 +2,11 @@
     <div class="card-left-holder pb-md-3">
         <div class="card-img-holder">
             <img alt=""
-                 class="w-100 h-100 card-img-base" src="{{projectWallet.project.main_image}}">
+                 class="w-100 h-100 card-img-base" src="{{ projectWallet.project.main_image }}">
         </div>
         <div class="card-progress-holder">
             <div class="h3 text-uppercase gray-text mb-3 mt-3 d-lg-none">
-                {{projectWallet.project.name}}
+                {{ projectWallet.project.name }}
             </div>
 
             <ng-container *ngIf="(projectWallet$ | async) as wallet else walletLoading">
@@ -14,7 +14,7 @@
                     <div class="mt-2">
                         <div class="mt-2 mb-2 raised-info">
                             <div>
-                                <span>{{wallet.totalFundsRaised | currencyDefault }}</span> raised of
+                                <span>{{ wallet.totalFundsRaised | currencyDefault }}</span> raised of
                                 {{ wallet.investmentCap | currencyDefault }} goal
                             </div>
                         </div>
@@ -35,18 +35,18 @@
             </ng-template>
 
             <div class="mt-2 ends-info">
-                <div>Ends on {{projectWallet.project.end_date | date:'mediumDate' }}</div>
+                <div>Ends on {{ projectWallet.project.end_date | date:'mediumDate' }}</div>
             </div>
         </div>
     </div>
     <div class="card-content-holder">
         <div class="card-content-text-holder">
             <div class="h3 text-uppercase gray-text mb-3 d-none d-lg-block">
-                {{projectWallet.project.name}}
+                {{ projectWallet.project.name }}
             </div>
             <div class="explainer-mini text-uppercase mb-4">
                 Expected yearly return:
-                <span class="roi-info">{{projectWallet.project.roi.from}}% - {{projectWallet.project.roi.to}}%</span>
+                <span class="roi-info">{{ projectWallet.project.roi.from }}% - {{ projectWallet.project.roi.to }}%</span>
             </div>
             <div [innerHTML]="projectWallet.project.description" class="p gray-text"></div>
         </div>

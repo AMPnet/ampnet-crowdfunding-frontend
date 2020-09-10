@@ -41,6 +41,7 @@ import { NewPlatformBankAccountComponent } from './platform-bank-account/new-pla
 import { ExchangeComponent } from './exchange/exchange.component';
 import { OwnershipComponent } from './ownership/ownership.component';
 import { RevenueShareComponent } from './revenue-share/revenue-share.component';
+import { ManagePaymentsComponent } from './project/manage-payments/manage-payments.component';
 
 const routes: Routes = [
     {
@@ -80,7 +81,11 @@ const routes: Routes = [
             {path: 'manage_groups/:id/projects', component: ManageProjectsComponent},
             {path: 'manage_groups/:groupID/manage_project/:projectID', component: ManageSingleProjectComponent},
             {path: 'offers/:offerID/invest/:investAmount/verify_sign', component: VerifySignOfferComponent},
-            {path: 'manage_groups/:groupID/manage_project/:projectID/revenue_share', component: RevenueShareComponent},
+            {path: 'manage_groups/:groupID/manage_project/:projectID/manage_payments', component: ManagePaymentsComponent},
+            {
+                path: 'manage_groups/:groupID/manage_project/:projectID/manage_payments/revenue_share/:amount',
+                component: RevenueShareComponent
+            },
             {path: 'manage_withdrawals', component: ManageWithdrawalsComponent},
             {path: 'manage_withdrawals/:ID', component: SingleWithdrawalComponent},
             {path: 'manage_deposits', component: ManageDepositsComponent},
@@ -92,7 +97,7 @@ const routes: Routes = [
             {path: 'admin/platform_bank_account', component: PlatformBankAccountComponent},
             {path: 'admin/platform_bank_account/new', component: NewPlatformBankAccountComponent},
             {path: 'exchange', component: ExchangeComponent},
-            {path: 'ownership', component: OwnershipComponent}
+            {path: 'ownership', component: OwnershipComponent},
         ]
     }
 ];

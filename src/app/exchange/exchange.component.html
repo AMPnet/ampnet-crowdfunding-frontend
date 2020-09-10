@@ -9,8 +9,8 @@
             data-live-search="true" id=""
             name="">
         <option disabled selected value="">Select the project you want to sell</option>
-        <option *ngFor="let item of portfolio; let i = index" value="{{i}}">
-            {{item.project.name}}
+        <option *ngFor="let item of portfolio; let i = index" value="{{ i }}">
+            {{ item.project.name }}
         </option>
     </select>
     <div *ngIf="selectedProjectIndex > -1" class="mt-3 w-100">
@@ -19,7 +19,7 @@
         <span class="">
           Your number of shares
           <div class="explainer-mini">
-            {{personalShares}}
+            {{ personalShares }}
           </div>
         </span>
             </div>
@@ -27,7 +27,7 @@
         <span class=" float-right">
           <div>Total number of shares</div>
           <div class="explainer-mini float-right">
-            {{totalShares}}
+            {{ totalShares }}
           </div>
         </span>
             </div>
@@ -35,31 +35,31 @@
         </div>
 
         <input (change)="onChangeInput($event.target.value)" class="form-control w-100 mt-3 p-4" id="input-share-sales"
-               max="{{portfolio[selectedProjectIndex].investment}}" min="0"
+               max="{{ portfolio[selectedProjectIndex].investment }}" min="0"
                placeholder="Enter the number of shares you want to sell"
                type="range">
 
         <div class="row w-100">
             <div class="col-md-6">
-                <div *ngIf="remainingShares.length > 0" class="mt-3">
+                <div *ngIf="remainingShares !== undefined" class="mt-3">
                     <div>Amount selling</div>
                     <div class="explainer-mini">
-                        {{sharesForSale}}
+                        {{ sharesForSale | number }}
                     </div>
                 </div>
             </div>
             <div class="col-md-6">
-                <div *ngIf="remainingShares.length > 0" class="mt-3 float-right">
+                <div *ngIf="remainingShares !== undefined" class="mt-3 float-right">
                     <div>Remaining shares after sale</div>
                     <div class="explainer-mini float-right">
-                        {{remainingShares}}
+                        {{ remainingShares | number }}
                     </div>
                 </div>
             </div>
             <div class="col-md-4 mt-3">
                 <div>Your purchase price</div>
                 <div class="explainer-mini">
-                    {{pricePaidFor | currencyDefault}}
+                    {{ pricePaidFor | currencyDefault }}
                 </div>
             </div>
             <div class="col-md-4 mt-3 text-center">
@@ -71,18 +71,15 @@
             <div class="col-md-4 mt-3 float-right">
                 <div class="text-right">Suggested discounted price</div>
                 <div class="explainer-mini text-right">
-                    {{suggestedSalePrice | currencyDefault}}
+                    {{ suggestedSalePrice | currencyDefault }}
                 </div>
             </div>
         </div>
 
-
         <button class="btn btn-primary px-4 py-3 float-right mt-3">Publish sales proposal</button>
-
     </div>
 
     <div class="explainer-mini mt-5">Projects on sale</div>
-
 </div>
 
 

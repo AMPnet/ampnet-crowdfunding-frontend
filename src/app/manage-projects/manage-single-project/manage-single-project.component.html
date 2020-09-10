@@ -4,14 +4,14 @@
     <div *ngIf="wallet !== undefined" class="row row-eq-height">
         <h5 class="text-uppercase mb-3 col-md-8">Manage your project</h5>
         <div class="col-md-4">
-            <button class="btn btn-primary w-100 py-3 float-right" routerLink="/dash/offers/{{project.uuid}}">
+            <button class="btn btn-primary w-100 py-3 float-right" routerLink="/dash/offers/{{ project.uuid }}">
                 <i class="fas fa-anchor mr-2"></i>
                 Preview project
             </button>
         </div>
 
         <div class="col-md-12 mt-3 mb-5">
-            <button class="w-100 btn btn-info py-3" routerLink="revenue_share">
+            <button class="w-100 btn btn-info py-3" routerLink="manage_payments">
                 <i class="fas fa-money-bill-wave mr-2"></i>
                 Manage payments
             </button>
@@ -48,7 +48,7 @@
         <div class="input-group mb-3 col-md-12">
             <input aria-describedby="basic-addon1" aria-label="Username" class="form-control p-4 " id="project-name"
                    type="text"
-                   value="{{project.name}}">
+                   value="{{ project.name }}">
         </div>
 
         <div class="col-md-12 mb-2">
@@ -56,7 +56,7 @@
         </div>
         <div class="input-group mb-3 col-md-12">
             <textarea class="form-control p-4" cols="30" id="project-description" name=""
-                      rows="10" style="border-radius: 5px!important;">{{project.description}}</textarea>
+                      rows="10" style="border-radius: 5px!important;">{{ project.description }}</textarea>
         </div>
 
         <div class="col-md-12 mb-2">
@@ -89,7 +89,7 @@
         <p class="explainer-mini text-uppercase col-sm-12">Project image</p>
 
         <div *ngIf="project !== undefined" class="col-md-6">
-            <img *ngIf="project.main_image !== null" alt="" class=" img-fluid" src="{{project.main_image}}">
+            <img *ngIf="project.main_image !== null" alt="" class=" img-fluid" src="{{ project.main_image }}">
             <div *ngIf="project.main_image ===  null" class="w-100 text-center mt-5">
                 Project has no image set
             </div>
@@ -117,12 +117,12 @@
             <div class="card">
                 <div class="card-body d-flex flex-row justify-content-between">
                     <div class="w-75"
-                         style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{file.name}}</div>
+                         style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{ file.name }}</div>
                     <span class="float-right">
             <span (click)="deleteFile(file.id)" class="mr-3 cursor-pointer gray-text">
               <i class="fas fa-trash"></i>
             </span>
-            <a class="cursor-pointer gray-text" href="{{file.link}}">
+            <a class="cursor-pointer gray-text" href="{{ file.link }}">
               <i class="fas fa-file-download"></i>
             </a>
           </span>
@@ -150,9 +150,9 @@
         <div class="col-md-12 mt-3">
             <ul class="list-group">
                 <li *ngFor="let item of project.news" class="list-group-item d-flex flex-row justify-content-between">
-                    <a class="w-75" href="{{item}}"
+                    <a class="w-75" href="{{ item }}"
                        style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis">
-                        {{item}}
+                        {{ item }}
                     </a>
                     <div (click)="deleteNewsClicked(item)" class="cursor-pointer">
                         <i class="fas fa-trash"></i>

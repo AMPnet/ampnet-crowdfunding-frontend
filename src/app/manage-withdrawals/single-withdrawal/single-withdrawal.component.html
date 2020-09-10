@@ -9,11 +9,11 @@
                     <div class="d-flex justify-content-between withdrawal-examine-holder">
                         <div>
                             <div class="explainer-mini text-uppercase">Name</div>
-                            <div>{{withdrawal.user.first_name}} {{withdrawal.user.last_name}}</div>
+                            <div>{{ withdrawal.user.first_name }} {{ withdrawal.user.last_name }}</div>
                         </div>
                         <div>
                             <div class="explainer-mini text-uppercase">IBAN</div>
-                            <div>{{withdrawal.bank_account}}</div>
+                            <div>{{ withdrawal.bank_account }}</div>
                         </div>
                         <div>
                             <div class="explainer-mini text-uppercase">SWIFT/BIC</div>
@@ -21,7 +21,7 @@
                         </div>
                         <div>
                             <div class="explainer-mini text-uppercase">Amount</div>
-                            <div>{{withdrawal.amount | currencyDefault}}</div>
+                            <div>{{ withdrawal.amount | currencyDefault }}</div>
                         </div>
                     </div>
                 </div>

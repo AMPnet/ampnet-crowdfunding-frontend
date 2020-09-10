@@ -42,7 +42,6 @@ export class SingleWithdrawalComponent implements OnInit, AfterViewInit {
         this.withdrawCooperativeService.getApprovedWithdrawals().subscribe(res => {
             SpinnerUtil.hideSpinner();
             this.withdrawal = res.withdraws.filter(item => item.id === id)[0];
-            this.withdrawal.amount = centsToBaseCurrencyUnit(this.withdrawal.amount);
         }, hideSpinnerAndDisplayError);
     }
 

@@ -8,12 +8,12 @@
             <ul *ngIf="withdrawals !== undefined" class="list-group">
                 <li *ngFor="let withdrawal of withdrawals"
                     class="list-group-item cursor-pointer  gray-text explainer-mini"
-                    routerLink="{{withdrawal.id}}">
+                    routerLink="{{ withdrawal.id }}">
           <span class="float-left ">
-            {{withdrawal.user.first_name}} {{withdrawal.user.last_name}} ({{withdrawal.user.email}})
+            {{ withdrawal.user.first_name }} {{ withdrawal.user.last_name }} ({{ withdrawal.user.email }})
           </span>
                     <span class="float-right  ">
-              {{withdrawal.amount | currencyDefault}}
+              {{ withdrawal.amount | currencyDefault }}
           </span>
                 </li>
             </ul>

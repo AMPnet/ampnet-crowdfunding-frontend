@@ -26,10 +26,7 @@ export class ManageWithdrawalsComponent implements OnInit {
         SpinnerUtil.showSpinner();
         return this.withdrawService.getApprovedWithdrawals().subscribe(res => {
             SpinnerUtil.hideSpinner();
-            this.withdrawals = res.withdraws.map(x => {
-                x.amount = centsToBaseCurrencyUnit(x.amount);
-                return x;
-            });
+            this.withdrawals = res.withdraws;
         }, hideSpinnerAndDisplayError);
     }
 }

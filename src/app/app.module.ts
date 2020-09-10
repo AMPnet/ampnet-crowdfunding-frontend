@@ -76,10 +76,6 @@ import { UserStateReminderComponent } from './user-state-reminder/user-state-rem
 import { RevenueShareConfirmModalComponent } from './revenue-share/revenue-share-confirm-modal/revenue-share-confirm-modal.component';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
-export function tokenGetter() {
-    return localStorage.getItem('access_token');
-}
-
 const socialAuthServiceConfig = {
     provide: 'SocialAuthServiceConfig',
     useValue: {
@@ -96,15 +92,6 @@ const socialAuthServiceConfig = {
         ]
     } as SocialAuthServiceConfig
 };
-
-export function jwtOptionsFactory() {
-    return {
-        tokenGetter: () => {
-            return localStorage.getItem('access_token');
-        },
-        whitelistedDomains: ['localhost:4200']
-    };
-}
 
 @NgModule({
     declarations: [

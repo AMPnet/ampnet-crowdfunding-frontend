@@ -7,6 +7,8 @@ import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { User, UserRole } from '../shared/services/user/signup.service';
 import { WalletService } from '../shared/services/wallet/wallet.service';
+import { version } from '../../../package.json';
+
 
 @Component({
     selector: 'app-sidebar',
@@ -14,6 +16,8 @@ import { WalletService } from '../shared/services/wallet/wallet.service';
     styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent implements OnInit, AfterViewInit {
+    appVersion: string = version;
+
     userRole = UserRole;
 
     userChange$: Observable<User>;

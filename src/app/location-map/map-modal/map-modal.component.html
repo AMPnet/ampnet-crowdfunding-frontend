@@ -4,5 +4,5 @@
   </button>
 </div>
 <div class="modal-body">
-    <app-location-map [coordsSet]="projectCoords"></app-location-map>
+    <app-location-map [coordsSet]="projectCoords" (getMap)="getMap($event)"></app-location-map>
 </div>

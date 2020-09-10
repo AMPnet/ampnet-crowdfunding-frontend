@@ -8,6 +8,7 @@ import leaflet from 'leaflet';
 })
 export class LocationMapComponent implements AfterViewInit {
     @Output() getMapCoords = new EventEmitter();
+    @Output() getMap = new EventEmitter();
     @Input() movableMarker: boolean;
     @Input() coordsSet = [];
     map;
@@ -17,10 +18,6 @@ export class LocationMapComponent implements AfterViewInit {
 
     ngAfterViewInit() {
         this.initMap();
-        setTimeout( () => {
-            this.map.invalidateSize();
-        }, 10);
-       /*  this.map.invalidateSize(); */
     }
 
     private initMap() {
@@ -41,6 +38,7 @@ export class LocationMapComponent implements AfterViewInit {
         if (this.movableMarker) {
             this.editMapCoords();
         }
+        this.getMap.emit(this.map);
     }
 
     editMapCoords() {

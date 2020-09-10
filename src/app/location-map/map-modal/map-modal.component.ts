@@ -1,5 +1,6 @@
-import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Input, Output } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
+import { Subject } from 'rxjs';
 
 @Component({
     selector: 'app-map-modal',
@@ -8,6 +9,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 })
 export class MapModalComponent implements OnInit, AfterViewInit {
     @Input() projectCoords = [];
+    @Input() rerenderMap;
 
     constructor(private bsModalRef: BsModalRef) { }
 
@@ -17,5 +19,9 @@ export class MapModalComponent implements OnInit, AfterViewInit {
 
     closeModal() {
         this.bsModalRef.hide();
+    }
+
+    getMap(e) {
+        this.rerenderMap = e;
     }
 }

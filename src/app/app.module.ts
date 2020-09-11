@@ -68,11 +68,9 @@ import { CurrencyDefaultPipe } from './pipes/currency-default-pipe';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RevenueShareComponent } from './revenue-share/revenue-share.component';
 import { TxIconStatus, TxIconType } from './wallet/wallet-icon.pipe';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
-import { MatOptionModule } from '@angular/material/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ProjectTagFilterComponent } from './shared/components/project-tag-filter/project-tag-filter.component';
 
@@ -181,11 +179,9 @@ export function jwtOptionsFactory() {
         SocialLoginModule,
         NgxSpinnerModule,
         NgbModule,
-        BrowserAnimationsModule,
         MatFormFieldModule,
         MatChipsModule,
         MatIconModule,
-        MatOptionModule,
         MatAutocompleteModule,
     ],
     providers: [

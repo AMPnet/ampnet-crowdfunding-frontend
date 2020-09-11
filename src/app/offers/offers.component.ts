@@ -118,6 +118,5 @@ export class OffersComponent implements OnInit, OnDestroy {
     ngOnDestroy(): void {
         this.projectTagFilterService.clearAllTags();
         this.subs.unsubscribe();
-        console.log('unsubscribe');
     }
 }

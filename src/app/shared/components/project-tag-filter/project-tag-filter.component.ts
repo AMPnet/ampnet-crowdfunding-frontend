@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { COMMA, ENTER, SPACE } from '@angular/cdk/keycodes';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
@@ -20,7 +20,7 @@ export class ProjectTagFilterComponent implements OnInit, OnDestroy {
     @ViewChild('auto') matAutocomplete: MatAutocomplete;
     selectable = true;
     removable = true;
-    separatorKeysCodes: number[] = [ENTER, COMMA];
+    separatorKeysCodes: number[] = [ENTER, COMMA, SPACE];
     tagsCtrl = new FormControl();
     filteredTags: Observable<string[]>;
     projectTags: string[] = [];

@@ -19,13 +19,13 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.app.json",
             "assets": [
+              "src/favicon.ico",
+              "src/assets",
               {
                 "glob": "**/*",
-                "input": "./node_modules/leaflet/dist/images",
-                "output": "leaflet/"
-            },
-              "src/favicon.ico",
-              "src/assets"
+                "input": "node_modules/leaflet/dist/images/",
+                "output": "assets/leaflet/"
+              }
             ],
             "styles": [
               "src/styles.css",

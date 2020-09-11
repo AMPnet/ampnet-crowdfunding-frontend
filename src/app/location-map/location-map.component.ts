@@ -18,12 +18,16 @@ export class LocationMapComponent implements AfterViewInit {
     map: leaflet.Map;
     latLngDefault: leaflet.LatLngTuple = [37.97404469468311, 23.71933726268805];
     mapMarker: leaflet.Marker;
+    icon: leaflet.Icon.Default;
 
     constructor() {
+        this.icon = new leaflet.Icon.Default({
+            iconUrl: 'assets/leaflet/marker-icon.png',
+            shadowUrl: 'assets/leaflet/marker-shadow.png'
+        });
     }
 
     ngAfterViewInit() {
-        leaflet.Icon.Default.prototype.options.shadowUrl = 'leaflet/marker-shadow.png';
         this.map = leaflet.map(this.mapEl.nativeElement);
 
         if (this.lat === undefined || this.lng === undefined) {
@@ -33,7 +37,7 @@ export class LocationMapComponent implements AfterViewInit {
 
         const latLng: leaflet.LatLngTuple = [this.lat, this.lng];
         this.map.setView(latLng, 12);
-        this.mapMarker = leaflet.marker(latLng).addTo(this.map);
+        this.mapMarker = this.newMarker(latLng).addTo(this.map);
         this.map.addLayer(leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }));
@@ -54,7 +58,11 @@ export class LocationMapComponent implements AfterViewInit {
             this.latChange.next(this.lat);
             this.lngChange.next(this.lng);
 
-            this.mapMarker = leaflet.marker(e.latlng).addTo(this.map);
+            this.mapMarker = this.newMarker(e.latlng).addTo(this.map);
         }.bind(this));
+    }
+
+    private newMarker(latLng: leaflet.LatLngTuple) {
+        return leaflet.marker(latLng, {icon: this.icon});
     }
 }

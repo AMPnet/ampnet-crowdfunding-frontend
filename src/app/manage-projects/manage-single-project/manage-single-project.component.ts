@@ -163,9 +163,7 @@ export class ManageSingleProjectComponent implements OnInit, AfterViewInit {
         updatedProject.name = projectName;
         updatedProject.description = projectDescription;
         updatedProject.location_text = locationName;
-        console.log('last', updatedProject.location);
         updatedProject.location = {lat: this.mapLat, long: this.mapLong};
-        console.log('new', updatedProject.location);
 
 
         SpinnerUtil.showSpinner();

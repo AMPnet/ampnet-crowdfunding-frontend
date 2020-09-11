@@ -26,7 +26,6 @@ export class OfferDetailsComponent implements OnInit {
     isPortfolio = false;
     userConfirmed = true;
     bsModalRef: BsModalRef;
-    locationDefined = true;
 
     constructor(private projectService: ProjectService,
                 private newsPreviewService: NewsPreviewService,

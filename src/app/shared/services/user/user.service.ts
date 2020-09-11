@@ -25,24 +25,4 @@ export class UserService {
                 this.userChangeSubject.next(user);
             }));
     }
-
-    logout() {
-        return this.http.post<void>(`/api/user/logout`, {})
-            .pipe(tap(() => {
-                localStorage.removeItem('access_token');
-                localStorage.removeItem('refresh_token');
-            }));
-    }
-
-    refreshUserToken() {
-        return this.http.post<TokenModel>('/api/user/token/refresh', {
-            refresh_token: localStorage.getItem('refresh_token')
-        }).pipe(
-            tap(res => {
-                localStorage.setItem('access_token', res.access_token);
-                localStorage.setItem('refresh_token', res.refresh_token);
-            }),
-            tap(() => this.getOwnProfile().subscribe())
-        );
-    }
 }

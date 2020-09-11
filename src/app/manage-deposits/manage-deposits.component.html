@@ -22,12 +22,12 @@
             <ul class="list-group mt-3">
                 <li *ngFor="let deposit of unapprovedDeposits; let i = index"
                     class="list-group-item gray-text">
-                    <span class="float-left explainer-mini">{{deposit.deposit.reference}} ({{deposit.user.email}}
+                    <span class="float-left explainer-mini">{{ deposit.deposit.reference }} ({{ deposit.user.email }}
                         )</span>
                     <span (click)="deleteDeposit(deposit.deposit.id)" class="float-right cursor-pointer">
             <i class="fas fa-trash-alt"></i>
           </span>
-                    <a class="float-right mr-4 cursor-pointer" href="mailto:{{deposit.user.email}}">
+                    <a class="float-right mr-4 cursor-pointer" href="mailto:{{ deposit.user.email }}">
                         <i class="fas fa-envelope"></i>
                     </a>
                     <span (click)="contactPhoneClicked(i)" class="float-right mr-4 cursor-pointer">

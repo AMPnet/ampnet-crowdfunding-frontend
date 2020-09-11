@@ -23,7 +23,7 @@ class="wow fadeIn" style="background: #fdfdfd">
             <!-- Offer image -->
             <div *ngIf="(project !== undefined) && (!isPortfolio)"
                 class="wow fadeIn d-none d-lg-block">
-                <img class="header-image w-100" src="{{project.main_image}}">
+                <img class="header-image w-100" src="{{ project.main_image }}">
             </div>
             <!-- Offer desc -->
             <div class="offer-desc">
@@ -33,12 +33,12 @@ class="wow fadeIn" style="background: #fdfdfd">
             <div class="offer-docs mb-5 mb-lg-0">
                 <div *ngFor="let doc of project.documents" class="w-100 mt-4">
                     <div class="d-flex flex-row align-items-center">
-                        <a href="{{doc.link}}">
+                        <a href="{{ doc.link }}">
                             <i class="fas fa-file-download mr-2"></i>
                         </a>
                         <div class=" w-75"
                              style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                            {{doc.name}}
+                            {{ doc.name }}
                         </div>
                     </div>
                 </div>
@@ -57,13 +57,13 @@ class="wow fadeIn" style="background: #fdfdfd">
                 <!-- Offer image for mobile -->
             <div *ngIf="(project !== undefined) && (!isPortfolio)"
             class="wow fadeIn d-lg-none d-block">
-                <img class="header-image w-100" src="{{project.main_image}}">
+                <img class="header-image w-100" src="{{ project.main_image }}">
             </div>
 
                 <div class="offer-right-text col-lg-9">
                     <!-- Offer title -->
                     <div *ngIf="!isPortfolio">
-                        <h3 class="pt-lg-5 pt-4 offer-title">{{project.name}}</h3>
+                        <h3 class="pt-lg-5 pt-4 offer-title">{{ project.name }}</h3>
                     </div>
 
                     <!-- Offer location -->
@@ -72,14 +72,14 @@ class="wow fadeIn" style="background: #fdfdfd">
                             <i class="fas fa-map-marker-alt mr-2"></i>
                             Show location
                         </p>
-                        {{project.location_text}}
+                        {{ project.location_text }}
                     </div>
 
                     <!-- Offer progress -->
                     <div class="progress-text">
                         <p class="mt-lg-5 mt-4">
-                            <span>{{wallet?.balance | currencyDefault}}</span> raised of
-                            <span>{{project.expected_funding | currencyDefault}}</span> goal
+                            <span>{{ wallet?.balance | currencyDefault }}</span> raised of
+                            <span>{{ project.expected_funding | currencyDefault }}</span> goal
                         </p>
                     </div>
                     <div class="progress">
@@ -118,25 +118,26 @@ class="wow fadeIn" style="background: #fdfdfd">
 
                     <!-- Offer return rate -->
                     <div class="offer-return">
-                        <span class="mr-2">{{project.roi.from}}% - {{project.roi.to}}%</span>Expected yearly return
+                        <span class="mr-2">{{ project.roi.from }}% - {{ project.roi.to }}%</span>Expected yearly return
                     </div>
                     <div class="dropdown-divider mt-lg-3"></div>
 
                     <!-- Offer min investment -->
                     <div class="mt-lg-3">
-                        <span class="mr-2">{{project.min_per_user | currencyDefault}}</span>Min Investment
+                        <span class="mr-2">{{ project.min_per_user | currencyDefault }}</span>Min Investment
                     </div>
                     <div class="dropdown-divider mt-lg-3"></div>
 
                     <!-- Offer max investment -->
                     <div class="mt-lg-3">
-                        <span class="mr-2">{{project.max_per_user | currencyDefault}}</span>Max Investment
+                        <span class="mr-2">{{ project.max_per_user | currencyDefault }}</span>Max Investment
                     </div>
                     <div class="dropdown-divider mt-lg-3"></div>
 
                     <!-- Offer funding period -->
                     <div class="mt-lg-3 pb-lg-5 pb-0">
-                        <span class="mr-2">Funding period</span>{{project.start_date | date:'mediumDate'}} - {{project.end_date | date:'mediumDate'}}
+                        <span class="mr-2">Funding period</span>
+                        {{ project.start_date | date:'mediumDate' }} - {{ project.end_date | date:'mediumDate' }}
                     </div>
 
                     <!-- Offer Invest btn for mobile -->

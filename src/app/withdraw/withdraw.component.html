@@ -17,8 +17,8 @@
                 <li (click)="changeActiveAccount(i)"
                     *ngFor="let bank of banks; let i = index"
                     class="list-group-item cursor-pointer hover-bg  gray-text">
-                    {{bank.iban}}
-                    <span *ngIf="bank.alias"> - {{bank.alias}}</span>
+                    {{ bank.iban }}
+                    <span *ngIf="bank.alias"> - {{ bank.alias }}</span>
                     <span *ngIf="activeBankAccount ===  i" class="float-right">
             <i class="fas fa-check-circle"></i>
           </span>
@@ -39,7 +39,7 @@
 
           <span class="card-text mt-2">
             <div class="explainer-mini">Withdrawal amount</div>
-              {{withdrawAmount | currencyDefault}}
+              {{ pendingWithdrawal.amount | currencyDefault }}
           </span>
                     <span (click)="deleteWithdrawal()" class="float-right cursor-pointer">
             <i class="fas fa-trash"></i>

@@ -3,7 +3,6 @@ import { Meta } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NewsPreviewService } from 'src/app/shared/services/news-preview.service';
 import { UserService } from 'src/app/shared/services/user/user.service';
-import { centsToBaseCurrencyUnit } from 'src/app/utilities/currency-util';
 import { displayBackendError, hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import swal from 'sweetalert2';
@@ -97,16 +96,12 @@ export class OfferDetailsComponent implements OnInit {
         this.projectService.getProject(projectID).subscribe(project => {
             this.project = project;
 
-            this.project.expected_funding = centsToBaseCurrencyUnit(project.expected_funding);
-            this.project.min_per_user = centsToBaseCurrencyUnit(project.min_per_user);
-            this.project.max_per_user = centsToBaseCurrencyUnit(project.max_per_user);
-
             this.setUpNewsPreviews(this.project.news);
             this.setMetaTags();
         });
 
         this.walletService.getProjectWallet(projectID).subscribe(wallet => {
-            wallet.balance = centsToBaseCurrencyUnit(wallet.balance || 0);
+            wallet.balance = wallet.balance || 0;
             this.wallet = wallet;
         }, err => {
             if (err.error.err_code === '0851') {

@@ -8,15 +8,10 @@ import { Portfolio } from '../../shared/services/wallet/portfolio.service';
     templateUrl: './single-invest-item.component.html',
     styleUrls: ['./single-invest-item.component.css']
 })
-export class SingleInvestItemComponent implements OnInit {
+export class SingleInvestItemComponent {
     @Input() investment: Portfolio;
 
     constructor(private router: Router) {
-    }
-
-    ngOnInit() {
-        this.investment.project.currency = prettyCurrency(this.investment.project.currency);
-        this.investment.investment = centsToBaseCurrencyUnit(this.investment.investment);
     }
 
     onClickedItem() {

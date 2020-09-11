@@ -5,7 +5,13 @@ import { displayBackendError } from '../utilities/error-handler';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { Project, ProjectService } from '../shared/services/project/project.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { autonumericCurrency, centsToBaseCurrencyUnit, prettyCurrency, stripCurrencyData } from '../utilities/currency-util';
+import {
+    autonumericCurrency,
+    baseCurrencyUnitToCents,
+    centsToBaseCurrencyUnit,
+    prettyCurrency,
+    stripCurrencyData
+} from '../utilities/currency-util';
 import { WalletDetails } from '../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
 
 declare var $: any;
@@ -84,10 +90,9 @@ export class InvestComponent implements OnInit {
     }
 
     investButtonClicked() {
-        this.router.navigate(['./', stripCurrencyData(this.inputValue), 'verify_sign'],
-            {
-                relativeTo: this.route
-            });
+        this.router.navigate(['./',
+                baseCurrencyUnitToCents(Number(stripCurrencyData(this.inputValue))), 'verify_sign'],
+            {relativeTo: this.route});
     }
 
     inputChanged(event: any) {

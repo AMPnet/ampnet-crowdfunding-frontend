@@ -14,12 +14,12 @@ export class ExchangeComponent implements OnInit {
 
     portfolio: Portfolio[];
     selectedProjectIndex = -1;
-    remainingShares = '';
-    personalShares = '';
-    totalShares = '';
-    sharesForSale = '';
-    pricePaidFor = '';
-    suggestedSalePrice = '';
+    remainingShares: number;
+    personalShares: number;
+    totalShares: number;
+    sharesForSale: number;
+    pricePaidFor: number;
+    suggestedSalePrice: number;
 
     constructor(private portfolioService: PortfolioService) {
     }
@@ -33,33 +33,25 @@ export class ExchangeComponent implements OnInit {
 
             setTimeout(() => {
                 (<any>$('select')).selectpicker();
-
             }, 200);
 
         }, hideSpinnerAndDisplayError);
-
-
     }
 
     onChangeSelect(item: any) {
         this.selectedProjectIndex = item;
         const folioItem = this.portfolio[item];
-        this.personalShares = this.numeralFormat(folioItem.investment);
-        this.totalShares = this.numeralFormat(folioItem.project.expected_funding);
-
+        this.personalShares = folioItem.investment;
+        this.totalShares = folioItem.project.expected_funding;
     }
 
-    onChangeInput(value: number) {
+    onChangeInput(shareValue: string) {
+        const value = Number(shareValue);
         const folioItem = this.portfolio[this.selectedProjectIndex];
 
-        this.remainingShares = this.numeralFormat(folioItem.investment - value);
-        this.sharesForSale = this.numeralFormat(value);
-        this.pricePaidFor = this.numeralFormat(value / 100);
-        this.suggestedSalePrice = this.numeralFormat((value / 100) * 0.7);
+        this.remainingShares = folioItem.investment - value;
+        this.sharesForSale = value;
+        this.pricePaidFor = value;
+        this.suggestedSalePrice = value * 0.7; // TODO: remove hardcoded multiplication value
     }
-
-    numeralFormat(input: number): string {
-        return numeral(input).format('0,0');
-    }
-
 }

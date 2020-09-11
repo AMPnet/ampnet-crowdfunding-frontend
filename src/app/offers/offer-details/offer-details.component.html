@@ -67,21 +67,13 @@ class="wow fadeIn" style="background: #fdfdfd">
                     </div>
 
                     <!-- Offer location -->
-                    <div *ngIf="locationDefined; else locationUndefined" class="mt-4 offer-location">
+                    <div class="mt-4 offer-location">
                         <p (click)="openModal()">
                             <i class="fas fa-map-marker-alt mr-2"></i>
                             Show location
                         </p>
                         {{ project.location_text }}
                     </div>
-                    <ng-template #locationUndefined>
-                        <div class="mt-4 offer-location">
-                            <p>
-                                <i class="fas fa-map-marker-alt mr-2"></i>
-                                Location not available
-                            </p>
-                        </div>
-                    </ng-template>
 
                     <!-- Offer progress -->
                     <div class="progress-text">

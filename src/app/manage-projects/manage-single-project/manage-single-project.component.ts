@@ -67,6 +67,7 @@ export class ManageSingleProjectComponent implements OnInit {
 
     createProjectWallet() {
         this.walletService.createProjectWalletTransaction(this.project.uuid).subscribe(res => {
+            SpinnerUtil.showSpinner();
             swal('', 'Verify the project creation with your blockchain wallet. You will be prompted now!', 'info')
                 .then(async () => {
                     const arkaneConnect = new ArkaneConnect('AMPnet', {

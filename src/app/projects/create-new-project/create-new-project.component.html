@@ -18,13 +18,19 @@
 
         </div>
     </div>
-    <form [formGroup]="createProjectForm" class="mb-5">
+    <form [formGroup]="createForm" class="mb-5">
         <div class="explainer-mini  mb-2 mt-3">Project name</div>
         <input class="w-100 p-4 form-control " formControlName="name" id="" name="" type="text">
 
+        <div class="explainer-mini  mb-2 mt-3">Project description</div>
+        <textarea class="form-control p-4" cols="30" id="project-description" name=""
+                  formControlName="description"
+                  rows="10" style="border-radius: 5px!important;">
+        </textarea>
+
         <div class="explainer-mini  mb-2 mt-3">Project location</div>
-        <app-location-map [movableMarker]="true" 
-            [coordsSet]="projectCoords" (getMapCoords)="getMapCoords($event)">
+        <app-location-map [editable]="true"
+                          [(lat)]="mapLat" [(lng)]="mapLong">
         </app-location-map>
 
         <div class="explainer-mini  mb-2 mt-3">Start date</div>
@@ -49,7 +55,8 @@
                    id="max-per-user-input" name="" type="text">
         </div>
 
-        <button (click)="submitForm()" (click)="submitButtonClicked()"
+        <button (click)="submitForm()"
+                [disabled]="!createForm.valid"
                 class="btn btn-primary float-right mt-3 mb-5 pt-3 pb-3 pl-5 pr-5 "
                 type="submit">
             <i class="mr-3 fas fa-plus"></i>

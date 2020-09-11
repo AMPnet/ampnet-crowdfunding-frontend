@@ -65,9 +65,9 @@
         <div class="input-group mb-3 col-md-12">
         </div>
 
-        <div *ngIf="project.location !== undefined" class="col-md-12">
-            <app-location-map [movableMarker]="true" 
-                [coordsSet]="projectCoords" (getMapCoords)="getMapCoords($event)">
+        <div class="col-md-12">
+            <app-location-map [editable]="true"
+                              [(lat)]="mapLat" [(lng)]="mapLong">
             </app-location-map>
         </div>
 

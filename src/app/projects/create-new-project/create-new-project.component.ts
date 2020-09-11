@@ -14,8 +14,8 @@ declare var $: any;
     templateUrl: './create-new-project.component.html',
     styleUrls: ['./create-new-project.component.css'],
 })
-export class CreateNewProjectComponent implements OnInit, AfterViewInit {
-    createProjectForm: FormGroup;
+export class CreateNewProjectComponent implements OnInit {
+    createForm: FormGroup;
     mapLat: number;
     mapLong: number;
     projectCoords = [];
@@ -24,27 +24,21 @@ export class CreateNewProjectComponent implements OnInit, AfterViewInit {
                 private fb: FormBuilder,
                 private activatedRoute: ActivatedRoute,
                 private router: Router) {
-        this.createProjectForm = this.fb.group({
-            'name': [' ', Validators.required],
-            'description': [' ', Validators.required],
-            'colloqual': [' ', Validators.required],
-            'startDate': [' ', Validators.required],
-            'endDate': [' ', Validators.required],
-            'expectedFunding': [' ', Validators.required],
-            'minPerUser': [' ', Validators.required],
-            'maxPerUser': [' ', Validators.required]
+        this.createForm = this.fb.group({
+            name: ['', Validators.required],
+            description: ['', Validators.required],
+            startDate: ['', Validators.required],
+            endDate: ['', Validators.required],
+            expectedFunding: ['', Validators.required],
+            minPerUser: ['', Validators.required],
+            maxPerUser: ['', Validators.required]
         });
     }
 
     submitForm() {
-        if (!this.createProjectForm.valid) {
-            return;
-        }
-        const formValue = this.createProjectForm.value;
-        const date = moment(formValue.startDate).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
-        formValue.startDate = date;
+        const formValue = this.createForm.value;
+        formValue.startDate = moment(formValue.startDate).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
         formValue.endDate = moment(formValue.endDate).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
-        formValue.location = 'abc';
         const orgID = this.activatedRoute.snapshot.params.orgId;
 
         SpinnerUtil.showSpinner();
@@ -69,12 +63,6 @@ export class CreateNewProjectComponent implements OnInit, AfterViewInit {
             SpinnerUtil.hideSpinner();
             displayBackendError(err);
         });
-        this.projectCoords = [this.mapLat, this.mapLong];
-    }
-
-    getMapCoords(e) {
-        this.mapLat = e[0];
-        this.mapLong = e[1];
     }
 
     ngOnInit() {
@@ -83,11 +71,5 @@ export class CreateNewProjectComponent implements OnInit, AfterViewInit {
             autonumericCurrency('#max-per-user-input');
             autonumericCurrency('#expected-funding-input');
         });
-    }
-
-    ngAfterViewInit() {
-    }
-
-    submitButtonClicked() {
     }
 }

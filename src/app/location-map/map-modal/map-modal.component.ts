@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
@@ -6,21 +6,21 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
     templateUrl: './map-modal.component.html',
     styleUrls: ['./map-modal.component.css'],
 })
-export class MapModalComponent implements OnInit, AfterViewInit {
-    @Input() projectCoords = [];
-    @Input() rerenderMap;
+export class MapModalComponent implements AfterViewInit {
+    modalShown = false;
+    lat: number;
+    lng: number;
 
-    constructor(private bsModalRef: BsModalRef) { }
+    constructor(private bsModalRef: BsModalRef) {
+    }
 
-    ngOnInit() {}
-
-    ngAfterViewInit() {}
+    ngAfterViewInit() {
+        // Required is an issue with showing leaflet map before
+        // modal is completely rendered. https://stackoverflow.com/q/20400713/4636976
+        this.modalShown = true;
+    }
 
     closeModal() {
         this.bsModalRef.hide();
-    }
-
-    getMap(e) {
-        this.rerenderMap = e;
     }
 }

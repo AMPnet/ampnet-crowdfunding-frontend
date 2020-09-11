@@ -135,14 +135,10 @@ export class OfferDetailsComponent implements OnInit {
     }
 
     openModal() {
-        this.showModal();
-        this.bsModalRef.content.rerenderMap.invalidateSize();
-    }
-
-    showModal() {
         this.bsModalRef = this.modalService.show(MapModalComponent, {
             initialState: {
-                projectCoords: [this.project.location.lat, this.project.location.long]
+                lat: this.project.location.lat,
+                lng: this.project.location.lat
             },
             class: 'modal-lg modal-dialog-centered'
         });

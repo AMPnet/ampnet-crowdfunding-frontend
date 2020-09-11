@@ -132,7 +132,6 @@ export class ManageSingleProjectComponent implements OnInit, AfterViewInit {
         this.projectService.getProject(id).subscribe((res: Project) => {
             SpinnerUtil.hideSpinner();
             this.project = res;
-            this.projectCoords = [this.project.location.lat, this.project.location.long];
             this.mapLat = this.project.location.lat;
             this.mapLong = this.project.location.long;
             onComplete();
@@ -164,7 +163,10 @@ export class ManageSingleProjectComponent implements OnInit, AfterViewInit {
         updatedProject.name = projectName;
         updatedProject.description = projectDescription;
         updatedProject.location_text = locationName;
+        console.log('last', updatedProject.location);
         updatedProject.location = {lat: this.mapLat, long: this.mapLong};
+        console.log('new', updatedProject.location);
+
 
         SpinnerUtil.showSpinner();
         this.projectService.updateProject(updatedProject.uuid, {
@@ -285,10 +287,5 @@ export class ManageSingleProjectComponent implements OnInit, AfterViewInit {
             });
             $('.note-editor').attr('id', 'note-custom');
         });
-    }
-
-    getMapCoords(e) {
-        this.mapLat = e[0];
-        this.mapLong = e[1];
     }
 }

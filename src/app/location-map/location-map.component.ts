@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, Input, Output, EventEmitter } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import leaflet from 'leaflet';
 
 @Component({
@@ -7,47 +7,54 @@ import leaflet from 'leaflet';
     styleUrls: ['./location-map.component.css'],
 })
 export class LocationMapComponent implements AfterViewInit {
-    @Output() getMapCoords = new EventEmitter();
-    @Output() getMap = new EventEmitter();
-    @Input() movableMarker: boolean;
-    @Input() coordsSet = [];
-    map;
-    startingLocation = [37.97404469468311, 23.71933726268805];
-    mapMarker;
-    constructor() {}
+    @Input() lat: number;
+    @Input() lng: number;
+    @Output() latChange = new EventEmitter<number>();
+    @Output() lngChange = new EventEmitter<number>();
+    @Input() editable: boolean;
+
+    @ViewChild('mapEl') mapEl;
+
+    map: leaflet.Map;
+    latLngDefault: leaflet.LatLngTuple = [37.97404469468311, 23.71933726268805];
+    mapMarker: leaflet.Marker;
+
+    constructor() {
+    }
 
     ngAfterViewInit() {
-        this.initMap();
-    }
-
-    private initMap() {
         leaflet.Icon.Default.prototype.options.shadowUrl = 'leaflet/marker-shadow.png';
-        this.map = leaflet.map('map').setView(this.startingLocation, 12);
-        this.mapMarker = leaflet.marker(this.startingLocation).addTo(this.map);
-        if (!(this.coordsSet.length === 0)) {
-            this.map.removeLayer(this.mapMarker);
-            this.map.setView(this.coordsSet, 12);
-            this.mapMarker = leaflet.marker(this.coordsSet).addTo(this.map);
-        } else {
-            this.getMapCoords.emit(this.startingLocation);
+        this.map = leaflet.map(this.mapEl.nativeElement);
+
+        if (this.lat === undefined || this.lng === undefined) {
+            this.lat = this.latLngDefault[0];
+            this.lng = this.latLngDefault[1];
         }
-        leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution:
-            '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            }).addTo(this.map);
-        if (this.movableMarker) {
-            this.editMapCoords();
+
+        const latLng: leaflet.LatLngTuple = [this.lat, this.lng];
+        this.map.setView(latLng, 12);
+        this.mapMarker = leaflet.marker(latLng).addTo(this.map);
+        this.map.addLayer(leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }));
+
+        if (this.editable) {
+            this.enableMapEdit();
         }
-        this.getMap.emit(this.map);
     }
 
-    editMapCoords() {
-        this.map.on('click', e => {
+    private enableMapEdit() {
+        this.map.on('click', function (e: leaflet.LeafletMouseEvent) {
             if (this.mapMarker) {
                 this.map.removeLayer(this.mapMarker);
             }
-        this.getMapCoords.emit([e.latlng.lat, e.latlng.lng]);
-        this.mapMarker = leaflet.marker([e.latlng.lat, e.latlng.lng]).addTo(this.map);
-        });
+
+            this.lat = e.latlng.lat;
+            this.lng = e.latlng.lng;
+            this.latChange.next(this.lat);
+            this.lngChange.next(this.lng);
+
+            this.mapMarker = leaflet.marker(e.latlng).addTo(this.map);
+        }.bind(this));
     }
 }

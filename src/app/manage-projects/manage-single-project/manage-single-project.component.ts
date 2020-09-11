@@ -60,8 +60,8 @@ export class ManageSingleProjectComponent implements OnInit {
                 } else {
                     displayBackendError(err);
                 }
-                SpinnerUtil.hideSpinner();
             });
+            SpinnerUtil.hideSpinner();
         });
     }
 
@@ -90,6 +90,7 @@ export class ManageSingleProjectComponent implements OnInit {
         }, err => {
             displayBackendError(err);
         });
+        /* SpinnerUtil.hideSpinner(); */
     }
 
     addNewsLink() {

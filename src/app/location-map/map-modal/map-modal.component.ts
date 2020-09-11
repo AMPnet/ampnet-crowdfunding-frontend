@@ -15,7 +15,7 @@ export class MapModalComponent implements AfterViewInit {
     }
 
     ngAfterViewInit() {
-        // Required is an issue with showing leaflet map before
+        // Required for issue with showing leaflet map before
         // modal is completely rendered. https://stackoverflow.com/q/20400713/4636976
         this.modalShown = true;
     }

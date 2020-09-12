@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BackendHttpClient } from '../backend-http-client.service';
-import { repeatWhen, switchMap, tap } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 import { User } from './signup.service';
-import { BehaviorSubject, Observable, of, ReplaySubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { CacheService } from '../cache.service';
-import { UserStatusStorage } from '../../../user-status-storage';
 
 @Injectable({
     providedIn: 'root'

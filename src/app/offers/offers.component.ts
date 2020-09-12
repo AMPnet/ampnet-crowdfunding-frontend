@@ -26,7 +26,7 @@ export class OffersComponent implements OnInit {
             this.isOverview = true;
         }
 
-        this.projectsWallets$ = this.projectService.getAllActiveProjects().pipe(
+        this.projectsWallets$ = this.projectService.getAllActiveProjectsCached().pipe(
             map(res => res.projects_with_wallet)
         );
     }

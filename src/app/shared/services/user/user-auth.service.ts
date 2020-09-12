@@ -40,7 +40,7 @@ export class UserAuthService {
             refresh_token: localStorage.getItem('refresh_token')
         }).pipe(
             this.saveTokens,
-            tap(() => this.userService.getOwnProfile().subscribe())
+            tap(() => this.userService.refreshUser())
         );
     }
 

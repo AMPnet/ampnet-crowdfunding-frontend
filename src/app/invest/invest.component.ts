@@ -51,7 +51,7 @@ export class InvestComponent implements OnInit {
 
     getWalletBalance() {
         SpinnerUtil.showSpinner();
-        this.walletService.getUserWallet().subscribe(res => {
+        this.walletService.getUserWalletCached().subscribe(res => {
             if (res === null) {
                 return;
             }

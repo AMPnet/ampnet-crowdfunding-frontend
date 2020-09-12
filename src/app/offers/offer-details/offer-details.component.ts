@@ -46,7 +46,7 @@ export class OfferDetailsComponent implements OnInit {
 
         if (!this.isOverview && !this.isPortfolio) {
             SpinnerUtil.showSpinner();
-            this.userService.getOwnProfile().subscribe(res => {
+            this.userService.user$.subscribe(res => {
                 this.userConfirmed = res.verified;
                 SpinnerUtil.hideSpinner();
             }, hideSpinnerAndDisplayError);

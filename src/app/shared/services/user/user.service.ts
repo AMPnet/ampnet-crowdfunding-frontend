@@ -1,28 +1,28 @@
 import { Injectable } from '@angular/core';
-import { UserStatusStorage } from '../../../user-status-storage';
 import { BackendHttpClient } from '../backend-http-client.service';
-import { tap } from 'rxjs/operators';
+import { repeatWhen, switchMap, tap } from 'rxjs/operators';
 import { User } from './signup.service';
-import { TokenModel } from '../../../models/auth/TokenModel';
-import { Observable, ReplaySubject } from 'rxjs';
+import { BehaviorSubject, Observable, of, ReplaySubject } from 'rxjs';
+import { CacheService } from '../cache.service';
+import { UserStatusStorage } from '../../../user-status-storage';
 
 @Injectable({
     providedIn: 'root'
 })
 export class UserService {
-    userChange$: Observable<User>;
+    private refreshUserSubject = new BehaviorSubject<void>(null);
+    private freshUser$ = this.http.get<User>('/api/user/me');
 
-    private userChangeSubject = new ReplaySubject<User>(1);
+    user$: Observable<User> = this.refreshUserSubject.asObservable().pipe(
+        switchMap(() => this.cacheService.setAndGet('user/me', this.freshUser$))
+    );
 
-    constructor(private http: BackendHttpClient) {
-        this.userChange$ = this.userChangeSubject.asObservable();
+    constructor(private http: BackendHttpClient,
+                private cacheService: CacheService) {
     }
 
-    getOwnProfile() {
-        return this.http.get<User>('/api/user/me')
-            .pipe(tap(user => {
-                UserStatusStorage.personalData = user;
-                this.userChangeSubject.next(user);
-            }));
+    refreshUser() {
+        this.cacheService.clear('user/me');
+        this.refreshUserSubject.next();
     }
 }

@@ -18,14 +18,17 @@ export class UserStateReminderComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.walletInitialized$ = this.walletService.getUserWallet().pipe(
+        this.walletInitialized$ = this.walletService.getUserWalletCached().pipe(
             switchMap(_ => this.walletService.walletChange$),
             map(wallet => wallet !== null)
         );
 
-        this.userVerified$ = this.userService.getOwnProfile().pipe(
-            switchMap(_ => this.userService.userChange$),
+        this.userVerified$ = this.userService.user$.pipe(
             map(user => user.verified)
         );
+    }
+
+    refUser() {
+        this.userService.refreshUser();
     }
 }

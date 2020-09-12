@@ -2,6 +2,8 @@
     userVerified: userVerified$ | async,
     walletInitialized: walletInitialized$ | async
 } as states">
+
+    <button (click)="refUser()">heelo</button>
     <div *ngIf="states.userVerified === false" class="container">
         <div class="wallet-init-reminder">
             <p>

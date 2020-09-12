@@ -31,11 +31,9 @@ export class SidebarComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit() {
-        this.userChange$ = this.userService.getOwnProfile().pipe(
-            switchMap(_ => this.userService.userChange$)
-        );
+        this.userChange$ = this.userService.user$;
 
-        this.walletInitialized$ = this.walletService.getUserWallet().pipe(
+        this.walletInitialized$ = this.walletService.getUserWalletCached().pipe(
             switchMap(_ => this.walletService.walletChange$),
             map(wallet => wallet !== null)
         );

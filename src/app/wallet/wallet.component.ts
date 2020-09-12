@@ -55,7 +55,7 @@ export class WalletComponent implements OnInit {
 
     getUserWallet() {
         SpinnerUtil.showSpinner();
-        this.walletService.getUserWallet().subscribe(res => {
+        this.walletService.getUserWalletCached().subscribe(res => {
             if (res !== null) {
                 this.wallet = res;
                 this.wallet.currency = prettyCurrency(res.currency);

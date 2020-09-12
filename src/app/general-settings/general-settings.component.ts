@@ -4,6 +4,7 @@ import { FormBuilder } from '@angular/forms';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
 import { User } from '../shared/services/user/signup.service';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-general-settings',
@@ -11,26 +12,17 @@ import { User } from '../shared/services/user/signup.service';
     styleUrls: ['./general-settings.component.css']
 })
 export class GeneralSettingsComponent implements OnInit {
-
-    user: User;
+    user$: Observable<User>;
     updatingInfo = false;
 
-    constructor(
-        private userService: UserService,
-        private fb: FormBuilder) {
-
+    constructor(private userService: UserService) {
     }
 
     ngOnInit() {
-        SpinnerUtil.showSpinner();
-        this.userService.getOwnProfile().subscribe(res => {
-            this.user = res;
-            SpinnerUtil.hideSpinner();
-        }, hideSpinnerAndDisplayError);
+        this.user$ = this.userService.user$;
     }
 
     updateInfoClicked() {
         this.updatingInfo = true;
     }
-
 }

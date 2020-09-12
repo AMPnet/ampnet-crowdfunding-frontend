@@ -4,6 +4,7 @@ import { BackendHttpClient } from '../backend-http-client.service';
 import { TransactionInfo, WalletDetails } from './wallet-cooperative/wallet-cooperative-wallet.service';
 import { catchError, tap } from 'rxjs/operators';
 import { Observable, of, ReplaySubject, throwError } from 'rxjs';
+import { CacheService } from '../cache.service';
 
 @Injectable({
     providedIn: 'root'
@@ -13,7 +14,8 @@ export class WalletService {
 
     private walletChangeSubject = new ReplaySubject<WalletDetails | null>(1);
 
-    constructor(private http: BackendHttpClient) {
+    constructor(private http: BackendHttpClient,
+                private cacheService: CacheService) {
         this.walletChange$ = this.walletChangeSubject.asObservable();
     }
 
@@ -29,6 +31,10 @@ export class WalletService {
             catchError(err => err.status === 404 ? of(null) : throwError(err)),
             this.tapWalletChange(this)
         );
+    }
+
+    getUserWalletCached() {
+        return this.cacheService.setAndGet('user_wallet', this.getUserWallet(), 60_000);
     }
 
     private tapWalletChange(self: any) {

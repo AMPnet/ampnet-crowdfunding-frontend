@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BackendHttpClient } from '../backend-http-client.service';
+import { Observable } from 'rxjs';
+import { CacheService } from '../cache.service';
 
 @Injectable({
     providedIn: 'root'
@@ -7,12 +9,11 @@ import { BackendHttpClient } from '../backend-http-client.service';
 export class PlatformBankAccountService {
     endpoint = '/api/wallet/bank-account';
 
-    constructor(private http: BackendHttpClient) {
+    constructor(private http: BackendHttpClient,
+                private cacheService: CacheService) {
     }
 
-    getBankAccounts() {
-        return this.http.get<WalletBankAccountsRes>(this.endpoint);
-    }
+    bankAccounts$ = this.http.get<WalletBankAccountsRes>(this.endpoint);
 
     createBankAccount(iban: String, bankCode: String, alias: String) {
         return this.http.post<PlatformBankAccount>(this.endpoint,

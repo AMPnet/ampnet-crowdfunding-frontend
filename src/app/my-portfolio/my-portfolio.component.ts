@@ -33,7 +33,7 @@ export class MyPortfolioComponent implements OnInit {
                     this.hasWallet = true;
                     this.stats = portfolioStatsRes;
                     if (this.stats.investments > 0) {
-                        this.roi = ((this.stats.earnings + this.stats.investments) / (this.stats.investments) - 1) * 100;
+                        this.roi = ((this.stats.earnings + this.stats.investments) / (this.stats.investments) - 1);
                     }
                     SpinnerUtil.showSpinner();
                     this.portfolioService.getPortfolio().subscribe((portfolioRes) => {

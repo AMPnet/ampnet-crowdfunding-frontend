@@ -6,6 +6,7 @@ import { WalletDetails } from '../wallet/wallet-cooperative/wallet-cooperative-w
 import { tap } from 'rxjs/operators';
 import { UserStatusStorage } from '../../../user-status-storage';
 import { UserService } from './user.service';
+import { CacheService } from '../cache.service';
 
 
 @Injectable({
@@ -13,7 +14,8 @@ import { UserService } from './user.service';
 })
 export class UserAuthService {
     constructor(private http: BackendHttpClient,
-                private userService: UserService) {
+                private userService: UserService,
+                private cacheService: CacheService) {
     }
 
     emailLogin(email: string, password: string) {
@@ -46,7 +48,7 @@ export class UserAuthService {
 
     logout() {
         return this.http.post<void>(`/api/user/logout`, {})
-            .pipe(this.removeTokens);
+            .pipe(this.removeTokens, tap(_ => this.cacheService.clearAll()));
     }
 
     private saveTokens(source: Observable<TokenModel>) {

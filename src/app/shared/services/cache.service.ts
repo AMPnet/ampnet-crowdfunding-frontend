@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, ReplaySubject } from 'rxjs';
-import { multicast, refCount, shareReplay } from 'rxjs/operators';
+import { multicast, publishReplay, refCount, shareReplay } from 'rxjs/operators';
 import Timer = NodeJS.Timer;
 
 @Injectable({
@@ -15,7 +15,7 @@ export class CacheService {
 
     setAndGet<T>(key: string, object: Observable<T>, timeout?: number): Observable<T> {
         if (!this.cachedObservables.has(key)) {
-            this.cachedObservables.set(key, object.pipe(shareReplay(1)));
+            this.cachedObservables.set(key, object.pipe(shareReplay({bufferSize: 1, refCount: true})));
 
             if (timeout) {
                 const timeoutRef = setTimeout(function () {
@@ -29,7 +29,7 @@ export class CacheService {
     }
 
     update(key: string, object: Observable<any>) {
-        this.cachedObservables.set(key, object.pipe(multicast(() => new ReplaySubject(1)), refCount()));
+        this.cachedObservables.set(key, object);
     }
 
     clear(key: string) {

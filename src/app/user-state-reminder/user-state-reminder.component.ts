@@ -27,8 +27,4 @@ export class UserStateReminderComponent implements OnInit {
             map(user => user.verified)
         );
     }
-
-    refUser() {
-        this.userService.refreshUser();
-    }
 }

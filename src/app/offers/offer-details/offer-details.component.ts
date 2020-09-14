@@ -10,7 +10,7 @@ import { NewsLink } from '../../manage-projects/manage-single-project/news-link-
 import { Project, ProjectService } from '../../shared/services/project/project.service';
 import { WalletService } from '../../shared/services/wallet/wallet.service';
 import { Wallet } from 'src/app/shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { MapModalComponent } from 'src/app/location-map/map-modal/map-modal.component';
 
 @Component({
@@ -25,6 +25,7 @@ export class OfferDetailsComponent implements OnInit {
     isOverview = false;
     isPortfolio = false;
     userConfirmed = true;
+    currentLocation = encodeURIComponent(window.location.href);
     bsModalRef: BsModalRef;
 
     constructor(private projectService: ProjectService,

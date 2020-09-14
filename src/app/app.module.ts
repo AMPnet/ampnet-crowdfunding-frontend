@@ -68,10 +68,10 @@ import { CurrencyDefaultPipe } from './pipes/currency-default-pipe';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RevenueShareComponent } from './revenue-share/revenue-share.component';
 import { TxIconStatus, TxIconType } from './wallet/wallet-icon.pipe';
+import { UserStateReminderComponent } from './user-state-reminder/user-state-reminder.component';
 import { FileValidator } from './shared/validators/file.validator';
 import { FileValueAccessorDirective } from './shared/directives/file-value-accessor.directive';
 import { SpinnerComponent } from './shared/components/spinner/spinner.component';
-import { UserStateReminderComponent } from './user-state-reminder/user-state-reminder.component';
 // tslint:disable-next-line:max-line-length
 import { RevenueShareConfirmModalComponent } from './revenue-share/revenue-share-confirm-modal/revenue-share-confirm-modal.component';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';

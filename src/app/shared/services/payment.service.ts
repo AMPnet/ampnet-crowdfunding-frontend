@@ -12,11 +12,7 @@ export class PaymentService {
     }
 
     getMyBankAccounts() {
-        const bankData = this.http.get<UserBankAccountsRes>(this.endpoint);
-        bankData.subscribe(res => {
-            UserStatusStorage.bankData = res.bank_accounts;
-        });
-        return bankData;
+        return this.http.get<UserBankAccountsRes>(this.endpoint);
     }
 
     createBankAccount(iban: String, bankCode: String, alias: String) {

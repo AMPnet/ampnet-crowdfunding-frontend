@@ -9,7 +9,10 @@ import { Observable } from 'rxjs';
 @Component({
     selector: 'app-general-settings',
     templateUrl: './general-settings.component.html',
-    styleUrls: ['./general-settings.component.css']
+    styleUrls: [
+        './../app.component.css',
+        './general-settings.component.css'
+    ]
 })
 export class GeneralSettingsComponent implements OnInit {
     user$: Observable<User>;

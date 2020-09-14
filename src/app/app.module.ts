@@ -75,6 +75,7 @@ import { UserStateReminderComponent } from './user-state-reminder/user-state-rem
 // tslint:disable-next-line:max-line-length
 import { RevenueShareConfirmModalComponent } from './revenue-share/revenue-share-confirm-modal/revenue-share-confirm-modal.component';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { ActionButtonComponent } from './shared/components/action-button/action-button.component';
 
 const socialAuthServiceConfig = {
     provide: 'SocialAuthServiceConfig',
@@ -160,6 +161,7 @@ const socialAuthServiceConfig = {
         RevenueShareConfirmModalComponent,
         SpinnerComponent,
         TxIconStatus,
+        ActionButtonComponent,
     ],
     imports: [
         BrowserModule,

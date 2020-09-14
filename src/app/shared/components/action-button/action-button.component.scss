@@ -1,0 +1,15 @@
+button {
+  width: 100%;
+
+  .loading-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    span {
+      padding-left: 0.5rem
+    }
+  }
+}
+
+

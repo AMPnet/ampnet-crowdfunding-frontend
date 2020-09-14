@@ -146,5 +146,10 @@
   "defaultProject": "ampnet-frontend",
   "cli": {
     "analytics": "76102ae2-5c77-4aae-adf9-834e9cfa29ae"
+  },
+  "schematics": {
+    "@schematics/angular:component": {
+      "styleext": "scss"
+    }
   }
 }

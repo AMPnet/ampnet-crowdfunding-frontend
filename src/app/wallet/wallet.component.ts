@@ -21,7 +21,7 @@ export class WalletComponent implements OnInit {
     checkComplete = false;
     arkaneConnect: ArkaneConnect;
     tablePage = 1;
-    tablePageSize = 4;
+    tablePageSize = 10;
     transactionItems = 0;
     transactionHistory: UserTransaction[] = [];
     transactionHistoryPage: UserTransaction[] = [];

@@ -10,20 +10,23 @@ import { NewsLink } from '../../manage-projects/manage-single-project/news-link-
 import { Project, ProjectService } from '../../shared/services/project/project.service';
 import { WalletService } from '../../shared/services/wallet/wallet.service';
 import { Wallet } from 'src/app/shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { MapModalComponent } from 'src/app/location-map/map-modal/map-modal.component';
 
 @Component({
     selector: 'app-offer-details',
     templateUrl: './offer-details.component.html',
-    styleUrls: ['./offer-details.component.css']
+    styleUrls: ['./offer-details.component.css'],
 })
 export class OfferDetailsComponent implements OnInit {
     project: Project;
     wallet: Wallet;
     newsPreviews: NewsLink[];
-
     isOverview = false;
     isPortfolio = false;
     userConfirmed = true;
+    currentLocation = encodeURIComponent(window.location.href);
+    bsModalRef: BsModalRef;
 
     constructor(private projectService: ProjectService,
                 private newsPreviewService: NewsPreviewService,
@@ -31,7 +34,8 @@ export class OfferDetailsComponent implements OnInit {
                 private route: ActivatedRoute,
                 private userService: UserService,
                 private meta: Meta,
-                private router: Router) {
+                private router: Router,
+                private modalService: BsModalService) {
     }
 
     ngOnInit() {
@@ -128,5 +132,15 @@ export class OfferDetailsComponent implements OnInit {
 
     backToOffersScreen() {
         this.router.navigate(['dash/offers']);
+    }
+
+    openModal() {
+        this.bsModalRef = this.modalService.show(MapModalComponent, {
+            initialState: {
+                lat: this.project.location.lat,
+                lng: this.project.location.long
+            },
+            class: 'modal-lg modal-dialog-centered'
+        });
     }
 }

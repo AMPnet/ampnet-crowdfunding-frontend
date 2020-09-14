@@ -3,7 +3,7 @@
 </div>
 
 <div *ngIf="project !== undefined" [class.container]="!isPortfolio"
-class="wow fadeIn" style="background: #fdfdfd">
+     class="wow fadeIn" style="background: #fdfdfd">
     <div class="row">
         <!-- Closed project popup -->
         <div *ngIf="!project.active" class="col-lg-12 mb-3">
@@ -19,11 +19,11 @@ class="wow fadeIn" style="background: #fdfdfd">
                 OFFER DETAILS
             </p>
         </div>
-        <div class="col-lg-7 offer-left order-last order-lg-second">
+        <div class="col-lg-7 offer-left order-last order-lg-second"
+             *ngIf="(project !== undefined) && (!isPortfolio)">
             <!-- Offer image -->
-            <div *ngIf="(project !== undefined) && (!isPortfolio)"
-                class="wow fadeIn d-none d-lg-block">
-                <img class="header-image w-100" src="{{ project.main_image }}">
+            <div class="wow fadeIn d-lg-block">
+                <img class="header-image w-100" src="{{project.main_image}}">
             </div>
             <!-- Offer desc -->
             <div class="offer-desc">
@@ -44,6 +44,7 @@ class="wow fadeIn" style="background: #fdfdfd">
                 </div>
             </div>
         </div>
+
         <div class="col-12 col-lg-5 offer-right order-second order-lg-last">
             <div class="offer-right-container">
                 <!-- Page title for mobile -->
@@ -55,10 +56,10 @@ class="wow fadeIn" style="background: #fdfdfd">
                 </div>
 
                 <!-- Offer image for mobile -->
-            <div *ngIf="(project !== undefined) && (!isPortfolio)"
-            class="wow fadeIn d-lg-none d-block">
-                <img class="header-image w-100" src="{{ project.main_image }}">
-            </div>
+                <div *ngIf="(project !== undefined) && (!isPortfolio)"
+                     class="wow fadeIn d-lg-none d-block">
+                    <img class="header-image w-100" src="{{ project.main_image }}">
+                </div>
 
                 <div class="offer-right-text col-lg-9">
                     <!-- Offer title -->
@@ -68,7 +69,7 @@ class="wow fadeIn" style="background: #fdfdfd">
 
                     <!-- Offer location -->
                     <div class="mt-4 offer-location">
-                        <p>
+                        <p (click)="openModal()">
                             <i class="fas fa-map-marker-alt mr-2"></i>
                             Show location
                         </p>
@@ -84,10 +85,9 @@ class="wow fadeIn" style="background: #fdfdfd">
                     </div>
                     <div class="progress">
                         <div [style.width.%]="(wallet?.balance / project.expected_funding) * 100" class="progress-bar"
-                        role="progressbar">
+                             role="progressbar">
                         </div>
                     </div>
-
 
                     <!-- Offer Invest btn -->
                     <div *ngIf="!isPortfolio" class="invest-button-holder d-none d-lg-block">
@@ -137,7 +137,8 @@ class="wow fadeIn" style="background: #fdfdfd">
                     <!-- Offer funding period -->
                     <div class="mt-lg-3 pb-lg-5 pb-0">
                         <span class="mr-2">Funding period</span>
-                        {{ project.start_date | date:'mediumDate' }} - {{ project.end_date | date:'mediumDate' }}
+                        {{ project.start_date | date:'mediumDate' }}
+                        - {{ project.end_date | date:'mediumDate' }}
                     </div>
 
                     <!-- Offer Invest btn for mobile -->
@@ -170,14 +171,20 @@ class="wow fadeIn" style="background: #fdfdfd">
             </div>
 
             <!-- Offer socials share -->
-            <div class="offer-right-socials col-lg-9 mt-4">
+            <div class="offer-right-socials col-lg-9">
                 <div class="d-flex flex-row align-items-center">
                     <span class="mr-lg-5">Share</span>
                     <div class="cursor-pointer mr-lg-5">
-                        <i class="fab fa-twitter"></i>
+                        <a href="https://twitter.com/intent/tweet?url={{ currentLocation }}"
+                           target="_blank">
+                            <i class="fab fa-twitter"></i>
+                        </a>
                     </div>
                     <div class="cursor-pointer mr-lg-5">
-                        <i class="fab fa-facebook-f"></i>
+                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ currentLocation }}"
+                           target="_blank">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
                     </div>
                     <div class="cursor-pointer"
                          (click)="copyProjectDetailsUrl()"

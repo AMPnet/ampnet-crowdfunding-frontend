@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { UserStatusStorage } from '../../../user-status-storage';
 import { BackendHttpClient } from '../backend-http-client.service';
 import { TransactionInfo, WalletDetails } from './wallet-cooperative/wallet-cooperative-wallet.service';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, retry, tap } from 'rxjs/operators';
 import { Observable, of, ReplaySubject, throwError } from 'rxjs';
 import { CacheService } from '../cache.service';
 
@@ -28,6 +28,7 @@ export class WalletService {
 
     getUserWallet() {
         return this.http.get<WalletDetails>('/api/wallet/wallet').pipe(
+            retry(3),
             catchError(err => err.status === 404 ? of(null) : throwError(err)),
             this.tapWalletChange(this)
         );

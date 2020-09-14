@@ -71,7 +71,9 @@
                         <div class="col-12 col-md-6 col-xl-8 balance-left">
                             <span class="h1">
                                 <div class="balance-text text-uppercase mb-2">Balance</div>
-                                <div *ngIf="wallet.balance !== undefined" class="balance-amount">{{ wallet.currency }}{{ wallet.balance }}.00</div>
+                                <div *ngIf="wallet.balance !== undefined" class="balance-amount">
+                                    {{ wallet.balance | currencyCents }}
+                                </div>
                             </span>
                         </div>
                         <div class="col-12 col-md-3 col-xl-2 mt-4 mt-md-0 button-container">
@@ -123,7 +125,7 @@
                                 <div class="currency-table-column" >
                                     <i *ngIf="transaction.type == 'DEPOSIT'; else negativeTx">+</i>
                                     <ng-template #negativeTx> <i>-</i> </ng-template>
-                                    {{ transaction.amount | currencyDefault }}
+                                    {{ transaction.amount | currencyCents }}
                                 </div>
                             </td>
                         </tr>

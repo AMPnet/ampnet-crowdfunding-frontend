@@ -68,7 +68,7 @@ class="wow fadeIn" style="background: #fdfdfd">
 
                     <!-- Offer location -->
                     <div class="mt-4 offer-location">
-                        <p>
+                        <p (click)="openModal()">
                             <i class="fas fa-map-marker-alt mr-2"></i>
                             Show location
                         </p>
@@ -87,7 +87,6 @@ class="wow fadeIn" style="background: #fdfdfd">
                         role="progressbar">
                         </div>
                     </div>
-
 
                     <!-- Offer Invest btn -->
                     <div *ngIf="!isPortfolio" class="invest-button-holder d-none d-lg-block">

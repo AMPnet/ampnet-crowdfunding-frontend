@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import * as Uppy from 'uppy';
 import swal from 'sweetalert2';
 import { ActivatedRoute } from '@angular/router';
@@ -18,9 +18,9 @@ declare var $: any;
 @Component({
     selector: 'app-manage-single-project',
     templateUrl: './manage-single-project.component.html',
-    styleUrls: ['./manage-single-project.component.css']
+    styleUrls: ['./manage-single-project.component.css'],
 })
-export class ManageSingleProjectComponent implements OnInit {
+export class ManageSingleProjectComponent implements OnInit, AfterViewInit {
 
     public files: string[] = [
         'Building permit',
@@ -31,6 +31,9 @@ export class ManageSingleProjectComponent implements OnInit {
     project: Project;
     wallet: WalletDetails;
     qrCodeData: String = '';
+    mapLat: number;
+    mapLong: number;
+    projectCoords = [];
 
     constructor(private projectService: ProjectService,
                 private walletService: WalletService,
@@ -42,6 +45,9 @@ export class ManageSingleProjectComponent implements OnInit {
 
     ngOnInit() {
         this.fetchAllData();
+    }
+
+    ngAfterViewInit() {
     }
 
     fetchAllData() {
@@ -128,6 +134,8 @@ export class ManageSingleProjectComponent implements OnInit {
         this.projectService.getProject(id).subscribe((res: Project) => {
             SpinnerUtil.hideSpinner();
             this.project = res;
+            this.mapLat = this.project.location.lat;
+            this.mapLong = this.project.location.long;
             onComplete();
         }, err => {
             SpinnerUtil.hideSpinner();
@@ -157,6 +165,8 @@ export class ManageSingleProjectComponent implements OnInit {
         updatedProject.name = projectName;
         updatedProject.description = projectDescription;
         updatedProject.location_text = locationName;
+        updatedProject.location = {lat: this.mapLat, long: this.mapLong};
+
 
         SpinnerUtil.showSpinner();
         this.projectService.updateProject(updatedProject.uuid, {

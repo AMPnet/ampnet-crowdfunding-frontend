@@ -72,6 +72,7 @@
 
 .offer-location {
     font-size: 12px;
+    cursor: pointer;
 }
 
 .offer-right-text {
@@ -155,4 +156,4 @@
     .page-title {
         margin-top: 0 !important;
     }
- }
+}

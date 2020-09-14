@@ -6,6 +6,8 @@ import * as numeral from 'numeral';
 import { ArkaneConnect, SecretType } from '@arkane-network/arkane-connect';
 import { UserTransaction, WalletService } from '../shared/services/wallet/wallet.service';
 import { WalletDetails } from '../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
+import { BehaviorSubject } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 declare var $: any;
 
@@ -19,16 +21,20 @@ export class WalletComponent implements OnInit {
     checkComplete = false;
     arkaneConnect: ArkaneConnect;
     tablePage = 1;
-    tablePageSize = 10;
+    tablePageSize = 4;
     transactionItems = 0;
     transactionHistory: UserTransaction[] = [];
     transactionHistoryPage: UserTransaction[] = [];
+
+    private refreshWalletSubject = new BehaviorSubject<void>(null);
+    wallet$ = this.refreshWalletSubject.pipe(
+        switchMap(() => this.walletService.getUserWalletCached())
+    );
 
     constructor(private walletService: WalletService) {
     }
 
     ngOnInit() {
-        this.getUserWallet();
         this.getTransactionHistory();
     }
 
@@ -45,7 +51,7 @@ export class WalletComponent implements OnInit {
         SpinnerUtil.showSpinner();
         this.walletService.initWallet(addr).subscribe(() => {
             SpinnerUtil.hideSpinner();
-            this.getUserWallet();
+            this.refreshWalletSubject.next();
         }, err => {
             this.arkaneConnect.logout();
             SpinnerUtil.hideSpinner();
@@ -53,22 +59,6 @@ export class WalletComponent implements OnInit {
         });
     }
 
-    getUserWallet() {
-        SpinnerUtil.showSpinner();
-        this.walletService.getUserWalletCached().subscribe(res => {
-            if (res !== null) {
-                this.wallet = res;
-                this.wallet.currency = prettyCurrency(res.currency);
-                this.wallet.balance = numeral(centsToBaseCurrencyUnit(res.balance)).format('0,0');
-                this.wallet.activated_at = res.activated_at;
-            }
-            this.checkComplete = true;
-            SpinnerUtil.hideSpinner();
-        }, _ => {
-            SpinnerUtil.hideSpinner();
-            this.checkComplete = true;
-        });
-    }
 
     getTransactionHistory() {
         SpinnerUtil.showSpinner();
@@ -77,6 +67,7 @@ export class WalletComponent implements OnInit {
                 .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
             this.transactionItems = this.transactionHistory.length;
             this.refreshTransactionHistory();
+            SpinnerUtil.hideSpinner();
         });
     }
 

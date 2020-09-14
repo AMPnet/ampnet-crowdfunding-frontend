@@ -14,6 +14,9 @@ export class TxIconType implements PipeTransform {
             case 'INVEST': {
                 return 'fa-coins';
             }
+            case 'SHARE_PAYOUT': {
+                return 'fa-hand-holding-usd';
+            }
             default: {
                 return 'fa-question-circle';
             }

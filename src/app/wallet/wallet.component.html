@@ -123,7 +123,7 @@
                                 <div class="currency-table-column" >
                                     <i *ngIf="transaction.type == 'DEPOSIT'; else negativeTx">+</i>
                                     <ng-template #negativeTx> <i>-</i> </ng-template>
-                                    {{ transaction.amount / 100 | currency:'EUR' }}
+                                    {{ transaction.amount | currencyDefault }}
                                 </div>
                             </td>
                         </tr>

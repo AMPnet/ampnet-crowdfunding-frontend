@@ -75,6 +75,8 @@ import { UserStateReminderComponent } from './user-state-reminder/user-state-rem
 // tslint:disable-next-line:max-line-length
 import { RevenueShareConfirmModalComponent } from './revenue-share/revenue-share-confirm-modal/revenue-share-confirm-modal.component';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { LocationMapComponent } from './location-map/location-map.component';
+import { MapModalComponent } from './location-map/map-modal/map-modal.component';
 
 const socialAuthServiceConfig = {
     provide: 'SocialAuthServiceConfig',
@@ -159,6 +161,8 @@ const socialAuthServiceConfig = {
         FileValueAccessorDirective,
         RevenueShareConfirmModalComponent,
         SpinnerComponent,
+        LocationMapComponent,
+        MapModalComponent,
         TxIconStatus,
     ],
     imports: [
@@ -173,7 +177,11 @@ const socialAuthServiceConfig = {
         HttpClientModule,
         SocialLoginModule,
         NgxSpinnerModule,
-        NgbModule
+        NgbModule,
+        ModalModule.forRoot()
+    ],
+    entryComponents: [
+        MapModalComponent
     ],
     providers: [
         socialAuthServiceConfig,

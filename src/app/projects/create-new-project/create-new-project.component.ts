@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ProjectService } from '../../shared/services/project/project.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
@@ -12,36 +12,33 @@ declare var $: any;
 @Component({
     selector: 'app-create-new-project',
     templateUrl: './create-new-project.component.html',
-    styleUrls: ['./create-new-project.component.css']
+    styleUrls: ['./create-new-project.component.css'],
 })
-export class CreateNewProjectComponent implements OnInit, AfterViewInit {
-    createProjectForm: FormGroup;
+export class CreateNewProjectComponent implements OnInit {
+    createForm: FormGroup;
+    mapLat: number;
+    mapLong: number;
+    projectCoords = [];
 
     constructor(private projectService: ProjectService,
                 private fb: FormBuilder,
                 private activatedRoute: ActivatedRoute,
                 private router: Router) {
-        this.createProjectForm = this.fb.group({
-            'name': [' ', Validators.required],
-            'description': [' ', Validators.required],
-            'colloqual': [' ', Validators.required],
-            'startDate': [' ', Validators.required],
-            'endDate': [' ', Validators.required],
-            'expectedFunding': [' ', Validators.required],
-            'minPerUser': [' ', Validators.required],
-            'maxPerUser': [' ', Validators.required]
+        this.createForm = this.fb.group({
+            name: ['', Validators.required],
+            description: ['', Validators.required],
+            startDate: ['', Validators.required],
+            endDate: ['', Validators.required],
+            expectedFunding: ['', Validators.required],
+            minPerUser: ['', Validators.required],
+            maxPerUser: ['', Validators.required]
         });
     }
 
     submitForm() {
-        if (!this.createProjectForm.valid) {
-            return;
-        }
-        const formValue = this.createProjectForm.value;
-        const date = moment(formValue.startDate).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
-        formValue.startDate = date;
+        const formValue = this.createForm.value;
+        formValue.startDate = moment(formValue.startDate).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
         formValue.endDate = moment(formValue.endDate).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
-        formValue.location = 'abc';
         const orgID = this.activatedRoute.snapshot.params.orgId;
 
         SpinnerUtil.showSpinner();
@@ -50,7 +47,7 @@ export class CreateNewProjectComponent implements OnInit, AfterViewInit {
             organization_uuid: orgID,
             name: formValue.name,
             description: formValue.description,
-            location: {lat: 0, long: 0},
+            location: {lat: this.mapLat, long: this.mapLong},
             roi: {from: 2.1, to: 5.3},
             start_date: formValue.startDate,
             end_date: formValue.endDate,
@@ -74,11 +71,5 @@ export class CreateNewProjectComponent implements OnInit, AfterViewInit {
             autonumericCurrency('#max-per-user-input');
             autonumericCurrency('#expected-funding-input');
         });
-    }
-
-    ngAfterViewInit() {
-    }
-
-    submitButtonClicked() {
     }
 }

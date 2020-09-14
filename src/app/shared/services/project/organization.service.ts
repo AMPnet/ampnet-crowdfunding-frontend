@@ -49,7 +49,7 @@ export class OrganizationService {
         return this.http.get<OrganizationInvitesResponse>('/api/project/invites/me');
     }
 
-    acceptInvite(orgID: number) {
+    acceptInvite(orgID: string) {
         return this.http.post<void>(`/api/project/invites/me/${orgID}/accept`, {});
     }
 

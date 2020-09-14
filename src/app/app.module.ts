@@ -64,7 +64,7 @@ import { PlatformBankAccountComponent } from './platform-bank-account/platform-b
 import { NewPlatformBankAccountComponent } from './platform-bank-account/new-platform-bank-account/new-platform-bank-account.component';
 import { ExchangeComponent } from './exchange/exchange.component';
 import { OwnershipComponent } from './ownership/ownership.component';
-import { CurrencyDefaultPipe } from './pipes/currency-default-pipe';
+import { CurrencyDefaultPipe } from './pipes/currency-default.pipe';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RevenueShareComponent } from './revenue-share/revenue-share.component';
 import { TxIconStatus, TxIconType } from './wallet/wallet-icon.pipe';
@@ -77,6 +77,7 @@ import { RevenueShareConfirmModalComponent } from './revenue-share/revenue-share
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { LocationMapComponent } from './location-map/location-map.component';
 import { MapModalComponent } from './location-map/map-modal/map-modal.component';
+import { CurrencyCentsPipe } from './pipes/currency-cents.pipe';
 
 const socialAuthServiceConfig = {
     provide: 'SocialAuthServiceConfig',
@@ -154,6 +155,7 @@ const socialAuthServiceConfig = {
         ExchangeComponent,
         OwnershipComponent,
         CurrencyDefaultPipe,
+        CurrencyCentsPipe,
         RevenueShareComponent,
         TxIconType,
         UserStateReminderComponent,

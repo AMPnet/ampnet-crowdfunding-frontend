@@ -96,7 +96,6 @@ export class ManageSingleProjectComponent implements OnInit, AfterViewInit {
         }, err => {
             displayBackendError(err);
         });
-        /* SpinnerUtil.hideSpinner(); */
     }
 
     addNewsLink() {

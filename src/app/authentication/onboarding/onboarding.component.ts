@@ -4,7 +4,7 @@ import { OnboardingService } from '../../shared/services/user/onboarding.service
 import swal from 'sweetalert2';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
-import { UserService } from '../../shared/services/user/user.service';
+import { UserAuthService } from '../../shared/services/user/user-auth.service';
 
 @Component({
     selector: 'app-onboarding',
@@ -17,12 +17,13 @@ export class OnboardingComponent implements OnInit {
     constructor(
         private router: Router,
         private onboardingService: OnboardingService,
-        private userService: UserService) {
+        private loginService: UserAuthService) {
     }
 
     ngOnInit() {
         SpinnerUtil.showSpinner();
         this.onboardingService.getSessionID().subscribe((res: IdentyumUserResponse) => {
+            const self = this;
 
             const script: any = document.createElement('idy-flow-manager');
             script.clientToken = res;
@@ -36,21 +37,20 @@ export class OnboardingComponent implements OnInit {
             };
             document.getElementsByTagName('head')[0].appendChild(loader);
             SpinnerUtil.hideSpinner();
-            script.addEventListener('finished', (event) => {
+            script.addEventListener('finished', () => {
                 SpinnerUtil.showSpinner();
-                this.onboardingService.verifyUser(res.session_state).subscribe(_ => {
+                self.onboardingService.verifyUser(res.session_state).subscribe(_ => {
                     swal({
                         title: '',
                         text: 'Success!',
                         type: 'success'
                     }).then(function () {
-                        this.userService.refreshUserToken()
+                        self.loginService.refreshUserToken()
                             .subscribe(() => {
                                 SpinnerUtil.hideSpinner();
-                                this.reloadPage('/dash/general_settings');
+                                self.reloadPage('/dash/general_settings');
                             });
-                    }.bind(this));
-                    SpinnerUtil.hideSpinner();
+                    });
                 }, hideSpinnerAndDisplayError);
             });
         }, hideSpinnerAndDisplayError);

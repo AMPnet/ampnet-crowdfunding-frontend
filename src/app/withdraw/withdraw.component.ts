@@ -45,9 +45,6 @@ export class WithdrawComponent implements OnInit {
         SpinnerUtil.showSpinner();
         this.withdrawService.getMyPendingWithdraw().subscribe(res => {
             this.pendingWithdrawal = res;
-            this.withdrawAmount = numeral(
-                centsToBaseCurrencyUnit(this.pendingWithdrawal.amount)
-            ).format('0,0');
         }, hideSpinnerAndDisplayError);
     }
 

@@ -80,6 +80,7 @@
 
 .offer-location {
     font-size: 12px;
+    cursor: pointer;
 }
 
 .offer-right-text {

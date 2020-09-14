@@ -5,7 +5,7 @@
             Invest in
         </p>
         <h2 class="col-12 mb-3 mt-3 text-uppercase project-title">
-            {{project.name}}
+            {{ project.name }}
             <div class="dropdown-divider mt-lg-3"></div>
         </h2>
 
@@ -29,7 +29,7 @@
                 </div>
     
                 <div class="min-investment">
-                    <p>{{project.currency}}{{project.min_per_user}} Min investment</p>
+                    <p>{{ project.currency }}{{ project.min_per_user }} Min investment</p>
                 </div>
             </div>
     
@@ -44,7 +44,7 @@
             
             <div class="col-lg-2 invest-text-right mt-4 mt-lg-0">
                 <p class="text-uppercase" style="font-size: 12px;">Available funds</p>
-                <h1 class="mb-4">{{wallet.currency}}{{wallet.balance}}.00</h1>
+                <h1 class="mb-4">{{ wallet.currency }}{{ wallet.balance }}.00</h1>
                 <a routerLink="/dash/wallet">Open wallet</a>
             </div>
         </div>

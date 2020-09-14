@@ -3,7 +3,6 @@ import { Meta } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NewsPreviewService } from 'src/app/shared/services/news-preview.service';
 import { UserService } from 'src/app/shared/services/user/user.service';
-import { centsToBaseCurrencyUnit } from 'src/app/utilities/currency-util';
 import { displayBackendError, hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import swal from 'sweetalert2';
@@ -11,21 +10,23 @@ import { NewsLink } from '../../manage-projects/manage-single-project/news-link-
 import { Project, ProjectService } from '../../shared/services/project/project.service';
 import { WalletService } from '../../shared/services/wallet/wallet.service';
 import { Wallet } from 'src/app/shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { MapModalComponent } from 'src/app/location-map/map-modal/map-modal.component';
 
 @Component({
     selector: 'app-offer-details',
     templateUrl: './offer-details.component.html',
-    styleUrls: ['./offer-details.component.css']
+    styleUrls: ['./offer-details.component.css'],
 })
 export class OfferDetailsComponent implements OnInit {
     project: Project;
     wallet: Wallet;
     newsPreviews: NewsLink[];
-
     isOverview = false;
     isPortfolio = false;
     userConfirmed = true;
-    currentLocation =  encodeURIComponent(window.location.href);
+    currentLocation = encodeURIComponent(window.location.href);
+    bsModalRef: BsModalRef;
 
     constructor(private projectService: ProjectService,
                 private newsPreviewService: NewsPreviewService,
@@ -33,7 +34,8 @@ export class OfferDetailsComponent implements OnInit {
                 private route: ActivatedRoute,
                 private userService: UserService,
                 private meta: Meta,
-                private router: Router) {
+                private router: Router,
+                private modalService: BsModalService) {
     }
 
     ngOnInit() {
@@ -94,16 +96,12 @@ export class OfferDetailsComponent implements OnInit {
         this.projectService.getProject(projectID).subscribe(project => {
             this.project = project;
 
-            this.project.expected_funding = centsToBaseCurrencyUnit(project.expected_funding);
-            this.project.min_per_user = centsToBaseCurrencyUnit(project.min_per_user);
-            this.project.max_per_user = centsToBaseCurrencyUnit(project.max_per_user);
-
             this.setUpNewsPreviews(this.project.news);
             this.setMetaTags();
         });
 
         this.walletService.getProjectWallet(projectID).subscribe(wallet => {
-            wallet.balance = centsToBaseCurrencyUnit(wallet.balance || 0);
+            wallet.balance = wallet.balance || 0;
             this.wallet = wallet;
         }, err => {
             if (err.error.err_code === '0851') {
@@ -134,5 +132,15 @@ export class OfferDetailsComponent implements OnInit {
 
     backToOffersScreen() {
         this.router.navigate(['dash/offers']);
+    }
+
+    openModal() {
+        this.bsModalRef = this.modalService.show(MapModalComponent, {
+            initialState: {
+                lat: this.project.location.lat,
+                lng: this.project.location.long
+            },
+            class: 'modal-lg modal-dialog-centered'
+        });
     }
 }

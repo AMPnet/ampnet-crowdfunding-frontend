@@ -30,12 +30,6 @@ export class InvestmentDetailsComponent implements OnInit {
         SpinnerUtil.showSpinner();
         this.portfolioService.getInvestmentsInProject(id).subscribe(res => {
             this.investment = res;
-            this.investment.transactions.map((v, i, a) => {
-                const newV = v;
-                newV.amount = centsToBaseCurrencyUnit(v.amount);
-                newV.date = prettyDate(v.date);
-                return newV;
-            });
             this.canCancelInvestment();
             SpinnerUtil.hideSpinner();
         }, hideSpinnerAndDisplayError);

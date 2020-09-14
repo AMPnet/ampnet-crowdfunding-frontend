@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 
 declare var WOW: any;
 
@@ -11,7 +10,7 @@ declare var WOW: any;
 export class AppComponent implements OnInit {
     title = 'AMPnet';
 
-    constructor(private router: Router) {
+    constructor() {
     }
 
     ngOnInit() {

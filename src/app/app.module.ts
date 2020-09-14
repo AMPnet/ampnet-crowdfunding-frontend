@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { DEFAULT_CURRENCY_CODE, NgModule } from '@angular/core';
 import { DisqusModule } from 'ngx-disqus';
-
 import { AppComponent } from './app.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -60,18 +59,25 @@ import { GroupActivationComponent } from './wallet-activation/group-activation/g
 import { ProjectActivationComponent } from './wallet-activation/project-activation/project-activation.component';
 import { CompleteOnboardingComponent } from './complete-onboarding/complete-onboarding.component';
 import { SummaryComponent } from './summary/summary.component';
+import { ModalModule } from 'ngx-bootstrap/modal';
 import { PlatformBankAccountComponent } from './platform-bank-account/platform-bank-account.component';
 import { NewPlatformBankAccountComponent } from './platform-bank-account/new-platform-bank-account/new-platform-bank-account.component';
 import { ExchangeComponent } from './exchange/exchange.component';
 import { OwnershipComponent } from './ownership/ownership.component';
-import { CurrencyDefaultPipe } from './pipes/currency-default-pipe';
+import { CurrencyDefaultPipe } from './pipes/currency-default.pipe';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RevenueShareComponent } from './revenue-share/revenue-share.component';
-import { TxIconType, TxIconStatus } from './wallet/wallet-icon.pipe';
-
-export function tokenGetter() {
-    return localStorage.getItem('access_token');
-}
+import { TxIconStatus, TxIconType } from './wallet/wallet-icon.pipe';
+import { UserStateReminderComponent } from './user-state-reminder/user-state-reminder.component';
+import { FileValidator } from './shared/validators/file.validator';
+import { FileValueAccessorDirective } from './shared/directives/file-value-accessor.directive';
+import { SpinnerComponent } from './shared/components/spinner/spinner.component';
+// tslint:disable-next-line:max-line-length
+import { RevenueShareConfirmModalComponent } from './revenue-share/revenue-share-confirm-modal/revenue-share-confirm-modal.component';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { LocationMapComponent } from './location-map/location-map.component';
+import { MapModalComponent } from './location-map/map-modal/map-modal.component';
+import { CurrencyCentsPipe } from './pipes/currency-cents.pipe';
 
 const socialAuthServiceConfig = {
     provide: 'SocialAuthServiceConfig',
@@ -89,15 +95,6 @@ const socialAuthServiceConfig = {
         ]
     } as SocialAuthServiceConfig
 };
-
-export function jwtOptionsFactory() {
-    return {
-        tokenGetter: () => {
-            return localStorage.getItem('access_token');
-        },
-        whitelistedDomains: ['localhost:4200']
-    };
-}
 
 @NgModule({
     declarations: [
@@ -158,21 +155,35 @@ export function jwtOptionsFactory() {
         ExchangeComponent,
         OwnershipComponent,
         CurrencyDefaultPipe,
+        CurrencyCentsPipe,
         RevenueShareComponent,
         TxIconType,
-        TxIconStatus
+        UserStateReminderComponent,
+        FileValidator,
+        FileValueAccessorDirective,
+        RevenueShareConfirmModalComponent,
+        SpinnerComponent,
+        LocationMapComponent,
+        MapModalComponent,
+        TxIconStatus,
     ],
     imports: [
         BrowserModule,
         RouterModule,
         AppRoutingModule,
         DisqusModule.forRoot('ampnet.disqus.com/embed.js'),
+        TooltipModule.forRoot(),
+        ModalModule.forRoot(),
         FormsModule,
         ReactiveFormsModule,
         HttpClientModule,
         SocialLoginModule,
         NgxSpinnerModule,
-        NgbModule
+        NgbModule,
+        ModalModule.forRoot()
+    ],
+    entryComponents: [
+        MapModalComponent
     ],
     providers: [
         socialAuthServiceConfig,

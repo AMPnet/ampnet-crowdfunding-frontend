@@ -58,9 +58,9 @@ export class ManageOrganizationsComponent implements OnInit {
         });
     }
 
-    acceptInvite(orgID: number) {
+    acceptInvite(orgID: string) {
         SpinnerUtil.showSpinner();
-        this.organizationService.acceptInvite(orgID).subscribe(res => {
+        this.organizationService.acceptInvite(orgID).subscribe(_ => {
             SpinnerUtil.hideSpinner();
             swal('Success', 'Accepted invitation to organization', 'success');
             this.refreshState();

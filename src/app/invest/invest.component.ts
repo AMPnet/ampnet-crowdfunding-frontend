@@ -5,7 +5,13 @@ import { displayBackendError } from '../utilities/error-handler';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { Project, ProjectService } from '../shared/services/project/project.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { autonumericCurrency, centsToBaseCurrencyUnit, prettyCurrency, stripCurrencyData } from '../utilities/currency-util';
+import {
+    autonumericCurrency,
+    baseCurrencyUnitToCents,
+    centsToBaseCurrencyUnit,
+    prettyCurrency,
+    stripCurrencyData
+} from '../utilities/currency-util';
 import { WalletDetails } from '../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
 
 declare var $: any;
@@ -43,10 +49,12 @@ export class InvestComponent implements OnInit {
         this.getWalletBalance();
     }
 
-
     getWalletBalance() {
         SpinnerUtil.showSpinner();
         this.walletService.getUserWallet().subscribe(res => {
+            if (res === null) {
+                return;
+            }
             this.wallet = res;
             this.wallet.currency = prettyCurrency(res.currency);
             this.wallet.balance = numeral(centsToBaseCurrencyUnit(res.balance)).format('0,0');
@@ -56,7 +64,6 @@ export class InvestComponent implements OnInit {
                 SpinnerUtil.hideSpinner();
             }, 200);
             this.getProject();
-
         }, err => {
             SpinnerUtil.hideSpinner();
             displayBackendError(err);
@@ -83,10 +90,9 @@ export class InvestComponent implements OnInit {
     }
 
     investButtonClicked() {
-        this.router.navigate(['./', stripCurrencyData(this.inputValue), 'verify_sign'],
-            {
-                relativeTo: this.route
-            });
+        this.router.navigate(['./',
+                baseCurrencyUnitToCents(Number(stripCurrencyData(this.inputValue))), 'verify_sign'],
+            {relativeTo: this.route});
     }
 
     inputChanged(event: any) {

@@ -46,7 +46,7 @@ a {
 
 #main-menu li:hover {
     background: #DEA546;
-    color: #fff !important;
+    color: #fff;
     cursor: pointer;
 }
 
@@ -83,4 +83,26 @@ a {
 .full-name {
     padding-left: 24px;
     font-size: 12px;
+}
+
+.unverified-user-disabled {
+    pointer-events: none;
+    color: #e6e6e6 !important;
+}
+
+.app-version {
+    position: absolute;
+    bottom: 0;
+    font-style: italic;
+    font-size: smaller;
+}
+
+.app-version li {
+    padding-bottom: 0 !important;
+    color: gray !important;
+}
+
+.app-version li:hover {
+    background: initial !important;
+    cursor: initial !important;
 }

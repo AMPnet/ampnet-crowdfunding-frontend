@@ -3,7 +3,7 @@
     <div *ngIf="projects.length > 0" class="mt-3">
         <ul class="list-group">
             <li *ngFor="let project of projects" class="list-group-item explainer-mini">
-                {{project.project.name}}
+                {{ project.project.name }}
                 <span (click)="activateProjectClicked(project.wallet.uuid)" class="float-right cursor-pointer hover-fg">
           <i class="fas fa-check-circle mr-2"></i>
           Activate

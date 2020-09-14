@@ -3,7 +3,6 @@ import * as Uppy from 'uppy';
 import { ActivatedRoute } from '@angular/router';
 import { hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
-import { prettyDate } from 'src/app/utilities/date-format-util';
 import * as numeral from 'numeral';
 import {
     DepositSearchResponse,
@@ -24,27 +23,20 @@ declare var $: any;
     styleUrls: ['./manage-single-deposit.component.css']
 })
 export class ManageSingleDepositComponent implements OnInit, AfterViewInit {
-
     depositModel: DepositSearchResponse;
     paymentUppy: Uppy.Core.Uppy;
 
     constructor(private route: ActivatedRoute,
                 private http: BackendHttpClient,
                 private depositCooperativeService: WalletCooperativeDepositService,
-                private broadService: BroadcastService,
-    ) {
-
+                private broadService: BroadcastService) {
     }
 
     ngOnInit() {
-
         this.getDeposit();
-
     }
 
     ngAfterViewInit() {
-
-
     }
 
     createUploadArea() {
@@ -57,7 +49,7 @@ export class ManageSingleDepositComponent implements OnInit, AfterViewInit {
             height: 300,
             width: $('.root-content-container').width(),
             note: 'Upload payment reciept for deposit',
-            hideUploadButton: true
+            hideUploadButton: true,
         });
     }
 
@@ -90,7 +82,7 @@ export class ManageSingleDepositComponent implements OnInit, AfterViewInit {
         SpinnerUtil.showSpinner();
         this.depositCooperativeService.getDeposit(id).subscribe(res => {
             this.depositModel = res;
-            this.depositModel.deposit.created_at = new Date(prettyDate(res.deposit.created_at.toISOString()));
+
             this.depositModel.deposit.amount = numeral(this.depositModel.deposit.amount).format(',');
             if (!this.depositModel.deposit.approved) {
                 setTimeout(() => {
@@ -104,7 +96,6 @@ export class ManageSingleDepositComponent implements OnInit, AfterViewInit {
             setTimeout(() => {
                 autonumericCurrency('#deposit-amount');
                 autonumericCurrency('#deposit-confirm-amount');
-
             }, 200);
 
             SpinnerUtil.hideSpinner();
@@ -144,5 +135,4 @@ export class ManageSingleDepositComponent implements OnInit, AfterViewInit {
             this.getDeposit();
         });
     }
-
 }

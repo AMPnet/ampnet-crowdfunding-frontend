@@ -1,12 +1,16 @@
- .offer-right-container {
+.offer-right-container {
     background-color: #F7F7F7;
- }
+}
 
- .offer-right-text, .offer-right-socials {
-     margin: 0 auto;
- }
+.offer-right-text {
+    margin: 0 auto;
+}
 
- .progress {
+.offer-right-socials {
+    margin: 1rem;
+}
+
+.progress {
     max-width: 244px;
 }
 
@@ -57,6 +61,10 @@
     color: #444444;
 }
 
+.offer-right-socials a {
+    color: initial;
+}
+
 .page-title {
     font-size: 12px;
     font-weight: 500;
@@ -72,14 +80,20 @@
 
 .offer-location {
     font-size: 12px;
+    cursor: pointer;
 }
 
 .offer-right-text {
     font-size: 14px;
 }
 
+.offer-left {
+    display: none;
+}
+
 @media (min-width: 800px) {
     .offer-left {
+        display: initial;
         max-width: 686px;
         padding-right: 0;
     }
@@ -96,10 +110,11 @@
         max-height: 330px;
         margin-top: -16px;
     }
+
     .offer-desc {
         max-width: 550px;
     }
- }
+}
 
 @media (max-width: 800px) {
     .col-12 {
@@ -155,4 +170,4 @@
     .page-title {
         margin-top: 0 !important;
     }
- }
+}

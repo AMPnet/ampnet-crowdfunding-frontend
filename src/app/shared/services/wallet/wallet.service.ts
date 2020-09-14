@@ -2,27 +2,46 @@ import { Injectable } from '@angular/core';
 import { UserStatusStorage } from '../../../user-status-storage';
 import { BackendHttpClient } from '../backend-http-client.service';
 import { TransactionInfo, WalletDetails } from './wallet-cooperative/wallet-cooperative-wallet.service';
-import { tap } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
+import { Observable, of, ReplaySubject, throwError } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
 })
 export class WalletService {
+    walletChange$: Observable<WalletDetails | null>;
+
+    private walletChangeSubject = new ReplaySubject<WalletDetails | null>(1);
+
     constructor(private http: BackendHttpClient) {
+        this.walletChange$ = this.walletChangeSubject.asObservable();
     }
 
     initWallet(address: string) {
         return this.http.post<WalletDetails>('/api/wallet/wallet',
             <InitWalletData>{
                 public_key: address
-            });
+            }).pipe(this.tapWalletChange(this));
     }
 
     getUserWallet() {
-        const walletResponse = this.http.get<WalletDetails>('/api/wallet/wallet');
-        walletResponse.subscribe((res) => UserStatusStorage.walletData = res);
+        return this.http.get<WalletDetails>('/api/wallet/wallet').pipe(
+            catchError(err => err.status === 404 ? of(null) : throwError(err)),
+            this.tapWalletChange(this)
+        );
+    }
 
-        return walletResponse;
+    private tapWalletChange(self: any) {
+        return function (source: Observable<WalletDetails>) {
+            return source.pipe(
+                tap(wallet => {
+                    UserStatusStorage.walletData = wallet;
+                    self.walletChangeSubject.next(wallet);
+                }, _ => {
+                    self.walletChangeSubject.next(null);
+                })
+            );
+        };
     }
 
     getInfoFromPairingCode(pairingCode: string) {

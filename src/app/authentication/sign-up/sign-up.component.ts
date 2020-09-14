@@ -5,9 +5,10 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import swal from 'sweetalert2';
 import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthService } from 'angularx-social-login';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
-import { LoginService } from '../../shared/services/user/login.service';
+import { UserAuthService } from '../../shared/services/user/user-auth.service';
 import { displayBackendError, hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
 import { MustMatch } from './confirm-password-validator';
+import { switchMap } from 'rxjs/operators';
 
 
 @Component({
@@ -23,7 +24,7 @@ export class SignUpComponent implements OnInit {
         private router: Router,
         private socialAuthService: SocialAuthService,
         private route: ActivatedRoute,
-        private loginService: LoginService,
+        private loginService: UserAuthService,
         private formBuilder: FormBuilder
     ) {
         this.emailSignupForm = this.formBuilder.group({
@@ -59,8 +60,8 @@ export class SignUpComponent implements OnInit {
                 usr['provider'] = SocialRes.provider;
 
                 this.loginService.socialLogin(GoogleLoginProvider.PROVIDER_ID, SocialRes.authToken)
-                    .subscribe(LoginRes => {
-                        localStorage.setItem('access_token', (<any>LoginRes).access_token);
+                    .subscribe(_ => {
+                        SpinnerUtil.hideSpinner();
                         this.router.navigate(['/dash']);
                     }, displayBackendError);
             }, err => {
@@ -73,16 +74,16 @@ export class SignUpComponent implements OnInit {
         });
     }
 
-    onSubmitEmailForm(formData) {
+    onSubmitEmailForm() {
         SpinnerUtil.showSpinner();
-        const values = this.emailSignupForm.value;
-        this.signUpService.signupEmail(values.email, values.firstName, values.lastName, values.password)
-            .subscribe((_: any) => {
-                swal('', 'Sign-up successful!', 'success');
-                this.loginService.emailLogin(values.email, values.password).subscribe(res => {
-                    localStorage.setItem('access_token', res.access_token);
-                    this.router.navigate(['/dash']);
-                }, hideSpinnerAndDisplayError);
-            }, hideSpinnerAndDisplayError);
+        const user = this.emailSignupForm.value;
+
+        this.signUpService.signupEmail(user.email, user.firstName, user.lastName, user.password).pipe(
+            switchMap(_ => this.loginService.emailLogin(user.email, user.password))
+        ).subscribe(() => {
+            SpinnerUtil.hideSpinner();
+            this.router.navigate(['/dash'])
+                .then(() => swal('', 'Sign-up successful!', 'success'));
+        }, hideSpinnerAndDisplayError);
     }
 }

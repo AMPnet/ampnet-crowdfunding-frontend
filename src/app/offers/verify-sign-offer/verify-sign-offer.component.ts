@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Project, ProjectService } from 'src/app/shared/services/project/project.service';
 import { displayBackendError, hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
-import { baseCurrencyUnitToCents, prettyCurrency } from 'src/app/utilities/currency-util';
 import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
 import { BroadcastService } from 'src/app/shared/services/broadcast.service';
 import swal from 'sweetalert2';
@@ -22,7 +21,8 @@ export class VerifySignOfferComponent implements OnInit {
     constructor(private route: ActivatedRoute,
                 private projectService: ProjectService,
                 private walletService: WalletService,
-                private broadcastService: BroadcastService) {
+                private broadcastService: BroadcastService,
+                private router: Router) {
     }
 
     ngOnInit() {
@@ -71,10 +71,15 @@ export class VerifySignOfferComponent implements OnInit {
             title: 'Transaction signed',
             text: 'Transaction is being processed...',
             footer: 'Check your transaction status<a href="/dash/wallet">&nbsp;here</a>'
+        }).then(() => {
+            this.navigateToWalletScreen();
         });
         // This is a hack to fix bug in Sweet Alert lib -> always displays dropdown
         // TODO: This is deprecated and needs to be fixed.
         swal.getContent().getElementsByClassName('swal2-select').item(0).remove();
     }
-}
 
+    navigateToWalletScreen() {
+        this.router.navigate(['/dash/wallet']);
+    }
+}

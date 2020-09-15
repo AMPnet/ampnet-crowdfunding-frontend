@@ -34,7 +34,9 @@
         </app-location-map>
 
         <div class="explainer-mini  mb-2 mt-3">Start date</div>
-        <input class="w-100 p-4 form-control" formControlName="startDate" id="start-date" name="" type="date">
+        <input class="w-100 p-4 form-control" formControlName="startDate"
+               id="start-date" bsDatepicker [bsConfig]="{ showTodayButton: true,
+               todayPosition: 'right', containerClass: 'theme-default custom' }">
 
         <div class="explainer-mini  mb-2 mt-3">End date</div>
         <input class="w-100 p-4 form-control" formControlName="endDate" id="end-date" name="" type="date">

@@ -78,6 +78,9 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { LocationMapComponent } from './location-map/location-map.component';
 import { MapModalComponent } from './location-map/map-modal/map-modal.component';
 import { CurrencyCentsPipe } from './pipes/currency-cents.pipe';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+
 
 const socialAuthServiceConfig = {
     provide: 'SocialAuthServiceConfig',
@@ -180,7 +183,9 @@ const socialAuthServiceConfig = {
         SocialLoginModule,
         NgxSpinnerModule,
         NgbModule,
-        ModalModule.forRoot()
+        ModalModule.forRoot(),
+        BrowserAnimationsModule,
+        BsDatepickerModule.forRoot(),
     ],
     entryComponents: [
         MapModalComponent

@@ -90,7 +90,7 @@ const socialAuthServiceConfig = {
             },
             {
                 id: FacebookLoginProvider.PROVIDER_ID,
-                provider: new FacebookLoginProvider('293264554869933'),
+                provider: new FacebookLoginProvider('611379136173563'),
             },
         ]
     } as SocialAuthServiceConfig

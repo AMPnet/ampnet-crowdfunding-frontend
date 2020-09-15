@@ -59,7 +59,7 @@ export class SignUpComponent implements OnInit {
                 usr['auth'] = SocialRes.authToken;
                 usr['provider'] = SocialRes.provider;
 
-                this.loginService.socialLogin(GoogleLoginProvider.PROVIDER_ID, SocialRes.authToken)
+                this.loginService.socialLogin(provider, SocialRes.authToken)
                     .subscribe(_ => {
                         SpinnerUtil.hideSpinner();
                         this.router.navigate(['/dash']);

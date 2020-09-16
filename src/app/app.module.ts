@@ -78,6 +78,7 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { LocationMapComponent } from './location-map/location-map.component';
 import { MapModalComponent } from './location-map/map-modal/map-modal.component';
 import { CurrencyCentsPipe } from './pipes/currency-cents.pipe';
+import { environment } from '../environments/environment.prod';
 
 const socialAuthServiceConfig = {
     provide: 'SocialAuthServiceConfig',
@@ -86,11 +87,11 @@ const socialAuthServiceConfig = {
         providers: [
             {
                 id: GoogleLoginProvider.PROVIDER_ID,
-                provider: new GoogleLoginProvider('507079277405-o3834fb5jojeq3u9tmm14aobeukg3jmo.apps.googleusercontent.com'),
+                provider: new GoogleLoginProvider(environment.googleClientId),
             },
             {
                 id: FacebookLoginProvider.PROVIDER_ID,
-                provider: new FacebookLoginProvider('611379136173563'),
+                provider: new FacebookLoginProvider(environment.facebookAppId),
             },
         ]
     } as SocialAuthServiceConfig

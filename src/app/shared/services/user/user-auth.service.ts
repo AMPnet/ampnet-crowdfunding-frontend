@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 import { TokenModel } from 'src/app/models/auth/TokenModel';
 import { BackendHttpClient } from '../backend-http-client.service';
-import { Observable } from 'rxjs';
-import { WalletDetails } from '../wallet/wallet-cooperative/wallet-cooperative-wallet.service';
-import { tap } from 'rxjs/operators';
-import { UserStatusStorage } from '../../../user-status-storage';
+import { Observable, of } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 import { UserService } from './user.service';
 import { CacheService } from '../cache.service';
 
@@ -47,8 +45,10 @@ export class UserAuthService {
     }
 
     logout() {
-        return this.http.post<void>(`/api/user/logout`, {})
-            .pipe(this.removeTokens, tap(_ => this.cacheService.clearAll()));
+        return this.http.post<void>(`/api/user/logout`, {}).pipe(
+            catchError(_ => of(null)),
+            this.removeTokens
+        );
     }
 
     private saveTokens(source: Observable<TokenModel>) {

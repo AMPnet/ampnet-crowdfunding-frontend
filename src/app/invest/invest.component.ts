@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import numeral from 'numeral';
-import { WalletService } from '../shared/services/wallet/wallet.service';
+import { WalletService, WalletState } from '../shared/services/wallet/wallet.service';
 import { displayBackendError } from '../utilities/error-handler';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { Project, ProjectService } from '../shared/services/project/project.service';
@@ -51,11 +51,12 @@ export class InvestComponent implements OnInit {
 
     getWalletBalance() {
         SpinnerUtil.showSpinner();
-        this.walletService.getUserWalletCached().subscribe(res => {
-            if (res === null) {
+        this.walletService.wallet$.subscribe(res => {
+            if (res === WalletState.EMPTY) {
                 return;
             }
-            this.wallet = res;
+
+            this.wallet = res as WalletDetails;
             this.wallet.currency = prettyCurrency(res.currency);
             this.wallet.balance = numeral(centsToBaseCurrencyUnit(res.balance)).format('0,0');
 

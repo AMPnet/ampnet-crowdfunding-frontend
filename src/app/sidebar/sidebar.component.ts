@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import * as $ from 'jquery';
 import { UserService } from '../shared/services/user/user.service';
 import { Observable } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { User, UserRole } from '../shared/services/user/signup.service';
 import { WalletService } from '../shared/services/wallet/wallet.service';
 import { version } from '../../../package.json';
@@ -18,10 +18,9 @@ import { UserAuthService } from '../shared/services/user/user-auth.service';
 })
 export class SidebarComponent implements OnInit, AfterViewInit {
     appVersion: string = version;
-
     userRole = UserRole;
 
-    userChange$: Observable<User>;
+    user$: Observable<User>;
     walletInitialized$: Observable<boolean>;
 
     constructor(private router: Router,
@@ -31,10 +30,9 @@ export class SidebarComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit() {
-        this.userChange$ = this.userService.user$;
+        this.user$ = this.userService.user$;
 
-        this.walletInitialized$ = this.walletService.getUserWalletCached().pipe(
-            switchMap(_ => this.walletService.walletChange$),
+        this.walletInitialized$ = this.walletService.wallet$.pipe(
             map(wallet => wallet !== null)
         );
     }

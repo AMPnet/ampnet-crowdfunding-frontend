@@ -4,10 +4,10 @@ import { displayBackendError } from '../utilities/error-handler';
 import { centsToBaseCurrencyUnit, prettyCurrency } from '../utilities/currency-util';
 import * as numeral from 'numeral';
 import { ArkaneConnect, SecretType } from '@arkane-network/arkane-connect';
-import { UserTransaction, WalletService } from '../shared/services/wallet/wallet.service';
+import { UserTransaction, WalletService, WalletState } from '../shared/services/wallet/wallet.service';
 import { WalletDetails } from '../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
-import { BehaviorSubject } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { switchMap, tap } from 'rxjs/operators';
 
 declare var $: any;
 
@@ -26,10 +26,8 @@ export class WalletComponent implements OnInit {
     transactionHistory: UserTransaction[] = [];
     transactionHistoryPage: UserTransaction[] = [];
 
-    private refreshWalletSubject = new BehaviorSubject<void>(null);
-    wallet$ = this.refreshWalletSubject.pipe(
-        switchMap(() => this.walletService.getUserWalletCached())
-    );
+    wallet$ = this.walletService.wallet$;
+    walletState = WalletState;
 
     constructor(private walletService: WalletService) {
     }
@@ -51,14 +49,13 @@ export class WalletComponent implements OnInit {
         SpinnerUtil.showSpinner();
         this.walletService.initWallet(addr).subscribe(() => {
             SpinnerUtil.hideSpinner();
-            this.refreshWalletSubject.next();
+            this.walletService.clearAndRefreshWallet();
         }, err => {
             this.arkaneConnect.logout();
             SpinnerUtil.hideSpinner();
             displayBackendError(err);
         });
     }
-
 
     getTransactionHistory() {
         SpinnerUtil.showSpinner();

@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
-import { WalletService } from '../shared/services/wallet/wallet.service';
-import { map, switchMap } from 'rxjs/operators';
+import { WalletService, WalletState } from '../shared/services/wallet/wallet.service';
+import { map } from 'rxjs/operators';
 import { UserService } from '../shared/services/user/user.service';
 
 @Component({
@@ -9,22 +9,16 @@ import { UserService } from '../shared/services/user/user.service';
     templateUrl: './user-state-reminder.component.html',
     styleUrls: ['./user-state-reminder.component.css']
 })
-export class UserStateReminderComponent implements OnInit {
-    walletInitialized$: Observable<boolean>;
-    userVerified$: Observable<boolean>;
+export class UserStateReminderComponent {
+    walletInitialized$: Observable<boolean> = this.walletService.wallet$.pipe(
+        map(wallet => wallet !== WalletState.EMPTY)
+    );
+
+    userVerified$: Observable<boolean> = this.userService.user$.pipe(
+        map(user => user.verified)
+    );
 
     constructor(private walletService: WalletService,
                 private userService: UserService) {
-    }
-
-    ngOnInit() {
-        this.walletInitialized$ = this.walletService.getUserWalletCached().pipe(
-            switchMap(_ => this.walletService.walletChange$),
-            map(wallet => wallet !== null)
-        );
-
-        this.userVerified$ = this.userService.user$.pipe(
-            map(user => user.verified)
-        );
     }
 }

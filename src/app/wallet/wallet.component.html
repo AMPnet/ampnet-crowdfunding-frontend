@@ -1,12 +1,13 @@
-<div *ngIf="checkComplete">
-    <div class="container root-content-container">
-        <p class="col-12 mt-3 mb-lg-4 page-title text-uppercase page-title">
-            <i class="fas fa-long-arrow-alt-left mr-3"></i>
-            wallet
-        </p>
+<div class="container root-content-container">
+    <p class="col-12 mt-3 mb-lg-4 page-title text-uppercase page-title">
+        <i class="fas fa-long-arrow-alt-left mr-3"></i>
+        WALLET
+    </p>
 
-        <div *ngIf="(wallet ===  undefined)" class="row">
-            
+    <ng-container *ngIf="{ wallet: wallet$ | async } as states">
+
+        <div *ngIf="states.wallet === walletState.EMPTY" class="row">
+
             <div class="content-left col-12 col-lg-6 mt-4 pl-md-5 pr-md-5">
                 <div class="wallet-warning mt-5 mb-5">
                     <i class="fas fa-exclamation-triangle mr-2"></i>
@@ -17,8 +18,8 @@
                         Your private, secure wallet
                     </h4>
                     <p>
-                        We're commited to making sure your funds are as safe as they can possibly be when 
-                        using our platform. <br> To do this, we prevent the management of your money by anyone 
+                        We're commited to making sure your funds are as safe as they can possibly be when
+                        using our platform. <br> To do this, we prevent the management of your money by anyone
                         other than you.
                     </p>
                     <P>
@@ -26,7 +27,7 @@
                         your money and approve investments into projects. To start
                         the process of initializing your wallet - click on the button below.
                     </P>
-                    
+
                 </div>
                 <div class="mt-4 text-center initialize-button">
                     <button (click)="setUpArkane()" class="btn btn-primary mt-3 w-100">
@@ -38,30 +39,31 @@
             </div>
 
             <div class="content-right col-12 col-lg-5 mt-lg-4">
-                <svg width="1.2em" height="1.2em" viewBox="0 0 16 16" class="bi bi-lightning-fill mr-3" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" d="M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09z"/>
+                <svg width="1.2em" height="1.2em" viewBox="0 0 16 16" class="bi bi-lightning-fill mr-3"
+                     fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                          d="M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09z"/>
                 </svg>
                 <div>
                     <p>
                         <span>Advanced users</span>
                         <br>
                         This platform is powered by blockchain technology. A "wallet" is
-                        a keystorage service used for signing transactions. If you're an advanced user and 
+                        a keystorage service used for signing transactions. If you're an advanced user and
                         would like to sign transactions yourself, <u>click here</u>
                     </p>
-                    
+
                 </div>
             </div>
         </div>
 
-        <div *ngIf="wallet !== undefined" class="">
+        <div *ngIf="!!states.wallet && states.wallet !== walletState.EMPTY else loadingWallet" class="">
             <div class="row">
-
                 <div class="col-md-12">
-                    <div *ngIf="wallet.balance ===  0" class="alert alert-info w-100 mt-4">
+                    <div *ngIf="states.wallet.balance === 0" class="alert alert-info w-100 mt-4">
                         Your wallet is empty. Deposit funds to get started!
                     </div>
-                    <div *ngIf="wallet.hash ===  undefined" class="alert alert-info w-100 mt-4">
+                    <div *ngIf="states.wallet.hash === undefined" class="alert alert-info w-100 mt-4">
                         Your wallet is pending approval from admin. You can deposit funds while pending approval.
                     </div>
                 </div>
@@ -71,8 +73,8 @@
                         <div class="col-12 col-md-6 col-xl-8 balance-left">
                             <span class="h1">
                                 <div class="balance-text text-uppercase mb-2">Balance</div>
-                                <div *ngIf="wallet.balance !== undefined" class="balance-amount">
-                                    {{ wallet.balance | currencyCents }}
+                                <div class="balance-amount">
+                                    {{ states.wallet.balance | currencyCents }}
                                 </div>
                             </span>
                         </div>
@@ -89,7 +91,7 @@
                             </button>
                         </div>
                     </div>
-                    
+
 
                 </div>
             </div>
@@ -109,7 +111,7 @@
                             </td>
                             <td class="pl-1">
                                 <div>
-                                    
+
                                     <span>
                                         <div>
                                             {{ transaction.type }}
@@ -122,9 +124,9 @@
                                 <i class="icon-type fas {{ transaction.state | txIconStatus }}"></i>
                             </td>
                             <td>
-                                <div class="currency-table-column" >
+                                <div class="currency-table-column">
                                     <i *ngIf="transaction.type == 'DEPOSIT'; else negativeTx">+</i>
-                                    <ng-template #negativeTx> <i>-</i> </ng-template>
+                                    <ng-template #negativeTx><i>-</i></ng-template>
                                     {{ transaction.amount | currencyCents }}
                                 </div>
                             </td>
@@ -140,5 +142,9 @@
                 </div>
             </div>
         </div>
-    </div>
+    </ng-container>
+
+    <ng-template #loadingWallet>
+        <app-spinner type="overlay"></app-spinner>
+    </ng-template>
 </div>

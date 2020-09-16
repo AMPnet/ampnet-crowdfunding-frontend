@@ -2,8 +2,6 @@
     userVerified: userVerified$ | async,
     walletInitialized: walletInitialized$ | async
 } as states">
-
-    {{ states | json }}
     <div *ngIf="states.userVerified === false" class="container">
         <div class="wallet-init-reminder">
             <p>

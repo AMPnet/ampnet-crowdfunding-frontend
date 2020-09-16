@@ -4,7 +4,7 @@
     </div>
 
     <ng-container *ngIf="{
-        user: userChange$ | async,
+        user: user$ | async,
         walletInitialized: walletInitialized$ | async
     } as states">
         <ul class="list-unstyled components" id="main-menu">

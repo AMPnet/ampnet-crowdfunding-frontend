@@ -7,6 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class SpinnerComponent {
     @Input() type: 'inline' | 'overlay' = 'inline' ;
+    @Input() color: 'black' | 'white' = 'black';
 
     constructor() {
     }

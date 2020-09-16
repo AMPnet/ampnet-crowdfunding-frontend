@@ -6,9 +6,10 @@ import { UserService } from '../shared/services/user/user.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { User, UserRole } from '../shared/services/user/signup.service';
-import { WalletService } from '../shared/services/wallet/wallet.service';
+import { WalletDetailsWithState, WalletService, WalletState } from '../shared/services/wallet/wallet.service';
 import { version } from '../../../package.json';
 import { UserAuthService } from '../shared/services/user/user-auth.service';
+import { WalletDetails } from '../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
 
 
 @Component({
@@ -16,25 +17,17 @@ import { UserAuthService } from '../shared/services/user/user-auth.service';
     templateUrl: './sidebar.component.html',
     styleUrls: ['./sidebar.component.css']
 })
-export class SidebarComponent implements OnInit, AfterViewInit {
+export class SidebarComponent implements AfterViewInit {
     appVersion: string = version;
     userRole = UserRole;
 
-    user$: Observable<User>;
-    walletInitialized$: Observable<boolean>;
+    user$ = this.userService.user$;
+    wallet$ = this.walletService.wallet$;
 
     constructor(private router: Router,
                 private userService: UserService,
                 private userAuthService: UserAuthService,
                 private walletService: WalletService) {
-    }
-
-    ngOnInit() {
-        this.user$ = this.userService.user$;
-
-        this.walletInitialized$ = this.walletService.wallet$.pipe(
-            map(wallet => wallet !== null)
-        );
     }
 
     ngAfterViewInit() {
@@ -44,8 +37,11 @@ export class SidebarComponent implements OnInit, AfterViewInit {
     }
 
     onLogout() {
-        return this.userAuthService.logout().subscribe(() => {
-            this.router.navigate(['']);
-        });
+        this.userAuthService.logout();
+        this.router.navigate(['']);
+    }
+
+    isWalletReady(wallet: WalletDetailsWithState) {
+        return !wallet ? false : wallet.state === WalletState.READY;
     }
 }

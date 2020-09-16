@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../shared/services/user/user.service';
-import { FormBuilder } from '@angular/forms';
-import { SpinnerUtil } from '../utilities/spinner-utilities';
-import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
 import { User } from '../shared/services/user/signup.service';
 import { Observable } from 'rxjs';
 

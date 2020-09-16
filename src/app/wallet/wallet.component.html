@@ -5,9 +5,7 @@
     </p>
 
     <ng-container *ngIf="{ wallet: wallet$ | async } as states">
-
-        <div *ngIf="states.wallet === walletState.EMPTY" class="row">
-
+        <div *ngIf="states.wallet?.state === walletState.EMPTY" class="row">
             <div class="content-left col-12 col-lg-6 mt-4 pl-md-5 pr-md-5">
                 <div class="wallet-warning mt-5 mb-5">
                     <i class="fas fa-exclamation-triangle mr-2"></i>
@@ -35,7 +33,6 @@
                         Initialize secure wallet
                     </button>
                 </div>
-
             </div>
 
             <div class="content-right col-12 col-lg-5 mt-lg-4">
@@ -57,14 +54,11 @@
             </div>
         </div>
 
-        <div *ngIf="!!states.wallet && states.wallet !== walletState.EMPTY else loadingWallet" class="">
+        <div *ngIf="!!states.wallet && states.wallet.state !== walletState.EMPTY else overlaySpinner" class="">
             <div class="row">
                 <div class="col-md-12">
-                    <div *ngIf="states.wallet.balance === 0" class="alert alert-info w-100 mt-4">
+                    <div *ngIf="states.wallet?.wallet?.balance === 0" class="alert alert-info w-100 mt-4">
                         Your wallet is empty. Deposit funds to get started!
-                    </div>
-                    <div *ngIf="states.wallet.hash === undefined" class="alert alert-info w-100 mt-4">
-                        Your wallet is pending approval from admin. You can deposit funds while pending approval.
                     </div>
                 </div>
 
@@ -74,77 +68,77 @@
                             <span class="h1">
                                 <div class="balance-text text-uppercase mb-2">Balance</div>
                                 <div class="balance-amount">
-                                    {{ states.wallet.balance | currencyCents }}
+                                    {{ states.wallet?.wallet?.balance | currencyCents }}
                                 </div>
                             </span>
                         </div>
                         <div class="col-12 col-md-3 col-xl-2 mt-4 mt-md-0 button-container">
-                            <button class="btn btn-primary w-100" routerLink="deposit">
+                            <button class="btn btn-primary w-100" routerLink="deposit"
+                                    [disabled]="states.wallet.state !== walletState.READY">
                                 <i class="fas fa-arrow-circle-down mr-2"></i>
                                 Deposit
                             </button>
                         </div>
                         <div class="col-12 col-md-3 col-xl-2 mt-4 mt-md-0 button-container">
-                            <button class="btn btn-primary w-100" routerLink="withdraw">
-                                <i class="fas fa-arrow-circle-up mr-2"></i>
+                            <button class="btn btn-primary w-100" routerLink="withdraw"
+                                    [disabled]="states.wallet.state !== walletState.READY">
+                            <i class="fas fa-arrow-circle-up mr-2"></i>
                                 Withdraw
                             </button>
                         </div>
                     </div>
-
-
                 </div>
             </div>
             <br>
-            <div class="col-md-12 mt-3 mb-5">
+            <div class="col-md-12 mt-3 mb-5" *ngIf="states.wallet.state === walletState.READY">
 					<span class="h4 text-left">
 						<div class="explainer-mini float-right mb-2 w-100">Transaction History</div>
 					</span>
-                <div *ngIf="transactionHistory != undefined">
-                    <table class="table table-striped">
-                        <tbody>
-                        <tr *ngFor="let transaction of transactionHistoryPage">
-                            <td class="icon-type-cell pr-0">
+                <ng-container *ngIf="(transactionHistory$ | async) else overlaySpinner">
+                    <div *ngIf="transactionHistory !== undefined" class="wow fadeIn">
+                        <table class="table table-striped">
+                            <tbody>
+                            <tr *ngFor="let transaction of transactionHistoryPage">
+                                <td class="icon-type-cell pr-0">
                                 <span class="icon-type">
                                     <i class="fas mr-3 {{ transaction.type | txIconType }}"></i>
                                 </span>
-                            </td>
-                            <td class="pl-1">
-                                <div>
-
+                                </td>
+                                <td class="pl-1">
+                                    <div>
                                     <span>
-                                        <div>
-                                            {{ transaction.type }}
-                                        </div>
-                                        {{ transaction.date | date:'medium' }}
+                                        <div>{{ transaction.type }}</div>{{ transaction.date | date:'medium' }}
                                     </span>
-                                </div>
-                            </td>
-                            <td *ngIf="transaction.state != 'MINED'">
-                                <i class="icon-type fas {{ transaction.state | txIconStatus }}"></i>
-                            </td>
-                            <td>
-                                <div class="currency-table-column">
-                                    <i *ngIf="transaction.type == 'DEPOSIT'; else negativeTx">+</i>
-                                    <ng-template #negativeTx><i>-</i></ng-template>
-                                    {{ transaction.amount | currencyCents }}
-                                </div>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <div class="d-flex justify-content-center p-2">
-                        <ngb-pagination [collectionSize]="transactionItems" [(page)]="tablePage"
-                                        [pageSize]="tablePageSize"
-                                        (pageChange)="refreshTransactionHistory()">
-                        </ngb-pagination>
+                                    </div>
+                                </td>
+                                <td *ngIf="transaction.state != 'MINED'">
+                                    <i class="icon-type fas {{ transaction.state | txIconStatus }}"></i>
+                                </td>
+                                <td>
+                                    <div class="currency-table-column">
+                                        <i *ngIf="transaction.type == 'DEPOSIT'; else negativeTx">+</i>
+                                        <ng-template #negativeTx><i>-</i></ng-template>
+                                        {{ transaction.amount | currencyCents }}
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="d-flex justify-content-center p-2">
+                            <ngb-pagination [collectionSize]="transactionItems" [(page)]="tablePage"
+                                            [pageSize]="tablePageSize"
+                                            (pageChange)="refreshTransactionHistory()">
+                            </ngb-pagination>
+                        </div>
                     </div>
-                </div>
+                </ng-container>
             </div>
         </div>
     </ng-container>
 
-    <ng-template #loadingWallet>
-        <app-spinner type="overlay"></app-spinner>
+    <ng-template #overlaySpinner>
+        <div class="justify-content-center" style="width: 100%">
+            <app-spinner type="overlay"></app-spinner>
+        </div>
     </ng-template>
 </div>

@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { UserStatusStorage } from '../../user-status-storage';
 import { BackendHttpClient } from './backend-http-client.service';
 
 @Injectable({

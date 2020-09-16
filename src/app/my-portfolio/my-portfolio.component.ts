@@ -1,11 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Portfolio, PortfolioResponse, PortfolioService, PortfolioStats } from '../shared/services/wallet/portfolio.service';
-import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
-import { SpinnerUtil } from '../utilities/spinner-utilities';
+import { Component } from '@angular/core';
+import { Portfolio, PortfolioService } from '../shared/services/wallet/portfolio.service';
 import { WalletService, WalletState } from '../shared/services/wallet/wallet.service';
-import { WalletDetails } from '../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
-import { EMPTY, Observable, of, Subscription } from 'rxjs';
-import { delay, map, switchMap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 
 @Component({
@@ -19,7 +16,7 @@ export class MyPortfolioComponent {
     }
 
     walletActivated$: Observable<boolean> = this.walletService.wallet$.pipe(
-        map(wallet => wallet !== WalletState.EMPTY && wallet.hash !== null)
+        map(wallet => wallet.state === WalletState.READY)
     );
 
     portfolioStats$ = this.portfolioService.getPortfolioStats().pipe(

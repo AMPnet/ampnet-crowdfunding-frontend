@@ -16,10 +16,9 @@ declare var $: any;
     templateUrl: './wallet.component.html',
     styleUrls: ['./wallet.component.css']
 })
-export class WalletComponent implements OnInit {
-    wallet: WalletDetails;
-    checkComplete = false;
+export class WalletComponent {
     arkaneConnect: ArkaneConnect;
+
     tablePage = 1;
     tablePageSize = 10;
     transactionItems = 0;
@@ -28,12 +27,16 @@ export class WalletComponent implements OnInit {
 
     wallet$ = this.walletService.wallet$;
     walletState = WalletState;
+    transactionHistory$ = this.walletService.getTransactionHistory().pipe(
+        tap(res => {
+            this.transactionHistory = res.transactions
+                .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+            this.transactionItems = this.transactionHistory.length;
+            this.refreshTransactionHistory();
+        })
+    );
 
     constructor(private walletService: WalletService) {
-    }
-
-    ngOnInit() {
-        this.getTransactionHistory();
     }
 
     setUpArkane() {
@@ -54,17 +57,6 @@ export class WalletComponent implements OnInit {
             this.arkaneConnect.logout();
             SpinnerUtil.hideSpinner();
             displayBackendError(err);
-        });
-    }
-
-    getTransactionHistory() {
-        SpinnerUtil.showSpinner();
-        this.walletService.getTransactionHistory().subscribe(res => {
-            this.transactionHistory = res.transactions
-                .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-            this.transactionItems = this.transactionHistory.length;
-            this.refreshTransactionHistory();
-            SpinnerUtil.hideSpinner();
         });
     }
 

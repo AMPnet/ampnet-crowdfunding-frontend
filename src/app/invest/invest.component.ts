@@ -52,13 +52,11 @@ export class InvestComponent implements OnInit {
     getWalletBalance() {
         SpinnerUtil.showSpinner();
         this.walletService.wallet$.subscribe(res => {
-            if (res === WalletState.EMPTY) {
+            if (res.state === WalletState.EMPTY) {
                 return;
             }
 
-            this.wallet = res as WalletDetails;
-            this.wallet.currency = prettyCurrency(res.currency);
-            this.wallet.balance = numeral(centsToBaseCurrencyUnit(res.balance)).format('0,0');
+            this.wallet = res.wallet;
 
             setTimeout(() => {
                 autonumericCurrency('#amount-input');

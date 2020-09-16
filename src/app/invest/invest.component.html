@@ -29,7 +29,7 @@
                 </div>
     
                 <div class="min-investment">
-                    <p>{{ project.currency }}{{ project.min_per_user }} Min investment</p>
+                    <p>{{ project.min_per_user | currencyDefault }} Min investment</p>
                 </div>
             </div>
     
@@ -44,7 +44,7 @@
             
             <div class="col-lg-2 invest-text-right mt-4 mt-lg-0">
                 <p class="text-uppercase" style="font-size: 12px;">Available funds</p>
-                <h1 class="mb-4">{{ wallet.currency }}{{ wallet.balance }}.00</h1>
+                <h1 class="mb-4">{{ wallet.balance | currencyDefault }}</h1>
                 <a routerLink="/dash/wallet">Open wallet</a>
             </div>
         </div>

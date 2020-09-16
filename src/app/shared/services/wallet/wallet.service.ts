@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
-import { UserStatusStorage } from '../../../user-status-storage';
 import { BackendHttpClient } from '../backend-http-client.service';
 import { TransactionInfo, WalletDetails } from './wallet-cooperative/wallet-cooperative-wallet.service';
 import { catchError, retry, switchMap, tap } from 'rxjs/operators';
-import { BehaviorSubject, EMPTY, empty, merge, Observable, of, ReplaySubject, throwError } from 'rxjs';
+import { BehaviorSubject, EMPTY, merge, Observable, of, ReplaySubject, throwError } from 'rxjs';
 import { CacheService } from '../cache.service';
-import { log } from 'util';
 
 @Injectable({
     providedIn: 'root'
@@ -13,13 +11,13 @@ import { log } from 'util';
 export class WalletService {
     private cacheKey = 'user_wallet';
 
-    private changeWalletSubject = new ReplaySubject<WalletDetails>(1);
+    private changeWalletSubject = new ReplaySubject<WalletDetailsWithState>(1);
     private refreshWalletSubject = new BehaviorSubject<void>(null);
 
     wallet$ = merge(
         this.changeWalletSubject.pipe(switchMap(wallet => of(wallet))),
         this.refreshWalletSubject.pipe(
-            switchMap(() => this.cacheService.setAndGet(this.cacheKey, this.getUserWallet(), 60_000)))
+            switchMap(() => this.cacheService.setAndGet(this.cacheKey, this.getUserWallet(), 30_000)))
     ).pipe(catchError(() => EMPTY));
 
     constructor(private http: BackendHttpClient,
@@ -30,19 +28,34 @@ export class WalletService {
         return this.http.post<WalletDetails>('/api/wallet/wallet',
             <InitWalletData>{
                 public_key: address
-            }).pipe(this.tapWalletChange(this));
+            }).pipe(tap(() => this.clearAndRefreshWallet()));
     }
 
-    getUserWallet() {
-        const self = this;
-        return this.http.get<WalletDetails | WalletState>('/api/wallet/wallet').pipe(
-            self.tapWalletChange(self),
+    getUserWallet(): Observable<WalletDetailsWithState> {
+        return this.getFreshUserWallet().pipe(
+            switchMap(wallet => {
+                const walletState = wallet.hash !== null ? WalletState.READY : WalletState.NOT_VERIFIED;
+                return of({state: walletState, wallet: wallet});
+            }),
+            tap(wallet => this.changeWalletSubject.next(wallet)),
+            catchError(err => {
+                switch (err.status) {
+                    case 404:
+                    case 409:
+                        return of({state: WalletState.EMPTY});
+                    default:
+                        return throwError(err);
+                }
+            }),
             retry(3),
-            catchError(err => err.status === 404 ? of(WalletState.EMPTY) : throwError(err))
         );
     }
 
-    setWallet(wallet: WalletDetails) {
+    getFreshUserWallet() {
+        return this.http.get<WalletDetails>('/api/wallet/wallet');
+    }
+
+    setWallet(wallet: WalletDetailsWithState) {
         this.changeWalletSubject.next(wallet);
     }
 
@@ -53,17 +66,6 @@ export class WalletService {
 
     refreshWallet() {
         this.refreshWalletSubject.next();
-    }
-
-    private tapWalletChange(self: WalletService) {
-        return function (source: Observable<WalletDetails>) {
-            return source.pipe(
-                tap(wallet => {
-                    UserStatusStorage.walletData = wallet;
-                    self.changeWalletSubject.next(wallet);
-                })
-            );
-        };
     }
 
     getInfoFromPairingCode(pairingCode: string) {
@@ -121,4 +123,11 @@ interface UserTransactionResponse {
 
 export enum WalletState {
     EMPTY,
+    NOT_VERIFIED,
+    READY,
+}
+
+export interface WalletDetailsWithState {
+    wallet?: WalletDetails;
+    state: WalletState;
 }

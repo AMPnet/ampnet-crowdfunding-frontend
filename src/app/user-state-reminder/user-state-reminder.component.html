@@ -1,8 +1,8 @@
 <ng-container *ngIf="{
-    userVerified: userVerified$ | async,
-    walletInitialized: walletInitialized$ | async
+    user: user$ | async,
+    wallet: wallet$ | async
 } as states">
-    <div *ngIf="states.userVerified === false" class="container">
+    <div *ngIf="!isUserVerified(states.user)" class="container">
         <div class="wallet-init-reminder">
             <p>
                 Profile not verified.
@@ -12,12 +12,22 @@
         </div>
     </div>
 
-    <div *ngIf="states.userVerified === true && states.walletInitialized === false" class="container">
+    <div *ngIf="isUserVerified(states.user) && !isWalletInitialized(states.wallet)" class="container">
         <div class="wallet-init-reminder">
             <p>
                 Thank you for verifying your profile.
                 In order to manage funds, you need to have your wallet initialized.
                 Please initialize your wallet <span class="reminder-link" routerLink="wallet">here</span>.
+            </p>
+        </div>
+    </div>
+
+    <div *ngIf="isUserVerified(states.user) && isWalletInitialized(states.wallet) && !isWalletReady(states.wallet)"
+         class="container">
+        <div class="wallet-init-reminder">
+            <p>
+                Thank you for initializing your wallet.
+                Please wait for the administrator to get it verified.
             </p>
         </div>
     </div>

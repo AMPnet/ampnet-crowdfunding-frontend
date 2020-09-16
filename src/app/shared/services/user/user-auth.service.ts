@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { TokenModel } from 'src/app/models/auth/TokenModel';
 import { BackendHttpClient } from '../backend-http-client.service';
-import { Observable, of } from 'rxjs';
+import { EMPTY, Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { UserService } from './user.service';
 import { CacheService } from '../cache.service';
@@ -45,10 +45,13 @@ export class UserAuthService {
     }
 
     logout() {
-        return this.http.post<void>(`/api/user/logout`, {}).pipe(
-            catchError(_ => of(null)),
-            this.removeTokens
-        );
+        this.http.post<void>(`/api/user/logout`, {})
+            .pipe(catchError(_ => EMPTY)).subscribe();
+
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('refresh_token');
+
+        this.cacheService.clearAll();
     }
 
     private saveTokens(source: Observable<TokenModel>) {
@@ -56,15 +59,6 @@ export class UserAuthService {
             tap(res => {
                 localStorage.setItem('access_token', res.access_token);
                 localStorage.setItem('refresh_token', res.refresh_token);
-            })
-        );
-    }
-
-    private removeTokens<T>(source: Observable<T>) {
-        return source.pipe(
-            tap(_ => {
-                localStorage.removeItem('access_token');
-                localStorage.removeItem('refresh_token');
             })
         );
     }

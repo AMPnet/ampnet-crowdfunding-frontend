@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import * as Uppy from 'uppy';
 import { ActivatedRoute } from '@angular/router';
 import { hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
@@ -11,9 +11,12 @@ import {
 import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
 import { BroadcastService } from 'src/app/shared/services/broadcast.service';
 import swal from 'sweetalert2';
-import { autonumericCurrency, baseCurrencyUnitToCents, stripCurrencyData } from 'src/app/utilities/currency-util';
+import { autonumericCurrency, baseCurrencyUnitToCents } from 'src/app/utilities/currency-util';
 import MicroModal from 'micromodal';
 import { BackendHttpClient } from '../../shared/services/backend-http-client.service';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { ManageSingleDepositModalComponent } from './manage-single-deposit-modal/manage-single-deposit-modal.component';
+import { KeyboardType } from 'tns-core-modules/ui/enums';
 
 declare var $: any;
 
@@ -22,22 +25,23 @@ declare var $: any;
     templateUrl: './manage-single-deposit.component.html',
     styleUrls: ['./manage-single-deposit.component.css']
 })
-export class ManageSingleDepositComponent implements OnInit, AfterViewInit {
+export class ManageSingleDepositComponent implements OnInit {
+    @Input() depositAmount;
+    confirmationModal: BsModalRef;
     depositModel: DepositSearchResponse;
     paymentUppy: Uppy.Core.Uppy;
 
     constructor(private route: ActivatedRoute,
                 private http: BackendHttpClient,
                 private depositCooperativeService: WalletCooperativeDepositService,
-                private broadService: BroadcastService) {
+                private broadService: BroadcastService,
+                private modalService: BsModalService) {
     }
 
     ngOnInit() {
         this.getDeposit();
     }
 
-    ngAfterViewInit() {
-    }
 
     createUploadArea() {
         this.paymentUppy = Uppy.Core();
@@ -95,44 +99,40 @@ export class ManageSingleDepositComponent implements OnInit, AfterViewInit {
 
             setTimeout(() => {
                 autonumericCurrency('#deposit-amount');
-                autonumericCurrency('#deposit-confirm-amount');
             }, 200);
 
             SpinnerUtil.hideSpinner();
         }, hideSpinnerAndDisplayError);
     }
 
-    approveButtonClicked() {
-        const depositAmount = parseInt(stripCurrencyData($('#deposit-amount').val()), 10);
-        const depositConfirmAmount = parseInt(stripCurrencyData($('#deposit-confirm-amount').val()), 10);
-
-        if (depositAmount !== depositConfirmAmount) {
-            swal('', 'The deposit amounts don\'t match. Please check the proper deposit amount and try again!',
-                'error').then(() => {
-                (<any>$('#modal-confirm-deposit')).modal('hide');
-                location.reload();
-            });
-            return;
-        }
-
-        const depositApprovalURL = this.depositCooperativeService.generateDepositApprovalURL(
-            location.origin,
-            this.depositModel.deposit.id,
-            baseCurrencyUnitToCents(depositAmount)
-        );
-
-        this.paymentUppy.use(Uppy.XHRUpload, {
-            endpoint: depositApprovalURL,
-            fieldName: 'file',
-            headers: {
-                'Authorization': this.http.authHttpOptions().headers.get('Authorization')
+    showConfirmModal() {
+        this.confirmationModal = this.modalService.show(ManageSingleDepositModalComponent, {
+            initialState: {
+                depositAmount: this.depositAmount
             }
         });
+        const confirmationSub = this.confirmationModal.content.onSuccessfulConfirmation
+            .subscribe(() => {
+                console.log('subscribe');
+                const depositApprovalURL = this.depositCooperativeService.generateDepositApprovalURL(
+                    location.origin,
+                    this.depositModel.deposit.id,
+                    Number(baseCurrencyUnitToCents(this.depositAmount))
+                );
 
-        SpinnerUtil.showSpinner();
-        this.paymentUppy.upload().then(res => {
-            SpinnerUtil.hideSpinner();
-            this.getDeposit();
-        });
+                this.paymentUppy.use(Uppy.XHRUpload, {
+                    endpoint: depositApprovalURL,
+                    fieldName: 'file',
+                    headers: {
+                        'Authorization': this.http.authHttpOptions().headers.get('Authorization')
+                    }
+                });
+                confirmationSub.unsubscribe();
+                // SpinnerUtil.showSpinner();
+                // this.paymentUppy.upload().then(() => {
+                //     SpinnerUtil.hideSpinner();
+                //     this.getDeposit();
+                // });
+            });
     }
 }

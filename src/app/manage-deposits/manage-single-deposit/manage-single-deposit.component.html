@@ -44,39 +44,21 @@
             <div *ngIf="!depositModel.deposit.approved" class="explainer-mini mt-3 mb-2">
                 Deposit amount
             </div>
-            <input *ngIf="!depositModel.deposit.approved" class=" px-3 w-100 form-control py-4" id="deposit-amount" name="">
+            <input *ngIf="!depositModel.deposit.approved" class=" px-3 w-100 form-control py-4"
+                   [(ngModel)]="depositAmount" id="deposit-amount" name="">
         </div>
+
         <div *ngIf="(depositModel !== undefined)" class="col-md-12 mt-3">
             <div id="payment-reciept-upload-target"></div>
-            <button class="btn btn-primary w-100 py-3 mt-3" data-target="#modal-confirm-deposit" data-toggle="modal">
+            <button
+                    class="btn btn-primary w-100 py-3 mt-3"
+                    [disabled]="!depositAmount"
+                    (click)="showConfirmModal()"
+                    data-target="#modal-confirm-deposit"
+                    data-toggle="modal">
                 <i class="fas fa-check-circle mr-2"></i>
                 Confirm deposit
             </button>
-        </div>
-    </div>
-</div>
-
-<!-- Modal -->
-<div aria-hidden="true" aria-labelledby="exampleModalCenterTitle" class="modal fade" id="modal-confirm-deposit"
-    role="dialog" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Confirm deposit amount</h5>
-                <button aria-label="Close" class="close" data-dismiss="modal" type="button">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <input class="form-control px-4 py-4" id="deposit-confirm-amount" type="text">
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary px-5 py-2" data-dismiss="modal" type="button">Cancel</button>
-                <button (click)="approveButtonClicked()" class="btn btn-primary px-5 py-2" type="button">
-                    <i class="fas fa-check-circle mr-2"></i>
-                    Create & Mint
-                </button>
-            </div>
         </div>
     </div>
 </div>

@@ -1,0 +1,40 @@
+<div class="alert-box">
+    <div class="modal-header">
+        <h4 class="modal-title">Confirm deposit amount</h4>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="confirmForm">
+            <div class="row">
+                <h5 class="explainer-mini text-uppercase gray-text col-md-12">
+                    <b>Amount</b>
+                </h5>
+
+                <div class="col-md-12">
+                    <input class="form-control mt-3 p-4 w-100"
+                           formControlName="depositConfirmAmount"
+                           id="deposit-confirm-amount"
+                           placeholder="Deposit amount"
+                           type="text">
+                </div>
+
+                <div class="col-md-6">
+                    <button (click)="onCancel()"
+                            class="btn btn-primary w-100 float-left mt-4 py-3 px-3"
+                            type="button">
+                        Cancel
+                    </button>
+                </div>
+
+                <div class="col-md-6">
+                    <button (click)="onConfirm()"
+                            [disabled]="!confirmForm.valid || depositAmount === undefined"
+                            class="btn btn-primary w-100 float-right mt-4 py-3 px-3"
+                            type="submit"><i class="fas fa-check-circle mr-2"></i>
+                        Create & Mint
+                    </button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>

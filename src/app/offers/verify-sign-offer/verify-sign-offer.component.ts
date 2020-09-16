@@ -71,15 +71,9 @@ export class VerifySignOfferComponent implements OnInit {
             title: 'Transaction signed',
             text: 'Transaction is being processed...',
             footer: 'Check your transaction status<a href="/dash/wallet">&nbsp;here</a>'
-        }).then(() => {
-            this.navigateToWalletScreen();
-        });
+        }).then(() => this.router.navigate(['/dash/wallet']));
         // This is a hack to fix bug in Sweet Alert lib -> always displays dropdown
         // TODO: This is deprecated and needs to be fixed.
         swal.getContent().getElementsByClassName('swal2-select').item(0).remove();
-    }
-
-    navigateToWalletScreen() {
-        this.router.navigate(['/dash/wallet']);
     }
 }

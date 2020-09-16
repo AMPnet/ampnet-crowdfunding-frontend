@@ -39,8 +39,8 @@ export class CreateNewProjectComponent implements OnInit {
 
     submitForm() {
         const formValue = this.createForm.value;
-        formValue.startDate = moment(formValue.startDate).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
-        formValue.endDate = moment(formValue.endDate).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
+        formValue.startDate = moment(formValue.startDate).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
+        formValue.endDate = moment(formValue.endDate).endOf('day').format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
         const orgID = this.activatedRoute.snapshot.params.orgId;
 
         SpinnerUtil.showSpinner();

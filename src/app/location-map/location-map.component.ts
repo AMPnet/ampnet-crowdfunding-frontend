@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import leaflet from 'leaflet';
 
 @Component({
@@ -21,9 +21,10 @@ export class LocationMapComponent implements AfterViewInit {
     icon: leaflet.Icon.Default;
 
     constructor() {
-        this.icon = new leaflet.Icon.Default({
+        this.icon = leaflet.icon({
             iconUrl: 'assets/leaflet/marker-icon.png',
-            shadowUrl: 'assets/leaflet/marker-shadow.png'
+            shadowUrl: 'assets/leaflet/marker-shadow.png',
+            iconAnchor: [13, 41]
         });
     }
 
@@ -48,6 +49,18 @@ export class LocationMapComponent implements AfterViewInit {
     }
 
     private enableMapEdit() {
+        this.map.on('mouseover', () => {
+            this.mapEl.nativeElement.style.cursor = 'pointer';
+        });
+
+        this.map.on('dragstart', () => {
+            this.mapEl.nativeElement.style.cursor = '';
+        });
+
+        this.map.on('dragend', () => {
+            this.mapEl.nativeElement.style.cursor = 'pointer';
+        });
+
         this.map.on('click', function (e: leaflet.LeafletMouseEvent) {
             if (this.mapMarker) {
                 this.map.removeLayer(this.mapMarker);

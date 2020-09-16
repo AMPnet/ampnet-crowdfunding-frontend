@@ -2,9 +2,9 @@ import { CurrencyPipe } from '@angular/common';
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-    name: 'currencyDefault'
+    name: 'currencyCents'
 })
-export class CurrencyDefaultPipe extends CurrencyPipe implements PipeTransform {
+export class CurrencyCentsPipe extends CurrencyPipe implements PipeTransform {
     transform(
         value: number,
         code = 'EUR',

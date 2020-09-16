@@ -22,7 +22,8 @@
                     </div>
                 </div>
             </div>
-            <div *ngIf="depositModel.deposit.approved" class="d-flex justify-content-center mt-5 text-center">
+            <div *ngIf="depositModel.deposit.approved" 
+                 class="d-flex justify-content-center mt-5 text-center">
 
                 <div>
                     <div class="mb-5 mt-3">
@@ -44,11 +45,13 @@
             <div *ngIf="!depositModel.deposit.approved" class="explainer-mini mt-3 mb-2">
                 Deposit amount
             </div>
-            <input *ngIf="!depositModel.deposit.approved" class=" px-3 w-100 form-control py-4" id="deposit-amount" name="">
+            <input *ngIf="!depositModel.deposit.approved" class=" px-3 w-100 form-control py-4" 
+                   id="deposit-amount" autocomplete="off">
         </div>
         <div *ngIf="(depositModel !== undefined)" class="col-md-12 mt-3">
             <div id="payment-reciept-upload-target"></div>
-            <button class="btn btn-primary w-100 py-3 mt-3" data-target="#modal-confirm-deposit" data-toggle="modal">
+            <button class="btn btn-primary w-100 py-3 mt-3" data-target="#modal-confirm-deposit" 
+                    data-toggle="modal">
                 <i class="fas fa-check-circle mr-2"></i>
                 Confirm deposit
             </button>
@@ -57,8 +60,9 @@
 </div>
 
 <!-- Modal -->
-<div aria-hidden="true" aria-labelledby="exampleModalCenterTitle" class="modal fade" id="modal-confirm-deposit"
-    role="dialog" tabindex="-1">
+<div aria-hidden="true" aria-labelledby="exampleModalCenterTitle" 
+     class="modal fade" id="modal-confirm-deposit"
+     role="dialog" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -68,11 +72,14 @@
                 </button>
             </div>
             <div class="modal-body">
-                <input class="form-control px-4 py-4" id="deposit-confirm-amount" type="text">
+                <input class="form-control px-4 py-4" id="deposit-confirm-amount" 
+                       type="text" autocomplete="off">
             </div>
             <div class="modal-footer">
-                <button class="btn btn-secondary px-5 py-2" data-dismiss="modal" type="button">Cancel</button>
-                <button (click)="approveButtonClicked()" class="btn btn-primary px-5 py-2" type="button">
+                <button class="btn btn-secondary px-5 py-2" data-dismiss="modal" 
+                        type="button">Cancel</button>
+                <button (click)="approveButtonClicked()" class="btn btn-primary px-5 py-2" 
+                        type="button">
                     <i class="fas fa-check-circle mr-2"></i>
                     Create & Mint
                 </button>

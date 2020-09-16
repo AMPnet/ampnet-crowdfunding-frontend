@@ -40,23 +40,22 @@
         <input class="w-100 p-4 form-control" formControlName="endDate" id="end-date" name="" type="date">
 
         <div class="explainer-mini  mb-2 mt-3">Expected funding</div>
-        <input class="w-100 p-4 form-control"
-               formControlName="expectedFunding" id="expected-funding-input" type="text">
+        <input class="w-100 p-4 form-control" formControlName="expectedFunding" 
+               id="expected-funding-input" type="text" autocomplete="off">
 
         <div class="explainer-mini  mb-2 mt-3">Minimum investment per user</div>
         <div class="input-group">
-            <input class=" p-4 form-control"
-                   formControlName="minPerUser" id="min-per-user-input" type="text">
+            <input class=" p-4 form-control" formControlName="minPerUser" 
+                   id="min-per-user-input" type="text" autocomplete="off">
         </div>
 
         <div class="explainer-mini  mb-2 mt-3">Maximum investment per user</div>
         <div class="input-group">
             <input class=" p-4 form-control" formControlName="maxPerUser"
-                   id="max-per-user-input" name="" type="text">
+                   id="max-per-user-input" type="text" autocomplete="off">
         </div>
 
-        <button (click)="submitForm()"
-                [disabled]="!createForm.valid"
+        <button (click)="submitForm()" [disabled]="!createForm.valid"
                 class="btn btn-primary float-right mt-3 mb-5 pt-3 pb-3 pl-5 pr-5 "
                 type="submit">
             <i class="mr-3 fas fa-plus"></i>

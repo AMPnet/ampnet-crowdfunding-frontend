@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { ProjectService } from '../../shared/services/project/project.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { displayBackendError } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { autonumericCurrency, baseCurrencyUnitToCents, stripCurrencyData } from 'src/app/utilities/currency-util';
+import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 
 declare var $: any;
 
@@ -19,6 +20,7 @@ export class CreateNewProjectComponent implements OnInit {
     mapLat: number;
     mapLong: number;
     projectCoords = [];
+    bsConfig: Partial<BsDatepickerConfig>;
 
     constructor(private projectService: ProjectService,
                 private fb: FormBuilder,
@@ -62,6 +64,16 @@ export class CreateNewProjectComponent implements OnInit {
         }, err => {
             SpinnerUtil.hideSpinner();
             displayBackendError(err);
+        });
+    }
+
+    setDatepickerOptions() {
+        this.bsConfig = Object.assign({}, {
+            showTodayButton: true, 
+            todayPosition: 'right', 
+            containerClass: 'theme-default', 
+            isAnimated: true,
+            dateInputFormat: 'DD-MM-YYYY'
         });
     }
 

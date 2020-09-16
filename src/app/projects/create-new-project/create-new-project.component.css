@@ -1,0 +1,9 @@
+::ng-deep.theme-default .bs-datepicker-head,
+::ng-deep.bs-datepicker-buttons .btn-success {
+    background-color: #DEA546;
+}
+
+::ng-deep.bs-datepicker-buttons .btn-success {
+    border-color: #DEA546;
+    height: unset;
+}

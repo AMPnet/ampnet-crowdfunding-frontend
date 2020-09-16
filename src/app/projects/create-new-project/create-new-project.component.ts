@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ProjectService } from '../../shared/services/project/project.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
@@ -69,9 +69,9 @@ export class CreateNewProjectComponent implements OnInit {
 
     setDatepickerOptions() {
         this.bsConfig = Object.assign({}, {
-            showTodayButton: true, 
-            todayPosition: 'right', 
-            containerClass: 'theme-default', 
+            showTodayButton: true,
+            todayPosition: 'right',
+            containerClass: 'theme-default',
             isAnimated: true,
             dateInputFormat: 'DD-MM-YYYY'
         });

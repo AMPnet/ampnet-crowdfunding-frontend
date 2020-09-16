@@ -81,7 +81,6 @@ import { CurrencyCentsPipe } from './pipes/currency-cents.pipe';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
-
 const socialAuthServiceConfig = {
     provide: 'SocialAuthServiceConfig',
     useValue: {

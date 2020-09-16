@@ -52,10 +52,7 @@ export class ManageSingleProjectComponent implements OnInit, AfterViewInit {
 
     fetchAllData() {
         this.getProject(() => {
-            SpinnerUtil.showSpinner();
-
             this.walletService.getProjectWallet(this.project.uuid).subscribe(res => {
-                SpinnerUtil.hideSpinner();
                 this.wallet = res;
                 setTimeout(() => {
                     this.setUploadAreas();
@@ -67,7 +64,6 @@ export class ManageSingleProjectComponent implements OnInit, AfterViewInit {
                     displayBackendError(err);
                 }
             });
-            SpinnerUtil.hideSpinner();
         });
     }
 
@@ -94,6 +90,7 @@ export class ManageSingleProjectComponent implements OnInit, AfterViewInit {
                         }, hideSpinnerAndDisplayError);
                 });
         }, err => {
+            SpinnerUtil.hideSpinner();
             displayBackendError(err);
         });
     }

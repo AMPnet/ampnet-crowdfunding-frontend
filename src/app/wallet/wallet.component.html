@@ -82,7 +82,7 @@
                         <div class="col-12 col-md-3 col-xl-2 mt-4 mt-md-0 button-container">
                             <button class="btn btn-primary w-100" routerLink="withdraw"
                                     [disabled]="states.wallet.state !== walletState.READY">
-                            <i class="fas fa-arrow-circle-up mr-2"></i>
+                                <i class="fas fa-arrow-circle-up mr-2"></i>
                                 Withdraw
                             </button>
                         </div>
@@ -107,7 +107,8 @@
                                 <td class="pl-1">
                                     <div>
                                     <span>
-                                        <div>{{ transaction.type }}</div>{{ transaction.date | date:'medium' }}
+                                        <div>{{ transaction.type }}</div>
+                                        {{ transaction.date | date:'medium' }}
                                     </span>
                                     </div>
                                 </td>
@@ -116,9 +117,7 @@
                                 </td>
                                 <td>
                                     <div class="currency-table-column">
-                                        <i *ngIf="transaction.type == 'DEPOSIT'; else negativeTx">+</i>
-                                        <ng-template #negativeTx><i>-</i></ng-template>
-                                        {{ transaction.amount | currencyCents }}
+                                        {{ transaction.type | txAmountSign }} {{ transaction.amount | currencyCents }}
                                     </div>
                                 </td>
                             </tr>

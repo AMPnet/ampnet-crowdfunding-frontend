@@ -67,7 +67,7 @@ import { OwnershipComponent } from './ownership/ownership.component';
 import { CurrencyDefaultPipe } from './pipes/currency-default.pipe';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RevenueShareComponent } from './revenue-share/revenue-share.component';
-import { TxIconStatus, TxIconType } from './wallet/wallet-icon.pipe';
+import { TxAmountSign, TxIconStatus, TxIconType } from './wallet/wallet.pipe';
 import { UserStateReminderComponent } from './user-state-reminder/user-state-reminder.component';
 import { FileValidator } from './shared/validators/file.validator';
 import { FileValueAccessorDirective } from './shared/directives/file-value-accessor.directive';
@@ -167,6 +167,7 @@ const socialAuthServiceConfig = {
         LocationMapComponent,
         MapModalComponent,
         TxIconStatus,
+        TxAmountSign,
         ActionButtonComponent,
     ],
     imports: [

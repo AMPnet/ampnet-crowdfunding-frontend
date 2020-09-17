@@ -1,36 +1,43 @@
-import { ChangeDetectorRef, Component, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, Input, OnDestroy } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
-import { log } from 'util';
 
 @Component({
     selector: 'app-action-button',
     templateUrl: './action-button.component.html',
-    styleUrls: ['./action-button.component.scss']
+    styleUrls: ['./action-button.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ActionButtonComponent implements OnDestroy {
     @Input() text: string;
     @Input() loadingText: string;
     @Input() faIcon: string;
+    @Input() disabled = false;
+
     loading = false;
     sub: Subscription;
 
-    @Input() onClick: Observable<any>;
+    @Input() onClick: () => Observable<any>;
 
     @HostListener('click')
     click() {
+        if (this.disabled || this.loading) {
+            return;
+        }
+
         this.loading = true;
-        this.sub = this.onClick.subscribe(() => {}, () => {},
-            () => {
-                this.loading = false;
-                this.ref.detectChanges();
-            }
+        this.sub = this.onClick().subscribe(
+            () => this.loading = false,
+            () => this.loading = false,
+            () => this.loading = false,
         );
     }
 
-    constructor(private ref: ChangeDetectorRef) {
+    constructor() {
     }
 
     ngOnDestroy() {
-        this.sub.unsubscribe();
+        if (this.sub !== undefined && !this.sub.closed) {
+            this.sub.unsubscribe();
+        }
     }
 }

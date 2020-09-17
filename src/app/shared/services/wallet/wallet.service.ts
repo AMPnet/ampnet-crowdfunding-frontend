@@ -112,9 +112,9 @@ export interface UserTransaction {
     from_tx_hash: string;
     to_tx_hash: string;
     amount: number;
-    type: string;
+    type: TransactionType;
     date: Date;
-    state: string;
+    state: TransactionState;
 }
 
 interface UserTransactionResponse {
@@ -131,3 +131,18 @@ export interface WalletDetailsWithState {
     wallet?: WalletDetails;
     state: WalletState;
 }
+
+export enum TransactionType {
+    INVEST = 'INVEST',
+    DEPOSIT = 'DEPOSIT',
+    WITHDRAW = 'WITHDRAW',
+    SHARE_PAYOUT = 'SHARE_PAYOUT',
+    CANCEL_INVESTMENT = 'CANCEL_INVESTMENT'
+}
+
+export enum TransactionState {
+    MINED = 'MINED',
+    PENDING = 'PENDING',
+    FAILED = 'FAILED'
+}
+

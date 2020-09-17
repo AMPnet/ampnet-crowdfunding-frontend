@@ -5,6 +5,9 @@ import swal from 'sweetalert2';
 import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthService } from 'angularx-social-login';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { displayBackendError } from 'src/app/utilities/error-handler';
+import { catchError, switchMap, tap } from 'rxjs/operators';
+import { EMPTY, of, throwError } from 'rxjs';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 declare var $: any;
 
@@ -14,12 +17,16 @@ declare var $: any;
     styleUrls: ['./log-in-modal.component.css']
 })
 export class LogInModalComponent implements OnInit {
-    email: string;
-    password: string;
+    emailLoginForm: FormGroup;
 
     constructor(private router: Router,
                 private loginService: UserAuthService,
-                private auth: SocialAuthService) {
+                private auth: SocialAuthService,
+                private fb: FormBuilder) {
+        this.emailLoginForm = this.fb.group({
+            email: fb.control('', Validators.required),
+            password: fb.control('', Validators.required)
+        });
     }
 
     ngOnInit() {
@@ -54,18 +61,23 @@ export class LogInModalComponent implements OnInit {
 
     logInMailClicked() {
         SpinnerUtil.showSpinner();
-        this.loginService.emailLogin(this.email, this.password)
-            .subscribe(_ => {
+        const loginData = this.emailLoginForm.controls;
+        return this.loginService.emailLogin(loginData['email'].value, loginData['password'].value).pipe(
+            tap(() => {
                 SpinnerUtil.hideSpinner();
                 this.navigateToDash();
-            }, err => {
+            }),
+            catchError(err => {
                 SpinnerUtil.hideSpinner();
                 if (err.status === 401) {
                     swal('', 'Invalid email and/or password', 'warning');
                 } else {
                     displayBackendError(err);
                 }
-            });
+
+                return throwError(err);
+            })
+        );
     }
 
     private navigateToDash() {

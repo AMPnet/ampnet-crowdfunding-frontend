@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Portfolio, PortfolioService } from '../shared/services/wallet/portfolio.service';
 import { WalletService, WalletState } from '../shared/services/wallet/wallet.service';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { delay, map } from 'rxjs/operators';
 
 
 @Component({
@@ -23,6 +23,8 @@ export class MyPortfolioComponent {
         map(stats => {
             if (stats.investments > 0) {
                 stats.roi = ((stats.earnings + stats.investments) / (stats.investments) - 1);
+            } else {
+                stats.roi = 0;
             }
 
             return stats;

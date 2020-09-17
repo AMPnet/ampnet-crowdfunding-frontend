@@ -96,37 +96,39 @@
 					</span>
                 <ng-container *ngIf="(transactionHistory$ | async) else overlaySpinner">
                     <div *ngIf="transactionHistory !== undefined" class="wow fadeIn">
-                        <table class="table table-striped">
-                            <tbody>
-                            <tr *ngFor="let transaction of transactionHistoryPage">
-                                <td class="icon-type-cell pr-0">
-                                <span class="icon-type">
-                                    <i class="fas mr-3 {{ transaction.type | txIconType }}"></i>
-                                </span>
-                                </td>
-                                <td class="pl-1">
-                                    <div>
-                                    <span>
-                                        <div>{{ transaction.type }}</div>
-                                        {{ transaction.date | date:'medium' }}
-                                    </span>
-                                    </div>
-                                </td>
-                                <td *ngIf="transaction.state != 'MINED'">
-                                    <i class="icon-type fas {{ transaction.state | txIconStatus }}"></i>
-                                </td>
-                                <td>
-                                    <div class="currency-table-column">
-                                        {{ transaction.type | txAmountSign }} {{ transaction.amount | currencyCents }}
-                                    </div>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
+                        <div class="table-responsive-md">
+                            <table class="table table-striped">
+                                <tbody>
+                                <tr *ngFor="let transaction of transactionHistoryPage">
+                                    <td class="icon-type-cell pr-0">
+                                        <span class="icon-type icon-type__lead">
+                                            <i class="fas mr-3 {{ transaction.type | txIconType }}"></i>
+                                        </span>
+                                    </td>
+                                    <td class="pl-0 pr-0">
+                                        <div >
+                                            <span>
+                                                <div>{{ transaction.type }}</div>
+                                                {{ transaction.date | date:'medium' }}
+                                            </span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="currency-table-column">
+                                            {{ transaction.type | txAmountSign }} {{ transaction.amount | currencyCents }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <i class="icon-type fas {{ transaction.state | txIconStatus }}"></i>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
                         <div class="d-flex justify-content-center p-2">
                             <ngb-pagination [collectionSize]="transactionItems" [(page)]="tablePage"
                                             [pageSize]="tablePageSize"
-                                            (pageChange)="refreshTransactionHistory()">
+                                            (pageChange)="refreshTransactionHistoryPage()">
                             </ngb-pagination>
                         </div>
                     </div>

@@ -180,11 +180,16 @@ td {
     font-size: 15px;
     font-weight: normal;
     float: right;
-    margin-right: 20px
 }
 
 .icon-type {
     font-size: 22px;
+}
+
+@media (max-width: 575px) {
+    .icon-type.icon-type__lead {
+        display: none;
+    }
 }
 
 .icon-type-cell {

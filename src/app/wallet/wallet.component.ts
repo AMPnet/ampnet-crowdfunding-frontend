@@ -4,9 +4,9 @@ import { displayBackendError } from '../utilities/error-handler';
 import { centsToBaseCurrencyUnit, prettyCurrency } from '../utilities/currency-util';
 import * as numeral from 'numeral';
 import { ArkaneConnect, SecretType } from '@arkane-network/arkane-connect';
-import { UserTransaction, WalletService, WalletState } from '../shared/services/wallet/wallet.service';
+import { TransactionState, UserTransaction, WalletService, WalletState } from '../shared/services/wallet/wallet.service';
 import { WalletDetails } from '../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, timer } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 
 declare var $: any;
@@ -26,13 +26,30 @@ export class WalletComponent {
     transactionHistoryPage: UserTransaction[] = [];
 
     wallet$ = this.walletService.wallet$;
+
     walletState = WalletState;
-    transactionHistory$ = this.walletService.getTransactionHistory().pipe(
+    transactionState = TransactionState;
+
+    refreshTransactionHistorySubject = new BehaviorSubject<void>(null);
+    transactionHistory$ = this.refreshTransactionHistorySubject.pipe(
+        switchMap(() => this.walletService.getTransactionHistory()),
         tap(res => {
             this.transactionHistory = res.transactions
                 .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+            // this.transactionHistory[0].state = this.transactionState.PENDING; // TODO: remove this
+            // this.transactionHistory[2].state = this.transactionState.FAILED; // TODO: remove this
             this.transactionItems = this.transactionHistory.length;
-            this.refreshTransactionHistory();
+            this.refreshTransactionHistoryPage();
+        }),
+        tap(_ => {
+            const pendingTransactionsCount = this.transactionHistory
+                .filter(transaction => transaction.state === this.transactionState.PENDING).length;
+            if (pendingTransactionsCount > 0) {
+                timer(5_000).pipe(tap(() => {
+                    console.log('refreshing state');
+                    this.refreshTransactionHistorySubject.next();
+                })).subscribe();
+            }
         })
     );
 
@@ -60,7 +77,7 @@ export class WalletComponent {
         });
     }
 
-    refreshTransactionHistory() {
+    refreshTransactionHistoryPage() {
         this.transactionHistoryPage = this.transactionHistory
             .map((transaction, i) => ({id: i + 1, ...transaction}))
             .slice((this.tablePage - 1) * this.tablePageSize, (this.tablePage - 1) * this.tablePageSize + this.tablePageSize);

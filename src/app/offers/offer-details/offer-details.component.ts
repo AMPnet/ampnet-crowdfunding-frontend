@@ -1,17 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { Meta } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NewsPreviewService } from 'src/app/shared/services/news-preview.service';
+import { LinkPreview, NewsPreviewService } from 'src/app/shared/services/news-preview.service';
 import { UserService } from 'src/app/shared/services/user/user.service';
-import { displayBackendError, hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
-import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
+import { displayBackendError } from 'src/app/utilities/error-handler';
 import swal from 'sweetalert2';
-import { NewsLink } from '../../manage-projects/manage-single-project/news-link-model';
 import { Project, ProjectService } from '../../shared/services/project/project.service';
 import { WalletService } from '../../shared/services/wallet/wallet.service';
 import { Wallet } from 'src/app/shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { MapModalComponent } from 'src/app/location-map/map-modal/map-modal.component';
+import { EMPTY, forkJoin, Observable, of, throwError } from 'rxjs';
+import { catchError, delay, shareReplay, switchMap, take, takeWhile, tap } from 'rxjs/operators';
+import { User } from '../../shared/services/user/signup.service';
+import { MiddlewareService, ProjectWalletInfo } from '../../shared/services/middleware/middleware.service';
 
 @Component({
     selector: 'app-offer-details',
@@ -19,100 +21,73 @@ import { MapModalComponent } from 'src/app/location-map/map-modal/map-modal.comp
     styleUrls: ['./offer-details.component.css'],
 })
 export class OfferDetailsComponent implements OnInit {
-    project: Project;
-    wallet: Wallet;
-    newsPreviews: NewsLink[];
+    project$: Observable<Project>;
+    news$: Observable<LinkPreview[]>;
+    user$: Observable<User>;
+    projectWalletMW$: Observable<ProjectWalletInfo>;
+
+    // project: Project;
+    // wallet: Wallet;
     isOverview = false;
-    isPortfolio = false;
-    userConfirmed = true;
+    // userConfirmed = true;
     currentLocation = encodeURIComponent(window.location.href);
     bsModalRef: BsModalRef;
 
     constructor(private projectService: ProjectService,
                 private newsPreviewService: NewsPreviewService,
                 private walletService: WalletService,
+                private middlewareService: MiddlewareService,
                 private route: ActivatedRoute,
                 private userService: UserService,
                 private meta: Meta,
                 private router: Router,
                 private modalService: BsModalService) {
+        const projectID = this.route.snapshot.params.id;
+        this.project$ = this.projectService.getProject(projectID).pipe(
+            tap(project => this.setMetaTags(project)),
+            shareReplay(1)
+        );
+        this.news$ = this.project$.pipe(
+            switchMap(project => forkJoin(
+                project.news.map(singleNews => {
+                    return this.newsPreviewService.getLinkPreview(singleNews);
+                }))
+            )
+        );
+        this.projectWalletMW$ = this.walletService.getProjectWallet(projectID).pipe(
+            switchMap(projectWallet => {
+                return this.middlewareService.getProjectWalletInfoCached(projectWallet.hash);
+            })
+        );
+
+        this.user$ = of(!this.isOverview).pipe(
+            switchMap(shouldLoadUser => shouldLoadUser ? this.userService.user$ : EMPTY),
+            take(1)
+        );
     }
 
     ngOnInit() {
-        this.generateProjectView();
-
         if (this.route.snapshot.params.isOverview) {
             this.isOverview = true;
         }
-        if (this.route.snapshot.params.inPortfolio) {
-            this.isPortfolio = true;
-        }
-
-        if (!this.isOverview && !this.isPortfolio) {
-            SpinnerUtil.showSpinner();
-            this.userService.user$.subscribe(res => {
-                this.userConfirmed = res.verified;
-                SpinnerUtil.hideSpinner();
-            }, hideSpinnerAndDisplayError);
-        }
     }
 
-    setUpNewsPreviews(newsLinks: string[]) {
-        newsLinks.forEach(link => {
-            this.newsPreviewService.getLinkPreview(link).subscribe(res => {
-                this.newsPreviews.push({
-                    title: res.title,
-                    description: res.description,
-                    image: res.image.url,
-                    url: link
-                });
-            });
-        });
-    }
-
-    setMetaTags() {
+    setMetaTags(project: Project) {
         this.meta.addTag({
             name: 'og:title',
-            content: this.project.name
+            content: project.name
         });
         this.meta.addTag({
             name: 'og:description',
-            content: this.project.description
+            content: project.description
         });
         this.meta.addTag({
             name: 'og:image:secure_url',
-            content: this.project.main_image
+            content: project.main_image
         });
         this.meta.addTag({
             name: 'og:url',
             content: window.location.href
-        });
-    }
-
-
-    generateProjectView() {
-        const projectID = this.route.snapshot.params.id;
-
-        this.projectService.getProject(projectID).subscribe(project => {
-            this.project = project;
-
-            this.setUpNewsPreviews(this.project.news);
-            this.setMetaTags();
-        });
-
-        this.walletService.getProjectWallet(projectID).subscribe(wallet => {
-            wallet.balance = wallet.balance || 0;
-            this.wallet = wallet;
-        }, err => {
-            if (err.error.err_code === '0851') {
-                swal('Pending confirmation',
-                    'The project is being verified - this should take up to 5 minutes. Please check later',
-                    'info').then(() => {
-                    window.history.back();
-                });
-            } else {
-                displayBackendError(err);
-            }
         });
     }
 
@@ -134,13 +109,30 @@ export class OfferDetailsComponent implements OnInit {
         this.router.navigate(['dash/offers']);
     }
 
-    openModal() {
+    openModal(project: Project) {
         this.bsModalRef = this.modalService.show(MapModalComponent, {
             initialState: {
-                lat: this.project.location.lat,
-                lng: this.project.location.long
+                lat: project.location.lat,
+                lng: project.location.long
             },
             class: 'modal-lg modal-dialog-centered'
         });
+    }
+
+    private handleError<T>(source: Observable<T>) {
+        return source.pipe(
+            catchError(err => {
+                if (err.error.err_code === '0851') {
+                    swal('Pending confirmation',
+                        'The project is being verified - this should take up to 5 minutes. Please check later',
+                        'info').then(() => {
+                        window.history.back();
+                    });
+                } else {
+                    displayBackendError(err);
+                }
+                return throwError(err);
+            })
+        );
     }
 }

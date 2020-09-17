@@ -46,7 +46,7 @@ export class WalletComponent {
                 .filter(transaction => transaction.state === this.transactionState.PENDING).length;
             if (pendingTransactionsCount > 0) {
                 timer(5_000).pipe(tap(() => {
-                    console.log('refreshing state');
+                    console.log('refreshing state'); // TODO: try with duimane
                     this.refreshTransactionHistorySubject.next();
                 })).subscribe();
             }

@@ -21,7 +21,7 @@ export class WithdrawComponent implements OnInit {
     banks: UserBankAccount[];
     pendingWithdrawal: Withdraw;
 
-    withdrawAmount = '';
+    withdrawAmount = 0;
 
     constructor(private paymentService: PaymentService,
                 private withdrawService: WithdrawService,
@@ -58,10 +58,8 @@ export class WithdrawComponent implements OnInit {
             return;
         }
         SpinnerUtil.showSpinner();
-        const amount: any = $('#withdraw-amount').val();
         const iban = this.banks[this.activeBankAccount].iban;
-        const centAmount = baseCurrencyUnitToCents(amount);
-        this.withdrawService.createWithdrawRequest(centAmount, iban).subscribe(res => {
+        this.withdrawService.createWithdrawRequest(this.withdrawAmount, iban).subscribe(res => {
             this.pendingWithdrawal = res;
             SpinnerUtil.hideSpinner();
         }, hideSpinnerAndDisplayError);

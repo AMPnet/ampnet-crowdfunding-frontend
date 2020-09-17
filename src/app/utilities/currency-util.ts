@@ -10,23 +10,6 @@ export function prettyCurrency(input: string) {
     }
 }
 
-export function autonumericCurrency(selector: string, currencySymbol: string = '€') {
-    return new Autonumeric(selector, {
-        currencySymbol: currencySymbol,
-        decimalCharacter: ',',
-        digitGroupSeparator: '.',
-        decimalPlaces: 0,
-        modifyValueOnWheel: false
-    });
-}
-
-export function stripCurrencyData(inputValue: string, currencySymbol: string = '€') {
-    return inputValue
-        .replace(currencySymbol, '')
-        .split(',').join('')
-        .split('.').join('');
-}
-
 export function centsToBaseCurrencyUnit(cents: number) {
     return Math.floor(cents / 100);
 }

@@ -36,8 +36,6 @@ export class WalletComponent {
         tap(res => {
             this.transactionHistory = res.transactions
                 .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-            // this.transactionHistory[0].state = this.transactionState.PENDING; // TODO: remove this
-            // this.transactionHistory[2].state = this.transactionState.FAILED; // TODO: remove this
             this.transactionItems = this.transactionHistory.length;
             this.refreshTransactionHistoryPage();
         }),
@@ -46,7 +44,6 @@ export class WalletComponent {
                 .filter(transaction => transaction.state === this.transactionState.PENDING).length;
             if (pendingTransactionsCount > 0) {
                 timer(5_000).pipe(tap(() => {
-                    console.log('refreshing state'); // TODO: try with duimane
                     this.refreshTransactionHistorySubject.next();
                 })).subscribe();
             }

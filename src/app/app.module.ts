@@ -79,6 +79,7 @@ import { LocationMapComponent } from './location-map/location-map.component';
 import { MapModalComponent } from './location-map/map-modal/map-modal.component';
 import { ActionButtonComponent } from './shared/components/action-button/action-button.component';
 import { CurrencyCentsPipe } from './pipes/currency-cents.pipe';
+import { MoneyInputFieldComponent } from './shared/components/money-input-field/money-input-field.component';
 
 const socialAuthServiceConfig = {
     provide: 'SocialAuthServiceConfig',
@@ -169,6 +170,7 @@ const socialAuthServiceConfig = {
         TxIconStatus,
         TxAmountSign,
         ActionButtonComponent,
+        MoneyInputFieldComponent,
     ],
     imports: [
         BrowserModule,

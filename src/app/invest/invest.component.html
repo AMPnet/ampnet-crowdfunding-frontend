@@ -19,9 +19,14 @@
                         <div class="invest-text text-uppercase">
                             <p>I want to invest</p>
 
-                            <input formControlName="amount"
-                                   class="form-control mb-2" id="amount-input"
-                                   placeholder="€0.00" style="font-size: 16px;">
+                            <app-money-input-field
+                                    placeholder="Enter invest amount"
+                                    [control]="investForm.get('amount')">
+                            </app-money-input-field>
+
+<!--                            <input formControlName="amount"-->
+<!--                                   class="form-control mb-2" id="amount-input"-->
+<!--                                   placeholder="€0.00" style="font-size: 16px;">-->
                         </div>
 
                         <div class="min-investment">

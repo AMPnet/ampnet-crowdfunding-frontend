@@ -1,12 +1,11 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { WalletDetailsWithState, WalletService } from '../shared/services/wallet/wallet.service';
 import { displayBackendError } from '../utilities/error-handler';
 import { Project, ProjectService } from '../shared/services/project/project.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { autonumericCurrency, baseCurrencyUnitToCents, stripCurrencyData } from '../utilities/currency-util';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
-import { combineLatest, EMPTY, Observable, of, throwError } from 'rxjs';
-import { catchError, delay, last, map, share, shareReplay, switchMap, take, tap } from 'rxjs/operators';
+import { combineLatest, EMPTY, Observable } from 'rxjs';
+import { catchError, map, shareReplay, take } from 'rxjs/operators';
 
 declare var $: any;
 
@@ -15,7 +14,7 @@ declare var $: any;
     templateUrl: './invest.component.html',
     styleUrls: ['./invest.component.css']
 })
-export class InvestComponent implements OnInit, AfterViewInit {
+export class InvestComponent implements OnInit {
     wallet$: Observable<WalletDetailsWithState>;
     project$: Observable<Project>;
 
@@ -31,13 +30,6 @@ export class InvestComponent implements OnInit, AfterViewInit {
         this.wallet$ = this.walletService.wallet$.pipe(this.handleError, take(1));
     }
 
-    ngAfterViewInit(): void {
-        combineLatest([this.wallet$, this.project$]).subscribe(([wallet, project]) => {
-            if (wallet !== null && project !== null) {
-                setTimeout(() => autonumericCurrency('#amount-input'));
-            }
-        });
-    }
 
     ngOnInit() {
         this.investForm = this.fb.group({
@@ -48,7 +40,7 @@ export class InvestComponent implements OnInit, AfterViewInit {
     private validAmount(control: AbstractControl): Observable<ValidationErrors> {
         return combineLatest([this.wallet$, this.project$]).pipe(
             map(([wallet, project]) => {
-                const amount = baseCurrencyUnitToCents(Number(stripCurrencyData(control.value)));
+                const amount = control.value;
 
                 if (amount < project.min_per_user) {
                     return {amountBelowMin: true};
@@ -65,7 +57,7 @@ export class InvestComponent implements OnInit, AfterViewInit {
 
     investButtonClicked() {
         this.router.navigate(['./',
-                baseCurrencyUnitToCents(Number(stripCurrencyData(this.investForm.controls['amount'].value))),
+                this.investForm.controls['amount'].value,
                 'verify_sign'],
             {relativeTo: this.route});
     }

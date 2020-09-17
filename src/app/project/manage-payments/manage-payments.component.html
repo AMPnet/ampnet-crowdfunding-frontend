@@ -50,7 +50,8 @@
                     <input formControlName="amount"
                            class="form-control w-100 px-4 py-3 float-left"
                            id="revenueShareAmount"
-                           type="text">
+                           type="text"
+                           autocomplete="off">
                     <div *ngIf="revenueForm.dirty && revenueForm.invalid">
                         <div *ngIf="revenueForm.get('amount').errors?.inputAmountInvalid"
                              class="alert alert-danger">Payout must be lower or equal to balance.

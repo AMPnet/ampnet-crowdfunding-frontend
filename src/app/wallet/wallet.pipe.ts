@@ -11,11 +11,15 @@ export class TxIconType implements PipeTransform {
             case TransactionType.WITHDRAW: {
                 return 'fa-arrow-up';
             }
-            case TransactionType.INVEST: {
+            case TransactionType.INVEST:
+            case TransactionType.APPROVE_INVESTMENT: {
                 return 'fa-coins';
             }
             case TransactionType.SHARE_PAYOUT: {
                 return 'fa-hand-holding-usd';
+            }
+            case TransactionType.CANCEL_INVESTMENT: {
+                return 'fa-minus-circle';
             }
             default: {
                 return 'fa-question-circle';
@@ -62,7 +66,7 @@ export class TxIconStatus implements PipeTransform {
                 return 'fa-spinner fa-spin';
             }
             case TransactionState.FAILED: {
-                return 'fa-cross';
+                return 'fa-times-circle';
             }
             default: {
                 return 'fa-question-circle';

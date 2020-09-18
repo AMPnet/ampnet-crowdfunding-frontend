@@ -187,13 +187,18 @@ td {
 }
 
 @media (max-width: 575px) {
-    .icon-type.icon-type__lead {
+    .icon-type-cell__lead {
         display: none;
+    }
+
+    .data-column {
+        font-size: 0.6rem;
     }
 }
 
 .icon-type-cell {
     width: 20px;
+    padding-left: 0;
 }
 
 .page-item.active .page-link {

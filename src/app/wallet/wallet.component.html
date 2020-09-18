@@ -101,12 +101,12 @@
                                 <tbody>
                                 <tr *ngFor="let transaction of transactionHistoryPage">
                                     <ng-container *ngIf="shouldShowTransaction(transaction)">
-                                        <td class="icon-type-cell pr-0">
-                                        <span class="icon-type icon-type__lead">
+                                        <td class="icon-type-cell icon-type-cell__lead pr-0 pl-0">
+                                        <span class="icon-type">
                                             <i class="fas mr-3 {{ transaction.type | txIconType }}"></i>
                                         </span>
                                         </td>
-                                        <td class="pl-0 pr-0">
+                                        <td class="data-column">
                                             <div>
                                             <span>
                                                 <div>{{ transaction.type }}</div>

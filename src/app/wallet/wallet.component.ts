@@ -84,7 +84,8 @@ export class WalletComponent {
     }
 
     shouldShowTransaction(transaction: UserTransaction): boolean {
-        return !(transaction.type === TransactionType.APPROVE_INVESTMENT
+        // TODO: Remove UNRECOGNIZED when renamed on backend.
+        return !([TransactionType.APPROVE_INVESTMENT, TransactionType.UNRECOGNIZED].includes(transaction.type)
             && transaction.state !== TransactionState.PENDING);
     }
 }

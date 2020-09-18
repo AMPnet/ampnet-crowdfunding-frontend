@@ -46,6 +46,8 @@ export class InvestComponent implements OnInit {
                     return {amountBelowMin: true};
                 } else if (amount > project.max_per_user) {
                     return {amountAboveMax: true};
+                } else if (amount > project.expected_funding) {
+                    return {amountAboveExpFunding: true};
                 } else if (amount > wallet.wallet.balance) {
                     return {amountAboveBalance: true};
                 } else {

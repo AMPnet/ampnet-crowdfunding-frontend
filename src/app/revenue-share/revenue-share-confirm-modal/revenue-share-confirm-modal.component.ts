@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { autonumericCurrency, stripCurrencyData } from '../../utilities/currency-util';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { SpinnerUtil } from '../../utilities/spinner-utilities';
 import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
@@ -31,7 +30,6 @@ export class RevenueShareConfirmModalComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        autonumericCurrency('#revenue-confirm-amount');
         this.confirmForm = this.formBuilder.group({
             amount: ['', [Validators.required, Validators.pattern(this.amountInvestedConfirm)]]
         });
@@ -64,7 +62,7 @@ export class RevenueShareConfirmModalComponent implements OnInit {
 
     onConfirm(): void {
         this.bsModalRef.hide();
-        this.generateTransaction(Number(stripCurrencyData(this.amountInvestedConfirm, '€')));
+        this.generateTransaction(this.confirmForm.controls['amount'].value);
     }
 
     onCancel(): void {

@@ -10,11 +10,11 @@
                 </h5>
 
                 <div class="col-md-12">
-                    <input class="form-control mt-3 p-4 w-100"
-                           formControlName="amount"
-                           id="revenue-confirm-amount"
-                           placeholder="Revenue share amount"
-                           type="text">
+                    <!-- TODO: INPUT FIELD TEST-->
+                    <app-money-input-field
+                            placeholder="Enter revenue share amount"
+                            [control]="confirmForm.get('amount')">
+                    </app-money-input-field>
                 </div>
 
                 <div class="col-md-4">

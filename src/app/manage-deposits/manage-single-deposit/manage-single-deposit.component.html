@@ -44,7 +44,13 @@
             <div *ngIf="!depositModel.deposit.approved" class="explainer-mini mt-3 mb-2">
                 Deposit amount
             </div>
-            <input *ngIf="!depositModel.deposit.approved" class=" px-3 w-100 form-control py-4" id="deposit-amount" name="">
+            <ng-container *ngIf="!depositModel.deposit.approved">
+                <!-- TODO: INPUT FIELD TEST-->
+                <app-money-input-field
+                        placeholder="Enter maximum investment per user"
+                        [(app-page-titlee)]="amount">
+                </app-money-input-field>
+            </ng-container>
         </div>
         <div *ngIf="(depositModel !== undefined)" class="col-md-12 mt-3">
             <div id="payment-reciept-upload-target"></div>
@@ -68,7 +74,11 @@
                 </button>
             </div>
             <div class="modal-body">
-                <input class="form-control px-4 py-4" id="deposit-confirm-amount" type="text">
+                <!-- TODO: INPUT FIELD TEST-->
+                <app-money-input-field
+                        placeholder="Enter amount"
+                        [(realValue)]="amountToConfirm">
+                </app-money-input-field>
             </div>
             <div class="modal-footer">
                 <button class="btn btn-secondary px-5 py-2" data-dismiss="modal" type="button">Cancel</button>

@@ -1,15 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { displayBackendError } from '../utilities/error-handler';
-import { centsToBaseCurrencyUnit, prettyCurrency } from '../utilities/currency-util';
-import * as numeral from 'numeral';
 import { ArkaneConnect, SecretType } from '@arkane-network/arkane-connect';
 import { TransactionState, UserTransaction, WalletService, WalletState } from '../shared/services/wallet/wallet.service';
-import { WalletDetails } from '../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
-import { BehaviorSubject, Observable, timer } from 'rxjs';
+import { BehaviorSubject, timer } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
-
-declare var $: any;
 
 @Component({
     selector: 'app-wallet',

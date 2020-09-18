@@ -6,8 +6,6 @@ import { Withdraw, WithdrawService } from '../shared/services/wallet/withdraw.se
 import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
 import { BroadcastService } from '../shared/services/broadcast.service';
 import swal from 'sweetalert2';
-import { baseCurrencyUnitToCents, centsToBaseCurrencyUnit } from '../utilities/currency-util';
-import numeral from 'numeral';
 
 declare var $: any;
 

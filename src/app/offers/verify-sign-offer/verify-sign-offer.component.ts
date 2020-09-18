@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { Project, ProjectService } from 'src/app/shared/services/project/project.service';
 import { displayBackendError, hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
-import { baseCurrencyUnitToCents, prettyCurrency } from 'src/app/utilities/currency-util';
 import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
 import { BroadcastService } from 'src/app/shared/services/broadcast.service';
 import swal from 'sweetalert2';

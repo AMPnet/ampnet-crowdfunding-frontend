@@ -23,10 +23,6 @@
                                     placeholder="Enter invest amount"
                                     [control]="investForm.get('amount')">
                             </app-money-input-field>
-
-<!--                            <input formControlName="amount"-->
-<!--                                   class="form-control mb-2" id="amount-input"-->
-<!--                                   placeholder="€0.00" style="font-size: 16px;">-->
                         </div>
 
                         <div class="min-investment">
@@ -59,6 +55,11 @@
                     <div *ngIf="investForm.get('amount').errors?.amountAboveMax" class="alert alert-danger mt-3">
                         <i class="fas fa-exclamation-triangle mr-3"></i><b>Investment amount too high</b>.
                         The maximum investment is {{ states.project.max_per_user | currencyDefault }}
+                    </div>
+
+                    <div *ngIf="investForm.get('amount').errors?.amountAboveExpFunding" class="alert alert-danger mt-3">
+                        <i class="fas fa-exclamation-triangle mr-3"></i><b>Investment amount too high</b>.
+                        The expected funding for this project is {{ states.project.expected_funding | currencyDefault }}
                     </div>
 
                     <div *ngIf="investForm.get('amount').errors?.amountAboveBalance" class="alert alert-danger mt-3">

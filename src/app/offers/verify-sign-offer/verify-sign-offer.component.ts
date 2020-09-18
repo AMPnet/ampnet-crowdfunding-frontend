@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Project, ProjectService } from 'src/app/shared/services/project/project.service';
 import { displayBackendError, hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
@@ -19,6 +19,7 @@ export class VerifySignOfferComponent implements OnInit {
     project: Project;
 
     constructor(private route: ActivatedRoute,
+                private router: Router,
                 private projectService: ProjectService,
                 private walletService: WalletService,
                 private broadcastService: BroadcastService) {
@@ -70,7 +71,10 @@ export class VerifySignOfferComponent implements OnInit {
             title: 'Transaction signed',
             text: 'Transaction is being processed...',
             footer: 'Check your transaction status<a href="/dash/wallet">&nbsp;here</a>'
-        }).then(() => this.walletService.clearAndRefreshWallet());
+        }).then(() => {
+            this.walletService.clearAndRefreshWallet();
+            this.router.navigate(['/dash/wallet']);
+        });
         // This is a hack to fix bug in Sweet Alert lib -> always displays dropdown
         // TODO: This is deprecated and needs to be fixed.
         swal.getContent().getElementsByClassName('swal2-select').item(0).remove();

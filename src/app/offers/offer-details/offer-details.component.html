@@ -158,7 +158,8 @@
                         </button>
 
                         <div *ngIf="!isOverview && !!states.user">
-                            <button *ngIf="states.user.verified" [disabled]="!states.project.active"
+                            <button *ngIf="states.user.verified"
+                                    [disabled]="disableInvestButton(states.project, states.walletMW)"
                                     class="btn btn-primary w-100 btn-action-a" id="invest-button"
                                     routerLink="invest">
                                 <i class="mr-2 fas fa-chart-pie"></i>

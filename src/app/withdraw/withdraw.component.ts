@@ -6,6 +6,8 @@ import { Withdraw, WithdrawService } from '../shared/services/wallet/withdraw.se
 import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
 import { BroadcastService } from '../shared/services/broadcast.service';
 import swal from 'sweetalert2';
+import { WalletService } from '../shared/services/wallet/wallet.service';
+import { Router } from '@angular/router';
 
 declare var $: any;
 
@@ -23,6 +25,8 @@ export class WithdrawComponent implements OnInit {
 
     constructor(private paymentService: PaymentService,
                 private withdrawService: WithdrawService,
+                private walletService: WalletService,
+                private router: Router,
                 private broadService: BroadcastService) {
     }
 
@@ -82,7 +86,10 @@ export class WithdrawComponent implements OnInit {
             this.broadService.broadcastSignedTx(sigRes.result.signedTransaction, res.tx_id)
                 .subscribe(_ => {
                     SpinnerUtil.hideSpinner();
-                    swal('', 'Success', 'success');
+                    swal('', 'Success', 'success').then(() => {
+                        this.walletService.clearAndRefreshWallet();
+                        this.router.navigate(['/dash/wallet']);
+                    });
                 }, hideSpinnerAndDisplayError);
 
             SpinnerUtil.hideSpinner();

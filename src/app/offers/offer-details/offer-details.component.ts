@@ -25,7 +25,9 @@ export class OfferDetailsComponent implements OnInit {
     isOverview = false;
     isPortfolio = false;
     userConfirmed = true;
-    currentLocation = encodeURIComponent(window.location.href);
+    projectID = this.route.snapshot.params.id;
+    projectOverviewLink = window.location.host + '/overview/' + this.projectID + '/discover';
+    currentLocation = encodeURIComponent(this.projectOverviewLink);
     bsModalRef: BsModalRef;
 
     constructor(private projectService: ProjectService,
@@ -91,16 +93,14 @@ export class OfferDetailsComponent implements OnInit {
 
 
     generateProjectView() {
-        const projectID = this.route.snapshot.params.id;
-
-        this.projectService.getProject(projectID).subscribe(project => {
+        this.projectService.getProject(this.projectID).subscribe(project => {
             this.project = project;
 
             this.setUpNewsPreviews(this.project.news);
             this.setMetaTags();
         });
 
-        this.walletService.getProjectWallet(projectID).subscribe(wallet => {
+        this.walletService.getProjectWallet(this.projectID).subscribe(wallet => {
             wallet.balance = wallet.balance || 0;
             this.wallet = wallet;
         }, err => {
@@ -122,7 +122,7 @@ export class OfferDetailsComponent implements OnInit {
         selBox.style.left = '0';
         selBox.style.top = '0';
         selBox.style.opacity = '0';
-        selBox.value = window.location.href;
+        selBox.value = this.projectOverviewLink;
         document.body.appendChild(selBox);
         selBox.focus();
         selBox.select();

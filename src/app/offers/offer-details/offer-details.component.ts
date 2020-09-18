@@ -7,11 +7,10 @@ import { displayBackendError } from 'src/app/utilities/error-handler';
 import swal from 'sweetalert2';
 import { Project, ProjectService } from '../../shared/services/project/project.service';
 import { WalletService } from '../../shared/services/wallet/wallet.service';
-import { Wallet } from 'src/app/shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { MapModalComponent } from 'src/app/location-map/map-modal/map-modal.component';
 import { EMPTY, forkJoin, Observable, of, throwError } from 'rxjs';
-import { catchError, delay, shareReplay, switchMap, take, takeWhile, tap } from 'rxjs/operators';
+import { catchError, shareReplay, switchMap, take, tap } from 'rxjs/operators';
 import { User } from '../../shared/services/user/signup.service';
 import { MiddlewareService, ProjectWalletInfo } from '../../shared/services/middleware/middleware.service';
 
@@ -21,15 +20,13 @@ import { MiddlewareService, ProjectWalletInfo } from '../../shared/services/midd
     styleUrls: ['./offer-details.component.css'],
 })
 export class OfferDetailsComponent implements OnInit {
+    isOverview = false;
+
     project$: Observable<Project>;
     news$: Observable<LinkPreview[]>;
     user$: Observable<User>;
     projectWalletMW$: Observable<ProjectWalletInfo>;
 
-    // project: Project;
-    // wallet: Wallet;
-    isOverview = false;
-    // userConfirmed = true;
     currentLocation = encodeURIComponent(window.location.href);
     bsModalRef: BsModalRef;
 
@@ -45,6 +42,7 @@ export class OfferDetailsComponent implements OnInit {
         const projectID = this.route.snapshot.params.id;
         this.project$ = this.projectService.getProject(projectID).pipe(
             tap(project => this.setMetaTags(project)),
+            this.handleError,
             shareReplay(1)
         );
         this.news$ = this.project$.pipe(
@@ -52,12 +50,14 @@ export class OfferDetailsComponent implements OnInit {
                 project.news.map(singleNews => {
                     return this.newsPreviewService.getLinkPreview(singleNews);
                 }))
-            )
+            ),
+            this.handleError
         );
         this.projectWalletMW$ = this.walletService.getProjectWallet(projectID).pipe(
             switchMap(projectWallet => {
                 return this.middlewareService.getProjectWalletInfoCached(projectWallet.hash);
-            })
+            }),
+            this.handleError
         );
 
         this.user$ = of(!this.isOverview).pipe(

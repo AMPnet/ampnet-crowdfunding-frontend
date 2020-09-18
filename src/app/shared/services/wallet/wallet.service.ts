@@ -145,4 +145,3 @@ export enum TransactionState {
     PENDING = 'PENDING',
     FAILED = 'FAILED'
 }
-

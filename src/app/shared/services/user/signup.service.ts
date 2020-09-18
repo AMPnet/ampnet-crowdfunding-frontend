@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { BackendHttpClient } from '../backend-http-client.service';
-import { UserAuthService } from './user-auth.service';
 import { tap } from 'rxjs/operators';
 import { UserService } from './user.service';
 

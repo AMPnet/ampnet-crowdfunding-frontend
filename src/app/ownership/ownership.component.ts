@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UserService } from '../shared/services/user/user.service';
-import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
+import { displayBackendError, hideSpinnerAndDisplayError } from '../utilities/error-handler';
 import { WalletCooperativeOwnershipService } from '../shared/services/wallet/wallet-cooperative/wallet-cooperative-ownership.service';
 import { BroadcastService } from '../shared/services/broadcast.service';
 import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
@@ -8,15 +8,16 @@ import { SpinnerUtil } from '../utilities/spinner-utilities';
 import swal from 'sweetalert2';
 import { TransactionInfo } from '../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
 import { User } from '../shared/services/user/signup.service';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-ownership',
     templateUrl: './ownership.component.html',
     styleUrls: ['./ownership.component.css']
 })
-export class OwnershipComponent implements OnInit {
-
+export class OwnershipComponent implements OnInit, OnDestroy {
     user: User;
+    userSub: Subscription;
 
     constructor(private userService: UserService,
                 private ownershipService: WalletCooperativeOwnershipService,
@@ -24,9 +25,13 @@ export class OwnershipComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.userService.user$.subscribe(res => {
+        this.userSub = this.userService.user$.subscribe(res => {
             this.user = res;
-        }, hideSpinnerAndDisplayError);
+        }, displayBackendError);
+    }
+
+    ngOnDestroy() {
+        this.userSub.unsubscribe();
     }
 
     changePlatformManagerClicked() {

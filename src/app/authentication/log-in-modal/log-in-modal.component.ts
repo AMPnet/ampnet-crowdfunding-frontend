@@ -60,15 +60,12 @@ export class LogInModalComponent implements OnInit {
     }
 
     logInMailClicked() {
-        SpinnerUtil.showSpinner();
         const loginData = this.emailLoginForm.controls;
         return this.loginService.emailLogin(loginData['email'].value, loginData['password'].value).pipe(
             tap(() => {
-                SpinnerUtil.hideSpinner();
                 this.navigateToDash();
             }),
             catchError(err => {
-                SpinnerUtil.hideSpinner();
                 if (err.status === 401) {
                     swal('', 'Invalid email and/or password', 'warning');
                 } else {

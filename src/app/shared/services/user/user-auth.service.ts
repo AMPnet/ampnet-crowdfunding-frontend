@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { TokenModel } from 'src/app/models/auth/TokenModel';
 import { BackendHttpClient } from '../backend-http-client.service';
-import { EMPTY, Observable, of } from 'rxjs';
+import { EMPTY, Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { UserService } from './user.service';
 import { CacheService } from '../cache.service';

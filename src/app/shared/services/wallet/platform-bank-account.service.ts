@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { BackendHttpClient } from '../backend-http-client.service';
-import { Observable } from 'rxjs';
 import { CacheService } from '../cache.service';
 
 @Injectable({

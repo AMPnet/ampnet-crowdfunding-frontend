@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Portfolio, PortfolioService } from '../shared/services/wallet/portfolio.service';
 import { WalletService, WalletState } from '../shared/services/wallet/wallet.service';
 import { Observable } from 'rxjs';
-import { delay, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 
 @Component({

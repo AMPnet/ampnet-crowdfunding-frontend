@@ -5,7 +5,7 @@ import { BankCodeModel } from './bank-code-model';
 import 'bootstrap-select';
 import { catchError, switchMap } from 'rxjs/operators';
 import { displayBackendError } from '../../utilities/error-handler';
-import { of, throwError } from 'rxjs';
+import { of } from 'rxjs';
 
 declare var $: any;
 

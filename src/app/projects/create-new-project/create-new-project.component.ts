@@ -4,7 +4,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { displayBackendError } from 'src/app/utilities/error-handler';
-import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { catchError, tap } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 

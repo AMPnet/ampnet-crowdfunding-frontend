@@ -1,15 +1,12 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { Router } from '@angular/router';
 import * as $ from 'jquery';
 import { UserService } from '../shared/services/user/user.service';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { User, UserRole } from '../shared/services/user/signup.service';
+import { UserRole } from '../shared/services/user/signup.service';
 import { WalletDetailsWithState, WalletService, WalletState } from '../shared/services/wallet/wallet.service';
 import { version } from '../../../package.json';
 import { UserAuthService } from '../shared/services/user/user-auth.service';
-import { WalletDetails } from '../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
 
 
 @Component({

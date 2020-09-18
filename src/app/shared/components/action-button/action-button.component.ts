@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, Input, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostListener, Input, OnDestroy } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 
 @Component({

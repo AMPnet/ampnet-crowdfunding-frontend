@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { PaymentService, UserBankAccount } from '../shared/services/payment.service';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, of, timer } from 'rxjs';
-import { delay, map, switchMap } from 'rxjs/operators';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 
 
 @Component({

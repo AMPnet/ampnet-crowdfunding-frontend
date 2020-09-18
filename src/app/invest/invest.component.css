@@ -2,8 +2,8 @@
     color: #111111;
 }
 
-.page-title, 
-.invest-text, 
+.page-title,
+.invest-text,
 .min-investment,
 .invest-text-right a {
     font-size: 12px;
@@ -67,7 +67,7 @@
     .invest-text-right {
         text-align: left;
     }
-    
+
     .invest-text-right p {
         margin-top: 0px;
     }

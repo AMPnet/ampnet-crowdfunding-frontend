@@ -5,8 +5,8 @@ import swal from 'sweetalert2';
 import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthService } from 'angularx-social-login';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { displayBackendError } from 'src/app/utilities/error-handler';
-import { catchError, switchMap, tap } from 'rxjs/operators';
-import { EMPTY, of, throwError } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 declare var $: any;

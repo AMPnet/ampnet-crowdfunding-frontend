@@ -106,7 +106,11 @@ export class OfferDetailsComponent implements OnInit {
     }
 
     backToOffersScreen() {
-        this.router.navigate(['dash/offers']);
+        if (this.isOverview) {
+            this.router.navigate(['/overview/discover']);
+        } else {
+            this.router.navigate(['dash/offers']);
+        }
     }
 
     openModal(project: Project) {
@@ -117,6 +121,10 @@ export class OfferDetailsComponent implements OnInit {
             },
             class: 'modal-lg modal-dialog-centered'
         });
+    }
+
+    disableInvestButton(project: Project, walletMW: ProjectWalletInfo): boolean {
+        return !project.active || (!walletMW || walletMW.investmentCap === walletMW.totalFundsRaised);
     }
 
     private handleError<T>(source: Observable<T>) {

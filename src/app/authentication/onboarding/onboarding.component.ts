@@ -48,17 +48,12 @@ export class OnboardingComponent implements OnInit {
                         self.loginService.refreshUserToken()
                             .subscribe(() => {
                                 SpinnerUtil.hideSpinner();
-                                self.reloadPage('/dash/general_settings');
+                                self.router.navigate(['/dash/wallet']);
                             });
                     });
                 }, hideSpinnerAndDisplayError);
             });
         }, hideSpinnerAndDisplayError);
-    }
-
-    reloadPage(uri: string) {
-        this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
-            this.router.navigate([uri]));
     }
 }
 

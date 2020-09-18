@@ -40,27 +40,23 @@
         <input class="w-100 p-4 form-control" formControlName="endDate" id="end-date" name="" type="date">
 
         <div class="explainer-mini  mb-2 mt-3">Expected funding</div>
-        <!-- TODO: INPUT FIELD TEST-->
         <app-money-input-field
                 placeholder="Enter expected funding amount"
                 [control]="createForm.get('expectedFunding')">
         </app-money-input-field>
 
         <div class="explainer-mini  mb-2 mt-3">Minimum investment per user</div>
-        <!-- TODO: INPUT FIELD TEST-->
         <app-money-input-field
                 placeholder="Enter minimum investment per user"
                 [control]="createForm.get('minPerUser')">
         </app-money-input-field>
 
         <div class="explainer-mini  mb-2 mt-3">Maximum investment per user</div>
-        <!-- TODO: INPUT FIELD TEST-->
         <app-money-input-field
                 placeholder="Enter maximum investment per user"
                 [control]="createForm.get('maxPerUser')">
         </app-money-input-field>
 
-        <!-- TODO: BUTTON FIELD TEST-->
         <app-action-button text="Create" loadingText="Creating project..."
                            [onClick]="submitForm.bind(this)"
                            [disabled]="!createForm.valid">

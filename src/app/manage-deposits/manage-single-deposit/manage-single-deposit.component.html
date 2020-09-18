@@ -45,10 +45,9 @@
                 Deposit amount
             </div>
             <ng-container *ngIf="!depositModel.deposit.approved">
-                <!-- TODO: INPUT FIELD TEST-->
                 <app-money-input-field
                         placeholder="Enter maximum investment per user"
-                        [(app-page-titlee)]="amount">
+                        [(realValue)]="amount">
                 </app-money-input-field>
             </ng-container>
         </div>
@@ -74,7 +73,6 @@
                 </button>
             </div>
             <div class="modal-body">
-                <!-- TODO: INPUT FIELD TEST-->
                 <app-money-input-field
                         placeholder="Enter amount"
                         [(realValue)]="amountToConfirm">

@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { InvestmentsInProject, PortfolioService } from '../shared/services/wallet/portfolio.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
-import { prettyDate } from '../utilities/date-format-util';
-import { centsToBaseCurrencyUnit } from '../utilities/currency-util';
 import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
 import { BroadcastService } from 'src/app/shared/services/broadcast.service';
 import swal from 'sweetalert2';
+import { WalletService } from '../shared/services/wallet/wallet.service';
 
 @Component({
     selector: 'app-investment-details',
@@ -21,6 +20,8 @@ export class InvestmentDetailsComponent implements OnInit {
 
     constructor(private portfolioService: PortfolioService,
                 private activatedRoute: ActivatedRoute,
+                private walletService: WalletService,
+                private router: Router,
                 private broadcastService: BroadcastService) {
     }
 
@@ -76,6 +77,9 @@ export class InvestmentDetailsComponent implements OnInit {
             title: 'Transaction signed',
             text: 'Transaction is being processed...',
             footer: 'Check your transaction status<a href="/dash/wallet">&nbsp;here</a>'
+        }).then(() => {
+            this.walletService.clearAndRefreshWallet();
+            this.router.navigate(['/dash/wallet']);
         });
         // This is a hack to fix bug in Sweet Alert lib -> always displays dropdown
         // TODO: This is deprecated and needs to be fixed.

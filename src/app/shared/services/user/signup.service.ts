@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BackendHttpClient } from '../backend-http-client.service';
+import { tap } from 'rxjs/operators';
+import { UserService } from './user.service';
 
 
 @Injectable({
@@ -8,7 +10,8 @@ import { BackendHttpClient } from '../backend-http-client.service';
 export class SignupService {
     private endpoint = '/api/user/signup';
 
-    constructor(private http: BackendHttpClient) {
+    constructor(private http: BackendHttpClient,
+                private userService: UserService) {
     }
 
     signupEmail(email: string, firstName: string, lastName: string, password: string) {
@@ -20,7 +23,7 @@ export class SignupService {
                 email: email,
                 password: password
             }
-        });
+        }).pipe(tap(() => this.userService.refreshUser()));
     }
 
     signupSocial(provider: string, authToken: string) {
@@ -29,7 +32,7 @@ export class SignupService {
             user_info: {
                 token: authToken
             }
-        });
+        }).pipe(tap(() => this.userService.refreshUser()));
     }
 }
 

@@ -2,11 +2,15 @@
     <app-header></app-header>
 </div>
 
-<div *ngIf="project !== undefined" [class.container]="!isPortfolio"
-     class="wow fadeIn" style="background: #fdfdfd">
-    <div class="row">
+<div *ngIf="{
+    project: project$ | async,
+    walletMW: projectWalletMW$ | async,
+    news: news$ | async,
+    user: user$ | async
+} as states" class="wow fadeIn container" style="background: #fdfdfd">
+    <div class="row" *ngIf="states.project !== null else overlaySpinner">
         <!-- Closed project popup -->
-        <div *ngIf="!project.active" class="col-lg-12 mb-3">
+        <div *ngIf="!states.project.active" class="col-lg-12 mb-3">
             <div class="alert alert-danger">
                 The project is not open for funding. If you wish to invest, please check project at a
                 later date.
@@ -19,19 +23,18 @@
                 OFFER DETAILS
             </p>
         </div>
-        <div class="col-lg-7 offer-left order-last order-lg-second"
-             *ngIf="(project !== undefined) && (!isPortfolio)">
+        <div class="col-lg-7 offer-left order-last order-lg-second">
             <!-- Offer image -->
             <div class="wow fadeIn d-lg-block">
-                <img class="header-image w-100" src="{{project.main_image}}">
+                <img class="header-image w-100" src="{{states.project.main_image}}">
             </div>
             <!-- Offer desc -->
             <div class="offer-desc">
-                <div [innerHTML]="project.description"></div>
+                <div [innerHTML]="states.project.description"></div>
             </div>
             <!-- Offer docs -->
             <div class="offer-docs mb-5 mb-lg-0">
-                <div *ngFor="let doc of project.documents" class="w-100 mt-4">
+                <div *ngFor="let doc of states.project.documents" class="w-100 mt-4">
                     <div class="d-flex flex-row align-items-center">
                         <a href="{{ doc.link }}">
                             <i class="fas fa-file-download mr-2"></i>
@@ -56,42 +59,43 @@
                 </div>
 
                 <!-- Offer image for mobile -->
-                <div *ngIf="(project !== undefined) && (!isPortfolio)"
-                     class="wow fadeIn d-lg-none d-block">
-                    <img class="header-image w-100" src="{{ project.main_image }}">
+                <div class="wow fadeIn d-lg-none d-block">
+                    <img class="header-image w-100" src="{{ states.project.main_image }}">
                 </div>
 
                 <div class="offer-right-text col-lg-9">
                     <!-- Offer title -->
-                    <div *ngIf="!isPortfolio">
-                        <h3 class="pt-lg-5 pt-4 offer-title">{{ project.name }}</h3>
+                    <div>
+                        <h3 class="pt-lg-5 pt-4 offer-title">{{ states.project.name }}</h3>
                     </div>
 
                     <!-- Offer location -->
                     <div class="mt-4 offer-location">
-                        <p (click)="openModal()">
+                        <p (click)="openModal(states.project)">
                             <i class="fas fa-map-marker-alt mr-2"></i>
                             Show location
                         </p>
-                        {{ project.location_text }}
+                        {{ states.project.location_text }}
                     </div>
 
                     <!-- Offer progress -->
                     <div class="progress-text">
                         <p class="mt-lg-5 mt-4">
-                            <span>{{ wallet?.balance | currencyDefault }}</span> raised of
-                            <span>{{ project.expected_funding | currencyDefault }}</span> goal
+                            <ng-container *ngIf="!!states.walletMW else smallSpinner">
+                                <span>{{ states.walletMW.totalFundsRaised | currencyDefault }}</span> raised of
+                                <span>{{ states.walletMW.investmentCap | currencyDefault }}</span> goal
+                            </ng-container>
                         </p>
                     </div>
                     <div class="progress">
-                        <div [style.width.%]="(wallet?.balance / project.expected_funding) * 100" class="progress-bar"
+                        <div [style.width.%]="(states.walletMW?.totalFundsRaised / states.walletMW?.investmentCap) * 100"
+                             class="progress-bar"
                              role="progressbar">
                         </div>
                     </div>
 
                     <!-- Offer Invest btn -->
-                    <div *ngIf="!isPortfolio" class="invest-button-holder d-none d-lg-block">
-
+                    <div class="invest-button-holder d-none d-lg-block">
                         <button *ngIf="isOverview" class="btn btn-primary w-100 btn-action-a"
                                 id="invest-button"
                                 routerLink="/sign_up">
@@ -99,14 +103,15 @@
                             Sign Up & Invest
                         </button>
 
-                        <div *ngIf="!isOverview">
-                            <button *ngIf="userConfirmed" [disabled]="!project.active"
+                        <div *ngIf="!isOverview && !!states.user">
+                            <button *ngIf="states.user.verified"
+                                    [disabled]="disableInvestButton(states.project, states.walletMW)"
                                     class="btn btn-primary w-100 btn-action-a" id="invest-button"
                                     routerLink="invest">
                                 <i class="mr-2 fas fa-chart-pie"></i>
                                 Invest
                             </button>
-                            <button *ngIf="!userConfirmed" [disabled]="!project.active"
+                            <button *ngIf="!states.user.verified" [disabled]="!states.project.active"
                                     class="btn btn-primary w-100 btn-action-a"
                                     id="invest-button"
                                     routerLink="/dash/general_settings">
@@ -118,31 +123,32 @@
 
                     <!-- Offer return rate -->
                     <div class="offer-return">
-                        <span class="mr-2">{{ project.roi.from }}% - {{ project.roi.to }}%</span>Expected yearly return
+                        <span class="mr-2">{{ states.project.roi.from }}% - {{ states.project.roi.to }}%</span>
+                        Expected yearly return
                     </div>
                     <div class="dropdown-divider mt-lg-3"></div>
 
                     <!-- Offer min investment -->
                     <div class="mt-lg-3">
-                        <span class="mr-2">{{ project.min_per_user | currencyDefault }}</span>Min Investment
+                        <span class="mr-2">{{ states.project.min_per_user | currencyDefault }}</span>Min Investment
                     </div>
                     <div class="dropdown-divider mt-lg-3"></div>
 
                     <!-- Offer max investment -->
                     <div class="mt-lg-3">
-                        <span class="mr-2">{{ project.max_per_user | currencyDefault }}</span>Max Investment
+                        <span class="mr-2">{{ states.project.max_per_user | currencyDefault }}</span>Max Investment
                     </div>
                     <div class="dropdown-divider mt-lg-3"></div>
 
                     <!-- Offer funding period -->
                     <div class="mt-lg-3 pb-lg-5 pb-0">
                         <span class="mr-2">Funding period</span>
-                        {{ project.start_date | date:'mediumDate' }}
-                        - {{ project.end_date | date:'mediumDate' }}
+                        {{ states.project.start_date | date:'mediumDate' }}
+                        - {{ states.project.end_date | date:'mediumDate' }}
                     </div>
 
                     <!-- Offer Invest btn for mobile -->
-                    <div *ngIf="!isPortfolio" class="invest-button-holder d-block d-lg-none">
+                    <div class="invest-button-holder d-block d-lg-none">
 
                         <button *ngIf="isOverview" class="btn btn-primary w-100 btn-action-a"
                                 id="invest-button"
@@ -151,14 +157,15 @@
                             Sign Up & Invest
                         </button>
 
-                        <div *ngIf="!isOverview">
-                            <button *ngIf="userConfirmed" [disabled]="!project.active"
+                        <div *ngIf="!isOverview && !!states.user">
+                            <button *ngIf="states.user.verified"
+                                    [disabled]="disableInvestButton(states.project, states.walletMW)"
                                     class="btn btn-primary w-100 btn-action-a" id="invest-button"
                                     routerLink="invest">
                                 <i class="mr-2 fas fa-chart-pie"></i>
                                 Invest
                             </button>
-                            <button *ngIf="!userConfirmed" [disabled]="!project.active"
+                            <button *ngIf="!states.user.verified" [disabled]="!states.project.active"
                                     class="btn btn-primary w-100 btn-action-a"
                                     id="invest-button"
                                     routerLink="/dash/general_settings">
@@ -175,19 +182,19 @@
                 <div class="d-flex flex-row align-items-center">
                     <span class="mr-lg-5">Share</span>
                     <div class="cursor-pointer mr-lg-5">
-                        <a href="https://twitter.com/intent/tweet?url={{ currentLocation }}"
+                        <a href="https://twitter.com/intent/tweet?url={{ getProjectURL(states.project.uuid) }}"
                            target="_blank">
                             <i class="fab fa-twitter"></i>
                         </a>
                     </div>
                     <div class="cursor-pointer mr-lg-5">
-                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ currentLocation }}"
+                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ getProjectURL(states.project.uuid) }}"
                            target="_blank">
                             <i class="fab fa-facebook-f"></i>
                         </a>
                     </div>
                     <div class="cursor-pointer"
-                         (click)="copyProjectDetailsUrl()"
+                         (click)="copyProjectDetailsUrl(states.project.uuid)"
                          ngbTooltip="Copied to clipboard."
                          triggers="click:blur">
                         <i class="fas fa-link"></i>
@@ -197,3 +204,13 @@
         </div>
     </div>
 </div>
+
+<ng-template #overlaySpinner>
+    <app-spinner type="overlay"></app-spinner>
+</ng-template>
+
+<ng-template #smallSpinner>
+    <span>
+        <app-spinner type="inline"></app-spinner>
+    </span>
+</ng-template>

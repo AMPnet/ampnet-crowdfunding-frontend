@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 import { BackendHttpClient } from '../backend-http-client.service';
-import { DocumentModel, Organization } from './organization.service';
+import { DocumentModel } from './organization.service';
 import { Wallet } from '../wallet/wallet-cooperative/wallet-cooperative-wallet.service';
+import { CacheService } from '../cache.service';
 
 @Injectable({
     'providedIn': 'root'
 })
 export class ProjectService {
-    constructor(private http: BackendHttpClient) {
+    constructor(private http: BackendHttpClient,
+                private cacheService: CacheService) {
     }
 
     createProject(projectData: CreateProjectData) {
@@ -24,6 +26,10 @@ export class ProjectService {
 
     getAllActiveProjects() {
         return this.http.get<PageableProjectsResponse>('/api/project/public/project/active');
+    }
+
+    getAllActiveProjectsCached() {
+        return this.cacheService.setAndGet('projects/active', this.getAllActiveProjects(), 30_000);
     }
 }
 

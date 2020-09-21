@@ -15,7 +15,6 @@ export class OfferDetailsGuard implements CanActivate {
         | Promise<boolean | UrlTree> | boolean | UrlTree {
 
         if (this.userAuthService.isLoggedIn()) {
-            console.log(route.params);
             const projectUUID = route.params.id;
             this.router.navigate([`/dash/offers/${projectUUID}`]);
             return false;

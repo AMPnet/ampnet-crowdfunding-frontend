@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { Meta } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LinkPreview, NewsPreviewService } from 'src/app/shared/services/news-preview.service';
@@ -9,10 +9,11 @@ import { Project, ProjectService } from '../../shared/services/project/project.s
 import { WalletService } from '../../shared/services/wallet/wallet.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { MapModalComponent } from 'src/app/location-map/map-modal/map-modal.component';
-import { EMPTY, forkJoin, Observable, of, throwError } from 'rxjs';
+import { EMPTY, forkJoin, Observable, of, throwError, timer } from 'rxjs';
 import { catchError, shareReplay, switchMap, take, tap } from 'rxjs/operators';
 import { User } from '../../shared/services/user/signup.service';
 import { MiddlewareService, ProjectWalletInfo } from '../../shared/services/middleware/middleware.service';
+import { TooltipContainerComponent, TooltipDirective } from 'ngx-bootstrap/tooltip';
 
 @Component({
     selector: 'app-offer-details',
@@ -90,7 +91,7 @@ export class OfferDetailsComponent implements OnInit {
         });
     }
 
-    copyProjectDetailsUrl(projectUUID: string) {
+    copyProjectDetailsUrl(el: TooltipDirective, projectUUID: string) {
         const selBox = document.createElement('textarea');
         selBox.style.position = 'fixed';
         selBox.style.left = '0';
@@ -102,6 +103,9 @@ export class OfferDetailsComponent implements OnInit {
         selBox.select();
         document.execCommand('copy');
         document.body.removeChild(selBox);
+
+        el.show();
+        timer(2000).subscribe(() => el.hide());
     }
 
     backToOffersScreen() {

@@ -193,10 +193,10 @@
                             <i class="fab fa-facebook-f"></i>
                         </a>
                     </div>
-                    <div class="cursor-pointer"
-                         (click)="copyProjectDetailsUrl(states.project.uuid)"
-                         ngbTooltip="Copied to clipboard."
-                         triggers="click:blur">
+                    <div class="cursor-pointer" #copyToClipboard="bs-tooltip"
+                         (click)="copyProjectDetailsUrl(copyToClipboard, states.project.uuid)"
+                         tooltip="Copied to clipboard."
+                         triggers="">
                         <i class="fas fa-link"></i>
                     </div>
                 </div>

@@ -1,35 +1,59 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { displayBackendError } from '../utilities/error-handler';
-import { centsToBaseCurrencyUnit, prettyCurrency } from '../utilities/currency-util';
-import * as numeral from 'numeral';
 import { ArkaneConnect, SecretType } from '@arkane-network/arkane-connect';
-import { UserTransaction, WalletService } from '../shared/services/wallet/wallet.service';
-import { WalletDetails } from '../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
-
-declare var $: any;
+import { TransactionState, TransactionType, UserTransaction, WalletService, WalletState } from '../shared/services/wallet/wallet.service';
+import { BehaviorSubject, timer } from 'rxjs';
+import { map, switchMap, tap } from 'rxjs/operators';
 
 @Component({
     selector: 'app-wallet',
     templateUrl: './wallet.component.html',
     styleUrls: ['./wallet.component.css']
 })
-export class WalletComponent implements OnInit {
-    wallet: WalletDetails;
-    checkComplete = false;
+export class WalletComponent {
     arkaneConnect: ArkaneConnect;
+
     tablePage = 1;
     tablePageSize = 10;
     transactionItems = 0;
     transactionHistory: UserTransaction[] = [];
     transactionHistoryPage: UserTransaction[] = [];
 
-    constructor(private walletService: WalletService) {
-    }
+    wallet$ = this.walletService.wallet$;
 
-    ngOnInit() {
-        this.getUserWallet();
-        this.getTransactionHistory();
+    walletState = WalletState;
+    transactionState = TransactionState;
+
+    refreshTransactionHistorySubject = new BehaviorSubject<'fromPending'>(null);
+    transactionHistory$ = this.refreshTransactionHistorySubject.pipe(
+        switchMap(refreshReason => {
+            return this.walletService.getTransactionHistory().pipe(
+                map(res => {
+                    this.transactionHistory = res.transactions
+                        .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+                    this.transactionItems = this.transactionHistory.length;
+                    this.refreshTransactionHistoryPage();
+
+                    return {refreshReason, transactionHistory: this.transactionHistory} as {
+                        refreshReason: 'fromPending',
+                        transactionHistory: UserTransaction[]
+                    };
+                })
+            );
+        }),
+        tap(({refreshReason, transactionHistory}) => {
+            const pendingTransactionsCount = transactionHistory
+                .filter(transaction => transaction.state === TransactionState.PENDING).length;
+            if (pendingTransactionsCount > 0) {
+                timer(3_000).subscribe(() => this.refreshTransactionHistorySubject.next('fromPending'));
+            } else if (refreshReason === 'fromPending') {
+                this.walletService.clearAndRefreshWallet();
+            }
+        })
+    );
+
+    constructor(private walletService: WalletService) {
     }
 
     setUpArkane() {
@@ -45,7 +69,7 @@ export class WalletComponent implements OnInit {
         SpinnerUtil.showSpinner();
         this.walletService.initWallet(addr).subscribe(() => {
             SpinnerUtil.hideSpinner();
-            this.getUserWallet();
+            this.walletService.clearAndRefreshWallet();
         }, err => {
             this.arkaneConnect.logout();
             SpinnerUtil.hideSpinner();
@@ -53,33 +77,15 @@ export class WalletComponent implements OnInit {
         });
     }
 
-    getUserWallet() {
-        SpinnerUtil.showSpinner();
-        this.walletService.getUserWallet().subscribe(res => {
-            if (res !== null) {
-                this.wallet = res;
-            }
-            this.checkComplete = true;
-            SpinnerUtil.hideSpinner();
-        }, _ => {
-            SpinnerUtil.hideSpinner();
-            this.checkComplete = true;
-        });
-    }
-
-    getTransactionHistory() {
-        SpinnerUtil.showSpinner();
-        this.walletService.getTransactionHistory().subscribe(res => {
-            this.transactionHistory = res.transactions
-                .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-            this.transactionItems = this.transactionHistory.length;
-            this.refreshTransactionHistory();
-        });
-    }
-
-    refreshTransactionHistory() {
+    refreshTransactionHistoryPage() {
         this.transactionHistoryPage = this.transactionHistory
             .map((transaction, i) => ({id: i + 1, ...transaction}))
             .slice((this.tablePage - 1) * this.tablePageSize, (this.tablePage - 1) * this.tablePageSize + this.tablePageSize);
+    }
+
+    shouldShowTransaction(transaction: UserTransaction): boolean {
+        // TODO: Remove UNRECOGNIZED when renamed on backend.
+        return !([TransactionType.APPROVE_INVESTMENT, TransactionType.UNRECOGNIZED].includes(transaction.type)
+            && transaction.state !== TransactionState.PENDING);
     }
 }

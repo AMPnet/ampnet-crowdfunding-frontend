@@ -4,9 +4,9 @@
     <app-header></app-header>
 </div>
 
-<div class="container root-content-container pt-md-0 pt-3"
+<div class="container root-content-container"
      [class.overview-modifier]="isOverview">
-    <h1 class="offers-title">OFFERS</h1>
+    <h1 class="app-page-title">OFFERS</h1>
     <ng-container *ngIf="(projectsWallets$ | async) as projectsWallets else loadingProjects">
         <div class="row" id="component-container"
              *ngIf="projectsWallets.length > 0">

@@ -29,7 +29,7 @@
                     </div>
                     <div class="card-text">
                         <h5>Balance</h5>
-                        <h5>{{ projectWallet.currency }}{{ projectWallet.balance }}</h5>
+                        <h5>{{ projectWallet.balance | currencyDefault }}</h5>
                     </div>
                 </div>
             </div>
@@ -47,10 +47,10 @@
         <div class="row w-100">
             <div class="col-md-6 align-self-center">
                 <div class="w-40 h-auto d-flex flex-column">
-                    <input formControlName="amount"
-                           class="form-control w-100 px-4 py-3 float-left"
-                           id="revenueShareAmount"
-                           type="text">
+                    <app-money-input-field
+                            placeholder="Enter maximum investment per user"
+                            [control]="revenueForm.get('amount')">
+                    </app-money-input-field>
                     <div *ngIf="revenueForm.dirty && revenueForm.invalid">
                         <div *ngIf="revenueForm.get('amount').errors?.inputAmountInvalid"
                              class="alert alert-danger">Payout must be lower or equal to balance.

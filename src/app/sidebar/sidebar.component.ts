@@ -1,12 +1,10 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { Router } from '@angular/router';
 import * as $ from 'jquery';
 import { UserService } from '../shared/services/user/user.service';
-import { Observable } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
-import { User, UserRole } from '../shared/services/user/signup.service';
-import { WalletService } from '../shared/services/wallet/wallet.service';
+import { UserRole } from '../shared/services/user/signup.service';
+import { WalletDetailsWithState, WalletService, WalletState } from '../shared/services/wallet/wallet.service';
 import { version } from '../../../package.json';
 import { UserAuthService } from '../shared/services/user/user-auth.service';
 
@@ -16,29 +14,17 @@ import { UserAuthService } from '../shared/services/user/user-auth.service';
     templateUrl: './sidebar.component.html',
     styleUrls: ['./sidebar.component.css']
 })
-export class SidebarComponent implements OnInit, AfterViewInit {
+export class SidebarComponent implements AfterViewInit {
     appVersion: string = version;
-
     userRole = UserRole;
 
-    userChange$: Observable<User>;
-    walletInitialized$: Observable<boolean>;
+    user$ = this.userService.user$;
+    wallet$ = this.walletService.wallet$;
 
     constructor(private router: Router,
                 private userService: UserService,
                 private userAuthService: UserAuthService,
                 private walletService: WalletService) {
-    }
-
-    ngOnInit() {
-        this.userChange$ = this.userService.getOwnProfile().pipe(
-            switchMap(_ => this.userService.userChange$)
-        );
-
-        this.walletInitialized$ = this.walletService.getUserWallet().pipe(
-            switchMap(_ => this.walletService.walletChange$),
-            map(wallet => wallet !== null)
-        );
     }
 
     ngAfterViewInit() {
@@ -48,8 +34,11 @@ export class SidebarComponent implements OnInit, AfterViewInit {
     }
 
     onLogout() {
-        return this.userAuthService.logout().subscribe(() => {
-            this.router.navigate(['']);
-        });
+        this.userAuthService.logout();
+        this.router.navigate(['']);
+    }
+
+    isWalletReady(wallet: WalletDetailsWithState) {
+        return !wallet ? false : wallet.state === WalletState.READY;
     }
 }

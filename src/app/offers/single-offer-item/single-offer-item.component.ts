@@ -22,7 +22,7 @@ export class SingleOfferItemComponent implements OnInit {
 
     ngOnInit() {
         this.projectWallet.project.main_image = this.projectWallet.project.main_image ?? '../../../assets/noimage.png';
-        this.projectWallet$ = this.middlewareService.getProjectWalletInfo(this.projectWallet.wallet.hash);
+        this.projectWallet$ = this.middlewareService.getProjectWalletInfoCached(this.projectWallet.wallet.hash);
     }
 
     onClickedItem() {

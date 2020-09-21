@@ -39,6 +39,7 @@ export class BackendHttpClient {
         const httpOptions = {
             headers: new HttpHeaders()
         };
+        httpOptions.headers.append('Connection', 'Keep-Alive');
 
         const accessToken = localStorage.getItem('access_token');
         if (accessToken !== null) {

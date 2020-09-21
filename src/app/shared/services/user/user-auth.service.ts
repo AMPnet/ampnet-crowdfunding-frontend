@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { TokenModel } from 'src/app/models/auth/TokenModel';
 import { BackendHttpClient } from '../backend-http-client.service';
-import { Observable } from 'rxjs';
-import { WalletDetails } from '../wallet/wallet-cooperative/wallet-cooperative-wallet.service';
-import { tap } from 'rxjs/operators';
-import { UserStatusStorage } from '../../../user-status-storage';
+import { EMPTY, Observable } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 import { UserService } from './user.service';
+import { CacheService } from '../cache.service';
 
 
 @Injectable({
@@ -13,7 +12,8 @@ import { UserService } from './user.service';
 })
 export class UserAuthService {
     constructor(private http: BackendHttpClient,
-                private userService: UserService) {
+                private userService: UserService,
+                private cacheService: CacheService) {
     }
 
     emailLogin(email: string, password: string) {
@@ -40,13 +40,18 @@ export class UserAuthService {
             refresh_token: localStorage.getItem('refresh_token')
         }).pipe(
             this.saveTokens,
-            tap(() => this.userService.getOwnProfile().subscribe())
+            tap(() => this.userService.refreshUser())
         );
     }
 
     logout() {
-        return this.http.post<void>(`/api/user/logout`, {})
-            .pipe(this.removeTokens);
+        this.http.post<void>(`/api/user/logout`, {})
+            .pipe(catchError(_ => EMPTY)).subscribe();
+
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('refresh_token');
+
+        this.cacheService.clearAll();
     }
 
     private saveTokens(source: Observable<TokenModel>) {
@@ -54,15 +59,6 @@ export class UserAuthService {
             tap(res => {
                 localStorage.setItem('access_token', res.access_token);
                 localStorage.setItem('refresh_token', res.refresh_token);
-            })
-        );
-    }
-
-    private removeTokens<T>(source: Observable<T>) {
-        return source.pipe(
-            tap(_ => {
-                localStorage.removeItem('access_token');
-                localStorage.removeItem('refresh_token');
             })
         );
     }

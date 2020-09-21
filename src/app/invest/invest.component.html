@@ -13,62 +13,61 @@
                 <div class="dropdown-divider mt-lg-3"></div>
             </h2>
 
-            <form [formGroup]="investForm" class="container">
-                <div class="col-12 d-lg-flex align-items-center">
-                    <div class="col-lg-6">
-                        <div class="invest-text text-uppercase">
-                            <p>I want to invest</p>
+            <div class="col-12 d-lg-flex align-items-center">
+                <div class="col-lg-6">
+                    <div class="invest-text text-uppercase">
+                        <p>I want to invest</p>
 
-                            <app-money-input-field
-                                    placeholder="Enter invest amount"
-                                    [control]="investForm.get('amount')">
-                            </app-money-input-field>
-                        </div>
-
-                        <div class="min-investment">
-                            <p>{{ states.project.min_per_user | currencyDefault }} Min investment</p>
-                        </div>
+                        <app-money-input-field
+                                placeholder="Enter invest amount"
+                                [control]="investForm.get('amount')">
+                        </app-money-input-field>
                     </div>
 
-                    <div class="col-lg-4 invest-button mt-4 mt-lg-0">
-                        <button (click)="investButtonClicked()"
-                                [disabled]="!investForm.valid"
-                                class="btn btn-primary py-3 w-100 mb-2">
-                            <i class="fas fa-chart-pie mr-2"></i>
-                            Invest
-                        </button>
-                    </div>
-
-                    <div class="col-lg-2 invest-text-right mt-4 mt-lg-0">
-                        <p class="text-uppercase" style="font-size: 12px;">Available funds</p>
-                        <h1 class="mb-4">{{ states.wallet.wallet.balance | currencyDefault }}</h1>
-                        <a routerLink="/dash/wallet">Open wallet</a>
+                    <div class="min-investment">
+                        <p>{{ states.project.min_per_user | currencyDefault }} Min investment</p>
                     </div>
                 </div>
 
-                <div class="col-12 mb-2" *ngIf="investForm.dirty && investForm.invalid">
-                    <div *ngIf="investForm.get('amount').errors?.amountBelowMin" class="alert alert-danger mt-3">
-                        <i class="fas fa-exclamation-triangle mr-3"></i><b>Investment amount too low</b>.
-                        The minimum investment is {{ states.project.min_per_user | currencyDefault }}
-                    </div>
-
-                    <div *ngIf="investForm.get('amount').errors?.amountAboveMax" class="alert alert-danger mt-3">
-                        <i class="fas fa-exclamation-triangle mr-3"></i><b>Investment amount too high</b>.
-                        The maximum investment is {{ states.project.max_per_user | currencyDefault }}
-                    </div>
-
-                    <div *ngIf="investForm.get('amount').errors?.amountAboveExpFunding" class="alert alert-danger mt-3">
-                        <i class="fas fa-exclamation-triangle mr-3"></i><b>Investment amount too high</b>.
-                        The expected funding for this project is {{ states.project.expected_funding | currencyDefault }}
-                    </div>
-
-                    <div *ngIf="investForm.get('amount').errors?.amountAboveBalance" class="alert alert-danger mt-3">
-                        <i class="fas fa-exclamation-triangle mr-3"></i><b>You don't have enough funds on your
-                        wallet</b>.
-                        Please deposit funds in the wallet tab.
-                    </div>
+                <div class="col-lg-4 invest-button mt-4 mt-lg-0">
+                    <button (click)="investButtonClicked()"
+                            [disabled]="!investForm.valid"
+                            type="submit"
+                            class="btn btn-primary py-3 w-100 mb-2">
+                        <i class="fas fa-chart-pie mr-2"></i>
+                        Invest
+                    </button>
                 </div>
-            </form>
+
+                <div class="col-lg-2 invest-text-right mt-4 mt-lg-0">
+                    <p class="text-uppercase" style="font-size: 12px;">Available funds</p>
+                    <h1 class="mb-4">{{ states.wallet.wallet.balance | currencyDefault }}</h1>
+                    <a routerLink="/dash/wallet">Open wallet</a>
+                </div>
+            </div>
+
+            <div class="col-12 mb-2" *ngIf="investForm.dirty && investForm.invalid">
+                <div *ngIf="investForm.get('amount').errors?.amountBelowMin" class="alert alert-danger mt-3">
+                    <i class="fas fa-exclamation-triangle mr-3"></i><b>Investment amount too low</b>.
+                    The minimum investment is {{ states.project.min_per_user | currencyDefault }}
+                </div>
+
+                <div *ngIf="investForm.get('amount').errors?.amountAboveMax" class="alert alert-danger mt-3">
+                    <i class="fas fa-exclamation-triangle mr-3"></i><b>Investment amount too high</b>.
+                    The maximum investment is {{ states.project.max_per_user | currencyDefault }}
+                </div>
+
+                <div *ngIf="investForm.get('amount').errors?.amountAboveExpFunding" class="alert alert-danger mt-3">
+                    <i class="fas fa-exclamation-triangle mr-3"></i><b>Investment amount too high</b>.
+                    The expected funding for this project is {{ states.project.expected_funding | currencyDefault }}
+                </div>
+
+                <div *ngIf="investForm.get('amount').errors?.amountAboveBalance" class="alert alert-danger mt-3">
+                    <i class="fas fa-exclamation-triangle mr-3"></i><b>You don't have enough funds on your
+                    wallet</b>.
+                    Please deposit funds in the wallet tab.
+                </div>
+            </div>
         </div>
     </ng-container>
 </div>

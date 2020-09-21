@@ -30,10 +30,6 @@
                 </div>
             </ng-container>
 
-            <ng-template #walletLoading>
-                <app-spinner></app-spinner>
-            </ng-template>
-
             <div class="mt-2 ends-info">
                 <div>Ends on {{ projectWallet.project.end_date | date:'mediumDate' }}</div>
             </div>
@@ -58,3 +54,9 @@
         </div>
     </div>
 </div>
+
+<ng-template #walletLoading>
+    <span>
+        <app-spinner type="inline"></app-spinner>
+    </span>
+</ng-template>

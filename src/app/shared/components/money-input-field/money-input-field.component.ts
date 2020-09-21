@@ -25,6 +25,7 @@ export class MoneyInputFieldComponent implements AfterViewInit, OnChanges {
 
     @Input() placeholder: string;
     @Input() control: AbstractControl;
+    @Input() inputClass = 'w-100 mt-3 py-4 form-control p-4';
 
     @Input() realValue = 0;
     @Output() realValueChange = new EventEmitter<number>();

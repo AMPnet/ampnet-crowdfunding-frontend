@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { WalletDetailsWithState, WalletService } from '../shared/services/wallet/wallet.service';
 import { displayBackendError } from '../utilities/error-handler';
 import { Project, ProjectService } from '../shared/services/project/project.service';
@@ -12,7 +12,8 @@ declare var $: any;
 @Component({
     selector: 'app-invest',
     templateUrl: './invest.component.html',
-    styleUrls: ['./invest.component.css']
+    styleUrls: ['./invest.component.css'],
+    encapsulation: ViewEncapsulation.None
 })
 export class InvestComponent implements OnInit {
     wallet$: Observable<WalletDetailsWithState>;

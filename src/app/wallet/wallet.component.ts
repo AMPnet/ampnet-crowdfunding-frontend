@@ -4,7 +4,7 @@ import { displayBackendError } from '../utilities/error-handler';
 import { ArkaneConnect, SecretType } from '@arkane-network/arkane-connect';
 import { TransactionState, TransactionType, UserTransaction, WalletService, WalletState } from '../shared/services/wallet/wallet.service';
 import { BehaviorSubject, timer } from 'rxjs';
-import { delay, map, switchMap, tap } from 'rxjs/operators';
+import { map, switchMap, tap } from 'rxjs/operators';
 
 @Component({
     selector: 'app-wallet',

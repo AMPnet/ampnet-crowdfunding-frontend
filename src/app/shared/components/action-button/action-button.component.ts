@@ -12,6 +12,7 @@ export class ActionButtonComponent implements OnDestroy {
     @Input() loadingText: string;
     @Input() faIcon: string;
     @Input() disabled = false;
+    @Input() buttonClass = 'btn btn-primary';
 
     loading = false;
     sub: Subscription;

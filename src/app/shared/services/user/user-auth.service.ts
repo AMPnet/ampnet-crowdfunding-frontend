@@ -62,4 +62,8 @@ export class UserAuthService {
             })
         );
     }
+
+    isLoggedIn(): boolean {
+        return localStorage.getItem('access_token') !== null;
+    }
 }

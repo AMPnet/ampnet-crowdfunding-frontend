@@ -182,21 +182,21 @@
                 <div class="d-flex flex-row align-items-center">
                     <span class="mr-lg-5">Share</span>
                     <div class="cursor-pointer mr-lg-5">
-                        <a href="https://twitter.com/intent/tweet?url={{ currentLocation }}"
+                        <a href="https://twitter.com/intent/tweet?url={{ getProjectURL(states.project.uuid) }}"
                            target="_blank">
                             <i class="fab fa-twitter"></i>
                         </a>
                     </div>
                     <div class="cursor-pointer mr-lg-5">
-                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ currentLocation }}"
+                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ getProjectURL(states.project.uuid) }}"
                            target="_blank">
                             <i class="fab fa-facebook-f"></i>
                         </a>
                     </div>
-                    <div class="cursor-pointer"
-                         (click)="copyProjectDetailsUrl()"
-                         ngbTooltip="Copied to clipboard."
-                         triggers="click:blur">
+                    <div class="cursor-pointer" #copyToClipboard="bs-tooltip"
+                         (click)="copyProjectDetailsUrl(copyToClipboard, states.project.uuid)"
+                         tooltip="Copied to clipboard."
+                         triggers="">
                         <i class="fas fa-link"></i>
                     </div>
                 </div>

@@ -42,6 +42,7 @@ import { ExchangeComponent } from './exchange/exchange.component';
 import { OwnershipComponent } from './ownership/ownership.component';
 import { RevenueShareComponent } from './revenue-share/revenue-share.component';
 import { ManagePaymentsComponent } from './project/manage-payments/manage-payments.component';
+import { OfferDetailsGuard } from './offers/offer-details/offer-details.guard';
 
 const routes: Routes = [
     {
@@ -51,7 +52,7 @@ const routes: Routes = [
             {path: 'sign_up', component: SignUpComponent},
             {path: 'confirm_email', component: ConfirmEmailComponent},
             {path: 'overview/:isOverview', component: OffersComponent},
-            {path: 'overview/:id/:isOverview', component: OfferDetailsComponent},
+            {path: 'overview/:id/:isOverview', component: OfferDetailsComponent, canActivate: [OfferDetailsGuard]},
             {path: 'onboarding', component: OnboardingComponent},
         ]
     },

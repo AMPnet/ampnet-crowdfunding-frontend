@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { Meta } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LinkPreview, NewsPreviewService } from 'src/app/shared/services/news-preview.service';
@@ -9,10 +9,11 @@ import { Project, ProjectService } from '../../shared/services/project/project.s
 import { WalletService } from '../../shared/services/wallet/wallet.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { MapModalComponent } from 'src/app/location-map/map-modal/map-modal.component';
-import { EMPTY, forkJoin, Observable, of, throwError } from 'rxjs';
+import { EMPTY, forkJoin, Observable, of, throwError, timer } from 'rxjs';
 import { catchError, shareReplay, switchMap, take, tap } from 'rxjs/operators';
 import { User } from '../../shared/services/user/signup.service';
 import { MiddlewareService, ProjectWalletInfo } from '../../shared/services/middleware/middleware.service';
+import { TooltipContainerComponent, TooltipDirective } from 'ngx-bootstrap/tooltip';
 
 @Component({
     selector: 'app-offer-details',
@@ -27,7 +28,6 @@ export class OfferDetailsComponent implements OnInit {
     user$: Observable<User>;
     projectWalletMW$: Observable<ProjectWalletInfo>;
 
-    currentLocation = encodeURIComponent(window.location.href);
     bsModalRef: BsModalRef;
 
     constructor(private projectService: ProjectService,
@@ -91,18 +91,21 @@ export class OfferDetailsComponent implements OnInit {
         });
     }
 
-    copyProjectDetailsUrl() {
+    copyProjectDetailsUrl(el: TooltipDirective, projectUUID: string) {
         const selBox = document.createElement('textarea');
         selBox.style.position = 'fixed';
         selBox.style.left = '0';
         selBox.style.top = '0';
         selBox.style.opacity = '0';
-        selBox.value = window.location.href;
+        selBox.value = this.getProjectURL(projectUUID, false);
         document.body.appendChild(selBox);
         selBox.focus();
         selBox.select();
         document.execCommand('copy');
         document.body.removeChild(selBox);
+
+        el.show();
+        timer(2000).subscribe(() => el.hide());
     }
 
     backToOffersScreen() {
@@ -125,6 +128,12 @@ export class OfferDetailsComponent implements OnInit {
 
     disableInvestButton(project: Project, walletMW: ProjectWalletInfo): boolean {
         return !project.active || (!walletMW || walletMW.investmentCap === walletMW.totalFundsRaised);
+    }
+
+    getProjectURL(projectUUID: string, uriComponent = true) {
+        const url = `${window.location.host}/overview/${projectUUID}/discover`;
+
+        return uriComponent ? encodeURIComponent(url) : encodeURI(url);
     }
 
     private handleError<T>(source: Observable<T>) {

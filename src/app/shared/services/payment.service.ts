@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { UserStatusStorage } from '../../user-status-storage';
 import { BackendHttpClient } from './backend-http-client.service';
 
 @Injectable({
@@ -12,11 +11,7 @@ export class PaymentService {
     }
 
     getMyBankAccounts() {
-        const bankData = this.http.get<UserBankAccountsRes>(this.endpoint);
-        bankData.subscribe(res => {
-            UserStatusStorage.bankData = res.bank_accounts;
-        });
-        return bankData;
+        return this.http.get<UserBankAccountsRes>(this.endpoint);
     }
 
     createBankAccount(iban: String, bankCode: String, alias: String) {

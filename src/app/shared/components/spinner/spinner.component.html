@@ -1,10 +1,12 @@
-<div *ngIf="type === 'inline'">
-    <div class="spinner-border spinner-border-sm" role="status">
+<div *ngIf="type === 'inline'" class="inline-spinner" style="display: inline-flex">
+    <div class="spinner-border spinner-border-sm"
+         [style.color]="color"
+         role="status">
         <span class="sr-only">Loading...</span>
     </div>
 </div>
 
-<div *ngIf="type === 'overlay'" class="row justify-content-center"
+<div *ngIf="type === 'overlay'" class="overlay-spinner"
      style="align-content: center; height: 50vh;">
     <div class="spinner-border"
          style="width: 3rem; height: 3rem;" role="status">

@@ -64,7 +64,7 @@ export class CreateNewProjectComponent {
             })
         );
     }
-    
+
     setDatepickerOptions() {
         this.bsConfig = Object.assign({}, {
             showTodayButton: true,

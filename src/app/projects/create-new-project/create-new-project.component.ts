@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { displayBackendError } from 'src/app/utilities/error-handler';
 import { catchError, tap } from 'rxjs/operators';
 import { throwError } from 'rxjs';
+import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 
 @Component({
     selector: 'app-create-new-project',
@@ -17,6 +18,7 @@ export class CreateNewProjectComponent {
     mapLat: number;
     mapLong: number;
     projectCoords = [];
+    bsConfig: Partial<BsDatepickerConfig>;
 
     constructor(private projectService: ProjectService,
                 private fb: FormBuilder,
@@ -35,8 +37,8 @@ export class CreateNewProjectComponent {
 
     submitForm() {
         const formValue = this.createForm.value;
-        formValue.startDate = moment(formValue.startDate).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
-        formValue.endDate = moment(formValue.endDate).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
+        formValue.startDate = moment(formValue.startDate).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
+        formValue.endDate = moment(formValue.endDate).endOf('day').format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
         const orgID = this.activatedRoute.snapshot.params.orgId;
 
         return this.projectService.createProject({
@@ -61,5 +63,15 @@ export class CreateNewProjectComponent {
                 return throwError(err);
             })
         );
+    }
+
+    setDatepickerOptions() {
+        this.bsConfig = Object.assign({}, {
+            showTodayButton: true,
+            todayPosition: 'right',
+            containerClass: 'theme-default',
+            isAnimated: true,
+            dateInputFormat: 'DD-MM-YYYY'
+        });
     }
 }

@@ -34,10 +34,14 @@
         </app-location-map>
 
         <div class="explainer-mini  mb-2 mt-3">Start date</div>
-        <input class="w-100 p-4 form-control" formControlName="startDate" id="start-date" name="" type="date">
+        <input class="w-100 p-4 form-control" formControlName="startDate"
+               id="start-date" placeholder="dd/mm/yyyy" bsDatepicker 
+               [bsConfig]="bsConfig" (click)="setDatepickerOptions()">
 
         <div class="explainer-mini  mb-2 mt-3">End date</div>
-        <input class="w-100 p-4 form-control" formControlName="endDate" id="end-date" name="" type="date">
+        <input class="w-100 p-4 form-control" formControlName="endDate" 
+               id="end-date" placeholder="dd/mm/yyyy" bsDatepicker 
+               [bsConfig]="bsConfig" (click)="setDatepickerOptions()">
 
         <div class="explainer-mini  mb-2 mt-3">Expected funding</div>
         <app-money-input-field

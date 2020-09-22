@@ -81,6 +81,8 @@ import { ActionButtonComponent } from './shared/components/action-button/action-
 import { CurrencyCentsPipe } from './pipes/currency-cents.pipe';
 import { environment } from '../environments/environment.prod';
 import { MoneyInputFieldComponent } from './shared/components/money-input-field/money-input-field.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 const socialAuthServiceConfig = {
     provide: 'SocialAuthServiceConfig',
@@ -186,7 +188,9 @@ const socialAuthServiceConfig = {
         SocialLoginModule,
         NgxSpinnerModule,
         NgbModule,
-        ModalModule.forRoot()
+        ModalModule.forRoot(),
+        BrowserAnimationsModule,
+        BsDatepickerModule.forRoot(),
     ],
     entryComponents: [
         MapModalComponent

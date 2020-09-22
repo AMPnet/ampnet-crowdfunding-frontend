@@ -3,9 +3,9 @@ import { PaymentService } from '../../shared/services/payment.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BankCodeModel } from './bank-code-model';
 import 'bootstrap-select';
-import { catchError, switchMap } from 'rxjs/operators';
-import { displayBackendError } from '../../utilities/error-handler';
-import { of } from 'rxjs';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { SpinnerUtil } from '../../utilities/spinner-utilities';
+import { hideSpinnerAndDisplayError } from '../../utilities/error-handler';
 
 declare var $: any;
 
@@ -15,16 +15,21 @@ declare var $: any;
     styleUrls: ['./new-payment-option.component.css']
 })
 export class NewPaymentOptionComponent implements OnInit, AfterViewInit {
-    creditCardNavTab: JQuery;
-    bankAccountNavTab: JQuery;
-
     hasNoBankAccounts: boolean;
-
     bankCodes: BankCodeModel[];
+
+    bankAccountForm: FormGroup;
 
     constructor(private paymentService: PaymentService,
                 private router: Router,
-                private route: ActivatedRoute) {
+                private route: ActivatedRoute,
+                private fb: FormBuilder) {
+
+        this.bankAccountForm = this.fb.group({
+            iban: ['', [Validators.required]],
+            bankCode: ['', [Validators.required]],
+            bankAccountAlias: ['', Validators.required]
+        });
     }
 
     ngOnInit() {
@@ -44,20 +49,15 @@ export class NewPaymentOptionComponent implements OnInit, AfterViewInit {
     }
 
     addNewBankAccountClicked() {
-        const iban: string = (<string>$('#iban-holder').val()).replace(/ /g, '');
-        let bankCode: string = (<string>$('#bankcode-holder').val());
-        if (bankCode.length === 0) {
-            bankCode = 'N/A';
-        }
-        const alias: string = (<string>$('#alias-holder').val());
-
-        return this.paymentService.createBankAccount(iban, bankCode, alias).pipe(
-            switchMap(() => this.router.navigate(['dash', 'payment_options'])),
-            catchError(err => {
-                displayBackendError(err);
-                return of(null);
-            })
-        );
+        SpinnerUtil.showSpinner();
+        const controls = this.bankAccountForm.controls;
+        const iban = controls['iban'].value.replace(/\s/g, '');
+        const bankCode = controls['bankCode'].value;
+        const alias = controls['bankAccountAlias'].value;
+        this.paymentService.createBankAccount(iban, bankCode, alias)
+            .subscribe(() => {
+                SpinnerUtil.hideSpinner();
+                this.router.navigate(['dash', 'payment_options']);
+            }, hideSpinnerAndDisplayError);
     }
-
 }

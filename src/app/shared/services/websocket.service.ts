@@ -1,16 +1,20 @@
 import { Injectable } from '@angular/core';
-import { webSocket } from 'rxjs/webSocket';
+import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 import { retry } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
 })
 export class WebsocketService {
-    subject = webSocket({
-        url: 'wss://staging.ampnet.io/api/middleware/ws'
-    });
+    subject: WebSocketSubject<unknown>;
 
     constructor() {
+        const protocol = window.location.protocol.replace('http', 'ws');
+        const host = window.location.host;
+        const wsURL = `${protocol}//${host}/api/middleware/ws`;
+        this.subject = webSocket({
+            url: wsURL
+        });
     }
 
     walletNotifier(walletAddress: string) {

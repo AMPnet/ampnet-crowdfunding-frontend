@@ -97,7 +97,7 @@
                 <ng-container *ngIf="(transactionHistory$ | async) else overlaySpinner">
                     <div *ngIf="transactionHistory !== undefined" class="wow fadeIn">
                         <div class="table-responsive-md">
-                            <table class="table table-striped">
+                            <table class="table">
                                 <tbody>
                                 <tr *ngFor="let transaction of transactionHistoryPage">
                                     <ng-container *ngIf="shouldShowTransaction(transaction)">

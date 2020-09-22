@@ -46,9 +46,14 @@ export class WalletComponent implements OnDestroy {
         tap(({refreshReason, transactionHistory}) => {
             const pendingTransactionsCount = transactionHistory
                 .filter(transaction => transaction.state === TransactionState.PENDING).length;
-            if (pendingTransactionsCount > 0) {
-                timer(3_000).subscribe(() => this.refreshTransactionHistorySubject.next('fromPending'));
-            } else if (refreshReason === 'fromPending') {
+
+            // TODO: uncomment if, for a long period of time, websocket mechanism doesn't work;
+            //  remove if works.
+            // if (pendingTransactionsCount > 0) {
+            //     timer(10_000).subscribe(() => this.refreshTransactionHistorySubject.next('fromPending'));
+            // }
+
+            if (refreshReason === 'fromPending' && pendingTransactionsCount === 0) {
                 this.walletService.clearAndRefreshWallet();
             }
         })
@@ -56,7 +61,7 @@ export class WalletComponent implements OnDestroy {
 
     middlewareNotifier$ = this.wallet$.pipe(take(1), switchMap(wallet => {
         return this.websocketService.walletNotifier(wallet.wallet.activation_data);
-    })).subscribe(() => this.refreshTransactionHistorySubject.next(null));
+    })).subscribe(() => this.refreshTransactionHistorySubject.next('fromPending'));
 
     constructor(private walletService: WalletService,
                 private websocketService: WebsocketService) {

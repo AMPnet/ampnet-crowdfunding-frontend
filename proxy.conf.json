@@ -1,15 +1,8 @@
 {
-  "/wees": {
-    "target": "wss://echo.websocket.org",
-    "secure": true,
-    "ws": true,
-    "logLevel": "debug",
-    "changeOrigin": true
-
-  },
   "/api/*": {
     "target": "https://staging.ampnet.io",
     "secure": true,
+    "ws": true,
     "logLevel": "debug",
     "changeOrigin": true
   }

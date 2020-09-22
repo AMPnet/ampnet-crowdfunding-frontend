@@ -3,7 +3,7 @@ import { PaymentService } from '../../shared/services/payment.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BankCodeModel } from './bank-code-model';
 import 'bootstrap-select';
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SpinnerUtil } from '../../utilities/spinner-utilities';
 import { hideSpinnerAndDisplayError } from '../../utilities/error-handler';
 
@@ -26,7 +26,7 @@ export class NewPaymentOptionComponent implements OnInit, AfterViewInit {
                 private fb: FormBuilder) {
 
         this.bankAccountForm = this.fb.group({
-            iban: ['', [Validators.required, SpaceValidator.cannotContainSpace]],
+            iban: ['', [Validators.required]],
             bankCode: ['', [Validators.required]],
             bankAccountAlias: ['', Validators.required]
         });
@@ -51,24 +51,13 @@ export class NewPaymentOptionComponent implements OnInit, AfterViewInit {
     addNewBankAccountClicked() {
         SpinnerUtil.showSpinner();
         const controls = this.bankAccountForm.controls;
-        const iban = controls['iban'].value;
+        const iban = controls['iban'].value.replace(/\s/g, '');
         const bankCode = controls['bankCode'].value;
         const alias = controls['bankAccountAlias'].value;
-
         this.paymentService.createBankAccount(iban, bankCode, alias)
             .subscribe(() => {
                 SpinnerUtil.hideSpinner();
                 this.router.navigate(['dash', 'payment_options']);
             }, hideSpinnerAndDisplayError);
-    }
-}
-
-export class SpaceValidator {
-    static cannotContainSpace(control: AbstractControl): ValidationErrors | null {
-        if ((control.value as string).indexOf(' ') >= 0) {
-            return {cannotContainSpace: true};
-        }
-
-        return null;
     }
 }

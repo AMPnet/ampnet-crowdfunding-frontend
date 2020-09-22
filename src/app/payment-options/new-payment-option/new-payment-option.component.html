@@ -12,25 +12,13 @@
         <div class="col-md-12 mt-3">
             <form [formGroup]="bankAccountForm">
 
-                <input class="form-control w-100 p-4 "
-                       id="iban-holder"
-                       formControlName="iban"
-                       name=""
-                       placeholder="IBAN"
+                <input class="form-control w-100 p-4" id="iban-holder"
+                       formControlName="iban" placeholder="IBAN"
                        type="text">
-                <div *ngIf="bankAccountForm.dirty && bankAccountForm.controls['iban'].invalid"
-                     class="alert alert-danger">
-                    <div *ngIf="bankAccountForm.controls['iban'].errors.required">IBAN is required.</div>
-                    <div *ngIf="bankAccountForm.controls['iban'].errors.cannotContainSpace">IBAN can not contain
-                        space.
-                    </div>
-                </div>
 
                 <select class="form-control mt-3 p-2  bank-code-picker"
-                        data-live-search="true"
-                        id="bankcode-holder"
+                        data-live-search="true" id="bankcode-holder"
                         formControlName="bankCode"
-                        name=""
                         placeholder="SWIFT/BIC (Optional)"
                         type="text">
                     <option *ngFor="let bankCode of bankCodes; let i = index" value="{{ bankCode.swift_code }}">
@@ -38,18 +26,9 @@
                     </option>
                 </select>
 
-                <input class="form-control mt-3 p-4"
-                       id="alias-holder"
+                <input class="form-control mt-3 p-4" id="alias-holder"
                        formControlName="bankAccountAlias"
-                       name=""
-                       placeholder="Bank account alias"
-                       type="text">
-                <div *ngIf="bankAccountForm.dirty && bankAccountForm.controls['bankAccountAlias'].invalid"
-                     class="alert alert-danger">
-                    <div *ngIf="bankAccountForm.controls['bankAccountAlias'].errors.required">Bank account alias is
-                        required.
-                    </div>
-                </div>
+                       placeholder="Bank account alias" type="text">
             </form>
         </div>
         <div class="col-md-8"></div>

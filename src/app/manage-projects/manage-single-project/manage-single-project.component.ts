@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import * as Uppy from 'uppy';
 import swal from 'sweetalert2';
 import { ActivatedRoute } from '@angular/router';

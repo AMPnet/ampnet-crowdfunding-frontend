@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BackendHttpClient } from '../backend-http-client.service';
-import { PageableProjectsResponse, Project } from './project.service';
-import { Wallet } from '../wallet/wallet-cooperative/wallet-cooperative-wallet.service';
+import { Project } from './project.service';
 
 @Injectable({
     providedIn: 'root'

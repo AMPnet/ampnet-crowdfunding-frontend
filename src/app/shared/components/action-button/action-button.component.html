@@ -1,0 +1,11 @@
+<button class="{{ buttonClass }}" [disabled]="disabled || loading" type="submit">
+    <div *ngIf="!loading">
+        <i class="mr-2 {{ faIcon ? 'fas' : '' }} {{ faIcon }}" *ngIf="!loading"></i>
+        <span>{{ text }}</span>
+    </div>
+
+    <div *ngIf="loading" class="loading-text">
+        <app-spinner type="inline" color="white"></app-spinner>
+        <span>{{ loadingText }}</span>
+    </div>
+</button>

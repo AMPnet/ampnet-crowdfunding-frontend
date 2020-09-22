@@ -6,8 +6,10 @@
             <div class="explainer-mini text-uppercase">
                 Withdrawal
             </div>
-            <input class="w-100 mt-3 py-4 form-control  p-4" id="withdraw-amount"
-                   name="" placeholder="Enter withdrawal amount" type="number">
+
+            <app-money-input-field
+                    placeholder="Enter withdrawal amount" [(realValue)]="withdrawAmount">
+            </app-money-input-field>
 
             <div class="explainer-mini text-uppercase mt-4">
                 Choose bank account

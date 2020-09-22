@@ -1,148 +1,76 @@
-import { Component, OnInit } from '@angular/core';
-import numeral from 'numeral';
-import { WalletService } from '../shared/services/wallet/wallet.service';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { WalletDetailsWithState, WalletService } from '../shared/services/wallet/wallet.service';
 import { displayBackendError } from '../utilities/error-handler';
-import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { Project, ProjectService } from '../shared/services/project/project.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import {
-    autonumericCurrency,
-    baseCurrencyUnitToCents,
-    centsToBaseCurrencyUnit,
-    prettyCurrency,
-    stripCurrencyData
-} from '../utilities/currency-util';
-import { WalletDetails } from '../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { combineLatest, EMPTY, Observable } from 'rxjs';
+import { catchError, map, shareReplay, take } from 'rxjs/operators';
 
 declare var $: any;
 
 @Component({
     selector: 'app-invest',
     templateUrl: './invest.component.html',
-    styleUrls: ['./invest.component.css']
+    styleUrls: ['./invest.component.css'],
+    encapsulation: ViewEncapsulation.None
 })
 export class InvestComponent implements OnInit {
-    inputValue: string;
+    wallet$: Observable<WalletDetailsWithState>;
+    project$: Observable<Project>;
 
-    yearlyReturn: string;
-    projectStake: string;
-    breakevenPeriod: string;
-    wallet: WalletDetails;
-    project: Project;
-    expectedROI: number;
-
-    investmentOutOfBoundsWarningMessage = '';
-
-    INVEST_LOW_MSG = '<i class="fas fa-exclamation-triangle mr-3"></i><b>Investment amount too low</b>. The minimum investment is ';
-    INVEST_HIGH_MSG = '<i class="fas fa-exclamation-triangle mr-3"></i><b>Investment amount too high</b>. The maximum investment is ';
-    WALLET_LOW_MSG = '<i class="fas fa-exclamation-triangle mr-3"></i>' +
-        '<b>You don\'t have enough funds on your wallet</b>. Please deposit funds in the wallet tab.';
+    investForm: FormGroup;
 
     constructor(private walletService: WalletService,
                 private projectService: ProjectService,
                 private route: ActivatedRoute,
+                private fb: FormBuilder,
                 private router: Router) {
+        const projectID = this.route.snapshot.params.id;
+        this.project$ = this.projectService.getProject(projectID).pipe(this.handleError, shareReplay(1));
+        this.wallet$ = this.walletService.wallet$.pipe(this.handleError, take(1));
     }
+
 
     ngOnInit() {
-        this.expectedROI = 10.5;
-        this.getWalletBalance();
-    }
-
-    getWalletBalance() {
-        SpinnerUtil.showSpinner();
-        this.walletService.getUserWallet().subscribe(res => {
-            if (res === null) {
-                return;
-            }
-            this.wallet = res;
-            this.wallet.currency = prettyCurrency(res.currency);
-            this.wallet.balance = numeral(centsToBaseCurrencyUnit(res.balance)).format('0,0');
-
-            setTimeout(() => {
-                autonumericCurrency('#amount-input');
-                SpinnerUtil.hideSpinner();
-            }, 200);
-            this.getProject();
-        }, err => {
-            SpinnerUtil.hideSpinner();
-            displayBackendError(err);
+        this.investForm = this.fb.group({
+            amount: ['', [Validators.required], this.validAmount.bind(this)]
         });
     }
 
-    getProject() {
-        const id = this.route.snapshot.params.id;
-        SpinnerUtil.showSpinner();
-        this.projectService.getProject(id).subscribe(res => {
-            res.currency = prettyCurrency(res.currency);
-            this.project = res;
+    private validAmount(control: AbstractControl): Observable<ValidationErrors> {
+        return combineLatest([this.wallet$, this.project$]).pipe(
+            map(([wallet, project]) => {
+                const amount = control.value;
 
-            this.project.min_per_user = centsToBaseCurrencyUnit(res.min_per_user);
-            this.project.max_per_user = centsToBaseCurrencyUnit(res.max_per_user);
-
-            this.investmentOutOfBoundsWarningMessage
-                = this.INVEST_LOW_MSG + res.currency + this.project.min_per_user + '. ';
-            SpinnerUtil.hideSpinner();
-        }, err => {
-            SpinnerUtil.hideSpinner();
-            displayBackendError(err);
-        });
+                if (amount < project.min_per_user) {
+                    return {amountBelowMin: true};
+                } else if (amount > project.max_per_user) {
+                    return {amountAboveMax: true};
+                } else if (amount > project.expected_funding) {
+                    return {amountAboveExpFunding: true};
+                } else if (amount > wallet.wallet.balance) {
+                    return {amountAboveBalance: true};
+                } else {
+                    return null;
+                }
+            })
+        );
     }
 
     investButtonClicked() {
         this.router.navigate(['./',
-                baseCurrencyUnitToCents(Number(stripCurrencyData(this.inputValue))), 'verify_sign'],
+                this.investForm.controls['amount'].value,
+                'verify_sign'],
             {relativeTo: this.route});
     }
 
-    inputChanged(event: any) {
-        let inputValue = parseInt(stripCurrencyData(this.inputValue), 10);
-
-        if (inputValue === NaN) {
-            inputValue = 0;
-        }
-
-        // this.inputValue = numeral(inputValue).format('0,0,0');
-        this.yearlyReturn = numeral(this.calculateYearlyReturn(inputValue)).format('0,0.00');
-        this.projectStake = this.calculateProjectStake(inputValue)
-            .toFixed(4) + '%';
-        this.breakevenPeriod = numeral(this.calculateTotalLifetimeReturn(inputValue)).format('0,0');
-
-        if (inputValue < this.project.min_per_user) {
-            this.investmentOutOfBoundsWarningMessage =
-                this.INVEST_LOW_MSG + this.project.currency + this.project.min_per_user + '. ';
-        } else if (inputValue > this.project.max_per_user) {
-            this.investmentOutOfBoundsWarningMessage =
-                this.INVEST_HIGH_MSG + this.project.currency + this.project.max_per_user + '. ';
-        } else {
-            this.investmentOutOfBoundsWarningMessage = '';
-        }
-
-        if (inputValue > this.wallet.balance) {
-            let padding = '';
-            if (this.investmentOutOfBoundsWarningMessage.length > 0) {
-                padding = '<br><br>';
-            }
-            this.investmentOutOfBoundsWarningMessage += (padding + (this.WALLET_LOW_MSG));
-        }
-
-        const inputAmount = $('#amount-input');
-        const inputAmountContent: String = inputAmount.val();
-
+    private handleError<T>(source: Observable<T>) {
+        return source.pipe(
+            catchError(err => {
+                displayBackendError(err);
+                return EMPTY;
+            })
+        );
     }
-
-    calculateProjectStake(investment: number): number {
-        const total = this.project.expected_funding;
-        return (investment / total) * 100;
-    }
-
-    calculateYearlyReturn(investment: number): number {
-        const maxReturn = this.expectedROI;
-        return investment * (maxReturn / 100);
-    }
-
-    calculateTotalLifetimeReturn(investment): number {
-        return this.calculateYearlyReturn(investment) * 25;
-    }
-
 }

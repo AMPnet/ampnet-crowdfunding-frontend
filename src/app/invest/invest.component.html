@@ -1,52 +1,77 @@
-<div *ngIf="(wallet !== undefined) && (project !== undefined)" class="container root-content-container">
-    <div class="row">
-        <p class="col-12 mt-3 mb-lg-4 ml-lg-3 page-title text-uppercase">
-            <i class="fas fa-long-arrow-alt-left mr-3"></i>
-            Invest in
-        </p>
-        <h2 class="col-12 mb-3 mt-3 text-uppercase project-title">
-            {{ project.name }}
-            <div class="dropdown-divider mt-lg-3"></div>
-        </h2>
+<div *ngIf="{
+    wallet: wallet$ | async,
+    project: project$ | async
+} as states" class="container root-content-container">
+    <ng-container *ngIf="states.wallet !== null && states.project !== null else spinner">
+        <div class="row">
+            <p class="col-12 mt-3 mb-lg-4 ml-lg-3 page-title text-uppercase">
+                <i class="fas fa-long-arrow-alt-left mr-3"></i>
+                Invest in
+            </p>
+            <h2 class="col-12 mb-3 mt-3 text-uppercase project-title">
+                {{ states.project.name }}
+                <div class="dropdown-divider mt-lg-3"></div>
+            </h2>
 
-        <div class="col-12 mb-2">
-            <div *ngIf="investmentOutOfBoundsWarningMessage.length > 0"
-                [innerHTML]="investmentOutOfBoundsWarningMessage"
-                class="alert alert-danger mt-3">
-           </div>
-        </div>
+            <div class="col-12 d-lg-flex align-items-center">
+                <div class="col-lg-6">
+                    <div class="invest-text text-uppercase">
+                        <p>I want to invest</p>
 
-        <div class="col-12 d-lg-flex align-items-center">
-            <div class="col-lg-6">
-                <div class="invest-text text-uppercase">
-                    <p>I want to invest</p>
-    
-                    <input (keyup)="inputChanged($event)"
-                           [(ngModel)]="inputValue"
-                           class="form-control mb-2" id="amount-input"
-                           placeholder="€0.00" style="font-size: 16px;">
-                        
+                        <app-money-input-field
+                                placeholder="Enter invest amount"
+                                [control]="investForm.get('amount')">
+                        </app-money-input-field>
+                    </div>
+
+                    <div class="min-investment">
+                        <p>{{ states.project.min_per_user | currencyDefault }} Min investment</p>
+                    </div>
                 </div>
-    
-                <div class="min-investment">
-                    <p>{{ project.currency }}{{ project.min_per_user }} Min investment</p>
+
+                <div class="col-lg-4 invest-button mt-4 mt-lg-0">
+                    <button (click)="investButtonClicked()"
+                            [disabled]="!investForm.valid"
+                            type="submit"
+                            class="btn btn-primary py-3 w-100 mb-2">
+                        <i class="fas fa-chart-pie mr-2"></i>
+                        Invest
+                    </button>
+                </div>
+
+                <div class="col-lg-2 invest-text-right mt-4 mt-lg-0">
+                    <p class="text-uppercase" style="font-size: 12px;">Available funds</p>
+                    <h1 class="mb-4">{{ states.wallet.wallet.balance | currencyDefault }}</h1>
+                    <a routerLink="/dash/wallet">Open wallet</a>
                 </div>
             </div>
-    
-            <div class="col-lg-4 invest-button mt-4 mt-lg-0">
-                <button (click)="investButtonClicked()"
-                        [disabled]="investmentOutOfBoundsWarningMessage.length > 0"
-                        class="btn btn-primary py-3 w-100 mb-2">
-                    <i class="fas fa-chart-pie mr-2"></i>
-                    Invest
-                </button>
-            </div>
-            
-            <div class="col-lg-2 invest-text-right mt-4 mt-lg-0">
-                <p class="text-uppercase" style="font-size: 12px;">Available funds</p>
-                <h1 class="mb-4">{{ wallet.currency }}{{ wallet.balance }}.00</h1>
-                <a routerLink="/dash/wallet">Open wallet</a>
+
+            <div class="col-12 mb-2" *ngIf="investForm.dirty && investForm.invalid">
+                <div *ngIf="investForm.get('amount').errors?.amountBelowMin" class="alert alert-danger mt-3">
+                    <i class="fas fa-exclamation-triangle mr-3"></i><b>Investment amount too low</b>.
+                    The minimum investment is {{ states.project.min_per_user | currencyDefault }}
+                </div>
+
+                <div *ngIf="investForm.get('amount').errors?.amountAboveMax" class="alert alert-danger mt-3">
+                    <i class="fas fa-exclamation-triangle mr-3"></i><b>Investment amount too high</b>.
+                    The maximum investment is {{ states.project.max_per_user | currencyDefault }}
+                </div>
+
+                <div *ngIf="investForm.get('amount').errors?.amountAboveExpFunding" class="alert alert-danger mt-3">
+                    <i class="fas fa-exclamation-triangle mr-3"></i><b>Investment amount too high</b>.
+                    The expected funding for this project is {{ states.project.expected_funding | currencyDefault }}
+                </div>
+
+                <div *ngIf="investForm.get('amount').errors?.amountAboveBalance" class="alert alert-danger mt-3">
+                    <i class="fas fa-exclamation-triangle mr-3"></i><b>You don't have enough funds on your
+                    wallet</b>.
+                    Please deposit funds in the wallet tab.
+                </div>
             </div>
         </div>
-    </div>
+    </ng-container>
 </div>
+
+<ng-template #spinner>
+    <app-spinner type="overlay"></app-spinner>
+</ng-template>

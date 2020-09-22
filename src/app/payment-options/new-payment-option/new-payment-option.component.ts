@@ -1,10 +1,11 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { PaymentService } from '../../shared/services/payment.service';
-import { displayBackendError } from 'src/app/utilities/error-handler';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { BankCodeModel } from './bank-code-model';
 import 'bootstrap-select';
+import { catchError, switchMap } from 'rxjs/operators';
+import { displayBackendError } from '../../utilities/error-handler';
+import { of } from 'rxjs';
 
 declare var $: any;
 
@@ -35,7 +36,6 @@ export class NewPaymentOptionComponent implements OnInit, AfterViewInit {
 
     ngAfterViewInit() {
         $('select').selectpicker();
-
     }
 
     checkStatusAndSetText() {
@@ -51,14 +51,13 @@ export class NewPaymentOptionComponent implements OnInit, AfterViewInit {
         }
         const alias: string = (<string>$('#alias-holder').val());
 
-        SpinnerUtil.showSpinner();
-        this.paymentService.createBankAccount(iban, bankCode, alias).subscribe(res => {
-            SpinnerUtil.hideSpinner();
-            this.router.navigate(['dash', 'payment_options']);
-        }, err => {
-            SpinnerUtil.hideSpinner();
-            displayBackendError(err);
-        });
+        return this.paymentService.createBankAccount(iban, bankCode, alias).pipe(
+            switchMap(() => this.router.navigate(['dash', 'payment_options'])),
+            catchError(err => {
+                displayBackendError(err);
+                return of(null);
+            })
+        );
     }
 
 }

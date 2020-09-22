@@ -3,7 +3,6 @@ import 'bootstrap-select';
 import { Portfolio, PortfolioService } from '../shared/services/wallet/portfolio.service';
 import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
-import numeral from 'numeral';
 
 @Component({
     selector: 'app-exchange',

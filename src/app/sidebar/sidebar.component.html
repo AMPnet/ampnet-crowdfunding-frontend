@@ -4,8 +4,8 @@
     </div>
 
     <ng-container *ngIf="{
-        user: userChange$ | async,
-        walletInitialized: walletInitialized$ | async
+        user: user$ | async,
+        wallet: wallet$ | async
     } as states">
         <ul class="list-unstyled components" id="main-menu">
             <p class="menu-header ml-4 mb-3 mt-3 ">MENU</p>
@@ -14,7 +14,7 @@
                 <span>Offers</span>
             </li>
             <li routerLink="my_portfolio" routerLinkActive="side-active"
-                [class.unverified-user-disabled]="!states.user?.verified">
+                [class.unverified-user-disabled]="!states.user?.verified || !isWalletReady(states.wallet)">
                 <i class="menu-icon fas fa-user"></i>
                 <span>My Portfolio</span>
             </li>
@@ -24,12 +24,12 @@
                 <span>Wallet</span>
             </li>
             <li routerLink="manage_groups" routerLinkActive="side-active"
-                [class.unverified-user-disabled]="!states.user?.verified">
+                [class.unverified-user-disabled]="!states.user?.verified || !isWalletReady(states.wallet)">
                 <i class="menu-icon fas fa-layer-group"></i>
                 <span>Investment groups</span>
             </li>
             <li routerLink="exchange" routerLinkActive="side-active"
-                [class.unverified-user-disabled]="!states.user?.verified">
+                [class.unverified-user-disabled]="!states.user?.verified || !isWalletReady(states.wallet)">
                 <i class="menu-icon fas fa-store"></i>
                 <span>Project market</span>
             </li>

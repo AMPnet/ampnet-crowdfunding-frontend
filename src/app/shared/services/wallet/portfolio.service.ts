@@ -34,6 +34,7 @@ export interface PortfolioStats {
     investments: number;
     earnings: number;
     date_of_first_investment: Date;
+    roi?: number;
 }
 
 export interface PortfolioResponse {

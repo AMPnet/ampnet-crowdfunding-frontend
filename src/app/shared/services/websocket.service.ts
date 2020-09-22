@@ -20,7 +20,7 @@ export class WebsocketService {
     walletNotifier(walletAddress: string) {
         return this.subject.multiplex(
             () => <WalletNotifierInput>({wallet: walletAddress}), null,
-            (data: WalletNotifierOutput) => data.wallet === walletAddress)
+            (data: WalletNotifierOutput) => data?.wallet === walletAddress)
             .pipe(retry());
     }
 }

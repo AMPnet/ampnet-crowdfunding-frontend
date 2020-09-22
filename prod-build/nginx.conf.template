@@ -37,8 +37,6 @@ http {
             proxy_pass ${BACKEND_URL};
         }
 
-
-
         location / {
             try_files $uri $uri/ /index.html;
         }

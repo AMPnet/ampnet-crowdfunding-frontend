@@ -62,7 +62,7 @@ export class SignUpComponent implements OnInit {
                 this.loginService.socialLogin(GoogleLoginProvider.PROVIDER_ID, SocialRes.authToken)
                     .subscribe(_ => {
                         SpinnerUtil.hideSpinner();
-                        this.router.navigate(['/dash']);
+                        this.router.navigate(['/dash/offers']);
                     }, displayBackendError);
             }, err => {
                 SpinnerUtil.hideSpinner();
@@ -82,7 +82,7 @@ export class SignUpComponent implements OnInit {
             switchMap(_ => this.loginService.emailLogin(user.email, user.password))
         ).subscribe(() => {
             SpinnerUtil.hideSpinner();
-            this.router.navigate(['/dash'])
+            this.router.navigate(['/dash/offers'])
                 .then(() => swal('', 'Sign-up successful!', 'success'));
         }, hideSpinnerAndDisplayError);
     }

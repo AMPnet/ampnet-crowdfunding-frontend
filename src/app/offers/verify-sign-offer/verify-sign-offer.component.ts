@@ -19,6 +19,7 @@ export class VerifySignOfferComponent implements OnInit {
     project: Project;
 
     constructor(private route: ActivatedRoute,
+                private router: Router,
                 private projectService: ProjectService,
                 private walletService: WalletService,
                 private broadcastService: BroadcastService,
@@ -71,7 +72,10 @@ export class VerifySignOfferComponent implements OnInit {
             title: 'Transaction signed',
             text: 'Transaction is being processed...',
             footer: 'Check your transaction status<a href="/dash/wallet">&nbsp;here</a>'
-        }).then(() => this.router.navigate(['/dash/wallet']));
+        }).then(() => {
+            this.walletService.clearAndRefreshWallet();
+            this.router.navigate(['/dash/wallet']);
+        });
         // This is a hack to fix bug in Sweet Alert lib -> always displays dropdown
         // TODO: This is deprecated and needs to be fixed.
         swal.getContent().getElementsByClassName('swal2-select').item(0).remove();

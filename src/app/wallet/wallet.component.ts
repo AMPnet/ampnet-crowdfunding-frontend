@@ -1,17 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { displayBackendError } from '../utilities/error-handler';
 import { ArkaneConnect, SecretType } from '@arkane-network/arkane-connect';
 import { TransactionState, TransactionType, UserTransaction, WalletService, WalletState } from '../shared/services/wallet/wallet.service';
 import { BehaviorSubject, timer } from 'rxjs';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { map, switchMap, take, tap } from 'rxjs/operators';
+import { WebsocketService } from '../shared/services/websocket.service';
 
 @Component({
     selector: 'app-wallet',
     templateUrl: './wallet.component.html',
     styleUrls: ['./wallet.component.css']
 })
-export class WalletComponent {
+export class WalletComponent implements OnDestroy {
     arkaneConnect: ArkaneConnect;
 
     tablePage = 1;
@@ -53,7 +54,16 @@ export class WalletComponent {
         })
     );
 
-    constructor(private walletService: WalletService) {
+    middlewareNotifier$ = this.wallet$.pipe(take(1), switchMap(wallet => {
+        return this.websocketService.walletNotifier(wallet.wallet.activation_data);
+    })).subscribe(() => this.refreshTransactionHistorySubject.next(null));
+
+    constructor(private walletService: WalletService,
+                private websocketService: WebsocketService) {
+    }
+
+    ngOnDestroy() {
+        this.middlewareNotifier$.unsubscribe();
     }
 
     setUpArkane() {

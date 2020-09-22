@@ -13,6 +13,16 @@ http {
         index index.html index.htm;
         include /etc/nginx/mime.types;
 
+        location /wees {
+            # WebSocket support (nginx 1.4)
+            proxy_http_version 1.1;
+            proxy_set_header Host $host;
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection "upgrade";
+
+            proxy_pass "https://echo.websocket.org";
+        }
+
         location /api {
             add_header 'Access-Control-Allow-Origin' '*';
             add_header 'Access-Control-Allow-Credentials' 'true';
@@ -32,6 +42,8 @@ http {
 
             proxy_pass ${BACKEND_URL};
         }
+
+
 
         location / {
             try_files $uri $uri/ /index.html;

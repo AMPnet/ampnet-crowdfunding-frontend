@@ -140,9 +140,17 @@
         <ul class="list-unstyled components app-version" id="main-menu">
             <li>{{ appVersion }}</li>
         </ul>
+
+        <ng-template #ToolTipNotVerified>
+            <div *ngIf="!isUserVerified(states.user)">
+                <p>Profile not verified. Go to User Profile screen to finish onboarding process.</p>
+            </div>
+            <div *ngIf="isUserVerified(states.user) && !isWalletInitialized(states.wallet)">
+                <p>In order to manage funds, you need to have your wallet initialized.</p>
+            </div>
+            <div *ngIf="isUserVerified(states.user) && isWalletInitialized(states.wallet) && !isWalletReady(states.wallet)">
+                <p>Please wait for the administrator to verified your wallet.</p>
+            </div>
+        </ng-template>
     </ng-container>
 </div>
-
-<ng-template #ToolTipNotVerified>
-    <div>Profile not verified. Go to User Profile screen to finish onboarding process.</div>
-</ng-template>

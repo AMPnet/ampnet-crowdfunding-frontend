@@ -9,7 +9,6 @@ import {
 import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
 import { BroadcastService } from 'src/app/shared/services/broadcast.service';
 import swal from 'sweetalert2';
-import { centsToBaseCurrencyUnit } from '../../utilities/currency-util';
 
 declare var $: any;
 

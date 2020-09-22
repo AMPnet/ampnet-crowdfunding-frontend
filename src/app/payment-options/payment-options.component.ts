@@ -1,45 +1,38 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { PaymentService, UserBankAccount } from '../shared/services/payment.service';
-import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
-import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { Router } from '@angular/router';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 
 
 @Component({
     selector: 'app-payment-options',
     templateUrl: './payment-options.component.html',
-    styleUrls: ['./payment-options.component.css']
+    styleUrls: [
+        './../app.component.css',
+        './payment-options.component.css'
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PaymentOptionsComponent implements OnInit {
-    banks: UserBankAccount[];
+export class PaymentOptionsComponent {
+    private refreshBankAccountsSubject = new BehaviorSubject<void>(null);
+
+    bankAccounts$: Observable<UserBankAccount[]> = this.refreshBankAccountsSubject.pipe(
+        switchMap(_ => this.paymentService.getMyBankAccounts()),
+        map(res => res.bank_accounts)
+    );
 
     constructor(private paymentService: PaymentService,
                 private router: Router) {
     }
 
-    ngOnInit() {
-        this.getBankAccounts();
-    }
-
-    getBankAccounts() {
-        SpinnerUtil.showSpinner();
-        this.paymentService.getMyBankAccounts().subscribe(res => {
-            SpinnerUtil.hideSpinner();
-            if (res.bank_accounts.length === 0) {
-                this.router.navigate(['dash', 'payment_options', 'new'], {
-                    queryParams: {
-                        'status': 'empty'
-                    }
-                });
-            }
-            this.banks = res.bank_accounts;
-        }, hideSpinnerAndDisplayError);
+    toNewBankAccount() {
+        return this.router.navigate(['/dash/payment_options/new']);
     }
 
     deleteBankAccountClicked(id: number) {
-        SpinnerUtil.showSpinner();
-        this.paymentService.deleteBankAccount(id).subscribe(res => {
-            this.getBankAccounts();
-        }, hideSpinnerAndDisplayError);
+        this.paymentService.deleteBankAccount(id).subscribe(_ => {
+            this.refreshBankAccountsSubject.next();
+        });
     }
 }

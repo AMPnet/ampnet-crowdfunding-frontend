@@ -23,7 +23,7 @@ export class PlatformBankAccountComponent implements OnInit {
 
     getBankAccounts() {
         SpinnerUtil.showSpinner();
-        this.service.getBankAccounts().subscribe(res => {
+        this.service.bankAccounts$.subscribe(res => {
             SpinnerUtil.hideSpinner();
             if (res.bank_accounts.length === 0) {
                 this.router.navigate(['dash', 'admin', 'platform_bank_account', 'new'], {

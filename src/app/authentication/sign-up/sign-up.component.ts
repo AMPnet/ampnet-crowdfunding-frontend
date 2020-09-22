@@ -74,7 +74,7 @@ export class SignUpComponent implements OnInit {
             switchMap(_ => this.loginService.emailLogin(user.email, user.password))
         ).subscribe(() => {
             SpinnerUtil.hideSpinner();
-            this.router.navigate(['/dash'])
+            this.router.navigate(['/dash/offers'])
                 .then(() => swal('', 'Sign-up successful!', 'success'));
         }, hideSpinnerAndDisplayError);
     }

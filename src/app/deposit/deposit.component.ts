@@ -55,7 +55,7 @@ export class DepositComponent implements OnInit {
     }
 
     getMasterIban() {
-        this.bankAccountService.getBankAccounts().subscribe(res => {
+        this.bankAccountService.bankAccounts$.subscribe(res => {
             this.masterIban = res.bank_accounts[0].iban;
         }, err => {
             hideSpinnerAndDisplayError(err);

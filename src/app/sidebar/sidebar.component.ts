@@ -3,7 +3,7 @@ import { NavbarComponent } from '../navbar/navbar.component';
 import { Router } from '@angular/router';
 import * as $ from 'jquery';
 import { UserService } from '../shared/services/user/user.service';
-import { UserRole } from '../shared/services/user/signup.service';
+import { User, UserRole } from '../shared/services/user/signup.service';
 import { WalletDetailsWithState, WalletService, WalletState } from '../shared/services/wallet/wallet.service';
 import { version } from '../../../package.json';
 import { UserAuthService } from '../shared/services/user/user-auth.service';
@@ -40,5 +40,13 @@ export class SidebarComponent implements AfterViewInit {
 
     isWalletReady(wallet: WalletDetailsWithState) {
         return !wallet ? false : wallet.state === WalletState.READY;
+    }
+
+    isUserVerified(user: User): boolean {
+        return !user ? true : user.verified;
+    }
+
+    isWalletInitialized(wallet: WalletDetailsWithState) {
+        return !wallet ? true : wallet.state !== WalletState.EMPTY;
     }
 }

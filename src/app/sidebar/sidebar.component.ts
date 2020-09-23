@@ -38,8 +38,12 @@ export class SidebarComponent implements AfterViewInit {
         this.router.navigate(['']);
     }
 
-    isWalletReady(wallet: WalletDetailsWithState) {
+    isWalletEagerReady(wallet: WalletDetailsWithState) {
         return !wallet ? false : wallet.state === WalletState.READY;
+    }
+
+    isWalletLazyReady(wallet: WalletDetailsWithState) {
+        return !wallet ? true : wallet.state === WalletState.READY;
     }
 
     isUserVerified(user: User): boolean {

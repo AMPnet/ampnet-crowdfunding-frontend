@@ -136,6 +136,10 @@ export class OfferDetailsComponent implements OnInit {
         return uriComponent ? encodeURIComponent(url) : encodeURI(url);
     }
 
+    goToInvest(projectUUID: string) {
+        this.router.navigate([`/dash/offers/${projectUUID}/invest`]);
+    }
+
     private handleError<T>(source: Observable<T>) {
         return source.pipe(
             catchError(err => {

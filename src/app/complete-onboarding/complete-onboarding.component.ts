@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { UserStatusStorage } from '../user-status-storage';
+import { UserService } from '../shared/services/user/user.service';
 
+// TODO: see if this component is even used.
 @Component({
     selector: 'app-complete-onboarding',
     templateUrl: './complete-onboarding.component.html',
@@ -10,11 +11,12 @@ export class CompleteOnboardingComponent implements OnInit {
     isVerified: boolean;
     hasWallet: boolean;
 
-    constructor() {
+    constructor(private userService: UserService) {
     }
 
     ngOnInit() {
-        this.isVerified = UserStatusStorage.personalData.verified;
-        this.hasWallet = UserStatusStorage.walletData !== undefined;
+        this.userService.user$.subscribe(user => {
+            this.isVerified = user.verified;
+        });
     }
 }

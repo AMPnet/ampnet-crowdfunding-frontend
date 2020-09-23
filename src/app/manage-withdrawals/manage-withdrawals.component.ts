@@ -5,7 +5,6 @@ import {
     UserWithdraw,
     WalletCooperativeWithdrawService
 } from '../shared/services/wallet/wallet-cooperative/wallet-cooperative-withdraw.service';
-import { centsToBaseCurrencyUnit } from '../utilities/currency-util';
 
 @Component({
     selector: 'app-manage-withdrawals',

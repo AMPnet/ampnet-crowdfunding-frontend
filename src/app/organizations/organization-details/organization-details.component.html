@@ -49,23 +49,25 @@
                 </button>
             </div>
 
-            <div class="col-md-12 mt-4" *ngIf="organization !== undefined">
-                <app-manage-projects [groupID]="organization.uuid"></app-manage-projects>
-            </div>
-            <div class="col-md-12 mt-4">
-                <div class="explainer-mini mb-3">Manage users</div>
-                <ul class="list-group">
-                    <li *ngFor="let member of orgMembers" class="list-group-item">
-                        <span class="float-left">{{ member.first_name }} {{ member.last_name }}</span>
-                        <span class="float-right" (click)="deleteMember(organization.uuid, member.uuid)">
-                            <i class="fas fa-trash cursor-pointer"></i></span>
-                    </li>
-                </ul>
-                <div *ngIf="(orgMembers !== undefined) && (orgMembers.length ===  0)"
-                     class="w-100 pt-3 pb-3 text-center explainer-mini">
-                    You are the only member of {{ organization.name }}
+            <ng-container *ngIf="organization !== undefined">
+                <div class="col-md-12 mt-4">
+                    <app-manage-projects [groupID]="organization.uuid"></app-manage-projects>
                 </div>
-            </div>
+                <div class="col-md-12 mt-4">
+                    <div class="explainer-mini mb-3">Manage users</div>
+                    <ul class="list-group">
+                        <li *ngFor="let member of orgMembers" class="list-group-item">
+                            <span class="float-left">{{ member.first_name }} {{ member.last_name }}</span>
+                            <span class="float-right" (click)="deleteMember(organization.uuid, member.uuid)">
+                            <i class="fas fa-trash cursor-pointer"></i></span>
+                        </li>
+                    </ul>
+                    <div *ngIf="(orgMembers !== undefined) && (orgMembers.length ===  0)"
+                         class="w-100 pt-3 pb-3 text-center explainer-mini">
+                        You are the only member of {{ organization.name }}
+                    </div>
+                </div>
+            </ng-container>
         </div>
     </div>
 </div>

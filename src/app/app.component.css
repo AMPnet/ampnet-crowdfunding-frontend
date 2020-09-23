@@ -1,0 +1,27 @@
+h1.app-page-title {
+    margin-bottom: 3rem;
+    font-size: 36px;
+    position: relative;
+}
+
+h1.app-page-title:before {
+    content: "";
+    display: inline-block;
+    width: 35px;
+    height: 3px;
+    margin-right: 10px;
+    background-color: #111111;
+    vertical-align: middle;
+}
+
+@media (max-width: 800px) {
+    h1.app-page-title {
+        font-size: 12px;
+        margin: 0 0 1rem 0;
+    }
+
+    h1.app-page-title:before {
+        height: 1px;
+        width: 10px;
+    }
+}

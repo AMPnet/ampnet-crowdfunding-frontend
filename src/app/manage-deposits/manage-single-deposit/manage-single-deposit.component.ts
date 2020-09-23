@@ -1,9 +1,8 @@
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import * as Uppy from 'uppy';
 import { ActivatedRoute, Router } from '@angular/router';
 import { hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
-import * as numeral from 'numeral';
 import {
     DepositSearchResponse,
     WalletCooperativeDepositService
@@ -11,7 +10,6 @@ import {
 import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
 import { BroadcastService } from 'src/app/shared/services/broadcast.service';
 import swal from 'sweetalert2';
-import { autonumericCurrency, baseCurrencyUnitToCents, stripCurrencyData } from 'src/app/utilities/currency-util';
 import { BackendHttpClient } from '../../shared/services/backend-http-client.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ManageSingleDepositModalComponent } from './manage-single-deposit-modal/manage-single-deposit-modal.component';
@@ -21,10 +19,10 @@ declare var $: any;
 @Component({
     selector: 'app-manage-single-deposit',
     templateUrl: './manage-single-deposit.component.html',
-    styleUrls: ['./manage-single-deposit.component.css']
+    styleUrls: ['./manage-single-deposit.component.css'],
 })
 export class ManageSingleDepositComponent implements OnInit, AfterViewInit {
-    @Input() depositAmount;
+    amount = 0;
     confirmationModal: BsModalRef;
     depositModel: DepositSearchResponse;
     paymentUppy: Uppy.Core.Uppy;
@@ -45,21 +43,21 @@ export class ManageSingleDepositComponent implements OnInit, AfterViewInit {
         this.paymentUppy = Uppy.Core();
 
         this.paymentUppy.use(Uppy.Dashboard, {
-            id: 'reciept-payment',
-            target: document.getElementById('payment-reciept-upload-target'),
+            id: 'receipt-payment',
+            target: document.getElementById('payment-receipt-upload-target'),
             inline: true,
             height: 300,
             width: $('.root-content-container').width(),
-            note: 'Upload payment reciept for deposit',
+            note: 'Upload payment receipt for deposit',
             hideUploadButton: true,
         });
-        autonumericCurrency('#deposit-amount');
     }
 
     generateSignerAndSign() {
         SpinnerUtil.showSpinner();
 
         this.depositCooperativeService.generateDepositMintTx(this.depositModel.deposit.id).subscribe(async res => {
+            SpinnerUtil.hideSpinner();
             const arkaneConnect = new ArkaneConnect('AMPnet', {
                 environment: 'staging'
             });
@@ -87,7 +85,6 @@ export class ManageSingleDepositComponent implements OnInit, AfterViewInit {
         this.depositCooperativeService.getDeposit(id).subscribe(res => {
             SpinnerUtil.hideSpinner();
             this.depositModel = res;
-            this.depositModel.deposit.amount = numeral(this.depositModel.deposit.amount).format(',');
             if (this.depositModel.deposit.approved) {
                 this.generateSignerAndSign();
             }
@@ -97,15 +94,15 @@ export class ManageSingleDepositComponent implements OnInit, AfterViewInit {
     showConfirmModal() {
         this.confirmationModal = this.modalService.show(ManageSingleDepositModalComponent, {
             initialState: {
-                depositAmount: this.depositAmount
+                depositAmount: this.amount
             }
         });
-        const confirmationSub = this.confirmationModal.content.onSuccessfulConfirmation
+        const confirmationSub = this.confirmationModal.content.successfulConfirmation
             .subscribe(() => {
                 const depositApprovalURL = this.depositCooperativeService.generateDepositApprovalURL(
                     location.origin,
                     this.depositModel.deposit.id,
-                    baseCurrencyUnitToCents(Number(stripCurrencyData(this.depositAmount)))
+                    this.amount
                 );
 
                 this.paymentUppy.use(Uppy.XHRUpload, {

@@ -3,57 +3,40 @@
         <div class="col-md-12">
             <div class="explainer-mini mb-3">Deposit info</div>
         </div>
-        <div class="col-md-12">
-            <ng-container *ngIf="depositModel !== undefined">
-                <div class="card px-3">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <div class="explainer-mini">Name</div>
-                                <div>{{ depositModel?.user?.first_name }} {{ depositModel?.user?.last_name }}</div>
-                            </div>
-                            <div>
-                                <div class="explainer-mini">Date created</div>
-                                <div>{{ depositModel?.deposit?.created_at | date:'mediumDate' }}</div>
-                            </div>
-                            <div>
-                                <div class="explainer-mini">Reference</div>
-                                <div>{{ depositModel?.deposit?.reference }}</div>
-                            </div>
+        <div *ngIf="depositModel !== undefined" class="col-md-12">
+            <div class="card px-3">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <div class="explainer-mini">Name</div>
+                            <div>{{ depositModel.user.first_name }} {{ depositModel.user.last_name }}</div>
+                        </div>
+                        <div>
+                            <div class="explainer-mini">Date created</div>
+                            <div>{{ depositModel.deposit.created_at | date:'mediumDate' }}</div>
+                        </div>
+                        <div>
+                            <div class="explainer-mini">Reference</div>
+                            <div>{{ depositModel.deposit.reference }}</div>
                         </div>
                     </div>
                 </div>
-
-                <div *ngIf="depositModel.deposit.approved" class="d-flex justify-content-center mt-5 text-center">
-                    <div>
-                        <div class="mb-5 mt-3">
-                            <div class="explainer-mini">
-                                Mint amount
-                            </div>
-                            <div class="gray-text h1 mt-3">
-                                {{ depositModel.deposit.amount | currencyDefault }}
-                            </div>
-                            <div class="alert alert-danger mt-2 ">
-                                Verify the amount of currency minted for this deposit! This action cannot be reverted!
-                            </div>
-                        </div>
-                        <div class="explainer-mini">Scan the code to issue tokens to user</div>
-                        <canvas id="mint-deposit-code"></canvas>
-                    </div>
-                </div>
-            </ng-container>
-
-            <div class="explainer-mini mt-3 mb-2">
+            </div>
+            <div *ngIf="!depositModel.deposit.approved" class="explainer-mini mt-3 mb-2">
                 Deposit amount
             </div>
-            <input class=" px-3 w-100 form-control py-4" [(ngModel)]="depositAmount" id="deposit-amount">
+            <ng-container *ngIf="!depositModel.deposit.approved">
+                <app-money-input-field
+                        placeholder="Enter maximum investment per user"
+                        [(realValue)]="amount">
+                </app-money-input-field>
+            </ng-container>
         </div>
-
-        <div class="col-md-12 mt-3">
-            <div id="payment-reciept-upload-target"></div>
+        <div [hidden]="depositModel === undefined" class="col-md-12 mt-3">
+            <div id="payment-receipt-upload-target"></div>
             <button
                     class="btn btn-primary w-100 py-3 mt-3"
-                    [disabled]="!depositAmount"
+                    [disabled]="!amount"
                     (click)="showConfirmModal()"
                     data-toggle="modal">
                 <i class="fas fa-check-circle mr-2"></i>

@@ -1,7 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { autonumericCurrency } from '../../../utilities/currency-util';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
@@ -10,10 +9,8 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
     styleUrls: ['./manage-single-deposit-modal.component.css']
 })
 export class ManageSingleDepositModalComponent implements OnInit {
-    @Output() onSuccessfulConfirmation = new EventEmitter<void>();
-    origin: string;
-    depositId: string;
-    depositAmount: string;
+    @Output() successfulConfirmation = new EventEmitter<void>();
+    depositAmount: number;
 
     confirmForm: FormGroup;
 
@@ -23,18 +20,27 @@ export class ManageSingleDepositModalComponent implements OnInit {
     }
 
     ngOnInit() {
-        autonumericCurrency('#deposit-confirm-amount');
         this.confirmForm = this.formBuilder.group({
-            depositConfirmAmount: ['', [Validators.required, Validators.pattern(this.depositAmount)]]
+            amountToConfirm: ['', [Validators.required, this.amountEqual(this.depositAmount)]]
         });
     }
 
     onConfirm(): void {
         this.bsModalRef.hide();
-        this.onSuccessfulConfirmation.emit();
+        this.successfulConfirmation.emit();
     }
 
     onCancel(): void {
         this.bsModalRef.hide();
+    }
+
+    private amountEqual(equalTo: number) {
+        return function (control: AbstractControl): ValidationErrors | null {
+            const inputAmount = control.value;
+            if (inputAmount !== equalTo) {
+                return {inputAmountInvalid: true};
+            }
+            return null;
+        };
     }
 }

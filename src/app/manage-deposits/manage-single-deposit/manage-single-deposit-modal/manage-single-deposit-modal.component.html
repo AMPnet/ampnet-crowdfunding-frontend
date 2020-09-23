@@ -10,11 +10,10 @@
                 </h5>
 
                 <div class="col-md-12">
-                    <input class="form-control mt-3 p-4 w-100"
-                           formControlName="depositConfirmAmount"
-                           id="deposit-confirm-amount"
-                           placeholder="Deposit amount"
-                           type="text">
+                    <app-money-input-field
+                            placeholder="Deposit amount"
+                            [control]="confirmForm.get('amountToConfirm')">
+                    </app-money-input-field>
                 </div>
 
                 <div class="col-md-6">
@@ -27,13 +26,12 @@
 
                 <div class="col-md-6">
                     <button (click)="onConfirm()"
-                            [disabled]="!confirmForm.valid || depositAmount === undefined"
+                            [disabled]="!confirmForm.valid"
                             class="btn btn-primary w-100 float-right mt-4 py-3 px-3"
                             type="submit"><i class="fas fa-check-circle mr-2"></i>
                         Create & Mint
                     </button>
                 </div>
-
             </div>
         </form>
     </div>

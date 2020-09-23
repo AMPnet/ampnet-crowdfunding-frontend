@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { Portfolio, PortfolioService, PortfolioStats } from '../shared/services/wallet/portfolio.service';
-import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
-import { SpinnerUtil } from '../utilities/spinner-utilities';
-import { WalletService } from '../shared/services/wallet/wallet.service';
+import { Component } from '@angular/core';
+import { Portfolio, PortfolioService } from '../shared/services/wallet/portfolio.service';
+import { WalletService, WalletState } from '../shared/services/wallet/wallet.service';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 
 @Component({
@@ -10,42 +10,28 @@ import { WalletService } from '../shared/services/wallet/wallet.service';
     templateUrl: './my-portfolio.component.html',
     styleUrls: ['./my-portfolio.component.css']
 })
-export class MyPortfolioComponent implements OnInit {
-    hasWallet = false;
-    portfolio: Portfolio[];
-    stats: PortfolioStats;
-    roi = 0;
-
+export class MyPortfolioComponent {
     constructor(private portfolioService: PortfolioService,
                 private walletService: WalletService) {
     }
 
-    ngOnInit() {
-        this.getTransactions();
-    }
+    walletActivated$: Observable<boolean> = this.walletService.wallet$.pipe(
+        map(wallet => wallet.state === WalletState.READY)
+    );
 
-    getTransactions() {
-        SpinnerUtil.showSpinner();
-
-        this.walletService.getUserWallet().subscribe(walletRes => {
-            if (walletRes?.hash !== undefined) { // Check if wallet was activated by admin
-                this.portfolioService.getPortfolioStats().subscribe((portfolioStatsRes) => {
-                    this.hasWallet = true;
-                    this.stats = portfolioStatsRes;
-                    if (this.stats.investments > 0) {
-                        this.roi = ((this.stats.earnings + this.stats.investments) / (this.stats.investments) - 1) * 100;
-                    }
-                    SpinnerUtil.showSpinner();
-                    this.portfolioService.getPortfolio().subscribe((portfolioRes) => {
-                        this.portfolio = portfolioRes.portfolio;
-                        SpinnerUtil.hideSpinner();
-                    }, hideSpinnerAndDisplayError);
-                }, hideSpinnerAndDisplayError);
+    portfolioStats$ = this.portfolioService.getPortfolioStats().pipe(
+        map(stats => {
+            if (stats.investments > 0) {
+                stats.roi = ((stats.earnings + stats.investments) / (stats.investments) - 1);
             } else {
-                SpinnerUtil.hideSpinner();
+                stats.roi = 0;
             }
-        }, _ => {
-            SpinnerUtil.hideSpinner();
-        });
-    }
+
+            return stats;
+        })
+    );
+
+    portfolio$: Observable<Portfolio[]> = this.portfolioService.getPortfolio().pipe(
+        map(res => res.portfolio)
+    );
 }

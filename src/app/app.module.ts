@@ -83,6 +83,7 @@ import { environment } from '../environments/environment.prod';
 import { MoneyInputFieldComponent } from './shared/components/money-input-field/money-input-field.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+// tslint:disable-next-line:max-line-length
 import { ManageSingleDepositModalComponent } from './manage-deposits/manage-single-deposit/manage-single-deposit-modal/manage-single-deposit-modal.component';
 
 const socialAuthServiceConfig = {

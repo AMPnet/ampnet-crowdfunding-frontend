@@ -176,14 +176,20 @@ td {
     background-color: #fffcf8;
 }
 
-.currency-table-column {
-    font-size: 15px;
-    font-weight: normal;
-    float: right;
-}
-
 .icon-type {
     font-size: 22px;
+}
+
+.data-column {
+  font-size: small;
+
+  span {
+    display: block;
+  }
+
+  &--amount {
+    font-size: medium;
+  }
 }
 
 @media (max-width: 575px) {
@@ -192,7 +198,11 @@ td {
     }
 
     .data-column {
-        font-size: 0.6rem;
+        font-size: smaller;
+
+        &--amount {
+          font-size: small;
+        }
     }
 }
 

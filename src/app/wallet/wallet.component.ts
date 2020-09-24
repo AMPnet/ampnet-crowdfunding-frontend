@@ -6,6 +6,7 @@ import { TransactionState, TransactionType, UserTransaction, WalletService, Wall
 import { BehaviorSubject, timer } from 'rxjs';
 import { map, switchMap, take, tap } from 'rxjs/operators';
 import { WebsocketService } from '../shared/services/websocket.service';
+import { ArkaneService } from '../shared/services/arkane.service';
 
 @Component({
     selector: 'app-wallet',
@@ -64,6 +65,7 @@ export class WalletComponent implements OnDestroy {
     })).subscribe(() => this.refreshTransactionHistorySubject.next('fromPending'));
 
     constructor(private walletService: WalletService,
+                public arkaneService: ArkaneService,
                 private websocketService: WebsocketService) {
     }
 
@@ -72,13 +74,29 @@ export class WalletComponent implements OnDestroy {
     }
 
     setUpArkane() {
-        this.arkaneConnect = new ArkaneConnect('AMPnet', {environment: 'staging'});
+        // this.arkaneConnect = new ArkaneConnect('AMPnet', {environment: 'staging'});
+        //
         this.arkaneConnect.flows.getAccount(SecretType.AETERNITY).then(acc => {
             if ((acc.wallets !== undefined) && (acc.wallets.length > 0)) {
                 this.startWalletInit(acc.wallets[0].address);
             }
         });
     }
+
+    // testArkane() {
+    //     // this.arkaneService.isAuthenticated().subscribe(res => {
+    //     //     console.log(res);
+    //     //
+    //     //
+    //     // });
+    //
+    //     this.arkaneService.getAccount().subscribe(account => {
+    //         console.log(account);
+    //     });
+    //
+    //     // this.arkaneService.getProfile();
+    //
+    // }
 
     startWalletInit(addr: string) {
         SpinnerUtil.showSpinner();

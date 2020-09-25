@@ -109,12 +109,15 @@ interface WalletPairInfo {
 }
 
 export interface UserTransaction {
-    from_tx_hash: string;
-    to_tx_hash: string;
     amount: number;
-    type: TransactionType;
     date: Date;
+    description: string;
+    from: string;
+    from_tx_hash: string;
     state: TransactionState;
+    to: string;
+    to_tx_hash: string;
+    type: TransactionType;
 }
 
 interface UserTransactionResponse {

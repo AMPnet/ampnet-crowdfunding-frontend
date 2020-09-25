@@ -43,10 +43,6 @@ export class ManageOrganizationsComponent implements OnInit {
         });
     }
 
-    detailsClicked(id: number) {
-        this.router.navigate(['organization_details', id]);
-    }
-
     fetchOrgInvites() {
         SpinnerUtil.showSpinner();
         this.organizationService.getMyInvitations().subscribe(res => {

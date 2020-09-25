@@ -13,30 +13,30 @@
                 <i class="menu-icon fas fa-align-left"></i>
                 <span>Offers</span>
             </li>
-            <div [tooltip]="!states.user?.verified || !isWalletReady(states.wallet) ? ToolTipNotVerified : null">
+            <div [tooltip]="!isUserVerified(states.user) || !isWalletLazyReady(states.wallet) ? ToolTipNotVerified : null">
                 <li routerLink="my_portfolio" routerLinkActive="side-active"
-                    [class.unverified-user-disabled]="!states.user?.verified || !isWalletReady(states.wallet)">
+                    [class.unverified-user-disabled]="!isUserVerified(states.user) || !isWalletEagerReady(states.wallet)">
                     <i class="menu-icon fas fa-user"></i>
                     <span>My Portfolio</span>
                 </li>
             </div>
-            <div [tooltip]="!states.user?.verified ? ToolTipNotVerified : null">
+            <div [tooltip]="!isUserVerified(states.user) ? ToolTipNotVerified : null">
                 <li routerLink="wallet" routerLinkActive="side-active"
-                    [class.unverified-user-disabled]="!states.user?.verified">
+                    [class.unverified-user-disabled]="!isUserVerified(states.user)">
                     <i class="menu-icon fas fa-wallet"></i>
                     <span>Wallet</span>
                 </li>
             </div>
-            <div [tooltip]="!states.user?.verified || !isWalletReady(states.wallet) ? ToolTipNotVerified : null">
+            <div [tooltip]="!isUserVerified(states.user) || !isWalletLazyReady(states.wallet) ? ToolTipNotVerified : null">
                 <li routerLink="manage_groups" routerLinkActive="side-active"
-                    [class.unverified-user-disabled]="!states.user?.verified || !isWalletReady(states.wallet)">
+                    [class.unverified-user-disabled]="!isUserVerified(states.user) || !isWalletEagerReady(states.wallet)">
                     <i class="menu-icon fas fa-layer-group"></i>
                     <span>Investment groups</span>
                 </li>
             </div>
-            <div [tooltip]="!states.user?.verified || !isWalletReady(states.wallet) ? ToolTipNotVerified : null">
+            <div [tooltip]="!isUserVerified(states.user) || !isWalletLazyReady(states.wallet) ? ToolTipNotVerified : null">
                 <li routerLink="exchange" routerLinkActive="side-active"
-                    [class.unverified-user-disabled]="!states.user?.verified || !isWalletReady(states.wallet)">
+                    [class.unverified-user-disabled]="!isUserVerified(states.user) || !isWalletEagerReady(states.wallet)">
                     <i class="menu-icon fas fa-store"></i>
                     <span>Project market</span>
                 </li>
@@ -148,7 +148,7 @@
             <div *ngIf="isUserVerified(states.user) && !isWalletInitialized(states.wallet)">
                 <p>In order to manage funds, you need to have your wallet initialized.</p>
             </div>
-            <div *ngIf="isUserVerified(states.user) && isWalletInitialized(states.wallet) && !isWalletReady(states.wallet)">
+            <div *ngIf="isUserVerified(states.user) && isWalletInitialized(states.wallet) && !isWalletLazyReady(states.wallet)">
                 <p>Please wait for the administrator to verified your wallet.</p>
             </div>
         </ng-template>

@@ -107,17 +107,12 @@
                                         </span>
                                         </td>
                                         <td class="data-column">
-                                            <div>
-                                            <span>
-                                                <div>{{ transaction.type }}</div>
-                                                {{ transaction.date | date:'medium' }}
-                                            </span>
-                                            </div>
+                                            <span>{{ transaction.type }}</span>
+                                            <span>{{ transaction.description }}</span>
+                                            <span>{{ transaction.date | date:'medium' }}</span>
                                         </td>
-                                        <td>
-                                            <div class="currency-table-column">
-                                                {{ transaction.type | txAmountSign }} {{ transaction.amount | currencyCents }}
-                                            </div>
+                                        <td class="data-column data-column--amount">
+                                            {{ transaction.type | txAmountSign }} {{ transaction.amount | currencyCents }}
                                         </td>
                                         <td>
                                             <i class="icon-type fas {{ transaction.state | txIconStatus }}"></i>

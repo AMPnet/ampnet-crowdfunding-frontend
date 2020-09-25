@@ -35,7 +35,7 @@
         <div [hidden]="depositModel === undefined" class="col-md-12 mt-3">
             <div id="payment-receipt-upload-target"></div>
             <button class="btn btn-primary w-100 py-3 mt-3"
-                    [disabled]="!amount"
+                    [disabled]="!amount || !fileAttached"
                     (click)="showConfirmModal()"
                     data-toggle="modal">
                 <i class="fas fa-check-circle mr-2"></i>

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import * as Uppy from 'uppy';
 import { ActivatedRoute, Router } from '@angular/router';
 import { hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
@@ -21,11 +21,12 @@ declare var $: any;
     templateUrl: './manage-single-deposit.component.html',
     styleUrls: ['./manage-single-deposit.component.css'],
 })
-export class ManageSingleDepositComponent implements OnInit, AfterViewInit {
+export class ManageSingleDepositComponent implements OnInit {
     amount = 0;
     confirmationModal: BsModalRef;
     depositModel: DepositSearchResponse;
     paymentUppy: Uppy.Core.Uppy;
+    fileAttached = false;
 
     constructor(private route: ActivatedRoute,
                 private http: BackendHttpClient,
@@ -37,10 +38,13 @@ export class ManageSingleDepositComponent implements OnInit, AfterViewInit {
 
     ngOnInit() {
         this.getDeposit();
-    }
 
-    ngAfterViewInit(): void {
-        this.paymentUppy = Uppy.Core();
+        this.paymentUppy = Uppy.Core({
+            restrictions: {
+                allowedFileTypes: ['.png', '.jpeg', '.jpg', '.pdf'],
+                maxNumberOfFiles: 1
+            }
+        });
 
         this.paymentUppy.use(Uppy.Dashboard, {
             id: 'receipt-payment',
@@ -50,37 +54,62 @@ export class ManageSingleDepositComponent implements OnInit, AfterViewInit {
             width: $('.root-content-container').width(),
             note: 'Upload payment receipt for deposit',
             hideUploadButton: true,
+            plugins: ['XHRUpload']
         });
+
+        this.paymentUppy.on('file-added', () => this.isFileAttached());
+        this.paymentUppy.on('file-removed', () => this.isFileAttached());
+
+        this.paymentUppy.on('upload-progress', (file, progress) => {
+            if (progress.bytesUploaded < progress.bytesTotal) {
+                SpinnerUtil.showSpinner();
+            }
+        });
+
+        this.paymentUppy.on('upload-error', (file) => {
+            SpinnerUtil.hideSpinner();
+            this.paymentUppy.removeFile(file.id);
+            this.removeUppyPlugin();
+        });
+    }
+
+    isFileAttached() {
+        this.fileAttached = this.paymentUppy.getFiles().length > 0;
     }
 
     generateSignerAndSign() {
         SpinnerUtil.showSpinner();
+        this.depositCooperativeService.generateDepositMintTx(this.depositModel.deposit.id)
+            .subscribe(async res => {
+                const arkaneConnect = new ArkaneConnect('AMPnet', {
+                    environment: 'staging'
+                });
 
-        this.depositCooperativeService.generateDepositMintTx(this.depositModel.deposit.id).subscribe(async res => {
-            SpinnerUtil.hideSpinner();
-            const arkaneConnect = new ArkaneConnect('AMPnet', {
-                environment: 'staging'
-            });
-
-            const account = await arkaneConnect.flows.getAccount(SecretType.AETERNITY);
-
-            const sigRes = await arkaneConnect.createSigner(WindowMode.POPUP).sign({
-                walletId: account.wallets[0].id,
-                data: res.tx,
-                type: SignatureRequestType.AETERNITY_RAW
-            });
-            this.broadService.broadcastSignedTx(sigRes.result.signedTransaction, res.tx_id)
-                .subscribe(_ => {
+                try {
+                    const account = await arkaneConnect.flows.getAccount(SecretType.AETERNITY);
+                    const sigRes = await arkaneConnect.createSigner(WindowMode.POPUP).sign({
+                        walletId: account.wallets[0].id,
+                        data: res.tx,
+                        type: SignatureRequestType.AETERNITY_RAW
+                    });
+                    this.broadService.broadcastSignedTx(sigRes.result.signedTransaction, res.tx_id)
+                        .subscribe(_ => {
+                            swal('', 'Success', 'success')
+                                .then(() => {
+                                    SpinnerUtil.hideSpinner();
+                                    this.router.navigate(['/dash/manage_deposits']);
+                                });
+                        }, hideSpinnerAndDisplayError);
+                } catch (error) {
+                    // When user close Arkane popup window
                     SpinnerUtil.hideSpinner();
-                    swal('', 'Success', 'success')
-                        .then(() => this.router.navigate(['/dash/manage_deposits']));
-                }, hideSpinnerAndDisplayError);
-        }, hideSpinnerAndDisplayError);
+                    this.removeUppyPlugin();
+                }
+            }, hideSpinnerAndDisplayError);
     }
 
     getDeposit() {
         SpinnerUtil.showSpinner();
-
         const id = this.route.snapshot.params.ID;
         this.depositCooperativeService.getDeposit(id).subscribe(res => {
             SpinnerUtil.hideSpinner();
@@ -112,10 +141,16 @@ export class ManageSingleDepositComponent implements OnInit, AfterViewInit {
                         'Authorization': this.http.authHttpOptions().headers.get('Authorization')
                     }
                 });
+
                 confirmationSub.unsubscribe();
-                this.paymentUppy.upload().then(() => {
-                    this.getDeposit();
-                }, hideSpinnerAndDisplayError);
+                this.paymentUppy.upload().then(() => this.getDeposit());
             }, hideSpinnerAndDisplayError);
+    }
+
+    removeUppyPlugin() {
+        const instance = this.paymentUppy.getPlugin('XHRUpload');
+        if (instance !== null) {
+            this.paymentUppy.removePlugin(instance);
+        }
     }
 }

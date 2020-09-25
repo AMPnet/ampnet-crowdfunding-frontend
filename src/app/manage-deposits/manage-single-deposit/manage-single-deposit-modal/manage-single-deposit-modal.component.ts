@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BsModalRef } from 'ngx-bootstrap/modal';
+import { SpinnerUtil } from '../../../utilities/spinner-utilities';
 
 @Component({
     selector: 'app-manage-single-deposit-modal',
@@ -32,6 +33,7 @@ export class ManageSingleDepositModalComponent implements OnInit {
 
     onCancel(): void {
         this.bsModalRef.hide();
+        SpinnerUtil.hideSpinner();
     }
 
     private amountEqual(equalTo: number) {

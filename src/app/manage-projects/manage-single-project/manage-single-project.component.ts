@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import * as Uppy from 'uppy';
 import swal from 'sweetalert2';
 import { ActivatedRoute } from '@angular/router';
@@ -75,6 +75,7 @@ export class ManageSingleProjectComponent implements OnInit, AfterViewInit {
         this.walletService.createProjectWalletTransaction(this.project.uuid).subscribe(res => {
             swal('', 'Verify the project creation with your blockchain wallet. You will be prompted now!', 'info')
                 .then(async () => {
+                    SpinnerUtil.showSpinner();
                     const arkaneConnect = new ArkaneConnect('AMPnet', {
                         environment: 'staging'
                     });

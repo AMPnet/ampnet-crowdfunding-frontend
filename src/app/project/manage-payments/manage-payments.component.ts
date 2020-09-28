@@ -1,13 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { displayBackendError } from 'src/app/utilities/error-handler';
-import { autonumericCurrency, centsToBaseCurrencyUnit, prettyCurrency, stripCurrencyData } from 'src/app/utilities/currency-util';
-import * as numeral from 'numeral';
 import { Project, ProjectService } from '../../shared/services/project/project.service';
 import { WalletService } from '../../shared/services/wallet/wallet.service';
 import { WalletDetails } from '../../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 
 @Component({
     selector: 'app-manage-payments',
@@ -49,9 +47,6 @@ export class ManagePaymentsComponent implements OnInit {
         this.walletService.getProjectWallet(projectID)
             .subscribe(res => {
                 this.projectWallet = res;
-                this.projectWallet.currency = prettyCurrency(res.currency);
-                this.projectWallet.balance = numeral(centsToBaseCurrencyUnit(res.balance)).format('0,0');
-                autonumericCurrency('#revenueShareAmount');
             }, err => {
                 displayBackendError(err);
             })
@@ -66,9 +61,9 @@ export class ManagePaymentsComponent implements OnInit {
         this.router.navigate([`/dash/manage_groups/${orgID}/manage_project/${projID}/manage_payments/revenue_share/${amount}`]);
     }
 
-    private amountValidator(control: AbstractControl): { [key: string]: any } | null {
-        const inputAmount = Number(stripCurrencyData(control.value.toString()));
-        const walletBalance = Number(stripCurrencyData((this.projectWallet?.balance || 0).toString()));
+    private amountValidator(control: AbstractControl): ValidationErrors | null {
+        const inputAmount = control.value;
+        const walletBalance = this.projectWallet?.balance || 0;
 
         if (inputAmount > walletBalance || inputAmount <= 0) {
             return {inputAmountInvalid: true};

@@ -8,6 +8,7 @@
 
 .offer-right-socials {
     margin: 1rem;
+    width: auto;
 }
 
 .progress {
@@ -70,6 +71,7 @@
     font-weight: 500;
     color: #111111;
     letter-spacing: 2px;
+    width: auto;
 }
 
 .offer-title {

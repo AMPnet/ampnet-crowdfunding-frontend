@@ -12,7 +12,7 @@ export class RevenueShareService {
 
     generateRevenueShareTx(projectID: string, amount: number) {
         return this.http.post<TransactionInfo>(`/api/wallet/revenue/payout/project/${projectID}`, {
-            amount: baseCurrencyUnitToCents(amount)
+            amount: amount
         });
     }
 }

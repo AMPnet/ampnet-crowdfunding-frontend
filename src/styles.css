@@ -258,3 +258,13 @@ input[type="number"] {
     border-bottom-left-radius: 1rem !important;
     border-bottom-right-radius: 1rem !important;
 }
+
+.theme-default .bs-datepicker-head,
+.bs-datepicker-buttons .btn-success {
+    background-color: #DEA546;
+}
+
+.bs-datepicker-buttons .btn-success {
+    border-color: #DEA546;
+    height: unset;
+}

@@ -67,7 +67,7 @@ import { OwnershipComponent } from './ownership/ownership.component';
 import { CurrencyDefaultPipe } from './pipes/currency-default.pipe';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RevenueShareComponent } from './revenue-share/revenue-share.component';
-import { TxIconStatus, TxIconType } from './wallet/wallet-icon.pipe';
+import { TxAmountSign, TxIconStatus, TxIconType } from './wallet/wallet.pipe';
 import { UserStateReminderComponent } from './user-state-reminder/user-state-reminder.component';
 import { FileValidator } from './shared/validators/file.validator';
 import { FileValueAccessorDirective } from './shared/directives/file-value-accessor.directive';
@@ -77,7 +77,12 @@ import { RevenueShareConfirmModalComponent } from './revenue-share/revenue-share
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { LocationMapComponent } from './location-map/location-map.component';
 import { MapModalComponent } from './location-map/map-modal/map-modal.component';
+import { ActionButtonComponent } from './shared/components/action-button/action-button.component';
 import { CurrencyCentsPipe } from './pipes/currency-cents.pipe';
+import { environment } from '../environments/environment.prod';
+import { MoneyInputFieldComponent } from './shared/components/money-input-field/money-input-field.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 const socialAuthServiceConfig = {
     provide: 'SocialAuthServiceConfig',
@@ -86,11 +91,11 @@ const socialAuthServiceConfig = {
         providers: [
             {
                 id: GoogleLoginProvider.PROVIDER_ID,
-                provider: new GoogleLoginProvider('507079277405-o3834fb5jojeq3u9tmm14aobeukg3jmo.apps.googleusercontent.com'),
+                provider: new GoogleLoginProvider(environment.googleClientId),
             },
             {
                 id: FacebookLoginProvider.PROVIDER_ID,
-                provider: new FacebookLoginProvider('293264554869933'),
+                provider: new FacebookLoginProvider(environment.facebookAppId),
             },
         ]
     } as SocialAuthServiceConfig
@@ -166,6 +171,9 @@ const socialAuthServiceConfig = {
         LocationMapComponent,
         MapModalComponent,
         TxIconStatus,
+        TxAmountSign,
+        ActionButtonComponent,
+        MoneyInputFieldComponent,
     ],
     imports: [
         BrowserModule,
@@ -180,7 +188,9 @@ const socialAuthServiceConfig = {
         SocialLoginModule,
         NgxSpinnerModule,
         NgbModule,
-        ModalModule.forRoot()
+        ModalModule.forRoot(),
+        BrowserAnimationsModule,
+        BsDatepickerModule.forRoot(),
     ],
     entryComponents: [
         MapModalComponent

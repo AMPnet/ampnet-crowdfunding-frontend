@@ -30,6 +30,10 @@ http {
                 return 204;
             }
 
+            # WebSocket support (nginx 1.4)
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection "upgrade";
+
             proxy_pass ${BACKEND_URL};
         }
 

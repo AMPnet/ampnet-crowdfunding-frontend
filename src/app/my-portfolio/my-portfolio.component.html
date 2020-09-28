@@ -1,59 +1,91 @@
-<div *ngIf="hasWallet" class="root-content-container">
-    <div class="container wow fadeIn">
-        <div class="card stats-card p-3">
-            <div class="card-body">
-                <div class="card-text">
-                    <div class="row">
-                        <div class="col-md-4 col-sm-6">
-                            <p class="mb-2">
-                                <i class="explainer-mini text-white mr-3 fas fa-chart-pie"></i>
-                                <span class="explainer-mini text-white">Total investments</span>
-                            </p>
-                            <h6 class="mt-3 text-white">{{ stats.investments | currencyDefault }}</h6>
-                        </div>
-                        <div class="col-md-4 col-sm-6">
-                            <p class="mb-2">
-                                <i class="explainer-mini text-white mr-3 fas fa-money-bill-alt"></i>
-                                <span class="explainer-mini text-white">Earnings</span></p>
-                            <h6 class="mt-3 gray-text text-white">{{ stats.earnings | currencyDefault }}</h6>
-                        </div>
-                        <div class="col-md-4">
-                            <p class="mb-2">
-                                <i class="mr-3 explainer-mini fas fa-percentage text-white"></i>
-                                <span class="explainer-mini text-white">Return on investment</span></p>
-                            <h6 class="mt-3 gray-text text-white">{{ roi }}%</h6>
+<ng-container *ngIf="(walletActivated$ | async) as walletActivated else overlaySpinner">
+    <div *ngIf="walletActivated" class="root-content-container">
+        <ng-container *ngIf="{
+            stats: portfolioStats$ | async,
+            portfolio: portfolio$ | async
+        } as states">
+            <div class="container wow fadeIn">
+                <div class="card stats-card p-3">
+                    <div class="card-body">
+                        <div class="card-text">
+                            <div class="row">
+                                <div class="col-md-4 col-sm-6">
+                                    <p class="mb-2">
+                                        <i class="explainer-mini text-white mr-3 fas fa-chart-pie"></i>
+                                        <span class="explainer-mini text-white">Total investments</span>
+                                    </p>
+                                    <h6 class="mt-3 text-white">
+                                        <ng-container *ngIf="!!states.stats else smallSpinner">
+                                            {{ states.stats.investments | currencyDefault }}
+                                        </ng-container>
+                                    </h6>
+                                </div>
+                                <div class="col-md-4 col-sm-6">
+                                    <p class="mb-2">
+                                        <i class="explainer-mini text-white mr-3 fas fa-money-bill-alt"></i>
+                                        <span class="explainer-mini text-white">Earnings</span></p>
+
+                                    <h6 class="mt-3 text-white">
+                                        <ng-container *ngIf="!!states.stats else smallSpinner">
+                                            {{ states.stats.earnings | currencyDefault }}
+                                        </ng-container>
+                                    </h6>
+                                </div>
+                                <div class="col-md-4">
+                                    <p class="mb-2">
+                                        <i class="mr-3 explainer-mini fas fa-percentage text-white"></i>
+                                        <span class="explainer-mini text-white">Return on investment</span></p>
+
+                                    <h6 class="mt-3 text-white">
+                                        <ng-container *ngIf="!!states.stats else smallSpinner">
+                                            {{ states.stats.roi | percent:'1.0-2' }}
+                                        </ng-container>
+                                    </h6>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-        </div>
-
-    </div>
-
-    <div class="container mt-4">
-        <div class="row">
-            <div *ngIf="portfolio !== undefined" class="col-md-12">
-                <div class=" gray-text mb-2 explainer-mini">
-                    My investments
-                </div>
-                <div *ngIf="portfolio.length ===  0">
-                    <div class="w-100 text-center mt-5">
-                        You don't have any active investments
+            <div class="container mt-4">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class=" gray-text mb-2 explainer-mini">
+                            My investments
+                        </div>
+                        <div *ngIf="states.portfolio?.length === 0">
+                            <div class="w-100 text-center mt-5">
+                                You don't have any active investments
+                            </div>
+                        </div>
                     </div>
+                    <ng-container *ngIf="states.portfolio else overlaySpinner">
+                        <div *ngFor="let item of states.portfolio"
+                             class="col-md-12 mt-2 wow fadeIn" style="visibility:hidden">
+                            <app-single-invest-item [investment]=item></app-single-invest-item>
+                        </div>
+                    </ng-container>
                 </div>
             </div>
-            <div *ngFor="let item of portfolio" class="col-md-12 mt-2">
-                <app-single-invest-item [investment]=item></app-single-invest-item>
-            </div>
+        </ng-container>
+    </div>
+
+    <div *ngIf="!walletActivated" class="root-content-container">
+        <div class="conatiner wow fadeIn mt-5">
+            <h6 class=" text-center w-100">
+                Your portfolio will be available after you've invested into a project.
+            </h6>
         </div>
     </div>
-</div>
+</ng-container>
 
-<div *ngIf="!hasWallet" class="root-content-container">
-    <div class="conatiner wow fadeIn mt-5">
-        <h6 class=" text-center w-100">
-            Your portfolio will be available after you've invested into a project.
-        </h6>
+<ng-template #overlaySpinner>
+    <div class="justify-content-center" style="width: 100%">
+        <app-spinner type="overlay"></app-spinner>
     </div>
-</div>
+</ng-template>
+
+<ng-template #smallSpinner>
+    <app-spinner type="inline" color="white"></app-spinner>
+</ng-template>

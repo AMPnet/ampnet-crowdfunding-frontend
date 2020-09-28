@@ -18,8 +18,8 @@ export class RevenueShareComponent implements OnInit {
     orgID: string;
     projectID: string;
     projectName: string;
-    amountInvested: number;
-    amountInvestedConfirm: number;
+    amount: number;
+    amountToConfirm: number;
 
     constructor(private route: ActivatedRoute,
                 private projectService: ProjectService,
@@ -35,7 +35,7 @@ export class RevenueShareComponent implements OnInit {
     fetchDataFromRoute() {
         this.orgID = this.route.snapshot.params.projectID;
         this.projectID = this.route.snapshot.params.projectID;
-        this.amountInvested = this.route.snapshot.params.amount;
+        this.amount = this.route.snapshot.params.amount;
         this.getProject(this.projectID);
     }
 
@@ -53,7 +53,7 @@ export class RevenueShareComponent implements OnInit {
             initialState: {
                 orgID: this.orgID,
                 projectID: this.projectID,
-                amountInvestedConfirm: this.amountInvested
+                amountInvestedConfirm: this.amount
             }
         });
     }

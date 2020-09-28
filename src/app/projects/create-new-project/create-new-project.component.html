@@ -34,34 +34,37 @@
         </app-location-map>
 
         <div class="explainer-mini  mb-2 mt-3">Start date</div>
-        <input class="w-100 p-4 form-control" formControlName="startDate" id="start-date" name="" type="date">
+        <input class="w-100 p-4 form-control" formControlName="startDate"
+               id="start-date" placeholder="dd/mm/yyyy" bsDatepicker 
+               [bsConfig]="bsConfig" (click)="setDatepickerOptions()">
 
         <div class="explainer-mini  mb-2 mt-3">End date</div>
-        <input class="w-100 p-4 form-control" formControlName="endDate" id="end-date" name="" type="date">
+        <input class="w-100 p-4 form-control" formControlName="endDate" 
+               id="end-date" placeholder="dd/mm/yyyy" bsDatepicker 
+               [bsConfig]="bsConfig" (click)="setDatepickerOptions()">
 
         <div class="explainer-mini  mb-2 mt-3">Expected funding</div>
-        <input class="w-100 p-4 form-control"
-               formControlName="expectedFunding" id="expected-funding-input" type="text">
+        <app-money-input-field
+                placeholder="Enter expected funding amount"
+                [control]="createForm.get('expectedFunding')">
+        </app-money-input-field>
 
         <div class="explainer-mini  mb-2 mt-3">Minimum investment per user</div>
-        <div class="input-group">
-            <input class=" p-4 form-control"
-                   formControlName="minPerUser" id="min-per-user-input" type="text">
-        </div>
+        <app-money-input-field
+                placeholder="Enter minimum investment per user"
+                [control]="createForm.get('minPerUser')">
+        </app-money-input-field>
 
         <div class="explainer-mini  mb-2 mt-3">Maximum investment per user</div>
-        <div class="input-group">
-            <input class=" p-4 form-control" formControlName="maxPerUser"
-                   id="max-per-user-input" name="" type="text">
-        </div>
+        <app-money-input-field
+                placeholder="Enter maximum investment per user"
+                [control]="createForm.get('maxPerUser')">
+        </app-money-input-field>
 
-        <button (click)="submitForm()"
-                [disabled]="!createForm.valid"
-                class="btn btn-primary float-right mt-3 mb-5 pt-3 pb-3 pl-5 pr-5 "
-                type="submit">
-            <i class="mr-3 fas fa-plus"></i>
-            Create
-        </button>
+        <app-action-button text="Create" loadingText="Creating project..."
+                           [onClick]="submitForm.bind(this)"
+                           [disabled]="!createForm.valid">
+        </app-action-button>
     </form>
 </div>
 

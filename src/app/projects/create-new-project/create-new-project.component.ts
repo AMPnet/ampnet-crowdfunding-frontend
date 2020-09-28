@@ -1,24 +1,24 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ProjectService } from '../../shared/services/project/project.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { displayBackendError } from 'src/app/utilities/error-handler';
-import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
-import { autonumericCurrency, baseCurrencyUnitToCents, stripCurrencyData } from 'src/app/utilities/currency-util';
-
-declare var $: any;
+import { catchError, tap } from 'rxjs/operators';
+import { throwError } from 'rxjs';
+import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 
 @Component({
     selector: 'app-create-new-project',
     templateUrl: './create-new-project.component.html',
     styleUrls: ['./create-new-project.component.css'],
 })
-export class CreateNewProjectComponent implements OnInit {
+export class CreateNewProjectComponent {
     createForm: FormGroup;
     mapLat: number;
     mapLong: number;
     projectCoords = [];
+    bsConfig: Partial<BsDatepickerConfig>;
 
     constructor(private projectService: ProjectService,
                 private fb: FormBuilder,
@@ -37,13 +37,11 @@ export class CreateNewProjectComponent implements OnInit {
 
     submitForm() {
         const formValue = this.createForm.value;
-        formValue.startDate = moment(formValue.startDate).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
-        formValue.endDate = moment(formValue.endDate).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
+        formValue.startDate = moment(formValue.startDate).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
+        formValue.endDate = moment(formValue.endDate).endOf('day').format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
         const orgID = this.activatedRoute.snapshot.params.orgId;
 
-        SpinnerUtil.showSpinner();
-
-        this.projectService.createProject({
+        return this.projectService.createProject({
             organization_uuid: orgID,
             name: formValue.name,
             description: formValue.description,
@@ -51,25 +49,29 @@ export class CreateNewProjectComponent implements OnInit {
             roi: {from: 2.1, to: 5.3},
             start_date: formValue.startDate,
             end_date: formValue.endDate,
-            expected_funding: baseCurrencyUnitToCents(parseInt(stripCurrencyData(formValue.expectedFunding), 10)),
+            expected_funding: formValue.expectedFunding,
             currency: 'EUR',
-            min_per_user: baseCurrencyUnitToCents(parseInt(stripCurrencyData(formValue.minPerUser), 10)),
-            max_per_user: baseCurrencyUnitToCents(parseInt(stripCurrencyData(formValue.maxPerUser), 10)),
+            min_per_user: formValue.minPerUser,
+            max_per_user: formValue.maxPerUser,
             active: false
-        }).subscribe(res => {
-            SpinnerUtil.hideSpinner();
-            this.router.navigate(['/dash', 'manage_groups', orgID.toString(), 'manage_project', res.uuid]);
-        }, err => {
-            SpinnerUtil.hideSpinner();
-            displayBackendError(err);
-        });
+        }).pipe(
+            tap(project => {
+                this.router.navigate([`/dash/manage_groups/${orgID}/manage_project/${project.uuid}`]);
+            }),
+            catchError(err => {
+                displayBackendError(err);
+                return throwError(err);
+            })
+        );
     }
 
-    ngOnInit() {
-        $(document).ready(() => {
-            autonumericCurrency('#min-per-user-input');
-            autonumericCurrency('#max-per-user-input');
-            autonumericCurrency('#expected-funding-input');
+    setDatepickerOptions() {
+        this.bsConfig = Object.assign({}, {
+            showTodayButton: true,
+            todayPosition: 'right',
+            containerClass: 'theme-default',
+            isAnimated: true,
+            dateInputFormat: 'DD-MM-YYYY'
         });
     }
 }

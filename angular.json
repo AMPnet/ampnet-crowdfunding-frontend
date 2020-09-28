@@ -28,14 +28,15 @@
               }
             ],
             "styles": [
-              "src/styles.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/assets/animate.css",
               "node_modules/@fortawesome/fontawesome-free/css/all.css",
               "node_modules/bootstrap-select/dist/css/bootstrap-select.min.css",
               "node_modules/uppy/dist/uppy.min.css",
               "node_modules/@chenfengyuan/datepicker/dist/datepicker.min.css",
-              "node_modules/leaflet/dist/leaflet.css"
+              "node_modules/leaflet/dist/leaflet.css",
+              "node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
+              "src/styles.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
@@ -152,5 +153,10 @@
   "defaultProject": "ampnet-frontend",
   "cli": {
     "analytics": "76102ae2-5c77-4aae-adf9-834e9cfa29ae"
+  },
+  "schematics": {
+    "@schematics/angular:component": {
+      "styleext": "scss"
+    }
   }
 }

@@ -13,40 +13,6 @@ h3 {
     margin-top: 100px;
 }
 
-h1.offers-title {
-    margin-bottom: 3rem;
-    font-size: 36px;
-    position: relative;
-    max-width: 250px;
-    text-align: center;
-}
-
-h1.offers-title:before {
-    content: "";
-    display: block;
-    width: 35px;
-    height: 3px;
-    background-color: #111111;
-    position: absolute;
-    left: 0;
-    top: 50%;
-}
-
-@media (max-width: 800px) {
-    h1.offers-title {
-        font-size: 12px;
-        max-width: 80px;
-        margin: 0 0 1rem 0;
-    }
-    
-    h1.offers-title:before {
-        height: 1px;
-        width: 10px;
-    }
-}
-
-
-
 .overview-bg {
     position: fixed;
     top: 0;

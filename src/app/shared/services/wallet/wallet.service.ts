@@ -1,47 +1,71 @@
 import { Injectable } from '@angular/core';
-import { UserStatusStorage } from '../../../user-status-storage';
 import { BackendHttpClient } from '../backend-http-client.service';
 import { TransactionInfo, WalletDetails } from './wallet-cooperative/wallet-cooperative-wallet.service';
-import { catchError, tap } from 'rxjs/operators';
-import { Observable, of, ReplaySubject, throwError } from 'rxjs';
+import { catchError, retry, switchMap, tap } from 'rxjs/operators';
+import { BehaviorSubject, EMPTY, merge, Observable, of, ReplaySubject, throwError } from 'rxjs';
+import { CacheService } from '../cache.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class WalletService {
-    walletChange$: Observable<WalletDetails | null>;
+    private cacheKey = 'user_wallet';
 
-    private walletChangeSubject = new ReplaySubject<WalletDetails | null>(1);
+    private changeWalletSubject = new ReplaySubject<WalletDetailsWithState>(1);
+    private refreshWalletSubject = new BehaviorSubject<void>(null);
 
-    constructor(private http: BackendHttpClient) {
-        this.walletChange$ = this.walletChangeSubject.asObservable();
+    wallet$ = merge(
+        this.changeWalletSubject.pipe(switchMap(wallet => of(wallet))),
+        this.refreshWalletSubject.pipe(
+            switchMap(() => this.cacheService.setAndGet(this.cacheKey, this.getUserWallet(), 30_000)))
+    ).pipe(catchError(() => EMPTY));
+
+    constructor(private http: BackendHttpClient,
+                private cacheService: CacheService) {
     }
 
     initWallet(address: string) {
         return this.http.post<WalletDetails>('/api/wallet/wallet',
             <InitWalletData>{
                 public_key: address
-            }).pipe(this.tapWalletChange(this));
+            }).pipe(tap(() => this.clearAndRefreshWallet()));
     }
 
-    getUserWallet() {
-        return this.http.get<WalletDetails>('/api/wallet/wallet').pipe(
-            catchError(err => err.status === 404 ? of(null) : throwError(err)),
-            this.tapWalletChange(this)
+    getUserWallet(): Observable<WalletDetailsWithState> {
+        return this.getFreshUserWallet().pipe(
+            switchMap(wallet => {
+                const walletState = wallet.hash !== null ? WalletState.READY : WalletState.NOT_VERIFIED;
+                return of({state: walletState, wallet: wallet});
+            }),
+            tap(wallet => this.changeWalletSubject.next(wallet)),
+            catchError(err => {
+                switch (err.status) {
+                    case 404:
+                    case 409:
+                        return of({state: WalletState.EMPTY});
+                    default:
+                        return throwError(err);
+                }
+            }),
+            retry(3),
         );
     }
 
-    private tapWalletChange(self: any) {
-        return function (source: Observable<WalletDetails>) {
-            return source.pipe(
-                tap(wallet => {
-                    UserStatusStorage.walletData = wallet;
-                    self.walletChangeSubject.next(wallet);
-                }, _ => {
-                    self.walletChangeSubject.next(null);
-                })
-            );
-        };
+    getFreshUserWallet() {
+        return this.http.get<WalletDetails>('/api/wallet/wallet');
+    }
+
+    setWallet(wallet: WalletDetailsWithState) {
+        this.changeWalletSubject.next(wallet);
+    }
+
+    clearAndRefreshWallet() {
+        this.cacheService.clear(this.cacheKey);
+        this.refreshWallet();
+    }
+
+    refreshWallet() {
+        this.refreshWalletSubject.next();
     }
 
     getInfoFromPairingCode(pairingCode: string) {
@@ -85,14 +109,44 @@ interface WalletPairInfo {
 }
 
 export interface UserTransaction {
-    from_tx_hash: string;
-    to_tx_hash: string;
     amount: number;
-    type: string;
     date: Date;
-    state: string;
+    description: string;
+    from: string;
+    from_tx_hash: string;
+    state: TransactionState;
+    to: string;
+    to_tx_hash: string;
+    type: TransactionType;
 }
 
 interface UserTransactionResponse {
     transactions: UserTransaction[];
+}
+
+export enum WalletState {
+    EMPTY,
+    NOT_VERIFIED,
+    READY,
+}
+
+export interface WalletDetailsWithState {
+    wallet?: WalletDetails;
+    state: WalletState;
+}
+
+export enum TransactionType {
+    INVEST = 'INVEST',
+    DEPOSIT = 'DEPOSIT',
+    WITHDRAW = 'WITHDRAW',
+    SHARE_PAYOUT = 'SHARE_PAYOUT',
+    CANCEL_INVESTMENT = 'CANCEL_INVESTMENT',
+    APPROVE_INVESTMENT = 'APPROVE_INVESTMENT',
+    UNRECOGNIZED = 'UNRECOGNIZED' // TODO: Remove UNRECOGNIZED when renamed on backend.
+}
+
+export enum TransactionState {
+    MINED = 'MINED',
+    PENDING = 'PENDING',
+    FAILED = 'FAILED'
 }

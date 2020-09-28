@@ -6,7 +6,7 @@ import swal from 'sweetalert2';
 import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthService } from 'angularx-social-login';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { UserAuthService } from '../../shared/services/user/user-auth.service';
-import { displayBackendError, hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
+import { hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
 import { MustMatch } from './confirm-password-validator';
 import { switchMap } from 'rxjs/operators';
 
@@ -49,29 +49,21 @@ export class SignUpComponent implements OnInit {
         this.performSocialSignup(FacebookLoginProvider.PROVIDER_ID);
     }
 
-    async performSocialSignup(provider: string) {
+    performSocialSignup(provider: string) {
         SpinnerUtil.showSpinner();
 
         this.socialAuthService.signIn(provider).then(SocialRes => {
-            this.signUpService.signupSocial(SocialRes.provider, SocialRes.authToken).subscribe(usr => {
-                SpinnerUtil.hideSpinner();
-
-                usr['auth'] = SocialRes.authToken;
-                usr['provider'] = SocialRes.provider;
-
-                this.loginService.socialLogin(GoogleLoginProvider.PROVIDER_ID, SocialRes.authToken)
+            this.signUpService.signupSocial(SocialRes.provider, SocialRes.authToken).subscribe(() => {
+                this.loginService.socialLogin(provider, SocialRes.authToken)
                     .subscribe(_ => {
                         SpinnerUtil.hideSpinner();
                         this.router.navigate(['/dash']);
-                    }, displayBackendError);
+                    }, hideSpinnerAndDisplayError);
             }, err => {
                 SpinnerUtil.hideSpinner();
                 swal('', err.error.message, 'warning');
             });
-        }).catch(err => {
-            SpinnerUtil.hideSpinner();
-            swal('', err, 'warning');
-        });
+        }).catch(hideSpinnerAndDisplayError);
     }
 
     onSubmitEmailForm() {
@@ -82,7 +74,7 @@ export class SignUpComponent implements OnInit {
             switchMap(_ => this.loginService.emailLogin(user.email, user.password))
         ).subscribe(() => {
             SpinnerUtil.hideSpinner();
-            this.router.navigate(['/dash'])
+            this.router.navigate(['/dash/offers'])
                 .then(() => swal('', 'Sign-up successful!', 'success'));
         }, hideSpinnerAndDisplayError);
     }

@@ -59,13 +59,6 @@ export class ManageSingleDepositComponent implements OnInit {
 
         this.paymentUppy.on('file-added', () => this.isFileAttached());
         this.paymentUppy.on('file-removed', () => this.isFileAttached());
-
-        this.paymentUppy.on('upload-progress', (file, progress) => {
-            if (progress.bytesUploaded < progress.bytesTotal) {
-                SpinnerUtil.showSpinner();
-            }
-        });
-
         this.paymentUppy.on('upload-error', (file) => {
             SpinnerUtil.hideSpinner();
             this.paymentUppy.removeFile(file.id);
@@ -102,6 +95,9 @@ export class ManageSingleDepositComponent implements OnInit {
                         }, hideSpinnerAndDisplayError);
                 } catch (error) {
                     // When user close Arkane popup window
+                    if (error.status !== undefined && error.status.length > 0) {
+                        swal('', error.status, 'warning');
+                    }
                     SpinnerUtil.hideSpinner();
                     this.removeUppyPlugin();
                 }
@@ -133,7 +129,6 @@ export class ManageSingleDepositComponent implements OnInit {
                     this.depositModel.deposit.id,
                     this.amount
                 );
-
                 this.paymentUppy.use(Uppy.XHRUpload, {
                     endpoint: depositApprovalURL,
                     fieldName: 'file',
@@ -141,9 +136,12 @@ export class ManageSingleDepositComponent implements OnInit {
                         'Authorization': this.http.authHttpOptions().headers.get('Authorization')
                     }
                 });
-
                 confirmationSub.unsubscribe();
-                this.paymentUppy.upload().then(() => this.getDeposit());
+                SpinnerUtil.showSpinner();
+                this.paymentUppy.upload().then(() => {
+                    SpinnerUtil.hideSpinner();
+                    this.getDeposit();
+                });
             }, hideSpinnerAndDisplayError);
     }
 

@@ -1,55 +1,60 @@
 <div class="container root-content-container h-100">
-    <div class="mb-5">
-        <div class="row">
-            <div class="col-md-8">
-            </div>
-            <div *ngIf="organizations !== undefined" class="col-md-4">
-                <button class="btn btn-primary py-3 float-right w-100 " routerLink="new">
-                    <i class="fas fa-plus mr-3"></i>Create new group
-                </button>
+    <ng-container *ngIf="(organizationGroup$ | async) as organization else spinner">
+        <div class="mb-5">
+            <div class="row">
+                <div class="col-md-8">
+                </div>
+                <div *ngIf="organization !== undefined" class="col-md-4">
+                    <button class="btn btn-primary py-3 float-right w-100 " routerLink="new">
+                        <i class="fas fa-plus mr-3"></i>Create new group
+                    </button>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="explainer-mini text-uppercase mb-3">My groups</div>
-    <div *ngIf="(organizations !== undefined) && (organizations.length > 0)">
-        <ul class="cursor-pointer list-group">
-            <li *ngFor="let org of organizations" class="list-group-item hover-bg"
-                routerLink="{{ org.uuid }}">
+        <div class="explainer-mini text-uppercase mb-3">My groups</div>
+        <div *ngIf="(organization !== undefined) && (organization.length > 0)">
+            <ul class="cursor-pointer list-group">
+                <li *ngFor="let org of organization" class="list-group-item hover-bg"
+                    routerLink="{{ org.uuid }}">
             <span class="float-left explainer-mini">
               {{ org.name }}
             </span>
-
-            </li>
-        </ul>
-    </div>
-    <div *ngIf="(organizations !== undefined) && (organizations.length ===  0)"
-         class="d-flex justify-content-center mt-5">
-        <div class="d-flex flex-column mt-3">
-            <div class="d-flex text-center explainer-mini">
-                You currently don't have access to any groups.
+                </li>
+            </ul>
+        </div>
+        <div *ngIf="(organization !== undefined) && (organization.length ===  0)"
+             class="d-flex justify-content-center mt-5">
+            <div class="d-flex flex-column mt-3">
+                <div class="d-flex text-center explainer-mini">
+                    You currently don't have access to any groups.
+                </div>
             </div>
         </div>
-    </div>
+    </ng-container>
 
-    <div *ngIf="invitedToOrgs !== undefined">
-        <div class="explainer-mini text-uppercase mt-5 mb-3">My group invites</div>
-        <ul *ngIf="invitedToOrgs.length > 0" class="list-group">
-            <li *ngFor="let invite of invitedToOrgs" class="list-group-item mt-2">
+    <ng-container *ngIf="(organizationInviteS | async) as invitedToOrganizations else spinner">
+        <div *ngIf="invitedToOrganizations !== undefined">
+            <div class="explainer-mini text-uppercase mt-5 mb-3">My group invites</div>
+            <ul *ngIf="invitedToOrganizations.length > 0" class="list-group">
+                <li *ngFor="let invite of invitedToOrganizations" class="list-group-item mt-2">
           <span class="float-left explainer-mini">
             {{ invite.organization_name }}
           </span>
-                <div class="float-right">
+                    <div class="float-right">
                     <span (click)="acceptInvite(invite.organization_uuid)"
                           class="explainer-mini text-uppercase cursor-pointer">
                         Accept invite
                     </span>
-                </div>
-            </li>
-        </ul>
-        <div *ngIf="invitedToOrgs.length ==0" class="w-100 text-center pt-5 pb-5 explainer-mini">
-            Not invited to any groups
+                    </div>
+                </li>
+            </ul>
+            <div *ngIf="invitedToOrganizations.length ==0" class="w-100 text-center pt-5 pb-5 explainer-mini">
+                Not invited to any groups
+            </div>
         </div>
-    </div>
-
+    </ng-container>
 </div>
+<ng-template #spinner>
+    <app-spinner type="overlay"></app-spinner>
+</ng-template>
 

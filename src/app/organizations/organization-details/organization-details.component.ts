@@ -8,6 +8,8 @@ import { WalletService } from '../../shared/services/wallet/wallet.service';
 import { WalletDetails } from '../../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
 import { Organization, OrganizationMember, OrganizationService } from '../../shared/services/project/organization.service';
 import { BroadcastService } from '../../shared/services/broadcast.service';
+import { BehaviorSubject, EMPTY, Observable } from 'rxjs';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
 
 declare var $: any;
 
@@ -17,15 +19,20 @@ declare var $: any;
     styleUrls: ['./organization-details.component.css']
 })
 export class OrganizationDetailsComponent implements OnInit {
+    organization$: Observable<Organization>;
+    orgWallet$: Observable<WalletDetails>;
+    orgMember$: Observable<OrganizationMember[]>;
+
+    refreshOrganizationSubject = new BehaviorSubject<void>(null);
+    refreshOrganizationWalletSubject = new BehaviorSubject<void>(null);
+    refreshOrganizationMemberSubject = new BehaviorSubject<void>(null);
 
     orgWalletInitialized: boolean;
     txData: string;
     txID: number;
+
     organization: Organization;
     orgWallet?: WalletDetails;
-    orgMembers: OrganizationMember[];
-
-    qrCodeData: String = '';
 
     constructor(private activeRoute: ActivatedRoute,
                 private organizationService: OrganizationService,
@@ -35,45 +42,49 @@ export class OrganizationDetailsComponent implements OnInit {
 
     ngOnInit() {
         const orgID = this.activeRoute.snapshot.params.id;
-        this.organizationService.getSingleOrganization(orgID).subscribe(org => {
-            this.organization = org;
-        }, err => {
-            displayBackendError(err);
-        });
 
-        this.walletService.getOrganizationWallet(orgID).subscribe(res => {
-            this.orgWallet = res;
-        }, err => {
-            if (err.status === 404) {
-                this.orgWallet = null;
-            } else if (err.error.err_code === '0851') {
-                swal('', 'The organization is being created. This can take up to a minute. Please check again later.', 'info')
-                    .then(() => {
-                        window.history.back();
-                    });
-            } else {
+        this.organization$ = this.refreshOrganizationSubject.pipe(
+            switchMap(_ => this.organizationService.getSingleOrganization(orgID)),
+            tap(res => this.organization = res),
+            catchError(err => {
                 displayBackendError(err);
-            }
-        });
+                return EMPTY;
+            }));
 
-        this.organizationService.getMembersForOrganization(orgID)
-            .subscribe(res => {
-                this.orgMembers = res.members;
-            }, err => {
+        this.orgWallet$ = this.refreshOrganizationWalletSubject.pipe(
+            switchMap(_ => this.walletService.getOrganizationWallet(orgID)),
+            tap(res => this.orgWallet = res),
+            catchError(err => {
+                if (err.status === 404) {
+                    this.orgWallet = null;
+                } else if (err.error.err_code === '0851') {
+                    swal('', 'The organization is being created. This can take up to a minute. Please check again later.', 'info')
+                        .then(() => {
+                            window.history.back();
+                        });
+                } else {
+                    displayBackendError(err);
+                }
+                return EMPTY;
+            }));
+
+        this.orgMember$ = this.refreshOrganizationMemberSubject.pipe(
+            switchMap(_ => this.organizationService.getMembersForOrganization(orgID)),
+            map(res => res.members),
+            catchError(err => {
                 displayBackendError(err);
-            });
+                return EMPTY;
+            }));
     }
 
     inviteClicked() {
         SpinnerUtil.showSpinner();
         const email = $('#email-invite-input').val();
-        this.organizationService.inviteUser(this.organization.uuid, email).subscribe(res => {
-            SpinnerUtil.hideSpinner();
-            swal('Success', 'Successfully invited user to organization', 'success');
-        }, err => {
-            SpinnerUtil.hideSpinner();
-            displayBackendError(err);
-        });
+        this.organizationService.inviteUser(this.organization.uuid, email)
+            .subscribe(() => {
+                SpinnerUtil.hideSpinner();
+                swal('Success', 'Successfully invited user to organization', 'success');
+            }, () => hideSpinnerAndDisplayError);
     }
 
     async createOrgWalletClicked() {
@@ -97,10 +108,10 @@ export class OrganizationDetailsComponent implements OnInit {
         }, err => {
             displayBackendError(err);
         });
-
     }
 
     deleteMember(orgID: string, memberID: string) {
+        const self = this;
         SpinnerUtil.showSpinner();
         this.organizationService.removeMemberFromOrganization(orgID, memberID)
             .subscribe(() => {
@@ -109,11 +120,8 @@ export class OrganizationDetailsComponent implements OnInit {
                         text: 'Success!',
                         type: 'success'
                     }).then(function () {
-                        this.organizationService.getMembersForOrganization(orgID)
-                            .subscribe(res => {
-                                this.orgMembers = res.members;
-                                SpinnerUtil.hideSpinner();
-                            }, hideSpinnerAndDisplayError);
+                        self.refreshOrganizationMemberSubject.next();
+                        SpinnerUtil.hideSpinner();
                     }.bind(this));
                 },
                 hideSpinnerAndDisplayError);

@@ -1,12 +1,15 @@
-<div class="container root-content-container">
-
-    <div *ngIf="organization !== undefined">
+<div *ngIf="{
+    organization: organization$ | async,
+    orgWallet: orgWallet$ | async,
+    orgMembers: orgMember$ | async
+} as states" class="container root-content-container">
+    <ng-container *ngIf="states.organization !== null else spinner">
         <div class="row">
             <div class="col-md-8 h5">
-                {{ organization.name }}
+                {{ states.organization.name }}
             </div>
             <div class="col-md-4">
-                <button *ngIf="orgWallet !== null && orgWallet?.hash !== undefined"
+                <button *ngIf="states.orgWallet !== null && states.orgWallet?.hash !== undefined"
                         class="btn btn-primary py-2 w-100"
                         routerLink="create_project">
                     <i class="fas fa-plus-circle mr-2"></i>
@@ -14,7 +17,7 @@
                 </button>
             </div>
         </div>
-    </div>
+    </ng-container>
 
     <div *ngIf="orgWallet === null" class="row">
         <div class="pt-5 w-100">
@@ -28,9 +31,9 @@
         </div>
     </div>
 
-    <div *ngIf="orgWallet !== null">
+    <div *ngIf="states.orgWallet !== null">
         <div class="row mt-3">
-            <div *ngIf="orgWallet?.hash === undefined" class="col-md-12">
+            <div *ngIf="states.orgWallet?.hash === undefined" class="col-md-12">
                 <div class="alert alert-warning">
                     This group is pending approval from admin. During this time, you can't create new projects.
                 </div>
@@ -49,25 +52,30 @@
                 </button>
             </div>
 
-            <ng-container *ngIf="organization !== undefined">
+            <ng-container *ngIf="states.organization !== undefined else spinner">
                 <div class="col-md-12 mt-4">
-                    <app-manage-projects [groupID]="organization.uuid"></app-manage-projects>
+                    <app-manage-projects [groupID]="states.organization.uuid"></app-manage-projects>
                 </div>
                 <div class="col-md-12 mt-4">
                     <div class="explainer-mini mb-3">Manage users</div>
                     <ul class="list-group">
-                        <li *ngFor="let member of orgMembers" class="list-group-item">
+                        <li *ngFor="let member of states.orgMembers" class="list-group-item">
                             <span class="float-left">{{ member.first_name }} {{ member.last_name }}</span>
-                            <span class="float-right" (click)="deleteMember(organization.uuid, member.uuid)">
+                            <span class="float-right" (click)="deleteMember(states.organization.uuid, member.uuid)">
                             <i class="fas fa-trash cursor-pointer"></i></span>
                         </li>
                     </ul>
-                    <div *ngIf="(orgMembers !== undefined) && (orgMembers.length ===  0)"
+                    <div *ngIf="(states.orgMembers !== undefined)"
                          class="w-100 pt-3 pb-3 text-center explainer-mini">
-                        You are the only member of {{ organization.name }}
+                        You are the only member of {{ states.organization.name }}
                     </div>
                 </div>
             </ng-container>
         </div>
     </div>
 </div>
+<ng-template #spinner>
+    <app-spinner type="overlay"></app-spinner>
+</ng-template>
+
+

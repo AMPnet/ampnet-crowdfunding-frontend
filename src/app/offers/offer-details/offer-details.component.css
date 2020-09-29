@@ -89,13 +89,8 @@
     font-size: 14px;
 }
 
-.offer-left {
-    display: none;
-}
-
 @media (min-width: 800px) {
     .offer-left {
-        display: initial;
         max-width: 686px;
         padding-right: 0;
     }
@@ -150,6 +145,7 @@
     }
 
     .offer-desc {
+        margin-top: 20px;
         font-size: 14px;
         line-height: 1.5rem;
     }

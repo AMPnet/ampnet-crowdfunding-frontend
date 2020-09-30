@@ -25,10 +25,6 @@ export class OrganizationDetailsComponent implements OnInit {
 
     refreshOrganizationMemberSubject = new BehaviorSubject<void>(null);
 
-    orgWalletInitialized: boolean;
-    txData: string;
-    txID: number;
-
     constructor(private activeRoute: ActivatedRoute,
                 private organizationService: OrganizationService,
                 private walletService: WalletService,
@@ -39,19 +35,19 @@ export class OrganizationDetailsComponent implements OnInit {
         const orgID = this.activeRoute.snapshot.params.id;
         this.organization$ = this.organizationService.getSingleOrganization(orgID).pipe(this.handleError);
         this.orgWallet$ = this.walletService.getOrganizationWallet(orgID).pipe(
-        catchError(err => {
-            if (err.status === 404) {
-                return of(undefined);
-            } else if (err.error.err_code === '0851') {
-                swal('', 'The organization is being created. This can take up to a minute. Please check again later.', 'info')
-                    .then(() => {
-                        window.history.back();
-                    });
-            } else {
-                displayBackendError(err);
-            }
-            return EMPTY;
-        }));
+            catchError(err => {
+                if (err.status === 404) {
+                    return of(undefined);
+                } else if (err.error.err_code === '0851') {
+                    swal('', 'The organization is being created. This can take up to a minute. Please check again later.', 'info')
+                        .then(() => {
+                            window.history.back();
+                        });
+                } else {
+                    displayBackendError(err);
+                }
+                return EMPTY;
+            }));
 
         this.orgMember$ = this.refreshOrganizationMemberSubject.pipe(
             switchMap(_ => this.organizationService.getMembersForOrganization(orgID)),
@@ -73,10 +69,6 @@ export class OrganizationDetailsComponent implements OnInit {
         const account = await arkaneConnect.flows.getAccount(SecretType.AETERNITY);
 
         this.walletService.createOrganizationWalletTransaction(orgUUID).subscribe(async res => {
-            this.orgWalletInitialized = false;
-            this.txData = JSON.stringify(res.tx);
-            this.txID = res.tx_id;
-
             const sigRes = await arkaneConnect.createSigner(WindowMode.POPUP).sign({
                 walletId: account.wallets[0].id,
                 data: res.tx,

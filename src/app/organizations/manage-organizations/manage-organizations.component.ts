@@ -12,7 +12,6 @@ import { catchError, map, switchMap } from 'rxjs/operators';
     styleUrls: ['./manage-organizations.component.css']
 })
 export class ManageOrganizationsComponent {
-
     organizationGroup$: Observable<Organization[]>;
     organizationInviteS: Observable<OrganizationInvite[]>;
 

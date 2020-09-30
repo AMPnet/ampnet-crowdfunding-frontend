@@ -24,19 +24,11 @@ export class ManageOrganizationsComponent {
 
         this.organizationGroup$ = this.refreshOrganizationGroupSubject.pipe(
             switchMap(_ => this.organizationService.getPersonalOrganizations()),
-            map(res => res.organizations),
-            catchError(err => {
-                displayBackendError(err);
-                return EMPTY;
-            }));
+            map(res => res.organizations)).pipe(this.handleError);
 
         this.organizationInviteS = this.refreshPersonalOrganizationSubject.pipe(
             switchMap(_ => this.organizationService.getMyInvitations()),
-            map(res => res.organization_invites),
-            catchError(err => {
-                displayBackendError(err);
-                return EMPTY;
-            }));
+            map(res => res.organization_invites)).pipe(this.handleError);
     }
 
     refreshState() {
@@ -51,5 +43,14 @@ export class ManageOrganizationsComponent {
             swal('Success', 'Accepted invitation to organization', 'success');
             this.refreshState();
         }, hideSpinnerAndDisplayError);
+    }
+
+    private handleError<T>(source: Observable<T>) {
+        return source.pipe(
+            catchError(err => {
+                displayBackendError(err);
+                return EMPTY;
+            })
+        );
     }
 }

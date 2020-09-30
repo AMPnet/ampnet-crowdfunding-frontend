@@ -8,8 +8,8 @@ import { WalletService } from '../../shared/services/wallet/wallet.service';
 import { WalletDetails } from '../../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
 import { Organization, OrganizationMember, OrganizationService } from '../../shared/services/project/organization.service';
 import { BroadcastService } from '../../shared/services/broadcast.service';
-import { BehaviorSubject, EMPTY, Observable } from 'rxjs';
-import { catchError, map, switchMap, tap } from 'rxjs/operators';
+import { BehaviorSubject, EMPTY, Observable, of } from 'rxjs';
+import { catchError, map, switchMap } from 'rxjs/operators';
 
 declare var $: any;
 
@@ -23,16 +23,11 @@ export class OrganizationDetailsComponent implements OnInit {
     orgWallet$: Observable<WalletDetails>;
     orgMember$: Observable<OrganizationMember[]>;
 
-    refreshOrganizationSubject = new BehaviorSubject<void>(null);
-    refreshOrganizationWalletSubject = new BehaviorSubject<void>(null);
     refreshOrganizationMemberSubject = new BehaviorSubject<void>(null);
 
     orgWalletInitialized: boolean;
     txData: string;
     txID: number;
-
-    organization: Organization;
-    orgWallet?: WalletDetails;
 
     constructor(private activeRoute: ActivatedRoute,
                 private organizationService: OrganizationService,
@@ -42,56 +37,42 @@ export class OrganizationDetailsComponent implements OnInit {
 
     ngOnInit() {
         const orgID = this.activeRoute.snapshot.params.id;
-
-        this.organization$ = this.refreshOrganizationSubject.pipe(
-            switchMap(_ => this.organizationService.getSingleOrganization(orgID)),
-            tap(res => this.organization = res),
-            catchError(err => {
+        this.organization$ = this.organizationService.getSingleOrganization(orgID).pipe(this.handleError);
+        this.orgWallet$ = this.walletService.getOrganizationWallet(orgID).pipe(
+        catchError(err => {
+            if (err.status === 404) {
+                return of(undefined);
+            } else if (err.error.err_code === '0851') {
+                swal('', 'The organization is being created. This can take up to a minute. Please check again later.', 'info')
+                    .then(() => {
+                        window.history.back();
+                    });
+            } else {
                 displayBackendError(err);
-                return EMPTY;
-            }));
-
-        this.orgWallet$ = this.refreshOrganizationWalletSubject.pipe(
-            switchMap(_ => this.walletService.getOrganizationWallet(orgID)),
-            tap(res => this.orgWallet = res),
-            catchError(err => {
-                if (err.status === 404) {
-                    this.orgWallet = null;
-                } else if (err.error.err_code === '0851') {
-                    swal('', 'The organization is being created. This can take up to a minute. Please check again later.', 'info')
-                        .then(() => {
-                            window.history.back();
-                        });
-                } else {
-                    displayBackendError(err);
-                }
-                return EMPTY;
-            }));
+            }
+            return EMPTY;
+        }));
 
         this.orgMember$ = this.refreshOrganizationMemberSubject.pipe(
             switchMap(_ => this.organizationService.getMembersForOrganization(orgID)),
-            map(res => res.members),
-            catchError(err => {
-                displayBackendError(err);
-                return EMPTY;
-            }));
+            map(res => res.members)).pipe(this.handleError);
     }
 
-    inviteClicked() {
+    inviteClicked(orgUUID: string) {
         SpinnerUtil.showSpinner();
         const email = $('#email-invite-input').val();
-        this.organizationService.inviteUser(this.organization.uuid, email)
+        this.organizationService.inviteUser(orgUUID, email)
             .subscribe(() => {
                 SpinnerUtil.hideSpinner();
                 swal('Success', 'Successfully invited user to organization', 'success');
             }, () => hideSpinnerAndDisplayError);
     }
 
-    async createOrgWalletClicked() {
+    async createOrgWalletClicked(orgUUID: string) {
         const arkaneConnect = new ArkaneConnect('AMPnet', {environment: 'staging'});
         const account = await arkaneConnect.flows.getAccount(SecretType.AETERNITY);
 
-        this.walletService.createOrganizationWalletTransaction(this.organization.uuid).subscribe(async res => {
+        this.walletService.createOrganizationWalletTransaction(orgUUID).subscribe(async res => {
             this.orgWalletInitialized = false;
             this.txData = JSON.stringify(res.tx);
             this.txID = res.tx_id;
@@ -125,5 +106,14 @@ export class OrganizationDetailsComponent implements OnInit {
                     }.bind(this));
                 },
                 hideSpinnerAndDisplayError);
+    }
+
+    private handleError<T>(source: Observable<T>) {
+        return source.pipe(
+            catchError(err => {
+                displayBackendError(err);
+                return EMPTY;
+            })
+        );
     }
 }

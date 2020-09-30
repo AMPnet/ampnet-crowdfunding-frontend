@@ -1,12 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { OrganizationService } from '../shared/services/project/organization.service';
-import { SpinnerUtil } from '../utilities/spinner-utilities';
-import { displayBackendError } from '../utilities/error-handler';
+import { displayBackendError, hideSpinnerAndDisplayError } from '../utilities/error-handler';
 import { Project, ProjectService } from '../shared/services/project/project.service';
-
-
-declare var _: any;
+import { BehaviorSubject, EMPTY, Observable } from 'rxjs';
+import { catchError, map, switchMap } from 'rxjs/operators';
 
 @Component({
     selector: 'app-manage-projects',
@@ -14,7 +12,8 @@ declare var _: any;
     styleUrls: ['./manage-projects.component.css']
 })
 export class ManageProjectsComponent implements OnInit {
-    projects: Project[];
+    project$: Observable<Project[]>;
+    refreshProjectsSubject = new BehaviorSubject<void>(null);
 
     @Input() groupID: string;
 
@@ -28,33 +27,27 @@ export class ManageProjectsComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.getProjectsForGroup();
-
+        this.project$ = this.refreshProjectsSubject.pipe(
+            switchMap(() => this.orgService.getAllProjectsForOrganization(this.groupID)),
+            map(res => res.projects)).pipe(this.handleError);
     }
 
-    getProjectsForGroup() {
-        SpinnerUtil.showSpinner();
-        this.orgService.getAllProjectsForOrganization(this.groupID).subscribe((res) => {
-            SpinnerUtil.hideSpinner();
-
-            this.projects = res.projects;
-        }, err => {
-            SpinnerUtil.hideSpinner();
-            displayBackendError(err);
-        });
-    }
-
-    toggleProject(uuid: string) {
-        SpinnerUtil.showSpinner();
-        const project = this.projects.filter(x => x.uuid === uuid)[0];
+    toggleProject(uuid: string, projects: Project[]) {
+        const project = projects.filter(x => x.uuid === uuid)[0];
 
         this.projectService.updateProject(project.uuid, {
             active: !project.active
         }).subscribe(() => {
-            this.getProjectsForGroup();
-        }, err => {
-            SpinnerUtil.hideSpinner();
-            displayBackendError(err);
-        });
+            this.refreshProjectsSubject.next();
+        }, hideSpinnerAndDisplayError);
+    }
+
+    private handleError<T>(source: Observable<T>) {
+        return source.pipe(
+            catchError(err => {
+                displayBackendError(err);
+                return EMPTY;
+            })
+        );
     }
 }

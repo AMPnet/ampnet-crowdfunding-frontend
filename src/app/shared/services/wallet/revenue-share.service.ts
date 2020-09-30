@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BackendHttpClient } from '../backend-http-client.service';
 import { TransactionInfo } from './wallet-cooperative/wallet-cooperative-wallet.service';
-import { baseCurrencyUnitToCents, centsToBaseCurrencyUnit } from '../../../utilities/currency-util';
 
 @Injectable({
     providedIn: 'root'

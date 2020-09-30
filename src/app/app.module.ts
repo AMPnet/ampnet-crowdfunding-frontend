@@ -44,7 +44,7 @@ import { CreateNewProjectComponent } from './projects/create-new-project/create-
 import { OnboardingComponent } from './authentication/onboarding/onboarding.component';
 import { ManageProjectsComponent } from './manage-projects/manage-projects.component';
 import { ManageSingleProjectComponent } from './manage-projects/manage-single-project/manage-single-project.component';
-import { VerifySignOfferComponent } from './offers/verify-sign-offer/verify-sign-offer.component';
+import { VerifySignOfferComponent } from './offers/offer-details/verify-sign-offer/verify-sign-offer.component';
 import { ManagePaymentsComponent } from './project/manage-payments/manage-payments.component';
 import { ManageWithdrawalsComponent } from './manage-withdrawals/manage-withdrawals.component';
 import { SingleWithdrawalComponent } from './manage-withdrawals/single-withdrawal/single-withdrawal.component';
@@ -83,6 +83,7 @@ import { environment } from '../environments/environment.prod';
 import { MoneyInputFieldComponent } from './shared/components/money-input-field/money-input-field.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { BaseArkaneFlowComponent } from './shared/components/base-arkane-flow/base-arkane-flow.component';
 
 const socialAuthServiceConfig = {
     provide: 'SocialAuthServiceConfig',
@@ -174,6 +175,7 @@ const socialAuthServiceConfig = {
         TxAmountSign,
         ActionButtonComponent,
         MoneyInputFieldComponent,
+        BaseArkaneFlowComponent,
     ],
     imports: [
         BrowserModule,

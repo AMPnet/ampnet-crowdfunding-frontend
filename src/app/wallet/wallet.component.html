@@ -9,7 +9,6 @@
     <button class="btn btn-primary" (click)="arkaneService.getProfile().subscribe()">getProfile</button>
     <button class="btn btn-primary" (click)="arkaneService.getWallets().subscribe()">getWallets</button>
     <button class="btn btn-primary" (click)="arkaneService.logout().subscribe()">logout</button>
-    <button class="btn btn-primary" (click)="arkaneService.createWallet().subscribe()">createWallet</button>
 
     <ng-container *ngIf="{ wallet: wallet$ | async } as states">
         <div *ngIf="states.wallet?.state === walletState.EMPTY" class="row">
@@ -142,12 +141,12 @@
                         </div>
                     </div>
                 </ng-container>
-                <ng-template #overlaySpinner>
-                    <div class="justify-content-center" style="width: 100%">
-                        <app-spinner type="overlay"></app-spinner>
-                    </div>
-                </ng-template>
             </div>
         </div>
+        <ng-template #overlaySpinner>
+            <div class="justify-content-center" style="width: 100%">
+                <app-spinner type="overlay"></app-spinner>
+            </div>
+        </ng-template>
     </ng-container>
 </div>

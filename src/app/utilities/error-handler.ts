@@ -17,10 +17,6 @@ export function displayBackendError(resp: any) {
     }
 }
 
-export function displayErrorMessage(msg: string) {
-    swal('', msg, 'error');
-}
-
 export function hideSpinnerAndDisplayError(err: any) {
     SpinnerUtil.hideSpinner();
     displayBackendError(err);

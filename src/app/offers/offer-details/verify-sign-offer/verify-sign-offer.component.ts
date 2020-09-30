@@ -6,7 +6,7 @@ import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
 import { BroadcastService } from 'src/app/shared/services/broadcast.service';
 import swal from 'sweetalert2';
-import { WalletService } from '../../shared/services/wallet/wallet.service';
+import { WalletService } from '../../../shared/services/wallet/wallet.service';
 
 @Component({
     selector: 'app-verify-sign-offer',

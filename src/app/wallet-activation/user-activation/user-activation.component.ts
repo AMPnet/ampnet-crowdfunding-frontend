@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
+import { displayBackendErrorRx, hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { BroadcastService } from 'src/app/shared/services/broadcast.service';
-import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
-import swal from 'sweetalert2';
 import {
     CooperativeUser,
     WalletCooperativeWalletService
 } from '../../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
+import { finalize, switchMap, tap } from 'rxjs/operators';
+import { ArkaneService } from '../../shared/services/arkane.service';
+import { PopupService } from '../../shared/services/popup.service';
 
 
 @Component({
@@ -19,6 +20,8 @@ export class UserActivationComponent implements OnInit {
     users: CooperativeUser[];
 
     constructor(private activationService: WalletCooperativeWalletService,
+                private arkaneService: ArkaneService,
+                private popupService: PopupService,
                 private broadService: BroadcastService) {
     }
 
@@ -35,27 +38,18 @@ export class UserActivationComponent implements OnInit {
             }, hideSpinnerAndDisplayError);
     }
 
-    async activateUserClicked(id: number) {
+    activateUserClicked(userUUID: string) {
         SpinnerUtil.showSpinner();
-
-        this.activationService.activateWallet(id).subscribe(async res => {
-            const arkaneConnect = new ArkaneConnect('AMPnet', {
-                environment: 'staging'
-            });
-
-            const account = await arkaneConnect.flows.getAccount(SecretType.AETERNITY);
-            const sigRes = await arkaneConnect.createSigner(WindowMode.POPUP).sign({
-                walletId: account.wallets[0].id,
-                data: res.tx,
-                type: SignatureRequestType.AETERNITY_RAW
-            });
-            this.broadService.broadcastSignedTx(sigRes.result.signedTransaction, res.tx_id)
-                .subscribe(_ => {
-                    SpinnerUtil.hideSpinner();
-                    swal('', 'Success', 'success').then(() => {
-                        this.fetchUnactivatedUserWallets();
-                    });
-                }, hideSpinnerAndDisplayError);
-        }, hideSpinnerAndDisplayError);
+        return this.activationService.activateWallet(userUUID).pipe(
+            displayBackendErrorRx(),
+            switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo)),
+            switchMap(() => this.popupService.new({
+                type: 'success',
+                title: 'Transaction signed',
+                text: 'Transaction is being processed...'
+            })),
+            tap(() => this.fetchUnactivatedUserWallets()),
+            finalize(() => SpinnerUtil.hideSpinner())
+        );
     }
 }

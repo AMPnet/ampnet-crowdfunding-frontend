@@ -3,12 +3,8 @@ import { InvestmentsInProject, PortfolioService } from '../shared/services/walle
 import { ActivatedRoute, Router } from '@angular/router';
 import { displayBackendErrorRx, hideSpinnerAndDisplayError } from '../utilities/error-handler';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
-import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
-import { BroadcastService } from 'src/app/shared/services/broadcast.service';
-import swal from 'sweetalert2';
 import { WalletService } from '../shared/services/wallet/wallet.service';
 import { switchMap } from 'rxjs/operators';
-import { throwError } from 'rxjs';
 import { PopupService } from '../shared/services/popup.service';
 import { ArkaneService } from '../shared/services/arkane.service';
 
@@ -62,20 +58,5 @@ export class InvestmentDetailsComponent implements OnInit {
                     this.isCancelable = res.can_cancel;
                 });
         }
-    }
-
-    showAlert() {
-        swal({
-            type: 'success',
-            title: 'Transaction signed',
-            text: 'Transaction is being processed...',
-            footer: 'Check your transaction status<a href="/dash/wallet">&nbsp;here</a>'
-        }).then(() => {
-            this.walletService.clearAndRefreshWallet();
-            this.router.navigate(['/dash/wallet']);
-        });
-        // This is a hack to fix bug in Sweet Alert lib -> always displays dropdown
-        // TODO: This is deprecated and needs to be fixed.
-        swal.getContent().getElementsByClassName('swal2-select').item(0).remove();
     }
 }

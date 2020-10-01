@@ -8,9 +8,10 @@
     <button class="btn btn-primary" (click)="arkaneService.isAuthenticated().subscribe()">isAuthenticated</button>
     <button class="btn btn-primary" (click)="arkaneService.getProfile().subscribe()">getProfile</button>
     <button class="btn btn-primary" (click)="arkaneService.getWallets().subscribe()">getWallets</button>
+    <button class="btn btn-primary" (click)="arkaneService.getMatchedWallet().subscribe()">getMatchedWallet</button>
     <button class="btn btn-primary" (click)="arkaneService.logout().subscribe()">logout</button>
 
-    <ng-container *ngIf="{ wallet: wallet$ | async } as states">
+    <ng-container *ngIf="{ wallet: (wallet$ | async) } as states">
         <div *ngIf="states.wallet?.state === walletState.EMPTY" class="row">
             <div class="content-left col-12 col-lg-6 mt-4 pl-md-5 pr-md-5">
                 <div class="wallet-warning mt-5 mb-5">
@@ -34,10 +35,13 @@
 
                 </div>
                 <div class="mt-4 text-center initialize-button">
-                    <button (click)="setUpArkane()" class="btn btn-primary mt-3 w-100">
-                        <i class="fas fa-plus mr-3"></i>
-                        Initialize secure wallet
-                    </button>
+<!--                    <button (click)="setUpArkane()" class="btn btn-primary mt-3 w-100">-->
+<!--                        <i class="fas fa-plus mr-3"></i>-->
+<!--                        Initialize secure wallet-->
+<!--                    </button>-->
+
+                    <app-action-button text="Initialize secure wallet" [onClick]="setUpArkane.bind(this)">
+                    </app-action-button>
                 </div>
             </div>
 
@@ -60,7 +64,7 @@
             </div>
         </div>
 
-        <div *ngIf="!!states.wallet && states.wallet.state !== walletState.EMPTY else overlaySpinner" class="">
+        <div *ngIf="!!states.wallet && states.wallet.state !== walletState.EMPTY else fetchWalletSpinner" class="">
             <div class="row">
                 <div class="col-md-12">
                     <div *ngIf="states.wallet?.wallet?.balance === 0" class="alert alert-info w-100 mt-4">
@@ -100,7 +104,7 @@
 					<span class="h4 text-left">
 						<div class="explainer-mini float-right mb-2 w-100">Transaction History</div>
 					</span>
-                <ng-container *ngIf="(transactionHistory$ | async) else overlaySpinner">
+                <ng-container *ngIf="(transactionHistory$ | async) else transactionHistorySpinner">
                     <div *ngIf="transactionHistory !== undefined" class="wow fadeIn">
                         <div class="table-responsive-md">
                             <table class="table">
@@ -141,10 +145,15 @@
                         </div>
                     </div>
                 </ng-container>
+                <ng-template #transactionHistorySpinner>
+                    <div class="justify-content-center" style="width: 100%">
+                        <app-spinner type="overlay"></app-spinner>
+                    </div>
+                </ng-template>
             </div>
         </div>
-        <ng-template #overlaySpinner>
-            <div class="justify-content-center" style="width: 100%">
+        <ng-template #fetchWalletSpinner>
+            <div *ngIf="states.wallet?.state === undefined" class="justify-content-center" style="width: 100%">
                 <app-spinner type="overlay"></app-spinner>
             </div>
         </ng-template>

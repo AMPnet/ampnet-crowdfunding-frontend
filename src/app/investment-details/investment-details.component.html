@@ -4,9 +4,9 @@
             <h4>{{ investment.project.name }}</h4>
         </div>
         <div *ngIf="isCancelable" class="float-right w-100">
-            <button (click)="cancelInvestment()" class="btn btn-primary py-3 w-25">
-                Cancel
-            </button>
+            <app-action-button text="Cancel" loadingText="Cancelling investment..."
+                               [onClick]="cancelInvestment.bind(this)">
+            </app-action-button>
         </div>
         <div class="col-md-12">
             <hr/>

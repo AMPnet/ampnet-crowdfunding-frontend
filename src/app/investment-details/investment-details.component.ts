@@ -1,12 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { InvestmentsInProject, PortfolioService } from '../shared/services/wallet/portfolio.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
+import { displayBackendErrorRx, hideSpinnerAndDisplayError } from '../utilities/error-handler';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
 import { BroadcastService } from 'src/app/shared/services/broadcast.service';
 import swal from 'sweetalert2';
 import { WalletService } from '../shared/services/wallet/wallet.service';
+import { switchMap } from 'rxjs/operators';
+import { throwError } from 'rxjs';
+import { PopupService } from '../shared/services/popup.service';
+import { ArkaneService } from '../shared/services/arkane.service';
 
 @Component({
     selector: 'app-investment-details',
@@ -21,8 +25,9 @@ export class InvestmentDetailsComponent implements OnInit {
     constructor(private portfolioService: PortfolioService,
                 private activatedRoute: ActivatedRoute,
                 private walletService: WalletService,
-                private router: Router,
-                private broadcastService: BroadcastService) {
+                private popupService: PopupService,
+                private arkaneService: ArkaneService,
+                private router: Router) {
     }
 
     ngOnInit() {
@@ -37,28 +42,16 @@ export class InvestmentDetailsComponent implements OnInit {
     }
 
     cancelInvestment() {
-        SpinnerUtil.showSpinner();
-        this.portfolioService.generateCancelInvestmentTransaction(this.investment.project.uuid)
-            .subscribe(async res => {
-                SpinnerUtil.hideSpinner();
-
-                const arkaneConnect = new ArkaneConnect('AMPnet', {environment: 'staging'});
-                const acc = await arkaneConnect.flows.getAccount(SecretType.AETERNITY);
-                const sigRes = await arkaneConnect.createSigner(WindowMode.POPUP).sign({
-                    walletId: acc.wallets[0].id,
-                    data: res.tx,
-                    type: SignatureRequestType.AETERNITY_RAW
-                });
-                this.broadcastService.broadcastSignedTx(sigRes.result.signedTransaction, res.tx_id)
-                    .subscribe(_ => {
-                        this.showAlert();
-                        SpinnerUtil.hideSpinner();
-                    }, err => {
-                        hideSpinnerAndDisplayError(err);
-                    });
-            }, err => {
-                hideSpinnerAndDisplayError(err);
-            });
+        return this.portfolioService.generateCancelInvestmentTransaction(this.investment.project.uuid).pipe(
+            displayBackendErrorRx(),
+            switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo)),
+            switchMap(() => this.popupService.new({
+                type: 'success',
+                title: 'Transaction signed',
+                text: 'Transaction is being processed...'
+            })),
+            switchMap(() => this.router.navigate(['/dash/wallet']))
+        );
     }
 
     private canCancelInvestment() {

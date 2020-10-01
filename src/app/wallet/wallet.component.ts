@@ -1,9 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
-import { SpinnerUtil } from '../utilities/spinner-utilities';
-import { displayBackendError } from '../utilities/error-handler';
-import { ArkaneConnect, SecretType } from '@arkane-network/arkane-connect';
+import { ArkaneConnect } from '@arkane-network/arkane-connect';
 import { TransactionState, TransactionType, UserTransaction, WalletService, WalletState } from '../shared/services/wallet/wallet.service';
-import { BehaviorSubject, timer } from 'rxjs';
+import { BehaviorSubject, combineLatest, EMPTY, iif } from 'rxjs';
 import { map, switchMap, take, tap } from 'rxjs/operators';
 import { WebsocketService } from '../shared/services/websocket.service';
 import { ArkaneService } from '../shared/services/arkane.service';
@@ -22,7 +20,7 @@ export class WalletComponent implements OnDestroy {
     transactionHistory: UserTransaction[] = [];
     transactionHistoryPage: UserTransaction[] = [];
 
-    wallet$ = this.walletService.wallet$;
+    wallet$ = this.walletService.wallet$.pipe(tap((val) => console.log('wallet component subs', val)));
 
     walletState = WalletState;
     transactionState = TransactionState;
@@ -60,9 +58,12 @@ export class WalletComponent implements OnDestroy {
         })
     );
 
-    middlewareNotifier$ = this.wallet$.pipe(take(1), switchMap(wallet => {
-        return this.websocketService.walletNotifier(wallet.wallet.activation_data);
-    })).subscribe(() => this.refreshTransactionHistorySubject.next('fromPending'));
+    middlewareNotifier$ = combineLatest([this.wallet$]).pipe(
+        map(([latestWallet]) => latestWallet), take(1),
+        switchMap(wallet => {
+            return wallet.wallet !== undefined ? this.websocketService.walletNotifier(wallet.wallet?.activation_data) : EMPTY;
+        })
+    ).subscribe(() => this.refreshTransactionHistorySubject.next('fromPending'));
 
     constructor(private walletService: WalletService,
                 public arkaneService: ArkaneService,
@@ -76,11 +77,14 @@ export class WalletComponent implements OnDestroy {
     setUpArkane() {
         // this.arkaneConnect = new ArkaneConnect('AMPnet', {environment: 'staging'});
         //
-        this.arkaneConnect.flows.getAccount(SecretType.AETERNITY).then(acc => {
-            if ((acc.wallets !== undefined) && (acc.wallets.length > 0)) {
-                this.startWalletInit(acc.wallets[0].address);
-            }
-        });
+        // this.arkaneConnect.flows.getAccount(SecretType.AETERNITY).then(acc => {
+        //     if ((acc.wallets !== undefined) && (acc.wallets.length > 0)) {
+        //         this.startWalletInit(acc.wallets[0].address);
+        //     }
+        // });
+
+
+        return this.arkaneService.getMatchedWallet();
     }
 
     // testArkane() {
@@ -98,17 +102,17 @@ export class WalletComponent implements OnDestroy {
     //
     // }
 
-    startWalletInit(addr: string) {
-        SpinnerUtil.showSpinner();
-        this.walletService.initWallet(addr).subscribe(() => {
-            SpinnerUtil.hideSpinner();
-            this.walletService.clearAndRefreshWallet();
-        }, err => {
-            this.arkaneConnect.logout();
-            SpinnerUtil.hideSpinner();
-            displayBackendError(err);
-        });
-    }
+    // startWalletInit(addr: string) {
+    //     SpinnerUtil.showSpinner();
+    //     this.walletService.initWallet(addr).subscribe(() => {
+    //         SpinnerUtil.hideSpinner();
+    //         this.walletService.clearAndRefreshWallet();
+    //     }, err => {
+    //         this.arkaneConnect.logout();
+    //         SpinnerUtil.hideSpinner();
+    //         displayBackendError(err);
+    //     });
+    // }
 
     refreshTransactionHistoryPage() {
         this.transactionHistoryPage = this.transactionHistory

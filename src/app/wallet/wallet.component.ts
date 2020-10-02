@@ -20,7 +20,7 @@ export class WalletComponent implements OnDestroy {
     transactionHistory: UserTransaction[] = [];
     transactionHistoryPage: UserTransaction[] = [];
 
-    wallet$ = this.walletService.wallet$.pipe(tap((val) => console.log('wallet component subs', val)));
+    wallet$ = this.walletService.wallet$;
 
     walletState = WalletState;
     transactionState = TransactionState;
@@ -75,44 +75,8 @@ export class WalletComponent implements OnDestroy {
     }
 
     setUpArkane() {
-        // this.arkaneConnect = new ArkaneConnect('AMPnet', {environment: 'staging'});
-        //
-        // this.arkaneConnect.flows.getAccount(SecretType.AETERNITY).then(acc => {
-        //     if ((acc.wallets !== undefined) && (acc.wallets.length > 0)) {
-        //         this.startWalletInit(acc.wallets[0].address);
-        //     }
-        // });
-
-
         return this.arkaneService.getMatchedWallet();
     }
-
-    // testArkane() {
-    //     // this.arkaneService.isAuthenticated().subscribe(res => {
-    //     //     console.log(res);
-    //     //
-    //     //
-    //     // });
-    //
-    //     this.arkaneService.getAccount().subscribe(account => {
-    //         console.log(account);
-    //     });
-    //
-    //     // this.arkaneService.getProfile();
-    //
-    // }
-
-    // startWalletInit(addr: string) {
-    //     SpinnerUtil.showSpinner();
-    //     this.walletService.initWallet(addr).subscribe(() => {
-    //         SpinnerUtil.hideSpinner();
-    //         this.walletService.clearAndRefreshWallet();
-    //     }, err => {
-    //         this.arkaneConnect.logout();
-    //         SpinnerUtil.hideSpinner();
-    //         displayBackendError(err);
-    //     });
-    // }
 
     refreshTransactionHistoryPage() {
         this.transactionHistoryPage = this.transactionHistory

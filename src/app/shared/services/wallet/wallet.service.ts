@@ -19,7 +19,6 @@ export class WalletService {
         this.refreshWalletSubject.pipe(
             switchMap(() => this.cacheService.setAndGet(this.cacheKey, this.getUserWallet(), 30_000)))
     ).pipe(
-        tap(val => console.log('wallet$ after merge', val)),
         catchError(() => EMPTY)
     );
 

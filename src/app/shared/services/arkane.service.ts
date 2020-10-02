@@ -34,7 +34,6 @@ export class ArkaneService {
 
     getMatchedWallet(): Observable<Wallet> {
         return combineLatest([this.getUserWalletAddress(), this.getWallets()]).pipe(
-            tap(([userWalletAddress, wallets]) => console.log('user wallet address and wallets', userWalletAddress, wallets)),
             switchMap(([userWalletAddress, wallets]) => {
                 return userWalletAddress === null ?
                     this.arkaneWalletNotInitializedProcedure(wallets) :
@@ -46,7 +45,6 @@ export class ArkaneService {
     private getUserWalletAddress(): Observable<string> {
         return combineLatest([this.walletService.wallet$]).pipe(
             map(([wallet]) => wallet), take(1),
-            tap(wallet => console.log('wallet in arkane service (take 1)', wallet)),
             map(wallet => wallet?.state !== WalletState.EMPTY ? wallet.wallet.activation_data : null)
         );
     }
@@ -83,20 +81,26 @@ export class ArkaneService {
     private arkaneWalletsAlreadyInUseProcedure(): Observable<Wallet> {
         return this.popupService.info('Your wallets on Arkane are already in use. Please create a new wallet.').pipe(
             switchMap(popupRes => popupRes.dismiss === undefined ? this.manageWalletsFlow() : EMPTY),
-            switchMap(manageFlowsRes => manageFlowsRes.status === 'SUCCESS' ? this.getMatchedWallet() : EMPTY)
+            switchMap(manageFlowsRes => (<PopupResult>manageFlowsRes)?.status === 'SUCCESS' ? this.getMatchedWallet() : EMPTY)
         );
     }
 
     private arkaneNoWalletsAvailableProcedure(): Observable<Wallet> {
         return this.popupService.info('You will be prompted to create a new wallet on Arkane.').pipe(
             switchMap(popupRes => popupRes.dismiss === undefined ? this.manageWalletsFlow() : EMPTY),
-            switchMap(manageFlowsRes => manageFlowsRes.status === 'SUCCESS' ? this.getMatchedWallet() : EMPTY)
+            switchMap(manageFlowsRes => (<PopupResult>manageFlowsRes)?.status === 'SUCCESS' ? this.getMatchedWallet() : EMPTY)
         );
     }
 
     private arkaneWrongAccountProcedure(): Observable<Wallet> {
-        return combineLatest([this.popupService.info('You are logged in with wrong Arkane account.'), this.logout()]).pipe(
-            switchMap(([popupRes, _]) => popupRes.dismiss === undefined ? this.getAccountFlow() : EMPTY),
+        return this.logout().pipe(
+            switchMap(() => this.popupService.info(
+                'You are logged in with wrong Arkane account. You will be logged out.',
+                'If this message appears multiple times, go to ' +
+                '<a href="https://arkane.network" target="_blank" style="display: contents">Arkane Network</a> website, ' +
+                'click on profile icon in upper-right corner, click logout and come back here.'
+            )),
+            switchMap((popupRes) => popupRes.dismiss === undefined ? this.getAccountFlow() : EMPTY),
             switchMap(account => account.isAuthenticated ? this.getMatchedWallet() : EMPTY)
         );
     }
@@ -105,18 +109,13 @@ export class ArkaneService {
         return this.ensureAuthenticated().pipe(
             switchMap(() => from(this.arkaneConnect.api.getProfile())),
             catchError(() => of(null)),
-            tap(profile => console.log('getProfile', profile))
         );
     }
 
     getWallets(): Observable<Wallet[]> {
         return this.ensureAuthenticated().pipe(
             switchMap(() => from(this.arkaneConnect.api.getWallets({secretType: this.secretType}))),
-            catchError(err => {
-                console.log(err);
-                return of(null);
-            }),
-            tap(wallets => console.log('getWallets', wallets))
+            catchError(() => of(null)),
         );
     }
 
@@ -143,24 +142,15 @@ export class ArkaneService {
     }
 
     logout(): Observable<void> {
-        return from(this.arkaneConnect.logout()).pipe(
-            tap(() => console.log('logout'))
-        );
+        return from(this.arkaneConnect.logout());
     }
 
     getAccountFlow(): Observable<Account> {
-        return from(this.arkaneConnect.flows.getAccount(this.secretType)).pipe(
-            catchError(err => {
-                console.log('error in getAccountFlow', err);
-                return throwError(err);
-            })
-        );
+        return from(this.arkaneConnect.flows.getAccount(this.secretType));
     }
 
-    manageWalletsFlow(): Observable<PopupResult> {
-        return from(this.arkaneConnect.flows.manageWallets(this.secretType)).pipe(
-            tap(console.log)
-        );
+    manageWalletsFlow(): Observable<void | PopupResult> {
+        return from(this.arkaneConnect.flows.manageWallets(this.secretType));
     }
 
     // on Chrome (Brave) returns infinite loop of warnings in browser console.
@@ -169,16 +159,13 @@ export class ArkaneService {
     isAuthenticated(): Observable<boolean> {
         return from(this.arkaneConnect.checkAuthenticated().then(res => res.isAuthenticated)).pipe(
             timeout(10000),
-            tap(isAuthenticated => console.log('isAuthenticated', isAuthenticated))
         );
     }
 
     isAuthenticatedByWallets(): Observable<boolean> {
         return from(this.arkaneConnect.api.getWallets({secretType: this.secretType})).pipe(
             catchError(() => of(null)),
-            tap(res => console.log('isAuthenticatedByWallets res before map', res)),
             map(wallet => wallet !== null),
-            tap(res => console.log('isAuthenticatedByWallets', res)),
         );
     }
 
@@ -189,11 +176,7 @@ export class ArkaneService {
                 map(account => account.isAuthenticated),
                 catchError(() => of(false))
             ) : of(signedIn)),
-            switchMap(signedIn => signedIn ? of(null) : EMPTY),
-            catchError(err => {
-                console.log('error in ensureAuthenticated', err);
-                return throwError(err);
-            })
+            switchMap(signedIn => signedIn ? of(null) : EMPTY)
         );
     }
 }

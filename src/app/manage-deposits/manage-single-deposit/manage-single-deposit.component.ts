@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import * as Uppy from 'uppy';
-import { ActivatedRoute } from '@angular/router';
-import { hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
+import { ActivatedRoute, Router } from '@angular/router';
+import { displayBackendErrorRx, hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import {
     DepositSearchResponse,
@@ -12,6 +12,9 @@ import { BroadcastService } from 'src/app/shared/services/broadcast.service';
 import swal from 'sweetalert2';
 import MicroModal from 'micromodal';
 import { BackendHttpClient } from '../../shared/services/backend-http-client.service';
+import { switchMap, tap } from 'rxjs/operators';
+import { ArkaneService } from '../../shared/services/arkane.service';
+import { PopupService } from '../../shared/services/popup.service';
 
 declare var $: any;
 
@@ -29,7 +32,9 @@ export class ManageSingleDepositComponent implements OnInit, AfterViewInit {
     constructor(private route: ActivatedRoute,
                 private http: BackendHttpClient,
                 private depositCooperativeService: WalletCooperativeDepositService,
-                private broadService: BroadcastService) {
+                private arkaneService: ArkaneService,
+                private popupService: PopupService,
+                private router: Router) {
     }
 
     ngOnInit() {
@@ -54,27 +59,16 @@ export class ManageSingleDepositComponent implements OnInit, AfterViewInit {
     }
 
     generateSignerAndSign() {
-        SpinnerUtil.showSpinner();
-
-        this.depositCooperativeService.generateDepositMintTx(this.depositModel.deposit.id).subscribe(async res => {
-            SpinnerUtil.hideSpinner();
-            const arkaneConnect = new ArkaneConnect('AMPnet', {
-                environment: 'staging'
-            });
-
-            const account = await arkaneConnect.flows.getAccount(SecretType.AETERNITY);
-
-            const sigRes = await arkaneConnect.createSigner(WindowMode.POPUP).sign({
-                walletId: account.wallets[0].id,
-                data: res.tx,
-                type: SignatureRequestType.AETERNITY_RAW
-            });
-            this.broadService.broadcastSignedTx(sigRes.result.signedTransaction, res.tx_id)
-                .subscribe(_ => {
-                    SpinnerUtil.hideSpinner();
-                    swal('', 'Success', 'success');
-                }, hideSpinnerAndDisplayError);
-        }, hideSpinnerAndDisplayError);
+        return this.depositCooperativeService.generateDepositMintTx(this.depositModel.deposit.id).pipe(
+            displayBackendErrorRx(),
+            switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo)),
+            switchMap(() => this.popupService.new({
+                type: 'success',
+                title: 'Transaction signed',
+                text: 'Transaction is being processed...'
+            })),
+            switchMap(() => this.router.navigate(['/dash/manage_deposits']))
+        );
     }
 
     getDeposit() {
@@ -89,7 +83,7 @@ export class ManageSingleDepositComponent implements OnInit, AfterViewInit {
                     MicroModal.init();
                 }, 300);
             } else {
-                this.generateSignerAndSign();
+                this.generateSignerAndSign().subscribe();
             }
 
             SpinnerUtil.hideSpinner();

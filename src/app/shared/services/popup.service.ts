@@ -9,17 +9,25 @@ export class PopupService {
     constructor() {
     }
 
-    info(message: string, footer?: string): Observable<SweetAlertResult> {
-        // return from(swal('Info', message, 'info'));
+    new(options: SweetAlertOptions): Observable<SweetAlertResult> {
+        return from(swal(options));
+    }
 
+    info(message: string, footer?: string): Observable<SweetAlertResult> {
         return from(swal({
+            type: 'info',
             titleText: 'Info',
             text: message,
             footer: footer
         }));
     }
 
-    new(options: SweetAlertOptions): Observable<SweetAlertResult> {
-        return from(swal(options));
+    success(message: string, footer?: string): Observable<SweetAlertResult> {
+        return from(swal({
+            type: 'info',
+            titleText: 'Success',
+            text: message,
+            footer: footer
+        }));
     }
 }

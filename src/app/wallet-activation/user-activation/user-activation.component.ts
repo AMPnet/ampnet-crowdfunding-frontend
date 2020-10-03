@@ -21,8 +21,7 @@ export class UserActivationComponent implements OnInit {
 
     constructor(private activationService: WalletCooperativeWalletService,
                 private arkaneService: ArkaneService,
-                private popupService: PopupService,
-                private broadService: BroadcastService) {
+                private popupService: PopupService) {
     }
 
     ngOnInit() {

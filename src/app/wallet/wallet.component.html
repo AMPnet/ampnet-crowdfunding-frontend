@@ -4,14 +4,15 @@
         WALLET
     </p>
 
-    <button class="btn btn-primary" (click)="arkaneService.getAccountFlow().subscribe()">getAccount</button>
-    <button class="btn btn-primary" (click)="arkaneService.isAuthenticated().subscribe()">isAuthenticated</button>
-    <button class="btn btn-primary" (click)="arkaneService.getProfile().subscribe()">getProfile</button>
-    <button class="btn btn-primary" (click)="arkaneService.getWallets().subscribe()">getWallets</button>
-    <button class="btn btn-primary" (click)="arkaneService.getMatchedWallet().subscribe()">getMatchedWallet</button>
-    <button class="btn btn-primary" (click)="arkaneService.logout().subscribe()">logout</button>
+<!--    TODO: Remove this when finished with testing -->
+<!--    <button class="btn btn-primary" (click)="arkaneService.getAccountFlow().subscribe()">getAccount</button>-->
+<!--    <button class="btn btn-primary" (click)="arkaneService.isAuthenticated().subscribe()">isAuthenticated</button>-->
+<!--    <button class="btn btn-primary" (click)="arkaneService.getProfile().subscribe()">getProfile</button>-->
+<!--    <button class="btn btn-primary" (click)="arkaneService.getWallets().subscribe()">getWallets</button>-->
+<!--    <button class="btn btn-primary" (click)="arkaneService.getMatchedWallet().subscribe()">getMatchedWallet</button>-->
+<!--    <button class="btn btn-primary" (click)="arkaneService.logout().subscribe()">logout</button>-->
 
-    <ng-container *ngIf="{ wallet: (wallet$ | async) } as states">
+    <ng-container *ngIf="{ wallet: wallet$ | async } as states">
         <div *ngIf="states.wallet?.state === walletState.EMPTY" class="row">
             <div class="content-left col-12 col-lg-6 mt-4 pl-md-5 pr-md-5">
                 <div class="wallet-warning mt-5 mb-5">

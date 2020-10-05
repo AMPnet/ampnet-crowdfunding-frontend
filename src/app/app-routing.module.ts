@@ -43,6 +43,8 @@ import { OwnershipComponent } from './ownership/ownership.component';
 import { RevenueShareComponent } from './revenue-share/revenue-share.component';
 import { ManagePaymentsComponent } from './project/manage-payments/manage-payments.component';
 import { OfferDetailsGuard } from './offers/offer-details/offer-details.guard';
+import { ProjectDepositComponent } from './project/project-deposit/project-deposit.component';
+import { ProjectWithdrawComponent } from './project/project-withdraw/project-withdraw.component';
 
 const routes: Routes = [
     {
@@ -83,6 +85,11 @@ const routes: Routes = [
             {path: 'manage_groups/:groupID/manage_project/:projectID', component: ManageSingleProjectComponent},
             {path: 'offers/:offerID/invest/:investAmount/verify_sign', component: VerifySignOfferComponent},
             {path: 'manage_groups/:groupID/manage_project/:projectID/manage_payments', component: ManagePaymentsComponent},
+            {path: 'manage_groups/:groupID/manage_project/:projectID/manage_payments/project_deposit', component: ProjectDepositComponent},
+            {
+                path: 'manage_groups/:groupID/manage_project/:projectID/manage_payments/project_withdraw',
+                component: ProjectWithdrawComponent
+            },
             {
                 path: 'manage_groups/:groupID/manage_project/:projectID/manage_payments/revenue_share/:amount',
                 component: RevenueShareComponent

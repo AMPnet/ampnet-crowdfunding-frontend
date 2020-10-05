@@ -83,6 +83,8 @@ import { environment } from '../environments/environment.prod';
 import { MoneyInputFieldComponent } from './shared/components/money-input-field/money-input-field.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { ProjectDepositComponent } from './project/project-deposit/project-deposit.component';
+import { ProjectWithdrawComponent } from './project/project-withdraw/project-withdraw.component';
 
 const socialAuthServiceConfig = {
     provide: 'SocialAuthServiceConfig',
@@ -174,6 +176,8 @@ const socialAuthServiceConfig = {
         TxAmountSign,
         ActionButtonComponent,
         MoneyInputFieldComponent,
+        ProjectDepositComponent,
+        ProjectWithdrawComponent,
     ],
     imports: [
         BrowserModule,

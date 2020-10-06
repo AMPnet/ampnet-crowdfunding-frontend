@@ -23,8 +23,8 @@ import { TransactionInfo } from './wallet/wallet-cooperative/wallet-cooperative-
 })
 export class ArkaneService {
     secretType = SecretType.AETERNITY;
-    arkaneConnect = new ArkaneConnect('AMPnet', {
-        environment: 'staging',
+    arkaneConnect = new ArkaneConnect('AMPnet', { // TODO: Extract to environment
+        environment: 'staging', // TODO: Extract to environment
     });
 
     constructor(private walletService: WalletService,

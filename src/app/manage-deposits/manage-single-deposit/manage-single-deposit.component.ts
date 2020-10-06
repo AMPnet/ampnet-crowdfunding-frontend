@@ -13,6 +13,7 @@ import swal from 'sweetalert2';
 import { BackendHttpClient } from '../../shared/services/backend-http-client.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ManageSingleDepositModalComponent } from './manage-single-deposit-modal/manage-single-deposit-modal.component';
+import { finalize } from 'rxjs/operators';
 
 declare var $: any;
 
@@ -57,16 +58,16 @@ export class ManageSingleDepositComponent implements OnInit {
             plugins: ['XHRUpload']
         });
 
-        this.paymentUppy.on('file-added', () => this.isFileAttached());
-        this.paymentUppy.on('file-removed', () => this.isFileAttached());
-        this.paymentUppy.on('upload-error', (file) => {
+        this.paymentUppy.on('file-added', () => this.onFilesChange());
+        this.paymentUppy.on('file-removed', () => this.onFilesChange());
+        this.paymentUppy.on('upload-error', file => {
             SpinnerUtil.hideSpinner();
             this.paymentUppy.removeFile(file.id);
             this.removeUppyPlugin();
         });
     }
 
-    isFileAttached() {
+    onFilesChange() {
         this.fileAttached = this.paymentUppy.getFiles().length > 0;
     }
 
@@ -122,7 +123,8 @@ export class ManageSingleDepositComponent implements OnInit {
                 depositAmount: this.amount
             }
         });
-        const confirmationSub = this.confirmationModal.content.successfulConfirmation
+        const confirmationSub = this.confirmationModal.content.successfulConfirmation.pipe(
+            finalize(() => confirmationSub.unsubscribe()))
             .subscribe(() => {
                 const depositApprovalURL = this.depositCooperativeService.generateDepositApprovalURL(
                     location.origin,
@@ -136,12 +138,11 @@ export class ManageSingleDepositComponent implements OnInit {
                         'Authorization': this.http.authHttpOptions().headers.get('Authorization')
                     }
                 });
-                confirmationSub.unsubscribe();
                 SpinnerUtil.showSpinner();
                 this.paymentUppy.upload().then(() => {
                     SpinnerUtil.hideSpinner();
                     this.getDeposit();
-                });
+                }).catch(hideSpinnerAndDisplayError);
             }, hideSpinnerAndDisplayError);
     }
 

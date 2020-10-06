@@ -121,11 +121,10 @@ export class ArkaneService {
 
     signAndBroadcastTx(txInfo: TransactionInfo) {
         return this.signTransaction(txInfo.tx).pipe(
-            displayBackendErrorRx(),
             switchMap(arkaneRes => arkaneRes.status === 'SUCCESS' ?
                 this.broadcastService.broadcastSignedTx(arkaneRes.result.signedTransaction, txInfo.tx_id).pipe(
                     displayBackendErrorRx()
-                ) : throwError(arkaneRes.errors))
+                ) : throwError(arkaneRes.errors)),
         );
     }
 

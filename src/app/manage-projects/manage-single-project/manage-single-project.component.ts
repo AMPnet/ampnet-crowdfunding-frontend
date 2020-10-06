@@ -1,8 +1,7 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import * as Uppy from 'uppy';
-import swal from 'sweetalert2';
-import { ActivatedRoute } from '@angular/router';
-import { displayBackendError, displayBackendErrorRx } from 'src/app/utilities/error-handler';
+import { ActivatedRoute, Router } from '@angular/router';
+import { displayBackendErrorRx } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { validURL } from '../../utilities/link-valid-util';
 import { WalletDetails } from '../../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
@@ -43,6 +42,7 @@ export class ManageSingleProjectComponent implements OnInit, AfterViewInit {
                 private manageProjectsService: ManageProjectsService,
                 private arkaneService: ArkaneService,
                 private popupService: PopupService,
+                private router: Router,
                 private route: ActivatedRoute) {
     }
 
@@ -82,10 +82,16 @@ export class ManageSingleProjectComponent implements OnInit, AfterViewInit {
             type: 'info',
             text: 'Verify the project creation with your blockchain wallet. You will be prompted now!'
         }).pipe(
+            tap(() => SpinnerUtil.showSpinner()),
             switchMap(() =>
                 this.walletService.createProjectWalletTransaction(this.project.uuid)
                     .pipe(displayBackendErrorRx())),
-            switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo)),
+            switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo).pipe(
+                catchError(_ => {
+                    this.router.navigate([`/dash/manage_groups/${this.route.snapshot.params.groupID}`]);
+                    return EMPTY;
+                })
+            )),
             switchMap(() => this.popupService.new({
                 type: 'success',
                 title: 'Transaction signed',

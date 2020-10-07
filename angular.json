@@ -36,7 +36,7 @@
               "node_modules/@chenfengyuan/datepicker/dist/datepicker.min.css",
               "node_modules/leaflet/dist/leaflet.css",
               "node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
-              "src/styles.css"
+              "src/styles/app.scss"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
@@ -99,7 +99,7 @@
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
             "styles": [
-              "src/styles.css"
+              "src/styles/app.scss"
             ],
             "scripts": [],
             "assets": [

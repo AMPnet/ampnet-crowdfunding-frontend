@@ -1,0 +1,15 @@
+@import "colors";
+
+.btn {
+  border-radius: 8px;
+  height: 48px;
+  background: $primary-color;
+  border-color: $primary-color;
+  font-weight: 400;
+  font-size: 16px;
+
+  &-primary {
+    height: 64px;
+    font-size: 17px;
+  }
+}

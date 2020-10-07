@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
-import { displayBackendError, hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
+import { displayBackendError } from 'src/app/utilities/error-handler';
 import swal from 'sweetalert2';
 import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
 import { WalletService } from '../../shared/services/wallet/wallet.service';
 import { WalletDetails } from '../../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
 import { Organization, OrganizationMember, OrganizationService } from '../../shared/services/project/organization.service';
 import { BroadcastService } from '../../shared/services/broadcast.service';
-import { BehaviorSubject, EMPTY, Observable, of } from 'rxjs';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { BehaviorSubject, EMPTY, from, Observable, of } from 'rxjs';
+import { catchError, finalize, map, switchMap, tap } from 'rxjs/operators';
 
 declare var $: any;
 
@@ -21,9 +21,9 @@ declare var $: any;
 export class OrganizationDetailsComponent implements OnInit {
     organization$: Observable<Organization>;
     orgWallet$: Observable<WalletDetails>;
-    orgMember$: Observable<OrganizationMember[]>;
+    orgMembers$: Observable<OrganizationMember[]>;
 
-    refreshOrganizationMemberSubject = new BehaviorSubject<void>(null);
+    refreshOrgMembersSubject = new BehaviorSubject<void>(null);
 
     constructor(private activeRoute: ActivatedRoute,
                 private organizationService: OrganizationService,
@@ -33,7 +33,7 @@ export class OrganizationDetailsComponent implements OnInit {
 
     ngOnInit() {
         const orgID = this.activeRoute.snapshot.params.id;
-        this.organization$ = this.organizationService.getSingleOrganization(orgID).pipe(this.handleError);
+        this.organization$ = this.organizationService.getSingleOrganization(orgID).pipe(this.handleErrors);
         this.orgWallet$ = this.walletService.getOrganizationWallet(orgID).pipe(
             catchError(err => {
                 if (err.status === 404) {
@@ -49,19 +49,19 @@ export class OrganizationDetailsComponent implements OnInit {
                 return EMPTY;
             }));
 
-        this.orgMember$ = this.refreshOrganizationMemberSubject.pipe(
-            switchMap(_ => this.organizationService.getMembersForOrganization(orgID)),
-            map(res => res.members)).pipe(this.handleError);
+        this.orgMembers$ = this.refreshOrgMembersSubject.pipe(
+            switchMap(_ => this.organizationService.getMembersForOrganization(orgID).pipe(this.handleErrors)),
+            map(res => res.members));
     }
 
     inviteClicked(orgUUID: string) {
         SpinnerUtil.showSpinner();
         const email = $('#email-invite-input').val();
-        this.organizationService.inviteUser(orgUUID, email)
-            .subscribe(() => {
-                SpinnerUtil.hideSpinner();
-                swal('Success', 'Successfully invited user to organization', 'success');
-            }, () => hideSpinnerAndDisplayError);
+        this.organizationService.inviteUser(orgUUID, email).pipe(err =>
+                this.handleErrors(err),
+            switchMap(() => from(swal('Success', 'Successfully invited user to organization', 'success'))),
+            finalize(() => SpinnerUtil.hideSpinner())
+        ).subscribe();
     }
 
     async createOrgWalletClicked(orgUUID: string) {
@@ -84,23 +84,17 @@ export class OrganizationDetailsComponent implements OnInit {
     }
 
     deleteMember(orgID: string, memberID: string) {
-        const self = this;
         SpinnerUtil.showSpinner();
-        this.organizationService.removeMemberFromOrganization(orgID, memberID)
-            .subscribe(() => {
-                    swal({
-                        title: '',
-                        text: 'Success!',
-                        type: 'success'
-                    }).then(function () {
-                        self.refreshOrganizationMemberSubject.next();
-                        SpinnerUtil.hideSpinner();
-                    }.bind(this));
-                },
-                hideSpinnerAndDisplayError);
+        this.organizationService.removeMemberFromOrganization(orgID, memberID).pipe(err => this.handleErrors(err),
+            tap(() => {
+                this.refreshOrgMembersSubject.next();
+                swal('', 'Successfully deleted user from the organization', 'success');
+            }),
+            finalize(() => SpinnerUtil.hideSpinner())
+        ).subscribe();
     }
 
-    private handleError<T>(source: Observable<T>) {
+    private handleErrors<T>(source: Observable<T>) {
         return source.pipe(
             catchError(err => {
                 displayBackendError(err);
@@ -108,4 +102,9 @@ export class OrganizationDetailsComponent implements OnInit {
             })
         );
     }
+
+    isOrgWalletInitialized(orgWallet: WalletDetails) {
+        return orgWallet !== undefined && orgWallet?.hash !== undefined;
+    }
 }
+

@@ -2,7 +2,7 @@
 
     <div class="col-md-12 mt-2 mb-3 explainer-mini">Manage Projects</div>
 
-    <ng-container *ngIf="{projects: project$ | async} as states">
+    <ng-container *ngIf="{projects: projects$ | async} as states">
         <div *ngIf="(states.projects !== undefined) else spinner" class="w-100">
             <div *ngIf="states.projects !== null && states.projects.length === 0" class="col-md-12">
                 <div class="w-100 text-center mt-5 mb-5">

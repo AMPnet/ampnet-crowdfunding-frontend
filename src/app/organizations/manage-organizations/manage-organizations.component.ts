@@ -12,27 +12,27 @@ import { catchError, map, switchMap } from 'rxjs/operators';
     styleUrls: ['./manage-organizations.component.css']
 })
 export class ManageOrganizationsComponent {
-    organizationGroup$: Observable<Organization[]>;
-    organizationInviteS: Observable<OrganizationInvite[]>;
+    organizationGroups$: Observable<Organization[]>;
+    organizationInvitesS: Observable<OrganizationInvite[]>;
 
-    refreshOrganizationGroupSubject = new BehaviorSubject<void>(null);
-    refreshPersonalOrganizationSubject = new BehaviorSubject<void>(null);
+    refreshOrganizationsSubject = new BehaviorSubject<void>(null);
+    refreshInvitesSubject = new BehaviorSubject<void>(null);
 
     constructor(
         private organizationService: OrganizationService) {
 
-        this.organizationGroup$ = this.refreshOrganizationGroupSubject.pipe(
-            switchMap(_ => this.organizationService.getPersonalOrganizations()),
-            map(res => res.organizations)).pipe(this.handleError);
+        this.organizationGroups$ = this.refreshOrganizationsSubject.pipe(
+            switchMap(_ => this.organizationService.getPersonalOrganizations().pipe(this.handleErrors)),
+            map(res => res.organizations));
 
-        this.organizationInviteS = this.refreshPersonalOrganizationSubject.pipe(
-            switchMap(_ => this.organizationService.getMyInvitations()),
-            map(res => res.organization_invites)).pipe(this.handleError);
+        this.organizationInvitesS = this.refreshInvitesSubject.pipe(
+            switchMap(_ => this.organizationService.getMyInvitations().pipe(this.handleErrors)),
+            map(res => res.organization_invites));
     }
 
     refreshState() {
-        this.refreshOrganizationGroupSubject.next();
-        this.refreshPersonalOrganizationSubject.next();
+        this.refreshOrganizationsSubject.next();
+        this.refreshInvitesSubject.next();
     }
 
     acceptInvite(orgID: string) {
@@ -44,7 +44,7 @@ export class ManageOrganizationsComponent {
         }, hideSpinnerAndDisplayError);
     }
 
-    private handleError<T>(source: Observable<T>) {
+    private handleErrors<T>(source: Observable<T>) {
         return source.pipe(
             catchError(err => {
                 displayBackendError(err);

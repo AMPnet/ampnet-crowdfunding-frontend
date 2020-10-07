@@ -5,6 +5,7 @@ import { displayBackendError, hideSpinnerAndDisplayError } from '../utilities/er
 import { Project, ProjectService } from '../shared/services/project/project.service';
 import { BehaviorSubject, EMPTY, Observable } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
+import { SpinnerUtil } from '../utilities/spinner-utilities';
 
 @Component({
     selector: 'app-manage-projects',
@@ -12,7 +13,7 @@ import { catchError, map, switchMap } from 'rxjs/operators';
     styleUrls: ['./manage-projects.component.css']
 })
 export class ManageProjectsComponent implements OnInit {
-    project$: Observable<Project[]>;
+    projects$: Observable<Project[]>;
     refreshProjectsSubject = new BehaviorSubject<void>(null);
 
     @Input() groupID: string;
@@ -27,22 +28,23 @@ export class ManageProjectsComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.project$ = this.refreshProjectsSubject.pipe(
-            switchMap(() => this.orgService.getAllProjectsForOrganization(this.groupID)),
-            map(res => res.projects)).pipe(this.handleError);
+        this.projects$ = this.refreshProjectsSubject.pipe(
+            switchMap(() => this.orgService.getAllProjectsForOrganization(this.groupID).pipe(this.handleErrors)),
+            map(res => res.projects));
     }
 
     toggleProject(uuid: string, projects: Project[]) {
-        const project = projects.filter(x => x.uuid === uuid)[0];
-
+        const project = projects.find(proj => proj.uuid === uuid);
+        SpinnerUtil.showSpinner();
         this.projectService.updateProject(project.uuid, {
             active: !project.active
         }).subscribe(() => {
+            SpinnerUtil.hideSpinner();
             this.refreshProjectsSubject.next();
         }, hideSpinnerAndDisplayError);
     }
 
-    private handleError<T>(source: Observable<T>) {
+    private handleErrors<T>(source: Observable<T>) {
         return source.pipe(
             catchError(err => {
                 displayBackendError(err);

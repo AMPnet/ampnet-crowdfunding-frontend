@@ -9,6 +9,7 @@ import {
 import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
 import { BroadcastService } from 'src/app/shared/services/broadcast.service';
 import swal from 'sweetalert2';
+import { Location } from '@angular/common';
 
 declare var $: any;
 
@@ -21,6 +22,7 @@ export class SingleWithdrawalComponent implements OnInit, AfterViewInit {
     withdrawal: UserWithdraw;
 
     constructor(private route: ActivatedRoute,
+                private location: Location,
                 private withdrawCooperativeService: WalletCooperativeWithdrawService,
                 private broadcastService: BroadcastService) {
     }
@@ -62,6 +64,7 @@ export class SingleWithdrawalComponent implements OnInit, AfterViewInit {
                 .subscribe(_ => {
                     SpinnerUtil.hideSpinner();
                     swal('', 'Success', 'success');
+                    this.location.back();
                 }, hideSpinnerAndDisplayError);
 
         }, hideSpinnerAndDisplayError);

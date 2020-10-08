@@ -2,7 +2,7 @@
     <h5 class="explainer-mini">Manage withdrawals</h5>
     <li *ngFor="let withdrawal of withdrawals"
         class="list-group-item cursor-pointer  gray-text explainer-mini"
-        routerLink="/dash/manage_withdrawals/{{ withdrawal.id }}">
+        routerLink="/dash/manage_withdrawals/projects/{{ withdrawal.id }}">
           <span class="float-left ">
             {{ withdrawal.project.name}} {{ withdrawal.project.description }}
           </span>

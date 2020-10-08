@@ -57,8 +57,8 @@ export class OrganizationDetailsComponent implements OnInit {
     inviteClicked(orgUUID: string) {
         SpinnerUtil.showSpinner();
         const email = $('#email-invite-input').val();
-        this.organizationService.inviteUser(orgUUID, email).pipe(err =>
-                this.handleErrors(err),
+        this.organizationService.inviteUser(orgUUID, email).pipe(
+            this.handleErrors,
             switchMap(() => from(swal('Success', 'Successfully invited user to organization', 'success'))),
             finalize(() => SpinnerUtil.hideSpinner())
         ).subscribe();
@@ -85,16 +85,15 @@ export class OrganizationDetailsComponent implements OnInit {
 
     deleteMember(orgID: string, memberID: string) {
         SpinnerUtil.showSpinner();
-        this.organizationService.removeMemberFromOrganization(orgID, memberID).pipe(err => this.handleErrors(err),
-            tap(() => {
-                this.refreshOrgMembersSubject.next();
-                swal('', 'Successfully deleted user from the organization', 'success');
-            }),
+        this.organizationService.removeMemberFromOrganization(orgID, memberID).pipe(
+            this.handleErrors,
+            switchMap(() => from(swal('Successfully deleted user from the organization', 'success'))),
+            tap(() => this.refreshOrgMembersSubject.next()),
             finalize(() => SpinnerUtil.hideSpinner())
         ).subscribe();
     }
 
-    private handleErrors<T>(source: Observable<T>) {
+    private handleErrors<T>(source: Observable<T>): Observable<T> {
         return source.pipe(
             catchError(err => {
                 displayBackendError(err);
@@ -107,4 +106,3 @@ export class OrganizationDetailsComponent implements OnInit {
         return orgWallet !== undefined && orgWallet?.hash !== undefined;
     }
 }
-

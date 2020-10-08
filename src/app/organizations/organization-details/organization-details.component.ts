@@ -54,9 +54,8 @@ export class OrganizationDetailsComponent implements OnInit {
             map(res => res.members));
     }
 
-    inviteClicked(orgUUID: string) {
+    inviteClicked(orgUUID: string, email: string) {
         SpinnerUtil.showSpinner();
-        const email = $('#email-invite-input').val();
         this.organizationService.inviteUser(orgUUID, email).pipe(
             this.handleErrors,
             switchMap(() => from(swal('Success', 'Successfully invited user to organization', 'success'))),

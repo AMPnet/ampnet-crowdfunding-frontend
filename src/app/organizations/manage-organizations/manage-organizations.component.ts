@@ -12,8 +12,8 @@ import { catchError, map, switchMap } from 'rxjs/operators';
     styleUrls: ['./manage-organizations.component.css']
 })
 export class ManageOrganizationsComponent {
-    organizationGroups$: Observable<Organization[]>;
-    organizationInvitesS: Observable<OrganizationInvite[]>;
+    organizations$: Observable<Organization[]>;
+    organizationInvites$: Observable<OrganizationInvite[]>;
 
     refreshOrganizationsSubject = new BehaviorSubject<void>(null);
     refreshInvitesSubject = new BehaviorSubject<void>(null);
@@ -21,11 +21,11 @@ export class ManageOrganizationsComponent {
     constructor(
         private organizationService: OrganizationService) {
 
-        this.organizationGroups$ = this.refreshOrganizationsSubject.pipe(
+        this.organizations$ = this.refreshOrganizationsSubject.pipe(
             switchMap(_ => this.organizationService.getPersonalOrganizations().pipe(this.handleErrors)),
             map(res => res.organizations));
 
-        this.organizationInvitesS = this.refreshInvitesSubject.pipe(
+        this.organizationInvites$ = this.refreshInvitesSubject.pipe(
             switchMap(_ => this.organizationService.getMyInvitations().pipe(this.handleErrors)),
             map(res => res.organization_invites));
     }

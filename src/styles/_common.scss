@@ -1,0 +1,40 @@
+.app-page-title {
+  font-size: $font-size-mobile-title;
+  font-weight: 400 !important;
+  text-transform: uppercase;
+  margin: 0 0 1rem 0;
+  position: relative;
+
+  &:before {
+    content: "";
+    display: inline-block;
+    height: 1px;
+    width: 10px;
+    margin-right: 10px;
+    background-color: $title-color;
+    vertical-align: middle;
+  }
+
+  @include media-breakpoint-up(lg) {
+    font-size: $font-size-desktop-title;
+    margin-bottom: 3rem;
+
+    &:before {
+      width: 35px;
+      height: 3px;
+    }
+  }
+}
+
+.app-page-subtitle {
+  font-size: $font-size-desktop-small;
+  font-weight: 400 !important;
+  padding-top: 23px;
+  padding-bottom: 18px;
+  text-transform: uppercase;
+}
+
+.app-page-header {
+  display: flex;
+  justify-content: space-between;
+}

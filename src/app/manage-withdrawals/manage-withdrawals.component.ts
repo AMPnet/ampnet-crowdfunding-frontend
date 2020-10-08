@@ -1,10 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
-import { SpinnerUtil } from '../utilities/spinner-utilities';
-import {
-    UserWithdraw,
-    WalletCooperativeWithdrawService
-} from '../shared/services/wallet/wallet-cooperative/wallet-cooperative-withdraw.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'app-manage-withdrawals',
@@ -12,20 +7,15 @@ import {
     styleUrls: ['./manage-withdrawals.component.css']
 })
 export class ManageWithdrawalsComponent implements OnInit {
-    withdrawals: UserWithdraw[];
 
-    constructor(private withdrawService: WalletCooperativeWithdrawService) {
+    withdrawalType = 'users';
+
+    constructor(private route: ActivatedRoute) {
     }
 
     ngOnInit() {
-        this.getApprovedWithdrawals();
-    }
-
-    getApprovedWithdrawals() {
-        SpinnerUtil.showSpinner();
-        return this.withdrawService.getApprovedWithdrawals().subscribe(res => {
-            SpinnerUtil.hideSpinner();
-            this.withdrawals = res.withdraws;
-        }, hideSpinnerAndDisplayError);
+        this.route.params.subscribe(params => {
+            this.withdrawalType = params.type;
+        });
     }
 }

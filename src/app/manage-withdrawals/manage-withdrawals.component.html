@@ -1,29 +1,28 @@
 <div class="root container root-content-container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="explainer-mini text-uppercase">Manage withdrawals</div>
-        </div>
-        <div class="col-md-12 mt-3">
-
-            <ul *ngIf="withdrawals !== undefined" class="list-group">
-                <li *ngFor="let withdrawal of withdrawals"
-                    class="list-group-item cursor-pointer  gray-text explainer-mini"
-                    routerLink="{{ withdrawal.id }}">
-          <span class="float-left ">
-            {{ withdrawal.user.first_name }} {{ withdrawal.user.last_name }} ({{ withdrawal.user.email }})
-          </span>
-                    <span class="float-right  ">
-              {{ withdrawal.amount | currencyDefault }}
-          </span>
-                </li>
-            </ul>
-        </div>
-
-        <div *ngIf="withdrawals !== undefined" class="col-md-12 mt-3">
-            <div *ngIf="withdrawals.length ===  0" class="text-center explainer-mini text-uppercase">
-                No pending withdrawals
+    <div class="row button-holder-activation">
+        <div class="col-6">
+            <div [class.active]="withdrawalType ===  'users'" class="btn btn-primary w-100 py-3 cursor-pointer"
+                 routerLink="/dash/manage_withdrawals/users">
+                <i class="fas fa-user mr-2"></i>
+                Users
             </div>
         </div>
+        <div class="col-6">
+            <div [class.active]="withdrawalType ===  'projects'" class="btn btn-primary w-100 py-3 cursor-pointer"
+                 routerLink="/dash/manage_withdrawals/projects">
+                <i class="fas fa-solar-panel mr-2"></i>
+                Projects
+            </div>
+        </div>
+    </div>
 
+    <div class="row pt-4">
+        <div *ngIf="withdrawalType === 'users'" class="col-md-12">
+            <app-manage-user-withdrawal></app-manage-user-withdrawal>
+        </div>
+
+        <div *ngIf="withdrawalType === 'projects'" class="col-md-12">
+            <app-manage-project-withdrawal></app-manage-project-withdrawal>
+        </div>
     </div>
 </div>

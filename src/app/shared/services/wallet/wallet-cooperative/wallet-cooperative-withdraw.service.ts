@@ -74,7 +74,7 @@ interface ProjectWithdrawListResponse {
     total_pages: number;
 }
 
-interface ProjectWithdraw {
+export interface ProjectWithdraw {
     id: number;
     project: {
         uuid: string;

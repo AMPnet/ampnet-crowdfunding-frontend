@@ -107,6 +107,12 @@
             "styles": [
               "src/styles/app.scss"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "node_modules",
+                "src/styles"
+              ]
+            },
             "scripts": [],
             "assets": [
               "src/favicon.png",

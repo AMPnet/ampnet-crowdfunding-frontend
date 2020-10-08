@@ -38,6 +38,12 @@
               "node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
               "src/styles/app.scss"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "node_modules",
+                "src/styles"
+              ]
+            },
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/popper.js/dist/umd/popper.min.js",

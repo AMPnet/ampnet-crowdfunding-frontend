@@ -1,4 +1,5 @@
-@import "~node_modules/bootstrap/scss/mixins/breakpoints";
+@import "colors";
+@import "bootstrap/scss/mixins/breakpoints";
 
 $font-size-desktop-title: 36px;
 $font-size-desktop-body: 16px;
@@ -11,7 +12,7 @@ $font-size-mobile-body: 14px;
 .title {
   font-size: $font-size-mobile-title;
 
-  @include media-breakpoint-up(md) {
+  @include media-breakpoint-up(lg) {
     font-size: $font-size-desktop-title;
   }
 }
@@ -19,11 +20,36 @@ $font-size-mobile-body: 14px;
 * {
   font-size: $font-size-mobile-body;
 
-  @include media-breakpoint-up(md) {
+  @include media-breakpoint-up(lg) {
     font-size: $font-size-desktop-body;
   }
 }
 
+.app-page-title {
+  font-size: $font-size-mobile-title;
+  margin: 0 0 1rem 0;
+  position: relative;
+
+  &:before {
+    content: "";
+    display: inline-block;
+    height: 1px;
+    width: 10px;
+    margin-right: 10px;
+    background-color: $title-color;
+    vertical-align: middle;
+  }
+
+  @include media-breakpoint-up(lg) {
+    font-size: $font-size-desktop-title;
+    margin-bottom: 3rem;
+
+    &:before {
+      width: 35px;
+      height: 3px;
+    }
+  }
+}
 
 /* cyrillic-ext */
 @font-face {

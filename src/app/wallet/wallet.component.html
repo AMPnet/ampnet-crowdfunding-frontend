@@ -1,8 +1,5 @@
 <div class="container root-content-container">
-    <p class="col-12 mt-3 mb-lg-4 page-title text-uppercase page-title">
-        <i class="fas fa-long-arrow-alt-left mr-3"></i>
-        WALLET
-    </p>
+    <h1 class="app-page-title">WALLET</h1>
 
     <ng-container *ngIf="{ wallet: wallet$ | async } as states">
         <div *ngIf="states.wallet?.state === walletState.EMPTY" class="row">

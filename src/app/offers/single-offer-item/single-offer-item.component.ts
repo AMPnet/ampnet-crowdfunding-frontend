@@ -8,7 +8,7 @@ import { MiddlewareService, ProjectWalletInfo } from '../../shared/services/midd
 @Component({
     selector: 'app-single-offer-item',
     templateUrl: './single-offer-item.component.html',
-    styleUrls: ['./single-offer-item.component.css']
+    styleUrls: ['./single-offer-item.component.scss']
 })
 export class SingleOfferItemComponent implements OnInit {
     @Input() projectWallet: ProjectWallet;

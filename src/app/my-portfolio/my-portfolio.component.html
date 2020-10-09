@@ -1,5 +1,6 @@
 <ng-container *ngIf="(walletActivated$ | async) as walletActivated else overlaySpinner">
-    <div *ngIf="walletActivated" class="root-content-container">
+    <div *ngIf="walletActivated" class="container root-content-container">
+        <h1 class="app-page-title">MY PORTFOLIO</h1>
         <ng-container *ngIf="{
             stats: portfolioStats$ | async,
             portfolio: portfolio$ | async

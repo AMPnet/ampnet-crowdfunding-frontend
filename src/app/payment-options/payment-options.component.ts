@@ -8,10 +8,7 @@ import { map, switchMap } from 'rxjs/operators';
 @Component({
     selector: 'app-payment-options',
     templateUrl: './payment-options.component.html',
-    styleUrls: [
-        './../app.component.css',
-        './payment-options.component.css'
-    ],
+    styleUrls: ['./payment-options.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PaymentOptionsComponent {

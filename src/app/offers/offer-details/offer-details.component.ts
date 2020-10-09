@@ -18,7 +18,7 @@ import { TooltipDirective } from 'ngx-bootstrap/tooltip';
 @Component({
     selector: 'app-offer-details',
     templateUrl: './offer-details.component.html',
-    styleUrls: ['./offer-details.component.css'],
+    styleUrls: ['./offer-details.component.scss'],
 })
 export class OfferDetailsComponent implements OnInit {
     isOverview = false;

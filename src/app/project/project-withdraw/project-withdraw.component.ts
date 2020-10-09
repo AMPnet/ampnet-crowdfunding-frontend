@@ -45,12 +45,12 @@ export class ProjectWithdrawComponent implements OnInit {
 
     ngOnInit() {
         this.projectID = this.route.snapshot.params.projectID;
-        this.getProjectWallet(Number(this.projectID));
+        this.getProjectWallet(this.projectID);
         this.getBankAccounts();
         this.getMyPendingWithdraw();
     }
 
-    getProjectWallet(projectID: number) {
+    getProjectWallet(projectID: number | string) {
         SpinnerUtil.showSpinner();
         this.walletService.getProjectWallet(projectID)
             .subscribe(wallet => {

@@ -4,6 +4,7 @@ import { PlatformBankAccountService } from '../../shared/services/wallet/platfor
 import { SpinnerUtil } from '../../utilities/spinner-utilities';
 import { displayBackendError, hideSpinnerAndDisplayError } from '../../utilities/error-handler';
 import swal from 'sweetalert2';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'app-project-deposit',
@@ -18,11 +19,13 @@ export class ProjectDepositComponent implements OnInit {
     projectUUID = '';
 
     constructor(private depositService: DepositServiceService,
+                private route: ActivatedRoute,
                 private bankAccountService: PlatformBankAccountService) {
     }
 
     ngOnInit() {
         SpinnerUtil.showSpinner();
+        this.projectUUID = this.route.snapshot.params.projectID;
         this.getMasterIban();
         this.depositService.getMyPendingDeposit().subscribe(res => {
             SpinnerUtil.hideSpinner();
@@ -39,7 +42,7 @@ export class ProjectDepositComponent implements OnInit {
 
     generateDepositInfo() {
         SpinnerUtil.showSpinner();
-        this.depositService.createDeposit().subscribe(res => {
+        this.depositService.createProjectDeposit(this.projectUUID).subscribe(res => {
             SpinnerUtil.hideSpinner();
             this.depositModel = res;
         }, err => {

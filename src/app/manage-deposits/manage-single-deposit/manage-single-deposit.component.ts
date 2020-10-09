@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import * as Uppy from 'uppy';
 import { ActivatedRoute, Router } from '@angular/router';
 import { displayBackendErrorRx, hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
@@ -7,14 +7,13 @@ import {
     DepositSearchResponse,
     WalletCooperativeDepositService
 } from '../../shared/services/wallet/wallet-cooperative/wallet-cooperative-deposit.service';
-import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
-import { BroadcastService } from 'src/app/shared/services/broadcast.service';
 import swal from 'sweetalert2';
 import MicroModal from 'micromodal';
 import { BackendHttpClient } from '../../shared/services/backend-http-client.service';
-import { switchMap, tap } from 'rxjs/operators';
+import { finalize, switchMap, tap } from 'rxjs/operators';
 import { ArkaneService } from '../../shared/services/arkane.service';
 import { PopupService } from '../../shared/services/popup.service';
+import { defer, EMPTY, of } from 'rxjs';
 
 declare var $: any;
 
@@ -23,7 +22,7 @@ declare var $: any;
     templateUrl: './manage-single-deposit.component.html',
     styleUrls: ['./manage-single-deposit.component.css']
 })
-export class ManageSingleDepositComponent implements OnInit, AfterViewInit {
+export class ManageSingleDepositComponent implements AfterViewInit {
     amount = 0;
     amountToConfirm = 0;
     depositModel: DepositSearchResponse;
@@ -37,11 +36,8 @@ export class ManageSingleDepositComponent implements OnInit, AfterViewInit {
                 private router: Router) {
     }
 
-    ngOnInit() {
-        this.getDeposit();
-    }
-
     ngAfterViewInit() {
+        this.getDeposit().subscribe();
     }
 
     createUploadArea() {
@@ -72,22 +68,23 @@ export class ManageSingleDepositComponent implements OnInit, AfterViewInit {
     }
 
     getDeposit() {
-        const id = this.route.snapshot.params.ID;
         SpinnerUtil.showSpinner();
-        this.depositCooperativeService.getDeposit(id).subscribe(res => {
-            this.depositModel = res;
-
-            if (!this.depositModel.deposit.approved) {
-                setTimeout(() => {
-                    this.createUploadArea();
-                    MicroModal.init();
-                }, 300);
-            } else {
-                this.generateSignerAndSign().subscribe();
-            }
-
-            SpinnerUtil.hideSpinner();
-        }, hideSpinnerAndDisplayError);
+        const id = this.route.snapshot.params.ID;
+        return this.depositCooperativeService.getDeposit(id).pipe(
+            displayBackendErrorRx(),
+            tap(res => this.depositModel = res),
+            switchMap(() => {
+                if (!this.depositModel.deposit.approved) {
+                    setTimeout(() => this.createUploadArea());
+                    return EMPTY;
+                } else {
+                    return this.generateSignerAndSign();
+                }
+            }),
+            finalize(() => {
+                SpinnerUtil.hideSpinner();
+            })
+        );
     }
 
     approveButtonClicked() {
@@ -106,6 +103,8 @@ export class ManageSingleDepositComponent implements OnInit, AfterViewInit {
             this.amount
         );
 
+
+
         this.paymentUppy.use(Uppy.XHRUpload, {
             endpoint: depositApprovalURL,
             fieldName: 'file',
@@ -114,10 +113,12 @@ export class ManageSingleDepositComponent implements OnInit, AfterViewInit {
             }
         });
 
+        (<any>$('#modal-confirm-deposit')).modal('hide');
+
         SpinnerUtil.showSpinner();
         this.paymentUppy.upload().then(res => {
             SpinnerUtil.hideSpinner();
-            this.getDeposit();
+            this.getDeposit().subscribe();
         });
     }
 }

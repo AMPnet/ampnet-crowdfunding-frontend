@@ -27,6 +27,8 @@ export class ProjectWithdrawComponent implements OnInit {
     withdrawAmount = 0;
     bankAccountForm: FormGroup;
 
+    projectID = '';
+
     constructor(private paymentService: PaymentService,
                 private withdrawService: WithdrawService,
                 private walletService: WalletService,
@@ -42,8 +44,8 @@ export class ProjectWithdrawComponent implements OnInit {
     }
 
     ngOnInit() {
-        const projID = this.route.snapshot.params.projectID;
-        this.getProjectWallet(projID);
+        this.projectID = this.route.snapshot.params.projectID;
+        this.getProjectWallet(Number(this.projectID));
         this.getBankAccounts();
         this.getMyPendingWithdraw();
     }
@@ -70,7 +72,7 @@ export class ProjectWithdrawComponent implements OnInit {
 
     getMyPendingWithdraw() {
         SpinnerUtil.showSpinner();
-        this.withdrawService.getMyPendingWithdraw().subscribe(res => {
+        this.withdrawService.getProjectPendingWithdraw(this.projectID).subscribe(res => {
             this.pendingWithdrawal = res;
         }, hideSpinnerAndDisplayError);
     }

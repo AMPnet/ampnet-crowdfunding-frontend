@@ -39,6 +39,10 @@ export class WithdrawService {
         return this.http.get<Withdraw>(this.endpoint);
     }
 
+    getProjectPendingWithdraw(projectID: string) {
+        return this.http.get<Withdraw>(`${this.projectWithdrawEndPoint}/${projectID}`);
+    }
+
     deleteWithdrawal(id: any) {
         return this.http.delete<void>(`${this.endpoint}/${id}`);
     }

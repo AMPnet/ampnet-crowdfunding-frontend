@@ -4,7 +4,8 @@
         <ul class="list-group">
             <li *ngFor="let user of users" class="list-group-item explainer-mini">
                 {{ user.user.first_name }} {{ user.user.last_name }} (<i>{{ user.user.email }}</i>)
-                <span (click)="activateUserClicked(user.wallet.uuid)" class="float-right cursor-pointer hover-fg">
+                <span (click)="activateUserClicked(user.wallet.uuid).subscribe()"
+                      class="float-right cursor-pointer hover-fg">
           <i class="fas fa-check-circle mr-2"></i>
           Activate
         </span>

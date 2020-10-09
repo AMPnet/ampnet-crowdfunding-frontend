@@ -1,16 +1,13 @@
-<div class="container root-content-container h-100">
-    <div class="mb-5">
-        <div class="row">
-            <div class="col-md-8">
-            </div>
-            <div *ngIf="organizations !== undefined" class="col-md-4">
-                <button class="btn btn-primary py-3 float-right w-100 " routerLink="new">
-                    <i class="fas fa-plus mr-3"></i>Create new group
-                </button>
-            </div>
+<div class="container root-content-container">
+    <div class="app-page-header">
+        <h1 class="app-page-title">Investment groups</h1>
+        <div *ngIf="organizations !== undefined">
+            <button class="btn" routerLink="new">
+                <i class="fas fa-plus mr-3" style="height: 14px"></i>Create group
+            </button>
         </div>
     </div>
-    <div class="explainer-mini text-uppercase mb-3">My groups</div>
+    <div class="app-page-subtitle">My groups</div>
     <div *ngIf="(organizations !== undefined) && (organizations.length > 0)">
         <ul class="cursor-pointer list-group">
             <li *ngFor="let org of organizations" class="list-group-item hover-bg"

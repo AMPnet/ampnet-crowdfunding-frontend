@@ -1,5 +1,7 @@
 import swal from 'sweetalert2';
 import { SpinnerUtil } from './spinner-utilities';
+import { catchError } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
 
 export function displayBackendError(resp: any) {
     const error = resp.error;
@@ -17,11 +19,14 @@ export function displayBackendError(resp: any) {
     }
 }
 
-export function displayErrorMessage(msg: string) {
-    swal('', msg, 'error');
-}
-
 export function hideSpinnerAndDisplayError(err: any) {
     SpinnerUtil.hideSpinner();
     displayBackendError(err);
+}
+
+export function displayBackendErrorRx<T>(): (source: Observable<T>) => Observable<T> {
+    return catchError(err => {
+        displayBackendError(err);
+        return throwError(err);
+    });
 }

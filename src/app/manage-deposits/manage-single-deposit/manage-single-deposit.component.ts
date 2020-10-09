@@ -1,19 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import * as Uppy from 'uppy';
+import { displayBackendError, hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
 import { ActivatedRoute, Router } from '@angular/router';
-import { hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import {
     DepositSearchResponse,
     WalletCooperativeDepositService
 } from '../../shared/services/wallet/wallet-cooperative/wallet-cooperative-deposit.service';
-import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
-import { BroadcastService } from 'src/app/shared/services/broadcast.service';
-import swal from 'sweetalert2';
 import { BackendHttpClient } from '../../shared/services/backend-http-client.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ManageSingleDepositModalComponent } from './manage-single-deposit-modal/manage-single-deposit-modal.component';
-import { finalize } from 'rxjs/operators';
+import { catchError, finalize, switchMap } from 'rxjs/operators';
+import { BroadcastService } from '../../shared/services/broadcast.service';
+import { ArkaneService } from '../../shared/services/arkane.service';
+import { PopupService } from '../../shared/services/popup.service';
+import { throwError } from 'rxjs';
 
 declare var $: any;
 
@@ -34,6 +35,8 @@ export class ManageSingleDepositComponent implements OnInit {
                 private depositCooperativeService: WalletCooperativeDepositService,
                 private broadService: BroadcastService,
                 private modalService: BsModalService,
+                private arkaneService: ArkaneService,
+                private popupService: PopupService,
                 private router: Router) {
     }
 
@@ -72,37 +75,19 @@ export class ManageSingleDepositComponent implements OnInit {
     }
 
     generateSignerAndSign() {
-        SpinnerUtil.showSpinner();
-        this.depositCooperativeService.generateDepositMintTx(this.depositModel.deposit.id)
-            .subscribe(async res => {
-                const arkaneConnect = new ArkaneConnect('AMPnet', {
-                    environment: 'staging'
-                });
-
-                try {
-                    const account = await arkaneConnect.flows.getAccount(SecretType.AETERNITY);
-                    const sigRes = await arkaneConnect.createSigner(WindowMode.POPUP).sign({
-                        walletId: account.wallets[0].id,
-                        data: res.tx,
-                        type: SignatureRequestType.AETERNITY_RAW
-                    });
-                    this.broadService.broadcastSignedTx(sigRes.result.signedTransaction, res.tx_id)
-                        .subscribe(_ => {
-                            swal('', 'Success', 'success')
-                                .then(() => {
-                                    SpinnerUtil.hideSpinner();
-                                    this.router.navigate(['/dash/manage_deposits']);
-                                });
-                        }, hideSpinnerAndDisplayError);
-                } catch (error) {
-                    // When user close Arkane popup window
-                    if (error.status !== undefined && error.status.length > 0) {
-                        swal('', error.status, 'warning');
-                    }
-                    SpinnerUtil.hideSpinner();
-                    this.removeUppyPlugin();
-                }
-            }, hideSpinnerAndDisplayError);
+        this.depositCooperativeService.generateDepositMintTx(this.depositModel.deposit.id).pipe(
+            catchError(err => {
+                displayBackendError(err);
+                return throwError(err);
+            }),
+            switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo)),
+            switchMap(() => this.popupService.new({
+                type: 'success',
+                title: 'Transaction signed',
+                text: 'Transaction is being processed...'
+            })),
+            switchMap(() => this.router.navigate(['/dash/manage_deposits']))
+        ).subscribe();
     }
 
     getDeposit() {
@@ -131,6 +116,7 @@ export class ManageSingleDepositComponent implements OnInit {
                     this.depositModel.deposit.id,
                     this.amount
                 );
+                this.removeUppyPlugin();
                 this.paymentUppy.use(Uppy.XHRUpload, {
                     endpoint: depositApprovalURL,
                     fieldName: 'file',

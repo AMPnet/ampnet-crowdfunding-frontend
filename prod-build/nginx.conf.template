@@ -13,6 +13,12 @@ http {
         index index.html index.htm;
         include /etc/nginx/mime.types;
 
+        gzip on;
+        gzip_types text/html text/css application/javascript;
+        gzip_min_length 1400;
+        gzip_comp_level 6;
+        gzip_proxied any;
+
         location /api {
             add_header 'Access-Control-Allow-Origin' '*';
             add_header 'Access-Control-Allow-Credentials' 'true';

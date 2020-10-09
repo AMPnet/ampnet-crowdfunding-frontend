@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, HostListener, Input, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostListener, Input, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 
 @Component({
@@ -7,7 +7,7 @@ import { Observable, Subscription } from 'rxjs';
     styleUrls: ['./action-button.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ActionButtonComponent implements OnDestroy {
+export class ActionButtonComponent implements OnInit, OnDestroy {
     @Input() text: string;
     @Input() loadingText: string;
     @Input() faIcon: string;
@@ -34,6 +34,10 @@ export class ActionButtonComponent implements OnDestroy {
     }
 
     constructor() {
+    }
+
+    ngOnInit() {
+        this.loadingText = this.loadingText !== undefined ? this.loadingText : this.text;
     }
 
     ngOnDestroy() {

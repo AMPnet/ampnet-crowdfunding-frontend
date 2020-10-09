@@ -1,0 +1,23 @@
+@import "colors";
+@import "bootstrap/scss/mixins/buttons";
+
+.btn {
+  @include button-variant($primary-color, darken($primary-color, 7.5%), darken($primary-color, 10%), lighten($primary-color,5%), lighten($primary-color, 10%), darken($primary-color,30%));
+  border-radius: 8px;
+  background: $primary-color;
+  border-color: $primary-color;
+  font-weight: 400;
+  height: 48px;
+  font-size: 16px;
+  padding: 16px 24px;
+  line-height: 0;
+
+  &-primary {
+    height: 64px;
+    font-size: 17px;
+  }
+
+  &-outline-primary {
+    @include button-outline-variant($primary-color, darken($primary-color, 10%), lighten($primary-color,5%), $primary-color);
+  }
+}

@@ -1,3 +1,8 @@
+/*
+Deprecated. Pick stuff from here when refactoring the code and delete if not used.
+TODO: Remove after none of this is used.
+*/
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
 
 * {

@@ -1,14 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UserService } from '../shared/services/user/user.service';
-import { displayBackendError, hideSpinnerAndDisplayError } from '../utilities/error-handler';
+import { displayBackendError, displayBackendErrorRx } from '../utilities/error-handler';
 import { WalletCooperativeOwnershipService } from '../shared/services/wallet/wallet-cooperative/wallet-cooperative-ownership.service';
-import { BroadcastService } from '../shared/services/broadcast.service';
-import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
-import swal from 'sweetalert2';
-import { TransactionInfo } from '../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
 import { User } from '../shared/services/user/signup.service';
 import { Subscription } from 'rxjs';
+import { finalize, switchMap } from 'rxjs/operators';
+import { ArkaneService } from '../shared/services/arkane.service';
+import { PopupService } from '../shared/services/popup.service';
 
 @Component({
     selector: 'app-ownership',
@@ -21,7 +20,8 @@ export class OwnershipComponent implements OnInit, OnDestroy {
 
     constructor(private userService: UserService,
                 private ownershipService: WalletCooperativeOwnershipService,
-                private broadcastService: BroadcastService) {
+                private arkaneService: ArkaneService,
+                private popupService: PopupService) {
     }
 
     ngOnInit() {
@@ -35,40 +35,32 @@ export class OwnershipComponent implements OnInit, OnDestroy {
     }
 
     changePlatformManagerClicked() {
+        const platformManagerAddress = String($('#platform-manager-address').val());
 
-        const platformManagerAddress: any = $('#platform-manager-address').val();
-
-        this.ownershipService.executePlatformManagerTransaction(platformManagerAddress).subscribe(res => {
-            this.confirmAndBroadcastTransaction(res);
-        }, hideSpinnerAndDisplayError);
+        return this.ownershipService.executePlatformManagerTransaction(platformManagerAddress).pipe(
+            displayBackendErrorRx(),
+            switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo)),
+            switchMap(() => this.popupService.new({
+                type: 'success',
+                title: 'Transaction signed',
+                text: 'Transaction is being processed...'
+            })),
+            finalize(() => SpinnerUtil.hideSpinner())
+        );
     }
 
     changeTokenIssuerClicked() {
+        const tokenIssuerAddress = String($('#token-issuer-address').val());
 
-        const tokenIssuerAddress: any = $('#token-issuer-address').val();
-
-        this.ownershipService.executeTokenIssuerTransaction(tokenIssuerAddress).subscribe(async res => {
-            await this.confirmAndBroadcastTransaction(res);
-        }, hideSpinnerAndDisplayError);
+        return this.ownershipService.executeTokenIssuerTransaction(tokenIssuerAddress).pipe(
+            displayBackendErrorRx(),
+            switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo)),
+            switchMap(() => this.popupService.new({
+                type: 'success',
+                title: 'Transaction signed',
+                text: 'Transaction is being processed...'
+            })),
+            finalize(() => SpinnerUtil.hideSpinner())
+        );
     }
-
-    async confirmAndBroadcastTransaction(res: TransactionInfo) {
-        const arkaneConnect = new ArkaneConnect('AMPnet', {
-            environment: 'staging'
-        });
-
-        const account = await arkaneConnect.flows.getAccount(SecretType.AETERNITY);
-
-        const sigRes = await arkaneConnect.createSigner(WindowMode.POPUP).sign({
-            walletId: account.wallets[0].id,
-            data: res.tx,
-            type: SignatureRequestType.AETERNITY_RAW
-        });
-        this.broadcastService.broadcastSignedTx(sigRes.result.signedTransaction, res.tx_id)
-            .subscribe(_ => {
-                SpinnerUtil.hideSpinner();
-                swal('', 'Success', 'success');
-            }, hideSpinnerAndDisplayError);
-    }
-
 }

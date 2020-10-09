@@ -4,7 +4,8 @@
         <ul class="list-group">
             <li *ngFor="let group of groups" class="list-group-item explainer-mini">
                 {{ group.organization.name }}
-                <span (click)="activateGroupClicked(group.wallet.uuid)" class="float-right cursor-pointer hover-fg">
+                <span (click)="activateGroup(group.wallet.uuid).subscribe()"
+                      class="float-right cursor-pointer hover-fg">
           <i class="fas fa-check-circle mr-2"></i>
           Activate
         </span>

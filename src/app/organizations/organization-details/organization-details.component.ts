@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
-import { displayBackendError, hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
+import { displayBackendError, displayBackendErrorRx, hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
 import swal from 'sweetalert2';
-import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
 import { WalletService } from '../../shared/services/wallet/wallet.service';
 import { WalletDetails } from '../../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
 import { Organization, OrganizationMember, OrganizationService } from '../../shared/services/project/organization.service';
-import { BroadcastService } from '../../shared/services/broadcast.service';
+import { switchMap, tap } from 'rxjs/operators';
+import { ArkaneService } from '../../shared/services/arkane.service';
+import { PopupService } from '../../shared/services/popup.service';
 
 declare var $: any;
 
@@ -17,20 +18,15 @@ declare var $: any;
     styleUrls: ['./organization-details.component.css']
 })
 export class OrganizationDetailsComponent implements OnInit {
-
-    orgWalletInitialized: boolean;
-    txData: string;
-    txID: number;
     organization: Organization;
     orgWallet?: WalletDetails;
     orgMembers: OrganizationMember[];
 
-    qrCodeData: String = '';
-
     constructor(private activeRoute: ActivatedRoute,
                 private organizationService: OrganizationService,
                 private walletService: WalletService,
-                private broadcastService: BroadcastService) {
+                private arkaneService: ArkaneService,
+                private popupService: PopupService) {
     }
 
     ngOnInit() {
@@ -76,28 +72,17 @@ export class OrganizationDetailsComponent implements OnInit {
         });
     }
 
-    async createOrgWalletClicked() {
-        const arkaneConnect = new ArkaneConnect('AMPnet', {environment: 'staging'});
-        const account = await arkaneConnect.flows.getAccount(SecretType.AETERNITY);
-
-        this.walletService.createOrganizationWalletTransaction(this.organization.uuid).subscribe(async res => {
-            this.orgWalletInitialized = false;
-            this.txData = JSON.stringify(res.tx);
-            this.txID = res.tx_id;
-
-            const sigRes = await arkaneConnect.createSigner(WindowMode.POPUP).sign({
-                walletId: account.wallets[0].id,
-                data: res.tx,
-                type: SignatureRequestType.AETERNITY_RAW
-            });
-            this.broadcastService.broadcastSignedTx(sigRes.result.signedTransaction, res.tx_id).subscribe(_ => {
-                swal('', 'Success', 'success');
-                this.ngOnInit();
-            }, displayBackendError);
-        }, err => {
-            displayBackendError(err);
-        });
-
+    createOrgWalletClicked() {
+        return this.walletService.createOrganizationWalletTransaction(this.organization.uuid).pipe(
+            displayBackendErrorRx(),
+            switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo)),
+            switchMap(() => this.popupService.new({
+                type: 'success',
+                title: 'Transaction signed',
+                text: 'Transaction is being processed...'
+            })),
+            tap(() => this.ngOnInit()),
+        );
     }
 
     deleteMember(orgID: string, memberID: string) {

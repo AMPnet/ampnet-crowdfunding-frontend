@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BackendHttpClient } from '../backend-http-client.service';
 import { Project } from '../project/project.service';
+import { TransactionInfo } from './wallet-cooperative/wallet-cooperative-wallet.service';
 
 @Injectable({
     providedIn: 'root'
@@ -22,7 +23,7 @@ export class PortfolioService {
     }
 
     generateCancelInvestmentTransaction(projectUUID: string) {
-        return this.http.post<CancelInvestmentResponse>(`/api/wallet/invest/project/${projectUUID}/cancel`, {});
+        return this.http.post<TransactionInfo>(`/api/wallet/invest/project/${projectUUID}/cancel`, {});
     }
 
     isInvestmentCancelable(projectWallet: string, userWallet: string) {
@@ -57,16 +58,6 @@ export interface TxData {
     amount: number;
     type: string;
     date: string;
-}
-
-export interface CancelInvestmentResponse {
-    tx: string;
-    tx_id: number;
-    info: {
-        tx_type: string;
-        title: string;
-        description: string;
-    };
 }
 
 interface CancelableResult {

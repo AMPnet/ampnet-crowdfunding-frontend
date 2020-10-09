@@ -1,19 +1,18 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import * as Uppy from 'uppy';
 import { ActivatedRoute, Router } from '@angular/router';
-import { displayBackendErrorRx, hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
+import { displayBackendErrorRx } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import {
     DepositSearchResponse,
     WalletCooperativeDepositService
 } from '../../shared/services/wallet/wallet-cooperative/wallet-cooperative-deposit.service';
 import swal from 'sweetalert2';
-import MicroModal from 'micromodal';
 import { BackendHttpClient } from '../../shared/services/backend-http-client.service';
 import { finalize, switchMap, tap } from 'rxjs/operators';
 import { ArkaneService } from '../../shared/services/arkane.service';
 import { PopupService } from '../../shared/services/popup.service';
-import { defer, EMPTY, of } from 'rxjs';
+import { EMPTY } from 'rxjs';
 
 declare var $: any;
 
@@ -102,7 +101,6 @@ export class ManageSingleDepositComponent implements AfterViewInit {
             this.depositModel.deposit.id,
             this.amount
         );
-
 
 
         this.paymentUppy.use(Uppy.XHRUpload, {

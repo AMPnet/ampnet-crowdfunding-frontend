@@ -1,7 +1,7 @@
 import swal from 'sweetalert2';
 import { SpinnerUtil } from './spinner-utilities';
 import { catchError } from 'rxjs/operators';
-import { EMPTY, Observable, throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 
 export function displayBackendError(resp: any) {
     const error = resp.error;

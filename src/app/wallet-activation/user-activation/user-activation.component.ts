@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { displayBackendErrorRx, hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
-import { BroadcastService } from 'src/app/shared/services/broadcast.service';
 import {
     CooperativeUser,
     WalletCooperativeWalletService

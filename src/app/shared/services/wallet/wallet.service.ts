@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BackendHttpClient } from '../backend-http-client.service';
 import { TransactionInfo, WalletDetails } from './wallet-cooperative/wallet-cooperative-wallet.service';
-import { catchError, map, retry, shareReplay, switchMap, take, tap } from 'rxjs/operators';
-import { BehaviorSubject, combineLatest, EMPTY, merge, Observable, of, ReplaySubject, throwError } from 'rxjs';
+import { catchError, retry, switchMap, tap } from 'rxjs/operators';
+import { BehaviorSubject, EMPTY, merge, Observable, of, ReplaySubject, throwError } from 'rxjs';
 import { CacheService } from '../cache.service';
 
 @Injectable({

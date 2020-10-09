@@ -4,11 +4,9 @@ import { Project, ProjectService } from 'src/app/shared/services/project/project
 import { displayBackendError, displayBackendErrorRx } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { BroadcastService } from 'src/app/shared/services/broadcast.service';
-import swal from 'sweetalert2';
 import { WalletService } from '../../../shared/services/wallet/wallet.service';
 import { ArkaneService } from '../../../shared/services/arkane.service';
-import { catchError, map, switchMap } from 'rxjs/operators';
-import { throwError } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { PopupService } from '../../../shared/services/popup.service';
 
 @Component({

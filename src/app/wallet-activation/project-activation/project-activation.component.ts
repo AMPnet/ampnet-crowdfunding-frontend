@@ -4,10 +4,7 @@ import {
     CooperativeProject,
     WalletCooperativeWalletService
 } from '../../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
-import { displayBackendError, displayBackendErrorRx, hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
-import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
-import { BroadcastService } from 'src/app/shared/services/broadcast.service';
-import swal from 'sweetalert2';
+import { displayBackendError, displayBackendErrorRx } from 'src/app/utilities/error-handler';
 import { finalize, switchMap, tap } from 'rxjs/operators';
 import { ArkaneService } from '../../shared/services/arkane.service';
 import { PopupService } from '../../shared/services/popup.service';

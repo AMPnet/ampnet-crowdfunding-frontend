@@ -70,7 +70,7 @@ export class ManageSingleProjectComponent implements OnInit, AfterViewInit {
                 this.wallet = res;
 
                 setTimeout(function () {
-                   this.setUploadAreas();
+                    this.setUploadAreas();
                 }.bind(this));
             }),
             finalize(() => SpinnerUtil.hideSpinner())

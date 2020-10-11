@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as Uppy from 'uppy';
-import { displayBackendError, hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
+import { displayBackendErrorRx, hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import {
@@ -10,11 +10,10 @@ import {
 import { BackendHttpClient } from '../../shared/services/backend-http-client.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ManageSingleDepositModalComponent } from './manage-single-deposit-modal/manage-single-deposit-modal.component';
-import { catchError, finalize, switchMap } from 'rxjs/operators';
+import { finalize, switchMap } from 'rxjs/operators';
 import { BroadcastService } from '../../shared/services/broadcast.service';
 import { ArkaneService } from '../../shared/services/arkane.service';
 import { PopupService } from '../../shared/services/popup.service';
-import { throwError } from 'rxjs';
 
 declare var $: any;
 
@@ -75,17 +74,16 @@ export class ManageSingleDepositComponent implements OnInit {
     }
 
     generateSignerAndSign() {
+        SpinnerUtil.showSpinner();
         this.depositCooperativeService.generateDepositMintTx(this.depositModel.deposit.id).pipe(
-            catchError(err => {
-                displayBackendError(err);
-                return throwError(err);
-            }),
+            displayBackendErrorRx(),
             switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo)),
             switchMap(() => this.popupService.new({
                 type: 'success',
                 title: 'Transaction signed',
                 text: 'Transaction is being processed...'
             })),
+            finalize(() => SpinnerUtil.hideSpinner()),
             switchMap(() => this.router.navigate(['/dash/manage_deposits']))
         ).subscribe();
     }

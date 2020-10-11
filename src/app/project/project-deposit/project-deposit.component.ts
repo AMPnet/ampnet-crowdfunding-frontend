@@ -63,5 +63,4 @@ export class ProjectDepositComponent implements OnInit {
             hideSpinnerAndDisplayError(err);
         });
     }
-
 }

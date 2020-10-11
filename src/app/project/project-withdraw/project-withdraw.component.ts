@@ -3,14 +3,14 @@ import { PaymentService, UserBankAccount } from '../../shared/services/payment.s
 import { Withdraw, WithdrawService } from '../../shared/services/wallet/withdraw.service';
 import { WalletService } from '../../shared/services/wallet/wallet.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BroadcastService } from '../../shared/services/broadcast.service';
 import { SpinnerUtil } from '../../utilities/spinner-utilities';
-import { hideSpinnerAndDisplayError } from '../../utilities/error-handler';
-import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
-import swal from 'sweetalert2';
+import { displayBackendErrorRx, hideSpinnerAndDisplayError } from '../../utilities/error-handler';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { WalletDetails } from '../../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
 import { MiddlewareService } from '../../shared/services/middleware/middleware.service';
+import { finalize, switchMap, tap } from 'rxjs/operators';
+import { PopupService } from '../../shared/services/popup.service';
+import { ArkaneService } from '../../shared/services/arkane.service';
 
 @Component({
     selector: 'app-project-withdraw',
@@ -19,7 +19,6 @@ import { MiddlewareService } from '../../shared/services/middleware/middleware.s
 })
 export class ProjectWithdrawComponent implements OnInit {
     projectWallet: WalletDetails;
-    activeBankAccount = 0;
     banks: UserBankAccount[];
     isProjectFullyFunded = false;
 
@@ -33,8 +32,9 @@ export class ProjectWithdrawComponent implements OnInit {
                 private withdrawService: WithdrawService,
                 private walletService: WalletService,
                 private router: Router,
+                private popupService: PopupService,
+                private arkaneService: ArkaneService,
                 private route: ActivatedRoute,
-                private broadService: BroadcastService,
                 private fb: FormBuilder,
                 private middlewareService: MiddlewareService) {
 
@@ -77,54 +77,42 @@ export class ProjectWithdrawComponent implements OnInit {
         }, hideSpinnerAndDisplayError);
     }
 
-    async generateWithdrawClicked() {
-        if (this.pendingWithdrawal !== undefined) {
-            this.burnWithdraw();
-            return;
-        }
-
+    requestWithdrawal() {
         SpinnerUtil.showSpinner();
         const controls = this.bankAccountForm.controls;
         const iban = controls['iban'].value.replace(/\s/g, '');
         const projID = this.route.snapshot.params.projectID;
 
-        this.withdrawService.createProjectWithdrawRequest(this.withdrawAmount, iban, projID).subscribe(res => {
-            this.pendingWithdrawal = res;
-            SpinnerUtil.hideSpinner();
-        }, hideSpinnerAndDisplayError);
+        return this.withdrawService.createProjectWithdrawRequest(this.withdrawAmount, iban, projID).pipe(
+            displayBackendErrorRx(),
+            tap(res => this.pendingWithdrawal = res),
+            finalize(() => SpinnerUtil.hideSpinner()),
+        );
     }
 
     burnWithdraw() {
         SpinnerUtil.showSpinner();
-        this.withdrawService.generateApproveWithdrawTx(this.pendingWithdrawal.id).subscribe(async res => {
-
-            const arkaneConnect = new ArkaneConnect('AMPnet', {
-                environment: 'staging'
-            });
-
-            const account = await arkaneConnect.flows.getAccount(SecretType.AETERNITY);
-
-            const sigRes = await arkaneConnect.createSigner(WindowMode.POPUP).sign({
-                walletId: account.wallets[0].id,
-                data: res.tx,
-                type: SignatureRequestType.AETERNITY_RAW
-            });
-            this.broadService.broadcastSignedTx(sigRes.result.signedTransaction, res.tx_id)
-                .subscribe(_ => {
-                    SpinnerUtil.hideSpinner();
-                    swal('', 'Success', 'success').then(() => {
-                        this.walletService.clearAndRefreshWallet();
-                        this.router.navigate(['/dash/wallet']);
-                    });
-                }, hideSpinnerAndDisplayError);
-
-            SpinnerUtil.hideSpinner();
-        }, hideSpinnerAndDisplayError);
+        return this.withdrawService.generateApproveWithdrawTx(this.pendingWithdrawal.id).pipe(
+            displayBackendErrorRx(),
+            switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo)),
+            switchMap(() => this.popupService.new({
+                type: 'success',
+                title: 'Transaction signed',
+                text: 'Transaction is being processed...'
+            })),
+            switchMap(() => this.router.navigate(['/dash/wallet'])),
+            finalize(() => SpinnerUtil.hideSpinner()),
+        );
     }
 
     deleteWithdrawal() {
-        this.withdrawService.deleteWithdrawal(this.pendingWithdrawal.id).subscribe(_ => {
-            swal('', 'Success!', 'success');
-        }, hideSpinnerAndDisplayError);
+        SpinnerUtil.showSpinner();
+
+        return this.withdrawService.deleteWithdrawal(this.pendingWithdrawal.id).pipe(
+            displayBackendErrorRx(),
+            switchMap(() => this.popupService.success('Withdrawal deleted')),
+            tap(() => this.pendingWithdrawal = undefined),
+            finalize(() => SpinnerUtil.hideSpinner()),
+        );
     }
 }

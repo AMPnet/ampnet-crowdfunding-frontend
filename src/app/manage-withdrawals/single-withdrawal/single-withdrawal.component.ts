@@ -1,54 +1,67 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import {
+    ProjectWithdraw,
     UserWithdraw,
     WalletCooperativeWithdrawService
 } from 'src/app/shared/services/wallet/wallet-cooperative/wallet-cooperative-withdraw.service';
 import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
 import { BroadcastService } from 'src/app/shared/services/broadcast.service';
 import swal from 'sweetalert2';
-import { Location } from '@angular/common';
-
-declare var $: any;
 
 @Component({
     selector: 'app-single-withdrawal',
     templateUrl: './single-withdrawal.component.html',
     styleUrls: ['./single-withdrawal.component.css']
 })
-export class SingleWithdrawalComponent implements OnInit, AfterViewInit {
-    withdrawal: UserWithdraw;
+export class SingleWithdrawalComponent implements OnInit {
+    withdrawalId;
+    withdrawalType = 'users';
+    userWithdrawal: UserWithdraw;
+    projectWithdrawal: ProjectWithdraw;
 
     constructor(private route: ActivatedRoute,
-                private location: Location,
                 private withdrawCooperativeService: WalletCooperativeWithdrawService,
                 private broadcastService: BroadcastService) {
     }
 
     ngOnInit() {
-        const id = Number(this.route.snapshot.params.ID);
-        this.getWithdrawal(id);
-    }
+        this.withdrawalId = Number(this.route.snapshot.params.ID);
+        this.withdrawalType = this.route.snapshot.params.type;
 
-    ngAfterViewInit() {
-        setTimeout(() => {
-            this.setUploadArea();
-        }, 300);
+        switch (this.withdrawalType) {
+            case 'users': {
+                this.getWithdrawal(this.withdrawalId);
+                break;
+            }
+            case 'projects': {
+                this.getProjectWithdrawal(this.withdrawalId);
+                break;
+            }
+        }
     }
 
     getWithdrawal(id: number) {
         SpinnerUtil.showSpinner();
         this.withdrawCooperativeService.getApprovedWithdrawals().subscribe(res => {
             SpinnerUtil.hideSpinner();
-            this.withdrawal = res.withdraws.filter(item => item.id === id)[0];
+            this.userWithdrawal = res.withdraws.filter(item => item.id === id)[0];
+        }, hideSpinnerAndDisplayError);
+    }
+
+    getProjectWithdrawal(id: number) {
+        SpinnerUtil.showSpinner();
+        this.withdrawCooperativeService.getApprovedProjectWithdraws().subscribe(res => {
+            SpinnerUtil.hideSpinner();
+            this.projectWithdrawal = res.withdraws.filter(item => item.id === id)[0];
         }, hideSpinnerAndDisplayError);
     }
 
     approveAndGenerateCodeClicked() {
         SpinnerUtil.showSpinner();
-        this.withdrawCooperativeService.generateBurnWithdrawTx(this.withdrawal.id).subscribe(async res => {
+        this.withdrawCooperativeService.generateBurnWithdrawTx(this.withdrawalId).subscribe(async res => {
 
             const arkaneConnect = new ArkaneConnect('AMPnet', {
                 environment: 'staging'
@@ -64,29 +77,8 @@ export class SingleWithdrawalComponent implements OnInit, AfterViewInit {
                 .subscribe(_ => {
                     SpinnerUtil.hideSpinner();
                     swal('', 'Success', 'success');
-                    this.location.back();
                 }, hideSpinnerAndDisplayError);
 
         }, hideSpinnerAndDisplayError);
-    }
-
-    setUploadArea() {
-        // let uppy = Uppy.Core({
-        //   id: "payment-reciept",
-        //   restrictions: {
-        //     maxFileSize: null,
-        //     maxNumberOfFiles: 1,
-        //     minNumberOfFiles: 1,
-        //     allowedFileTypes: null
-        //   }
-        // });
-        // uppy.use(Uppy.Dashboard, {
-        //   target: document.getElementById('payment-reciept-upload-target'),
-        //   height: 300,
-        //   width: $(".root-content-container").width(),
-        //   inline: true,
-        //   proudlyDisplayPoweredByUppy: false,
-        //   note: "Upload the payment reciept for the withdrawal in PDF format"
-        // })
     }
 }

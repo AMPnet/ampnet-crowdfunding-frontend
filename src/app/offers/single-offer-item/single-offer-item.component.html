@@ -1,25 +1,16 @@
-<!-- <div (click)="onClickedItem()" class="card-holder cursor-pointer"> -->
 <div (click)="onClickedItem()" class="card-holder cursor-pointer">
 
-    <!-- <div class="card-left-holder"> -->
     <div class="card-left">
-
-        <!-- <div class="card-img-holder"> -->
         <div class="left__img">
-
-            <!-- <img alt="" class="w-100 h-100 card-img-base" src="{{ projectWallet.project.main_image }}"> -->
-            <img alt="" class="w-100 h-100 img__base" src="{{ projectWallet.project.main_image }}">
-        
+            <img class="img__base w-100" src="{{ projectWallet.project.main_image }}">
         </div>
         <h1 class="app-card-title">
             {{ projectWallet.project.name }}
         </h1>
-        <!-- <div class="card-progress-holder"> -->
         <div class="left__progress">
             <ng-container *ngIf="(projectWallet$ | async) as wallet else walletLoading">
                 <div style="visibility:hidden" class="fadeIn wow">
                     <div>
-                        <!-- <div class="raised-info"> -->
                         <div class="progress__raised">
                             <div>
                                 <span>{{ wallet.totalFundsRaised | currencyDefault }}</span> raised of
@@ -27,7 +18,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div>
                         <div class="progress">
                             <div [style.width.%]="(wallet.totalFundsRaised / wallet.investmentCap) * 100"
@@ -37,19 +27,16 @@
                     </div>
                 </div>
             </ng-container>
-
-            <!-- <div class="ends-info"> -->
             <div class="left__ends-info">
                 Ends on {{ projectWallet.project.end_date | date:'mediumDate' }}
             </div>
         </div>
     </div>
-    <!-- <div class="card-content-holder"> -->
+
     <div class="card-right">
         <h1 class="app-card-title">
             {{ projectWallet.project.name }}
         </h1>
-        <!-- <div class="card-content-text-holder"> -->
         <div class="right__text">
             <p class="right__roi">
                 Expected yearly return:
@@ -57,11 +44,8 @@
                     {{ projectWallet.project.roi.from }}% - {{ projectWallet.project.roi.to }}%
                 </span>
             </p>
-            
-            
             <div [innerHTML]="projectWallet.project.description" class="right__desc"></div>
         </div>
-        <!-- <div class="card-content-actions-holder"> -->
         <div class="right__cta">
             <button class="btn w-100 invest-button">
                 See more

@@ -1,17 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
-import { displayBackendError } from 'src/app/utilities/error-handler';
+import { displayBackendError, displayBackendErrorRx } from 'src/app/utilities/error-handler';
 import swal from 'sweetalert2';
-import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
 import { WalletService } from '../../shared/services/wallet/wallet.service';
 import { WalletDetails } from '../../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
 import { Organization, OrganizationMember, OrganizationService } from '../../shared/services/project/organization.service';
-import { BroadcastService } from '../../shared/services/broadcast.service';
 import { BehaviorSubject, EMPTY, from, Observable, of } from 'rxjs';
 import { catchError, finalize, map, switchMap, tap } from 'rxjs/operators';
-
-declare var $: any;
+import { ArkaneService } from '../../shared/services/arkane.service';
+import { PopupService } from '../../shared/services/popup.service';
 
 @Component({
     selector: 'app-organization-details',
@@ -19,22 +17,24 @@ declare var $: any;
     styleUrls: ['./organization-details.component.css']
 })
 export class OrganizationDetailsComponent implements OnInit {
+    refreshOrgMembersSubject = new BehaviorSubject<void>(null);
+    orgID;
+
     organization$: Observable<Organization>;
     orgWallet$: Observable<WalletDetails>;
     orgMembers$: Observable<OrganizationMember[]>;
 
-    refreshOrgMembersSubject = new BehaviorSubject<void>(null);
-
     constructor(private activeRoute: ActivatedRoute,
                 private organizationService: OrganizationService,
                 private walletService: WalletService,
-                private broadcastService: BroadcastService) {
+                private arkaneService: ArkaneService,
+                private popupService: PopupService) {
     }
 
     ngOnInit() {
-        const orgID = this.activeRoute.snapshot.params.id;
-        this.organization$ = this.organizationService.getSingleOrganization(orgID).pipe(this.handleErrors);
-        this.orgWallet$ = this.walletService.getOrganizationWallet(orgID).pipe(
+        this.orgID = this.activeRoute.snapshot.params.id;
+        this.organization$ = this.organizationService.getSingleOrganization(this.orgID).pipe(this.handleErrors);
+        this.orgWallet$ = this.walletService.getOrganizationWallet(this.orgID).pipe(
             catchError(err => {
                 if (err.status === 404) {
                     return of(undefined);
@@ -50,7 +50,7 @@ export class OrganizationDetailsComponent implements OnInit {
             }));
 
         this.orgMembers$ = this.refreshOrgMembersSubject.pipe(
-            switchMap(_ => this.organizationService.getMembersForOrganization(orgID).pipe(this.handleErrors)),
+            switchMap(_ => this.organizationService.getMembersForOrganization(this.orgID).pipe(this.handleErrors)),
             map(res => res.members));
     }
 
@@ -63,23 +63,17 @@ export class OrganizationDetailsComponent implements OnInit {
         ).subscribe();
     }
 
-    async createOrgWalletClicked(orgUUID: string) {
-        const arkaneConnect = new ArkaneConnect('AMPnet', {environment: 'staging'});
-        const account = await arkaneConnect.flows.getAccount(SecretType.AETERNITY);
-
-        this.walletService.createOrganizationWalletTransaction(orgUUID).subscribe(async res => {
-            const sigRes = await arkaneConnect.createSigner(WindowMode.POPUP).sign({
-                walletId: account.wallets[0].id,
-                data: res.tx,
-                type: SignatureRequestType.AETERNITY_RAW
-            });
-            this.broadcastService.broadcastSignedTx(sigRes.result.signedTransaction, res.tx_id).subscribe(_ => {
-                swal('', 'Success', 'success');
-                this.ngOnInit();
-            }, displayBackendError);
-        }, err => {
-            displayBackendError(err);
-        });
+    createOrgWalletClicked() {
+        return this.walletService.createOrganizationWalletTransaction(this.orgID).pipe(
+            displayBackendErrorRx(),
+            switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo)),
+            switchMap(() => this.popupService.new({
+                type: 'success',
+                title: '',
+                text: 'Success!'
+            })),
+            tap(() => this.ngOnInit()),
+        );
     }
 
     deleteMember(orgID: string, memberID: string) {

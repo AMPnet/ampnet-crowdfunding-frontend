@@ -26,7 +26,7 @@ import { CreateNewProjectComponent } from './projects/create-new-project/create-
 import { OnboardingComponent } from './authentication/onboarding/onboarding.component';
 import { ManageProjectsComponent } from './manage-projects/manage-projects.component';
 import { ManageSingleProjectComponent } from './manage-projects/manage-single-project/manage-single-project.component';
-import { VerifySignOfferComponent } from './offers/verify-sign-offer/verify-sign-offer.component';
+import { VerifySignOfferComponent } from './offers/offer-details/verify-sign-offer/verify-sign-offer.component';
 import { ManageWithdrawalsComponent } from './manage-withdrawals/manage-withdrawals.component';
 import { SingleWithdrawalComponent } from './manage-withdrawals/single-withdrawal/single-withdrawal.component';
 import { ManageDepositsComponent } from './manage-deposits/manage-deposits.component';

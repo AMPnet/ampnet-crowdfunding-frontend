@@ -25,7 +25,7 @@
         </div>
         <div class="col-lg-7 offer-left order-last order-lg-second">
             <!-- Offer image -->
-            <div class="wow fadeIn d-lg-block">
+            <div class="wow fadeIn d-lg-block d-none">
                 <img class="header-image w-100" src="{{states.project.main_image}}">
             </div>
             <!-- Offer desc -->
@@ -33,7 +33,7 @@
                 <div [innerHTML]="states.project.description"></div>
             </div>
             <!-- Offer docs -->
-            <div class="offer-docs mb-5 mb-lg-0">
+            <div class="offer-docs mb-5 mb-lg-3">
                 <div *ngFor="let doc of states.project.documents" class="w-100 mt-4">
                     <div class="d-flex flex-row align-items-center">
                         <a href="{{ doc.link }}">

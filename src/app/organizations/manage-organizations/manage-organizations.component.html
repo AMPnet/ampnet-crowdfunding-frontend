@@ -1,17 +1,14 @@
-<div class="container root-content-container h-100">
+<div class="container root-content-container">
     <ng-container *ngIf="{organizations: organizations$ | async} as states">
-        <div class="mb-5">
-            <div class="row">
-                <div class="col-md-8">
-                </div>
-                <div *ngIf="states.organizations !== null" class="col-md-4">
-                    <button class="btn btn-primary py-3 float-right w-100 " routerLink="new">
-                        <i class="fas fa-plus mr-3"></i>Create new group
-                    </button>
-                </div>
+        <div class="app-page-header">
+            <h1 class="app-page-title">Investment groups</h1>
+            <div *ngIf="states.organizations !== null">
+                <button class="btn" routerLink="new">
+                    <i class="fas fa-plus mr-3" style="height: 14px"></i>Create group
+                </button>
             </div>
         </div>
-        <div class="explainer-mini text-uppercase mb-3">My groups</div>
+        <div class="app-page-subtitle">My groups</div>
         <ng-container *ngIf="states.organizations !== null else spinner">
             <div *ngIf="states.organizations.length > 0">
                 <ul class="cursor-pointer list-group">
@@ -50,7 +47,7 @@
                     </div>
                 </li>
             </ul>
-            <div *ngIf="invitedToOrganizations.length == 0" class="w-100 text-center pt-5 pb-5 explainer-mini">
+            <div *ngIf="invitedToOrganizations.length ==0" class="w-100 text-center pt-5 pb-5 explainer-mini">
                 Not invited to any groups
             </div>
         </div>

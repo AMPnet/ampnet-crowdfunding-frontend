@@ -8,10 +8,7 @@ import { map } from 'rxjs/operators';
 @Component({
     selector: 'app-offers',
     templateUrl: './offers.component.html',
-    styleUrls: [
-        '../app.component.css',
-        './offers.component.css'
-    ]
+    styleUrls: ['./offers.component.scss']
 })
 export class OffersComponent implements OnInit {
     projectsWallets$: Observable<ProjectWallet[]>;

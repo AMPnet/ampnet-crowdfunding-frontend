@@ -28,16 +28,12 @@
       </span>
         </div>
         <div class="col-md-4">
-            <button (click)="toggleProjectStatusClicked()" class="btn btn-info float-right h-100 w-100">
-        <span *ngIf="project.active">
-          <i class="fas fa-eye-slash mr-2"></i>
-          Hide project
-        </span>
-                <span *ngIf="!project.active">
-          <i class="fas fa-eye mr-2"></i>
-          Show project
-        </span>
-            </button>
+            <app-action-button text="{{ project.active ? 'Hide project' : 'Show project' }}"
+                               faIcon="{{ project.active ? 'fa-eye-slash' : 'fa-eye' }}"
+                               loadingText="Updating project status"
+                               [onClick]="toggleProjectStatusClicked.bind(this)"
+                               buttonClass="btn btn-info float-right h-100 w-100">
+            </app-action-button>
         </div>
 
         <div class="col-md-12 mb-2 mt-5">
@@ -72,10 +68,11 @@
         </div>
 
         <div class="col-md-12 mt-5 mb-5">
-            <button (click)="updateProject()" class="btn btn-primary w-100 py-3 float-right">
-                <i class="fas fa-check mr-3"></i>
-                <span>Update</span>
-            </button>
+            <app-action-button text="Update"
+                               loadingText="Updating..."
+                               [onClick]="updateProject.bind(this)"
+                               buttonClass="btn btn-primary w-100 py-3 float-right">
+            </app-action-button>
         </div>
 
         <div class="col-md-12">
@@ -137,10 +134,12 @@
                    type="text">
         </div>
         <div class="col-md-4">
-            <button (click)="addNewsLink()" class="w-100 btn btn-primary h-100">
-                <i class="fas fa-plus mr-2"></i>
-                Add news
-            </button>
+            <app-action-button text="Add news"
+                               loadingText="Adding news..."
+                               faIcon="fa-plus"
+                               [onClick]="addNewsLink.bind(this)"
+                               buttonClass="w-100 btn btn-primary h-100">
+            </app-action-button>
         </div>
 
         <div class="col-md-12 mt-3">

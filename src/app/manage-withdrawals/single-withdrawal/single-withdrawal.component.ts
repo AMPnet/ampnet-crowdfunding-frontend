@@ -8,7 +8,7 @@ import {
     WalletCooperativeWithdrawService
 } from 'src/app/shared/services/wallet/wallet-cooperative/wallet-cooperative-withdraw.service';
 import { PopupService } from '../../shared/services/popup.service';
-import { switchMap, tap } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 import { ArkaneService } from '../../shared/services/arkane.service';
 
 @Component({
@@ -62,8 +62,6 @@ export class SingleWithdrawalComponent implements OnInit {
     }
 
     approveAndGenerateCodeClicked() {
-        SpinnerUtil.showSpinner();
-
         return this.withdrawCooperativeService.generateBurnWithdrawTx(this.withdrawalId).pipe(
             displayBackendErrorRx(),
             switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo)),
@@ -72,8 +70,7 @@ export class SingleWithdrawalComponent implements OnInit {
                 title: 'Transaction signed',
                 text: 'Transaction is being processed...'
             })),
-            tap(() => SpinnerUtil.hideSpinner()),
-            switchMap(() => this.router.navigate(['/dash/manage_withdrawals']))
+            switchMap(() => this.router.navigate([`/dash/manage_withdrawals/${this.withdrawalType}`]))
         );
     }
 }

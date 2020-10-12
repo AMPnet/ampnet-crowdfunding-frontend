@@ -47,6 +47,9 @@ export class TxAmountSign implements PipeTransform {
             case TransactionType.CANCEL_INVESTMENT: {
                 return '+';
             }
+            case TransactionType.APPROVE_INVESTMENT: {
+                return '-';
+            }
             default: {
                 return '';
             }

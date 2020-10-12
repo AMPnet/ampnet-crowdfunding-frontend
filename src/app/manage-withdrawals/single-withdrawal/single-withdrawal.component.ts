@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
+import { ActivatedRoute, Router } from '@angular/router';
+import { displayBackendErrorRx, hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import {
     ProjectWithdraw,
     UserWithdraw,
     WalletCooperativeWithdrawService
 } from 'src/app/shared/services/wallet/wallet-cooperative/wallet-cooperative-withdraw.service';
-import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
-import { BroadcastService } from 'src/app/shared/services/broadcast.service';
-import swal from 'sweetalert2';
+import { PopupService } from '../../shared/services/popup.service';
+import { switchMap, tap } from 'rxjs/operators';
+import { ArkaneService } from '../../shared/services/arkane.service';
 
 @Component({
     selector: 'app-single-withdrawal',
@@ -24,7 +24,9 @@ export class SingleWithdrawalComponent implements OnInit {
 
     constructor(private route: ActivatedRoute,
                 private withdrawCooperativeService: WalletCooperativeWithdrawService,
-                private broadcastService: BroadcastService) {
+                private arkaneService: ArkaneService,
+                private popupService: PopupService,
+                private router: Router) {
     }
 
     ngOnInit() {
@@ -61,24 +63,17 @@ export class SingleWithdrawalComponent implements OnInit {
 
     approveAndGenerateCodeClicked() {
         SpinnerUtil.showSpinner();
-        this.withdrawCooperativeService.generateBurnWithdrawTx(this.withdrawalId).subscribe(async res => {
 
-            const arkaneConnect = new ArkaneConnect('AMPnet', {
-                environment: 'staging'
-            });
-            const account = await arkaneConnect.flows.getAccount(SecretType.AETERNITY);
-
-            const sigRes = await arkaneConnect.createSigner(WindowMode.POPUP).sign({
-                walletId: account.wallets[0].id,
-                data: res.tx,
-                type: SignatureRequestType.AETERNITY_RAW
-            });
-            this.broadcastService.broadcastSignedTx(sigRes.result.signedTransaction, res.tx_id)
-                .subscribe(_ => {
-                    SpinnerUtil.hideSpinner();
-                    swal('', 'Success', 'success');
-                }, hideSpinnerAndDisplayError);
-
-        }, hideSpinnerAndDisplayError);
+        return this.withdrawCooperativeService.generateBurnWithdrawTx(this.withdrawalId).pipe(
+            displayBackendErrorRx(),
+            switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo)),
+            switchMap(() => this.popupService.new({
+                type: 'success',
+                title: 'Transaction signed',
+                text: 'Transaction is being processed...'
+            })),
+            tap(() => SpinnerUtil.hideSpinner()),
+            switchMap(() => this.router.navigate(['/dash/manage_withdrawals']))
+        );
     }
 }

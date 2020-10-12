@@ -1,13 +1,12 @@
 <div (click)="onClickedItem()" class="card-holder cursor-pointer">
     <div class="card-left-holder pb-md-3">
         <div class="card-img-holder">
-            <img alt=""
-                 class="w-100 h-100 card-img-base" src="{{ projectWallet.project.main_image }}">
+            <img alt="" class="w-100 h-100 card-img-base" src="{{ projectWallet.project.main_image }}">
         </div>
         <div class="card-progress-holder">
-            <div class="h3 text-uppercase gray-text mb-3 mt-3 d-lg-none">
+            <h1 class="app-card-title">
                 {{ projectWallet.project.name }}
-            </div>
+            </h1>
 
             <ng-container *ngIf="(projectWallet$ | async) as wallet else walletLoading">
                 <div style="visibility:hidden" class="fadeIn wow">

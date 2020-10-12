@@ -23,10 +23,6 @@ export class ManageProjectsComponent implements OnInit {
                 private projectService: ProjectService) {
     }
 
-    onUserClicked() {
-        this.router.navigate(['manage_project', '10']);
-    }
-
     ngOnInit() {
         this.projects$ = this.refreshProjectsSubject.pipe(
             switchMap(() => this.orgService.getAllProjectsForOrganization(this.groupID).pipe(this.handleErrors)),

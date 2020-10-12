@@ -1,9 +1,13 @@
-.app-page-title {
+%app-page-title {
   font-size: $font-size-mobile-title-small;
   font-weight: 400 !important;
   text-transform: uppercase;
   margin: 1rem 0 1rem 1rem;
   position: relative;
+}
+
+.app-page-title {
+  @extend %app-page-title;
 
   &:before {
     content: "";
@@ -26,6 +30,11 @@
   }
 }
 
+.app-page-title-back {
+  @extend %app-page-title;
+  cursor: pointer;
+}
+
 .app-page-subtitle {
   font-size: $font-size-desktop-small;
   font-weight: 400 !important;
@@ -37,4 +46,17 @@
 .app-page-header {
   display: flex;
   justify-content: space-between;
+}
+
+.app-basic-title {
+  font-size: $font-size-mobile-title;
+  font-weight: normal;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: $title-color;
+
+  @include media-breakpoint-up(lg) {
+    font-size: $font-size-desktop-title;
+    letter-spacing: 1.5px;
+  }
 }

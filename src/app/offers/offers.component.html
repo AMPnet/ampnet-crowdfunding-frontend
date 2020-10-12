@@ -1,5 +1,3 @@
-<div [class.overview-bg]="isOverview"></div>
-
 <div *ngIf="isOverview">
     <app-header></app-header>
 </div>
@@ -10,8 +8,8 @@
         <div id="component-container" *ngIf="projectsWallets.length > 0">
             <div *ngFor="let projectWallet of projectsWallets"
                  style="visibility:hidden"
-                 class="col-md-12 fadeIn wow mt-md-3">
-                <div class="mb-md-5">
+                 class="fadeIn wow single-item">
+                <div>
                     <app-single-offer-item [projectWallet]=projectWallet></app-single-offer-item>
                 </div>
             </div>

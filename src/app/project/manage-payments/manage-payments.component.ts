@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
-import { displayBackendError } from 'src/app/utilities/error-handler';
+import { displayBackendErrorRx } from 'src/app/utilities/error-handler';
 import { Project, ProjectService } from '../../shared/services/project/project.service';
 import { WalletService } from '../../shared/services/wallet/wallet.service';
 import { WalletDetails } from '../../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { MiddlewareService } from '../../shared/services/middleware/middleware.service';
+import { finalize, map, switchMap, tap } from 'rxjs/operators';
 
 @Component({
     selector: 'app-manage-payments',
@@ -15,14 +17,17 @@ import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators }
 export class ManagePaymentsComponent implements OnInit {
     projectWallet: WalletDetails;
     project: Project;
-
+    isProjectFullyFunded = false;
     revenueForm: FormGroup;
+    projectID;
+    groupID;
 
     constructor(private walletService: WalletService,
                 private route: ActivatedRoute,
                 private router: Router,
                 private projectService: ProjectService,
-                private fb: FormBuilder) {
+                private fb: FormBuilder,
+                private middlewareService: MiddlewareService) {
 
         this.revenueForm = this.fb.group({
             amount: ['', [Validators.required, this.amountValidator.bind(this)]]
@@ -30,35 +35,35 @@ export class ManagePaymentsComponent implements OnInit {
     }
 
     ngOnInit() {
-        const projID = this.route.snapshot.params.projectID;
-        this.getProjectWallet(projID);
-        this.getProject(projID);
+        this.projectID = this.route.snapshot.params.projectID;
+        this.groupID = this.route.snapshot.params.groupID;
+        this.getProjectWallet(this.projectID);
+        this.getProject(this.projectID);
     }
 
     getProject(projectID: string) {
         SpinnerUtil.showSpinner();
-        this.projectService.getProject(projectID)
-            .subscribe(res => this.project = res, displayBackendError)
-            .add(SpinnerUtil.hideSpinner);
+        this.projectService.getProject(projectID).pipe(
+            displayBackendErrorRx(),
+            tap(res => this.project = res),
+            finalize(() => SpinnerUtil.hideSpinner())).subscribe();
     }
 
     getProjectWallet(projectID: number) {
         SpinnerUtil.showSpinner();
-        this.walletService.getProjectWallet(projectID)
-            .subscribe(res => {
-                this.projectWallet = res;
-            }, err => {
-                displayBackendError(err);
-            })
-            .add(SpinnerUtil.hideSpinner);
+        this.walletService.getProjectWallet(projectID).pipe(
+            displayBackendErrorRx(),
+            tap(wallet => this.projectWallet = wallet),
+            switchMap(_wallet => this.middlewareService.getProjectWalletInfoCached(_wallet.hash).pipe(
+                displayBackendErrorRx())),
+            tap(res => this.isProjectFullyFunded = res.investmentCap === res.totalFundsRaised),
+            finalize(SpinnerUtil.hideSpinner)).subscribe();
     }
 
     startPayout() {
-        const projID = this.route.snapshot.params.projectID;
-        const orgID = this.route.snapshot.params.groupID;
         const amount = this.revenueForm.controls['amount'].value;
-
-        this.router.navigate([`/dash/manage_groups/${orgID}/manage_project/${projID}/manage_payments/revenue_share/${amount}`]);
+        // tslint:disable-next-line:max-line-length
+        this.router.navigate([`/dash/manage_groups/${this.groupID}/manage_project/${this.projectID}/manage_payments/revenue_share/${amount}`]);
     }
 
     private amountValidator(control: AbstractControl): ValidationErrors | null {

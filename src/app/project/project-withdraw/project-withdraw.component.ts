@@ -7,7 +7,6 @@ import { SpinnerUtil } from '../../utilities/spinner-utilities';
 import { displayBackendErrorRx, hideSpinnerAndDisplayError } from '../../utilities/error-handler';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { WalletDetails } from '../../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
-import { MiddlewareService } from '../../shared/services/middleware/middleware.service';
 import { finalize, switchMap, tap } from 'rxjs/operators';
 import { PopupService } from '../../shared/services/popup.service';
 import { ArkaneService } from '../../shared/services/arkane.service';
@@ -20,7 +19,6 @@ import { ArkaneService } from '../../shared/services/arkane.service';
 export class ProjectWithdrawComponent implements OnInit {
     projectWallet: WalletDetails;
     banks: UserBankAccount[];
-    isProjectFullyFunded = false;
 
     pendingWithdrawal: Withdraw;
     withdrawAmount = 0;
@@ -35,8 +33,7 @@ export class ProjectWithdrawComponent implements OnInit {
                 private popupService: PopupService,
                 private arkaneService: ArkaneService,
                 private route: ActivatedRoute,
-                private fb: FormBuilder,
-                private middlewareService: MiddlewareService) {
+                private fb: FormBuilder) {
 
         this.bankAccountForm = this.fb.group({
             iban: ['', [Validators.required]],
@@ -45,21 +42,8 @@ export class ProjectWithdrawComponent implements OnInit {
 
     ngOnInit() {
         this.projectID = this.route.snapshot.params.projectID;
-        this.getProjectWallet(this.projectID);
         this.getBankAccounts();
         this.getMyPendingWithdraw();
-    }
-
-    getProjectWallet(projectID: number | string) {
-        SpinnerUtil.showSpinner();
-        this.walletService.getProjectWallet(projectID)
-            .subscribe(wallet => {
-                this.projectWallet = wallet;
-                this.middlewareService.getProjectWalletInfoCached(wallet.hash)
-                    .subscribe(res => {
-                        this.isProjectFullyFunded = res.balance === res.investmentCap;
-                    }, hideSpinnerAndDisplayError);
-            }, hideSpinnerAndDisplayError);
     }
 
     getBankAccounts() {

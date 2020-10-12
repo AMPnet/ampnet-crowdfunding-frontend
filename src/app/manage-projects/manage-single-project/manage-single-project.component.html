@@ -1,160 +1,178 @@
-<div class="container root-content-container" id="core-root-manager">
-    <!-- Wallet exists -->
-    <div *ngIf="wallet !== undefined" class="row row-eq-height">
-        <h5 class="text-uppercase mb-3 col-md-8">Manage your project</h5>
-        <div class="col-md-4">
-            <button class="btn btn-primary w-100 py-3 float-right" routerLink="/dash/offers/{{ project.uuid }}">
-                <i class="fas fa-anchor mr-2"></i>
-                Preview project
-            </button>
-        </div>
+<div *ngIf="{
+    project: project$ | async,
+    wallet: projectWallet$ | async,
+    updateForm: updateForm$ | async
+} as states" class="container root-content-container" id="core-root-manager">
+    <ng-container *ngIf="states.project || states.wallet else spinner">
+        <div class="row row-eq-height">
+            <h5 class="text-uppercase mb-3 col-md-8">Manage your project</h5>
+            <div class="col-md-4">
+                <button class="btn btn-primary w-100 py-3 float-right"
+                        routerLink="/dash/offers/{{ states.project.uuid }}">
+                    <i class="fas fa-anchor mr-2"></i>
+                    Preview project
+                </button>
+            </div>
 
-        <div class="col-md-12 mt-3 mb-5">
-            <button class="w-100 btn btn-info py-3" routerLink="manage_payments">
-                <i class="fas fa-money-bill-wave mr-2"></i>
-                Manage payments
-            </button>
-        </div>
+            <div class="col-md-12 mt-3 mb-5">
+                <button class="w-100 btn btn-info py-3" routerLink="manage_payments">
+                    <i class="fas fa-money-bill-wave mr-2"></i>
+                    Manage payments
+                </button>
+            </div>
 
-        <div class="col-md-8">
-            <div class="explainer-mini text-uppercase mb-2">Project status</div>
-            <span *ngIf="project.active">
+            <div class="col-md-8">
+                <div class="explainer-mini text-uppercase mb-2">Project status</div>
+                <span *ngIf="states.project.active">
         <i class="fas fa-check-circle mr-2"></i>
         Public
       </span>
-            <span *ngIf="!project.active">
+                <span *ngIf="!states.project.active">
         <i class="fas fa-toggle-off mr-2"></i>
         Hidden
       </span>
-        </div>
-        <div class="col-md-4">
-            <app-action-button text="{{ project.active ? 'Hide project' : 'Show project' }}"
-                               faIcon="{{ project.active ? 'fa-eye-slash' : 'fa-eye' }}"
-                               loadingText="Updating project status"
-                               [onClick]="toggleProjectStatusClicked.bind(this)"
-                               buttonClass="btn btn-info float-right h-100 w-100">
-            </app-action-button>
-        </div>
-
-        <div class="col-md-12 mb-2 mt-5">
-            <div class="explainer-mini text-uppercase">Name</div>
-        </div>
-
-        <div class="input-group mb-3 col-md-12">
-            <input aria-describedby="basic-addon1" aria-label="Username" class="form-control p-4 " id="project-name"
-                   type="text"
-                   value="{{ project.name }}">
-        </div>
-
-        <div class="col-md-12 mb-2">
-            <div class="explainer-mini text-uppercase">Description</div>
-        </div>
-        <div class="input-group mb-3 col-md-12">
-            <textarea class="form-control p-4" cols="30" id="project-description" name=""
-                      rows="10" style="border-radius: 5px!important;">{{ project.description }}</textarea>
-        </div>
-
-        <div class="col-md-12 mb-2">
-            <div class="explainer-mini text-uppercase">Project tags</div>
-        </div>
-
-        <div class="input-group mb-3 col-md-12">
-        </div>
-
-        <div class="col-md-12">
-            <app-location-map [editable]="true"
-                              [(lat)]="mapLat" [(lng)]="mapLong">
-            </app-location-map>
-        </div>
-
-        <div class="col-md-12 mt-5 mb-5">
-            <app-action-button text="Update"
-                               loadingText="Updating..."
-                               [onClick]="updateProject.bind(this)"
-                               buttonClass="btn btn-primary w-100 py-3 float-right">
-            </app-action-button>
-        </div>
-
-        <div class="col-md-12">
-            <hr>
-        </div>
-
-        <p class="explainer-mini text-uppercase col-sm-12">Project image</p>
-
-        <div *ngIf="project !== undefined" class="col-md-6">
-            <img *ngIf="project.main_image !== null" alt="" class=" img-fluid" src="{{ project.main_image }}">
-            <div *ngIf="project.main_image ===  null" class="w-100 text-center mt-5">
-                Project has no image set
             </div>
-        </div>
-
-        <div class="col-md-6" id="drag-drop-area-img"></div>
-
-        <div class="col-md-12">
-            <hr>
-        </div>
-
-        <p class="explainer-mini text-uppercase col-md-12 mt-3">Project files</p>
-
-        <div class="col-md-12">
-            <div id="files-upload-uppy"></div>
-        </div>
-
-        <div *ngIf="files.length ===  0" class="col-md-12 mt-3">
-            <div class="border p-5 text-center">
-                No files added
+            <div class="col-md-4">
+                <app-action-button text="{{ states.project.active ? 'Hide project' : 'Show project' }}"
+                                   faIcon="{{ states.project.active ? 'fa-eye-slash' : 'fa-eye' }}"
+                                   loadingText="Updating project status"
+                                   [onClick]="toggleProjectStatusClicked.bind(this)"
+                                   buttonClass="btn btn-info float-right h-100 w-100">
+                </app-action-button>
             </div>
-        </div>
 
-        <div *ngFor="let file of project.documents; let i = index" class="col-md-6 mt-3">
-            <div class="card">
-                <div class="card-body d-flex flex-row justify-content-between">
-                    <div class="w-75"
-                         style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{ file.name }}</div>
-                    <span class="float-right">
-            <span (click)="deleteFile(file.id)" class="mr-3 cursor-pointer gray-text">
+            <ng-container *ngIf="(updateForm$ | async) as updateForm">
+                <form [formGroup]="updateForm" style="width: 100%">
+                    <!-- Name -->
+                    <div class="col-md-12 mb-2 mt-5">
+                        <div class="explainer-mini text-uppercase">Name</div>
+                    </div>
+
+                    <div class="input-group mb-3 col-md-12">
+                        <input aria-describedby="basic-addon1"
+                               aria-label="Username" class="form-control p-4" id="project-name"
+                               formControlName="name"
+                               type="text">
+                    </div>
+
+                    <!-- Description -->
+                    <div class="col-md-12 mb-2">
+                        <div class="explainer-mini text-uppercase">Description</div>
+                    </div>
+                    <div class="input-group mb-3 col-md-12">
+                        <textarea class="form-control p-4" cols="30" id="project-description" name=""
+                          formControlName="description"
+                          rows="10" style="border-radius: 5px!important;"></textarea>
+                    </div>
+
+                    <!-- Location -->
+                    <div class="col-md-12 mb-2">
+                        <div class="explainer-mini text-uppercase">Location</div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <app-location-map [editable]="true"
+                                          [latControl]="updateForm.get('location.lat')"
+                                          [lngControl]="updateForm.get('location.long')">
+                        </app-location-map>
+                    </div>
+
+                    <div class="col-md-12 mt-5 mb-5">
+                        <app-action-button text="Update"
+                                           loadingText="Updating..."
+                                           [onClick]="updateProject(states.project, updateForm).bind(this)"
+                                           buttonClass="btn btn-primary w-100 py-3 float-right">
+                        </app-action-button>
+                    </div>
+                </form>
+            </ng-container>
+
+
+
+
+            <div class="col-md-12">
+                <hr>
+            </div>
+
+            <p class="explainer-mini text-uppercase col-sm-12">Project image</p>
+
+            <div class="col-md-6">
+                <img *ngIf="states.project.main_image !== null" alt="" class=" img-fluid" src="{{ states.project.main_image }}">
+                <div *ngIf="states.project.main_image === null" class="w-100 text-center mt-5">
+                    Project has no image set
+                </div>
+            </div>
+
+            <div class="col-md-6" id="drag-drop-area-img"></div>
+
+            <div class="col-md-12">
+                <hr>
+            </div>
+
+            <p class="explainer-mini text-uppercase col-md-12 mt-3">Project files</p>
+
+            <div class="col-md-12">
+                <div id="files-upload-uppy"></div>
+            </div>
+
+            <div *ngIf="states.project.documents?.length === 0" class="col-md-12 mt-3">
+                <div class="border p-5 text-center">
+                    No files added
+                </div>
+            </div>
+
+            <div *ngFor="let file of states.project.documents; let i = index" class="col-md-6 mt-3">
+                <div class="card">
+                    <div class="card-body d-flex flex-row justify-content-between">
+                        <div class="w-75"
+                             style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{ file.name }}</div>
+                        <span class="float-right">
+            <span (click)="deleteFile(states.project, file.id).subscribe()" class="mr-3 cursor-pointer gray-text">
               <i class="fas fa-trash"></i>
             </span>
             <a class="cursor-pointer gray-text" href="{{ file.link }}">
               <i class="fas fa-file-download"></i>
             </a>
           </span>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="col-md-12">
-            <hr>
-        </div>
+            <div class="col-md-12">
+                <hr>
+            </div>
 
-        <p class="explainer-mini text-uppercase col-md-8 mt-3">Project news</p>
+            <p class="explainer-mini text-uppercase col-md-8 mt-3">Project news</p>
 
-        <div class="col-md-8">
-            <input class="form-control w-100" id="newsLink" placeholder="News link (e.g. https://portal.com/news)"
-                   type="text">
-        </div>
-        <div class="col-md-4">
-            <app-action-button text="Add news"
-                               loadingText="Adding news..."
-                               faIcon="fa-plus"
-                               [onClick]="addNewsLink.bind(this)"
-                               buttonClass="w-100 btn btn-primary h-100">
-            </app-action-button>
-        </div>
+            <div class="col-md-8">
+                <input class="form-control w-100" id="newsLink" placeholder="News link (e.g. https://portal.com/news)"
+                       type="text">
+            </div>
+            <div class="col-md-4">
+                <app-action-button text="Add news"
+                                   loadingText="Adding news..."
+                                   faIcon="fa-plus"
+                                   [onClick]="addNewsLink.bind(this)"
+                                   buttonClass="w-100 btn btn-primary h-100">
+                </app-action-button>
+            </div>
 
-        <div class="col-md-12 mt-3">
-            <ul class="list-group">
-                <li *ngFor="let item of project.news" class="list-group-item d-flex flex-row justify-content-between">
-                    <a class="w-75" href="{{ item }}"
-                       style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis">
-                        {{ item }}
-                    </a>
-                    <div (click)="deleteNewsClicked(item)" class="cursor-pointer">
-                        <i class="fas fa-trash"></i>
-                    </div>
-                </li>
-            </ul>
+            <div class="col-md-12 mt-3">
+                <ul class="list-group">
+                    <li *ngFor="let item of states.project.news" class="list-group-item d-flex flex-row justify-content-between">
+                        <a class="w-75" href="{{ item }}"
+                           style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis">
+                            {{ item }}
+                        </a>
+                        <div (click)="deleteNewsClicked(states.project, item)" class="cursor-pointer">
+                            <i class="fas fa-trash"></i>
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </div>
-
-    </div>
+    </ng-container>
+    <ng-template #spinner>
+        <app-spinner type="overlay"></app-spinner>
+    </ng-template>
 </div>

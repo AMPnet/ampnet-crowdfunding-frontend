@@ -42,8 +42,6 @@ export class LocationMapComponent implements AfterViewInit {
             this.lng = this.latLngDefault[1];
         }
 
-        console.log('lat long', this.lat, this.lng);
-
         const latLng: leaflet.LatLngTuple = [this.lat, this.lng];
         this.map.setView(latLng, 12);
         this.mapMarker = this.newMarker(latLng).addTo(this.map);

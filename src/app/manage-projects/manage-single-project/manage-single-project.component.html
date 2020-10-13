@@ -36,7 +36,7 @@
                 <app-action-button text="{{ states.project.active ? 'Hide project' : 'Show project' }}"
                                    faIcon="{{ states.project.active ? 'fa-eye-slash' : 'fa-eye' }}"
                                    loadingText="Updating project status"
-                                   [onClick]="toggleProjectStatusClicked.bind(this)"
+                                   [onClick]="toggleProjectStatusClicked(states.project).bind(this)"
                                    buttonClass="btn btn-info float-right h-100 w-100">
                 </app-action-button>
             </div>
@@ -61,8 +61,8 @@
                     </div>
                     <div class="input-group mb-3 col-md-12">
                         <textarea class="form-control p-4" cols="30" id="project-description" name=""
-                          formControlName="description"
-                          rows="10" style="border-radius: 5px!important;"></textarea>
+                                  formControlName="description"
+                                  rows="10" style="border-radius: 5px!important;"></textarea>
                     </div>
 
                     <!-- Location -->
@@ -77,9 +77,87 @@
                         </app-location-map>
                     </div>
 
+                    <div class="col-md-12 mb-2">
+                        <div class="explainer-mini text-uppercase">Project image</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <ng-container
+                                    *ngIf="updateForm.get('newImage').value || states.project.main_image else noProjectImageSet">
+                                <img alt="" class="img-fluid" height="300"
+                                     [src]="(updateForm.get('newImage').value | safe:'fileUrl') || states.project.main_image">
+                            </ng-container>
+                            <ng-template #noProjectImageSet>
+                                <div class="text-center">
+                                    Project has no image set
+                                </div>
+                            </ng-template>
+                        </div>
+
+                        <div class="col-md-6">
+                            <app-upload-area areaID='project-image' style="width: max-content"
+                                             [restrictions]="{
+                                                allowedFileTypes: ['image/*'],
+                                                maxFileSize: 10 * 1024 * 1024,
+                                                maxNumberOfFiles: 1
+                                             }"
+                                             [firstFileControl]="updateForm.get('newImage')">
+                            </app-upload-area>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 mb-2">
+                        <div class="explainer-mini text-uppercase">Project files</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <ng-container *ngIf="states.project.documents?.length > 0 else noDocuments">
+                                <div *ngFor="let file of states.project.documents; let i = index">
+                                    <div class="card">
+                                        <div class="card-body d-flex flex-row justify-content-between">
+                                            <div class="w-75"
+                                                 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis">
+                                                {{ file.name }}
+                                            </div>
+                                            <span class="float-right">
+                                            <span (click)="deleteFile(states.project, file.id).subscribe()"
+                                                  class="mr-3 cursor-pointer gray-text">
+                                              <i class="fas fa-trash"></i>
+                                            </span>
+                                            <a class="cursor-pointer gray-text" href="{{ file.link }}">
+                                              <i class="fas fa-file-download"></i>
+                                            </a>
+                                        </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <ng-template #noDocuments>
+                                <div class="text-center">
+                                    No files added
+                                </div>
+                            </ng-template>
+                        </div>
+
+
+                        <div class="col-md-6">
+                            <app-upload-area areaID='project-image' style="width: max-content"
+                                             [restrictions]="{
+                                                allowedFileTypes: ['image/*', 'application/pdf', 'application/zip', 'audio/*', 'video/*'],
+                                                maxFileSize: 10 * 1024 * 1024,
+                                                maxNumberOfFiles: 20
+                                             }"
+                                             [filesControl]="updateForm.get('newDocuments')">
+                            </app-upload-area>
+                        </div>
+                    </div>
+
                     <div class="col-md-12 mt-5 mb-5">
                         <app-action-button text="Update"
                                            loadingText="Updating..."
+                                           [disabled]="!updateForm.dirty || !updateForm.valid"
                                            [onClick]="updateProject(states.project, updateForm).bind(this)"
                                            buttonClass="btn btn-primary w-100 py-3 float-right">
                         </app-action-button>
@@ -88,83 +166,39 @@
             </ng-container>
 
 
-
-
-            <div class="col-md-12">
-                <hr>
-            </div>
-
-            <p class="explainer-mini text-uppercase col-sm-12">Project image</p>
-
-            <div class="col-md-6">
-                <img *ngIf="states.project.main_image !== null" alt="" class=" img-fluid" src="{{ states.project.main_image }}">
-                <div *ngIf="states.project.main_image === null" class="w-100 text-center mt-5">
-                    Project has no image set
-                </div>
-            </div>
-
-            <div class="col-md-6" id="drag-drop-area-img"></div>
-
-            <div class="col-md-12">
-                <hr>
-            </div>
-
-            <p class="explainer-mini text-uppercase col-md-12 mt-3">Project files</p>
-
-            <div class="col-md-12">
-                <div id="files-upload-uppy"></div>
-            </div>
-
-            <div *ngIf="states.project.documents?.length === 0" class="col-md-12 mt-3">
-                <div class="border p-5 text-center">
-                    No files added
-                </div>
-            </div>
-
-            <div *ngFor="let file of states.project.documents; let i = index" class="col-md-6 mt-3">
-                <div class="card">
-                    <div class="card-body d-flex flex-row justify-content-between">
-                        <div class="w-75"
-                             style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{ file.name }}</div>
-                        <span class="float-right">
-            <span (click)="deleteFile(states.project, file.id).subscribe()" class="mr-3 cursor-pointer gray-text">
-              <i class="fas fa-trash"></i>
-            </span>
-            <a class="cursor-pointer gray-text" href="{{ file.link }}">
-              <i class="fas fa-file-download"></i>
-            </a>
-          </span>
-                    </div>
-                </div>
-            </div>
-
             <div class="col-md-12">
                 <hr>
             </div>
 
             <p class="explainer-mini text-uppercase col-md-8 mt-3">Project news</p>
 
-            <div class="col-md-8">
-                <input class="form-control w-100" id="newsLink" placeholder="News link (e.g. https://portal.com/news)"
-                       type="text">
-            </div>
-            <div class="col-md-4">
-                <app-action-button text="Add news"
-                                   loadingText="Adding news..."
-                                   faIcon="fa-plus"
-                                   [onClick]="addNewsLink.bind(this)"
-                                   buttonClass="w-100 btn btn-primary h-100">
-                </app-action-button>
-            </div>
+            <form [formGroup]="newsForm" class="row" style="width: 100%">
+                <div class="col-md-8">
+                    <input class="form-control w-100" id="newsLink"
+                           placeholder="News link (e.g. https://portal.com/news)"
+                           formControlName="newsLink"
+                           type="text">
+                </div>
+                <div class="col-md-4">
+                    <app-action-button text="Add news"
+                                       loadingText="Adding news..."
+                                       faIcon="fa-plus"
+                                       [disabled]="!newsForm.dirty || !newsForm.valid"
+                                       [onClick]="addNewsLink(states.project, newsForm).bind(this)"
+                                       buttonClass="w-100 btn btn-primary h-100">
+                    </app-action-button>
+                </div>
+            </form>
 
             <div class="col-md-12 mt-3">
                 <ul class="list-group">
-                    <li *ngFor="let item of states.project.news" class="list-group-item d-flex flex-row justify-content-between">
+                    <li *ngFor="let item of states.project.news"
+                        class="list-group-item d-flex flex-row justify-content-between">
                         <a class="w-75" href="{{ item }}"
                            style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis">
                             {{ item }}
                         </a>
-                        <div (click)="deleteNewsClicked(states.project, item)" class="cursor-pointer">
+                        <div (click)="deleteNewsClicked(states.project, item).subscribe()" class="cursor-pointer">
                             <i class="fas fa-trash"></i>
                         </div>
                     </li>

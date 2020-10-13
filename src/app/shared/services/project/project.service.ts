@@ -20,8 +20,25 @@ export class ProjectService {
         return this.http.get<Project>(`/api/project/public/project/${projectID}`);
     }
 
-    updateProject(projectID: string, data: UpdateProjectData) {
-        return this.http.put<Project>(`/api/project/project/${projectID}`, data);
+    updateProject(projectID: string, data: UpdateProjectData,
+                  image?: File, documents?: File[]) {
+        const formData = new FormData();
+
+        formData.append('request', new Blob([JSON.stringify(data)], {
+            type: 'application/json'
+        }), 'request.json');
+
+        if (image) {
+            formData.append('image', image, image.name);
+        }
+
+        if (!!documents && documents.length > 0) {
+            documents.forEach(document => {
+                formData.append('documents', document, document.name);
+            });
+        }
+
+        return this.http.put<Project>(`/api/project/project/${projectID}`, formData);
     }
 
     getAllActiveProjects() {

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { displayBackendErrorRx, hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
+import { displayBackendErrorRx } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import {
     ProjectWithdraw,
@@ -8,7 +8,7 @@ import {
     WalletCooperativeWithdrawService
 } from 'src/app/shared/services/wallet/wallet-cooperative/wallet-cooperative-withdraw.service';
 import { PopupService } from '../../shared/services/popup.service';
-import { switchMap } from 'rxjs/operators';
+import { finalize, switchMap, tap } from 'rxjs/operators';
 import { ArkaneService } from '../../shared/services/arkane.service';
 
 @Component({
@@ -47,18 +47,18 @@ export class SingleWithdrawalComponent implements OnInit {
 
     getWithdrawal(id: number) {
         SpinnerUtil.showSpinner();
-        this.withdrawCooperativeService.getApprovedWithdrawals().subscribe(res => {
-            SpinnerUtil.hideSpinner();
-            this.userWithdrawal = res.withdraws.filter(item => item.id === id)[0];
-        }, hideSpinnerAndDisplayError);
+        this.withdrawCooperativeService.getApprovedWithdrawals().pipe(displayBackendErrorRx(),
+            tap(res => this.userWithdrawal = res.withdraws.filter(item => item.id === id)[0]),
+            finalize(() => SpinnerUtil.hideSpinner())
+        ).subscribe();
     }
 
     getProjectWithdrawal(id: number) {
         SpinnerUtil.showSpinner();
-        this.withdrawCooperativeService.getApprovedProjectWithdraws().subscribe(res => {
-            SpinnerUtil.hideSpinner();
-            this.projectWithdrawal = res.withdraws.filter(item => item.id === id)[0];
-        }, hideSpinnerAndDisplayError);
+        this.withdrawCooperativeService.getApprovedProjectWithdraws().pipe(displayBackendErrorRx(),
+            tap(res => this.projectWithdrawal = res.withdraws.filter(item => item.id === id)[0]),
+            finalize(() => SpinnerUtil.hideSpinner())
+        ).subscribe();
     }
 
     approveAndGenerateCodeClicked() {

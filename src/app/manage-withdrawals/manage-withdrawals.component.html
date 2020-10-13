@@ -1,14 +1,14 @@
 <div class="root container root-content-container">
     <div class="row button-holder-activation">
         <div class="col-6">
-            <div [class.active]="withdrawalType ===  'users'" class="btn btn-primary w-100 py-3 cursor-pointer"
+            <div [class.active]="withdrawalType === 'users'" class="btn btn-primary w-100 py-3 cursor-pointer"
                  routerLink="/dash/manage_withdrawals/users">
                 <i class="fas fa-user mr-2"></i>
                 Users
             </div>
         </div>
         <div class="col-6">
-            <div [class.active]="withdrawalType ===  'projects'" class="btn btn-primary w-100 py-3 cursor-pointer"
+            <div [class.active]="withdrawalType === 'projects'" class="btn btn-primary w-100 py-3 cursor-pointer"
                  routerLink="/dash/manage_withdrawals/projects">
                 <i class="fas fa-solar-panel mr-2"></i>
                 Projects

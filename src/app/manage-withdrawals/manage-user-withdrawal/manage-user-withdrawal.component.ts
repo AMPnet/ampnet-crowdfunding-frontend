@@ -4,7 +4,8 @@ import {
     WalletCooperativeWithdrawService
 } from '../../shared/services/wallet/wallet-cooperative/wallet-cooperative-withdraw.service';
 import { SpinnerUtil } from '../../utilities/spinner-utilities';
-import { hideSpinnerAndDisplayError } from '../../utilities/error-handler';
+import { displayBackendErrorRx } from '../../utilities/error-handler';
+import { finalize, tap } from 'rxjs/operators';
 
 @Component({
     selector: 'app-manage-user-withdrawal',
@@ -23,9 +24,9 @@ export class ManageUserWithdrawalComponent implements OnInit {
 
     getApprovedUsersWithdrawals() {
         SpinnerUtil.showSpinner();
-        return this.withdrawService.getApprovedWithdrawals().subscribe(res => {
-            SpinnerUtil.hideSpinner();
-            this.withdrawals = res.withdraws;
-        }, hideSpinnerAndDisplayError);
+        this.withdrawService.getApprovedWithdrawals().pipe(displayBackendErrorRx(),
+            tap(res => this.withdrawals = res.withdraws),
+            finalize(() => SpinnerUtil.hideSpinner())
+        ).subscribe();
     }
 }

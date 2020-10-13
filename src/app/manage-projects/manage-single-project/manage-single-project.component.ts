@@ -1,17 +1,18 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import * as Uppy from 'uppy';
-import swal from 'sweetalert2';
-import { ActivatedRoute } from '@angular/router';
-import { displayBackendError, hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
+import { ActivatedRoute, Router } from '@angular/router';
+import { displayBackendErrorRx } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { validURL } from '../../utilities/link-valid-util';
-import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
 import { WalletDetails } from '../../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
 import { Project, ProjectService } from '../../shared/services/project/project.service';
 import { WalletService } from '../../shared/services/wallet/wallet.service';
 import { BackendHttpClient } from '../../shared/services/backend-http-client.service';
 import { ManageProjectsService } from '../../shared/services/project/manage-projects.service';
-import { BroadcastService } from '../../shared/services/broadcast.service';
+import { catchError, finalize, switchMap, tap } from 'rxjs/operators';
+import { EMPTY, throwError } from 'rxjs';
+import { ArkaneService } from '../../shared/services/arkane.service';
+import { PopupService } from '../../shared/services/popup.service';
 
 declare var $: any;
 
@@ -39,120 +40,112 @@ export class ManageSingleProjectComponent implements OnInit, AfterViewInit {
                 private walletService: WalletService,
                 private http: BackendHttpClient,
                 private manageProjectsService: ManageProjectsService,
-                private route: ActivatedRoute,
-                private broadService: BroadcastService) {
+                private arkaneService: ArkaneService,
+                private popupService: PopupService,
+                private router: Router,
+                private route: ActivatedRoute) {
     }
 
     ngOnInit() {
-        this.fetchAllData();
+        this.fetchAllData().subscribe();
     }
 
     ngAfterViewInit() {
     }
 
     fetchAllData() {
-        this.getProject(() => {
-            SpinnerUtil.showSpinner();
-
-            this.walletService.getProjectWallet(this.project.uuid).subscribe(res => {
-                SpinnerUtil.hideSpinner();
-                this.wallet = res;
-                setTimeout(() => {
-                    this.setUploadAreas();
-                }, 300);
-            }, err => {
-                if (err.status === 404) { // 0501 meaning - "Missing wallet for org"
-                    this.createProjectWallet();
+        SpinnerUtil.showSpinner();
+        return this.getProject().pipe(
+            switchMap(() => this.walletService.getProjectWallet(this.project.uuid)),
+            catchError(err => {
+                if (err.status === 404) {
+                    this.createProjectWallet().subscribe();
+                    return EMPTY;
                 } else {
-                    displayBackendError(err);
+                    throwError(err);
                 }
-                SpinnerUtil.hideSpinner();
-            });
-        });
+            }),
+            displayBackendErrorRx(),
+            tap(res => {
+                this.wallet = res;
+
+                setTimeout(function () {
+                    this.setUploadAreas();
+                }.bind(this));
+            }),
+            finalize(() => SpinnerUtil.hideSpinner())
+        );
     }
 
     createProjectWallet() {
-        this.walletService.createProjectWalletTransaction(this.project.uuid).subscribe(res => {
-            swal('', 'Verify the project creation with your blockchain wallet. You will be prompted now!', 'info')
-                .then(async () => {
-                    SpinnerUtil.showSpinner();
-                    const arkaneConnect = new ArkaneConnect('AMPnet', {
-                        environment: 'staging'
-                    });
-
-                    const account = await arkaneConnect.flows.getAccount(SecretType.AETERNITY);
-                    const sigRes = await arkaneConnect.createSigner(WindowMode.POPUP).sign({
-                        walletId: account.wallets[0].id,
-                        data: res.tx,
-                        type: SignatureRequestType.AETERNITY_RAW
-                    });
-                    this.broadService.broadcastSignedTx(sigRes.result.signedTransaction, res.tx_id)
-                        .subscribe(_res => {
-                            SpinnerUtil.hideSpinner();
-                            swal('', 'Success', 'success');
-                            this.ngOnInit();
-                        }, hideSpinnerAndDisplayError);
-                });
-        }, err => {
-            displayBackendError(err);
-        });
+        return this.popupService.new({
+            type: 'info',
+            text: 'Verify the project creation with your blockchain wallet. You will be prompted now!'
+        }).pipe(
+            tap(() => SpinnerUtil.showSpinner()),
+            switchMap(() =>
+                this.walletService.createProjectWalletTransaction(this.project.uuid)
+                    .pipe(displayBackendErrorRx())),
+            switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo).pipe(
+                catchError(_ => {
+                    this.router.navigate([`/dash/manage_groups/${this.route.snapshot.params.groupID}`]);
+                    return EMPTY;
+                })
+            )),
+            switchMap(() => this.popupService.new({
+                type: 'success',
+                title: 'Transaction signed',
+                text: 'Transaction is being processed...'
+            })),
+            switchMap(() => this.fetchAllData()),
+            finalize(() => SpinnerUtil.hideSpinner())
+        );
     }
 
     addNewsLink() {
-        SpinnerUtil.showSpinner();
         const linkHolder = $('#newsLink').val();
         if (validURL(linkHolder)) {
-            this.manageProjectsService.addNewsToProject(this.project, linkHolder)
-                .subscribe(updatedProject => {
+            return this.manageProjectsService.addNewsToProject(this.project, linkHolder).pipe(
+                displayBackendErrorRx(),
+                tap(updatedProject => {
                     this.project = updatedProject;
-                    SpinnerUtil.hideSpinner();
-                }, err => {
-                    displayBackendError(err);
-                });
+                    $('#newsLink').val('');
+                })
+            );
         } else {
-            swal('', 'Link invalid! The news link ' + linkHolder + ' is not a valid link');
+            return this.popupService.new({
+                type: 'error',
+                text: `Link invalid! The news link ${linkHolder} is not a valid link`
+            });
         }
     }
 
     deleteNewsClicked(link: string) {
         SpinnerUtil.showSpinner();
-        this.manageProjectsService.deleteNewsFromProject(this.project, link)
-            .subscribe(() => {
-                SpinnerUtil.hideSpinner();
-                this.getProject(() => {
-                });
-            }, err => {
-                SpinnerUtil.hideSpinner();
-                displayBackendError(err);
-            });
+        this.manageProjectsService.deleteNewsFromProject(this.project, link).pipe(
+            displayBackendErrorRx(),
+            switchMap(() => this.getProject()),
+            finalize(() => SpinnerUtil.hideSpinner())
+        );
     }
 
-    getProject(onComplete: () => void) {
-        SpinnerUtil.showSpinner();
+    getProject() {
         const id = this.route.snapshot.params.projectID;
-        this.projectService.getProject(id).subscribe((res: Project) => {
-            SpinnerUtil.hideSpinner();
-            this.project = res;
-            this.mapLat = this.project.location.lat;
-            this.mapLong = this.project.location.long;
-            onComplete();
-        }, err => {
-            SpinnerUtil.hideSpinner();
-            displayBackendError(err);
-        });
+        return this.projectService.getProject(id).pipe(
+            displayBackendErrorRx(),
+            tap(res => {
+                this.project = res;
+                this.mapLat = this.project.location.lat;
+                this.mapLong = this.project.location.long;
+            })
+        );
     }
 
     toggleProjectStatusClicked() {
-        SpinnerUtil.showSpinner();
-        this.projectService.updateProject(this.project.uuid, {
-            active: !this.project.active
-        }).subscribe(() => {
-            this.getProject(() => {
-            });
-        }, err => {
-            SpinnerUtil.hideSpinner();
-            displayBackendError(err);
-        });
+        return this.projectService.updateProject(this.project.uuid, {active: !this.project.active}).pipe(
+            displayBackendErrorRx(),
+            switchMap(() => this.getProject()),
+        );
     }
 
     updateProject() {
@@ -166,39 +159,31 @@ export class ManageSingleProjectComponent implements OnInit, AfterViewInit {
         updatedProject.location_text = locationName;
         updatedProject.location = {lat: this.mapLat, long: this.mapLong};
 
-
-        SpinnerUtil.showSpinner();
-        this.projectService.updateProject(updatedProject.uuid, {
+        return this.projectService.updateProject(updatedProject.uuid, {
             name: updatedProject.name,
             description: updatedProject.description,
             location: updatedProject.location,
             roi: updatedProject.roi,
             active: updatedProject.active
-        }).subscribe(() => {
-            SpinnerUtil.hideSpinner();
-            this.getProject(() => {
-            });
-        }, hideSpinnerAndDisplayError);
+        }).pipe(
+            displayBackendErrorRx(),
+            switchMap(() => this.getProject()),
+        );
     }
 
     deleteFile(index: number): any {
-        swal({
+        return this.popupService.new({
             text: 'Are you sure you want to delete this file? This action cannot be reversed',
             confirmButtonText: 'Yes',
             showCancelButton: true,
             cancelButtonText: 'No'
-        }).then(() => {
-            SpinnerUtil.showSpinner();
-            this.manageProjectsService
-                .deleteDocument(this.project.uuid, index).subscribe(() => {
-                SpinnerUtil.hideSpinner();
-                this.getProject(() => {
-                });
-            }, err => {
-                SpinnerUtil.hideSpinner();
-                displayBackendError(err);
-            });
-        });
+        }).pipe(
+            tap(() => SpinnerUtil.showSpinner()),
+            switchMap(() => this.manageProjectsService.deleteDocument(this.project.uuid, index)
+                .pipe(displayBackendErrorRx())),
+            switchMap(() => this.getProject()),
+            finalize(() => SpinnerUtil.hideSpinner())
+        );
     }
 
     setUpUppy(id: string, allowedFileTypes: string[]): Uppy.Core.Uppy {
@@ -232,10 +217,8 @@ export class ManageSingleProjectComponent implements OnInit, AfterViewInit {
             ],
             fieldName: 'image'
         }).on('upload-success', () => {
-            this.getProject(() => {
-            });
+            this.fetchAllData().subscribe();
         });
-
     }
 
     private setUploadAreas() {
@@ -264,8 +247,7 @@ export class ManageSingleProjectComponent implements OnInit, AfterViewInit {
             fieldName: 'file',
             bundle: false
         }).on('upload-success', () => {
-            this.getProject(() => {
-            });
+            this.fetchAllData().subscribe();
             filesUppy.close();
         });
     }

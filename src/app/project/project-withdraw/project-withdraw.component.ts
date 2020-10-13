@@ -47,7 +47,7 @@ export class ProjectWithdrawComponent implements OnInit {
     getBankAccounts() {
         SpinnerUtil.showSpinner();
         this.paymentService.getMyBankAccounts().pipe(displayBackendErrorRx(),
-            tap(res => res.bank_accounts),
+            tap(res => this.banks = res.bank_accounts),
             finalize(() => SpinnerUtil.hideSpinner())
         ).subscribe();
     }
@@ -61,14 +61,12 @@ export class ProjectWithdrawComponent implements OnInit {
     }
 
     requestWithdrawal() {
-        SpinnerUtil.showSpinner();
         const controls = this.bankAccountForm.controls;
         const iban = controls['iban'].value.replace(/\s/g, '');
 
         return this.withdrawService.createProjectWithdrawRequest(this.withdrawAmount, iban, this.projectID).pipe(
             displayBackendErrorRx(),
-            tap(res => this.pendingWithdrawal = res),
-            finalize(() => SpinnerUtil.hideSpinner())
+            tap(res => this.pendingWithdrawal = res)
         );
     }
 

@@ -11,13 +11,15 @@
                             <div class="explainer-mini mb-3">Project wallet</div>
                             <div class="row w-100">
                                 <div class="col-md-6">
-                                    <button class="btn btn-primary w-100 py-3" routerLink="project_deposit">
+                                    <button class="btn btn-primary w-100 py-3"
+                                            routerLink="project_deposit">
                                         <i class="fas fa-arrow-circle-down mr-2"></i>
                                         Deposit
                                     </button>
                                 </div>
                                 <div class="col-md-6">
-                                    <button class="btn btn-primary w-100 py-3" [disabled]="!isProjectFullyFunded"
+                                    <button class="btn btn-primary w-100 py-3"
+                                            [disabled]="!isProjectFullyFunded"
                                             routerLink="project_withdraw">
                                         <i class="fas fa-arrow-circle-up mr-2"></i>
                                         Withdraw
@@ -50,6 +52,7 @@
                 <div class="w-40 h-auto d-flex flex-column">
                     <app-money-input-field
                             placeholder="Enter maximum investment per user"
+                            #amountInput
                             [control]="revenueForm.get('amount')">
                     </app-money-input-field>
                     <div *ngIf="revenueForm.dirty && revenueForm.invalid">
@@ -61,8 +64,9 @@
             </div>
             <div class="col-md-6">
                 <div class="float-left w-40 h-auto p-1">
-                    <button [disabled]="revenueForm.invalid" id="buttonStartPayout" (click)="startPayout()"
-                            routerLink="revenue_share"
+                    <button [disabled]="revenueForm.invalid"
+                            id="buttonStartPayout"
+                            routerLink="revenue_share/{{ amountInput.realValue }}"
                             class="btn btn-danger btn-action w-100 p-3 h-auto float-right w-auto">
                         <i class="fas fa-chart-pie mr-2"></i>
                         Start payout

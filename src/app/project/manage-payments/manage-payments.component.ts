@@ -7,7 +7,7 @@ import { WalletService } from '../../shared/services/wallet/wallet.service';
 import { WalletDetails } from '../../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { MiddlewareService } from '../../shared/services/middleware/middleware.service';
-import { finalize, map, switchMap, tap } from 'rxjs/operators';
+import { finalize, switchMap, tap } from 'rxjs/operators';
 
 @Component({
     selector: 'app-manage-payments',
@@ -17,9 +17,10 @@ import { finalize, map, switchMap, tap } from 'rxjs/operators';
 export class ManagePaymentsComponent implements OnInit {
     projectWallet: WalletDetails;
     project: Project;
+    projectID;
+
     isProjectFullyFunded = false;
     revenueForm: FormGroup;
-    projectID;
     groupID;
 
     constructor(private walletService: WalletService,
@@ -43,27 +44,20 @@ export class ManagePaymentsComponent implements OnInit {
 
     getProject(projectID: string) {
         SpinnerUtil.showSpinner();
-        this.projectService.getProject(projectID).pipe(
-            displayBackendErrorRx(),
+        this.projectService.getProject(projectID).pipe(displayBackendErrorRx(),
             tap(res => this.project = res),
-            finalize(() => SpinnerUtil.hideSpinner())).subscribe();
+            finalize(() => SpinnerUtil.hideSpinner())
+        ).subscribe();
     }
 
     getProjectWallet(projectID: number) {
         SpinnerUtil.showSpinner();
-        this.walletService.getProjectWallet(projectID).pipe(
-            displayBackendErrorRx(),
+        this.walletService.getProjectWallet(projectID).pipe(displayBackendErrorRx(),
             tap(wallet => this.projectWallet = wallet),
-            switchMap(_wallet => this.middlewareService.getProjectWalletInfoCached(_wallet.hash).pipe(
-                displayBackendErrorRx())),
+            switchMap(_wallet => this.middlewareService.getProjectWalletInfoCached(_wallet.hash).pipe(displayBackendErrorRx())),
             tap(res => this.isProjectFullyFunded = res.investmentCap === res.totalFundsRaised),
-            finalize(SpinnerUtil.hideSpinner)).subscribe();
-    }
-
-    startPayout() {
-        const amount = this.revenueForm.controls['amount'].value;
-        // tslint:disable-next-line:max-line-length
-        this.router.navigate([`/dash/manage_groups/${this.groupID}/manage_project/${this.projectID}/manage_payments/revenue_share/${amount}`]);
+            finalize(() => SpinnerUtil.hideSpinner())
+        ).subscribe();
     }
 
     private amountValidator(control: AbstractControl): ValidationErrors | null {

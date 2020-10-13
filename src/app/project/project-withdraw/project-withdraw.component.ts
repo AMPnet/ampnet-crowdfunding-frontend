@@ -4,9 +4,8 @@ import { Withdraw, WithdrawService } from '../../shared/services/wallet/withdraw
 import { WalletService } from '../../shared/services/wallet/wallet.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SpinnerUtil } from '../../utilities/spinner-utilities';
-import { displayBackendErrorRx, hideSpinnerAndDisplayError } from '../../utilities/error-handler';
+import { displayBackendErrorRx } from '../../utilities/error-handler';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { WalletDetails } from '../../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
 import { finalize, switchMap, tap } from 'rxjs/operators';
 import { PopupService } from '../../shared/services/popup.service';
 import { ArkaneService } from '../../shared/services/arkane.service';
@@ -17,7 +16,6 @@ import { ArkaneService } from '../../shared/services/arkane.service';
     styleUrls: ['./project-withdraw.component.css']
 })
 export class ProjectWithdrawComponent implements OnInit {
-    projectWallet: WalletDetails;
     banks: UserBankAccount[];
 
     pendingWithdrawal: Withdraw;
@@ -48,29 +46,29 @@ export class ProjectWithdrawComponent implements OnInit {
 
     getBankAccounts() {
         SpinnerUtil.showSpinner();
-        this.paymentService.getMyBankAccounts().subscribe(res => {
-            SpinnerUtil.hideSpinner();
-            this.banks = res.bank_accounts;
-        }, hideSpinnerAndDisplayError);
+        this.paymentService.getMyBankAccounts().pipe(displayBackendErrorRx(),
+            tap(res => res.bank_accounts),
+            finalize(() => SpinnerUtil.hideSpinner())
+        ).subscribe();
     }
 
     getMyPendingWithdraw() {
         SpinnerUtil.showSpinner();
-        this.withdrawService.getProjectPendingWithdraw(this.projectID).subscribe(res => {
-            this.pendingWithdrawal = res;
-        }, hideSpinnerAndDisplayError);
+        this.withdrawService.getProjectPendingWithdraw(this.projectID).pipe(displayBackendErrorRx(),
+            tap(res => this.pendingWithdrawal = res),
+            finalize(() => SpinnerUtil.hideSpinner())
+        ).subscribe();
     }
 
     requestWithdrawal() {
         SpinnerUtil.showSpinner();
         const controls = this.bankAccountForm.controls;
         const iban = controls['iban'].value.replace(/\s/g, '');
-        const projID = this.route.snapshot.params.projectID;
 
-        return this.withdrawService.createProjectWithdrawRequest(this.withdrawAmount, iban, projID).pipe(
+        return this.withdrawService.createProjectWithdrawRequest(this.withdrawAmount, iban, this.projectID).pipe(
             displayBackendErrorRx(),
             tap(res => this.pendingWithdrawal = res),
-            finalize(() => SpinnerUtil.hideSpinner()),
+            finalize(() => SpinnerUtil.hideSpinner())
         );
     }
 
@@ -85,18 +83,17 @@ export class ProjectWithdrawComponent implements OnInit {
                 text: 'Transaction is being processed...'
             })),
             switchMap(() => this.router.navigate(['/dash/wallet'])),
-            finalize(() => SpinnerUtil.hideSpinner()),
+            finalize(() => SpinnerUtil.hideSpinner())
         );
     }
 
     deleteWithdrawal() {
         SpinnerUtil.showSpinner();
-
         return this.withdrawService.deleteWithdrawal(this.pendingWithdrawal.id).pipe(
             displayBackendErrorRx(),
             switchMap(() => this.popupService.success('Withdrawal deleted')),
             tap(() => this.pendingWithdrawal = undefined),
-            finalize(() => SpinnerUtil.hideSpinner()),
+            finalize(() => SpinnerUtil.hideSpinner())
         );
     }
 }

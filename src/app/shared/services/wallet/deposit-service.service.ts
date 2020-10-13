@@ -24,6 +24,10 @@ export class DepositServiceService {
         return this.http.get<Deposit>(this.endpoint);
     }
 
+    public getProjectPendingDeposit(projectID: string) {
+        return this.http.get<Deposit>(`${this.endpointProjectDeposit}/${projectID}`);
+    }
+
     public deleteDeposit(id: number) {
         return this.http.delete<void>(`${this.endpoint}/${id}`);
     }

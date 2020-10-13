@@ -28,7 +28,7 @@ export class ProjectDepositComponent implements OnInit {
         this.projectUUID = this.route.snapshot.params.projectID;
         this.getMasterIban();
         SpinnerUtil.showSpinner();
-        this.depositService.getMyPendingDeposit().pipe(
+        this.depositService.getProjectPendingDeposit(this.projectUUID).pipe(
             catchError(err => {
                 if (err.status === 404) {
                     this.generateDepositInfo();

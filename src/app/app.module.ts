@@ -85,6 +85,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ManageUserWithdrawalComponent } from './manage-withdrawals/manage-user-withdrawal/manage-user-withdrawal.component';
 import { ManageProjectWithdrawalComponent } from './manage-withdrawals/manage-project-withdrawal/manage-project-withdrawal.component';
+import { ProjectDepositComponent } from './project/project-deposit/project-deposit.component';
+import { ProjectWithdrawComponent } from './project/project-withdraw/project-withdraw.component';
 
 const socialAuthServiceConfig = {
     provide: 'SocialAuthServiceConfig',
@@ -178,6 +180,8 @@ const socialAuthServiceConfig = {
         MoneyInputFieldComponent,
         ManageUserWithdrawalComponent,
         ManageProjectWithdrawalComponent,
+        ProjectDepositComponent,
+        ProjectWithdrawComponent,
     ],
     imports: [
         BrowserModule,

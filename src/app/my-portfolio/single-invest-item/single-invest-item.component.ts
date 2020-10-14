@@ -5,7 +5,7 @@ import { Portfolio } from '../../shared/services/wallet/portfolio.service';
 @Component({
     selector: 'app-single-invest-item',
     templateUrl: './single-invest-item.component.html',
-    styleUrls: ['./single-invest-item.component.css']
+    styleUrls: ['./single-invest-item.component.scss']
 })
 export class SingleInvestItemComponent {
     @Input() investment: Portfolio;

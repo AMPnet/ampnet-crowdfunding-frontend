@@ -1,0 +1,38 @@
+@import "app";
+
+.app-basic-title {
+  text-transform: unset;
+}
+
+.portfolio-item {
+  background-color: $background-color;
+  height: 140px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 15px;
+}
+
+.item__invested {
+  margin-bottom: 0;
+  color: #444444;
+  font-size: $font-size-mobile-title-small;
+  span {
+    font-weight: bold;
+    font-size: $font-size-mobile-title-small;
+  }
+}
+
+@include media-breakpoint-up(lg) {
+  .portfolio-item {
+    padding-left: 32px;
+    border-radius: 8px;
+  }
+
+  .item__invested {
+    font-size: $font-size-desktop-body2;
+    span {
+      font-size: $font-size-desktop-body2;
+    }
+  }
+}

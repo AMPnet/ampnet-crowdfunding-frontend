@@ -8,7 +8,7 @@ import { map } from 'rxjs/operators';
 @Component({
     selector: 'app-my-portfolio',
     templateUrl: './my-portfolio.component.html',
-    styleUrls: ['./my-portfolio.component.css']
+    styleUrls: ['./my-portfolio.component.scss']
 })
 export class MyPortfolioComponent {
     constructor(private portfolioService: PortfolioService,

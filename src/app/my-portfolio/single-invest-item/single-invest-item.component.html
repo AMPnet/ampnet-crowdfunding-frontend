@@ -1,35 +1,6 @@
-<div (click)="onClickedItem()" [style.background]="getImageAsURL()"
-     class="card cursor-pointer color-hover investment-item-card-holder">
-    <div class="card-body">
-        <div class="card-title text-uppercase">
-            <div>
-                <span class="float-left ">{{ investment.project.name }}</span>
-            </div>
-        </div>
-        <div class="mt-4">
-            <hr>
-        </div>
-        <div class="card-text">
-            <div class="row justify-content-between">
-                <div class="col-md-6 mt-3">
-                    <div class="explainer-mini text-white">
-                        <i class="fas fa-chart-pie mr-2"></i>
-                        Amount invested
-                    </div>
-                    <div class="h6  mt-2">
-                        {{ investment.investment | currencyDefault }}
-                    </div>
-                </div>
-                <div *ngIf="investment.project.roi !== undefined" class="col-md-6 mt-3">
-                    <div class="explainer-mini text-white">
-                        <i class="fas fa-percentage mr-2"></i>
-                        Expected yearly return
-                    </div>
-                    <div class="h6 mt-2">
-                        {{ investment.project.roi.from }}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="portfolio-item" (click)="onClickedItem()">
+    <h1 class="app-basic-title">{{ investment.project.name }}</h1>
+    <p class="item__invested">
+        <span>{{ investment.investment | currencyDefault }}</span> Invested
+    </p>
 </div>

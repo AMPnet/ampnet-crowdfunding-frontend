@@ -1,11 +1,15 @@
 <ng-container *ngIf="(walletActivated$ | async) as walletActivated else overlaySpinner">
-    <div *ngIf="walletActivated" class="container root-content-container">
+    <div *ngIf="walletActivated" class="container">
         <h1 class="app-page-title">MY PORTFOLIO</h1>
         <ng-container *ngIf="{
             stats: portfolioStats$ | async,
             portfolio: portfolio$ | async
         } as states">
-            <div class="container wow fadeIn">
+
+
+
+
+            <!-- <div class="container wow fadeIn">
                 <div class="card stats-card p-3">
                     <div class="card-body">
                         <div class="card-text">
@@ -47,9 +51,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
-            <div class="container mt-4">
+            <!-- <div class="container mt-4">
                 <div class="row">
                     <div class="col-md-12">
                         <div class=" gray-text mb-2 explainer-mini">
@@ -68,12 +72,13 @@
                         </div>
                     </ng-container>
                 </div>
-            </div>
+            </div> -->
         </ng-container>
     </div>
 
+    <!-- TODO: Check if this is correct, this will never be displayed -->
     <div *ngIf="!walletActivated" class="root-content-container">
-        <div class="conatiner wow fadeIn mt-5">
+        <div class="container wow fadeIn mt-5">
             <h6 class=" text-center w-100">
                 Your portfolio will be available after you've invested into a project.
             </h6>

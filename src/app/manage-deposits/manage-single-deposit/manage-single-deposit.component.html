@@ -7,11 +7,11 @@
             <div class="card px-3">
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
+                        <div *ngIf="depositModel.project !== null">
+                            <div class="explainer-mini">Project Name</div>
+                            <div>{{ depositModel.project.name }}</div>
+                        </div>
                         <div>
-                            <div *ngIf="depositModel.project !== null" class="explainer-mini">Project Name
-                                <div>{{ depositModel.project.name }}</div>
-                            </div>
-
                             <div class="explainer-mini">Name</div>
                             <div>{{ depositModel.user.first_name }} {{ depositModel.user.last_name }}</div>
                         </div>

@@ -5,7 +5,6 @@ import { DomSanitizer, SafeHtml, SafeResourceUrl, SafeScript, SafeStyle, SafeUrl
     name: 'safe'
 })
 export class SafePipe implements PipeTransform {
-
     constructor(protected sanitizer: DomSanitizer) {
     }
 

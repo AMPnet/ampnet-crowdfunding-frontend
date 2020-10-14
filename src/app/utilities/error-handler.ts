@@ -10,8 +10,6 @@ export function displayBackendError(resp: any) {
         return;
     }
 
-    console.log('error', error);
-
     if (error.message !== undefined) {
         swal('', error.message, 'warning');
     } else if (error.description !== undefined) {

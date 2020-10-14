@@ -1,4 +1,17 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import {
+    AfterViewInit,
+    ChangeDetectionStrategy,
+    Component,
+    EventEmitter,
+    Input,
+    OnChanges,
+    OnDestroy,
+    OnInit,
+    Output,
+    SimpleChange,
+    SimpleChanges,
+    ViewChild
+} from '@angular/core';
 import * as Uppy from 'uppy';
 import { AbstractControl } from '@angular/forms';
 import { SubSink } from 'subsink';
@@ -6,9 +19,10 @@ import { SubSink } from 'subsink';
 @Component({
     selector: 'app-upload-area',
     templateUrl: './upload-area.component.html',
-    styleUrls: ['./upload-area.component.scss']
+    styleUrls: ['./upload-area.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class UploadAreaComponent implements OnInit, AfterViewInit, OnDestroy {
+export class UploadAreaComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges {
     @Input() areaID: string;
     @Input() restrictions: UploadAreaComponentRestrictions;
     @Input() firstFileControl: AbstractControl;
@@ -34,18 +48,6 @@ export class UploadAreaComponent implements OnInit, AfterViewInit, OnDestroy {
         this.uppy.on('file-removed', () => {
             this.filesQuantityChanged();
         });
-
-        this.subSink.sink = this.firstFileControl?.valueChanges.subscribe(file => {
-            if (!file) {
-                this.uppy.reset();
-            }
-        });
-
-        this.subSink.sink = this.filesControl?.valueChanges.subscribe(files => {
-            if (!files || !!files && files.length === 0) {
-                this.uppy.reset();
-            }
-        });
     }
 
     ngAfterViewInit() {
@@ -57,6 +59,27 @@ export class UploadAreaComponent implements OnInit, AfterViewInit, OnDestroy {
             width: '100%',
             hideUploadButton: true,
         });
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        const firstFileCtl: SimpleChange = changes.firstFileControl;
+        const filesCtl: SimpleChange = changes.filesControl;
+
+        if (firstFileCtl?.isFirstChange() || firstFileCtl?.currentValue !== firstFileCtl?.previousValue) {
+            this.subSink.sink = this.firstFileControl?.valueChanges.subscribe(file => {
+                if (!file) {
+                    this.uppy.reset();
+                }
+            });
+        }
+
+        if (filesCtl?.isFirstChange() || filesCtl?.currentValue !== filesCtl?.previousValue) {
+            this.subSink.sink = this.filesControl?.valueChanges.subscribe(files => {
+                if (!files || !!files && files.length === 0) {
+                    this.uppy.reset();
+                }
+            });
+        }
     }
 
     ngOnDestroy() {

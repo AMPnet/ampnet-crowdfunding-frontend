@@ -73,4 +73,12 @@ export class SingleWithdrawalComponent implements OnInit {
             switchMap(() => this.router.navigate([`/dash/manage_withdrawals/${this.withdrawalType}`]))
         );
     }
+
+    isUserWithdrawApproved() {
+        return this.withdrawalType === 'users' && this.userWithdrawal !== undefined && this.userWithdrawal.burned_tx_hash === null;
+    }
+
+    isProjectWithdrawApproved() {
+        return this.withdrawalType === 'projects' && this.projectWithdrawal !== undefined && this.projectWithdrawal.burned_tx_hash === null;
+    }
 }

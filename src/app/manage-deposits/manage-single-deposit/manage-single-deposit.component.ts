@@ -105,9 +105,7 @@ export class ManageSingleDepositComponent implements OnInit {
                         type: 'info',
                         title: 'Transaction approved',
                         text: `You will be prompted to sign deposit transaction of ${amount}`
-                    }).pipe(tap(() => {
-                        this.generateSignerAndSign();
-                    }));
+                    }).pipe(tap(() => this.generateSignerAndSign()));
                 } else {
                     return this.router.navigate(['/dash/manage_deposits']);
                 }

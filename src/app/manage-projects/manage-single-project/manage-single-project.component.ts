@@ -1,29 +1,24 @@
-import { Component, OnInit } from '@angular/core';
-import * as Uppy from 'uppy';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { displayBackendErrorRx } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { WalletDetails } from '../../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
 import { Project, ProjectService } from '../../shared/services/project/project.service';
 import { WalletService } from '../../shared/services/wallet/wallet.service';
-import { BackendHttpClient } from '../../shared/services/backend-http-client.service';
 import { ManageProjectsService } from '../../shared/services/project/manage-projects.service';
-import { catchError, finalize, map, switchMap, tap } from 'rxjs/operators';
+import { catchError, finalize, map, shareReplay, switchMap, tap } from 'rxjs/operators';
 import { BehaviorSubject, EMPTY, Observable, of, throwError } from 'rxjs';
 import { ArkaneService } from '../../shared/services/arkane.service';
 import { PopupService } from '../../shared/services/popup.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { DomSanitizer } from '@angular/platform-browser';
 import { URLValidator } from '../../shared/validators/url.validator';
-
-declare var $: any;
 
 @Component({
     selector: 'app-manage-single-project',
     templateUrl: './manage-single-project.component.html',
     styleUrls: ['./manage-single-project.component.css'],
 })
-export class ManageSingleProjectComponent implements OnInit {
+export class ManageSingleProjectComponent {
     project$: Observable<Project>;
     projectWallet$: Observable<WalletDetails>;
     updateForm$: Observable<FormGroup>;
@@ -32,22 +27,18 @@ export class ManageSingleProjectComponent implements OnInit {
     refreshProjectSubject = new BehaviorSubject<Project>(null);
     refreshProjectWalletSubject = new BehaviorSubject<void>(null);
 
-    uppyImage: Uppy.Core.Uppy;
-    uppyDocuments: Uppy.Core.Uppy;
-
     constructor(private projectService: ProjectService,
                 private walletService: WalletService,
-                private http: BackendHttpClient,
                 private manageProjectsService: ManageProjectsService,
                 private arkaneService: ArkaneService,
                 private popupService: PopupService,
                 private router: Router,
-                private sanitizer: DomSanitizer,
                 private fb: FormBuilder,
                 private route: ActivatedRoute) {
         const projectUUID = this.route.snapshot.params.projectID;
         this.project$ = this.refreshProjectSubject.pipe(
             switchMap(project => project !== null ? of(project) : this.projectService.getProject(projectUUID)),
+            shareReplay(1)
         );
 
         this.projectWallet$ = this.refreshProjectWalletSubject.pipe(
@@ -86,9 +77,6 @@ export class ManageSingleProjectComponent implements OnInit {
         this.newsForm = fb.group({
             newsLink: ['', [URLValidator.validate]]
         });
-    }
-
-    ngOnInit() {
     }
 
     createProjectWallet(projectUUID: string) {
@@ -145,7 +133,8 @@ export class ManageSingleProjectComponent implements OnInit {
         return () => {
             return this.projectService.updateProject(project.uuid, {active: !project.active}).pipe(
                 displayBackendErrorRx(),
-                tap(() => this.refreshProjectSubject.next(null)),
+                tap(updatedProject => this.refreshProjectSubject.next(updatedProject)),
+                switchMap(() => this.project$)
             );
         };
     }

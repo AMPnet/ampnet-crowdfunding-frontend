@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BackendHttpClient } from '../../backend-http-client.service';
 import { TransactionInfo } from './wallet-cooperative-wallet.service';
+import { Project } from '../../project/project.service';
+import { User } from '../../user/signup.service';
 
 @Injectable({
     providedIn: 'root'
@@ -42,20 +44,14 @@ export class WalletCooperativeDepositService {
 
 export interface DepositSearchResponse {
     deposit: Deposit;
-    user: {
-        uuid: string;
-        email: string;
-        first_name: string;
-        last_name: string;
-        enabled: boolean;
-    };
+    user: User;
+    project: Project;
 }
 
 interface Deposit {
     id: number;
     owner: string;
     reference: string;
-    approved: boolean;
     created_at: Date;
     created_by: string;
     type: string;

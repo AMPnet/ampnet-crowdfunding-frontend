@@ -8,6 +8,10 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
                         <div>
+                            <div *ngIf="depositModel.project !== null" class="explainer-mini">Project Name
+                                <div>{{ depositModel.project.name }}</div>
+                            </div>
+
                             <div class="explainer-mini">Name</div>
                             <div>{{ depositModel.user.first_name }} {{ depositModel.user.last_name }}</div>
                         </div>
@@ -22,10 +26,10 @@
                     </div>
                 </div>
             </div>
-            <div *ngIf="!depositModel.deposit.approved" class="explainer-mini mt-3 mb-2">
+            <div *ngIf="!depositModel.deposit.approved_at" class="explainer-mini mt-3 mb-2">
                 Deposit amount
             </div>
-            <ng-container *ngIf="!depositModel.deposit.approved">
+            <ng-container *ngIf="!depositModel.deposit.approved_at">
                 <app-money-input-field
                         placeholder="Enter maximum investment per user"
                         [(realValue)]="amount">

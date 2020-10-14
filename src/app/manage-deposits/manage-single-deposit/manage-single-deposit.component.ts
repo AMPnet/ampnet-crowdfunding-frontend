@@ -10,10 +10,12 @@ import {
 import { BackendHttpClient } from '../../shared/services/backend-http-client.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ManageSingleDepositModalComponent } from './manage-single-deposit-modal/manage-single-deposit-modal.component';
-import { finalize, switchMap } from 'rxjs/operators';
+import { finalize, switchMap, tap } from 'rxjs/operators';
 import { BroadcastService } from '../../shared/services/broadcast.service';
 import { ArkaneService } from '../../shared/services/arkane.service';
 import { PopupService } from '../../shared/services/popup.service';
+import { EMPTY } from 'rxjs';
+import { CurrencyDefaultPipe } from '../../pipes/currency-default.pipe';
 
 declare var $: any;
 
@@ -36,6 +38,7 @@ export class ManageSingleDepositComponent implements OnInit {
                 private modalService: BsModalService,
                 private arkaneService: ArkaneService,
                 private popupService: PopupService,
+                private currencyPipe: CurrencyDefaultPipe,
                 private router: Router) {
     }
 
@@ -44,7 +47,6 @@ export class ManageSingleDepositComponent implements OnInit {
 
         this.paymentUppy = Uppy.Core({
             restrictions: {
-                allowedFileTypes: ['.png', '.jpeg', '.jpg', '.pdf'],
                 maxNumberOfFiles: 1
             }
         });
@@ -91,13 +93,26 @@ export class ManageSingleDepositComponent implements OnInit {
     getDeposit() {
         SpinnerUtil.showSpinner();
         const id = this.route.snapshot.params.ID;
-        this.depositCooperativeService.getDeposit(id).subscribe(res => {
-            SpinnerUtil.hideSpinner();
-            this.depositModel = res;
-            if (this.depositModel.deposit.approved) {
-                this.generateSignerAndSign();
-            }
-        }, hideSpinnerAndDisplayError);
+        this.depositCooperativeService.getDeposit(id).pipe(displayBackendErrorRx(),
+            switchMap(res => {
+                this.depositModel = res;
+                if (!this.depositModel.deposit.approved_at) {
+                    SpinnerUtil.hideSpinner();
+                    return EMPTY;
+                } else if (!!this.depositModel.deposit.approved_at && !this.depositModel.deposit.tx_hash) {
+                    const amount = this.currencyPipe.transform(this.depositModel.deposit.amount);
+                    return this.popupService.new({
+                        type: 'info',
+                        title: 'Transaction approved',
+                        text: `You will be prompted to sign deposit transaction of ${amount}`
+                    }).pipe(tap(() => {
+                        this.generateSignerAndSign();
+                    }));
+                } else {
+                    return this.router.navigate(['/dash/manage_deposits']);
+                }
+            })
+        ).subscribe();
     }
 
     showConfirmModal() {

@@ -1,7 +1,7 @@
 <div *ngIf="{
     wallet: wallet$ | async,
     project: project$ | async
-} as states" class="container root-content-container">
+} as states" class="container">
     <ng-container *ngIf="states.wallet !== null && states.project !== null else spinner">
         <div class="row">
             <div class="app-page-title-back" (click)="backToSingleOfferScreen(states.project.uuid)">

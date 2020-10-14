@@ -10,10 +10,12 @@ export function displayBackendError(resp: any) {
         return;
     }
 
-    if (error.description !== undefined) {
-        swal('', error.description, 'warning');
-    } else if (error.message !== undefined) {
+    console.log('error', error);
+
+    if (error.message !== undefined) {
         swal('', error.message, 'warning');
+    } else if (error.description !== undefined) {
+        swal('', error.description, 'warning');
     } else {
         swal('', 'An unknown error occurred.', 'error');
     }

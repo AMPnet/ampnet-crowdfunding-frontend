@@ -10,23 +10,28 @@
   padding: 20px 10px 20px 18px;
   border-radius: 8px;
   font-size: $font-size-desktop-small;
-  flex-direction: column;
+  justify-content: space-between;
 
   b {
     font-size: $font-size-desktop-small;
   }
   svg {
+    display: none;
     margin-right: 15px;
     font-size: 24px;
   }
 
   @include media-breakpoint-up(lg) {
     height: 64px;
-    font-size: $font-size-desktop-body2;
-    flex-direction: row;
+    font-size: $font-size-desktop-body;
+    justify-content: flex-start;
     
     b {
-      font-size: $font-size-desktop-body2;
+      font-size: $font-size-desktop-body;
+    }
+
+    svg {
+      display: block;
     }
   }
 

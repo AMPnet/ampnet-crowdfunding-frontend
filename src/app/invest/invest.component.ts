@@ -12,10 +12,11 @@ declare var $: any;
 @Component({
     selector: 'app-invest',
     templateUrl: './invest.component.html',
-    styleUrls: ['./invest.component.css'],
+    styleUrls: ['./invest.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class InvestComponent implements OnInit {
+    isOverview = false;
     wallet$: Observable<WalletDetailsWithState>;
     project$: Observable<Project>;
 
@@ -36,6 +37,10 @@ export class InvestComponent implements OnInit {
         this.investForm = this.fb.group({
             amount: ['', [Validators.required], this.validAmount.bind(this)]
         });
+        if (this.route.snapshot.params.isOverview) {
+            this.isOverview = true;
+        }
+        this.project$.subscribe(res => console.log(res));
     }
 
     private validAmount(control: AbstractControl): Observable<ValidationErrors> {
@@ -72,5 +77,13 @@ export class InvestComponent implements OnInit {
                 return EMPTY;
             })
         );
+    }
+
+    backToSingleOfferScreen(uuid: string) {
+        if (this.isOverview) {
+            this.router.navigate(['/overview/discover']);
+        } else {
+            this.router.navigate([`dash/offers/${uuid}`]);
+        }
     }
 }

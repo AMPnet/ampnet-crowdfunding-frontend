@@ -49,9 +49,11 @@
   @extend %app-page-title-bg;
   margin-bottom: 0px;
   cursor: pointer;
+  width: 100%;
 
   @include media-breakpoint-up(lg) {
     margin-bottom: 10px;
+    width: fit-content;
   }
 }
 
@@ -97,4 +99,13 @@
     top: calc(50% - 50px);
     left: calc(50% + 75px);
   }
+}
+
+.flex__center, .flex__center-space {
+  display: flex;
+  align-items: center;
+}
+
+.flex__center-space {
+  justify-content: space-between;
 }

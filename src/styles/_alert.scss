@@ -1,0 +1,42 @@
+@import "colors";
+@import "bootstrap/scss/mixins/alert";
+
+@mixin alert-colors($background, $color) {
+  background-color: $background;
+  color: $color;
+}
+
+.alert {
+  padding: 20px 10px 20px 18px;
+  border-radius: 8px;
+  font-size: $font-size-desktop-small;
+  flex-direction: column;
+
+  b {
+    font-size: $font-size-desktop-small;
+  }
+  svg {
+    margin-right: 15px;
+    font-size: 24px;
+  }
+
+  @include media-breakpoint-up(lg) {
+    height: 64px;
+    font-size: $font-size-desktop-body2;
+    flex-direction: row;
+    
+    b {
+      font-size: $font-size-desktop-body2;
+    }
+  }
+
+  &-success {
+    @include alert-colors($success-color-bg, $success-color);
+  }
+  &-warning {
+    @include alert-colors($warning-color-bg, $warning-color);
+  }
+  &-danger {
+    @include alert-colors($error-color-bg, $error-color);
+  }
+}

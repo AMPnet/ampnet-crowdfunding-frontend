@@ -19,16 +19,9 @@
   padding: 0 20px;
 }
 
-.left__progress {
-  display: table;
-}
-
-.left__img {
-  margin-bottom: 24px;
-}
-
 .img__base {
-  max-height: 48vw;
+  height: 100%;
+  object-fit: cover !important;
 }
 
 .progress {
@@ -53,11 +46,22 @@
   }
 }
 
-.left__ends-info {
-  font-size: $font-size-mobile-title-small;
-  font-weight: lighter;
-  margin-top: 10px;
-  color: #444444;
+.left {
+  &__img {
+    margin-bottom: 24px;
+    height: 48vw;
+  }
+
+  &__progress {
+    display: table;
+  }
+
+  &__ends-info {
+    font-size: $font-size-mobile-title-small;
+    font-weight: lighter;
+    margin-top: 10px;
+    color: #444444;
+  }
 }
 
 .right {
@@ -97,6 +101,7 @@
 
   .card-left {
     margin: 0 64px;
+    width: 60%;
 
     .app-basic-title {
       display: none;
@@ -107,9 +112,11 @@
     margin: 0;
   }
 
+  .left__img {
+    height: 300px;
+  }
+
   .img__base {
-    max-width: 622px;
-    max-height: 300px;
     border-radius: 8px;
     margin-top: -16px;
   }

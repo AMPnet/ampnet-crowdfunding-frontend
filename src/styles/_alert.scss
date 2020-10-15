@@ -4,6 +4,9 @@
 @mixin alert-colors($background, $color) {
   background-color: $background;
   color: $color;
+  svg {
+    color: $color;
+  }
 }
 
 .alert {
@@ -40,6 +43,9 @@
   }
   &-warning {
     @include alert-colors($warning-color-bg, $warning-color);
+    svg {
+      font-size: 16px;
+    }
   }
   &-danger {
     @include alert-colors($error-color-bg, $error-color);

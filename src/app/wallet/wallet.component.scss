@@ -1,24 +1,62 @@
-.wallet-container {
-  padding-top: 20px;
-  background: #fff;
+@import "app";
+
+.container {
+  padding: 0;
+  overflow: hidden;
 }
 
-.row-eq-height {
+.row {
+  padding: 0 15px;
+}
+
+.alert {
+  padding: 12px 10px 12px 18px;
+  height: 48px;
+  margin-bottom: 40px;
+}
+
+.init-left {
+  background-color: $background-color;
+  padding: 20px;
+  &__title {
+    font-size: $font-size-desktop-title;
+    text-transform: uppercase;
+    margin-bottom: 32px;
+  }
+  &__desc {
+    font-size: $font-size-mobile-body;
+    letter-spacing: 0.2px;
+    line-height: 25px;
+    color: $body-color;
+  }
+  &__btn {
+    margin: 40px 0 20px 0;
+  }
+}
+
+@include media-breakpoint-up(lg) {
+  .container {
+    padding: 0 15px;
+  }
+
+  .init-left {
+    padding: 40px 64px 80px 64px;
+    &__desc {
+      font-size: $font-size-desktop-body;
+      line-height: 25px;
+    }
+    &__btn {
+      margin-bottom: 0;
+    }
+  }
+}
+
+/* .row-eq-height {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
 }
-
-/*.button-container .btn {
-	position: relative;
-	top: 50%;
-	transform: translateY(-50%);
-	font-size: 15px;
-	font-weight: bold;
-	text-transform: capitalize!important;
-	padding-top: 18px;
-}*/
 
 .button-container button {
   height: 60px;
@@ -57,9 +95,9 @@
   width: 65px;
   text-align: center;
 }
-
+ */
 /* Page redesign CSS */
-.page-title {
+/* .page-title {
   font-size: 12px;
   color: #111111;
   font-weight: 500;
@@ -214,3 +252,4 @@ td {
 .page-item.active .page-link {
   background-color: red !important;
 }
+ */

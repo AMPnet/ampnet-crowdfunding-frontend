@@ -47,9 +47,13 @@ span {
 
   &__location {
     margin-bottom: 30px;
-    P, .location__icon {
+    cursor: pointer;
+    width: fit-content;
+
+    p, .location__icon {
       font-size: $font-size-desktop-small;
     }
+
     .location__icon {
       margin-right: 10px;
       vertical-align: baseline;

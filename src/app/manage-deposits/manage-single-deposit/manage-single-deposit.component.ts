@@ -73,11 +73,13 @@ export class ManageSingleDepositComponent implements AfterViewInit {
             displayBackendErrorRx(),
             tap(res => this.depositModel = res),
             switchMap(() => {
-                if (!this.depositModel.deposit.approved) {
+                if (!this.depositModel.deposit.approved_at) {
                     setTimeout(() => this.createUploadArea());
                     return EMPTY;
-                } else {
+                } else if (!!this.depositModel.deposit.approved_at && !this.depositModel.deposit.tx_hash) {
                     return this.generateSignerAndSign();
+                } else {
+                    return this.router.navigate(['/dash/manage_deposits']);
                 }
             }),
             finalize(() => {

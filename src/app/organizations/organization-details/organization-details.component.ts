@@ -9,8 +9,7 @@ import { Organization, OrganizationMember, OrganizationService } from '../../sha
 import { switchMap, tap } from 'rxjs/operators';
 import { ArkaneService } from '../../shared/services/arkane.service';
 import { PopupService } from '../../shared/services/popup.service';
-
-declare var $: any;
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 
 @Component({
     selector: 'app-organization-details',
@@ -18,15 +17,41 @@ declare var $: any;
     styleUrls: ['./organization-details.component.css']
 })
 export class OrganizationDetailsComponent implements OnInit {
-    organization: Organization;
-    orgWallet?: WalletDetails;
-    orgMembers: OrganizationMember[];
 
     constructor(private activeRoute: ActivatedRoute,
                 private organizationService: OrganizationService,
                 private walletService: WalletService,
                 private arkaneService: ArkaneService,
+                private fb: FormBuilder,
                 private popupService: PopupService) {
+    }
+    organization: Organization;
+    orgWallet?: WalletDetails;
+    orgMembers: OrganizationMember[];
+
+    inviteForm: FormGroup;
+
+    private static extractEmails(emails: string): string[] {
+        return emails
+            .split(',').flatMap(comma => comma.trim()
+                .split(';')).flatMap(semicolon => semicolon.trim()
+                .split(' ')).filter(space => space !== '');
+    }
+
+    private static emailsValidator(control: AbstractControl): ValidationErrors | null {
+        const emails = OrganizationDetailsComponent.extractEmails(control.value);
+
+        if (emails.length === 0) {
+            return { noEmails: true };
+        }
+
+        for (let i = 0; i < emails.length; i++) {
+            if ((new FormControl(emails[i], Validators.email)).errors) {
+                return { incorrectEmail: true };
+            }
+        }
+
+        return null;
     }
 
     ngOnInit() {
@@ -58,18 +83,24 @@ export class OrganizationDetailsComponent implements OnInit {
             }, err => {
                 displayBackendError(err);
             });
+
+        this.inviteForm = this.fb.group({
+            emails: ['', OrganizationDetailsComponent.emailsValidator]
+        });
     }
 
     inviteClicked() {
-        SpinnerUtil.showSpinner();
-        const email = $('#email-invite-input').val();
-        this.organizationService.inviteUser(this.organization.uuid, email).subscribe(res => {
-            SpinnerUtil.hideSpinner();
-            swal('Success', 'Successfully invited user to organization', 'success');
-        }, err => {
-            SpinnerUtil.hideSpinner();
-            displayBackendError(err);
-        });
+        const emails = OrganizationDetailsComponent.extractEmails(this.inviteForm.get('emails').value);
+
+        return this.organizationService.inviteUser(this.organization.uuid, emails).pipe(
+            displayBackendErrorRx(),
+            switchMap(() => this.popupService.new({
+                type: 'success',
+                title: 'Success',
+                text: 'Successfully invited user to organization'
+            })),
+            tap(() => this.inviteForm.reset())
+        );
     }
 
     createOrgWalletClicked() {

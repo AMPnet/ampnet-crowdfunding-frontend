@@ -17,7 +17,7 @@ import { ArkaneService } from '../../shared/services/arkane.service';
     styleUrls: ['./single-withdrawal.component.css']
 })
 export class SingleWithdrawalComponent implements OnInit {
-    withdrawalId;
+    withdrawalId: number;
     withdrawalType = 'users';
     userWithdrawal: UserWithdraw;
     projectWithdrawal: ProjectWithdraw;
@@ -48,7 +48,7 @@ export class SingleWithdrawalComponent implements OnInit {
     getWithdrawal(id: number) {
         SpinnerUtil.showSpinner();
         this.withdrawCooperativeService.getApprovedWithdrawals().pipe(displayBackendErrorRx(),
-            tap(res => this.userWithdrawal = res.withdraws.filter(item => item.id === id)[0]),
+            tap(res => this.userWithdrawal = res.withdraws.find(item => item.id === id)),
             finalize(() => SpinnerUtil.hideSpinner())
         ).subscribe();
     }
@@ -56,7 +56,7 @@ export class SingleWithdrawalComponent implements OnInit {
     getProjectWithdrawal(id: number) {
         SpinnerUtil.showSpinner();
         this.withdrawCooperativeService.getApprovedProjectWithdraws().pipe(displayBackendErrorRx(),
-            tap(res => this.projectWithdrawal = res.withdraws.filter(item => item.id === id)[0]),
+            tap(res => this.projectWithdrawal = res.withdraws.find(item => item.id === id)),
             finalize(() => SpinnerUtil.hideSpinner())
         ).subscribe();
     }

@@ -17,11 +17,10 @@ import { finalize, switchMap, tap } from 'rxjs/operators';
 export class ManagePaymentsComponent implements OnInit {
     projectWallet: WalletDetails;
     project: Project;
-    projectID;
+    projectID: string;
 
     isProjectFullyFunded = false;
     revenueForm: FormGroup;
-    groupID;
 
     constructor(private walletService: WalletService,
                 private route: ActivatedRoute,
@@ -37,7 +36,6 @@ export class ManagePaymentsComponent implements OnInit {
 
     ngOnInit() {
         this.projectID = this.route.snapshot.params.projectID;
-        this.groupID = this.route.snapshot.params.groupID;
         this.getProjectWallet(this.projectID);
         this.getProject(this.projectID);
     }
@@ -50,7 +48,7 @@ export class ManagePaymentsComponent implements OnInit {
         ).subscribe();
     }
 
-    getProjectWallet(projectID: number) {
+    getProjectWallet(projectID: string) {
         SpinnerUtil.showSpinner();
         this.walletService.getProjectWallet(projectID).pipe(displayBackendErrorRx(),
             tap(wallet => this.projectWallet = wallet),

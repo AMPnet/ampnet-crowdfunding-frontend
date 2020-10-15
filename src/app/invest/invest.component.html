@@ -21,11 +21,14 @@
                                     [control]="investForm.get('amount')">
                             </app-money-input-field>
                         </div>
-    
-                        <div class="invest__range-labels">
-                            <p>{{ states.project.min_per_user | currencyDefault }} Min investment</p>
-                            <p>{{ states.project.max_per_user | currencyDefault }} Max investment</p>
-                        </div>
+
+                        <ng-container *ngIf="!!states.project else spinner">
+                            <div class="invest__range-labels">
+                                <p>{{ states.project.min_per_user | currencyDefault }} Min investment</p>
+                                <p>{{ states.project.max_per_user | currencyDefault }} Max investment</p>
+                            </div>
+                        </ng-container>
+                        
                     </div>
     
                     <div class="col-lg-4 invest__button">
@@ -49,25 +52,25 @@
             <div class="error-messages col-12 col-lg-8" *ngIf="investForm.dirty && investForm.invalid">
                 <div *ngIf="investForm.get('amount').errors?.amountBelowMin" class="alert alert-danger flex__center">
                     <i class="fas fa-dizzy"></i>
-                    <b>Investment amount too low.&nbsp;</b>
+                    <b>Investment amount too low</b>
                     <span>
-                        The minimum investment is {{ states.project.min_per_user | currencyDefault }}
+                        . The minimum investment is {{ states.project.min_per_user | currencyDefault }}
                     </span>
                 </div>
 
                 <div *ngIf="investForm.get('amount').errors?.amountAboveMax" class="alert alert-danger flex__center">
                     <i class="fas fa-dizzy"></i>
-                    <b>Investment amount too high.&nbsp;</b>
+                    <b>Investment amount too high</b>
                     <span>
-                    The maximum investment is {{ states.project.max_per_user | currencyDefault }}
+                        . The maximum investment is {{ states.project.max_per_user | currencyDefault }}
                     </span>
                 </div>
 
                 <div *ngIf="investForm.get('amount').errors?.amountAboveExpFunding" class="alert alert-danger flex__center">
                     <i class="fas fa-dizzy"></i>
-                    <b>Investment amount too high.&nbsp;</b>
+                    <b>Investment amount too high</b>
                     <span>
-                        The expected funding for this project is {{ states.project.expected_funding | currencyDefault }}
+                        . The expected funding for this project is {{ states.project.expected_funding | currencyDefault }}
                     </span>
                 </div>
 

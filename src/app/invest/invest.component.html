@@ -22,12 +22,10 @@
                             </app-money-input-field>
                         </div>
 
-                        <ng-container *ngIf="!!states.project else spinner">
-                            <div class="invest__range-labels">
-                                <p>{{ states.project.min_per_user | currencyDefault }} Min investment</p>
-                                <p>{{ states.project.max_per_user | currencyDefault }} Max investment</p>
-                            </div>
-                        </ng-container>
+                        <div class="invest__range-labels">
+                            <p>{{ states.project.min_per_user | currencyDefault }} Min investment</p>
+                            <p>{{ states.project.max_per_user | currencyDefault }} Max investment</p>
+                        </div>
                         
                     </div>
     

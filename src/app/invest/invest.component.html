@@ -50,25 +50,25 @@
             <div class="error-messages col-12 col-lg-8" *ngIf="investForm.dirty && investForm.invalid">
                 <div *ngIf="investForm.get('amount').errors?.amountBelowMin" class="alert alert-danger flex__center">
                     <i class="fas fa-dizzy"></i>
-                    <b>Investment amount too low</b>
+                    <b>Investment amount too low.&nbsp;</b>
                     <span>
-                        . The minimum investment is {{ states.project.min_per_user | currencyDefault }}
+                        The minimum investment is {{ states.project.min_per_user | currencyDefault }}
                     </span>
                 </div>
 
                 <div *ngIf="investForm.get('amount').errors?.amountAboveMax" class="alert alert-danger flex__center">
                     <i class="fas fa-dizzy"></i>
-                    <b>Investment amount too high</b>
+                    <b>Investment amount too high.&nbsp;</b>
                     <span>
-                        . The maximum investment is {{ states.project.max_per_user | currencyDefault }}
+                        The maximum investment is {{ states.project.max_per_user | currencyDefault }}
                     </span>
                 </div>
 
                 <div *ngIf="investForm.get('amount').errors?.amountAboveExpFunding" class="alert alert-danger flex__center">
                     <i class="fas fa-dizzy"></i>
-                    <b>Investment amount too high</b>
+                    <b>Investment amount too high.&nbsp;</b>
                     <span>
-                        . The expected funding for this project is {{ states.project.expected_funding | currencyDefault }}
+                        The expected funding for this project is {{ states.project.expected_funding | currencyDefault }}
                     </span>
                 </div>
 

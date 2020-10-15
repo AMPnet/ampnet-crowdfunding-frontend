@@ -4,6 +4,10 @@
     "outDir": "../out-tsc/app",
     "types": [
       "node"
+    ],
+    "lib": [
+      "dom",
+      "es2019"
     ]
   },
   "exclude": [

@@ -27,7 +27,7 @@
                     </div>
                     <app-action-button text="Create organization wallet"
                                        loadingText="Creating organization wallet..." faIcon="fa-plus"
-                                       [onClick]="createOrgWalletClicked.bind(this)"
+                                       [onClick]="createOrgWalletClicked(states.organization.uuid).bind(this)"
                                        buttonClass="btn btn-primary p-3 w-100">
                     </app-action-button>
                 </div>

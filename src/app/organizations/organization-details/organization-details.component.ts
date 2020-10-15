@@ -18,7 +18,6 @@ import { PopupService } from '../../shared/services/popup.service';
 })
 export class OrganizationDetailsComponent implements OnInit {
     refreshOrgMembersSubject = new BehaviorSubject<void>(null);
-    orgID;
 
     organization$: Observable<Organization>;
     orgWallet$: Observable<WalletDetails>;
@@ -32,9 +31,9 @@ export class OrganizationDetailsComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.orgID = this.activeRoute.snapshot.params.id;
-        this.organization$ = this.organizationService.getSingleOrganization(this.orgID).pipe(this.handleErrors);
-        this.orgWallet$ = this.walletService.getOrganizationWallet(this.orgID).pipe(
+        const orgID = this.activeRoute.snapshot.params.id;
+        this.organization$ = this.organizationService.getSingleOrganization(orgID).pipe(this.handleErrors);
+        this.orgWallet$ = this.walletService.getOrganizationWallet(orgID).pipe(
             catchError(err => {
                 if (err.status === 404) {
                     return of(undefined);
@@ -50,7 +49,7 @@ export class OrganizationDetailsComponent implements OnInit {
             }));
 
         this.orgMembers$ = this.refreshOrgMembersSubject.pipe(
-            switchMap(_ => this.organizationService.getMembersForOrganization(this.orgID).pipe(this.handleErrors)),
+            switchMap(_ => this.organizationService.getMembersForOrganization(orgID).pipe(this.handleErrors)),
             map(res => res.members));
     }
 
@@ -63,17 +62,19 @@ export class OrganizationDetailsComponent implements OnInit {
         ).subscribe();
     }
 
-    createOrgWalletClicked() {
-        return this.walletService.createOrganizationWalletTransaction(this.orgID).pipe(
-            displayBackendErrorRx(),
-            switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo)),
-            switchMap(() => this.popupService.new({
-                type: 'success',
-                title: '',
-                text: 'Success!'
-            })),
-            tap(() => this.ngOnInit()),
-        );
+    createOrgWalletClicked(orgID: string) {
+        return () => {
+            return this.walletService.createOrganizationWalletTransaction(orgID).pipe(
+                displayBackendErrorRx(),
+                switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo)),
+                switchMap(() => this.popupService.new({
+                    type: 'success',
+                    title: '',
+                    text: 'Success!'
+                })),
+                tap(() => this.ngOnInit()),
+            );
+        };
     }
 
     deleteMember(orgID: string, memberID: string) {

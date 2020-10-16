@@ -34,6 +34,10 @@
   }
 }
 
+.init-right {
+  display: flex;
+}
+
 @include media-breakpoint-up(lg) {
   .container {
     padding: 0 15px;

@@ -72,7 +72,14 @@
   &__roi {
     text-transform: uppercase;
     margin-bottom: 25px;
-    color: #444444;
+    color: $title-color;
+    font-size: $font-size-desktop-small;
+    letter-spacing: 2px;
+    span {
+      font-size: $font-size-desktop-small;
+      letter-spacing: 2px;
+      color: $title-color;
+    }
   }
 
   &__desc {

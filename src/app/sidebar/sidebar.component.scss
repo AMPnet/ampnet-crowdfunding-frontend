@@ -54,6 +54,12 @@ a {
 .side-active {
   background: rgba($primary-color, 0.15);
   border-right: 3px solid $primary-color;
+  .menu-icon {
+    color: $primary-color;
+  }
+  span {
+    color: $title-color;
+  }
 }
 
 #main-menu li:focus {

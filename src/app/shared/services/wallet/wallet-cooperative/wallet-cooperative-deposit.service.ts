@@ -55,7 +55,6 @@ interface Deposit {
     id: number;
     owner: string;
     reference: string;
-    approved: boolean;
     created_at: Date;
     created_by: string;
     type: string;

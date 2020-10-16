@@ -23,6 +23,7 @@
 .app-page-title {
   @extend %app-page-title;
   @extend %app-page-title-bg;
+  color: $title-color;
 
   &:before {
     content: "";

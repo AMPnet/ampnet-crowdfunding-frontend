@@ -1,12 +1,29 @@
 @import 'bootstrap/scss/mixins/breakpoints';
 @import 'fonts';
 
-.app-page-title {
-  font-size: $font-size-mobile-title;
+%app-page-title {
+  font-size: $font-size-mobile-title-small;
   font-weight: 400 !important;
   text-transform: uppercase;
-  margin: 0 0 1rem 0;
+  padding: 1rem 0 1rem 1rem;
   position: relative;
+  letter-spacing: 2px;
+}
+
+%app-page-title-bg {
+  background-color: #F7F7F7;
+  margin-bottom: 0;
+
+  @include media-breakpoint-up(lg) {
+    background-color: unset;
+    margin: 0 0 3rem 0;
+  }
+}
+
+.app-page-title {
+  @extend %app-page-title;
+  @extend %app-page-title-bg;
+  color: $title-color;
 
   &:before {
     content: "";
@@ -20,12 +37,36 @@
 
   @include media-breakpoint-up(lg) {
     font-size: $font-size-desktop-title;
-    margin-bottom: 3rem;
-
+    letter-spacing: 1.5px;
     &:before {
       width: 35px;
       height: 3px;
     }
+  }
+}
+
+.app-page-title-back {
+  @extend %app-page-title;
+  @extend %app-page-title-bg;
+  margin-bottom: 0px;
+  cursor: pointer;
+  width: 100%;
+
+  @include media-breakpoint-up(lg) {
+    margin-bottom: 10px;
+    width: fit-content;
+  }
+}
+
+.app-basic-title {
+  font-size: $font-size-mobile-title;
+  font-weight: normal;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: $title-color;
+  @include media-breakpoint-up(lg) {
+    font-size: $font-size-desktop-title;
+    letter-spacing: 1.5px;
   }
 }
 
@@ -36,7 +77,6 @@
   padding-bottom: 18px;
   text-transform: uppercase;
 }
-
 .app-page-header {
   display: flex;
   justify-content: space-between;
@@ -60,4 +100,13 @@
     top: calc(50% - 50px);
     left: calc(50% + 75px);
   }
+}
+
+.flex__center, .flex__center-space {
+  display: flex;
+  align-items: center;
+}
+
+.flex__center-space {
+  justify-content: space-between;
 }

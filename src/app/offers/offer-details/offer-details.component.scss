@@ -1,179 +1,207 @@
 @import "app";
 
-.offer-right-container {
-  background-color: #F7F7F7;
+.col-lg-5, .col-lg-7 {
+  padding: 0;
 }
 
-.offer-right-text {
+.container {
+  padding: 0;
   margin: 0 auto;
+  overflow: hidden;
+}
+
+.right__container, 
+.left__desc, 
+.left__docs, 
+.offer-right-socials {
+  padding: 0 20px;
+}
+
+span {
+  font-weight: bold;
+}
+
+.btn-primary {
+  height: 48px;
+  font-size: 16px;
+  margin-bottom: 32px;
+}
+
+.dropdown-divider {
+  border-top: 1px solid #D8D8D8;
+  margin: 15px 0;
+}
+
+.app-basic-title {
+  margin-bottom: 16px;
+}
+
+.right {
+  &__container {
+    background-color: #F7F7F7;
+  }
+
+  &__text {
+    padding-top: 24px;
+  }
+
+  &__location {
+    margin-bottom: 30px;
+    cursor: pointer;
+    width: fit-content;
+
+    p, .location__icon {
+      font-size: $font-size-desktop-small;
+    }
+
+    .location__icon {
+      margin-right: 10px;
+      vertical-align: baseline;
+    }
+  }
+
+  &__progress {
+    display: table;
+    margin-bottom: 32px;
+    font-size: $font-size-desktop-body2;
+    .progress {
+      &__element {
+        margin-top: 8px;
+        height: 4px;
+        border-radius: 2px;
+        background-color: $border-color;
+      }
+      &__bar {
+        height: 4px;
+        border-radius: 2px;
+        background-color: $success-color;
+      }
+    }
+  }
+  &__info div {
+    font-size: $font-size-desktop-small;
+    span {
+      font-size: $font-size-desktop-small;
+      margin-right: 5px;
+    }
+  }
+  &__fund-period {
+    margin-bottom: 32px;
+  }
 }
 
 .offer-right-socials {
-  margin: 1rem;
-  width: auto;
+  margin-top: 24px;
+  .socials__content {
+    display: flex;
+    p {
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+    p, .socials__link {
+      margin-right: 28px;
+    }
+    .socials__link {
+      cursor: pointer;
+    }
+    .socials__icon {
+      color: $body-color;
+    }
+  }
 }
 
-.progress {
-  max-width: 244px;
-  height: 4px;
-  background-color: $border-color;
+.left {
+  &__img {
+    max-height: 48vw;
+  }
+
+  &__desc {
+    color: $body-color;
+  }
+  &__docs {
+    margin: 25px 0 50px 0;
+    .docs__links {
+      white-space: nowrap; 
+      overflow: hidden; 
+      text-overflow: ellipsis;
+      padding-bottom: 20px;
+      a {
+        text-decoration: none;
+        span {
+          color: $body-color;
+          font-weight: normal;
+        }
+        svg {
+          color: $primary-color;
+          font-size: 24px;
+          margin-right: 10px;
+        }
+      }
+    }
+  }
 }
 
-.progress, .progress-bar {
-  background-color: $primary-color;
-}
-
-.invest-button-holder {
-  margin-top: 40px;
-}
-
-.offer-return {
-  margin-top: 40px;
-}
-
-.offer-right-text span {
-  font-weight: 700;
-  color: #111111;
-}
-
-.offer-desc {
-  margin-top: 40px;
-  font-size: 16px;
-  color: #444444;
-  line-height: 1.6rem;
-}
-
-.offer-docs {
-  font-size: 14px;
-  color: #444444;
-}
-
-.offer-docs a {
-  color: #DEA546;
-}
-
-.offer-docs a {
-  font-size: 24px;
-}
-
-.offer-right-socials span {
-  text-transform: uppercase;
-  color: #111111;
-  font-size: 12px;
-}
-
-.offer-right-socials div {
-  color: #444444;
-}
-
-.offer-right-socials a {
-  color: initial;
-}
-
-.page-title {
-  font-size: 12px;
-  font-weight: 500;
-  color: #111111;
-  letter-spacing: 2px;
-  width: auto;
-}
-
-.offer-title {
-  font-size: 36px;
-  color: #111111;
-  text-transform: uppercase;
-}
-
-.offer-location {
-  font-size: 12px;
-  cursor: pointer;
-}
-
-.offer-right-text {
-  font-size: 14px;
-}
-
-@media (min-width: 800px) {
-  .offer-left {
-    max-width: 686px;
-    padding-right: 0;
+@include media-breakpoint-up(lg) {
+  .container {
+    display: flex;
+    flex-direction: column;
   }
 
   .offer-right {
-    padding-left: 0;
+    float: right;
   }
 
-  .col-md-9 {
-    padding: 0 6px;
+  .offer-left {
+    float: left;
   }
 
-  .offer-left .header-image {
-    max-height: 330px;
-    margin-top: -16px;
-  }
-
-  .offer-desc {
-    max-width: 550px;
-  }
-}
-
-@media (max-width: 800px) {
-  .col-12 {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-  }
-
-  .offer-title {
-    font-size: 24px;
-  }
-
-  .progress-text p {
-    margin-bottom: 8px !important;
-  }
-
-  .offer-return {
-    margin-top: 32px;
+  .btn-primary {
+    height: 64px;
+    font-size: 17px;
   }
 
   .offer-right-socials {
-    margin: 30px 0 0 0;
+    margin: 25px 64px;
   }
 
-  .offer-right-text .dropdown-divider {
-    margin-top: 15px;
-    margin-bottom: 15px;
+  .right {
+    &__container {
+      margin-top: 16px;
+      border-radius: 8px;
+      padding: 40px 64px;
+    }
+    &__progress {
+      width: fit-content;
+    }
+    &__text {
+      display: flex;
+      flex-direction: column;
+    }
+    &__invest {
+      order: 1;
+    }
+    &__info {
+      order: 2;
+    }
+    &__location,
+    &__fund-period {
+      margin-bottom: 10px;
+    }
+    &__info div {
+      font-size: $font-size-desktop-body2;
+      span {
+        font-size: $font-size-desktop-body2;
+      }
+    }
   }
 
-  .offer-right-text {
-    font-size: 12px;
-  }
-
-  .progress-text {
-    font-size: 14px;
-  }
-
-  .offer-desc {
-    margin-top: 30px;
-    font-size: 14px;
-    line-height: 1.5rem;
-  }
-
-  .offer-right-socials span {
-    margin-right: 28px;
-  }
-
-  .offer-right-socials div {
-    margin-right: 37px;
-  }
-
-  .invest-button-holder {
-    margin-top: 32px;
-    padding-bottom: 32px;
-  }
-}
-
-@media (min-width: 1399px) {
-  .page-title {
-    margin-top: 0 !important;
+  .left {
+    &__img {
+      max-height: 330px;
+      border-radius: 8px;
+    }
+    &__desc {
+      margin-top: 40px;
+    }
   }
 }

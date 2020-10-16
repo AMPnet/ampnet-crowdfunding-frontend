@@ -1,0 +1,30 @@
+@import "colors";
+
+%input {
+  box-shadow: none;
+  border: 1px solid #D8D8D8;
+  color: #111111;
+  outline: none;
+  border-radius: 8px;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  padding: 16px;
+
+  &::placeholder{
+    color: #AAAAAA;
+  }
+
+  &:focus {
+    border-color: $primary-color;
+    box-shadow: 0 0 0 3px lighten($primary-color, 90%);
+  }
+}
+
+.input-reg {
+  @extend %input;
+  height: 48px;
+}
+
+.input-lg {
+  @extend %input;
+  height: 64px;
+}

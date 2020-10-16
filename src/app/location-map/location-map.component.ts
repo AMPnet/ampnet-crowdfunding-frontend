@@ -34,7 +34,7 @@ export class LocationMapComponent implements AfterViewInit {
     ngAfterViewInit() {
         this.map = leaflet.map(this.mapEl.nativeElement);
 
-        if (this.usingControls) {
+        if (this.usingControls()) {
             this.lat = Number(this.latControl.value);
             this.lng = Number(this.lngControl.value);
         } else if (this.lat === undefined || this.lng === undefined) {
@@ -95,6 +95,6 @@ export class LocationMapComponent implements AfterViewInit {
     }
 
     private usingControls() {
-        return this.latControl !== undefined && this.lngControl !== undefined;
+        return !!this.latControl && !!this.lngControl;
     }
 }

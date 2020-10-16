@@ -14,7 +14,7 @@ declare var $: any;
 @Component({
     selector: 'app-log-in-modal',
     templateUrl: './log-in-modal.component.html',
-    styleUrls: ['./log-in-modal.component.css']
+    styleUrls: ['./log-in-modal.component.scss']
 })
 export class LogInModalComponent implements OnInit {
     emailLoginForm: FormGroup;

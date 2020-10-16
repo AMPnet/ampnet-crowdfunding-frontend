@@ -36,6 +36,8 @@
 
 .init-right {
   display: flex;
+  &__icon {
+  }
 }
 
 @include media-breakpoint-up(lg) {

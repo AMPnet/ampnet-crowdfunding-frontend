@@ -16,8 +16,7 @@ a:hover {
 }
 
 * {
-  font-weight: 500 !important;
-  font-size: $font-size-desktop-small
+  font-size: $font-size-desktop-small;
 }
 
 a {
@@ -35,8 +34,10 @@ a {
   padding-bottom: 12px;
   transition: all 0.1s;
   color: $body-color;
-  font-weight: 500 !important;
+  font-weight: 400 !important;
   letter-spacing: normal;
+  display: flex;
+  align-items: center;
 }
 
 #logo-image {
@@ -85,10 +86,14 @@ a {
 .menu-header {
   font-size: 13px;
   color: $primary-color;
+  letter-spacing: 2px;
+  font-size: $font-size-desktop-small;
 }
 
 .full-name {
   padding-left: 24px;
+  color: $title-color;
+  font-weight: 500 !important;
 }
 
 .unverified-user-disabled {
@@ -111,4 +116,10 @@ a {
 .app-version li:hover {
   background: initial !important;
   cursor: initial !important;
+}
+
+@include media-breakpoint-up(lg) {
+  * {
+    font-size: $font-size-desktop-body2
+  }
 }

@@ -19,8 +19,13 @@ export class WalletCooperativeDepositService {
         });
     }
 
-    generateDepositApprovalURL(origin: string, id: number, amount: number) {
-        return `${origin}${this.endpoint}/${id}/approve?amount=${amount}`;
+    approveDeposit(depositID: number, amount: number, document: File) {
+        const formData = new FormData();
+
+        formData.append('amount', String(amount));
+        formData.append('file', document, document.name);
+
+        return this.http.post<unknown>(`${origin}${this.endpoint}/${depositID}/approve`, formData);
     }
 
     getUnapprovedDeposits() {

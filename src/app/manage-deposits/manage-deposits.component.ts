@@ -1,57 +1,61 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
+import { displayBackendErrorRx } from '../utilities/error-handler';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
-import swal from 'sweetalert2';
 import {
     DepositSearchResponse,
     WalletCooperativeDepositService
 } from '../shared/services/wallet/wallet-cooperative/wallet-cooperative-deposit.service';
-
-declare var $: any;
+import { BehaviorSubject, Observable } from 'rxjs';
+import { finalize, map, switchMap, tap } from 'rxjs/operators';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { PopupService } from '../shared/services/popup.service';
 
 @Component({
     selector: 'app-manage-deposits',
     templateUrl: './manage-deposits.component.html',
     styleUrls: ['./manage-deposits.component.css']
 })
-export class ManageDepositsComponent implements OnInit, AfterViewInit {
-    unapprovedDeposits: DepositSearchResponse[];
+export class ManageDepositsComponent {
+    unapprovedDeposits$: Observable<DepositSearchResponse[]>;
+    refreshDepositsSubject = new BehaviorSubject<void>(null);
+
+    referenceForm: FormGroup;
 
     constructor(private router: Router,
+                private fb: FormBuilder,
+                private popupService: PopupService,
                 private depositCooperativeService: WalletCooperativeDepositService) {
+        this.unapprovedDeposits$ = this.refreshDepositsSubject.pipe(
+            switchMap(() => this.depositCooperativeService.getUnapprovedDeposits()),
+            displayBackendErrorRx(),
+            map(res => res.deposits)
+        );
+
+        this.referenceForm = fb.group({
+            reference: ['', Validators.required]
+        });
     }
 
-    ngOnInit() {
-        this.getUnapprovedDeposits();
+    getDepositInfoClicked(reference: string) {
+        this.router.navigate(['/dash', 'manage_deposits', reference]);
     }
 
-    ngAfterViewInit() {
-    }
-
-    getDepositInfoClicked() {
-        const depositCode = $('#deposit-code-input').val();
-        this.router.navigate(['/dash', 'manage_deposits', depositCode]);
-    }
-
-    getUnapprovedDeposits() {
+    // TODO: Implement adding a comment to decline deposit
+    declineDeposit(id: number) {
         SpinnerUtil.showSpinner();
-        this.depositCooperativeService.getUnapprovedDeposits().subscribe(res => {
-            this.unapprovedDeposits = res.deposits;
-            SpinnerUtil.hideSpinner();
-        }, hideSpinnerAndDisplayError);
+        return this.depositCooperativeService.declineDeposit(id, '').pipe(
+            displayBackendErrorRx(),
+            tap(() => this.refreshDepositsSubject.next()),
+            finalize(() => SpinnerUtil.hideSpinner())
+        );
     }
 
-    // TODO: cooperative can decline deposit, user can delete it, add comment!
-    deleteDeposit(id: number) {
-        const comment = 'Some comment';
-        SpinnerUtil.showSpinner();
-        this.depositCooperativeService.declineDeposit(id, comment).subscribe(res => {
-            this.getUnapprovedDeposits();
-        }, hideSpinnerAndDisplayError);
-    }
-
-    contactPhoneClicked(index: number) {
-        swal('Contact phone', '095 354 6106', 'info');
+    contactPhoneClicked() {
+        return this.popupService.new({
+            type: 'info',
+            title: 'Contact phone',
+            text: '+385 95 354 6106'
+        });
     }
 }

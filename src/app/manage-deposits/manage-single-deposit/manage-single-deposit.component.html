@@ -1,50 +1,64 @@
-<div class="root root-content-container">
+<div class="container">
     <div class="row">
         <div class="col-md-12">
             <div class="explainer-mini mb-3">Deposit info</div>
         </div>
-        <div *ngIf="depositModel !== undefined" class="col-md-12">
+        <div *ngIf="(deposit$ | async) as deposit else spinner" class="col-md-12">
             <div class="card px-3">
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
-                        <div *ngIf="depositModel.project !== null">
+                        <div *ngIf="deposit.project !== null">
                             <div class="explainer-mini">Project Name</div>
-                            <div>{{ depositModel.project.name }}</div>
+                            <div>{{ deposit.project.name }}</div>
                         </div>
                         <div>
                             <div class="explainer-mini">Name</div>
-                            <div>{{ depositModel.user.first_name }} {{ depositModel.user.last_name }}</div>
+                            <div>{{ deposit.user.first_name }} {{ deposit.user.last_name }}</div>
                         </div>
                         <div>
                             <div class="explainer-mini">Date created</div>
-                            <div>{{ depositModel.deposit.created_at | date:'mediumDate' }}</div>
+                            <div>{{ deposit.deposit.created_at | date:'mediumDate' }}</div>
                         </div>
                         <div>
                             <div class="explainer-mini">Reference</div>
-                            <div>{{ depositModel.deposit.reference }}</div>
+                            <div>{{ deposit.deposit.reference }}</div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div *ngIf="!depositModel.deposit.approved_at" class="explainer-mini mt-3 mb-2">
-                Deposit amount
-            </div>
-            <ng-container *ngIf="!depositModel.deposit.approved_at">
+
+            <form [formGroup]="confirmDepositForm" style="display: contents">
+                <div class="explainer-mini mt-3 mb-2">
+                    Deposit amount
+                </div>
                 <app-money-input-field
-                        placeholder="Enter maximum investment per user"
-                        [(realValue)]="amount">
+                        placeholder="Enter user investment amount"
+                        [control]="confirmDepositForm.get('amount')">
                 </app-money-input-field>
-            </ng-container>
+
+                <div class="explainer-mini mt-3 mb-2">
+                    Document
+                </div>
+                <app-upload-area areaID='project-image' style="width: max-content"
+                                 [restrictions]="{
+                                    allowedFileTypes: ['image/*', 'application/pdf', 'application/zip', 'audio/*', 'video/*'],
+                                    maxFileSize: 10 * 1024 * 1024,
+                                    maxNumberOfFiles: 1
+                                 }"
+                                 [firstFileControl]="confirmDepositForm.get('document')">
+                </app-upload-area>
+
+                <button class="btn btn-primary w-100 py-3 mt-3"
+                        [disabled]="!confirmDepositForm.valid"
+                        (click)="showConfirmModal(confirmDepositForm, deposit.deposit.id)"
+                        data-toggle="modal">
+                    <i class="fas fa-check-circle mr-2"></i>
+                    Confirm deposit
+                </button>
+            </form>
         </div>
-        <div [hidden]="depositModel === undefined" class="col-md-12 mt-3">
-            <div id="payment-receipt-upload-target"></div>
-            <button class="btn btn-primary w-100 py-3 mt-3"
-                    [disabled]="!amount || !fileAttached"
-                    (click)="showConfirmModal()"
-                    data-toggle="modal">
-                <i class="fas fa-check-circle mr-2"></i>
-                Confirm deposit
-            </button>
-        </div>
+        <ng-template #spinner>
+            <app-spinner type="overlay" style="width: 100%"></app-spinner>
+        </ng-template>
     </div>
 </div>

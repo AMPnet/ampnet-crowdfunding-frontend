@@ -52,7 +52,6 @@ import { DepositComponent } from './deposit/deposit.component';
 import { ManageDepositsComponent } from './manage-deposits/manage-deposits.component';
 import { ManageSingleDepositComponent } from './manage-deposits/manage-single-deposit/manage-single-deposit.component';
 import { WithdrawComponent } from './withdraw/withdraw.component';
-import { EscapeHtmlPipe } from './pipes/unescape';
 import { WalletActivationComponent } from './wallet-activation/wallet-activation.component';
 import { UserActivationComponent } from './wallet-activation/user-activation/user-activation.component';
 import { GroupActivationComponent } from './wallet-activation/group-activation/group-activation.component';
@@ -83,6 +82,9 @@ import { environment } from '../environments/environment.prod';
 import { MoneyInputFieldComponent } from './shared/components/money-input-field/money-input-field.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { UploadAreaComponent } from './shared/components/upload-area/upload-area.component';
+import { SafePipe } from './pipes/safe.pipe';
+import { URLValidator } from './shared/validators/url.validator';
 // tslint:disable-next-line:max-line-length
 import { ManageSingleDepositModalComponent } from './manage-deposits/manage-single-deposit/manage-single-deposit-modal/manage-single-deposit-modal.component';
 
@@ -150,7 +152,7 @@ const socialAuthServiceConfig = {
         ManageDepositsComponent,
         ManageSingleDepositComponent,
         WithdrawComponent,
-        EscapeHtmlPipe,
+        SafePipe,
         WalletActivationComponent,
         UserActivationComponent,
         GroupActivationComponent,
@@ -177,6 +179,8 @@ const socialAuthServiceConfig = {
         TxAmountSign,
         ActionButtonComponent,
         MoneyInputFieldComponent,
+        UploadAreaComponent,
+        URLValidator
     ],
     imports: [
         BrowserModule,

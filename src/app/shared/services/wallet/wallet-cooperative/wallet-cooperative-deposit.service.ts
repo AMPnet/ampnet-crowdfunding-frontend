@@ -25,7 +25,7 @@ export class WalletCooperativeDepositService {
         formData.append('amount', String(amount));
         formData.append('file', document, document.name);
 
-        return this.http.post<Deposit>(`${origin}${this.endpoint}/${depositID}/approve`, formData);
+        return this.http.post<Deposit>(`${this.endpoint}/${depositID}/approve`, formData);
     }
 
     getUnapprovedDeposits() {

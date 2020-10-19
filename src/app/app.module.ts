@@ -85,6 +85,8 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { UploadAreaComponent } from './shared/components/upload-area/upload-area.component';
 import { SafePipe } from './pipes/safe.pipe';
 import { URLValidator } from './shared/validators/url.validator';
+// tslint:disable-next-line:max-line-length
+import { ManageSingleDepositModalComponent } from './manage-deposits/manage-single-deposit/manage-single-deposit-modal/manage-single-deposit-modal.component';
 
 const socialAuthServiceConfig = {
     provide: 'SocialAuthServiceConfig',
@@ -173,6 +175,7 @@ const socialAuthServiceConfig = {
         LocationMapComponent,
         MapModalComponent,
         TxIconStatus,
+        ManageSingleDepositModalComponent,
         TxAmountSign,
         ActionButtonComponent,
         MoneyInputFieldComponent,

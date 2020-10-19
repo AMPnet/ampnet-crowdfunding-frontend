@@ -9,7 +9,7 @@
     position: fixed;
     top: 60;
     transition: all 0.3s;
-    z-index: 999;
+    z-index: 1006;
     transform: all 0.3s;
     width: 220px;
     height: 100%;

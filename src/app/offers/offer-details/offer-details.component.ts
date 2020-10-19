@@ -112,7 +112,7 @@ export class OfferDetailsComponent implements OnInit {
         if (this.isOverview) {
             this.router.navigate(['/overview/discover']);
         } else {
-            this.router.navigate(['dash/offers']);
+            this.router.navigate(['/dash/offers']);
         }
     }
 

@@ -87,6 +87,8 @@ import { SafePipe } from './pipes/safe.pipe';
 import { URLValidator } from './shared/validators/url.validator';
 import { ForgotPasswordComponent } from './authentication/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './authentication/reset-password/reset-password.component';
+// tslint:disable-next-line:max-line-length
+import { ManageSingleDepositModalComponent } from './manage-deposits/manage-single-deposit/manage-single-deposit-modal/manage-single-deposit-modal.component';
 
 const socialAuthServiceConfig = {
     provide: 'SocialAuthServiceConfig',
@@ -175,6 +177,7 @@ const socialAuthServiceConfig = {
         LocationMapComponent,
         MapModalComponent,
         TxIconStatus,
+        ManageSingleDepositModalComponent,
         TxAmountSign,
         ActionButtonComponent,
         MoneyInputFieldComponent,

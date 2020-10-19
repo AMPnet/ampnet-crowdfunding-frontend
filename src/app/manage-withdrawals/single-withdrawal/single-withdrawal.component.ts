@@ -6,7 +6,7 @@ import {
     UserWithdraw,
     WalletCooperativeWithdrawService
 } from 'src/app/shared/services/wallet/wallet-cooperative/wallet-cooperative-withdraw.service';
-import { switchMap, tap } from 'rxjs/operators';
+import { finalize, switchMap } from 'rxjs/operators';
 import { ArkaneService } from '../../shared/services/arkane.service';
 import { PopupService } from '../../shared/services/popup.service';
 
@@ -49,7 +49,7 @@ export class SingleWithdrawalComponent implements OnInit {
                 title: 'Transaction signed',
                 text: 'Transaction is being processed...'
             })),
-            tap(() => SpinnerUtil.hideSpinner()),
+            finalize(() => SpinnerUtil.hideSpinner()),
             switchMap(() => this.router.navigate(['/dash/manage_withdrawals']))
         );
     }

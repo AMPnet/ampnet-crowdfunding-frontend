@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { SignupService } from '../../shared/services/user/signup.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -13,8 +13,9 @@ import { finalize, switchMap } from 'rxjs/operators';
     templateUrl: './reset-password.component.html',
     styleUrls: ['./reset-password.component.scss']
 })
-export class ResetPasswordComponent {
+export class ResetPasswordComponent implements OnInit {
     resetPasswordForm: FormGroup;
+    token: string;
 
     constructor(private formBuilder: FormBuilder,
                 private signUpService: SignupService,
@@ -30,13 +31,18 @@ export class ResetPasswordComponent {
         });
     }
 
+    ngOnInit(): void {
+        this.route.queryParams.subscribe(params => {
+            this.token = params['token'];
+        });
+    }
+
     onSubmitPasswordForm() {
         SpinnerUtil.showSpinner();
         const controls = this.resetPasswordForm.controls;
-        const token = this.route.snapshot.params.token;
         const newPassword = controls['password'].value;
 
-        this.signUpService.resetPassword(newPassword, token).pipe(
+        this.signUpService.resetPassword(newPassword, this.token).pipe(
             displayBackendErrorRx(),
             switchMap(() => this.popupService.new({
                 type: 'success',

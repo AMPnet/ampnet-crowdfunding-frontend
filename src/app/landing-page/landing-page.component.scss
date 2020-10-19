@@ -1,3 +1,7 @@
+h1, h2 {
+  font-weight: 400;
+}
+
 .featured-image {
     background: linear-gradient(#B25050, rgba(0, 0, 0, 0)), url(../../assets/human.jpg);
     background-size: cover !important;
@@ -8,11 +12,6 @@
 .featured-image:hover {
     backdrop-filter: blur(0.8)
 }
-
-.gtSuper {
-    font-family: "GTSuper";
-}
-
 
 @media (max-width: 800px) {
     .feature-holder {

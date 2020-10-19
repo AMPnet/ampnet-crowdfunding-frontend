@@ -4,13 +4,21 @@
             <div class="explainer-mini text-uppercase">Manage deposits</div>
         </div>
         <div class="col-md-12 mt-3">
-            <input class="w-100 form-control p-4 "
-                   id="deposit-code-input" name="" placeholder="Enter code in the deposit description field"
-                   type="text">
-            <button (click)="getDepositInfoClicked()" class="btn btn-primary py-3 mt-3 w-100">
-                <i class="fas fa-info-circle mr-2"></i>
-                Get deposit info
-            </button>
+            <form [formGroup]="referenceForm" style="display: contents">
+                <input class="w-100 form-control p-4 "
+                       id="deposit-code-input"
+                       formControlName="reference"
+                       placeholder="Enter code in the deposit description field"
+                       type="text">
+                <button (click)="getDepositInfoClicked(referenceForm.get('reference').value)"
+                        [disabled]="!referenceForm.valid"
+                        type="button"
+                        class="btn btn-primary py-3 mt-3 w-100">
+                    <i class="fas fa-info-circle mr-2"></i>
+                    Get deposit info
+                </button>
+            </form>
+
         </div>
         <div class="col-md-12 mt-3">
             <hr>
@@ -18,19 +26,20 @@
         <div class="col-md-12 mt-3">
             <div class="explainer-mini text-uppercase">Unapproved deposits</div>
         </div>
-        <div *ngIf="unapprovedDeposits !== undefined" class="col-md-12">
+        <div *ngIf="(unapprovedDeposits$ | async) as unapprovedDeposits else spinner" class="col-md-12">
             <ul class="list-group mt-3">
                 <li *ngFor="let deposit of unapprovedDeposits; let i = index"
                     class="list-group-item gray-text">
                     <span class="float-left explainer-mini">{{ deposit.deposit.reference }} ({{ deposit.user.email }}
                         )</span>
-                    <span (click)="deleteDeposit(deposit.deposit.id)" class="float-right cursor-pointer">
+                    <span (click)="declineDeposit(deposit.deposit.id).subscribe()"
+                          class="float-right cursor-pointer">
             <i class="fas fa-trash-alt"></i>
           </span>
                     <a class="float-right mr-4 cursor-pointer" href="mailto:{{ deposit.user.email }}">
                         <i class="fas fa-envelope"></i>
                     </a>
-                    <span (click)="contactPhoneClicked(i)" class="float-right mr-4 cursor-pointer">
+                    <span (click)="contactPhoneClicked().subscribe()" class="float-right mr-4 cursor-pointer">
             <i class="fas fa-phone"></i>
           </span>
                 </li>
@@ -39,5 +48,8 @@
                 No unapproved deposits
             </div>
         </div>
+        <ng-template #spinner>
+            <app-spinner type="overlay" style="width: 100%"></app-spinner>
+        </ng-template>
     </div>
 </div>

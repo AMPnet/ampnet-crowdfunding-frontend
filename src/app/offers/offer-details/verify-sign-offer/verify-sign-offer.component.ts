@@ -12,7 +12,7 @@ import { PopupService } from '../../../shared/services/popup.service';
 @Component({
     selector: 'app-verify-sign-offer',
     templateUrl: './verify-sign-offer.component.html',
-    styleUrls: ['./verify-sign-offer.component.css']
+    styleUrls: ['./verify-sign-offer.component.scss']
 })
 export class VerifySignOfferComponent implements OnInit {
     projectID: string;

@@ -13,7 +13,6 @@ declare var $: any;
     selector: 'app-invest',
     templateUrl: './invest.component.html',
     styleUrls: ['./invest.component.scss'],
-    encapsulation: ViewEncapsulation.None
 })
 export class InvestComponent implements OnInit {
     wallet$: Observable<WalletDetailsWithState>;

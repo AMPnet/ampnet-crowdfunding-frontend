@@ -43,6 +43,8 @@ import { OwnershipComponent } from './ownership/ownership.component';
 import { RevenueShareComponent } from './revenue-share/revenue-share.component';
 import { ManagePaymentsComponent } from './project/manage-payments/manage-payments.component';
 import { OfferDetailsGuard } from './offers/offer-details/offer-details.guard';
+import { ForgotPasswordComponent } from './authentication/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './authentication/reset-password/reset-password.component';
 
 const routes: Routes = [
     {
@@ -54,6 +56,8 @@ const routes: Routes = [
             {path: 'overview/:isOverview', component: OffersComponent},
             {path: 'overview/:id/:isOverview', component: OfferDetailsComponent, canActivate: [OfferDetailsGuard]},
             {path: 'onboarding', component: OnboardingComponent},
+            {path: 'forgot_password', component: ForgotPasswordComponent},
+            {path: 'reset_password', component: ResetPasswordComponent},
         ]
     },
     {path: 'summary', component: SummaryComponent},

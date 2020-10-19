@@ -9,6 +9,8 @@ import { UserService } from './user.service';
 })
 export class SignupService {
     private endpoint = '/api/user/signup';
+    private endpointForgotPassword = '/api/user/forgot-password/token';
+    private endpointResetPassword = '/api/user/forgot-password';
 
     constructor(private http: BackendHttpClient,
                 private userService: UserService) {
@@ -33,6 +35,19 @@ export class SignupService {
                 token: authToken
             }
         }).pipe(tap(() => this.userService.refreshUser()));
+    }
+
+    forgotPassword(email: string) {
+        return this.http.post(`${this.endpointForgotPassword}`, {
+            email: email
+        });
+    }
+
+    resetPassword(newPassword: string, token: string) {
+        return this.http.post<User>(`${this.endpointResetPassword}`, {
+            new_password: newPassword,
+            token: token
+        });
     }
 }
 

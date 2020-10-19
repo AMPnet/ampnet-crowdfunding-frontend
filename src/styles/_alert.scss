@@ -7,6 +7,10 @@
   svg {
     color: $color;
   }
+  .btn {
+    background-color: $color;
+    border: none;
+  }
 }
 
 .alert {
@@ -25,7 +29,7 @@
   }
 
   @include media-breakpoint-up(lg) {
-    height: 64px;
+    min-height: 64px;
     font-size: $font-size-desktop-body;
     justify-content: flex-start;
     
@@ -34,7 +38,13 @@
     }
 
     svg {
-      display: block;
+      display: inline-block;
+    }
+  }
+
+  &-small {
+    @include media-breakpoint-up(lg) {
+      min-height: 48px;
     }
   }
 

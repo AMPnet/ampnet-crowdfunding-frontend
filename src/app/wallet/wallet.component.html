@@ -12,9 +12,9 @@
     <ng-container *ngIf="{ wallet: wallet$ | async } as states">
         <div *ngIf="states.wallet?.state === walletState.EMPTY" class="row">
             <div class="init-left col-12 col-lg-6">
-                <div class="alert alert-warning flex__center">
+                <div class="alert alert-small alert-warning flex__center">
                     <i class="fas fa-exclamation-triangle mr-2"></i>
-                    You must initialize your wallet to invest
+                    <b>You must initialize your wallet to invest</b>
                 </div>
                 <div>
                     <h4 class="init-left__title">
@@ -43,15 +43,18 @@
                 </div>
             </div>
 
-            <div class="init-right col-12 col-lg-4">
-                <svg width="1.2em" height="1.2em" viewBox="0 0 16 16" class="init-right__icon"
+            <div class="init-right col-12 col-lg-6">
+                <div class="init-right__icon">
+                    <svg width="1.2em" height="1.2em" viewBox="0 0 16 16"
                      fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd"
                           d="M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09z"/>
-                </svg>
+                    </svg>
+                </div>
                 <div>
-                    <span class="init-right__subtitle">Advanced users</span>
                     <p class="init-right__desc">
+                        <span class="init-right__subtitle">Advanced users</span>
+                        <br>
                         This platform is powered by blockchain technology. A "wallet" is
                         a keystorage service used for signing transactions. If you're an advanced user and
                         would like to sign transactions yourself, <u>click here</u>
@@ -62,12 +65,7 @@
 
         <div *ngIf="!!states.wallet && states.wallet.state !== walletState.EMPTY else fetchWalletSpinner" class="">
             <div class="row">
-                <div class="col-md-12">
-                    <div *ngIf="states.wallet?.wallet?.balance === 0" class="alert alert-info w-100 mt-4">
-                        Your wallet is empty. Deposit funds to get started!
-                    </div>
-                </div>
-
+                
                 <div class="col-lg-12  text-center text-md-left  mt-4 ">
                     <div class="wallet-balance d-md-flex align-items-center pt-4 pb-4 pl-2">
                         <div class="col-12 col-md-6 col-xl-8 balance-left">
@@ -94,6 +92,22 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="col-11">
+                    <div *ngIf="states.wallet?.wallet?.activated_at === null" class="alert alert-success w-100 flex__center-space">
+                        <i class="fas fa-bolt"></i>
+                        Your wallet is pending approval from admin. You can deposit funds while pending approval.
+                        <button class="btn" routerLink="deposit"
+                                [disabled]="states.wallet.state !== walletState.READY">
+                                Deposit funds
+                        </button>
+                    </div>
+                    <div *ngIf="states.wallet?.wallet?.balance === 0" class="alert alert-info w-100 mt-4">
+                        Your wallet is empty. Deposit funds to get started!
+                    </div>
+                </div>
+
+                
             </div>
             <br>
             <div class="col-md-12 mt-3 mb-5" *ngIf="states.wallet.state === walletState.READY">

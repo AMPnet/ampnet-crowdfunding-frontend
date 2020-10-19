@@ -1,6 +1,6 @@
 {
   "/api/*": {
-    "target": "https://staging.ampnet.io",
+    "target": "https://demo.ampnet.io",
     "secure": true,
     "ws": true,
     "logLevel": "debug",

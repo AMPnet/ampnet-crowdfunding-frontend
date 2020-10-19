@@ -1,73 +1,48 @@
-<div class="root root-content-container">
+<div class="container">
+    <h1 class="app-page-title">EXAMINE WITHDRAWAL</h1>
+
     <div class="row">
-        <div class="col-md-12">
-            <div class="explainer-mini text-uppercase">Examine withdrawal</div>
-        </div>
-
-        <div *ngIf="withdrawalType == 'users' && userWithdrawal !== undefined" class="col-md-12 mt-5">
-            <div class="card">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between withdrawal-examine-holder">
-                        <div>
-                            <div class="explainer-mini text-uppercase">Name</div>
-                            <div>{{ userWithdrawal.user.first_name }} {{ userWithdrawal.user.last_name }}</div>
-                        </div>
-                        <div>
-                            <div class="explainer-mini text-uppercase">IBAN</div>
-                            <div>{{ userWithdrawal.bank_account }}</div>
-                        </div>
-                        <div>
-                            <div class="explainer-mini text-uppercase">SWIFT/BIC</div>
-                            <div>BC3456</div>
-                        </div>
-                        <div>
-                            <div class="explainer-mini text-uppercase">Amount</div>
-                            <div>{{ userWithdrawal.amount | currencyDefault }}</div>
+        <ng-container *ngIf="(withdrawal$ | async) as withdrawal else spinner">
+            <div class="col-md-12 mt-5 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between withdrawal-examine-holder">
+                            <div *ngIf="!!withdrawal.project">
+                                <div class="explainer-mini text-uppercase">Name</div>
+                                <div>{{ withdrawal.project.name }}</div>
+                            </div>
+                            <div>
+                                <div class="explainer-mini text-uppercase">Name</div>
+                                <div>{{ withdrawal.user.first_name }} {{ withdrawal.user.last_name }}</div>
+                            </div>
+                            <div>
+                                <div class="explainer-mini text-uppercase">IBAN</div>
+                                <div>{{ withdrawal.withdraw.bank_account }}</div>
+                            </div>
+                            <div>
+                                <div class="explainer-mini text-uppercase">Amount</div>
+                                <div>{{ withdrawal.withdraw.amount | currencyDefault }}</div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div *ngIf="withdrawalType == 'projects' && projectWithdrawal !== undefined" class="col-md-12 mt-5">
-            <div class="card">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between withdrawal-examine-holder">
-                        <div>
-                            <div class="explainer-mini text-uppercase">Name</div>
-                            <div>{{ projectWithdrawal.project.name }}</div>
-                        </div>
-                        <div>
-                            <div class="explainer-mini text-uppercase">IBAN</div>
-                            <div>{{ projectWithdrawal.bank_account }}</div>
-                        </div>
-                        <div>
-                            <div class="explainer-mini text-uppercase">Amount</div>
-                            <div>{{ projectWithdrawal.amount | currencyDefault }}</div>
-                        </div>
-                    </div>
+            <div class="col-md-12">
+                <div class="alert alert-danger">
+                    Please perform the payout <b>after</b> finalizing the withdrawal!
                 </div>
             </div>
-        </div>
 
-        <div class="col-md-12">
-            <div class="alert alert-danger">
-                Please perform the payout <b>after</b> finalizing the withdrawal!
+            <div class="col-md-12 mt-1">
+                <app-action-button text="Finalize withdrawal" loadingText="Generating transaction..."
+                                   [onClick]="approveAndGenerateCodeClicked.bind(this)">
+                </app-action-button>
             </div>
-        </div>
+        </ng-container>
 
-        <div *ngIf="isUserWithdrawApproved()"
-             class="col-md-12 mt-1">
-            <app-action-button text="Finalize withdrawal" loadingText="Generating transaction..."
-                               [onClick]="approveAndGenerateCodeClicked.bind(this)">
-            </app-action-button>
-        </div>
-
-        <div *ngIf="isProjectWithdrawApproved()"
-             class="col-md-12 mt-1">
-            <app-action-button text="Finalize withdrawal" loadingText="Generating transaction..."
-                               [onClick]="approveAndGenerateCodeClicked.bind(this)">
-            </app-action-button>
-        </div>
+        <ng-template #spinner>
+            <app-spinner type="overlay" style="width: 100%"></app-spinner>
+        </ng-template>
     </div>
 </div>

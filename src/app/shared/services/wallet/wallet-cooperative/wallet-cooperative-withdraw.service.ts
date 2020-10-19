@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { BackendHttpClient } from '../../backend-http-client.service';
 import { TransactionInfo } from './wallet-cooperative-wallet.service';
 import { Withdraw } from '../withdraw.service';
+import { User } from '../../user/signup.service';
+import { Project } from '../../project/project.service';
 
 @Injectable({
     providedIn: 'root'
@@ -17,92 +19,32 @@ export class WalletCooperativeWithdrawService {
     }
 
     getApprovedWithdrawals() {
-        return this.http.get<UserWithdrawListResponse>(`${this.endpoint}/approved`);
+        return this.http.get<CoopWithdrawListResponse>(`${this.endpoint}/approved?type=${WithdrawRelation.USER}`);
     }
 
-    getApprovedProjectWithdraws() {
-        return this.http.get<ProjectWithdrawListResponse>(`${this.endpoint}/approved/project`);
+    getApprovedProjectWithdrawals() {
+        return this.http.get<CoopWithdrawListResponse>(`${this.endpoint}/approved?type=${WithdrawRelation.PROJECT}`);
     }
 
-    getBurnedProjectWithdrawals() {
-        return this.http.get<ProjectWithdrawListResponse>(`${this.endpoint}/burned/project`);
-    }
-
-    uploadDocument(withdrawID: number) {
-        // TODO: send document data as file
-        return this.http.get<Withdraw>(`${this.endpoint}/${withdrawID}/document`);
+    getApprovedWithdrawal(id: number) {
+        return this.http.get<CoopWithdraw>(`${this.endpoint}/approved/${id}`);
     }
 }
 
-interface UserWithdrawListResponse {
-    withdraws: UserWithdraw[];
+export interface CoopWithdrawListResponse {
+    withdraws: CoopWithdraw[];
     page: number;
     total_pages: number;
 }
 
-export interface UserWithdraw {
-    id: number;
-    user: {
-        uuid: string;
-        email: string;
-        first_name: string;
-        last_name: string;
-        enabled: boolean;
-    };
-    amount: number;
-    approved_tx_hash: string;
-    approved_at: Date;
-    burned_tx_hash?: string;
-    burned_by?: string;
-    burned_at?: Date;
-    created_at: Date;
-    bank_account: string;
-    user_wallet: string;
-    document_response?: {
-        id: number;
-        link: string;
-        name: string;
-        type: string;
-        size: number;
-        created_at: Date;
-    };
+export interface CoopWithdraw {
+    withdraw: Withdraw;
+    user: User;
+    project?: Project;
+    wallet_hash: string;
 }
 
-interface ProjectWithdrawListResponse {
-    withdraws: ProjectWithdraw[];
-    page: number;
-    total_pages: number;
-}
-
-export interface ProjectWithdraw {
-    id: number;
-    project: {
-        uuid: string;
-        name: string;
-        description: string;
-        end_date: Date;
-        expected_funding: number;
-        currency: string;
-        min_per_user: number;
-        max_per_user: number;
-        active: boolean;
-        image_url: string;
-    };
-    amount: number;
-    approved_tx_hash: string;
-    approved_at: Date;
-    burned_tx_hash?: any;
-    burned_by?: string;
-    burned_at?: Date;
-    created_at: Date;
-    bank_account: string;
-    project_wallet: string;
-    document_response?: {
-        id: number;
-        link: string;
-        name: string;
-        type: string;
-        size: number;
-        created_at: Date;
-    };
+enum WithdrawRelation {
+    USER = 'USER',
+    PROJECT = 'PROJECT'
 }

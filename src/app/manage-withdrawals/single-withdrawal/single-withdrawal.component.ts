@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { displayBackendErrorRx } from 'src/app/utilities/error-handler';
-import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import {
-    ProjectWithdraw,
-    UserWithdraw,
+    CoopWithdraw,
     WalletCooperativeWithdrawService
 } from 'src/app/shared/services/wallet/wallet-cooperative/wallet-cooperative-withdraw.service';
 import { PopupService } from '../../shared/services/popup.service';
-import { finalize, switchMap, tap } from 'rxjs/operators';
+import { delay, switchMap } from 'rxjs/operators';
 import { ArkaneService } from '../../shared/services/arkane.service';
+import { Observable, of } from 'rxjs';
 
 @Component({
     selector: 'app-single-withdrawal',
@@ -17,52 +16,41 @@ import { ArkaneService } from '../../shared/services/arkane.service';
     styleUrls: ['./single-withdrawal.component.css']
 })
 export class SingleWithdrawalComponent implements OnInit {
-    withdrawalId: number;
-    withdrawalType = 'users';
-    userWithdrawal: UserWithdraw;
-    projectWithdrawal: ProjectWithdraw;
+    withdrawalID: number;
+    withdrawal$: Observable<CoopWithdraw>;
 
     constructor(private route: ActivatedRoute,
-                private withdrawCooperativeService: WalletCooperativeWithdrawService,
+                private withdrawCoopService: WalletCooperativeWithdrawService,
                 private arkaneService: ArkaneService,
                 private popupService: PopupService,
                 private router: Router) {
     }
 
     ngOnInit() {
-        this.withdrawalId = Number(this.route.snapshot.params.ID);
-        this.withdrawalType = this.route.snapshot.params.type;
+        this.withdrawalID = Number(this.route.snapshot.params.ID);
 
-        switch (this.withdrawalType) {
-            case 'users': {
-                this.getWithdrawal(this.withdrawalId);
-                break;
-            }
-            case 'projects': {
-                this.getProjectWithdrawal(this.withdrawalId);
-                break;
-            }
-        }
-    }
+        // TODO: uncomment when available
+        // this.withdrawal$ = this.withdrawCoopService.getApprovedWithdrawal(this.withdrawalID);
 
-    getWithdrawal(id: number) {
-        SpinnerUtil.showSpinner();
-        this.withdrawCooperativeService.getApprovedWithdrawals().pipe(displayBackendErrorRx(),
-            tap(res => this.userWithdrawal = res.withdraws.find(item => item.id === id)),
-            finalize(() => SpinnerUtil.hideSpinner())
-        ).subscribe();
-    }
-
-    getProjectWithdrawal(id: number) {
-        SpinnerUtil.showSpinner();
-        this.withdrawCooperativeService.getApprovedProjectWithdraws().pipe(displayBackendErrorRx(),
-            tap(res => this.projectWithdrawal = res.withdraws.find(item => item.id === id)),
-            finalize(() => SpinnerUtil.hideSpinner())
-        ).subscribe();
+        this.withdrawal$ = of(<CoopWithdraw>{
+            withdraw: {
+                id: 23,
+                amount: 15000,
+            },
+            user: {
+                uuid: 'asdfad',
+                first_name: 'Matija',
+                last_name: 'Pevec',
+                email: 'matija@ampnet.io'
+            },
+            project: {
+                name: 'Proyecto bueno'
+            },
+        }).pipe(delay(1000));
     }
 
     approveAndGenerateCodeClicked() {
-        return this.withdrawCooperativeService.generateBurnWithdrawTx(this.withdrawalId).pipe(
+        return this.withdrawCoopService.generateBurnWithdrawTx(this.withdrawalID).pipe(
             displayBackendErrorRx(),
             switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo)),
             switchMap(() => this.popupService.new({
@@ -70,15 +58,7 @@ export class SingleWithdrawalComponent implements OnInit {
                 title: 'Transaction signed',
                 text: 'Transaction is being processed...'
             })),
-            switchMap(() => this.router.navigate([`/dash/manage_withdrawals/${this.withdrawalType}`]))
+            switchMap(() => this.router.navigate(['/dash/manage_withdrawals']))
         );
-    }
-
-    isUserWithdrawApproved() {
-        return this.withdrawalType === 'users' && this.userWithdrawal !== undefined && this.userWithdrawal.burned_tx_hash === null;
-    }
-
-    isProjectWithdrawApproved() {
-        return this.withdrawalType === 'projects' && this.projectWithdrawal !== undefined && this.projectWithdrawal.burned_tx_hash === null;
     }
 }

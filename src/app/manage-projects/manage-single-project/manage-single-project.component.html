@@ -81,7 +81,7 @@
                         <div class="explainer-mini text-uppercase">Project image</div>
                     </div>
 
-                    <div class="row">
+                    <div class="d-flex">
                         <div class="col-md-6">
                             <ng-container
                                     *ngIf="updateForm.get('newImage').value || states.project.main_image else noProjectImageSet">
@@ -111,7 +111,7 @@
                         <div class="explainer-mini text-uppercase">Project files</div>
                     </div>
 
-                    <div class="row">
+                    <div class="d-flex">
                         <div class="col-md-6">
                             <ng-container *ngIf="states.project.documents?.length > 0 else noDocuments">
                                 <div *ngFor="let file of states.project.documents; let i = index">
@@ -172,7 +172,7 @@
 
             <p class="explainer-mini text-uppercase col-md-8 mt-3">Project news</p>
 
-            <form [formGroup]="newsForm" class="row" style="width: 100%">
+            <form [formGroup]="newsForm" class="d-flex" style="width: 100%">
                 <div class="col-md-8">
                     <input class="form-control w-100" id="newsLink"
                            placeholder="News link (e.g. https://portal.com/news)"

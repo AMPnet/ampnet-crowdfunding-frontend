@@ -94,8 +94,7 @@ const routes: Routes = [
                 path: 'manage_groups/:groupID/manage_project/:projectID/manage_payments/revenue_share/:amount',
                 component: RevenueShareComponent
             },
-            {path: 'manage_withdrawals/:type', component: ManageWithdrawalsComponent},
-            {path: 'manage_withdrawals/:type/:ID', component: SingleWithdrawalComponent},
+            {path: 'manage_withdrawals', component: ManageWithdrawalsComponent},
             {path: 'manage_withdrawals/:ID', component: SingleWithdrawalComponent},
             {path: 'manage_deposits', component: ManageDepositsComponent},
             {path: 'manage_deposits/:ID', component: ManageSingleDepositComponent},

@@ -7,7 +7,7 @@
             <div class="card px-3">
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
-                        <div *ngIf="deposit.project !== null">
+                        <div *ngIf="!!deposit.project">
                             <div class="explainer-mini">Project Name</div>
                             <div>{{ deposit.project.name }}</div>
                         </div>

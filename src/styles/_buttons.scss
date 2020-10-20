@@ -11,10 +11,15 @@
   font-size: 16px;
   padding: 16px 24px;
   line-height: 0;
+  color: $secondary-color;
 
   &-primary {
     height: 64px;
     font-size: 17px;
+  }
+
+  &-danger {
+    @include button-variant($error-color, darken($error-color, 7.5%), darken($error-color, 10%), lighten($error-color,5%), lighten($error-color, 10%), darken($error-color,30%));
   }
 
   &-outline-primary {

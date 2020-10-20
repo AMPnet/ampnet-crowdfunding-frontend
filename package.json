@@ -60,6 +60,7 @@
     "reflect-metadata": "~0.1.8",
     "rxjs": "~6.6.2",
     "spin.js": "^4.1.0",
+    "subsink": "^1.0.1",
     "sweetalert2": "^7.33.1",
     "tns-core-modules": "~5.1.1",
     "typed-rest-client": "^1.0.11",

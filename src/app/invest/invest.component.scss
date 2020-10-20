@@ -1,0 +1,130 @@
+@import "app";
+
+.app-basic-title {
+  margin: 30px 0 24px 0;
+}
+
+.col-lg-6, 
+.col-lg-4, 
+.col-lg-2 {
+  padding: 0;
+}
+
+p {
+  font-size: $font-size-desktop-small;
+}
+
+.dropdown-divider {
+  margin-bottom: 20px;
+}
+
+.invest {
+  &__range-labels {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+  &__input-label p {
+    text-transform: uppercase;
+    color: $title-color;
+  }
+  &__text-right {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+    p {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.right {
+  &__available {
+    text-transform: uppercase;
+  }
+  &__amount {
+    font-size: 18px;
+  }
+  &__link {
+    color: $body-color;
+    font-size: $font-size-desktop-small;
+    text-decoration: underline;
+  }
+  &__available, 
+  &__amount {
+    color: $title-color;
+  }
+}
+
+.error-messages {
+  margin: 30px auto
+}
+
+.alert-danger {
+  span,
+  .btn-danger {
+    display: none;
+  }
+  .btn-mobile {
+    display: block;
+  }
+}
+
+@include media-breakpoint-up(lg) {
+  p {
+    margin-bottom: 0;
+  }
+
+  .col-lg-4 {
+    padding: 0 24px;
+  }
+  
+  .app-basic-title {
+    margin: 14px 0 24px 0;
+  }
+
+  .dropdown-divider {
+    margin-bottom: 48px;
+  }
+
+  .input-lg, 
+  .btn-primary, 
+  .invest__text-right {
+    margin: 17px 0 8px 0;
+  }
+
+  .invest__content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .invest {
+    &__range-labels {
+      margin-top: 0;
+    }
+    &__text-right {
+      text-align: right;
+      display: block;
+      margin-top: 0;
+    }
+  }
+  .right {
+    &__amount {
+      padding: 32px 0 ;
+      font-size: 21px;
+      line-height: 25px;
+    }
+  }
+  .alert-danger {
+    span,
+    .btn-danger  {
+      display: block;
+    }
+    .btn-mobile {
+      display: none;
+    }
+  }
+}

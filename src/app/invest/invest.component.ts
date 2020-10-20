@@ -12,7 +12,7 @@ declare var $: any;
 @Component({
     selector: 'app-invest',
     templateUrl: './invest.component.html',
-    styleUrls: ['./invest.component.css'],
+    styleUrls: ['./invest.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class InvestComponent implements OnInit {
@@ -72,5 +72,9 @@ export class InvestComponent implements OnInit {
                 return EMPTY;
             })
         );
+    }
+
+    backToSingleOfferScreen(uuid: string) {
+        this.router.navigate([`/dash/offers/${uuid}`]);
     }
 }

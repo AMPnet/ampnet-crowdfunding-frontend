@@ -43,14 +43,17 @@ h1 {
     color: #AAAAAA;
 }
 
+.socials-facebook, .socials-google {
+    border: none;
+    color: #FFFFFF;
+}
+
 .socials-facebook {
     background-color: #39579A;
-    color: #FFFFFF;
 }
 
 .socials-google {
     background-color: #3B4BE0;
-    color: #FFFFFF;
 }
 
 .socials-facebook:hover, .socials-google:hover {

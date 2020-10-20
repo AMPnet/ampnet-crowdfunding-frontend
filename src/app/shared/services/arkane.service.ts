@@ -9,7 +9,7 @@ import {
     Wallet,
     WindowMode
 } from '@arkane-network/arkane-connect';
-import { combineLatest, EMPTY, from, Observable, of, throwError } from 'rxjs';
+import { combineLatest, from, Observable, of, throwError } from 'rxjs';
 import { Account } from '@arkane-network/arkane-connect/dist/src/models/Account';
 import { catchError, find, map, switchMap, take, tap, timeout } from 'rxjs/operators';
 import { WalletService, WalletState } from './wallet/wallet.service';
@@ -22,14 +22,19 @@ import { TransactionInfo } from './wallet/wallet-cooperative/wallet-cooperative-
     providedIn: 'root'
 })
 export class ArkaneService {
+
+    constructor(private walletService: WalletService,
+                private broadcastService: BroadcastService,
+                private popupService: PopupService) {
+    }
+
     secretType = SecretType.AETERNITY;
     arkaneConnect = new ArkaneConnect('AMPnet', { // TODO: Extract to environment
         environment: 'staging', // TODO: Extract to environment
     });
 
-    constructor(private walletService: WalletService,
-                private broadcastService: BroadcastService,
-                private popupService: PopupService) {
+    private static throwError(reason: ArkaneError): Observable<never> {
+        return throwError({error: 'ARKANE_SERVICE_ERROR', message: reason});
     }
 
     getMatchedWallet(): Observable<Wallet> {
@@ -80,15 +85,17 @@ export class ArkaneService {
 
     private arkaneWalletsAlreadyInUseProcedure(): Observable<Wallet> {
         return this.popupService.info('Your wallets on Arkane are already in use. Please create a new wallet.').pipe(
-            switchMap(popupRes => popupRes.dismiss === undefined ? this.manageWalletsFlow() : EMPTY),
-            switchMap(manageFlowsRes => (<PopupResult>manageFlowsRes)?.status === 'SUCCESS' ? this.getMatchedWallet() : EMPTY)
+            switchMap(popupRes => popupRes.dismiss === undefined ?
+                this.manageWalletsFlow() : ArkaneService.throwError(ArkaneError.CREATE_WALLET_POPUP_DISMISSED)),
+            switchMap(() => this.getMatchedWallet())
         );
     }
 
     private arkaneNoWalletsAvailableProcedure(): Observable<Wallet> {
         return this.popupService.info('You will be prompted to create a new wallet on Arkane.').pipe(
-            switchMap(popupRes => popupRes.dismiss === undefined ? this.manageWalletsFlow() : EMPTY),
-            switchMap(manageFlowsRes => (<PopupResult>manageFlowsRes)?.status === 'SUCCESS' ? this.getMatchedWallet() : EMPTY)
+            switchMap(popupRes => popupRes.dismiss === undefined ?
+                this.manageWalletsFlow() : ArkaneService.throwError(ArkaneError.NO_WALLETS_POPUP_DISMISSED)),
+            switchMap(() => this.getMatchedWallet())
         );
     }
 
@@ -100,43 +107,51 @@ export class ArkaneService {
                 '<a href="https://arkane.network" target="_blank" style="display: contents">Arkane Network</a> website, ' +
                 'click on profile icon in upper-right corner, click logout and come back here.'
             )),
-            switchMap((popupRes) => popupRes.dismiss === undefined ? this.getAccountFlow() : EMPTY),
-            switchMap(account => account.isAuthenticated ? this.getMatchedWallet() : EMPTY)
+            switchMap(popupRes => popupRes.dismiss === undefined ?
+                this.getAccountFlow() : ArkaneService.throwError(ArkaneError.WRONG_ACCOUNT_POPUP_DISMISSED)),
+            switchMap(account => account.isAuthenticated ?
+                this.getMatchedWallet() : ArkaneService.throwError(ArkaneError.USER_NOT_AUTHENTICATED))
         );
     }
 
     getProfile(): Observable<Profile> {
         return this.ensureAuthenticated().pipe(
             switchMap(() => from(this.arkaneConnect.api.getProfile())),
-            catchError(() => of(null)),
         );
     }
 
     getWallets(): Observable<Wallet[]> {
         return this.ensureAuthenticated().pipe(
             switchMap(() => from(this.arkaneConnect.api.getWallets({secretType: this.secretType}))),
-            catchError(() => of(null)),
         );
     }
 
     signAndBroadcastTx(txInfo: TransactionInfo) {
         return this.signTransaction(txInfo.tx).pipe(
-            switchMap(arkaneRes => arkaneRes.status === 'SUCCESS' ?
-                this.broadcastService.broadcastSignedTx(arkaneRes.result.signedTransaction, txInfo.tx_id).pipe(
-                    displayBackendErrorRx()
-                ) : throwError(arkaneRes.errors)),
+            switchMap((arkaneRes) =>
+                this.broadcastService.broadcastSignedTx(arkaneRes.result.signedTransaction, txInfo.tx_id)
+                    .pipe(displayBackendErrorRx())),
         );
     }
 
     private signTransaction(txToSign: Observable<string> | string): Observable<SignerResult> {
         return this.getMatchedWallet().pipe(
             switchMap(wallet => combineLatest([of(wallet), txToSign instanceof Observable ? txToSign : of(txToSign)])),
-            switchMap(([wallet, txDataToSign]) => txDataToSign !== undefined ?
+            switchMap(([wallet, txDataToSign]) =>
                 from(this.arkaneConnect.createSigner(WindowMode.POPUP).sign({
                     walletId: wallet.id,
                     data: txDataToSign,
                     type: SignatureRequestType.AETERNITY_RAW
-                })) : EMPTY
+                })).pipe(switchMap(signingResult => {
+                    switch (signingResult.status) {
+                        case 'ABORTED':
+                            return ArkaneService.throwError(ArkaneError.SIGNING_ABORTED);
+                        case 'FAILED':
+                            return ArkaneService.throwError(ArkaneError.SIGNING_FAILED);
+                        case 'SUCCESS':
+                            return of(signingResult);
+                    }
+                }))
             ));
     }
 
@@ -145,11 +160,29 @@ export class ArkaneService {
     }
 
     getAccountFlow(): Observable<Account> {
-        return from(this.arkaneConnect.flows.getAccount(this.secretType));
+        return from(this.arkaneConnect.flows.getAccount(this.secretType)).pipe(
+            switchMap(res => res.auth === undefined ?
+                ArkaneService.throwError(ArkaneError.GET_ACCOUNT_FLOW_INTERRUPTED) : of(res))
+        );
     }
 
     manageWalletsFlow(): Observable<void | PopupResult> {
-        return from(this.arkaneConnect.flows.manageWallets(this.secretType));
+        return from(this.arkaneConnect.flows.manageWallets(this.secretType)).pipe(
+            switchMap(res => {
+                if (!res) {
+                    return ArkaneService.throwError(ArkaneError.MANAGE_WALLETS_FAILED);
+                }
+
+                switch (res.status) {
+                    case 'ABORTED':
+                        return ArkaneService.throwError(ArkaneError.MANAGE_WALLETS_ABORTED);
+                    case 'FAILED':
+                        return ArkaneService.throwError(ArkaneError.MANAGE_WALLETS_FAILED);
+                    case 'SUCCESS':
+                        return of(res);
+                }
+            })
+        );
     }
 
     // on Chrome (Brave) returns infinite loop of warnings in browser console.
@@ -171,11 +204,22 @@ export class ArkaneService {
     private ensureAuthenticated(): Observable<void> {
         // TODO: set isAuthenticated() when arkaneConnect.checkAuthenticated() will work properly.
         return this.isAuthenticatedByWallets().pipe(
-            switchMap(signedIn => !signedIn ? this.getAccountFlow().pipe(
-                map(account => account.isAuthenticated),
-                catchError(() => of(false))
-            ) : of(signedIn)),
-            switchMap(signedIn => signedIn ? of(null) : EMPTY)
+            switchMap(signedIn => !signedIn ?
+                this.getAccountFlow().pipe(map(account => account.isAuthenticated)) : of(signedIn)),
+            switchMap(signedIn => signedIn ?
+                of(null) : ArkaneService.throwError(ArkaneError.USER_NOT_AUTHENTICATED))
         );
     }
+}
+
+enum ArkaneError {
+    GET_ACCOUNT_FLOW_INTERRUPTED = 'GetAccountFlow interrupted.',
+    USER_NOT_AUTHENTICATED = 'User not authenticated.',
+    SIGNING_ABORTED = 'Transaction signing aborted.',
+    SIGNING_FAILED = 'Transaction signing failed.',
+    NO_WALLETS_POPUP_DISMISSED = 'User dismissed no wallets popup',
+    WRONG_ACCOUNT_POPUP_DISMISSED = 'User dismissed wrong account popup',
+    CREATE_WALLET_POPUP_DISMISSED = 'User dismissed create new wallet popup',
+    MANAGE_WALLETS_ABORTED = 'Manage wallets aborted.',
+    MANAGE_WALLETS_FAILED = 'Manage wallets failed.',
 }

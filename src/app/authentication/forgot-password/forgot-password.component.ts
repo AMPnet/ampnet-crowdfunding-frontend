@@ -29,7 +29,6 @@ export class ForgotPasswordComponent {
         const email = this.forgotPasswordForm.get('email').value;
 
         return this.signUpService.forgotPassword(email).pipe(
-            displayBackendErrorRx(),
             catchError(err => {
                 switch (err.status) {
                     case 404:
@@ -49,10 +48,12 @@ export class ForgotPasswordComponent {
                         }
                 }
                 return throwError(err);
-            })).pipe(switchMap(() => this.popupService.new({
-            type: 'success',
-            title: 'Success',
-            text: 'We have sent you an e-mail containing your password reset link.'
-        }).pipe(switchMap(() => this.router.navigate([''])))));
+            }),
+            displayBackendErrorRx())
+            .pipe(switchMap(() => this.popupService.new({
+                type: 'success',
+                title: 'Success',
+                text: 'We have sent you an e-mail containing your password reset link.'
+            }).pipe(switchMap(() => this.router.navigate([''])))));
     }
 }

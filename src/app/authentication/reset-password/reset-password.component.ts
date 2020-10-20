@@ -4,9 +4,8 @@ import { SignupService } from '../../shared/services/user/signup.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PopupService } from '../../shared/services/popup.service';
 import { MustMatch } from '../sign-up/confirm-password-validator';
-import { SpinnerUtil } from '../../utilities/spinner-utilities';
 import { displayBackendErrorRx } from '../../utilities/error-handler';
-import { finalize, switchMap } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
     selector: 'app-reset-password',
@@ -32,25 +31,20 @@ export class ResetPasswordComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.route.queryParams.subscribe(params => {
-            this.token = params['token'];
-        });
+        this.token = this.route.snapshot.queryParams.token;
     }
 
     onSubmitPasswordForm() {
-        SpinnerUtil.showSpinner();
-        const controls = this.resetPasswordForm.controls;
-        const newPassword = controls['password'].value;
+        const newPassword = this.resetPasswordForm.get('password').value;
 
-        this.signUpService.resetPassword(newPassword, this.token).pipe(
+        return this.signUpService.resetPassword(newPassword, this.token).pipe(
             displayBackendErrorRx(),
             switchMap(() => this.popupService.new({
                 type: 'success',
                 title: 'Success',
                 text: 'Your password has been changed successfully.'
             })),
-            switchMap(() => this.router.navigate([''])),
-            finalize(() => SpinnerUtil.hideSpinner())
-        ).subscribe();
+            switchMap(() => this.router.navigate(['']))
+        );
     }
 }

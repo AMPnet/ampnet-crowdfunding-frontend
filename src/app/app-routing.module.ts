@@ -58,7 +58,6 @@ const routes: Routes = [
             {path: 'onboarding', component: OnboardingComponent},
             {path: 'forgot_password', component: ForgotPasswordComponent},
             {path: 'reset_password', component: ResetPasswordComponent},
-            {path: 'reset_password/:token', component: ResetPasswordComponent},
         ]
     },
     {path: 'summary', component: SummaryComponent},

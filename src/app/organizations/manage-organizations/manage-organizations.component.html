@@ -1,52 +1,62 @@
-<div class="container root-content-container">
-    <div class="app-page-header">
-        <h1 class="app-page-title">Investment groups</h1>
-        <div *ngIf="organizations !== undefined">
-            <button class="btn" routerLink="new">
-                <i class="fas fa-plus mr-3" style="height: 14px"></i>Create group
-            </button>
-        </div>
-    </div>
-    <div class="app-page-subtitle">My groups</div>
-    <div *ngIf="(organizations !== undefined) && (organizations.length > 0)">
-        <ul class="cursor-pointer list-group">
-            <li *ngFor="let org of organizations" class="list-group-item hover-bg"
-                routerLink="{{ org.uuid }}">
-            <span class="float-left explainer-mini">
-              {{ org.name }}
-            </span>
-
-            </li>
-        </ul>
-    </div>
-    <div *ngIf="(organizations !== undefined) && (organizations.length ===  0)"
-         class="d-flex justify-content-center mt-5">
-        <div class="d-flex flex-column mt-3">
-            <div class="d-flex text-center explainer-mini">
-                You currently don't have access to any groups.
+<div class="container">
+    <ng-container *ngIf="{
+            organizations: organizations$ | async,
+            invites: organizationInvites$ | async
+    } as states">
+        <div class="app-page-header">
+            <h1 class="app-page-title">Investment groups</h1>
+            <div *ngIf="states.organizations !== null">
+                <button class="btn btn-primary" routerLink="new">
+                    <i class="fas fa-plus mr-3" ></i>
+                    Create group
+                </button>
             </div>
         </div>
-    </div>
 
-    <div *ngIf="invitedToOrgs !== undefined">
-        <div class="explainer-mini text-uppercase mt-5 mb-3">My group invites</div>
-        <ul *ngIf="invitedToOrgs.length > 0" class="list-group">
-            <li *ngFor="let invite of invitedToOrgs" class="list-group-item mt-2">
-          <span class="float-left explainer-mini">
-            {{ invite.organization_name }}
-          </span>
-                <div class="float-right">
+        <div class="app-page-subtitle">My groups</div>
+        <ng-container *ngIf="states.organizations !== null else spinner">
+            <div *ngIf="states.organizations?.length > 0">
+                <ul class="cursor-pointer list-group">
+                    <li *ngFor="let org of states.organizations" class="list-group-item hover-bg"
+                        routerLink="{{ org.uuid }}">
+                        <span class="float-left explainer-mini">
+                          {{ org.name }}
+                        </span>
+                    </li>
+                </ul>
+            </div>
+            <div *ngIf="states.organizations.length === 0"
+                 class="d-flex justify-content-center mt-5">
+                <div class="d-flex flex-column mt-3">
+                    <div class="d-flex text-center explainer-mini">
+                        You currently don't have access to any groups.
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+
+        <div class="app-page-subtitle">My group invites</div>
+        <ng-container *ngIf="states.invites !== null else spinner">
+            <ul *ngIf="states.invites?.length > 0" class="list-group">
+                <li *ngFor="let invite of states.invites" class="list-group-item mt-2">
+                    <span class="float-left explainer-mini">
+                        {{ invite.organization_name }}
+                    </span>
+                    <div class="float-right">
                     <span (click)="acceptInvite(invite.organization_uuid)"
                           class="explainer-mini text-uppercase cursor-pointer">
                         Accept invite
                     </span>
-                </div>
-            </li>
-        </ul>
-        <div *ngIf="invitedToOrgs.length ==0" class="w-100 text-center pt-5 pb-5 explainer-mini">
-            Not invited to any groups
-        </div>
-    </div>
+                    </div>
+                </li>
+            </ul>
+            <div *ngIf="states.invites?.length === 0" class="w-100 text-center pt-5 pb-5 explainer-mini">
+                Not invited to any groups
+            </div>
+        </ng-container>
+    </ng-container>
 
+    <ng-template #spinner>
+        <app-spinner type="overlay" style="height: 100px"></app-spinner>
+    </ng-template>
 </div>
-

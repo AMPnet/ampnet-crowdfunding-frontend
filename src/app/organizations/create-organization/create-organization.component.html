@@ -1,39 +1,31 @@
-<div class="root-content-container">
-    <form [formGroup]="newOrganizationForm">
+<div class="container">
+    <form [formGroup]="newOrganizationForm" style="display: contents">
         <div class="row">
-            <h5 class="explainer-mini text-uppercase gray-text col-md-12">
-                <b>Create a new group</b>
-            </h5>
-
             <div class="col-md-12">
-                <input class="form-control mt-3 p-4 w-100"
+                <h2 class="app-page-subtitle">Create a new group</h2>
+                <input class="form-control p-4 w-100"
                        formControlName="name"
                        placeholder="Group name"
                        type="text">
-            </div>
-
-            <div class="col-md-12">
                 <input class="form-control mt-3 p-4 w-100"
                        formControlName="description"
                        placeholder="Description"
                        type="text">
-            </div>
 
-            <h6 class="explainer-mini text-uppercase gray-text col-md-12 small p-3">
-                <b>Attach a group photo</b>
-            </h6>
+                <h2 class="app-page-subtitle">Attach a group photo</h2>
+                <app-upload-area areaID='group-image' style="width: max-content"
+                                 [restrictions]="{
+                                    allowedFileTypes: ['image/*'],
+                                    maxFileSize: 10 * 1024 * 1024,
+                                    maxNumberOfFiles: 1
+                                 }"
+                                 [firstFileControl]="newOrganizationForm.get('photo')">
+                </app-upload-area>
 
-            <div class="col-md-12" id="uppy-attach-document"></div>
-            <input type="file" hidden formControlName="photo">
-
-            <div class="col-md-4">
-                <button (click)="submitButtonClicked()"
-                        [disabled]="!newOrganizationForm.valid"
-                        class="btn btn-primary w-100 float-right mt-3 py-3 px-5"
-                        type="submit">
-                    <i class="mr-3 fas fa-plus"></i>
-                    Create
-                </button>
+                <app-action-button text="Create"
+                                   loadingText="Creating organization..." faIcon="fa-plus"
+                                   [onClick]="createOrganization.bind(this)">
+                </app-action-button>
             </div>
         </div>
     </form>

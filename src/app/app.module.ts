@@ -43,8 +43,10 @@ import { OrganizationDetailsComponent } from './organizations/organization-detai
 import { CreateNewProjectComponent } from './projects/create-new-project/create-new-project.component';
 import { OnboardingComponent } from './authentication/onboarding/onboarding.component';
 import { ManageProjectsComponent } from './organizations/organization-details/manage-projects/manage-projects.component';
+// tslint:disable-next-line:max-line-length
 import { ManageSingleProjectComponent } from './organizations/organization-details/manage-projects/manage-single-project/manage-single-project.component';
 import { VerifySignOfferComponent } from './offers/offer-details/verify-sign-offer/verify-sign-offer.component';
+// tslint:disable-next-line:max-line-length
 import { ManagePaymentsComponent } from './organizations/organization-details/manage-projects/manage-single-project/manage-payments/manage-payments.component';
 import { ManageWithdrawalsComponent } from './manage-withdrawals/manage-withdrawals.component';
 import { SingleWithdrawalComponent } from './manage-withdrawals/single-withdrawal/single-withdrawal.component';

@@ -126,12 +126,57 @@
 
                     <div *ngIf="transactionHistory !== undefined && transactionHistory.length > 0" 
                          class="wow fadeIn">
+                         <div class="transactions-history">
+                            <div class="p-4" *ngFor="let transaction of transactionHistoryPage">
+                                <ng-container *ngIf="shouldShowTransaction(transaction)">
+                                    <div class="transactions__left">
+                                        <ng-template *ngTemplateOutlet="transactionTypes"></ng-template>
+                                        <div class="left__info">
+                                            % - {{ transaction.date | date:'medium' }}
+                                        </div>
+                                    </div>
+                                    <div class="transactions__right">
+                                        <div class="right__amount">
+                                            {{ transaction.type | txAmountSign }} {{ transaction.amount | currencyCents }}
+                                        </div>
+                                        <div class="right__icon">
+                                            <i class="fal fa-file-chart-line"></i>
+                                        </div>
+                                    </div>
+
+                                    <ng-template #transactionTypes>
+                                        <div [class.transactions__error] = "transaction.state === 'PENDING' || 'FAILED'">
+                                            <div *ngIf="transaction.type === 'INVEST'">
+                                                Investment <span>to</span>
+                                            </div>
+                                            <div *ngIf="transaction.type === 'DEPOSIT'">
+                                                Deposit
+                                            </div>
+                                            <div *ngIf="transaction.type === 'WITHDRAW'">
+                                                Withdraw
+                                            </div>
+                                            <div *ngIf="transaction.type === 'SHARE_PAYOUT'">
+                                                Dividend <span>from</span>
+                                            </div>
+                                            <div *ngIf="transaction.type === 'CANCEL_INVESTMENT'">
+                                                Cancel investment <span>to</span>
+                                            </div>
+                                            <div *ngIf="transaction.type === 'APPROVE_INVESTMENT'">
+                                                Investment <span>to</span>
+                                            </div>
+                                            {{ transaction.description }}
+                                        </div>
+                                    </ng-template>
+                                </ng-container>
+
+                            </div>
+                         </div>
                         
                         <table class="transactions__table w-100">
                             <tbody>
                                 <tr *ngFor="let transaction of transactionHistoryPage">
                                     <ng-container *ngIf="shouldShowTransaction(transaction)">
-                                        <td class="table__mobile">
+                                        <!-- <td class="table__mobile">
                                             <div class="table__top">
                                                 <div class="top__left">
                                                     <ng-template *ngTemplateOutlet="transactionTypes"></ng-template>
@@ -146,7 +191,7 @@
 
                                                 </div>
                                             </div>
-                                        </td>
+                                        </td> -->
                                         <!-- <td class="table__left">
                                             <div [class.transactions__error] = "transaction.state === 'PENDING' || 'FAILED'">
                                                 <div *ngIf="transaction.type === 'INVEST'">
@@ -196,29 +241,7 @@
                                             </td>
                                         </tr> -->
 
-                                        <ng-template #transactionTypes>
-                                            <div [class.transactions__error] = "transaction.state === 'PENDING' || 'FAILED'">
-                                                <div *ngIf="transaction.type === 'INVEST'">
-                                                    Investment <span>to</span>
-                                                </div>
-                                                <div *ngIf="transaction.type === 'DEPOSIT'">
-                                                    Deposit
-                                                </div>
-                                                <div *ngIf="transaction.type === 'WITHDRAW'">
-                                                    Withdraw
-                                                </div>
-                                                <div *ngIf="transaction.type === 'SHARE_PAYOUT'">
-                                                    Dividend <span>from</span>
-                                                </div>
-                                                <div *ngIf="transaction.type === 'CANCEL_INVESTMENT'">
-                                                    Cancel investment <span>to</span>
-                                                </div>
-                                                <div *ngIf="transaction.type === 'APPROVE_INVESTMENT'">
-                                                    Investment <span>to</span>
-                                                </div>
-                                                {{ transaction.description }}
-                                            </div>
-                                        </ng-template>
+                                        
                                     </ng-container>
                                 </tr>
                                 

@@ -172,4 +172,8 @@ export class ManageSingleProjectComponent {
             finalize(() => SpinnerUtil.hideSpinner())
         );
     }
+
+    isWalletVerified(wallet: WalletDetails) {
+        return !!wallet && !!wallet?.hash;
+    }
 }

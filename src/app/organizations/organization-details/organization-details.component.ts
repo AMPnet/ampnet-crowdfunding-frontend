@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
-import { displayBackendError, displayBackendErrorRx } from 'src/app/utilities/error-handler';
-import swal from 'sweetalert2';
+import { displayBackendErrorRx } from 'src/app/utilities/error-handler';
 import { WalletService } from '../../shared/services/wallet/wallet.service';
 import { WalletDetails } from '../../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
 import { Organization, OrganizationMember, OrganizationService } from '../../shared/services/project/organization.service';
-import { BehaviorSubject, EMPTY, from, Observable, of } from 'rxjs';
+import { BehaviorSubject, EMPTY, Observable, of } from 'rxjs';
 import { catchError, finalize, map, switchMap, tap } from 'rxjs/operators';
 import { ArkaneService } from '../../shared/services/arkane.service';
 import { PopupService } from '../../shared/services/popup.service';
@@ -18,8 +17,9 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors,
     styleUrls: ['./organization-details.component.css']
 })
 export class OrganizationDetailsComponent implements OnInit {
-    refreshOrgMembersSubject = new BehaviorSubject<void>(null);
+    refreshOrganizationSubject = new BehaviorSubject<void>(null);
     refreshOrgWalletSubject = new BehaviorSubject<void>(null);
+    refreshOrgMembersSubject = new BehaviorSubject<void>(null);
 
     organization$: Observable<Organization>;
     orgWallet$: Observable<WalletDetails>;
@@ -61,25 +61,30 @@ export class OrganizationDetailsComponent implements OnInit {
 
     ngOnInit() {
         const orgID = this.activatedRoute.snapshot.params.id;
-        this.organization$ = this.organizationService.getSingleOrganization(orgID).pipe(displayBackendErrorRx());
+        this.organization$ = this.refreshOrganizationSubject.asObservable().pipe(
+            switchMap(() => this.organizationService.getSingleOrganization(orgID)
+                .pipe(displayBackendErrorRx()))
+        );
         this.orgWallet$ = this.refreshOrgWalletSubject.asObservable().pipe(
-            switchMap(() => this.walletService.getOrganizationWallet(orgID)),
-            catchError(err => {
-                if (err.status === 404) {
-                    return of(undefined);
-                } else if (err.error?.err_code === '0851') {
-                    return this.popupService.new({
-                        type: 'info',
-                        text: 'The organization is being created. This can take up to a minute. ' +
-                            'Please check again later.'
-                    }).pipe(switchMap(() => this.router.navigate(['/dash/manage_groups'])));
-                } else {
-                    return of(err).pipe(
-                        displayBackendErrorRx(),
-                        switchMap(() => this.router.navigate(['/dash/manage_groups']))
-                    );
-                }
-            }));
+            switchMap(() => this.walletService.getOrganizationWallet(orgID).pipe(
+                displayBackendErrorRx(),
+                catchError(err => {
+                    if (err.status === 404) {
+                        return this.popupService.new({
+                            type: 'info',
+                            text: 'The organization wallet needs to be created. You will be prompted now.'
+                        }).pipe(
+                            switchMap(popupRes => popupRes.dismiss === undefined ?
+                                this.createOrgWallet(orgID) : this.recoverBack())
+                        );
+                    } else {
+                        return of(err).pipe(
+                            displayBackendErrorRx(),
+                            switchMap(() => this.recoverBack())
+                        );
+                    }
+                })))
+        );
 
         this.orgMembers$ = this.refreshOrgMembersSubject.pipe(
             switchMap(_ => this.organizationService.getMembersForOrganization(orgID)
@@ -92,35 +97,38 @@ export class OrganizationDetailsComponent implements OnInit {
     }
 
     inviteClicked(orgUUID: string) {
-        const emails = OrganizationDetailsComponent.extractEmails(this.inviteForm.get('emails').value);
-
-        return this.organizationService.inviteUser(orgUUID, emails).pipe(
-            displayBackendErrorRx(),
-            switchMap(() => this.popupService.new({
-                type: 'success',
-                title: 'Success',
-                text: 'Successfully invited user to organization'
-            })),
-            tap(() => this.inviteForm.reset())
-        );
-    }
-
-    createOrgWalletClicked(orgID: string) {
         return () => {
-            return this.walletService.createOrganizationWalletTransaction(orgID).pipe(
+            const emails = OrganizationDetailsComponent.extractEmails(this.inviteForm.get('emails').value);
+
+            return this.organizationService.inviteUser(orgUUID, emails).pipe(
                 displayBackendErrorRx(),
-                switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo)),
                 switchMap(() => this.popupService.new({
                     type: 'success',
-                    title: 'Transaction signed',
-                    text: 'Transaction is being processed...'
+                    title: 'Success',
+                    text: 'Successfully invited user to organization'
                 })),
-                tap(() => {
-                    this.refreshOrgWalletSubject.next();
-                    this.refreshOrgMembersSubject.next();
-                }),
+                tap(() => this.inviteForm.reset())
             );
         };
+    }
+
+    createOrgWallet(orgUUID: string) {
+        return this.walletService.createOrganizationWalletTransaction(orgUUID).pipe(
+            displayBackendErrorRx(),
+            switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo)),
+            catchError(() => this.recoverBack()),
+            switchMap(() => this.popupService.new({
+                type: 'success',
+                title: 'Transaction signed',
+                text: 'Transaction is being processed...'
+            })),
+            switchMap(() => of(undefined)),
+            tap(() => {
+                this.refreshOrganizationSubject.next();
+                this.refreshOrgWalletSubject.next();
+                this.refreshOrgMembersSubject.next();
+            })
+        );
     }
 
     deleteMember(orgID: string, memberID: string) {
@@ -136,7 +144,12 @@ export class OrganizationDetailsComponent implements OnInit {
         ).subscribe();
     }
 
-    isOrgWalletInitialized(orgWallet: WalletDetails) {
-        return !!orgWallet && orgWallet?.hash !== undefined;
+    isWalletVerified(orgWallet: WalletDetails) {
+        return !!orgWallet && !!orgWallet?.hash;
+    }
+
+    private recoverBack(): Observable<never> {
+        this.router.navigate(['/dash/manage_groups']);
+        return EMPTY;
     }
 }

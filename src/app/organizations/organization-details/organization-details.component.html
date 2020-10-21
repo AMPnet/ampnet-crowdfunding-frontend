@@ -4,46 +4,27 @@
     orgMembers: orgMembers$ | async
 } as states" class="container">
     <ng-container *ngIf="!!states.organization else spinner">
-        <div class="row">
-            <div class="col-md-8 h5">
-                {{ states.organization.name }}
-            </div>
-            <div class="col-md-4">
-                <button [disabled]="!isOrgWalletInitialized(states.orgWallet)"
-                        class="btn btn-primary py-2 w-100"
-                        routerLink="create_project">
-                    <i class="fas fa-plus-circle mr-2"></i>
-                    Create project
-                </button>
-            </div>
+        <div class="app-page-header">
+            <h1 class="app-page-title">{{ states.organization.name }}</h1>
+            <button [disabled]="!isWalletVerified(states.orgWallet)"
+                    class="btn btn-primary py-2"
+                    routerLink="create_project">
+                <i class="fas fa-plus-circle mr-2"></i>
+                Create project
+            </button>
         </div>
 
-        <div *ngIf="states.orgWallet === undefined" class="row">
-            <div class="pt-5 w-100">
-                <div class="explainer-mini pb-3 text-center mb-4">
-                    You must create the wallet for the organization. This will allow you to create projects and add
-                    members.
-                </div>
-                <app-action-button text="Create organization wallet"
-                                   loadingText="Creating organization wallet..." faIcon="fa-plus"
-                                   [onClick]="createOrgWalletClicked(states.organization.uuid).bind(this)"
-                                   buttonClass="btn btn-primary p-3 w-100">
-                </app-action-button>
-            </div>
-        </div>
-
-        <ng-container *ngIf="!!states.orgWallet">
+        <ng-container *ngIf="!!states.orgWallet else spinner">
             <div class="row mt-3">
-                <div *ngIf="states.orgWallet?.hash === undefined" class="col-md-12">
+                <div *ngIf="!isWalletVerified(states.orgWallet)" class="col-md-12">
                     <div class="alert alert-warning">
                         This group is pending approval from admin. During this time, you can't create new projects.
                     </div>
                 </div>
 
-                <div class="col-md-12 mt-3">
-                    <div class="explainer-mini mb-3">Invite new members</div>
+                <div class="col-md-12">
+                    <h2 class="app-page-subtitle">Invite new members</h2>
                 </div>
-
                 <form [formGroup]="inviteForm" style="display: contents">
                     <div class="col-md-8">
                         <input class="form-control p-4" name=""
@@ -53,57 +34,32 @@
                     </div>
                     <div class="col-md-4">
                         <app-action-button text="Invite" loadingText="Inviting users..." faIcon="fa-envelope-open"
-                                           [onClick]="inviteClicked.bind(this)"
+                                           [onClick]="inviteClicked(states.organization.uuid).bind(this)"
                                            [disabled]="!inviteForm.valid">
                         </app-action-button>
                     </div>
                 </form>
-                <ng-container *ngIf="states.orgWallet != null">
-                    <div class="row mt-3">
-                        <div *ngIf="!isOrgWalletInitialized(states.orgWallet)" class="col-md-12">
-                            <div class="alert alert-warning">
-                                This group is pending approval from admin. During this time, you can't create new
-                                projects.
-                            </div>
-                        </div>
-                        <div class="col-md-12 mt-3">
-                            <div class="explainer-mini mb-3">Invite new members</div>
-                        </div>
-                        <div class="col-md-8">
-                            <input class="form-control p-4" id="email-invite-input"
-                                   placeholder="Enter user email"
-                                   type="text" value="">
-                        </div>
-                        <div class="col-md-4">
-                            <button (click)="inviteClicked(states.organization.uuid)"
-                                    class="btn btn-primary h-100 w-100">
-                                <i class="fas fa-envelope-open mr-2"></i>
-                                Invite
-                            </button>
-                        </div>
 
-                        <ng-container *ngIf="states.organization !== undefined else spinner">
-                            <div class="col-md-12 mt-4">
-                                <app-manage-projects [groupID]="states.organization.uuid"></app-manage-projects>
-                            </div>
-                            <div class="col-md-12 mt-4">
-                                <div class="explainer-mini mb-3">Manage users</div>
-                                <ul class="list-group">
-                                    <li *ngFor="let member of states.orgMembers" class="list-group-item">
-                                        <span class="float-left">{{ member.first_name }} {{ member.last_name }}</span>
-                                        <span class="float-right"
-                                              (click)="deleteMember(states.organization.uuid, member.uuid)">
+                <div class="col-md-12 mt-4">
+                    <app-manage-projects [groupID]="states.organization.uuid"></app-manage-projects>
+                </div>
+
+                <div class="col-md-12 mt-4">
+                    <h1 class="app-page-subtitle">Manage users</h1>
+                    <ng-container *ngIf="!!states.orgMembers else spinner">
+                        <ul class="list-group">
+                            <li *ngFor="let member of states.orgMembers" class="list-group-item">
+                                <span class="float-left">{{ member.first_name }} {{ member.last_name }}</span>
+                                <span class="float-right"
+                                      (click)="deleteMember(states.organization.uuid, member.uuid)">
                             <i class="fas fa-trash cursor-pointer"></i></span>
-                                    </li>
-                                </ul>
-                                <div *ngIf="(states.orgMembers !== undefined) && (states.orgMembers?.length === 0)"
-                                     class="w-100 pt-3 pb-3 text-center explainer-mini">
-                                    You are the only member of {{ states.organization.name }}
-                                </div>
-                            </div>
-                        </ng-container>
-                    </div>
-                </ng-container>
+                            </li>
+                        </ul>
+                        <div *ngIf="states.orgMembers.length === 0" class="w-100 pt-3 pb-3 text-center explainer-mini">
+                            You are the only member of {{ states.organization.name }}
+                        </div>
+                    </ng-container>
+                </div>
             </div>
         </ng-container>
     </ng-container>

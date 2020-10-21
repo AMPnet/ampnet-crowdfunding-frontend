@@ -4,7 +4,7 @@ import { displayBackendError, hideSpinnerAndDisplayError } from 'src/app/utiliti
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import swal from 'sweetalert2';
 import { BehaviorSubject, EMPTY, Observable } from 'rxjs';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { catchError, delay, map, switchMap } from 'rxjs/operators';
 
 @Component({
     selector: 'app-manage-organizations',
@@ -18,8 +18,7 @@ export class ManageOrganizationsComponent {
     refreshOrganizationsSubject = new BehaviorSubject<void>(null);
     refreshInvitesSubject = new BehaviorSubject<void>(null);
 
-    constructor(
-        private organizationService: OrganizationService) {
+    constructor(private organizationService: OrganizationService) {
 
         this.organizations$ = this.refreshOrganizationsSubject.pipe(
             switchMap(_ => this.organizationService.getPersonalOrganizations().pipe(this.handleErrors)),

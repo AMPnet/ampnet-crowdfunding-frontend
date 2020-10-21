@@ -24,8 +24,8 @@ import { ManageOrganizationsComponent } from './organizations/manage-organizatio
 import { OrganizationDetailsComponent } from './organizations/organization-details/organization-details.component';
 import { CreateNewProjectComponent } from './projects/create-new-project/create-new-project.component';
 import { OnboardingComponent } from './authentication/onboarding/onboarding.component';
-import { ManageProjectsComponent } from './manage-projects/manage-projects.component';
-import { ManageSingleProjectComponent } from './manage-projects/manage-single-project/manage-single-project.component';
+import { ManageProjectsComponent } from './organizations/organization-details/manage-projects/manage-projects.component';
+import { ManageSingleProjectComponent } from './organizations/organization-details/manage-projects/manage-single-project/manage-single-project.component';
 import { VerifySignOfferComponent } from './offers/offer-details/verify-sign-offer/verify-sign-offer.component';
 import { ManageWithdrawalsComponent } from './manage-withdrawals/manage-withdrawals.component';
 import { SingleWithdrawalComponent } from './manage-withdrawals/single-withdrawal/single-withdrawal.component';
@@ -41,7 +41,7 @@ import { NewPlatformBankAccountComponent } from './platform-bank-account/new-pla
 import { ExchangeComponent } from './exchange/exchange.component';
 import { OwnershipComponent } from './ownership/ownership.component';
 import { RevenueShareComponent } from './revenue-share/revenue-share.component';
-import { ManagePaymentsComponent } from './project/manage-payments/manage-payments.component';
+import { ManagePaymentsComponent } from './organizations/organization-details/manage-projects/manage-single-project/manage-payments/manage-payments.component';
 import { OfferDetailsGuard } from './offers/offer-details/offer-details.guard';
 
 const routes: Routes = [

@@ -63,28 +63,29 @@
             </div>
         </div>
 
-        <div *ngIf="!!states.wallet && states.wallet.state !== walletState.EMPTY else fetchWalletSpinner" class="">
-            <div class="row">
+        <div *ngIf="!!states.wallet && states.wallet.state !== walletState.EMPTY else fetchWalletSpinner">
                 
-                <div class="col-lg-12  text-center text-md-left  mt-4 ">
-                    <div class="wallet-balance d-md-flex align-items-center pt-4 pb-4 pl-2">
-                        <div class="col-12 col-md-6 col-xl-8 balance-left">
-                            <span class="h1">
-                                <div class="balance-text text-uppercase mb-2">Balance</div>
-                                <div class="balance-amount">
-                                    {{ states.wallet?.wallet?.balance | currencyCents }}
-                                </div>
-                            </span>
+            <div class="col-12">
+                <div class="wallet-balance flex__center row">
+                    <div class="col-12 col-lg-8">
+                        <div class="balance__content">
+                            <p class="balance__title">Balance</p>
+                            <p class="balance__amount">
+                                {{ states.wallet?.wallet?.balance | currencyCents }}
+                            </p>
                         </div>
-                        <div class="col-12 col-md-3 col-xl-2 mt-4 mt-md-0 button-container">
-                            <button class="btn btn-primary w-100" routerLink="deposit"
-                                    [disabled]="states.wallet.state !== walletState.READY">
+                    </div>
+
+                    <div class="balance__buttons col-12 col-lg-4 flex__center">
+                        <div class="col-6">
+                            <button class="btn w-100 flex__center" routerLink="deposit">
                                 <i class="fas fa-arrow-circle-down mr-2"></i>
                                 Deposit
                             </button>
                         </div>
-                        <div class="col-12 col-md-3 col-xl-2 mt-4 mt-md-0 button-container">
-                            <button class="btn btn-primary w-100" routerLink="withdraw"
+    
+                        <div class="col-6">
+                            <button class="btn w-100 flex__center" routerLink="withdraw"
                                     [disabled]="states.wallet.state !== walletState.READY">
                                 <i class="fas fa-arrow-circle-up mr-2"></i>
                                 Withdraw
@@ -92,56 +93,138 @@
                         </div>
                     </div>
                 </div>
+        
 
-                <div class="col-11">
+                <div class="wallet-alerts col-12 col-lg-11">
                     <div *ngIf="states.wallet?.wallet?.activated_at === null" class="alert alert-success w-100 flex__center-space">
-                        <i class="fas fa-bolt"></i>
-                        Your wallet is pending approval from admin. You can deposit funds while pending approval.
-                        <button class="btn" routerLink="deposit"
-                                [disabled]="states.wallet.state !== walletState.READY">
+                        <div>
+                            <i class="fas fa-bolt"></i>
+                            Your wallet is pending approval from admin. You can deposit funds while pending approval.
+                        </div>
+                        <button class="btn" routerLink="deposit">
                                 Deposit funds
                         </button>
                     </div>
-                    <div *ngIf="states.wallet?.wallet?.balance === 0" class="alert alert-info w-100 mt-4">
-                        Your wallet is empty. Deposit funds to get started!
+                    <div *ngIf="states.wallet?.wallet?.balance === 0" class="alert alert-success w-100 flex__center-space">
+                        <div>
+                            <i class="fas fa-bolt"></i>
+                            Your wallet is empty. Deposit funds to get started!
+                        </div>
+                        <button class="btn" routerLink="deposit">
+                            Deposit funds
+                    </button>
                     </div>
                 </div>
-
-                
             </div>
-            <br>
-            <div class="col-md-12 mt-3 mb-5" *ngIf="states.wallet.state === walletState.READY">
-					<span class="h4 text-left">
-						<div class="explainer-mini float-right mb-2 w-100">Transaction History</div>
-					</span>
+
+            <div class="transactions-history col-12" *ngIf="states.wallet.state === walletState.READY">
+                <span class="transactions__title">Transaction History</span> 
                 <ng-container *ngIf="(transactionHistory$ | async) else transactionHistorySpinner">
-                    <div *ngIf="transactionHistory !== undefined" class="wow fadeIn">
-                        <div class="table-responsive-md">
-                            <table class="table">
-                                <tbody>
+                    <div *ngIf="transactionHistory.length === 0">
+                        <span class="transactions__empty"></span>Your transaction history is empty.
+                    </div>
+
+                    <div *ngIf="transactionHistory !== undefined && transactionHistory.length > 0" 
+                         class="wow fadeIn">
+                        
+                        <table class="transactions__table w-100">
+                            <tbody>
                                 <tr *ngFor="let transaction of transactionHistoryPage">
                                     <ng-container *ngIf="shouldShowTransaction(transaction)">
-                                        <td class="icon-type-cell icon-type-cell__lead pr-0 pl-0">
-                                        <span class="icon-type">
-                                            <i class="fas mr-3 {{ transaction.type | txIconType }}"></i>
-                                        </span>
+                                        <td class="table__mobile">
+                                            <div class="table__top">
+                                                <div class="top__left">
+                                                    <ng-template *ngTemplateOutlet="transactionTypes"></ng-template>
+                                                </div>
+                                                <div class="top__right"></div>
+                                            </div>
+                                            <div class="table__bottom">
+                                                <div class="bottom__left">
+
+                                                </div>
+                                                <div class="bottom__right">
+
+                                                </div>
+                                            </div>
                                         </td>
-                                        <td class="data-column">
+                                        <!-- <td class="table__left">
+                                            <div [class.transactions__error] = "transaction.state === 'PENDING' || 'FAILED'">
+                                                <div *ngIf="transaction.type === 'INVEST'">
+                                                    Investment <span>to</span>
+                                                </div>
+                                                <div *ngIf="transaction.type === 'DEPOSIT'">
+                                                    Deposit
+                                                </div>
+                                                <div *ngIf="transaction.type === 'WITHDRAW'">
+                                                    Withdraw
+                                                </div>
+                                                <div *ngIf="transaction.type === 'SHARE_PAYOUT'">
+                                                    Dividend <span>from</span>
+                                                </div>
+                                                <div *ngIf="transaction.type === 'CANCEL_INVESTMENT'">
+                                                    Cancel investment <span>to</span>
+                                                </div>
+                                                <div *ngIf="transaction.type === 'APPROVE_INVESTMENT'">
+                                                    Investment <span>to</span>
+                                                </div>
+                                                {{ transaction.description }}
+                                            </div>
+                                        </td> -->
+                                       <!--  <tr class="table__top">
+                                            <td class="transactions__top">
+                                                
+                                            </td>
+                                            <td class="transactions__amount">
+                                                {{ transaction.type | txAmountSign }} {{ transaction.amount | currencyCents }}
+                                            </td> -->
+                                        <!-- <td class="table__data">
                                             <span>{{ transaction.type }}</span>
                                             <span>{{ transaction.description }}</span>
                                             <span>{{ transaction.date | date:'medium' }}</span>
-                                        </td>
-                                        <td class="data-column data-column--amount">
-                                            {{ transaction.type | txAmountSign }} {{ transaction.amount | currencyCents }}
-                                        </td>
-                                        <td>
+                                        </td> -->
+                                        <!-- <td>
                                             <i class="icon-type fas {{ transaction.state | txIconStatus }}"></i>
-                                        </td>
+                                        </td> -->
+                                    
+                                        <!-- </tr> -->
+                                        <!-- <tr class="table__bottom">
+                                            <td class="transactions__info">
+                                                & invested - {{ transaction.date | date:'medium' }}
+                                            </td>
+                                            <td class="transactions__icon">
+                                                <i class="icon-type fas {{ transaction.state | txIconStatus }}"></i>
+                                            </td>
+                                        </tr> -->
+
+                                        <ng-template #transactionTypes>
+                                            <div [class.transactions__error] = "transaction.state === 'PENDING' || 'FAILED'">
+                                                <div *ngIf="transaction.type === 'INVEST'">
+                                                    Investment <span>to</span>
+                                                </div>
+                                                <div *ngIf="transaction.type === 'DEPOSIT'">
+                                                    Deposit
+                                                </div>
+                                                <div *ngIf="transaction.type === 'WITHDRAW'">
+                                                    Withdraw
+                                                </div>
+                                                <div *ngIf="transaction.type === 'SHARE_PAYOUT'">
+                                                    Dividend <span>from</span>
+                                                </div>
+                                                <div *ngIf="transaction.type === 'CANCEL_INVESTMENT'">
+                                                    Cancel investment <span>to</span>
+                                                </div>
+                                                <div *ngIf="transaction.type === 'APPROVE_INVESTMENT'">
+                                                    Investment <span>to</span>
+                                                </div>
+                                                {{ transaction.description }}
+                                            </div>
+                                        </ng-template>
                                     </ng-container>
                                 </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                                
+                            </tbody>
+                        </table>
+               
                         <div class="d-flex justify-content-center p-2">
                             <ngb-pagination [collectionSize]="transactionItems" [(page)]="tablePage"
                                             [pageSize]="tablePageSize"

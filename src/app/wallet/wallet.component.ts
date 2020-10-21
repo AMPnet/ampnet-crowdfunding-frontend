@@ -69,9 +69,6 @@ export class WalletComponent implements OnDestroy {
     constructor(private walletService: WalletService,
                 public arkaneService: ArkaneService,
                 private websocketService: WebsocketService) {
-                    this.wallet$.subscribe(e => {
-                        console.log(e);
-                    });
     }
 
     ngOnDestroy() {

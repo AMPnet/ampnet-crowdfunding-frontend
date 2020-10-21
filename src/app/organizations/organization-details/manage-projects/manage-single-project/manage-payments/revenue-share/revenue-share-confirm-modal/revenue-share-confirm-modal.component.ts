@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsModalRef } from 'ngx-bootstrap/modal';
-import { SpinnerUtil } from '../../utilities/spinner-utilities';
-import { displayBackendErrorRx } from '../../utilities/error-handler';
-import { RevenueShareService } from '../../shared/services/wallet/revenue-share.service';
+import { SpinnerUtil } from '../../../../../../../utilities/spinner-utilities';
+import { displayBackendErrorRx } from '../../../../../../../utilities/error-handler';
+import { RevenueShareService } from '../../../../../../../shared/services/wallet/revenue-share.service';
 import { Router } from '@angular/router';
 import { finalize, switchMap, tap } from 'rxjs/operators';
-import { ArkaneService } from '../../shared/services/arkane.service';
-import { PopupService } from '../../shared/services/popup.service';
+import { ArkaneService } from '../../../../../../../shared/services/arkane.service';
+import { PopupService } from '../../../../../../../shared/services/popup.service';
 
 @Component({
     selector: 'app-revenue-share-confirm-modal',

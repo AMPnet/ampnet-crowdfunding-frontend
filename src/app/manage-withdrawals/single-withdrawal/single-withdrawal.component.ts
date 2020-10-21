@@ -6,9 +6,9 @@ import {
     WalletCooperativeWithdrawService
 } from 'src/app/shared/services/wallet/wallet-cooperative/wallet-cooperative-withdraw.service';
 import { PopupService } from '../../shared/services/popup.service';
-import { delay, switchMap } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 import { ArkaneService } from '../../shared/services/arkane.service';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-single-withdrawal',
@@ -28,25 +28,7 @@ export class SingleWithdrawalComponent implements OnInit {
 
     ngOnInit() {
         this.withdrawalID = Number(this.route.snapshot.params.ID);
-
-        // TODO: uncomment when available
-        // this.withdrawal$ = this.withdrawCoopService.getApprovedWithdrawal(this.withdrawalID);
-
-        this.withdrawal$ = of(<CoopWithdraw>{
-            withdraw: {
-                id: 23,
-                amount: 15000,
-            },
-            user: {
-                uuid: 'asdfad',
-                first_name: 'Matija',
-                last_name: 'Pevec',
-                email: 'matija@ampnet.io'
-            },
-            project: {
-                name: 'Proyecto bueno'
-            },
-        }).pipe(delay(1000));
+        this.withdrawal$ = this.withdrawCoopService.getApprovedWithdrawal(this.withdrawalID);
     }
 
     approveAndGenerateCodeClicked() {

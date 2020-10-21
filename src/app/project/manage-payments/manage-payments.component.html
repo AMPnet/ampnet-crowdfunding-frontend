@@ -1,4 +1,4 @@
-<div *ngIf="(projectWallet !== undefined) && (project !== undefined)" class="root root-content-container">
+<div *ngIf="(projectWallet !== undefined) && (project !== undefined)" class="container">
     <div class="row">
         <div class="col-md-12 mb-3">
             <h4>{{ project.name }}</h4>
@@ -37,42 +37,42 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
 
-<div class="col-md-12 px-3">
-    <h5>Revenue share</h5>
-</div>
-<div class="explainer-mini px-3 mt-2 mb-2">Enter amount of money to be paid out to investors</div>
+        <div class="col-md-12 px-3 mt-2">
+            <h5>Revenue share</h5>
+        </div>
+        <div class="explainer-mini px-3 mt-2 mb-2">Enter amount of money to be paid out to investors</div>
 
-<div class="col-md-12">
-    <form [formGroup]="revenueForm">
-        <div class="row w-100">
-            <div class="col-md-6 align-self-center">
-                <div class="w-40 h-auto d-flex flex-column">
-                    <app-money-input-field
-                            placeholder="Enter maximum investment per user"
-                            #amountInput
-                            [control]="revenueForm.get('amount')">
-                    </app-money-input-field>
-                    <div *ngIf="revenueForm.dirty && revenueForm.invalid">
-                        <div *ngIf="revenueForm.get('amount').errors?.inputAmountInvalid"
-                             class="alert alert-danger">Payout must be lower or equal to balance.
+        <div class="col-md-12">
+            <form [formGroup]="revenueForm">
+                <div class="row w-100">
+                    <div class="col-md-6 align-self-center">
+                        <div class="w-40 h-auto d-flex flex-column">
+                            <app-money-input-field
+                                    placeholder="Enter maximum investment per user"
+                                    #amountInput
+                                    [control]="revenueForm.get('amount')">
+                            </app-money-input-field>
+                            <div *ngIf="revenueForm.dirty && revenueForm.invalid">
+                                <div *ngIf="revenueForm.get('amount').errors?.inputAmountInvalid"
+                                     class="alert alert-danger">Payout must be lower or equal to balance.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="float-left w-40 h-auto p-1">
+                            <button [disabled]="revenueForm.invalid"
+                                    id="buttonStartPayout"
+                                    routerLink="revenue_share/{{ amountInput.realValue }}"
+                                    class="btn btn-danger btn-action w-100 p-3 h-auto float-right w-auto">
+                                <i class="fas fa-chart-pie mr-2"></i>
+                                Start payout
+                            </button>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-6">
-                <div class="float-left w-40 h-auto p-1">
-                    <button [disabled]="revenueForm.invalid"
-                            id="buttonStartPayout"
-                            routerLink="revenue_share/{{ amountInput.realValue }}"
-                            class="btn btn-danger btn-action w-100 p-3 h-auto float-right w-auto">
-                        <i class="fas fa-chart-pie mr-2"></i>
-                        Start payout
-                    </button>
-                </div>
-            </div>
+            </form>
         </div>
-    </form>
+    </div>
 </div>

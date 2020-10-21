@@ -117,7 +117,7 @@
                 </div>
             </div>
 
-            <div class="transactions-history col-12" *ngIf="states.wallet.state === walletState.READY">
+            <div class="transactions col-12" *ngIf="states.wallet.state === walletState.READY">
                 <span class="transactions__title">Transaction History</span> 
                 <ng-container *ngIf="(transactionHistory$ | async) else transactionHistorySpinner">
                     <div *ngIf="transactionHistory.length === 0">
@@ -126,26 +126,13 @@
 
                     <div *ngIf="transactionHistory !== undefined && transactionHistory.length > 0" 
                          class="wow fadeIn">
-                         <div class="transactions-history">
-                            <div class="p-4" *ngFor="let transaction of transactionHistoryPage">
+                        <div class="transactions__history">
+                            <div class="py-4 flex__center-space" 
+                                 *ngFor="let transaction of transactionHistoryPage"
+                                 [class.transactions__error] = "transaction.state !== 'MINED'">
                                 <ng-container *ngIf="shouldShowTransaction(transaction)">
                                     <div class="transactions__left">
-                                        <ng-template *ngTemplateOutlet="transactionTypes"></ng-template>
-                                        <div class="left__info">
-                                            % - {{ transaction.date | date:'medium' }}
-                                        </div>
-                                    </div>
-                                    <div class="transactions__right">
-                                        <div class="right__amount">
-                                            {{ transaction.type | txAmountSign }} {{ transaction.amount | currencyCents }}
-                                        </div>
-                                        <div class="right__icon">
-                                            <i class="fal fa-file-chart-line"></i>
-                                        </div>
-                                    </div>
-
-                                    <ng-template #transactionTypes>
-                                        <div [class.transactions__error] = "transaction.state === 'PENDING' || 'FAILED'">
+                                        <div class="left__desc">
                                             <div *ngIf="transaction.type === 'INVEST'">
                                                 Investment <span>to</span>
                                             </div>
@@ -166,11 +153,34 @@
                                             </div>
                                             {{ transaction.description }}
                                         </div>
-                                    </ng-template>
+                                        <div class="left__info">
+                                            <span class="info__state-mined" 
+                                                  *ngIf="transaction.state === 'MINED'">
+                                                  1%
+                                            </span>
+                                            <span class="info__state-pending" 
+                                                  *ngIf="transaction.state === 'PENDING'">
+                                                  Pending
+                                            </span>
+                                            <span class="info__state-failed" 
+                                                  *ngIf="transaction.state === 'FAILED'">
+                                                  Failed
+                                            </span>
+                                             - {{ transaction.date | date:'medium' }}
+                                        </div>
+                                    </div>
+                                    <div class="transactions__right">
+                                        <div class="right__amount">
+                                            {{ transaction.type | txAmountSign }} {{ transaction.amount | currencyCents }}
+                                        </div>
+                                        <div class="right__icon">
+                                            <i class="far fa-file"></i>
+                                        </div>
+                                    </div>
                                 </ng-container>
 
                             </div>
-                         </div>
+                        </div>
                         
                         <table class="transactions__table w-100">
                             <tbody>

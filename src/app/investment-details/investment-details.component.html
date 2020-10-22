@@ -1,6 +1,6 @@
-<div *ngIf="investment !== undefined" class="root root-content-container">
+<div *ngIf="investment !== undefined" class="container">
     <div class="row mb-5">
-        <div class="col-md-12">
+        <div class="col-md-12 mt-3">
             <h4>{{ investment.project.name }}</h4>
         </div>
         <div *ngIf="isCancelable" class="float-right w-100">
@@ -27,8 +27,12 @@
             </ul>
         </div>
     </div>
+
     <div class="explainer-mini text-uppercase mb-3">
         Investment details
     </div>
+</div>
+
+<div *ngIf="investment !== undefined">
     <app-offer-details></app-offer-details>
 </div>

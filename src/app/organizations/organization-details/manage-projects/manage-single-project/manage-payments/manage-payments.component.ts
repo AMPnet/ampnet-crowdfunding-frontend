@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { displayBackendError } from 'src/app/utilities/error-handler';
-import { Project, ProjectService } from '../../shared/services/project/project.service';
-import { WalletService } from '../../shared/services/wallet/wallet.service';
-import { WalletDetails } from '../../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
+import { Project, ProjectService } from '../../../../../shared/services/project/project.service';
+import { WalletService } from '../../../../../shared/services/wallet/wallet.service';
+import { WalletDetails } from '../../../../../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 
 @Component({

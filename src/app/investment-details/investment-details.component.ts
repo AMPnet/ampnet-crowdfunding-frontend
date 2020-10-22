@@ -11,7 +11,7 @@ import { ArkaneService } from '../shared/services/arkane.service';
 @Component({
     selector: 'app-investment-details',
     templateUrl: './investment-details.component.html',
-    styleUrls: ['./investment-details.component.css']
+    styleUrls: ['./investment-details.component.scss']
 })
 export class InvestmentDetailsComponent implements OnInit {
 

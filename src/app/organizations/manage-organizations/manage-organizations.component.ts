@@ -1,57 +1,37 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Organization, OrganizationInvite, OrganizationService } from '../../shared/services/project/organization.service';
-import { displayBackendError } from 'src/app/utilities/error-handler';
-import { Router } from '@angular/router';
+import { displayBackendError, hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import swal from 'sweetalert2';
+import { BehaviorSubject, EMPTY, Observable } from 'rxjs';
+import { catchError, delay, map, switchMap } from 'rxjs/operators';
 
 @Component({
     selector: 'app-manage-organizations',
     templateUrl: './manage-organizations.component.html',
     styleUrls: ['./manage-organizations.component.css']
 })
-export class ManageOrganizationsComponent implements OnInit {
+export class ManageOrganizationsComponent {
+    organizations$: Observable<Organization[]>;
+    organizationInvites$: Observable<OrganizationInvite[]>;
 
-    @Input()
-    organizations: Organization[];
+    refreshOrganizationsSubject = new BehaviorSubject<void>(null);
+    refreshInvitesSubject = new BehaviorSubject<void>(null);
 
-    invitedToOrgs: OrganizationInvite[];
+    constructor(private organizationService: OrganizationService) {
 
-    constructor(
-        private organizationService: OrganizationService,
-        private router: Router) {
-    }
+        this.organizations$ = this.refreshOrganizationsSubject.pipe(
+            switchMap(_ => this.organizationService.getPersonalOrganizations().pipe(this.handleErrors)),
+            map(res => res.organizations));
 
-    ngOnInit() {
-        this.fetchPersonalOrgs();
-        this.fetchOrgInvites();
+        this.organizationInvites$ = this.refreshInvitesSubject.pipe(
+            switchMap(_ => this.organizationService.getMyInvitations().pipe(this.handleErrors)),
+            map(res => res.organization_invites));
     }
 
     refreshState() {
-        this.fetchPersonalOrgs();
-        this.fetchOrgInvites();
-    }
-
-    fetchPersonalOrgs() {
-        SpinnerUtil.showSpinner();
-        this.organizationService.getPersonalOrganizations().subscribe(res => {
-            this.organizations = res.organizations;
-            SpinnerUtil.hideSpinner();
-        }, err => {
-            SpinnerUtil.hideSpinner();
-            displayBackendError(err);
-        });
-    }
-
-    fetchOrgInvites() {
-        SpinnerUtil.showSpinner();
-        this.organizationService.getMyInvitations().subscribe(res => {
-            SpinnerUtil.hideSpinner();
-            this.invitedToOrgs = res.organization_invites;
-        }, err => {
-            SpinnerUtil.hideSpinner();
-            displayBackendError(err);
-        });
+        this.refreshOrganizationsSubject.next();
+        this.refreshInvitesSubject.next();
     }
 
     acceptInvite(orgID: string) {
@@ -60,10 +40,15 @@ export class ManageOrganizationsComponent implements OnInit {
             SpinnerUtil.hideSpinner();
             swal('Success', 'Accepted invitation to organization', 'success');
             this.refreshState();
-        }, err => {
-            SpinnerUtil.hideSpinner();
-            displayBackendError(err);
-        });
+        }, hideSpinnerAndDisplayError);
     }
 
+    private handleErrors<T>(source: Observable<T>) {
+        return source.pipe(
+            catchError(err => {
+                displayBackendError(err);
+                return EMPTY;
+            })
+        );
+    }
 }

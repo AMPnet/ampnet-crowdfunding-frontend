@@ -42,10 +42,12 @@ import { ManageOrganizationsComponent } from './organizations/manage-organizatio
 import { OrganizationDetailsComponent } from './organizations/organization-details/organization-details.component';
 import { CreateNewProjectComponent } from './projects/create-new-project/create-new-project.component';
 import { OnboardingComponent } from './authentication/onboarding/onboarding.component';
-import { ManageProjectsComponent } from './manage-projects/manage-projects.component';
-import { ManageSingleProjectComponent } from './manage-projects/manage-single-project/manage-single-project.component';
+import { ManageProjectsComponent } from './organizations/organization-details/manage-projects/manage-projects.component';
+// tslint:disable-next-line:max-line-length
+import { ManageSingleProjectComponent } from './organizations/organization-details/manage-projects/manage-single-project/manage-single-project.component';
 import { VerifySignOfferComponent } from './offers/offer-details/verify-sign-offer/verify-sign-offer.component';
-import { ManagePaymentsComponent } from './project/manage-payments/manage-payments.component';
+// tslint:disable-next-line:max-line-length
+import { ManagePaymentsComponent } from './organizations/organization-details/manage-projects/manage-single-project/manage-payments/manage-payments.component';
 import { ManageWithdrawalsComponent } from './manage-withdrawals/manage-withdrawals.component';
 import { SingleWithdrawalComponent } from './manage-withdrawals/single-withdrawal/single-withdrawal.component';
 import { DepositComponent } from './deposit/deposit.component';
@@ -85,6 +87,8 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { UploadAreaComponent } from './shared/components/upload-area/upload-area.component';
 import { SafePipe } from './pipes/safe.pipe';
 import { URLValidator } from './shared/validators/url.validator';
+// tslint:disable-next-line:max-line-length
+import { ManageSingleDepositModalComponent } from './manage-deposits/manage-single-deposit/manage-single-deposit-modal/manage-single-deposit-modal.component';
 
 const socialAuthServiceConfig = {
     provide: 'SocialAuthServiceConfig',
@@ -173,6 +177,7 @@ const socialAuthServiceConfig = {
         LocationMapComponent,
         MapModalComponent,
         TxIconStatus,
+        ManageSingleDepositModalComponent,
         TxAmountSign,
         ActionButtonComponent,
         MoneyInputFieldComponent,

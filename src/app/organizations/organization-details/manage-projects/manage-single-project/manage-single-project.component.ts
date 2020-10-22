@@ -2,16 +2,16 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { displayBackendErrorRx } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
-import { WalletDetails } from '../../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
-import { Project, ProjectService } from '../../shared/services/project/project.service';
-import { WalletService } from '../../shared/services/wallet/wallet.service';
-import { ManageProjectsService } from '../../shared/services/project/manage-projects.service';
+import { WalletDetails } from '../../../../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
+import { Project, ProjectService } from '../../../../shared/services/project/project.service';
+import { WalletService } from '../../../../shared/services/wallet/wallet.service';
+import { ManageProjectsService } from '../../../../shared/services/project/manage-projects.service';
 import { catchError, finalize, map, shareReplay, switchMap, tap } from 'rxjs/operators';
 import { BehaviorSubject, EMPTY, Observable, of, throwError } from 'rxjs';
-import { ArkaneService } from '../../shared/services/arkane.service';
-import { PopupService } from '../../shared/services/popup.service';
+import { ArkaneService } from '../../../../shared/services/arkane.service';
+import { PopupService } from '../../../../shared/services/popup.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { URLValidator } from '../../shared/validators/url.validator';
+import { URLValidator } from '../../../../shared/validators/url.validator';
 
 @Component({
     selector: 'app-manage-single-project',
@@ -171,5 +171,9 @@ export class ManageSingleProjectComponent {
             tap(() => this.refreshProjectSubject.next(null)),
             finalize(() => SpinnerUtil.hideSpinner())
         );
+    }
+
+    isWalletVerified(wallet: WalletDetails) {
+        return !!wallet && !!wallet?.hash;
     }
 }

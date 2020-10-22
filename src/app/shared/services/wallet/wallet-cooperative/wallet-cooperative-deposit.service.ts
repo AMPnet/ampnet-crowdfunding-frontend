@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BackendHttpClient } from '../../backend-http-client.service';
 import { TransactionInfo } from './wallet-cooperative-wallet.service';
+import { Project } from '../../project/project.service';
+import { User } from '../../user/signup.service';
 
 @Injectable({
     providedIn: 'root'
@@ -17,8 +19,13 @@ export class WalletCooperativeDepositService {
         });
     }
 
-    generateDepositApprovalURL(origin: string, id: number, amount: number) {
-        return `${origin}${this.endpoint}/${id}/approve?amount=${amount}`;
+    approveDeposit(depositID: number, amount: number, document: File) {
+        const formData = new FormData();
+
+        formData.append('amount', String(amount));
+        formData.append('file', document, document.name);
+
+        return this.http.post<Deposit>(`${this.endpoint}/${depositID}/approve`, formData);
     }
 
     getUnapprovedDeposits() {
@@ -42,13 +49,8 @@ export class WalletCooperativeDepositService {
 
 export interface DepositSearchResponse {
     deposit: Deposit;
-    user: {
-        uuid: string;
-        email: string;
-        first_name: string;
-        last_name: string;
-        enabled: boolean;
-    };
+    user: User;
+    project: Project;
 }
 
 interface Deposit {

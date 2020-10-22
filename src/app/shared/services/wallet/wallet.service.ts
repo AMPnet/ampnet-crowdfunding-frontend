@@ -120,6 +120,7 @@ export interface UserTransaction {
     to: string;
     to_tx_hash: string;
     type: TransactionType;
+    share: string;
 }
 
 interface UserTransactionResponse {

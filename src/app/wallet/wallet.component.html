@@ -129,54 +129,44 @@
                             <ng-container *ngFor="let transaction of transactionHistoryPage">
                                 <ng-container *ngIf="shouldShowTransaction(transaction)">
                                     <div class="transactions__single-element" 
-                                         [class.transactions__error] = "transaction.state !== 'MINED' || transaction.type === 'APPROVE_INVESTMENT'">
+                                         [class.transactions__grayed-out]="transaction.state !== 'MINED' || transaction.type === 'APPROVE_INVESTMENT'">
                                         <div class="transactions__left">
                                             <div class="left__desc">
-                                                <div class="left__transaction-type" 
-                                                    *ngIf="transaction.type === 'INVEST'">
-                                                    Investment <span class="left__conjuctor">to</span>
-                                                </div>
-                                                <div class="left__transaction-type" 
-                                                    *ngIf="transaction.type === 'DEPOSIT'">
-                                                    Deposit
-                                                </div>
-                                                <div class="left__transaction-type" 
-                                                    *ngIf="transaction.type === 'WITHDRAW'">
-                                                    Withdraw
-                                                </div>
-                                                <div class="left__transaction-type" 
-                                                    *ngIf="transaction.type === 'SHARE_PAYOUT'">
-                                                    Dividend <span class="left__conjuctor">from</span>
-                                                </div>
-                                                <div class="left__transaction-type" 
-                                                    *ngIf="transaction.type === 'CANCEL_INVESTMENT'">
-                                                    Cancel investment <span class="left__conjuctor">to</span>
-                                                </div>
-                                                <div class="left__transaction-type" 
-                                                    *ngIf="transaction.type === 'APPROVE_INVESTMENT'">
-                                                    Approve Investment <span class="left__conjuctor">to</span>
+                                                <div class="left__transaction-type">
+                                                    <ng-container *ngIf="transaction.type === transactionType.INVEST">
+                                                        <b>Investment</b> to
+                                                    </ng-container>
+                                                    <ng-container *ngIf="transaction.type === transactionType.DEPOSIT">
+                                                        <b>Deposit</b>
+                                                    </ng-container>
+                                                    <ng-container *ngIf="transaction.type === transactionType.WITHDRAW">
+                                                        <b>Withdraw</b>
+                                                    </ng-container>
+                                                    <ng-container *ngIf="transaction.type === transactionType.SHARE_PAYOUT">
+                                                        <b>Dividend</b> from
+                                                    </ng-container>
+                                                    <ng-container *ngIf="transaction.type === transactionType.CANCEL_INVESTMENT">
+                                                        <b>Cancel investment</b> from
+                                                    </ng-container>
+                                                    <ng-container *ngIf="transaction.type === transactionType.APPROVE_INVESTMENT">
+                                                        <b>Approve investment</b> to
+                                                    </ng-container>
                                                 </div>
                                                 {{ transaction.description }}
                                             </div>
                                             <div class="left__info">
-                                                <span class="info__state-mined" 
-                                                    *ngIf="transaction.state === 'MINED'">
-                                                    <span class="state__invested" 
-                                                            *ngIf="transaction.type === 'INVEST'">
-                                                        1% Invested -
+                                                <span class="info__state-mined"
+                                                      *ngIf="transaction.state === transactionState.MINED">
+                                                    <span class="state__invested"
+                                                          *ngIf="transaction.type === transactionType.INVEST">
+                                                        {{ transaction.share | percent:'1.0-10'}} Invested —
                                                     </span>
                                                 </span>
-                                                <span class="info__state-pending" 
-                                                    *ngIf="transaction.state === 'PENDING'">
+                                                <span class="info__state-pending" *ngIf="transaction.state === 'PENDING'">
                                                     Pending
                                                 </span>
-                                                <span class="info__state-failed" 
-                                                    *ngIf="transaction.state === 'FAILED'">
+                                                <span class="info__state-failed" *ngIf="transaction.state === 'FAILED'">
                                                     Failed
-                                                    <span class="state__invested" 
-                                                            *ngIf="transaction.type === 'INVEST'">
-                                                        1% Invested -
-                                                    </span>
                                                 </span>
                                                 {{ transaction.date | date:'medium' }}
                                             </div>
@@ -187,9 +177,11 @@
                                                     {{ transaction.type | txAmountSign }} {{ transaction.amount | currencyCents }}
                                                 </span>
                                             </div>
-                                            <div class="right__icon">
-                                                <i class="fas fa-file-chart-line"></i>
-                                            </div>
+
+                                            <!-- TODO: Implement downloading statement -->
+                                            <!-- <div class="right__icon"> -->
+                                            <!--    <i class="fas fa-file-chart-line"></i> -->
+                                            <!-- </div> -->
                                         </div>
                                     </div>
                                 </ng-container>

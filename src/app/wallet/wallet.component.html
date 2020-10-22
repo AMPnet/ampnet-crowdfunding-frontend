@@ -118,147 +118,85 @@
             </div>
 
             <div class="transactions col-12" *ngIf="states.wallet.state === walletState.READY">
-                <span class="transactions__title">Transaction History</span> 
+                <div class="transactions__title">Transaction History</div> 
                 <ng-container *ngIf="(transactionHistory$ | async) else transactionHistorySpinner">
                     <div *ngIf="transactionHistory.length === 0">
                         <span class="transactions__empty"></span>Your transaction history is empty.
                     </div>
-
                     <div *ngIf="transactionHistory !== undefined && transactionHistory.length > 0" 
                          class="wow fadeIn">
                         <div class="transactions__history">
-                            <div class="py-4 flex__center-space" 
-                                 *ngFor="let transaction of transactionHistoryPage"
-                                 [class.transactions__error] = "transaction.state !== 'MINED'">
+                            <ng-container *ngFor="let transaction of transactionHistoryPage">
                                 <ng-container *ngIf="shouldShowTransaction(transaction)">
-                                    <div class="transactions__left">
-                                        <div class="left__desc">
-                                            <div *ngIf="transaction.type === 'INVEST'">
-                                                Investment <span>to</span>
-                                            </div>
-                                            <div *ngIf="transaction.type === 'DEPOSIT'">
-                                                Deposit
-                                            </div>
-                                            <div *ngIf="transaction.type === 'WITHDRAW'">
-                                                Withdraw
-                                            </div>
-                                            <div *ngIf="transaction.type === 'SHARE_PAYOUT'">
-                                                Dividend <span>from</span>
-                                            </div>
-                                            <div *ngIf="transaction.type === 'CANCEL_INVESTMENT'">
-                                                Cancel investment <span>to</span>
-                                            </div>
-                                            <div *ngIf="transaction.type === 'APPROVE_INVESTMENT'">
-                                                Investment <span>to</span>
-                                            </div>
-                                            {{ transaction.description }}
-                                        </div>
-                                        <div class="left__info">
-                                            <span class="info__state-mined" 
-                                                  *ngIf="transaction.state === 'MINED'">
-                                                  1%
-                                            </span>
-                                            <span class="info__state-pending" 
-                                                  *ngIf="transaction.state === 'PENDING'">
-                                                  Pending
-                                            </span>
-                                            <span class="info__state-failed" 
-                                                  *ngIf="transaction.state === 'FAILED'">
-                                                  Failed
-                                            </span>
-                                             - {{ transaction.date | date:'medium' }}
-                                        </div>
-                                    </div>
-                                    <div class="transactions__right">
-                                        <div class="right__amount">
-                                            {{ transaction.type | txAmountSign }} {{ transaction.amount | currencyCents }}
-                                        </div>
-                                        <div class="right__icon">
-                                            <i class="far fa-file"></i>
-                                        </div>
-                                    </div>
-                                </ng-container>
-
-                            </div>
-                        </div>
-                        
-                        <table class="transactions__table w-100">
-                            <tbody>
-                                <tr *ngFor="let transaction of transactionHistoryPage">
-                                    <ng-container *ngIf="shouldShowTransaction(transaction)">
-                                        <!-- <td class="table__mobile">
-                                            <div class="table__top">
-                                                <div class="top__left">
-                                                    <ng-template *ngTemplateOutlet="transactionTypes"></ng-template>
+                                    <div class="transactions__single-element" 
+                                         [class.transactions__error] = "transaction.state !== 'MINED' || transaction.type === 'APPROVE_INVESTMENT'">
+                                        <div class="transactions__left">
+                                            <div class="left__desc">
+                                                <div class="left__transaction-type" 
+                                                    *ngIf="transaction.type === 'INVEST'">
+                                                    Investment <span class="left__conjuctor">to</span>
                                                 </div>
-                                                <div class="top__right"></div>
-                                            </div>
-                                            <div class="table__bottom">
-                                                <div class="bottom__left">
-
-                                                </div>
-                                                <div class="bottom__right">
-
-                                                </div>
-                                            </div>
-                                        </td> -->
-                                        <!-- <td class="table__left">
-                                            <div [class.transactions__error] = "transaction.state === 'PENDING' || 'FAILED'">
-                                                <div *ngIf="transaction.type === 'INVEST'">
-                                                    Investment <span>to</span>
-                                                </div>
-                                                <div *ngIf="transaction.type === 'DEPOSIT'">
+                                                <div class="left__transaction-type" 
+                                                    *ngIf="transaction.type === 'DEPOSIT'">
                                                     Deposit
                                                 </div>
-                                                <div *ngIf="transaction.type === 'WITHDRAW'">
+                                                <div class="left__transaction-type" 
+                                                    *ngIf="transaction.type === 'WITHDRAW'">
                                                     Withdraw
                                                 </div>
-                                                <div *ngIf="transaction.type === 'SHARE_PAYOUT'">
-                                                    Dividend <span>from</span>
+                                                <div class="left__transaction-type" 
+                                                    *ngIf="transaction.type === 'SHARE_PAYOUT'">
+                                                    Dividend <span class="left__conjuctor">from</span>
                                                 </div>
-                                                <div *ngIf="transaction.type === 'CANCEL_INVESTMENT'">
-                                                    Cancel investment <span>to</span>
+                                                <div class="left__transaction-type" 
+                                                    *ngIf="transaction.type === 'CANCEL_INVESTMENT'">
+                                                    Cancel investment <span class="left__conjuctor">to</span>
                                                 </div>
-                                                <div *ngIf="transaction.type === 'APPROVE_INVESTMENT'">
-                                                    Investment <span>to</span>
+                                                <div class="left__transaction-type" 
+                                                    *ngIf="transaction.type === 'APPROVE_INVESTMENT'">
+                                                    Approve Investment <span class="left__conjuctor">to</span>
                                                 </div>
                                                 {{ transaction.description }}
                                             </div>
-                                        </td> -->
-                                       <!--  <tr class="table__top">
-                                            <td class="transactions__top">
-                                                
-                                            </td>
-                                            <td class="transactions__amount">
-                                                {{ transaction.type | txAmountSign }} {{ transaction.amount | currencyCents }}
-                                            </td> -->
-                                        <!-- <td class="table__data">
-                                            <span>{{ transaction.type }}</span>
-                                            <span>{{ transaction.description }}</span>
-                                            <span>{{ transaction.date | date:'medium' }}</span>
-                                        </td> -->
-                                        <!-- <td>
-                                            <i class="icon-type fas {{ transaction.state | txIconStatus }}"></i>
-                                        </td> -->
-                                    
-                                        <!-- </tr> -->
-                                        <!-- <tr class="table__bottom">
-                                            <td class="transactions__info">
-                                                & invested - {{ transaction.date | date:'medium' }}
-                                            </td>
-                                            <td class="transactions__icon">
-                                                <i class="icon-type fas {{ transaction.state | txIconStatus }}"></i>
-                                            </td>
-                                        </tr> -->
-
-                                        
-                                    </ng-container>
-                                </tr>
-                                
-                            </tbody>
-                        </table>
+                                            <div class="left__info">
+                                                <span class="info__state-mined" 
+                                                    *ngIf="transaction.state === 'MINED'">
+                                                    <span class="state__invested" 
+                                                            *ngIf="transaction.type === 'INVEST'">
+                                                        1% Invested -
+                                                    </span>
+                                                </span>
+                                                <span class="info__state-pending" 
+                                                    *ngIf="transaction.state === 'PENDING'">
+                                                    Pending
+                                                </span>
+                                                <span class="info__state-failed" 
+                                                    *ngIf="transaction.state === 'FAILED'">
+                                                    Failed
+                                                    <span class="state__invested" 
+                                                            *ngIf="transaction.type === 'INVEST'">
+                                                        1% Invested -
+                                                    </span>
+                                                </span>
+                                                {{ transaction.date | date:'medium' }}
+                                            </div>
+                                        </div>
+                                        <div class="transactions__right">
+                                            <div class="right__amount">
+                                                <span [class.amount__plus]="(transaction.type | txAmountSign) === '+'">
+                                                    {{ transaction.type | txAmountSign }} {{ transaction.amount | currencyCents }}
+                                                </span>
+                                            </div>
+                                            <div class="right__icon">
+                                                <i class="fas fa-file-chart-line"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                            </ng-container>
+                        </div>
                
-                        <div class="d-flex justify-content-center p-2">
+                        <div class="transactions__pagination">
                             <ngb-pagination [collectionSize]="transactionItems" [(page)]="tablePage"
                                             [pageSize]="tablePageSize"
                                             (pageChange)="refreshTransactionHistoryPage()">

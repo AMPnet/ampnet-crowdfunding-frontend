@@ -26,7 +26,7 @@
     "@arkane-network/arkane-connect": "1.20.0",
     "@auth0/angular-jwt": "^2.0.0",
     "@chenfengyuan/datepicker": "^1.0.8",
-    "@fortawesome/fontawesome-free": "^5.3.1",
+    "@fortawesome/fontawesome-pro": "^5.15.1",
     "@ng-bootstrap/ng-bootstrap": "^7.0.0",
     "@ng-toolkit/universal": "^1.1.40",
     "@ngx-translate/core": "^11.0.1",

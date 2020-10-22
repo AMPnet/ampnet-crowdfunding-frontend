@@ -4,7 +4,6 @@
 @mixin alert-colors($background, $color) {
   background-color: $background;
   color: $color;
-  // TODO: Check this on offer invest screen
   border: none;
   svg {
     color: $color;

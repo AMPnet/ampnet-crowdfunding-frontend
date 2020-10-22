@@ -5,7 +5,6 @@ import { BehaviorSubject, combineLatest, EMPTY } from 'rxjs';
 import { map, switchMap, take, tap } from 'rxjs/operators';
 import { WebsocketService } from '../shared/services/websocket.service';
 import { ArkaneService } from '../shared/services/arkane.service';
-import { conforms } from 'lodash';
 
 @Component({
     selector: 'app-wallet',

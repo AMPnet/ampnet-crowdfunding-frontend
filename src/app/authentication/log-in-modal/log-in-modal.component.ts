@@ -81,4 +81,9 @@ export class LogInModalComponent implements OnInit {
         $('#log-in-modal').modal('toggle');
         this.router.navigate(['/dash']);
     }
+
+    forgotPasswordClicked() {
+        $('#log-in-modal').modal('toggle');
+        this.router.navigate([`/forgot_password`]);
+    }
 }

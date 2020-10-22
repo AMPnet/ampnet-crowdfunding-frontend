@@ -87,6 +87,8 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { UploadAreaComponent } from './shared/components/upload-area/upload-area.component';
 import { SafePipe } from './pipes/safe.pipe';
 import { URLValidator } from './shared/validators/url.validator';
+import { ForgotPasswordComponent } from './authentication/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './authentication/reset-password/reset-password.component';
 // tslint:disable-next-line:max-line-length
 import { ManageSingleDepositModalComponent } from './manage-deposits/manage-single-deposit/manage-single-deposit-modal/manage-single-deposit-modal.component';
 
@@ -182,7 +184,9 @@ const socialAuthServiceConfig = {
         ActionButtonComponent,
         MoneyInputFieldComponent,
         UploadAreaComponent,
-        URLValidator
+        URLValidator,
+        ForgotPasswordComponent,
+        ResetPasswordComponent
     ],
     imports: [
         BrowserModule,

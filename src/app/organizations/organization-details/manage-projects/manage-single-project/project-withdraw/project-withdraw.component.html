@@ -2,11 +2,11 @@
     <ng-container *ngIf="(withdrawal$ | async) as withdrawal">
         <div *ngIf="withdrawal === withdrawalState.EMPTY" class="row">
             <div class="col-md-12">
-                <form [formGroup]="confirmWithdrawForm">
+                <form [formGroup]="requestWithdrawForm">
                     <h2 class="app-page-subtitle">Withdrawal</h2>
                     <app-money-input-field
                             placeholder="Enter withdrawal amount"
-                            [control]="confirmWithdrawForm.get('amount')">
+                            [control]="requestWithdrawForm.get('amount')">
                     </app-money-input-field>
 
                     <h2 class="app-page-subtitle">Enter bank account details</h2>
@@ -15,6 +15,7 @@
                            type="text">
 
                     <app-action-button text="Withdraw money"
+                                       [disabled]="!requestWithdrawForm.valid"
                                        [onClick]="requestWithdrawal.bind(this)">
                     </app-action-button>
                 </form>

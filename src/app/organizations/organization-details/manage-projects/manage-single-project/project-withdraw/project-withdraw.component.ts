@@ -22,7 +22,7 @@ export class ProjectWithdrawComponent {
     refreshWithdrawalSubject = new BehaviorSubject<Withdraw | WithdrawalState>(null);
     withdrawal$: Observable<Withdraw | WithdrawalState>;
 
-    confirmWithdrawForm: FormGroup;
+    requestWithdrawForm: FormGroup;
 
     constructor(private withdrawService: WithdrawService,
                 private router: Router,
@@ -43,7 +43,7 @@ export class ProjectWithdrawComponent {
             )
         );
 
-        this.confirmWithdrawForm = this.fb.group({
+        this.requestWithdrawForm = this.fb.group({
             amount: [0, [
                 Validators.required,
                 (c: FormControl) => c.value > 0 ? null : {invalid: true}]
@@ -53,8 +53,8 @@ export class ProjectWithdrawComponent {
     }
 
     requestWithdrawal() {
-        const amount: number = this.confirmWithdrawForm.get('amount').value;
-        const iban: string = this.confirmWithdrawForm.get('iban').value.replace(/\s/g, '');
+        const amount: number = this.requestWithdrawForm.get('amount').value;
+        const iban: string = this.requestWithdrawForm.get('iban').value.replace(/\s/g, '');
 
         return this.withdrawService.createProjectWithdrawRequest(amount, iban, this.projectID).pipe(
             displayBackendErrorRx(),
@@ -73,7 +73,7 @@ export class ProjectWithdrawComponent {
                     title: 'Transaction signed',
                     text: 'Transaction is being processed...'
                 })),
-                switchMap(() => this.router.navigate(['/dash/wallet'])),
+                switchMap(() => this.recoverBack()),
                 finalize(() => SpinnerUtil.hideSpinner())
             );
         };
@@ -90,7 +90,7 @@ export class ProjectWithdrawComponent {
     }
 
     private recoverBack(): Observable<never> {
-        this.router.navigate(['../']);
+        this.router.navigate(['../'], { relativeTo: this.route });
         return EMPTY;
     }
 }

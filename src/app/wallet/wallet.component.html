@@ -108,7 +108,7 @@
                             <table class="table">
                                 <tbody>
                                 <tr *ngFor="let transaction of transactionHistoryPage">
-                                    <ng-container *ngIf="shouldShowTransaction(transaction)">
+                                    <ng-container *ngIf="shouldShowTransaction(transaction, transactionHistoryPage)">
                                         <td class="icon-type-cell icon-type-cell__lead pr-0 pl-0">
                                         <span class="icon-type">
                                             <i class="fas mr-3 {{ transaction.type | txIconType }}"></i>

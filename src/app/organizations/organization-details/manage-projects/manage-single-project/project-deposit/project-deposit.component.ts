@@ -46,7 +46,7 @@ export class ProjectDepositComponent {
     }
 
     private recoverBack(): Observable<never> {
-        this.router.navigate(['../']);
+        this.router.navigate(['../'], { relativeTo: this.route });
         return EMPTY;
     }
 }

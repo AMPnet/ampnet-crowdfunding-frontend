@@ -69,7 +69,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="float-left w-40 h-auto p-1">
-                                <button [disabled]="revenueShareForm.invalid"
+                                <button [disabled]="!revenueShareForm.dirty || revenueShareForm.invalid"
                                         id="buttonStartPayout"
                                         routerLink="revenue_share/{{ revenueShareForm.get('amount').value }}"
                                         class="btn btn-danger btn-action w-100 p-3 h-auto float-right w-auto">

@@ -24,6 +24,7 @@
 
                 <app-action-button text="Create"
                                    loadingText="Creating organization..." faIcon="fa-plus"
+                                   [disabled]="!newOrganizationForm.valid"
                                    [onClick]="createOrganization.bind(this)">
                 </app-action-button>
             </div>

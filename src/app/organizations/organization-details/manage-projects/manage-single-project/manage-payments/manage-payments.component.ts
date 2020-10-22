@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { displayBackendErrorRx } from 'src/app/utilities/error-handler';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
-import { catchError, map, shareReplay, switchMap } from 'rxjs/operators';
+import { catchError, map, shareReplay, startWith, switchMap } from 'rxjs/operators';
 import { MiddlewareService, ProjectWalletInfo } from '../../../../../shared/services/middleware/middleware.service';
 import { Project, ProjectService } from '../../../../../shared/services/project/project.service';
 import { WalletService } from '../../../../../shared/services/wallet/wallet.service';

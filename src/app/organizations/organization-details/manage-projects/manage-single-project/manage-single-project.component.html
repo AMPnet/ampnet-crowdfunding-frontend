@@ -4,7 +4,7 @@
     updateForm: updateForm$ | async
 } as states" class="container" id="core-root-manager">
     <ng-container *ngIf="!!states.project && !!states.wallet else spinner">
-        <div class="row row-eq-height">
+        <div class="row row-eq-height" *ngIf="states.wallet !== walletState.EMPTY">
             <h5 class="text-uppercase mb-3 col-md-8">Manage your project</h5>
 
             <div class="col-md-4">

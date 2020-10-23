@@ -24,6 +24,7 @@ export class WalletComponent implements OnDestroy {
 
     walletState = WalletState;
     transactionState = TransactionState;
+    transactionType = TransactionType;
 
     refreshTransactionHistorySubject = new BehaviorSubject<'fromPending'>(null);
     transactionHistory$ = this.refreshTransactionHistorySubject.pipe(

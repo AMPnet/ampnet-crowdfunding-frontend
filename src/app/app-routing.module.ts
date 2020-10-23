@@ -46,6 +46,8 @@ import { ManagePaymentsComponent } from './organizations/organization-details/ma
 import { OfferDetailsGuard } from './offers/offer-details/offer-details.guard';
 import { ProjectWithdrawComponent } from './organizations/organization-details/manage-projects/manage-single-project/project-withdraw/project-withdraw.component';
 import { ProjectDepositComponent } from './organizations/organization-details/manage-projects/manage-single-project/project-deposit/project-deposit.component';
+import { ForgotPasswordComponent } from './authentication/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './authentication/reset-password/reset-password.component';
 
 const routes: Routes = [
     {
@@ -57,6 +59,8 @@ const routes: Routes = [
             {path: 'overview/:isOverview', component: OffersComponent},
             {path: 'overview/:id/:isOverview', component: OfferDetailsComponent, canActivate: [OfferDetailsGuard]},
             {path: 'onboarding', component: OnboardingComponent},
+            {path: 'forgot_password', component: ForgotPasswordComponent},
+            {path: 'reset_password', component: ResetPasswordComponent},
         ]
     },
     {path: 'summary', component: SummaryComponent},

@@ -1,0 +1,13 @@
+@import "app";
+
+.header-image {
+    height: 50vh;
+    width: 100%;
+    object-fit: cover;
+}
+
+@include media-breakpoint-up(lg) {
+  .container {
+    padding: 0;
+  }
+}

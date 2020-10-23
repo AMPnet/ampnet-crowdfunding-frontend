@@ -1,0 +1,68 @@
+@import "app";
+
+.container {
+  padding: 0;
+  color: $title-color;
+}
+
+.investment {
+  &-total {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 25px 15px 15px 15px;
+    border: 1px solid #E5E5E5;
+    margin-bottom: 32px;
+    &__right {
+      text-align: right;
+    }
+    &__left {
+      text-align: left;
+    }
+    p {
+      text-transform: uppercase;
+      font-size: $font-size-mobile-title-small;
+    }
+    h2 {
+      font-size: $font-size-mobile-title;
+      font-weight: normal;
+    }
+  }
+}
+
+.history {
+  &__title {
+    padding: 0 15px;
+    text-transform: uppercase;
+    margin-bottom: 32px;
+    font-size: $font-size-mobile-title-small;
+    letter-spacing: 2px;
+  }
+  &__item {
+    margin-bottom: 5px;
+    cursor: pointer;
+  }
+}
+  
+
+@include media-breakpoint-up(lg) {
+  .container {
+    padding: 0 15px;
+  }
+
+  .investment {
+    &-total {
+      padding: 24px 34px;
+      border-radius: 8px;
+      box-shadow: 0 6px 6px 0 rgba($color: #111111, $alpha: 0.04);
+      p {
+        font-size: $font-size-desktop-small;
+        letter-spacing: 2px;
+      }
+      h2 {
+        font-size: $font-size-desktop-title;
+        letter-spacing: 1.5px;
+      }
+    }
+  }
+}

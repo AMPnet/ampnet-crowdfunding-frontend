@@ -91,6 +91,7 @@ import { ForgotPasswordComponent } from './authentication/forgot-password/forgot
 import { ResetPasswordComponent } from './authentication/reset-password/reset-password.component';
 // tslint:disable-next-line:max-line-length
 import { ManageSingleDepositModalComponent } from './manage-deposits/manage-single-deposit/manage-single-deposit-modal/manage-single-deposit-modal.component';
+import { TabsModule } from 'ngx-bootstrap/tabs';
 
 const socialAuthServiceConfig = {
     provide: 'SocialAuthServiceConfig',
@@ -195,6 +196,7 @@ const socialAuthServiceConfig = {
         DisqusModule.forRoot('ampnet.disqus.com/embed.js'),
         TooltipModule.forRoot(),
         ModalModule.forRoot(),
+        TabsModule.forRoot(),
         FormsModule,
         ReactiveFormsModule,
         HttpClientModule,

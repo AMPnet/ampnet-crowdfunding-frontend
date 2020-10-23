@@ -34,5 +34,5 @@
 </div>
 
 <div *ngIf="investment !== undefined">
-    <app-offer-details></app-offer-details>
+    <app-offer-details [isPortfolioView] = "true" [investmentData] = "investment"></app-offer-details>
 </div>

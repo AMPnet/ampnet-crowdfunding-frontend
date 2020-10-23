@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Meta } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LinkPreview, NewsPreviewService } from 'src/app/shared/services/news-preview.service';
@@ -14,6 +14,7 @@ import { catchError, shareReplay, switchMap, take, tap } from 'rxjs/operators';
 import { User } from '../../shared/services/user/signup.service';
 import { MiddlewareService, ProjectWalletInfo } from '../../shared/services/middleware/middleware.service';
 import { TooltipDirective } from 'ngx-bootstrap/tooltip';
+import { Portfolio } from '../../shared/services/wallet/portfolio.service';
 
 @Component({
     selector: 'app-offer-details',
@@ -22,6 +23,10 @@ import { TooltipDirective } from 'ngx-bootstrap/tooltip';
 })
 export class OfferDetailsComponent implements OnInit {
     isOverview = false;
+
+    public transactionTotal: number;
+    @Input() isPortfolioView = false;
+    @Input() investmentData: Portfolio;
 
     project$: Observable<Project>;
     news$: Observable<LinkPreview[]>;
@@ -70,6 +75,8 @@ export class OfferDetailsComponent implements OnInit {
         if (this.route.snapshot.params.isOverview) {
             this.isOverview = true;
         }
+        this.transactionTotal = history.state.data.investment;
+        console.log(this.investmentData);
     }
 
     setMetaTags(project: Project) {

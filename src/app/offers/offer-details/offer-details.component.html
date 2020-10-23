@@ -135,21 +135,59 @@
         </div>
 
         <div class="offer-left col-lg-7">
-            <div class="left__desc">
-                <div [innerHTML]="states.project.description"></div>
+            <div *ngIf="!isPortfolioView else tabbedView">
+                <ng-container *ngTemplateOutlet="projectDetails"></ng-container>
             </div>
-            <div class="left__docs">
-                <div *ngFor="let doc of states.project.documents">
-                    <div class="docs__links">
-                        <a href="{{ doc.link }}">
-                            <i class="fas fa-file-download"></i>
-                            <span>{{ doc.name }}</span>
-                        </a>
+        </div>
+    </div>
+
+    <ng-template #projectDetails>
+        <div class="left__desc">
+            <div class="left__inner">
+                <div [innerHTML]="states.project.description"></div>
+                <div class="left__docs">
+                    <div *ngFor="let doc of states.project.documents">
+                        <div class="docs__links">
+                            <a href="{{ doc.link }}">
+                                <i class="fas fa-file-download"></i>
+                                <span>{{ doc.name }}</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </ng-template>
+
+    <ng-template #tabbedView>
+        <tabset>
+            <tab heading="Investments">
+                <div class="investment__total">
+                    <div class="total__title">Total Invested</div>
+                    <div class="total__amount">{{ transactionTotal | currencyDefault }}</div>
+                </div>
+                <div class="investments__history" *ngFor = "let singleInvestment of investmentData.transactions">
+                    <div class="history__left">
+                        <div class="history__amount">
+                            {{ singleInvestment.amount | currencyDefault }}
+                        </div>
+                        <div class="history__date">
+                            {{ singleInvestment.date | date:'MMMM d y, h:maaa' }}
+                        </div>
+                    </div>
+                    <div class="history__right">
+                        <div class="history__icon">
+
+                        </div>
+                    </div>
+                    
+                </div>
+            </tab>
+            <tab heading="Details">
+                <ng-container *ngTemplateOutlet="projectDetails"></ng-container>
+            </tab>
+        </tabset>
+    </ng-template>
 </div>
 
 <ng-template #overlaySpinner>

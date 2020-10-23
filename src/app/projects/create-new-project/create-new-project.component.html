@@ -38,10 +38,20 @@
                id="start-date" placeholder="dd/mm/yyyy" bsDatepicker
                [bsConfig]="bsConfig" (click)="setDatepickerOptions()">
 
+        <div class="alert alert-warning flex__center" *ngIf="createForm.hasError('start-date')">
+            <i class="fas fa-exclamation-triangle mr-2"></i>
+            Start date has to be lower than the end date.
+        </div>
+
         <div class="explainer-mini  mb-2 mt-3">End date</div>
         <input class="w-100 p-4 form-control" formControlName="endDate"
                id="end-date" placeholder="dd/mm/yyyy" bsDatepicker
                [bsConfig]="bsConfig" (click)="setDatepickerOptions()">
+
+        <div class="alert alert-warning flex__center" *ngIf="createForm.hasError('end-date')">
+            <i class="fas fa-exclamation-triangle mr-2"></i>
+            End date has to be greater than the start date.
+        </div>
 
         <div class="explainer-mini  mb-2 mt-3">Expected funding</div>
         <app-money-input-field
@@ -55,11 +65,23 @@
                 [control]="createForm.get('minPerUser')">
         </app-money-input-field>
 
+        <div class="alert alert-warning flex__center"
+             *ngIf="createForm.hasError('min-invest-invalid') && createForm.controls['minPerUser'].touched">
+            <i class="fas fa-exclamation-triangle mr-2"></i>
+            Minimum investment per user has to be greater than zero.
+        </div>
+
         <div class="explainer-mini  mb-2 mt-3">Maximum investment per user</div>
         <app-money-input-field
                 placeholder="Enter maximum investment per user"
                 [control]="createForm.get('maxPerUser')">
         </app-money-input-field>
+
+        <div class="alert alert-warning flex__center"
+             *ngIf="createForm.hasError('max-invest-invalid') && createForm.controls['maxPerUser'].touched">
+            <i class="fas fa-exclamation-triangle mr-2"></i>
+            Maximum investment per user has to be greater than minimum investment per user.
+        </div>
 
         <app-action-button text="Create" loadingText="Creating project..."
                            [onClick]="submitForm.bind(this)"

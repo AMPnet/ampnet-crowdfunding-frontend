@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
-import { ProjectService } from '../../shared/services/project/project.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { Project, ProjectService } from '../../shared/services/project/project.service';
+import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { displayBackendError } from 'src/app/utilities/error-handler';
-import { catchError, tap } from 'rxjs/operators';
-import { throwError } from 'rxjs';
+import { catchError, shareReplay, tap } from 'rxjs/operators';
+import { EMPTY, Observable, throwError } from 'rxjs';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 
 @Component({
@@ -24,14 +24,23 @@ export class CreateNewProjectComponent {
                 private fb: FormBuilder,
                 private activatedRoute: ActivatedRoute,
                 private router: Router) {
+
         this.createForm = this.fb.group({
             name: ['', Validators.required],
             description: ['', Validators.required],
-            startDate: ['', Validators.required],
-            endDate: ['', Validators.required],
+            startDate: [null, Validators.required],
+            endDate: [null, Validators.required],
             expectedFunding: ['', Validators.required],
-            minPerUser: ['', Validators.required],
-            maxPerUser: ['', Validators.required]
+            minPerUser: [null, Validators.required],
+            maxPerUser: [null, Validators.required]
+        }, {
+            validator: Validators.compose([
+                DateValidators.dateLessThan('startDate', 'endDate', {'start-date': true}),
+                DateValidators.dateLessThan('startDate', 'endDate', {'end-date': true}),
+                MinInvestUserValidator.investLessThan('minPerUser', {'min-invest-invalid': true}),
+                MaxInvestUserValidator.investLessThan('minPerUser', 'maxPerUser', {'max-invest-invalid': true}),
+                MaxInvestProjectValidator.investLessThan('maxPerUser', {'max-project-invest-invalid': true})
+            ])
         });
     }
 
@@ -73,5 +82,63 @@ export class CreateNewProjectComponent {
             isAnimated: true,
             dateInputFormat: 'DD-MM-YYYY'
         });
+    }
+}
+
+export class MaxInvestUserValidator {
+    static investLessThan(minPerUserField: string, maxPerUserField: string, validatorField: { [key: string]: boolean }): ValidatorFn {
+        return (c: AbstractControl): { [key: string]: boolean } | null => {
+            const minPerUser = c.get(minPerUserField).value;
+            const maxPerUser = c.get(maxPerUserField).value;
+
+            if (minPerUser > maxPerUser) {
+                return validatorField;
+            }
+
+            return null;
+        };
+    }
+}
+
+export class MinInvestUserValidator {
+    static investLessThan(minPerUserField: string, validatorField: { [key: string]: boolean }): ValidatorFn {
+        return (c: AbstractControl): { [key: string]: boolean } | null => {
+            const minPerUser = c.get(minPerUserField).value;
+
+            if (minPerUser <= 0) {
+                return validatorField;
+            }
+
+            return null;
+        };
+    }
+}
+
+export class MaxInvestProjectValidator {
+    static investLessThan(minPerUserField: string, validatorField: { [key: string]: boolean }): ValidatorFn {
+        return (c: AbstractControl): { [key: string]: boolean } | null => {
+            const minPerUser = c.get(minPerUserField).value;
+
+            // max investment per user <= investment cap
+
+            if (minPerUser <= 0) {
+                return validatorField;
+            }
+
+            return null;
+        };
+    }
+}
+
+export class DateValidators {
+    static dateLessThan(dateFieldStart: string, dateFieldEnd: string, validatorField: { [key: string]: boolean }): ValidatorFn {
+        return (c: AbstractControl): { [key: string]: boolean } | null => {
+            const startDate = c.get(dateFieldStart).value;
+            const endDate = c.get(dateFieldEnd).value;
+            if ((startDate !== null && endDate !== null) && startDate > endDate) {
+                return validatorField;
+            }
+            return null;
+        };
     }
 }

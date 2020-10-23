@@ -4,7 +4,7 @@ import { displayBackendErrorRx } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { WalletDetails } from '../../../../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
 import { Project, ProjectService } from '../../../../shared/services/project/project.service';
-import { WalletService } from '../../../../shared/services/wallet/wallet.service';
+import { WalletService, WalletState } from '../../../../shared/services/wallet/wallet.service';
 import { ManageProjectsService } from '../../../../shared/services/project/manage-projects.service';
 import { catchError, finalize, map, shareReplay, switchMap, tap } from 'rxjs/operators';
 import { BehaviorSubject, EMPTY, Observable, of, throwError } from 'rxjs';
@@ -19,8 +19,10 @@ import { URLValidator } from '../../../../shared/validators/url.validator';
     styleUrls: ['./manage-single-project.component.css'],
 })
 export class ManageSingleProjectComponent {
+    walletState = WalletState;
+
     project$: Observable<Project>;
-    projectWallet$: Observable<WalletDetails>;
+    projectWallet$: Observable<WalletDetails | WalletState>;
     updateForm$: Observable<FormGroup>;
     newsForm: FormGroup;
 
@@ -42,16 +44,20 @@ export class ManageSingleProjectComponent {
         );
 
         this.projectWallet$ = this.refreshProjectWalletSubject.pipe(
-            switchMap(() => this.walletService.getProjectWallet(projectUUID)),
-            catchError(err => {
-                if (err.status === 404) {
-                    this.createProjectWallet(projectUUID).subscribe();
-                    return EMPTY;
-                } else {
-                    return throwError(err);
-                }
-            }),
-            displayBackendErrorRx(),
+            switchMap(() => this.walletService.getProjectWallet(projectUUID)
+                .pipe(
+                    catchError(err => {
+                        if (err.status === 404) {
+                            this.createProjectWallet(projectUUID).subscribe();
+                            return of(WalletState.EMPTY);
+                        } else {
+                            return throwError(err);
+                        }
+                    }),
+                    displayBackendErrorRx(),
+                    catchError(() => EMPTY)
+                )
+            )
         );
 
         this.updateForm$ = this.project$.pipe(map(project => {
@@ -100,6 +106,7 @@ export class ManageSingleProjectComponent {
                 text: 'Transaction is being processed...'
             })),
             tap(() => {
+
                 this.refreshProjectSubject.next(null);
                 this.refreshProjectWalletSubject.next();
             }),

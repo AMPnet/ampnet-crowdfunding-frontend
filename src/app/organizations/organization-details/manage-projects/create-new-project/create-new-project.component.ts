@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ProjectService } from '../../shared/services/project/project.service';
+import { ProjectService } from '../../../../shared/services/project/project.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import { ActivatedRoute, Router } from '@angular/router';

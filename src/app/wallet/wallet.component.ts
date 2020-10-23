@@ -85,9 +85,8 @@ export class WalletComponent implements OnDestroy {
             .slice((this.tablePage - 1) * this.tablePageSize, (this.tablePage - 1) * this.tablePageSize + this.tablePageSize);
     }
 
-    shouldShowTransaction(transaction: UserTransaction): boolean {
-        // TODO: Remove UNRECOGNIZED when renamed on backend.
-        return !([TransactionType.APPROVE_INVESTMENT, TransactionType.UNRECOGNIZED].includes(transaction.type)
-            && transaction.state !== TransactionState.PENDING);
+    shouldShowTransaction(transaction: UserTransaction, transactions: UserTransaction[]): boolean {
+        const isTransientTransaction = [TransactionType.APPROVE_INVESTMENT, TransactionType.UNRECOGNIZED].includes(transaction.type);
+        return !(isTransientTransaction && transactions.indexOf(transaction) > 0);
     }
 }

@@ -58,7 +58,7 @@
         </div>
 
         <div *ngIf="!!states.wallet && states.wallet.state !== walletState.EMPTY else fetchWalletSpinner">
-                
+
             <div class="col-12">
                 <div class="wallet-balance flex__center row">
                     <div class="col-12 col-lg-8">
@@ -77,7 +77,7 @@
                                 Deposit
                             </button>
                         </div>
-    
+
                         <div class="col-6">
                             <button class="btn w-100 flex__center" routerLink="withdraw"
                                     [disabled]="states.wallet.state !== walletState.READY">
@@ -87,7 +87,7 @@
                         </div>
                     </div>
                 </div>
-        
+
 
                 <div class="wallet-alerts col-12 col-lg-11">
                     <div *ngIf="states.wallet?.wallet?.activated_at === null" class="alert alert-success w-100 flex__center-space">
@@ -112,17 +112,17 @@
             </div>
 
             <div class="transactions col-12" *ngIf="states.wallet.state === walletState.READY">
-                <div class="transactions__title">Transaction History</div> 
+                <div class="transactions__title">Transaction History</div>
                 <ng-container *ngIf="(transactionHistory$ | async) else transactionHistorySpinner">
                     <div *ngIf="transactionHistory.length === 0">
                         <span class="transactions__empty"></span>Your transaction history is empty.
                     </div>
-                    <div *ngIf="transactionHistory !== undefined && transactionHistory.length > 0" 
+                    <div *ngIf="transactionHistory !== undefined && transactionHistory.length > 0"
                          class="wow fadeIn">
                         <div class="transactions__history">
                             <ng-container *ngFor="let transaction of transactionHistoryPage">
-                                <ng-container *ngIf="shouldShowTransaction(transaction)">
-                                    <div class="transactions__single-element" 
+                                <ng-container *ngIf="shouldShowTransaction(transaction, transactionHistoryPage)">
+                                    <div class="transactions__single-element"
                                          [class.transactions__grayed-out]="transaction.state !== 'MINED' || transaction.type === 'APPROVE_INVESTMENT'">
                                         <div class="transactions__left">
                                             <div class="left__desc">
@@ -181,7 +181,7 @@
                                 </ng-container>
                             </ng-container>
                         </div>
-               
+
                         <div class="transactions__pagination">
                             <ngb-pagination [collectionSize]="transactionItems" [(page)]="tablePage"
                                             [pageSize]="tablePageSize"

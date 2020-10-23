@@ -128,9 +128,9 @@ interface UserTransactionResponse {
 }
 
 export enum WalletState {
-    EMPTY,
-    NOT_VERIFIED,
-    READY,
+    EMPTY = 'EMPTY',
+    NOT_VERIFIED = 'NOT_VERIFIED',
+    READY = 'READY',
 }
 
 export interface WalletDetailsWithState {

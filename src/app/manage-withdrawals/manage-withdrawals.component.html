@@ -1,29 +1,51 @@
-<div class="root container root-content-container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="explainer-mini text-uppercase">Manage withdrawals</div>
-        </div>
-        <div class="col-md-12 mt-3">
+<div class="container">
+    <h1 class="app-page-title">MANAGE WITHDRAWALS</h1>
 
-            <ul *ngIf="withdrawals !== undefined" class="list-group">
-                <li *ngFor="let withdrawal of withdrawals"
-                    class="list-group-item cursor-pointer  gray-text explainer-mini"
-                    routerLink="{{ withdrawal.id }}">
-          <span class="float-left ">
-            {{ withdrawal.user.first_name }} {{ withdrawal.user.last_name }} ({{ withdrawal.user.email }})
-          </span>
-                    <span class="float-right  ">
-              {{ withdrawal.amount | currencyDefault }}
-          </span>
-                </li>
-            </ul>
-        </div>
+    <h2 class="app-page-subtitle">User withdrawals</h2>
+    <ng-container *ngIf="(userWithdrawals$ | async) as userWithdrawals else spinner">
+        <ul *ngIf="userWithdrawals.length > 0" class="list-group">
+            <li *ngFor="let userWithdrawal of userWithdrawals"
+                class="list-group-item cursor-pointer  gray-text explainer-mini"
+                routerLink="/dash/manage_withdrawals/{{ userWithdrawal.withdraw.id }}">
+            <span class="float-left">
+                {{ userWithdrawal.user.first_name }} {{ userWithdrawal.user.last_name }} ({{ userWithdrawal.user.email }})
+            </span>
+                <span class="float-right">
+              {{ userWithdrawal.withdraw.amount | currencyDefault }}
+            </span>
+            </li>
+        </ul>
 
-        <div *ngIf="withdrawals !== undefined" class="col-md-12 mt-3">
-            <div *ngIf="withdrawals.length ===  0" class="text-center explainer-mini text-uppercase">
-                No pending withdrawals
+        <div *ngIf="userWithdrawals.length === 0" class="col-md-12 mt-3">
+            <div class="text-center explainer-mini text-uppercase">
+                No pending user withdrawals
             </div>
         </div>
+    </ng-container>
 
-    </div>
+    <h2 class="app-page-subtitle">Project withdrawals</h2>
+    <ng-container *ngIf="(projectWithdrawals$ | async) as projectWithdrawals else spinner">
+        <ul *ngIf="projectWithdrawals.length > 0" class="list-group">
+            <li *ngFor="let projectWithdrawal of projectWithdrawals"
+                class="list-group-item cursor-pointer  gray-text explainer-mini"
+                routerLink="/dash/manage_withdrawals/{{ projectWithdrawal.withdraw.id }}">
+            <span class="float-left">
+                {{ projectWithdrawal.project.name}}, {{ projectWithdrawal.user.first_name }} {{ projectWithdrawal.user.last_name }} ({{ projectWithdrawal.user.email }})
+            </span>
+                <span class="float-right">
+              {{ projectWithdrawal.withdraw.amount | currencyDefault }}
+            </span>
+            </li>
+        </ul>
+
+        <div *ngIf="projectWithdrawals.length === 0" class="col-md-12 mt-3">
+            <div class="text-center explainer-mini text-uppercase">
+                No pending project withdrawals
+            </div>
+        </div>
+    </ng-container>
+
+    <ng-template #spinner>
+        <app-spinner type="overlay" style="height: 100px"></app-spinner>
+    </ng-template>
 </div>

@@ -1,13 +1,38 @@
 @import "app";
 
-.header-image {
-    height: 50vh;
-    width: 100%;
-    object-fit: cover;
+::ng-deep {
+  .tab-container {
+    .nav {
+      margin-top: 30px;
+      .nav-item {
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        span {
+          font-size: $font-size-mobile-title-small;
+        }
+        .nav-link {
+          color: $title-color;
+          padding: 0 0 8px 0;
+          margin-right: 23px;
+        }
+        .nav-link.active {
+          // border-bottom: 2px solid $primary-color;
+          border-top: unset;
+          border-left: unset;
+          border-right: unset;
+        }
+      }
+    }
+    .nav-tabs {
+      border: none;
+      .nav-link:hover {
+        border: unset;
+      }
+    }
+  } 
 }
 
+
+
 @include media-breakpoint-up(lg) {
-  .container {
-    padding: 0;
-  }
 }

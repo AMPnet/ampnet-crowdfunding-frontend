@@ -8,9 +8,9 @@
     news: news$ | async,
     user: user$ | async
 } as states" class="wow fadeIn container" style="background: #fdfdfd">
-    <div class="app-page-title-back" (click)="backToOffersScreen()">
+    <div class="app-page-title-back" (click)="backToPreviousScreen()">
         <i class="fas fa-long-arrow-alt-left mr-3"></i>
-        OFFER DETAILS
+        {{ !isPortfolioView ? "OFFER DETAILS" : "PORTFOLIO DETAILS" }}
     </div>
 
     <div *ngIf="states.project !== null else overlaySpinner">
@@ -82,6 +82,13 @@
                     </div>
                     
                     <div class="right__invest">
+                        <div *ngIf="isPortfolioView" class="w-100">
+                            <!-- TODO: Hook up cancelInvestment() method from parent component -->
+                            <app-action-button text="Cancel Investment" loadingText="Cancelling investment..."
+                                                buttonClass="btn" [disabled]="!isCancelable">
+                            </app-action-button>
+                        </div>
+
                         <button *ngIf="isOverview" class="btn btn-primary w-100 btn-action-a"
                                 id="invest-button"
                                 routerLink="/sign_up">
@@ -135,33 +142,33 @@
         </div>
 
         <div class="offer-left col-lg-7">
-            <div *ngIf="!isPortfolioView else tabbedView">
-                <ng-container *ngTemplateOutlet="projectDetails"></ng-container>
+            <div class="left__desc">
+                <div *ngIf="!isPortfolioView else tabbedView">
+                    <ng-container *ngTemplateOutlet="projectDetails"></ng-container>
+                </div>
             </div>
         </div>
     </div>
 
     <ng-template #projectDetails>
-        <div class="left__desc">
-            <div class="left__inner">
-                <div [innerHTML]="states.project.description"></div>
-                <div class="left__docs">
-                    <div *ngFor="let doc of states.project.documents">
-                        <div class="docs__links">
-                            <a href="{{ doc.link }}">
-                                <i class="fas fa-file-download"></i>
-                                <span>{{ doc.name }}</span>
-                            </a>
-                        </div>
+        <div class="left__inner">
+            <div [innerHTML]="states.project.description"></div>
+            <div class="left__docs">
+                <div *ngFor="let doc of states.project.documents">
+                    <div class="docs__links">
+                        <a href="{{ doc.link }}">
+                            <i class="fas fa-file-download"></i>
+                            <span>{{ doc.name }}</span>
+                        </a>
                     </div>
-                </div>
+                 </div>
             </div>
         </div>
     </ng-template>
 
     <ng-template #tabbedView>
         <tabset>
-            <tab heading="Investments">
+            <tab heading="Transactions">
                 <div class="investment__total">
                     <div class="total__title">Total Invested</div>
                     <div class="total__amount">{{ transactionTotal | currencyDefault }}</div>
@@ -177,7 +184,7 @@
                     </div>
                     <div class="history__right">
                         <div class="history__icon">
-
+                            <!-- TODO: add doc icon here -->
                         </div>
                     </div>
                     

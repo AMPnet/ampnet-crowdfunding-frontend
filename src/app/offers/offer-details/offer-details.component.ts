@@ -10,11 +10,11 @@ import { WalletService } from '../../shared/services/wallet/wallet.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { MapModalComponent } from 'src/app/location-map/map-modal/map-modal.component';
 import { EMPTY, forkJoin, Observable, of, throwError, timer } from 'rxjs';
-import { catchError, shareReplay, switchMap, take, tap } from 'rxjs/operators';
+import { catchError, shareReplay, switchMap, take, tap, filter, map } from 'rxjs/operators';
 import { User } from '../../shared/services/user/signup.service';
 import { MiddlewareService, ProjectWalletInfo } from '../../shared/services/middleware/middleware.service';
 import { TooltipDirective } from 'ngx-bootstrap/tooltip';
-import { Portfolio } from '../../shared/services/wallet/portfolio.service';
+import { Portfolio, PortfolioService, InvestmentsInProject } from '../../shared/services/wallet/portfolio.service';
 
 @Component({
     selector: 'app-offer-details',
@@ -24,14 +24,16 @@ import { Portfolio } from '../../shared/services/wallet/portfolio.service';
 export class OfferDetailsComponent implements OnInit {
     isOverview = false;
 
-    public transactionTotal: number;
     @Input() isPortfolioView = false;
-    @Input() investmentData: Portfolio;
+    @Input() isCancelable: Boolean;
+    @Input() investmentData: InvestmentsInProject;
+    transactionTotal: number;
 
     project$: Observable<Project>;
     news$: Observable<LinkPreview[]>;
     user$: Observable<User>;
     projectWalletMW$: Observable<ProjectWalletInfo>;
+    portfolio$: Observable<Portfolio[]>;
 
     bsModalRef: BsModalRef;
 
@@ -43,7 +45,8 @@ export class OfferDetailsComponent implements OnInit {
                 private userService: UserService,
                 private meta: Meta,
                 private router: Router,
-                private modalService: BsModalService) {
+                private modalService: BsModalService,
+                private portfolioService: PortfolioService) {
         const projectID = this.route.snapshot.params.id;
         this.project$ = this.projectService.getProject(projectID).pipe(
             tap(project => this.setMetaTags(project)),
@@ -69,14 +72,21 @@ export class OfferDetailsComponent implements OnInit {
             switchMap(shouldLoadUser => shouldLoadUser ? this.userService.user$ : EMPTY),
             take(1)
         );
+        this.portfolio$ = this.portfolioService.getPortfolio().pipe(
+            map(res => res.portfolio));
     }
 
     ngOnInit() {
         if (this.route.snapshot.params.isOverview) {
             this.isOverview = true;
         }
-        this.transactionTotal = history.state.data.investment;
-        console.log(this.investmentData);
+        this.portfolio$.subscribe(res => {
+            res.forEach(elem => {
+                if (elem.project.uuid === this.route.snapshot.params.id) {
+                    this.transactionTotal = elem.investment;
+                }
+            });
+        });
     }
 
     setMetaTags(project: Project) {
@@ -115,11 +125,15 @@ export class OfferDetailsComponent implements OnInit {
         timer(2000).subscribe(() => el.hide());
     }
 
-    backToOffersScreen() {
-        if (this.isOverview) {
-            this.router.navigate(['/overview/discover']);
+    backToPreviousScreen() {
+        if (!this.isPortfolioView) {
+            if (this.isOverview) {
+                this.router.navigate(['/overview/discover']);
+            } else {
+                this.router.navigate(['/dash/offers']);
+            }
         } else {
-            this.router.navigate(['/dash/offers']);
+            this.router.navigate(['/dash/my_portfolio']);
         }
     }
 

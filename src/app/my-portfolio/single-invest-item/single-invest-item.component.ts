@@ -11,7 +11,6 @@ export class SingleInvestItemComponent {
     @Input() investment: Portfolio;
 
     constructor(private router: Router) {
-        console.log(this.investment);
     }
 
     onClickedItem() {

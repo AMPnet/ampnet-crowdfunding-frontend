@@ -134,7 +134,7 @@
                                             <div class="left__desc">
                                                 <div class="left__transaction-type">
                                                     <ng-container *ngIf="transaction.type === transactionType.INVEST">
-                                                        <b>Investment</b> to
+                                                        <b>Investment</b><span class="left__conjuctor"> to</span>
                                                     </ng-container>
                                                     <ng-container *ngIf="transaction.type === transactionType.DEPOSIT">
                                                         <b>Deposit</b>
@@ -143,13 +143,13 @@
                                                         <b>Withdraw</b>
                                                     </ng-container>
                                                     <ng-container *ngIf="transaction.type === transactionType.SHARE_PAYOUT">
-                                                        <b>Dividend</b> from
+                                                        <b>Dividend</b><span class="left__conjuctor"> from</span>
                                                     </ng-container>
                                                     <ng-container *ngIf="transaction.type === transactionType.CANCEL_INVESTMENT">
-                                                        <b>Cancel investment</b> from
+                                                        <b>Cancel investment</b><span class="left__conjuctor"> from</span>
                                                     </ng-container>
                                                     <ng-container *ngIf="transaction.type === transactionType.APPROVE_INVESTMENT">
-                                                        <b>Approve investment</b> to
+                                                        <b>Approve investment</b><span class="left__conjuctor"> to</span>
                                                     </ng-container>
                                                 </div>
                                                 {{ transaction.description }}

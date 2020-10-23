@@ -119,6 +119,9 @@
       line-height: 20px;
       letter-spacing: 0.18px;
     }
+    &__conjuctor {
+      display: none;
+    }
     &__info {
       color: $icons-color;
       font-size: $font-size-mobile-title-small;
@@ -258,6 +261,9 @@
         font-size: $font-size-desktop-body;
         line-height: 25px;
         display: flex;
+      }
+      &__conjuctor {
+        display: inline-block;
       }
       &__transaction-type {
         padding-right: 5px;

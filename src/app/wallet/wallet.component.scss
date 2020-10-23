@@ -137,9 +137,23 @@
             display: none;
           }
         }
+
         &__state-pending {
+          @keyframes blink {
+            0% { opacity: 100%; }
+            50% { opacity: 0; }
+            100% { opacity: 100%; }
+          }
+          @-webkit-keyframes blink {
+            0% { opacity: 100%; }
+            50% { opacity: 0; }
+            100% { opacity: 100%; }
+          }
           color: $warning-color;
           font-weight: bold;
+          -webkit-animation: blink 2s linear infinite;
+          -moz-animation: blink 2s linear infinite;
+          animation: blink 2s linear infinite;
         }
       }
       .state__invested {

@@ -2,14 +2,17 @@ import { Component, OnDestroy } from '@angular/core';
 import { ArkaneConnect } from '@arkane-network/arkane-connect';
 import { TransactionState, TransactionType, UserTransaction, WalletService, WalletState } from '../shared/services/wallet/wallet.service';
 import { BehaviorSubject, combineLatest, EMPTY } from 'rxjs';
-import { map, switchMap, take, tap } from 'rxjs/operators';
+import { finalize, map, switchMap, take, tap } from 'rxjs/operators';
 import { WebsocketService } from '../shared/services/websocket.service';
 import { ArkaneService } from '../shared/services/arkane.service';
+import { ReportService } from '../shared/services/report/report.service';
+import { displayBackendErrorRx } from '../utilities/error-handler';
+import { SpinnerUtil } from '../utilities/spinner-utilities';
 
 @Component({
     selector: 'app-wallet',
     templateUrl: './wallet.component.html',
-    styleUrls: ['./wallet.component.scss']
+    styleUrls: ['./wallet.component.scss'],
 })
 export class WalletComponent implements OnDestroy {
     arkaneConnect: ArkaneConnect;
@@ -68,6 +71,7 @@ export class WalletComponent implements OnDestroy {
 
     constructor(private walletService: WalletService,
                 public arkaneService: ArkaneService,
+                private reportService: ReportService,
                 private websocketService: WebsocketService) {
     }
 
@@ -90,5 +94,10 @@ export class WalletComponent implements OnDestroy {
         // TODO: when backend will return transaction id, compare transaction order by ID, and provide
         // transactionHistory instead of transactionHistoryPage array to this function.
         return !(isTransientTransaction && (this.tablePage > 1 || transactions.indexOf(transaction) > 0));
+    }
+
+    downloadReport() {
+        return this.reportService.userTransactions()
+            .pipe(displayBackendErrorRx());
     }
 }

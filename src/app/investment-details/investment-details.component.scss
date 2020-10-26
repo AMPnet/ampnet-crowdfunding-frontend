@@ -56,9 +56,23 @@
       align-items: center;
       justify-content: center;
     }
-    /* .btn {
-      background-color: $background-color;
-    } */
+    .btn {
+      background-color: $border-light-color;
+      color: $body-color;
+      border: none;
+      &:hover {
+        background-color: darken($border-light-color, 10%);
+      }
+      &:not(:disabled):not(.disabled):active {
+        background-color: darken($border-light-color, 10%);
+        border: none;
+      }
+      &:disabled {
+        background-color: $background-color;
+        color: $border-color;
+        border: none;
+      }
+    }
     .btn:last-of-type {
       margin-bottom: 32px;
     }

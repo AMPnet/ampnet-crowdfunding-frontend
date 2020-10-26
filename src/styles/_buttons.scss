@@ -5,7 +5,7 @@
   @include button-variant($primary-color, darken($primary-color, 7.5%), darken($primary-color, 10%), lighten($primary-color,5%), lighten($primary-color, 10%), darken($primary-color,30%));
   border-radius: 8px;
   background: $primary-color;
-  border-color: $primary-color;
+  border: none;
   font-weight: 400;
   height: 48px;
   font-size: 16px;
@@ -25,4 +25,18 @@
   &-outline-primary {
     @include button-outline-variant($primary-color, darken($primary-color, 10%), lighten($primary-color,5%), $primary-color);
   }
+
+  &:focus {
+    box-shadow: none;
+  }
+  
+  &:not(:disabled):not(.disabled):active:focus {
+    box-shadow: none;
+  }
+  // TODO: Uncomment this if everyone agrees that disabled btn should be in this style
+  /* &:disabled {
+    background-color: $background-color;
+    color: $border-color;
+    border: none;
+  } */
 }

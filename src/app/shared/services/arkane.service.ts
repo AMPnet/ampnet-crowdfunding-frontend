@@ -22,7 +22,6 @@ import { TransactionInfo } from './wallet/wallet-cooperative/wallet-cooperative-
     providedIn: 'root'
 })
 export class ArkaneService {
-
     constructor(private walletService: WalletService,
                 private broadcastService: BroadcastService,
                 private popupService: PopupService) {
@@ -101,12 +100,7 @@ export class ArkaneService {
 
     private arkaneWrongAccountProcedure(): Observable<Wallet> {
         return this.logout().pipe(
-            switchMap(() => this.popupService.info(
-                'You are logged in with wrong Arkane account. You will be logged out.',
-                'If this message appears multiple times, go to ' +
-                '<a href="https://arkane.network" target="_blank" style="display: contents">Arkane Network</a> website, ' +
-                'click on profile icon in upper-right corner, click logout and come back here.'
-            )),
+            switchMap(() => this.popupService.info('You are logged in with wrong Arkane account. You will be logged out.')),
             switchMap(popupRes => popupRes.dismiss === undefined ?
                 this.getAccountFlow() : ArkaneService.throwError(ArkaneError.WRONG_ACCOUNT_POPUP_DISMISSED)),
             switchMap(account => account.isAuthenticated ?
@@ -185,25 +179,17 @@ export class ArkaneService {
         );
     }
 
-    // on Chrome (Brave) returns infinite loop of warnings in browser console.
-    // After arkaneConnect.flows.getAccount, method does not ever respond back and gets stuck
-    // in an endless loop.
+    // on Brave browser; returns infinite loop of warnings in browser console.
+    // It turns out that Brave Shield has something to do with this issue. Should be handled on Arkane side.
     isAuthenticated(): Observable<boolean> {
-        return from(this.arkaneConnect.checkAuthenticated().then(res => res.isAuthenticated)).pipe(
+        return from(this.arkaneConnect.checkAuthenticated()).pipe(
+            map(res => res.isAuthenticated),
             timeout(10000),
         );
     }
 
-    isAuthenticatedByWallets(): Observable<boolean> {
-        return from(this.arkaneConnect.api.getWallets({secretType: this.secretType})).pipe(
-            catchError(() => of(null)),
-            map(wallet => wallet !== null),
-        );
-    }
-
     private ensureAuthenticated(): Observable<void> {
-        // TODO: set isAuthenticated() when arkaneConnect.checkAuthenticated() will work properly.
-        return this.isAuthenticatedByWallets().pipe(
+        return this.isAuthenticated().pipe(
             switchMap(signedIn => !signedIn ?
                 this.getAccountFlow().pipe(map(account => account.isAuthenticated)) : of(signedIn)),
             switchMap(signedIn => signedIn ?

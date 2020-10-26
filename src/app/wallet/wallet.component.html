@@ -61,7 +61,7 @@
 
             <div class="col-12">
                 <div class="wallet-balance flex__center row">
-                    <div class="col-12 col-lg-8">
+                    <div class="col-12 col-lg-6 col-xl-8">
                         <div class="balance__content">
                             <p class="balance__title">Balance</p>
                             <p class="balance__amount">
@@ -70,7 +70,7 @@
                         </div>
                     </div>
 
-                    <div class="balance__buttons col-12 col-lg-4 flex__center">
+                    <div class="balance__buttons col-12 col-lg-6 col-xl-4 flex__center">
                         <div class="col-6">
                             <button class="btn w-100 flex__center" routerLink="deposit">
                                 <i class="fas fa-arrow-circle-down mr-2"></i>
@@ -112,7 +112,13 @@
             </div>
 
             <div class="transactions col-12" *ngIf="states.wallet.state === walletState.READY">
-                <div class="transactions__title">Transaction History</div>
+                <div class="d-flex justify-content-between">
+                    <div class="transactions__title">Transaction History</div>
+                    <div class="transactions__report">
+                        <ng-template [ngTemplateOutlet]="downloadReportButton"></ng-template>
+                    </div>
+                </div>
+
                 <ng-container *ngIf="(transactionHistory$ | async) else transactionHistorySpinner">
                     <div *ngIf="transactionHistory.length === 0">
                         <span class="transactions__empty"></span>Your transaction history is empty.
@@ -196,6 +202,10 @@
                     </div>
                 </ng-template>
             </div>
+
+            <div class="bottom-report col-12 pb-3">
+                <ng-template [ngTemplateOutlet]="downloadReportButton"></ng-template>
+            </div>
         </div>
         <ng-template #fetchWalletSpinner>
             <div *ngIf="states.wallet?.state === undefined" class="justify-content-center" style="width: 100%">
@@ -204,3 +214,13 @@
         </ng-template>
     </ng-container>
 </div>
+
+<ng-template #downloadReportButton>
+    <app-action-button
+            text="Generate PDF Report"
+            loadingText="Downloading PDF Report..."
+            faIcon="fa-file-chart-line"
+            buttonClass="btn w-100"
+            [onClick]="downloadReport.bind(this)">
+    </app-action-button>
+</ng-template>

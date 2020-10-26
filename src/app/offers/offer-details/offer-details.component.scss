@@ -113,6 +113,7 @@ span {
 .left {
   &__img {
     max-height: 48vw;
+    object-fit: cover;
   }
 
   &__desc {

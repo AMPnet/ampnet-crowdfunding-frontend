@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
     providedIn: 'root'
 })
 export class BackendHttpClient {
-    constructor(private http: HttpClient) {
+    constructor(public http: HttpClient) {
     }
 
     get<T>(path: string, params?: object): Observable<T> {

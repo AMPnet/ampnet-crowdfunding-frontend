@@ -3,18 +3,20 @@ import { Meta } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LinkPreview, NewsPreviewService } from 'src/app/shared/services/news-preview.service';
 import { UserService } from 'src/app/shared/services/user/user.service';
-import { displayBackendError } from 'src/app/utilities/error-handler';
+import { displayBackendErrorRx,displayBackendError } from 'src/app/utilities/error-handler';
 import swal from 'sweetalert2';
 import { Project, ProjectService } from '../../shared/services/project/project.service';
 import { WalletService } from '../../shared/services/wallet/wallet.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { MapModalComponent } from 'src/app/location-map/map-modal/map-modal.component';
 import { EMPTY, forkJoin, Observable, of, throwError, timer } from 'rxjs';
-import { catchError, shareReplay, switchMap, take, tap, filter, map } from 'rxjs/operators';
+import { catchError, shareReplay, switchMap, take, tap, map } from 'rxjs/operators';
 import { User } from '../../shared/services/user/signup.service';
 import { MiddlewareService, ProjectWalletInfo } from '../../shared/services/middleware/middleware.service';
 import { TooltipDirective } from 'ngx-bootstrap/tooltip';
 import { Portfolio, PortfolioService, InvestmentsInProject } from '../../shared/services/wallet/portfolio.service';
+import { PopupService } from '../../shared/services/popup.service';
+import { ArkaneService } from '../../shared/services/arkane.service';
 
 @Component({
     selector: 'app-offer-details',
@@ -46,7 +48,9 @@ export class OfferDetailsComponent implements OnInit {
                 private meta: Meta,
                 private router: Router,
                 private modalService: BsModalService,
-                private portfolioService: PortfolioService) {
+                private portfolioService: PortfolioService,
+                private popupService: PopupService,
+                private arkaneService: ArkaneService) {
         const projectID = this.route.snapshot.params.id;
         this.project$ = this.projectService.getProject(projectID).pipe(
             tap(project => this.setMetaTags(project)),
@@ -175,6 +179,19 @@ export class OfferDetailsComponent implements OnInit {
                 }
                 return throwError(err);
             })
+        );
+    }
+
+    cancelInvestment() {
+        return this.portfolioService.generateCancelInvestmentTransaction(this.investmentData.project.uuid).pipe(
+            displayBackendErrorRx(),
+            switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo)),
+            switchMap(() => this.popupService.new({
+                type: 'success',
+                title: 'Transaction signed',
+                text: 'Transaction is being processed...'
+            })),
+            switchMap(() => this.router.navigate(['/dash/wallet']))
         );
     }
 }

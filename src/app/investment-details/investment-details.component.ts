@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { InvestmentsInProject, PortfolioService } from '../shared/services/wallet/portfolio.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { displayBackendErrorRx, hideSpinnerAndDisplayError } from '../utilities/error-handler';
+import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { WalletService } from '../shared/services/wallet/wallet.service';
-import { switchMap } from 'rxjs/operators';
 import { PopupService } from '../shared/services/popup.service';
 import { ArkaneService } from '../shared/services/arkane.service';
 
@@ -19,11 +18,7 @@ export class InvestmentDetailsComponent implements OnInit {
     public isCancelable: Boolean;
 
     constructor(private portfolioService: PortfolioService,
-                private activatedRoute: ActivatedRoute,
-                private walletService: WalletService,
-                private popupService: PopupService,
-                private arkaneService: ArkaneService,
-                private router: Router) {
+                private activatedRoute: ActivatedRoute) {
     }
 
     ngOnInit() {
@@ -35,19 +30,6 @@ export class InvestmentDetailsComponent implements OnInit {
             this.canCancelInvestment();
             SpinnerUtil.hideSpinner();
         }, hideSpinnerAndDisplayError);
-    }
-
-    cancelInvestment() {
-        return this.portfolioService.generateCancelInvestmentTransaction(this.investment.project.uuid).pipe(
-            displayBackendErrorRx(),
-            switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo)),
-            switchMap(() => this.popupService.new({
-                type: 'success',
-                title: 'Transaction signed',
-                text: 'Transaction is being processed...'
-            })),
-            switchMap(() => this.router.navigate(['/dash/wallet']))
-        );
     }
 
     private canCancelInvestment() {

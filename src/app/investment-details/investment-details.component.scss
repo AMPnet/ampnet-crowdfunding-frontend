@@ -1,38 +1,98 @@
 @import "app";
 
 ::ng-deep {
-  .tab-container {
-    .nav {
-      margin-top: 30px;
-      .nav-item {
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        span {
-          font-size: $font-size-mobile-title-small;
+  overflow: hidden;
+  .investment__total {
+    background-color: $background-color;
+    margin: 0 -20px;
+    padding: 24px 20px;
+    .total {
+      &__title {
+        font-size: $font-size-mobile-title-small;
+      letter-spacing: 2px;
+      color: $title-color;
+      text-transform: uppercase;
+      padding-bottom: 6px;
+      }
+      &__amount {
+        font-size: $font-size-mobile-title;
+        letter-spacing: 1px;
+        color: $title-color;
+      }
+    }
+  }
+
+  .investments__history {
+    padding: 15px 0;
+    border-bottom: 1px solid $border-light-color;
+    &:last-of-type {
+      border-bottom: none;
+    }
+    .history {
+      &__amount {
+        font-size: $font-size-mobile-body;
+        letter-spacing: 0.18px;
+        line-height: 25px;
+        padding-bottom: 4px;
+      }
+      &__date {
+        font-size: $font-size-mobile-title-small;
+        color: $icons-color;
+      }
+      &__icon {
+        svg {
+          font-size: $font-size-desktop-body;
+          color: $icons-color;
         }
-        .nav-link {
+      }
+    }
+  }
+
+  .portfolio__invest {
+    .btn-primary {
+      margin-bottom: 16px !important;
+      font-size: $font-size-desktop-body2 !important;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    /* .btn {
+      background-color: $background-color;
+    } */
+    .btn:last-of-type {
+      margin-bottom: 32px;
+    }
+  }
+
+  @include media-breakpoint-up(lg) {
+    .investments__container {
+      margin-left: -20px;
+    }
+    .investment__total {
+      margin: 0 0 8px 0;
+      border-radius: 8px;
+      padding: 24px;
+    }
+    .investments__history {
+      padding: 20px 16px 22px 16px;
+      &:last-of-type {
+        border-bottom: 1px solid $border-light-color;
+      }
+      .history {
+        &__amount {
+          font-size: $font-size-desktop-body;
+          letter-spacing: 0.2px;
           color: $title-color;
-          padding: 0 0 8px 0;
-          margin-right: 23px;
-        }
-        .nav-link.active {
-          // border-bottom: 2px solid $primary-color;
-          border-top: unset;
-          border-left: unset;
-          border-right: unset;
         }
       }
     }
-    .nav-tabs {
-      border: none;
-      .nav-link:hover {
-        border: unset;
+    .portfolio__invest {
+      .btn-primary {
+        font-size: 17px !important;
+      }
+      .btn:last-of-type {
+        margin-bottom: 40px;
       }
     }
-  } 
-}
-
-
-
-@include media-breakpoint-up(lg) {
+  }
 }

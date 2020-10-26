@@ -17,9 +17,4 @@ export class SingleInvestItemComponent {
         this.router.navigate(['dash', 'my_portfolio', this.investment.project.uuid, 'in_portfolio'],
         {state: {data: this.investment}});
     }
-
-    // Todo: Remove this if not needed (image that was showing on portfolio single item as bg)
-    getImageAsURL() {
-        return `url(${(<any>this.investment.project).image_url})`;
-    }
 }

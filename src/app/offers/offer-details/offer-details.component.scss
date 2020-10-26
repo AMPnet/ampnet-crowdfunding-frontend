@@ -97,6 +97,7 @@ span {
     p {
       text-transform: uppercase;
       letter-spacing: 2px;
+      font-size: $font-size-desktop-body2;
     }
     p, .socials__link {
       margin-right: 28px;
@@ -168,7 +169,7 @@ span {
     &__container {
       margin-top: 16px;
       border-radius: 8px;
-      padding: 40px 64px;
+      padding: 40px 64px 64px 64px;
     }
     &__progress {
       width: fit-content;
@@ -201,7 +202,7 @@ span {
       border-radius: 8px;
     }
     &__desc {
-      margin-top: 40px;
+      margin-top: 32px;
     }
   }
 }

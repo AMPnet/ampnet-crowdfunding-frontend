@@ -119,7 +119,7 @@ export class ManageSingleDepositComponent implements OnInit {
     }
 
     private recoverBack(): Observable<never> {
-        this.router.navigate(['/dash/manage_deposits']);
+        this.router.navigate(['/dash/manage_deposits'], { relativeTo: this.route });
         return EMPTY;
     }
 }

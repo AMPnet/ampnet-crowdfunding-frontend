@@ -8,12 +8,20 @@ import { TransactionInfo } from './wallet-cooperative/wallet-cooperative-wallet.
 export class WithdrawService {
     endpoint = '/api/wallet/withdraw';
     coopEndpoint = '/api/wallet/cooperative/withdraw';
+    projectWithdrawEndPoint = '/api/wallet/withdraw/project';
 
     constructor(private http: BackendHttpClient) {
     }
 
     createWithdrawRequest(amount: number, iban: string) {
         return this.http.post<Withdraw>(this.endpoint, {
+            amount: amount.toString(),
+            bank_account: iban
+        });
+    }
+
+    createProjectWithdrawRequest(amount: number, iban: string, projectID: string) {
+        return this.http.post<Withdraw>(`${this.projectWithdrawEndPoint}/${projectID}`, {
             amount: amount.toString(),
             bank_account: iban
         });
@@ -29,6 +37,10 @@ export class WithdrawService {
 
     getMyPendingWithdraw() {
         return this.http.get<Withdraw>(this.endpoint);
+    }
+
+    getProjectPendingWithdraw(projectID: string) {
+        return this.http.get<Withdraw>(`${this.projectWithdrawEndPoint}/${projectID}`);
     }
 
     deleteWithdrawal(id: any) {

@@ -10,7 +10,7 @@ declare var $: any;
 @Component({
     selector: 'app-deposit',
     templateUrl: './deposit.component.html',
-    styleUrls: ['./deposit.component.css']
+    styleUrls: ['./deposit.component.scss']
 })
 export class DepositComponent implements OnInit {
     depositModel: Deposit;

@@ -4,6 +4,14 @@
 @mixin alert-colors($background, $color) {
   background-color: $background;
   color: $color;
+  border: none;
+  svg {
+    color: $color;
+  }
+  .btn {
+    background-color: $color;
+    border: none;
+  }
 }
 
 .alert {
@@ -11,6 +19,7 @@
   border-radius: 8px;
   font-size: $font-size-desktop-small;
   justify-content: space-between;
+  min-height: 48px;
 
   b {
     font-size: $font-size-desktop-small;
@@ -31,7 +40,13 @@
     }
 
     svg {
-      display: block;
+      display: inline-block;
+    }
+  }
+
+  &-small {
+    @include media-breakpoint-up(lg) {
+      min-height: 48px;
     }
   }
 
@@ -40,6 +55,9 @@
   }
   &-warning {
     @include alert-colors($warning-color-bg, $warning-color);
+    svg {
+      font-size: 16px;
+    }
   }
   &-danger {
     @include alert-colors($error-color-bg, $error-color);

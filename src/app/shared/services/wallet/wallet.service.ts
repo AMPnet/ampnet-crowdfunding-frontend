@@ -120,6 +120,7 @@ export interface UserTransaction {
     to: string;
     to_tx_hash: string;
     type: TransactionType;
+    share: string;
 }
 
 interface UserTransactionResponse {
@@ -127,9 +128,9 @@ interface UserTransactionResponse {
 }
 
 export enum WalletState {
-    EMPTY,
-    NOT_VERIFIED,
-    READY,
+    EMPTY = 'EMPTY',
+    NOT_VERIFIED = 'NOT_VERIFIED',
+    READY = 'READY',
 }
 
 export interface WalletDetailsWithState {

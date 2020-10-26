@@ -3,7 +3,7 @@ import { Meta } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LinkPreview, NewsPreviewService } from 'src/app/shared/services/news-preview.service';
 import { UserService } from 'src/app/shared/services/user/user.service';
-import { displayBackendErrorRx,displayBackendError } from 'src/app/utilities/error-handler';
+import { displayBackendErrorRx, displayBackendError } from 'src/app/utilities/error-handler';
 import swal from 'sweetalert2';
 import { Project, ProjectService } from '../../shared/services/project/project.service';
 import { WalletService } from '../../shared/services/wallet/wallet.service';

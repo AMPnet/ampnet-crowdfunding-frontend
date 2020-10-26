@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { Organization, OrganizationInvite, OrganizationService } from '../../shared/services/project/organization.service';
-import { displayBackendError, hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
+import { displayBackendErrorRx } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
-import swal from 'sweetalert2';
-import { BehaviorSubject, EMPTY, Observable } from 'rxjs';
-import { catchError, delay, map, switchMap } from 'rxjs/operators';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { finalize, map, switchMap, tap } from 'rxjs/operators';
+import { PopupService } from '../../shared/services/popup.service';
 
 @Component({
     selector: 'app-manage-organizations',
@@ -18,14 +18,16 @@ export class ManageOrganizationsComponent {
     refreshOrganizationsSubject = new BehaviorSubject<void>(null);
     refreshInvitesSubject = new BehaviorSubject<void>(null);
 
-    constructor(private organizationService: OrganizationService) {
-
+    constructor(private organizationService: OrganizationService,
+                private popupService: PopupService) {
         this.organizations$ = this.refreshOrganizationsSubject.pipe(
-            switchMap(_ => this.organizationService.getPersonalOrganizations().pipe(this.handleErrors)),
+            switchMap(_ => this.organizationService.getPersonalOrganizations()
+                .pipe(displayBackendErrorRx())),
             map(res => res.organizations));
 
         this.organizationInvites$ = this.refreshInvitesSubject.pipe(
-            switchMap(_ => this.organizationService.getMyInvitations().pipe(this.handleErrors)),
+            switchMap(_ => this.organizationService.getMyInvitations()
+                .pipe(displayBackendErrorRx())),
             map(res => res.organization_invites));
     }
 
@@ -36,19 +38,15 @@ export class ManageOrganizationsComponent {
 
     acceptInvite(orgID: string) {
         SpinnerUtil.showSpinner();
-        this.organizationService.acceptInvite(orgID).subscribe(_ => {
-            SpinnerUtil.hideSpinner();
-            swal('Success', 'Accepted invitation to organization', 'success');
-            this.refreshState();
-        }, hideSpinnerAndDisplayError);
-    }
-
-    private handleErrors<T>(source: Observable<T>) {
-        return source.pipe(
-            catchError(err => {
-                displayBackendError(err);
-                return EMPTY;
-            })
-        );
+        return this.organizationService.acceptInvite(orgID).pipe(
+            displayBackendErrorRx(),
+            switchMap(() =>
+                this.popupService.new({
+                    type: 'success', text: 'Accepted invitation to organization'
+                })
+            ),
+            tap(() => this.refreshState()),
+            finalize(() => SpinnerUtil.hideSpinner())
+        ).subscribe();
     }
 }

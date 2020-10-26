@@ -1,31 +1,25 @@
-import { Component, OnInit } from '@angular/core';
-import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
-import { SpinnerUtil } from '../utilities/spinner-utilities';
+import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
 import {
-    UserWithdraw,
+    CoopWithdraw,
     WalletCooperativeWithdrawService
 } from '../shared/services/wallet/wallet-cooperative/wallet-cooperative-withdraw.service';
+import { map } from 'rxjs/operators';
 
 @Component({
     selector: 'app-manage-withdrawals',
     templateUrl: './manage-withdrawals.component.html',
     styleUrls: ['./manage-withdrawals.component.css']
 })
-export class ManageWithdrawalsComponent implements OnInit {
-    withdrawals: UserWithdraw[];
+export class ManageWithdrawalsComponent {
+    userWithdrawals$: Observable<CoopWithdraw[]>;
+    projectWithdrawals$: Observable<CoopWithdraw[]>;
 
-    constructor(private withdrawService: WalletCooperativeWithdrawService) {
-    }
+    constructor(private withdrawCoopService: WalletCooperativeWithdrawService) {
+        this.userWithdrawals$ = withdrawCoopService.getApprovedWithdrawals()
+            .pipe(map((res => res.withdraws)));
 
-    ngOnInit() {
-        this.getApprovedWithdrawals();
-    }
-
-    getApprovedWithdrawals() {
-        SpinnerUtil.showSpinner();
-        return this.withdrawService.getApprovedWithdrawals().subscribe(res => {
-            SpinnerUtil.hideSpinner();
-            this.withdrawals = res.withdraws;
-        }, hideSpinnerAndDisplayError);
+        this.projectWithdrawals$ = withdrawCoopService.getApprovedProjectWithdrawals()
+            .pipe(map((res => res.withdraws)));
     }
 }

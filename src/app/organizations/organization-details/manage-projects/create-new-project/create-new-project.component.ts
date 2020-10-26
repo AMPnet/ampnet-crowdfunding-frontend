@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { Project, ProjectService } from '../../shared/services/project/project.service';
+import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
-import * as moment from 'moment';
-import { ActivatedRoute, Router } from '@angular/router';
-import { displayBackendError } from 'src/app/utilities/error-handler';
-import { catchError, shareReplay, tap } from 'rxjs/operators';
-import { EMPTY, Observable, throwError } from 'rxjs';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
+import * as moment from 'moment';
+import { catchError, tap } from 'rxjs/operators';
+import { throwError } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ProjectService } from '../../../../shared/services/project/project.service';
+import { displayBackendError } from '../../../../utilities/error-handler';
 
 @Component({
     selector: 'app-create-new-project',

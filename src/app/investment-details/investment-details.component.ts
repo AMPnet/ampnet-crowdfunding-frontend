@@ -3,9 +3,6 @@ import { InvestmentsInProject, PortfolioService } from '../shared/services/walle
 import { ActivatedRoute, Router } from '@angular/router';
 import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
-import { WalletService } from '../shared/services/wallet/wallet.service';
-import { PopupService } from '../shared/services/popup.service';
-import { ArkaneService } from '../shared/services/arkane.service';
 
 @Component({
     selector: 'app-investment-details',

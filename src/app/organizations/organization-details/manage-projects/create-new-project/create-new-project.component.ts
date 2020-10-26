@@ -30,16 +30,15 @@ export class CreateNewProjectComponent {
             description: ['', Validators.required],
             startDate: [null, Validators.required],
             endDate: [null, Validators.required],
-            expectedFunding: ['', Validators.required],
+            expectedFunding: [null, Validators.required],
             minPerUser: [null, Validators.required],
             maxPerUser: [null, Validators.required]
         }, {
             validator: Validators.compose([
-                DateValidators.dateLessThan('startDate', 'endDate', {'start-date': true}),
-                DateValidators.dateLessThan('startDate', 'endDate', {'end-date': true}),
-                MinInvestUserValidator.investLessThan('minPerUser', {'min-invest-invalid': true}),
-                MaxInvestUserValidator.investLessThan('minPerUser', 'maxPerUser', {'max-invest-invalid': true}),
-                MaxInvestProjectValidator.investLessThan('maxPerUser', {'max-project-invest-invalid': true})
+                DateValidator.startDateLessThanEndDate('startDate', 'endDate', {'invalidStartEndDate': true}),
+                MinInvestUserValidator.investGreaterThanZero('minPerUser', {'invalidMinInvest': true}),
+                MaxInvestUserValidator.minPerUserGreaterThatMaxPerUser('minPerUser', 'maxPerUser', {'invalidMaxInvest': true}),
+                MaxInvestProjectValidator.expFundingGreaterThatMaxPerUser('maxPerUser', 'expectedFunding', {'invalidExpectedFunding': true})
             ])
         });
     }
@@ -86,13 +85,13 @@ export class CreateNewProjectComponent {
 }
 
 export class MaxInvestUserValidator {
-    static investLessThan(minPerUserField: string, maxPerUserField: string, validatorField: { [key: string]: boolean }): ValidatorFn {
+    // tslint:disable-next-line:max-line-length
+    static minPerUserGreaterThatMaxPerUser(minPerUserField: string, maxPerUserField: string, validatorError: { [key: string]: boolean }): ValidatorFn {
         return (c: AbstractControl): { [key: string]: boolean } | null => {
             const minPerUser = c.get(minPerUserField).value;
             const maxPerUser = c.get(maxPerUserField).value;
-
             if (minPerUser > maxPerUser) {
-                return validatorField;
+                return validatorError;
             }
 
             return null;
@@ -101,12 +100,11 @@ export class MaxInvestUserValidator {
 }
 
 export class MinInvestUserValidator {
-    static investLessThan(minPerUserField: string, validatorField: { [key: string]: boolean }): ValidatorFn {
+    static investGreaterThanZero(minPerUserField: string, validatorError: { [key: string]: boolean }): ValidatorFn {
         return (c: AbstractControl): { [key: string]: boolean } | null => {
             const minPerUser = c.get(minPerUserField).value;
-
             if (minPerUser <= 0) {
-                return validatorField;
+                return validatorError;
             }
 
             return null;
@@ -115,14 +113,13 @@ export class MinInvestUserValidator {
 }
 
 export class MaxInvestProjectValidator {
-    static investLessThan(minPerUserField: string, validatorField: { [key: string]: boolean }): ValidatorFn {
+    // tslint:disable-next-line:max-line-length
+    static expFundingGreaterThatMaxPerUser(maxPerUserField: string, expFundingField: string, validatorError: { [key: string]: boolean }): ValidatorFn {
         return (c: AbstractControl): { [key: string]: boolean } | null => {
-            const minPerUser = c.get(minPerUserField).value;
-
-            // max investment per user <= investment cap
-
-            if (minPerUser <= 0) {
-                return validatorField;
+            const maxPerUser = c.get(maxPerUserField).value;
+            const expFunding = c.get(expFundingField).value;
+            if (expFunding <= maxPerUser) {
+                return validatorError;
             }
 
             return null;
@@ -130,14 +127,15 @@ export class MaxInvestProjectValidator {
     }
 }
 
-export class DateValidators {
-    static dateLessThan(dateFieldStart: string, dateFieldEnd: string, validatorField: { [key: string]: boolean }): ValidatorFn {
+export class DateValidator {
+    static startDateLessThanEndDate(dateStartField: string, dateEndField: string, validatorError: { [key: string]: boolean }): ValidatorFn {
         return (c: AbstractControl): { [key: string]: boolean } | null => {
-            const startDate = c.get(dateFieldStart).value;
-            const endDate = c.get(dateFieldEnd).value;
+            const startDate = c.get(dateStartField).value;
+            const endDate = c.get(dateEndField).value;
             if ((startDate !== null && endDate !== null) && startDate > endDate) {
-                return validatorField;
+                return validatorError;
             }
+
             return null;
         };
     }

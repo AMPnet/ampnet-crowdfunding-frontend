@@ -1,10 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { OrganizationService } from '../../../shared/services/project/organization.service';
-import { displayBackendError, displayBackendErrorRx, hideSpinnerAndDisplayError } from '../../../utilities/error-handler';
+import { displayBackendErrorRx } from '../../../utilities/error-handler';
 import { Project, ProjectService } from '../../../shared/services/project/project.service';
-import { BehaviorSubject, EMPTY, Observable, of } from 'rxjs';
-import { catchError, finalize, map, switchMap, tap } from 'rxjs/operators';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { finalize, map, switchMap, tap } from 'rxjs/operators';
 import { SpinnerUtil } from '../../../utilities/spinner-utilities';
 
 @Component({

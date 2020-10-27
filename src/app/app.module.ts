@@ -91,6 +91,7 @@ import { RevenueShareConfirmModalComponent } from './organizations/organization-
 import { ProjectDepositComponent } from './organizations/organization-details/manage-projects/manage-single-project/project-deposit/project-deposit.component';
 import { ProjectWithdrawComponent } from './organizations/organization-details/manage-projects/manage-single-project/project-withdraw/project-withdraw.component';
 import { TabsModule } from 'ngx-bootstrap/tabs';
+import { DatePipe } from '@angular/common';
 
 const socialAuthServiceConfig = {
     provide: 'SocialAuthServiceConfig',
@@ -215,7 +216,9 @@ const socialAuthServiceConfig = {
         socialAuthServiceConfig,
         {
             provide: DEFAULT_CURRENCY_CODE, useValue: 'EUR',
-        }
+        },
+        DatePipe,
+        SafePipe
     ],
     bootstrap: [AppComponent]
 })

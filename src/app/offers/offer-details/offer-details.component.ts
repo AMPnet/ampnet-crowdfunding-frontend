@@ -10,7 +10,7 @@ import { WalletService } from '../../shared/services/wallet/wallet.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { MapModalComponent } from 'src/app/location-map/map-modal/map-modal.component';
 import { EMPTY, forkJoin, Observable, of, throwError, timer } from 'rxjs';
-import { catchError, shareReplay, switchMap, take, tap, map } from 'rxjs/operators';
+import { catchError, shareReplay, switchMap, take, tap, map, find } from 'rxjs/operators';
 import { User } from '../../shared/services/user/signup.service';
 import { MiddlewareService, ProjectWalletInfo } from '../../shared/services/middleware/middleware.service';
 import { TooltipDirective } from 'ngx-bootstrap/tooltip';
@@ -27,15 +27,14 @@ export class OfferDetailsComponent implements OnInit {
     isOverview = false;
 
     @Input() isPortfolioView = false;
-    @Input() isCancelable: Boolean;
+    @Input() isCancelable: boolean;
     @Input() investmentData: InvestmentsInProject;
-    transactionTotal: number;
 
     project$: Observable<Project>;
     news$: Observable<LinkPreview[]>;
     user$: Observable<User>;
     projectWalletMW$: Observable<ProjectWalletInfo>;
-    portfolio$: Observable<Portfolio[]>;
+    investmentTotal$: Observable<number>;
 
     bsModalRef: BsModalRef;
 
@@ -76,21 +75,18 @@ export class OfferDetailsComponent implements OnInit {
             switchMap(shouldLoadUser => shouldLoadUser ? this.userService.user$ : EMPTY),
             take(1)
         );
-        this.portfolio$ = this.portfolioService.getPortfolio().pipe(
-            map(res => res.portfolio));
+
+        this.investmentTotal$ = this.portfolioService.getPortfolio().pipe(
+            switchMap(res => res.portfolio),
+            find(item => item.project.uuid === this.route.snapshot.params.id),
+            map(portfolio => portfolio?.investment)
+        );
     }
 
     ngOnInit() {
         if (this.route.snapshot.params.isOverview) {
             this.isOverview = true;
         }
-        this.portfolio$.subscribe(res => {
-            res.forEach(elem => {
-                if (elem.project.uuid === this.route.snapshot.params.id) {
-                    this.transactionTotal = elem.investment;
-                }
-            });
-        });
     }
 
     setMetaTags(project: Project) {

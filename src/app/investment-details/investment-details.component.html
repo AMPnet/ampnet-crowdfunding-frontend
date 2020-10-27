@@ -1,5 +1,10 @@
-<div *ngIf="investment !== undefined">
-    <app-offer-details [isPortfolioView]="true" [investmentData]="investment" 
-                       [isCancelable]="isCancelable">
-    </app-offer-details>
-</div>
+<ng-container *ngIf="(investment$ | async) as investment else spinner">
+    <ng-container *ngIf="{ isCancelable: isCancelable$ | async } as states">
+        <app-offer-details [isPortfolioView]="true" [investmentData]="investment"
+                           [isCancelable]="states.isCancelable">
+        </app-offer-details>
+    </ng-container>
+</ng-container>
+<ng-template #spinner>
+    <app-spinner type="overlay"></app-spinner>
+</ng-template>

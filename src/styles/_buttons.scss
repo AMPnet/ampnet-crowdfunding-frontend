@@ -22,6 +22,10 @@
     @include button-variant($error-color, darken($error-color, 7.5%), darken($error-color, 10%), lighten($error-color,5%), lighten($error-color, 10%), darken($error-color,30%));
   }
 
+  &-grey {
+    @include button-variant(darken($background-color, 7.5%), darken($background-color, 30%), darken($background-color, 12%), darken($background-color, 30%), darken($background-color, 10%), darken($background-color, 40%));
+  }
+
   &-outline-primary {
     @include button-outline-variant($primary-color, darken($primary-color, 10%), lighten($primary-color,5%), $primary-color);
   }
@@ -33,10 +37,10 @@
   &:not(:disabled):not(.disabled):active:focus {
     box-shadow: none;
   }
-  // TODO: Uncomment this if everyone agrees that disabled btn should be in this style
-  /* &:disabled {
-    background-color: $background-color;
-    color: $border-color;
+
+  &:disabled {
+    background-color: darken($background-color, 7.5%);
+    color: darken($border-color, 7.5%);
     border: none;
-  } */
+  }
 }

@@ -89,8 +89,10 @@
                              class="portfolio__invest">
                             <ng-container *ngTemplateOutlet="investButtons"></ng-container>
 
-                            <app-action-button text="Cancel all investments" loadingText="Cancelling investment..."
-                                               buttonClass="btn btn-grey" [disabled]="!isCancelable" 
+                            <app-action-button text="Cancel all investments"
+                                               loadingText="Cancelling investments..."
+                                               buttonClass="btn btn-grey mb-4"
+                                               [disabled]="!isCancelable"
                                                [onClick]="cancelInvestment.bind(this)">
                             </app-action-button>
                         </div>
@@ -105,14 +107,13 @@
                         <div *ngIf="!isOverview && !!states.user">
                             <button *ngIf="states.user.verified"
                                     [disabled]="disableInvestButton(states.project, states.walletMW)"
-                                    class="btn btn-primary w-100 btn-action-a" id="invest-button"
+                                    class="btn btn-primary w-100 btn-action-a"
                                     (click)="goToInvest(states.project.uuid)">
                                 <i class="mr-2 fas fa-chart-pie"></i>
                                 Invest
                             </button>
                             <button *ngIf="!states.user.verified" [disabled]="!states.project.active"
                                     class="btn btn-primary w-100 btn-action-a"
-                                    id="invest-button"
                                     routerLink="/dash/general_settings">
                                 <i class="mr-2 fas fa-chart-pie"></i>
                                 Verify Profile & Invest
@@ -179,15 +180,20 @@
                 <div class="investments__container">
                     <div class="investment__total">
                         <div class="total__title">Total Invested</div>
-                        <div class="total__amount">{{ transactionTotal | currencyDefault }}</div>
+                        <div class="total__amount">
+                            <ng-container *ngIf="(investmentTotal$ | async) as investmentTotal else smallSpinner">
+                                {{ investmentTotal | currencyDefault }}
+                            </ng-container>
+                        </div>
                     </div>
-                    <div class="investments__history flex__center-space" *ngFor = "let singleInvestment of investmentData.transactions">
+                    <div class="investments__history flex__center-space"
+                         *ngFor="let singleInvestment of investmentData.transactions">
                         <div class="history__left">
                             <div class="history__amount">
                                 {{ singleInvestment.amount | currencyDefault }}
                             </div>
                             <div class="history__date">
-                                {{ singleInvestment.date | date:'MMMM d y, h:maaa' }}
+                                {{ singleInvestment.date | date:'medium' }}
                             </div>
                         </div>
                         <div class="history__right">

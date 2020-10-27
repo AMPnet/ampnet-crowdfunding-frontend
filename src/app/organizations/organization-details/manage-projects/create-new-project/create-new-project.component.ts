@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import * as moment from 'moment';
-import { catchError, tap } from 'rxjs/operators';
-import { throwError } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProjectService } from '../../../../shared/services/project/project.service';
-import { displayBackendError } from '../../../../utilities/error-handler';
+import { displayBackendErrorRx } from '../../../../utilities/error-handler';
 
 @Component({
     selector: 'app-create-new-project',
@@ -30,15 +29,13 @@ export class CreateNewProjectComponent {
             description: ['', Validators.required],
             startDate: ['', Validators.required],
             endDate: ['', Validators.required],
-            expectedFunding: ['', Validators.required],
-            minPerUser: ['', Validators.required],
-            maxPerUser: ['', Validators.required]
+            expectedFunding: [0, [ProjectValidators.greaterThan(0)]],
+            minPerUser: [0, [ProjectValidators.greaterThan(0)]],
+            maxPerUser: [0, [ProjectValidators.greaterThan(0)]]
         }, {
             validator: Validators.compose([
-                DateValidator.startDateLessThanEndDate('startDate', 'endDate', {invalidStartEndDate: true}),
-                MinInvestUserValidator.investGreaterThanZero('minPerUser', {invalidMinInvest: true}),
-                MaxInvestUserValidator.minPerUserGreaterThatMaxPerUser('minPerUser', 'maxPerUser', {invalidMaxInvest: true}),
-                MaxInvestProjectValidator.expFundingGreaterThatMaxPerUser('maxPerUser', 'expectedFunding', {invalidExpectedFunding: true})
+                ProjectValidators.fundingLimits,
+                ProjectValidators.fundingPeriodLimits
             ])
         });
     }
@@ -63,12 +60,9 @@ export class CreateNewProjectComponent {
             max_per_user: formValue.maxPerUser,
             active: false
         }).pipe(
+            displayBackendErrorRx(),
             tap(project => {
                 this.router.navigate([`/dash/manage_groups/${orgID}/manage_project/${project.uuid}`]);
-            }),
-            catchError(err => {
-                displayBackendError(err);
-                return throwError(err);
             })
         );
     }
@@ -84,59 +78,32 @@ export class CreateNewProjectComponent {
     }
 }
 
-class MaxInvestUserValidator {
-    // tslint:disable-next-line:max-line-length
-    static minPerUserGreaterThatMaxPerUser(minPerUserField: string, maxPerUserField: string, validatorError: { [key: string]: boolean }): ValidatorFn {
-        return (c: AbstractControl): { [key: string]: boolean } | null => {
-            const minPerUser = c.get(minPerUserField).value;
-            const maxPerUser = c.get(maxPerUserField).value;
-            if (minPerUser > maxPerUser) {
-                return validatorError;
-            }
-
-            return null;
-        };
+class ProjectValidators {
+    static greaterThan(value: number): ValidatorFn {
+        return (c: FormControl) => c.value > value ? null : {invalid: true};
     }
-}
 
-class MinInvestUserValidator {
-    static investGreaterThanZero(minPerUserField: string, validatorError: { [key: string]: boolean }): ValidatorFn {
-        return (c: AbstractControl): { [key: string]: boolean } | null => {
-            const minPerUser = c.get(minPerUserField).value;
-            if (minPerUser <= 0) {
-                return validatorError;
-            }
+    static fundingLimits(c: AbstractControl): ValidationErrors | null {
+        const minPerUser = Number(c.get('minPerUser').value);
+        const maxPerUser = Number(c.get('maxPerUser').value);
+        const expectedFunding = Number(c.get('expectedFunding').value);
 
-            return null;
-        };
+        if (minPerUser > maxPerUser) {
+            return {invalidMinMax: true};
+        }
+
+        if (maxPerUser > expectedFunding) {
+            return {invalidMaxExpectedFunding: true};
+        }
+
+        return null;
     }
-}
 
-class MaxInvestProjectValidator {
-    // tslint:disable-next-line:max-line-length
-    static expFundingGreaterThatMaxPerUser(maxPerUserField: string, expFundingField: string, validatorError: { [key: string]: boolean }): ValidatorFn {
-        return (c: AbstractControl): { [key: string]: boolean } | null => {
-            const maxPerUser = c.get(maxPerUserField).value;
-            const expFunding = c.get(expFundingField).value;
-            if (expFunding <= maxPerUser) {
-                return validatorError;
-            }
+    static fundingPeriodLimits(c: AbstractControl): ValidationErrors | null {
+        const startDate = c.get('startDate').value;
+        const endDate = c.get('endDate').value;
 
-            return null;
-        };
-    }
-}
-
-class DateValidator {
-    static startDateLessThanEndDate(dateStartField: string, dateEndField: string, validatorError: { [key: string]: boolean }): ValidatorFn {
-        return (c: AbstractControl): { [key: string]: boolean } | null => {
-            const startDate = c.get(dateStartField).value;
-            const endDate = c.get(dateEndField).value;
-            if ((startDate !== null && endDate !== null) && startDate > endDate) {
-                return validatorError;
-            }
-
-            return null;
-        };
+        return Date.parse(endDate) >= Date.parse(startDate) ?
+            null : {invalidStartEndDate: true};
     }
 }

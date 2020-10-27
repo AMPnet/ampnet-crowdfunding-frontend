@@ -1,3 +1,6 @@
 <input class="{{ inputClass }}" #inputField
        (input)="onHTMLInputElementChange()"
+       [class.ng-valid]="control.valid"
+       [class.ng-invalid]="!control.valid"
+       [class.ng-dirty]="control.dirty"
        placeholder="{{ placeholder }}">

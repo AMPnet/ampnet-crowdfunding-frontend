@@ -77,16 +77,3 @@ h1 {
     height: 60px !important;
 }
 
-.ng-invalid.ng-dirty:not(form) {
-    border-right: 10px solid #ff4040 !important;
-    border-left: 10px solid #ff4040 !important;
-    /* border-top: 1px solid #ff4040!important;
-    border-bottom: 1px solid #ff4040!important; */
-}
-
-.ng-valid.ng-dirty:not(form) {
-    border-right: 10px solid #94da8d !important;
-    border-left: 10px solid #94da8d !important;
-    /* border-top: 1px solid #94da8d!important;
-    border-bottom: 1px solid #94da8d!important; */
-}

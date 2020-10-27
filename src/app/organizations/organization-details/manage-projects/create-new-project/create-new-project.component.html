@@ -15,7 +15,6 @@
                     Please make sure these parameters are finalized <i>before</i> creating the project.
                 </div>
             </div>
-
         </div>
     </div>
     <form [formGroup]="createForm" class="mb-5">
@@ -46,45 +45,48 @@
         <div class="explainer-mini mb-2 mt-3">Expected funding</div>
         <app-money-input-field
                 placeholder="Enter expected funding amount"
-                inputClass="form-control form-control-validation"
+                inputClass="form-control p-4"
                 [control]="createForm.get('expectedFunding')">
         </app-money-input-field>
 
         <div class="explainer-mini mb-2 mt-3">Minimum investment per user</div>
         <app-money-input-field
                 placeholder="Enter minimum investment per user"
-                inputClass="form-control form-control-validation"
+                inputClass="form-control p-4"
                 [control]="createForm.get('minPerUser')">
         </app-money-input-field>
 
         <div class="explainer-mini mb-2 mt-3">Maximum investment per user</div>
         <app-money-input-field
                 placeholder="Enter maximum investment per user"
-                inputClass="form-control form-control-validation"
+                inputClass="form-control p-4"
                 [control]="createForm.get('maxPerUser')">
         </app-money-input-field>
 
         <div *ngIf="createForm.dirty && createForm.invalid">
-            <div class="alert alert-warning flex__center mb-2 mt-3"
-                 *ngIf="createForm.hasError('invalidStartEndDate') && createForm.controls['startDate'].touched">
-                <i class="fas fa-exclamation-triangle mr-2"></i>
-                Start date has to be lower than the end date.
-            </div>
-            <div class="alert alert-warning flex__center mb-2 mt-3"
-                 *ngIf="createForm.hasError('invalidExpectedFunding') && createForm.controls['expectedFunding'].touched">
-                <i class="fas fa-exclamation-triangle mr-2"></i>
-                Maximum investment per user cannot be equal or greater than project investment cap.
-            </div>
-            <div class="alert alert-warning flex__center mb-2 mt-3"
-                 *ngIf="createForm.hasError('invalidMinInvest') && createForm.controls['minPerUser'].touched">
-                <i class="fas fa-exclamation-triangle mr-2"></i>
-                Minimum investment per user has to be greater than zero.
-            </div>
-            <div class="alert alert-warning flex__center mb-2 mt-3"
-                 *ngIf="createForm.hasError('invalidMaxInvest') && createForm.controls['maxPerUser'].touched">
-                <i class="fas fa-exclamation-triangle mr-2"></i>
-                Maximum investment per user has to be greater than minimum investment per user.
-            </div>
+            <ng-container *ngIf="createForm.get('startDate').dirty
+                                    && createForm.get('endDate').dirty">
+                <div class="alert alert-warning flex__center mb-2 mt-3"
+                     *ngIf="createForm.hasError('invalidStartEndDate')">
+                    <i class="fas fa-exclamation-triangle mr-2"></i>
+                    Start date has to be lower than the end date.
+                </div>
+            </ng-container>
+
+            <ng-container *ngIf="createForm.get('expectedFunding').dirty
+                                    && createForm.get('minPerUser').dirty
+                                    && createForm.get('maxPerUser').dirty">
+                <div class="alert alert-warning flex__center mb-2 mt-3"
+                     *ngIf="createForm.hasError('invalidMaxExpectedFunding')">
+                    <i class="fas fa-exclamation-triangle mr-2"></i>
+                    Maximum investment per user cannot be equal or greater than project investment cap.
+                </div>
+                <div class="alert alert-warning flex__center mb-2 mt-3"
+                     *ngIf="createForm.hasError('invalidMinMax')">
+                    <i class="fas fa-exclamation-triangle mr-2"></i>
+                    Maximum investment per user has to be greater than minimum investment per user.
+                </div>
+            </ng-container>
         </div>
 
         <div class="explainer-mini mb-2 mt-3">

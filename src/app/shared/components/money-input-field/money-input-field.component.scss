@@ -5,17 +5,3 @@
     margin: 17px 0 8px 0;
   }
 }
-
-.form-control-validation.ng-invalid.ng-dirty:not(form) {
-  border-right: 10px solid #ff4040 !important;
-  border-left: 10px solid #ff4040 !important;
-  /* border-top: 1px solid #ff4040!important;
-  border-bottom: 1px solid #ff4040!important; */
-}
-
-.ng-valid.ng-dirty:not(form) {
-  border-right: 10px solid #94da8d !important;
-  border-left: 10px solid #94da8d !important;
-  /* border-top: 1px solid #94da8d!important;
-  border-bottom: 1px solid #94da8d!important; */
-}

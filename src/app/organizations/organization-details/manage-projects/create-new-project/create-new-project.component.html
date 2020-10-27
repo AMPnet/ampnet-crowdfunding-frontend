@@ -20,7 +20,7 @@
     </div>
     <form [formGroup]="createForm" class="mb-5">
         <div class="explainer-mini mb-2 mt-3">Project name</div>
-        <input class="w-100 p-4 form-control " formControlName="name" id="" name="" type="text">
+        <input class="w-100 p-4 form-control" formControlName="name" id="" name="" type="text">
 
         <div class="explainer-mini mb-2 mt-3">Project description</div>
         <textarea class="form-control p-4" cols="30" id="project-description" name=""
@@ -46,18 +46,21 @@
         <div class="explainer-mini mb-2 mt-3">Expected funding</div>
         <app-money-input-field
                 placeholder="Enter expected funding amount"
+                inputClass="form-control form-control-validation"
                 [control]="createForm.get('expectedFunding')">
         </app-money-input-field>
 
         <div class="explainer-mini mb-2 mt-3">Minimum investment per user</div>
         <app-money-input-field
                 placeholder="Enter minimum investment per user"
+                inputClass="form-control form-control-validation"
                 [control]="createForm.get('minPerUser')">
         </app-money-input-field>
 
         <div class="explainer-mini mb-2 mt-3">Maximum investment per user</div>
         <app-money-input-field
                 placeholder="Enter maximum investment per user"
+                inputClass="form-control form-control-validation"
                 [control]="createForm.get('maxPerUser')">
         </app-money-input-field>
 
@@ -70,7 +73,7 @@
             <div class="alert alert-warning flex__center mb-2 mt-3"
                  *ngIf="createForm.hasError('invalidExpectedFunding') && createForm.controls['expectedFunding'].touched">
                 <i class="fas fa-exclamation-triangle mr-2"></i>
-                Maximum investment per user cannot be greater or equal than project investment cap.
+                Maximum investment per user cannot be equal or greater than project investment cap.
             </div>
             <div class="alert alert-warning flex__center mb-2 mt-3"
                  *ngIf="createForm.hasError('invalidMinInvest') && createForm.controls['minPerUser'].touched">
@@ -84,10 +87,11 @@
             </div>
         </div>
 
-        <app-action-button text="Create" loadingText="Creating project..."
-                           [onClick]="submitForm.bind(this)"
-                           [disabled]="!createForm.valid">
-        </app-action-button>
+        <div class="explainer-mini mb-2 mt-3">
+            <app-action-button text="Create" loadingText="Creating project..."
+                               [onClick]="submitForm.bind(this)"
+                               [disabled]="!createForm.valid">
+            </app-action-button>
+        </div>
     </form>
 </div>
-

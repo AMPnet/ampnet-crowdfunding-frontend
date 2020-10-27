@@ -13,40 +13,48 @@
             </div>
         </div>
 
-        <div class="app-page-subtitle">My groups</div>
         <ng-container *ngIf="states.organizations !== null else spinner">
             <div *ngIf="states.organizations?.length > 0">
-                <ul class="cursor-pointer list-group">
-                    <li *ngFor="let org of states.organizations" class="list-group-item hover-bg"
+                <ul class="list-group">
+                    <li *ngFor="let org of states.organizations" class="list__item"
                         routerLink="{{ org.uuid }}">
-                        <span class="float-left explainer-mini">
-                          {{ org.name }}
-                        </span>
+                        <div class="item__img">
+                            <img src="{{ org.header_image }}" alt="Organization image">
+                        </div>
+                        <div class="item__desc">
+                            <div class="item__title">{{ org.name }}</div>
+                            <!-- TODO: Add this info once available from backend -->
+                            <div class="item__projects-count">23 Projects</div>
+                        </div>
                     </li>
                 </ul>
             </div>
             <div *ngIf="states.organizations.length === 0"
-                 class="d-flex justify-content-center mt-5">
-                <div class="d-flex flex-column mt-3">
-                    <div class="d-flex text-center explainer-mini">
-                        You currently don't have access to any groups.
-                    </div>
+                 class="empty-group">
+                <div class="app-page-subtitle">My groups</div>
+                <div class="empty__label">
+                    You currently don't have access to any groups.
                 </div>
             </div>
         </ng-container>
 
-        <div class="app-page-subtitle">My group invites</div>
+        <div class="app-page-subtitle">Group invites</div>
         <ng-container *ngIf="states.invites !== null else spinner">
             <ul *ngIf="states.invites?.length > 0" class="list-group">
-                <li *ngFor="let invite of states.invites" class="list-group-item mt-2">
-                    <span class="float-left explainer-mini">
-                        {{ invite.organization_name }}
-                    </span>
-                    <div class="float-right">
-                    <span (click)="acceptInvite(invite.organization_uuid)"
-                          class="explainer-mini text-uppercase cursor-pointer">
-                        Accept invite
-                    </span>
+                <li *ngFor="let invite of states.invites" class="list__item">
+                    <div class="item-left">
+                        <!-- TODO: hook this up once available at backend -->
+                        <div class="item__img">
+                            <img src="https://ampnet-storage.ams3.digitaloceanspaces.com/test/image-1603710614.png" alt="Organization image">
+                        </div>
+                        <div class="item__title">{{ invite.organization_name }}</div>
+                    </div>
+                    <div class="item-right">
+                        <button (click)="acceptInvite(invite.organization_uuid)"
+                            class="btn">
+                        <i class="far fa-check"></i>
+                        <span class="">Join group</span>
+                    </button>
                     </div>
                 </li>
             </ul>

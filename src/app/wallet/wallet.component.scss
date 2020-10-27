@@ -111,6 +111,9 @@
     letter-spacing: 2px;
     margin-bottom: 34px;
   }
+  &__report {
+    display: none;
+  }
   &__grayed-out {
     color: $icons-color;
   }
@@ -270,6 +273,9 @@
       margin-bottom: 50px;
       padding-left: 15px;
     }
+    &__report {
+      display: initial;
+    }
     .left {
       &__desc {
         font-size: $font-size-desktop-body;
@@ -314,5 +320,9 @@
         }
       }
     }
+  }
+
+  .bottom-report {
+    display: none;
   }
 }

@@ -90,7 +90,7 @@
                             <ng-container *ngTemplateOutlet="investButtons"></ng-container>
 
                             <app-action-button text="Cancel all investments" loadingText="Cancelling investment..."
-                                               buttonClass="btn" [disabled]="!isCancelable" 
+                                               buttonClass="btn btn-grey" [disabled]="!isCancelable" 
                                                [onClick]="cancelInvestment.bind(this)">
                             </app-action-button>
                         </div>

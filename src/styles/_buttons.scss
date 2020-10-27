@@ -12,6 +12,7 @@
   padding: 16px 24px;
   line-height: 0;
   color: $secondary-color;
+  border: none;
 
   &-primary {
     height: 64px;
@@ -20,6 +21,10 @@
 
   &-danger {
     @include button-variant($error-color, darken($error-color, 7.5%), darken($error-color, 10%), lighten($error-color,5%), lighten($error-color, 10%), darken($error-color,30%));
+  }
+
+  &-success {
+    @include button-variant($success-color, darken($success-color, 7.5%), darken($success-color, 10%), lighten($success-color,5%), lighten($success-color, 10%), darken($success-color,30%));
   }
 
   &-outline-primary {

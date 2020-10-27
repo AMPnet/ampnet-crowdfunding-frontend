@@ -18,21 +18,21 @@
                 class="alert alert-success w-100 flex__center-space col-12 col-lg-4">
                <div>
                    <i class="fas fa-bolt"></i>
-                   You have invites pending
+                   <b>You have invites pending</b>
                </div>
            </div>
         </div>
         
 
         <ng-container *ngIf="states.organizations !== null else spinner">
-            <div *ngIf="states.organizations?.length > 0" class="space">
+            <div *ngIf="states.organizations?.length > 0" class="groups space">
                 <ul class="list-group">
                     <li *ngFor="let org of states.organizations" class="list__item"
                         routerLink="{{ org.uuid }}">
                         <div class="item__desc">
                             <div class="item__title">{{ org.name }}</div>
                             <!-- TODO: Add this info once available from backend -->
-                            <div class="item__projects-count">23 Projects</div>
+                            <div class="item__projects-count"><b>23 </b>Projects</div>
                         </div>
                         <div class="item__img">
                             <img src="{{ org.header_image }}" alt="Organization image">
@@ -49,31 +49,33 @@
             </div>
         </ng-container>
 
-        <div class="app-page-subtitle space">Group invites</div>
-        <ng-container *ngIf="states.invites !== null else spinner" class="space">
-            <div class="space">
-                <ul *ngIf="states.invites?.length > 0" class="list-group">
-                    <li *ngFor="let invite of states.invites" class="list__item">
-                        <div class="item__content">
-                            <div class="item__title">{{ invite.organization_name }}</div>
-                            <div class="item__img">
-                                <img src="https://ampnet-storage.ams3.digitaloceanspaces.com/test/image-1603710614.png" alt="Organization image">
+        <div class="invites">
+            <div class="app-page-subtitle space">Group invites</div>
+            <ng-container *ngIf="states.invites !== null else spinner" class="space">
+                <div class="space">
+                    <ul *ngIf="states.invites?.length > 0" class="list-group">
+                        <li *ngFor="let invite of states.invites" class="list__item">
+                            <div class="item__content">
+                                <div class="item__title">{{ invite.organization_name }}</div>
+                                <div class="item__img">
+                                    <img src="https://ampnet-storage.ams3.digitaloceanspaces.com/test/image-1603710614.png" alt="Organization image">
+                                </div>
                             </div>
-                        </div>
-                        <div class="div__cta">
-                            <button (click)="acceptInvite(invite.organization_uuid)"
-                                    class="btn">
-                                <i class="far fa-check"></i>
-                                <span class="">Join group</span>
-                            </button>
-                        </div>
-                    </li>
-                </ul>
-                <div *ngIf="states.invites?.length === 0" class="empty__label">
-                    Not invited to any groups
+                            <div class="item__cta">
+                                <button (click)="acceptInvite(invite.organization_uuid)"
+                                        class="btn btn-success">
+                                    <i class="far fa-check mr-3"></i>
+                                    <span class="">Join group</span>
+                                </button>
+                            </div>
+                        </li>
+                    </ul>
+                    <div *ngIf="states.invites?.length === 0" class="empty__label">
+                        Not invited to any groups
+                    </div>
                 </div>
-            </div>
-        </ng-container>
+            </ng-container>
+        </div>
     </ng-container>
 
     <ng-template #spinner>

@@ -1,0 +1,76 @@
+@import "app";
+
+.container {
+  padding: 0;
+}
+
+.space {
+  padding: 0 20px;
+}
+
+.alert-success {
+  margin: 0 auto;
+}
+
+.app-page-header {
+  background-color: $background-color;
+}
+
+.btn {
+  border-radius: 0;
+  &__text {
+    display: none;
+  }
+}
+
+.list-group {
+  list-style: none;
+  .item {
+    &__img,
+    &__img img {
+      width: 64px;
+      height: 64px;
+    }
+  }
+}
+
+@include media-breakpoint-up(lg) {
+  .container {
+    padding: 0 20px;
+  }
+
+  .space {
+    padding: 0;
+  }
+
+  .btn {
+    border-radius: 8px;
+    &__text {
+      display: inline-block;
+    }
+  }
+
+  .app-page-header {
+    background-color: unset;
+  }
+  
+}
+
+
+
+
+// .container {
+//   padding: 0;
+// }
+
+
+// .hover-bg:hover {
+//     background-color: #69be94;
+//     color: white !important;
+// }
+
+// .group-display-card:hover {
+//     background-color: #69be94 !important;
+//     color: white;
+//     transition: all 0.2s;
+// }

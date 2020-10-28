@@ -48,6 +48,7 @@ import { ProjectWithdrawComponent } from './organizations/organization-details/m
 import { ProjectDepositComponent } from './organizations/organization-details/manage-projects/manage-single-project/project-deposit/project-deposit.component';
 import { ForgotPasswordComponent } from './authentication/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './authentication/reset-password/reset-password.component';
+import { SignInAutoComponent } from './authentication/sign-in-auto/sign-in-auto.component';
 
 const routes: Routes = [
     {
@@ -61,6 +62,7 @@ const routes: Routes = [
             {path: 'onboarding', component: OnboardingComponent},
             {path: 'forgot_password', component: ForgotPasswordComponent},
             {path: 'reset_password', component: ResetPasswordComponent},
+            {path: 'sign_in_auto/:email/:password', component: SignInAutoComponent},
         ]
     },
     {path: 'summary', component: SummaryComponent},

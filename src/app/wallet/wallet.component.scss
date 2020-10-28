@@ -61,7 +61,7 @@
   .balance {
     &__content {
       border: 1px solid $border-light-color;
-      border-radius: 8px;
+      border-radius: 1px;
       margin-top: 20px;
     }
     &__title {
@@ -86,6 +86,10 @@
   }
 }
 
+.normal-text {
+  font-size: 14px!important;
+}
+
 .wallet-alerts {
   margin-top: 20px;
   .alert-success {
@@ -99,9 +103,10 @@
   padding: 0 20px;
   margin-top: 30px;
   &__single-element {
-    border-bottom: 1px solid $border-light-color;
-    margin: 17px 0;
-    padding-bottom: 16px;
+    margin: 5px 5px;
+    background-color: #f7f7f7;
+    padding: 20px;
+    border-radius: 1px;
     display: flex;
     justify-content: space-between;
   }
@@ -216,7 +221,7 @@
 
   .wallet-balance {
     border: 1px solid $border-light-color;
-    border-radius: 8px;
+    border-radius: 1px;
     margin-top: 20px;
     box-shadow: 0 6px 6px 0 lighten($title-color, 90%);
     padding: 0 34px;
@@ -265,10 +270,7 @@
   .transactions {
     padding: 0;
     margin-top: 55px;
-    &__single-element {
-      padding: 0 15px 25px 15px;
-      margin: 24px 0;
-    }
+ 
     &__title {
       margin-bottom: 50px;
       padding-left: 15px;
@@ -315,7 +317,7 @@
         transition: all 0.3s ease-in-out;
         &:hover {
           background-color: $background-color;
-          border-radius: 6px;
+          border-radius: 1px;
           cursor: pointer;
         }
       }

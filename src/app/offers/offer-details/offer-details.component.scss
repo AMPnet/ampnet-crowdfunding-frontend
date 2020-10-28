@@ -28,8 +28,8 @@ span {
 }
 
 .dropdown-divider {
-  border-top: 1px solid #D8D8D8;
-  margin: 15px 0;
+  border-top: 1px solid #efefef;
+  margin: 18px 0;
 }
 
 .app-basic-title {
@@ -169,7 +169,7 @@ span {
   .right {
     &__container {
       margin-top: 16px;
-      border-radius: 8px;
+      border-radius: 1px;
       padding: 40px 64px 64px 64px;
     }
     &__progress {
@@ -200,7 +200,7 @@ span {
   .left {
     &__img {
       max-height: 330px;
-      border-radius: 8px;
+      border-radius: 1px;
     }
     &__desc {
       margin-top: 32px;
@@ -291,7 +291,7 @@ span {
   }
   .investment__total {
     margin: 0 0 8px 0;
-    border-radius: 8px;
+    border-radius: 1px;
     padding: 24px;
   }
   .investments__history {
@@ -316,7 +316,7 @@ span {
         transition: all 0.3s ease-in-out;
         &:hover {
           background-color: $background-color;
-          border-radius: 6px;
+          border-radius: 1px;
           cursor: pointer;
         }
       }

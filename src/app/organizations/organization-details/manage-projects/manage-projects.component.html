@@ -10,6 +10,9 @@
     <ul class="list-group">
         <li *ngFor="let project of projects"
             class="list-group-item explainer-mini">
+            <div>
+                <img src="{{ project.main_image}}" alt="Project image" style="width: 100px; height: 100px;">
+            </div>
 
                 <span class="float-left hover-bg cursor-pointer"
                       routerLink="manage_project/{{ project.uuid }}">

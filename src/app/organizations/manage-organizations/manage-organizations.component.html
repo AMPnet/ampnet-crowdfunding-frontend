@@ -31,8 +31,7 @@
                         routerLink="{{ org.uuid }}">
                         <div class="item__desc">
                             <div class="item__title">{{ org.name }}</div>
-                            <!-- TODO: Add this info once available from backend -->
-                            <div class="item__projects-count"><b>23 </b>Projects</div>
+                            <div class="item__projects-count"><b> {{org.project_count}} </b>Projects</div>
                         </div>
                         <div class="item__img">
                             <img src="{{ org.header_image }}" alt="Organization image">
@@ -58,7 +57,7 @@
                             <div class="item__content">
                                 <div class="item__title">{{ invite.organization_name }}</div>
                                 <div class="item__img">
-                                    <img src="https://ampnet-storage.ams3.digitaloceanspaces.com/test/image-1603710614.png" alt="Organization image">
+                                    <img src="{{ invite.organization_header_image }}" alt="Organization image">
                                 </div>
                             </div>
                             <div class="item__cta">

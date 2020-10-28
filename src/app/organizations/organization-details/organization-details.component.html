@@ -5,60 +5,79 @@
 } as states" class="container">
     <ng-container *ngIf="!!states.organization else spinner">
         <div class="app-page-header">
-            <h1 class="app-page-title">{{ states.organization.name }}</h1>
+            <div class="app-page-title-back" (click)="backToGroupsScreen()">
+                <i class="fas fa-long-arrow-alt-left mr-3"></i>
+                Investment group details
+            </div>
             <button [disabled]="!isWalletVerified(states.orgWallet)"
-                    class="btn btn-primary py-2"
+                    class="btn"
                     routerLink="create_project">
-                <i class="fas fa-plus-circle mr-2"></i>
-                Create project
+                <i class="fas fa-plus mr-lg-3" ></i>
+                <span class="btn__text">Create project</span>
             </button>
         </div>
 
         <ng-container *ngIf="!!states.orgWallet else spinner">
-            <div class="row mt-3">
+            <div class="content">
+                <div class="organization-info">
+                    <div class="organization__img">
+                        <img src="{{states.organization.header_image}}" alt="">
+                    </div>
+                    <div class="organization__desc">
+                        <div class="desc__title"> {{states.organization.name}} </div>
+                        <!-- TODO: Swap this with real data once available at route -->
+                        <div class="desc__project-count"> <b>23 </b>Projects </div>
+                        <div class="desc__info"> {{states.organization.description}} </div>
+                    </div>
+                </div>
+                <!-- TODO: Style this and check width on mobile/dewktop -->
                 <div *ngIf="!isWalletVerified(states.orgWallet)" class="col-md-12">
                     <div class="alert alert-warning">
                         This group is pending approval from admin. During this time, you can't create new projects.
                     </div>
                 </div>
 
-                <div class="col-md-12">
-                    <h2 class="app-page-subtitle">Invite new members</h2>
-                </div>
-                <form [formGroup]="inviteForm" style="display: contents">
-                    <div class="col-md-8">
-                        <input class="form-control p-4" name=""
-                               placeholder="Enter list of emails (e.g. alice@email.com, bob@company.com)"
-                               formControlName="emails"
-                               type="text" value="">
-                    </div>
-                    <div class="col-md-4">
-                        <app-action-button text="Invite" loadingText="Inviting users..." faIcon="fa-envelope-open"
-                                           [onClick]="inviteClicked(states.organization.uuid).bind(this)"
-                                           [disabled]="!inviteForm.valid">
-                        </app-action-button>
-                    </div>
-                </form>
-
-                <div class="col-md-12 mt-4">
+                <div class="manage__projects">
                     <app-manage-projects [groupID]="states.organization.uuid"></app-manage-projects>
                 </div>
 
-                <div class="col-md-12 mt-4">
-                    <h1 class="app-page-subtitle">Manage users</h1>
-                    <ng-container *ngIf="!!states.orgMembers else spinner">
-                        <ul class="list-group">
-                            <li *ngFor="let member of states.orgMembers" class="list-group-item">
-                                <span class="float-left">{{ member.first_name }} {{ member.last_name }}</span>
-                                <span class="float-right"
-                                      (click)="deleteMember(states.organization.uuid, member.uuid)">
-                            <i class="fas fa-trash cursor-pointer"></i></span>
-                            </li>
-                        </ul>
-                        <div *ngIf="states.orgMembers.length === 0" class="w-100 pt-3 pb-3 text-center explainer-mini">
-                            You are the only member of {{ states.organization.name }}
+                <div class="manage__members">
+                    <div class="invite-members">
+                        <h2 class="app-page-subtitle">Invite new members</h2>
+                        <div class="invite__form">
+                            <form [formGroup]="inviteForm" style="display: contents">
+                                <div class="form__input">
+                                    <input class="form-control p-4" name=""
+                                           placeholder="Enter list of emails (e.g. alice@email.com, bob@company.com)"
+                                           formControlName="emails"
+                                           type="text" value="">
+                                </div>
+                                <div class="form__cta">
+                                    <app-action-button text="Invite" loadingText="Inviting users..." faIcon="fa-envelope-open"
+                                                       [onClick]="inviteClicked(states.organization.uuid).bind(this)"
+                                                       [disabled]="!inviteForm.valid">
+                                    </app-action-button>
+                                </div>
+                            </form>
                         </div>
-                    </ng-container>
+                    </div>
+
+                    <div class="users__list">
+                        <h1 class="app-page-subtitle">Manage users</h1>
+                        <ng-container *ngIf="!!states.orgMembers else spinner">
+                            <ul class="list-group">
+                                <li *ngFor="let member of states.orgMembers" class="list__item">
+                                    <span class="float-left">{{ member.first_name }} {{ member.last_name }}</span>
+                                    <span class="float-right"
+                                          (click)="deleteMember(states.organization.uuid, member.uuid)">
+                                        <i class="fas fa-trash cursor-pointer"></i></span>
+                                </li>
+                            </ul>
+                            <div *ngIf="states.orgMembers.length === 0" class="w-100 pt-3 pb-3 text-center explainer-mini">
+                                You are the only member of {{ states.organization.name }}
+                            </div>
+                        </ng-container>
+                    </div>
                 </div>
             </div>
         </ng-container>

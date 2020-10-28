@@ -52,6 +52,8 @@
     &__img img {
       width: 64px;
       height: 64px;
+      border-radius: 8px;
+      border: 1px solid $background-color;
     }
     &__title {
       font-size: $font-size-mobile-title;
@@ -129,7 +131,6 @@
       &__img img {
         width: 140px;
         height: 140px;
-        border-radius: 8px;
         margin-right: 32px;
       }
       &__title {
@@ -170,21 +171,4 @@
   }
 }
 
-
-
-
-// .container {
-//   padding: 0;
-// }
-
-
-// .hover-bg:hover {
-//     background-color: #69be94;
-//     color: white !important;
-// }
-
-// .group-display-card:hover {
-//     background-color: #69be94 !important;
-//     color: white;
-//     transition: all 0.2s;
-// }
+// TODO: Remove blue outline when single group is clicked

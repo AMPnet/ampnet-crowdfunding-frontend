@@ -14,7 +14,7 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors,
 @Component({
     selector: 'app-organization-details',
     templateUrl: './organization-details.component.html',
-    styleUrls: ['./organization-details.component.css']
+    styleUrls: ['./organization-details.component.scss']
 })
 export class OrganizationDetailsComponent implements OnInit {
     refreshOrganizationSubject = new BehaviorSubject<void>(null);
@@ -151,5 +151,9 @@ export class OrganizationDetailsComponent implements OnInit {
     private recoverBack(): Observable<never> {
         this.router.navigate(['/dash/manage_groups']);
         return EMPTY;
+    }
+
+    backToGroupsScreen() {
+        this.router.navigate(['/dash/manage_groups']);
     }
 }

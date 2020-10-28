@@ -13,16 +13,14 @@ export class NavbarComponent {
         const sidebar = $('.sidebar-fixer');
 
         if (toVisible) {
-            
-            sidebar.css("left", "0px")
-
+            sidebar.css('left', '0px');
         } else {
-            sidebar.css("left", "-220px")
+            sidebar.css('left', '-220px');
         }
     }
 
     menuButtonClicked() {
         this.sidebar = $('.sidebar-fixer');
-        NavbarComponent.toggleSidebar(this.sidebar.css("left") != "0px");
+        NavbarComponent.toggleSidebar(this.sidebar.css('left') !== '0px');
     }
 }

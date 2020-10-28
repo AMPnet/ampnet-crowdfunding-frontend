@@ -25,8 +25,9 @@
                     </div>
                     <div class="organization__desc">
                         <div class="desc__title"> {{states.organization.name}} </div>
-                        <!-- TODO: Swap this with real data once available at route -->
-                        <div class="desc__project-count"> <b>23 </b>Projects </div>
+                        <div class="desc__project-count"> <b>{{states.organization.project_count}} </b>
+                            {{ states.organization.project_count === 1 ? "Project" : "Projects" }}
+                        </div>
                         <div class="desc__info"> {{states.organization.description}} </div>
                     </div>
                 </div>
@@ -37,47 +38,61 @@
                     </div>
                 </div>
 
-                <div class="manage__projects">
-                    <app-manage-projects [groupID]="states.organization.uuid"></app-manage-projects>
-                </div>
-
-                <div class="manage__members">
-                    <div class="invite-members">
-                        <h2 class="app-page-subtitle">Invite new members</h2>
-                        <div class="invite__form">
-                            <form [formGroup]="inviteForm" style="display: contents">
-                                <div class="form__input">
-                                    <input class="form-control p-4" name=""
-                                           placeholder="Enter list of emails (e.g. alice@email.com, bob@company.com)"
-                                           formControlName="emails"
-                                           type="text" value="">
-                                </div>
-                                <div class="form__cta">
-                                    <app-action-button text="Invite" loadingText="Inviting users..." faIcon="fa-envelope-open"
-                                                       [onClick]="inviteClicked(states.organization.uuid).bind(this)"
-                                                       [disabled]="!inviteForm.valid">
-                                    </app-action-button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-
-                    <div class="users__list">
-                        <h1 class="app-page-subtitle">Manage users</h1>
-                        <ng-container *ngIf="!!states.orgMembers else spinner">
-                            <ul class="list-group">
-                                <li *ngFor="let member of states.orgMembers" class="list__item">
-                                    <span class="float-left">{{ member.first_name }} {{ member.last_name }}</span>
-                                    <span class="float-right"
-                                          (click)="deleteMember(states.organization.uuid, member.uuid)">
-                                        <i class="fas fa-trash cursor-pointer"></i></span>
-                                </li>
-                            </ul>
-                            <div *ngIf="states.orgMembers.length === 0" class="w-100 pt-3 pb-3 text-center explainer-mini">
-                                You are the only member of {{ states.organization.name }}
+                <div class="tabs">
+                    <tabset>
+                        <tab heading="Projects">
+                            <div class="manage__projects">
+                                <app-manage-projects [groupID]="states.organization.uuid"></app-manage-projects>
                             </div>
-                        </ng-container>
-                    </div>
+                        </tab>
+                        <tab heading="Members">
+                            <div class="manage__members">
+                                <div class="invite-members">
+                                    <div class="invite__form">
+                                        <form [formGroup]="inviteForm" style="display: contents">
+                                            <div class="form__input col-lg-5">
+                                                <input class="form-control input-reg p-4" name=""
+                                                       placeholder="Add members"
+                                                       formControlName="emails"
+                                                       type="text" value="">
+                                            </div>
+                                            <div class="form__cta col-lg-2">
+                                                <app-action-button text="Add members" loadingText="Inviting members..." faIcon="fas fa-plus"
+                                                                   [onClick]="inviteClicked(states.organization.uuid).bind(this)"
+                                                                   [disabled]="!inviteForm.valid" buttonClass="btn btn-success">
+                                                </app-action-button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <p class="invite__desc col-lg-7">Separated emails by comma e.g <b>joe@mail.com, jane@mail.com</b></p>
+                                </div>
+            
+                                <div class="users__list">
+                                    <ng-container *ngIf="!!states.orgMembers else spinner">
+                                        <ul class="list-group">
+                                            <li *ngFor="let member of states.orgMembers" class="list__item flex__center-space">
+                                                <div class="item__left flex__center">
+                                                    <div class="item__name">{{ member.first_name }} {{ member.last_name }}</div>
+                                                    <!-- TODO: Change this with real data -->
+                                                    <div class="item__email">testmail@test.com</div>
+                                                </div>
+                                                <div class="item__right flex__center">
+                                                    <div class="item__joined">{{member.member_since | date:'medium'}}</div>
+                                                    <span class="item__icon"
+                                                      (click)="deleteMember(states.organization.uuid, member.uuid)">
+                                                        <i class="fas fa-trash-alt cursor-pointer"></i>
+                                                    </span>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                        <div *ngIf="states.orgMembers.length === 0" class="w-100 pt-3 pb-3 text-center explainer-mini">
+                                            You are the only member of {{ states.organization.name }}
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </div>
+                        </tab>
+                    </tabset>
                 </div>
             </div>
         </ng-container>

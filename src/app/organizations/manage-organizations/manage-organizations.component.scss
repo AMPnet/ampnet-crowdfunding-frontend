@@ -46,13 +46,16 @@
     &:last-of-type {
       border-bottom: none;
     }
+    &:focus {
+      outline: none;
+    }
   }
   .item {
     &__img,
     &__img img {
       width: 64px;
       height: 64px;
-      border-radius: 8px;
+      border-radius: 1px;
       border: 1px solid $background-color;
     }
     &__title {
@@ -100,7 +103,7 @@
   }
 
   .btn {
-    border-radius: 8px;
+    border-radius: 2px;
     &__text {
       display: inline-block;
     }
@@ -120,7 +123,7 @@
       margin-top: 5px;
       height: 140px;
       background-color: $background-color;
-      border-radius: 8px;
+      border-radius: 1px;
       border-bottom: none;
       flex-direction: row-reverse;
       align-items: center;
@@ -170,5 +173,3 @@
     }
   }
 }
-
-// TODO: Remove blue outline when single group is clicked

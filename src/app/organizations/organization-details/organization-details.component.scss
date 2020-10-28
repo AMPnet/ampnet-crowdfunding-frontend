@@ -27,7 +27,7 @@
   &__img img {
     width: 64px;
     height: 64px;
-    border-radius: 8px;
+    border-radius: 1px;
     border: 1px solid $background-color;
   }
   &__desc {
@@ -57,6 +57,17 @@
   }
 }
 
+.tabs {
+  margin-top: 50px;
+}
+
+.users__list {
+  margin-top: 24px;
+  .list-group {
+    list-style: none;
+  }
+}
+
 @include media-breakpoint-up(lg) {
   .container {
     padding: 0 20px;
@@ -71,40 +82,94 @@
   }
 
   .btn {
-    border-radius: 8px;
+    border-radius: 2px;
     &__text {
       display: inline-block;
     }
   }
 
-}
-
-
-
-.title-holder {
-    height: 60px;
-}
-
-.card-img-overlay {
-    background-color: #55000075;
-}
-
-.project-holder {
-    margin-bottom: 20px;
-    border: none;
-    box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease-in-out;
-
-}
-
-.project-holder:hover {
-    cursor: pointer;
-    box-shadow: -4px 10px 20px rgba(0, 0, 0, 0.1);
-    transform: scale(1.03);
-}
-
-@media (min-width: 800px) {
-    .pairing-text {
-        width: 50%;
+  .organization {
+    &-info {
+      display: flex;
+      align-items: center;
+      padding-bottom: 41px;
+      border-bottom: 1px solid $border-light-color;
     }
+    &__img, 
+    &__img img {
+      width: 140px;
+      height: 140px;
+      margin-right: 32px;
+    }
+    &__desc {
+      .desc {
+        &__title {
+          margin-top: 0;
+          font-size: $font-size-desktop-title;
+          letter-spacing: 1.5px;
+        }
+        &__project-count {
+          font-size: $font-size-desktop-body2;
+          b {
+            font-size: $font-size-desktop-body2;
+          }
+        }
+        &__info {
+          font-size: $font-size-desktop-body2;
+          margin-top: 8px;
+        }
+      }
+    }
+  }
+
+  .tabs {
+    margin-top: 36px;
+    padding-left: 20px;
+  }
+
+  .manage__projects,
+  .manage__members {
+    margin-left: -20px;
+  }
+
+  .manage__members {
+    .col-lg-7,
+    .col-lg-5,
+    .col-lg-2 {
+      padding: 0;
+    }
+
+    .invite {
+      &-members {
+        padding: 25px 0;
+        background-color: $background-color;
+        border-radius: 1px;
+      }
+      &__form {
+        display: flex;
+        justify-content: center;
+      }
+      &__desc {
+        font-size: $font-size-desktop-xsmall;
+        color: $body-color;
+        padding-left: 14px !important;
+        margin: 0 auto;
+        b {
+          font-size: $font-size-desktop-xsmall;
+        }
+      }
+    }
+
+    .users__list {
+      .list__item {
+        padding: 20px 24px;
+        background-color: $background-color;
+      }
+      .item {
+        
+      }
+    }
+  }
+
+  
 }

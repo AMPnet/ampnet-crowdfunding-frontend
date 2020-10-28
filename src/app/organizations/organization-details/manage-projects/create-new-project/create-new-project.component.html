@@ -15,56 +15,85 @@
                     Please make sure these parameters are finalized <i>before</i> creating the project.
                 </div>
             </div>
-
         </div>
     </div>
     <form [formGroup]="createForm" class="mb-5">
-        <div class="explainer-mini  mb-2 mt-3">Project name</div>
-        <input class="w-100 p-4 form-control " formControlName="name" id="" name="" type="text">
+        <div class="explainer-mini mb-2 mt-3">Project name</div>
+        <input class="w-100 p-4 form-control" formControlName="name" id="" name="" type="text">
 
-        <div class="explainer-mini  mb-2 mt-3">Project description</div>
+        <div class="explainer-mini mb-2 mt-3">Project description</div>
         <textarea class="form-control p-4" cols="30" id="project-description" name=""
                   formControlName="description"
                   rows="10" style="border-radius: 5px!important;">
         </textarea>
 
-        <div class="explainer-mini  mb-2 mt-3">Project location</div>
+        <div class="explainer-mini mb-2 mt-3">Project location</div>
         <app-location-map [editable]="true"
                           [(lat)]="mapLat" [(lng)]="mapLong">
         </app-location-map>
 
-        <div class="explainer-mini  mb-2 mt-3">Start date</div>
+        <div class="explainer-mini mb-2 mt-3">Start date</div>
         <input class="w-100 p-4 form-control" formControlName="startDate"
                id="start-date" placeholder="dd/mm/yyyy" bsDatepicker
                [bsConfig]="bsConfig" (click)="setDatepickerOptions()">
 
-        <div class="explainer-mini  mb-2 mt-3">End date</div>
+        <div class="explainer-mini mb-2 mt-3">End date</div>
         <input class="w-100 p-4 form-control" formControlName="endDate"
                id="end-date" placeholder="dd/mm/yyyy" bsDatepicker
                [bsConfig]="bsConfig" (click)="setDatepickerOptions()">
 
-        <div class="explainer-mini  mb-2 mt-3">Expected funding</div>
+        <div class="explainer-mini mb-2 mt-3">Expected funding</div>
         <app-money-input-field
                 placeholder="Enter expected funding amount"
+                inputClass="form-control p-4"
                 [control]="createForm.get('expectedFunding')">
         </app-money-input-field>
 
-        <div class="explainer-mini  mb-2 mt-3">Minimum investment per user</div>
+        <div class="explainer-mini mb-2 mt-3">Minimum investment per user</div>
         <app-money-input-field
                 placeholder="Enter minimum investment per user"
+                inputClass="form-control p-4"
                 [control]="createForm.get('minPerUser')">
         </app-money-input-field>
 
-        <div class="explainer-mini  mb-2 mt-3">Maximum investment per user</div>
+        <div class="explainer-mini mb-2 mt-3">Maximum investment per user</div>
         <app-money-input-field
                 placeholder="Enter maximum investment per user"
+                inputClass="form-control p-4"
                 [control]="createForm.get('maxPerUser')">
         </app-money-input-field>
 
-        <app-action-button text="Create" loadingText="Creating project..."
-                           [onClick]="submitForm.bind(this)"
-                           [disabled]="!createForm.valid">
-        </app-action-button>
+        <div *ngIf="createForm.dirty && createForm.invalid">
+            <ng-container *ngIf="createForm.get('startDate').dirty
+                                    && createForm.get('endDate').dirty">
+                <div class="alert alert-warning flex__center mb-2 mt-3"
+                     *ngIf="createForm.hasError('invalidStartEndDate')">
+                    <i class="fas fa-exclamation-triangle mr-2"></i>
+                    Start date has to be lower than the end date.
+                </div>
+            </ng-container>
+
+            <ng-container *ngIf="createForm.get('expectedFunding').dirty
+                                    && createForm.get('minPerUser').dirty
+                                    && createForm.get('maxPerUser').dirty">
+                <div class="alert alert-warning flex__center mb-2 mt-3"
+                     *ngIf="createForm.hasError('invalidMaxExpectedFunding')">
+                    <i class="fas fa-exclamation-triangle mr-2"></i>
+                    Maximum investment per user cannot be greater than project expected funding.
+                </div>
+                <div class="alert alert-warning flex__center mb-2 mt-3"
+                     *ngIf="createForm.hasError('invalidMinMax')">
+                    <i class="fas fa-exclamation-triangle mr-2"></i>
+                    Minimum investment per user cannot be greater than maximum investment per user.
+                </div>
+            </ng-container>
+        </div>
+
+        <div class="explainer-mini mb-2 mt-3">
+            <app-action-button text="Create" loadingText="Creating project..."
+                               [onClick]="submitForm.bind(this)"
+                               [disabled]="!createForm.valid">
+            </app-action-button>
+        </div>
     </form>
 </div>
-

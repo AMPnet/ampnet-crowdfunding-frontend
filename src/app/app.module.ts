@@ -90,7 +90,9 @@ import { RevenueShareComponent } from './organizations/organization-details/mana
 import { RevenueShareConfirmModalComponent } from './organizations/organization-details/manage-projects/manage-single-project/manage-payments/revenue-share/revenue-share-confirm-modal/revenue-share-confirm-modal.component';
 import { ProjectDepositComponent } from './organizations/organization-details/manage-projects/manage-single-project/project-deposit/project-deposit.component';
 import { ProjectWithdrawComponent } from './organizations/organization-details/manage-projects/manage-single-project/project-withdraw/project-withdraw.component';
+import { TabsModule } from 'ngx-bootstrap/tabs';
 import { DatePipe } from '@angular/common';
+import { SignInAutoComponent } from './authentication/sign-in-auto/sign-in-auto.component';
 
 const socialAuthServiceConfig = {
     provide: 'SocialAuthServiceConfig',
@@ -188,7 +190,8 @@ const socialAuthServiceConfig = {
         UploadAreaComponent,
         URLValidator,
         ForgotPasswordComponent,
-        ResetPasswordComponent
+        ResetPasswordComponent,
+        SignInAutoComponent
     ],
     imports: [
         BrowserModule,
@@ -197,6 +200,7 @@ const socialAuthServiceConfig = {
         DisqusModule.forRoot('ampnet.disqus.com/embed.js'),
         TooltipModule.forRoot(),
         ModalModule.forRoot(),
+        TabsModule.forRoot(),
         FormsModule,
         ReactiveFormsModule,
         HttpClientModule,

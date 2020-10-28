@@ -1,0 +1,46 @@
+@import "fonts";
+@import "colors";
+@import "bootstrap/scss/nav";
+
+.tab-container {
+  .nav-tabs {
+    margin: 27px 0 18px 0;
+    border-bottom: none;
+    .nav-item {
+      margin-bottom: 0;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      span {
+        font-size: $font-size-mobile-title-small;
+      }
+    }
+    .nav-link {
+      border: none;
+      padding: 0;
+      margin-right: 23px;
+      color: $title-color;
+      @include border-top-radius(0);
+      @include hover-focus() {
+        border-color: transparent;
+      }
+    }
+    .nav-link.active,
+    .nav-item.show .nav-link {
+      color: $primary-color;
+      border-bottom: 1px solid $primary-color;
+      padding-bottom: 4px;
+    }
+  }
+} 
+
+@include media-breakpoint-up(lg) {
+  .tab-container {
+    .nav-tabs {
+      margin: 27px 0 24px 0;
+      .nav-link.active,
+      .nav-item.show .nav-link {
+        border-bottom: 2px solid $primary-color;
+      }
+    }
+  } 
+}

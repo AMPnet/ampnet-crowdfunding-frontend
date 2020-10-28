@@ -14,10 +14,7 @@ export class SingleInvestItemComponent {
     }
 
     onClickedItem() {
-        this.router.navigate(['dash', 'my_portfolio', this.investment.project.uuid, 'in_portfolio']);
-    }
-
-    getImageAsURL() {
-        return `url(${(<any>this.investment.project).image_url})`;
+        this.router.navigate(['dash', 'my_portfolio', this.investment.project.uuid, 'in_portfolio'],
+        {state: {data: this.investment}});
     }
 }

@@ -79,12 +79,12 @@
                 <div class="alert alert-warning flex__center mb-2 mt-3"
                      *ngIf="createForm.hasError('invalidMaxExpectedFunding')">
                     <i class="fas fa-exclamation-triangle mr-2"></i>
-                    Maximum investment per user cannot be equal or greater than project investment cap.
+                    Maximum investment per user cannot be greater than project expected funding.
                 </div>
                 <div class="alert alert-warning flex__center mb-2 mt-3"
                      *ngIf="createForm.hasError('invalidMinMax')">
                     <i class="fas fa-exclamation-triangle mr-2"></i>
-                    Maximum investment per user has to be greater than minimum investment per user.
+                    Minimum investment per user cannot be greater than maximum investment per user.
                 </div>
             </ng-container>
         </div>

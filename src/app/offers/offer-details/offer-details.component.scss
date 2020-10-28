@@ -97,6 +97,7 @@ span {
     p {
       text-transform: uppercase;
       letter-spacing: 2px;
+      font-size: $font-size-desktop-body2;
     }
     p, .socials__link {
       margin-right: 28px;
@@ -169,7 +170,7 @@ span {
     &__container {
       margin-top: 16px;
       border-radius: 8px;
-      padding: 40px 64px;
+      padding: 40px 64px 64px 64px;
     }
     &__progress {
       width: fit-content;
@@ -202,7 +203,131 @@ span {
       border-radius: 8px;
     }
     &__desc {
-      margin-top: 40px;
+      margin-top: 32px;
+    }
+  }
+}
+
+// Investment details
+.investment__total {
+  background-color: $background-color;
+  margin: 0 -20px;
+  padding: 24px 20px;
+  .total {
+    &__title {
+      font-size: $font-size-mobile-title-small;
+      letter-spacing: 2px;
+      color: $title-color;
+      text-transform: uppercase;
+      padding-bottom: 6px;
+    }
+    &__amount {
+      font-size: $font-size-mobile-title;
+      letter-spacing: 1px;
+      color: $title-color;
+    }
+  }
+}
+
+.investments__history {
+  padding: 15px 0;
+  border-bottom: 1px solid $border-light-color;
+  &:last-of-type {
+    border-bottom: none;
+  }
+  .history {
+    &__amount {
+      font-size: $font-size-mobile-body;
+      letter-spacing: 0.18px;
+      line-height: 25px;
+      padding-bottom: 4px;
+    }
+    &__date {
+      font-size: $font-size-mobile-title-small;
+      color: $icons-color;
+    }
+    &__icon {
+      svg {
+        font-size: $font-size-desktop-body;
+        color: $icons-color;
+      }
+    }
+  }
+}
+
+.portfolio__invest {
+  .btn-primary {
+    margin-bottom: 16px !important;
+    font-size: $font-size-desktop-body2 !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .btn-grey {
+    background-color: $border-light-color;
+    color: $body-color;
+    border: none;
+    &:hover {
+      background-color: darken($border-light-color, 10%);
+    }
+    &:not(:disabled):not(.disabled):active {
+      background-color: darken($border-light-color, 10%);
+      border: none;
+    }
+    &:disabled {
+      background-color: $background-color;
+      color: $border-color;
+      border: none;
+    }
+  }
+  .btn:last-of-type {
+    margin-bottom: 32px;
+  }
+}
+
+@include media-breakpoint-up(lg) {
+  .investments__container {
+    margin-left: -20px;
+  }
+  .investment__total {
+    margin: 0 0 8px 0;
+    border-radius: 8px;
+    padding: 24px;
+  }
+  .investments__history {
+    padding: 20px 16px 22px 16px;
+    &:last-of-type {
+      border-bottom: 1px solid $border-light-color;
+    }
+    .history {
+      &__amount {
+        font-size: $font-size-desktop-body;
+        letter-spacing: 0.2px;
+        color: $title-color;
+      }
+      &__icon {
+        align-self: center;
+        margin-left: 14px;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease-in-out;
+        &:hover {
+          background-color: $background-color;
+          border-radius: 6px;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+  .portfolio__invest {
+    .btn-primary {
+      font-size: 17px !important;
+    }
+    .btn:last-of-type {
+      margin-bottom: 40px;
     }
   }
 }

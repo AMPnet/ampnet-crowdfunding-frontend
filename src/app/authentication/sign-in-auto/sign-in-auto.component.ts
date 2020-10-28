@@ -7,7 +7,7 @@ import { EMPTY } from 'rxjs';
 
 @Component({
     selector: 'app-sign-in-auto',
-    template: undefined
+    template: ''
 })
 export class SignInAutoComponent implements OnInit {
 

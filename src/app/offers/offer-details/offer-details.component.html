@@ -91,7 +91,8 @@
 
                             <app-action-button text="Cancel all investments"
                                                loadingText="Cancelling investments..."
-                                               buttonClass="btn btn-grey mb-4"
+                                               faIcon="fa-times-circle"
+                                               buttonClass="btn btn-primary font-weight-bold btn-danger mb-4"
                                                [disabled]="!isCancelable"
                                                [onClick]="cancelInvestment.bind(this)">
                             </app-action-button>
@@ -110,7 +111,13 @@
                                     class="btn btn-primary w-100 btn-action-a"
                                     (click)="goToInvest(states.project.uuid)">
                                 <i class="mr-2 fas fa-chart-pie"></i>
-                                Invest
+                                <span *ngIf="isPortfolioView">
+                                    Increase investment
+                                </span>
+                                <span *ngIf="!isPortfolioView">
+                                    Invest
+                                </span>
+                                
                             </button>
                             <button *ngIf="!states.user.verified" [disabled]="!states.project.active"
                                     class="btn btn-primary w-100 btn-action-a"

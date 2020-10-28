@@ -92,6 +92,7 @@ import { ProjectDepositComponent } from './organizations/organization-details/ma
 import { ProjectWithdrawComponent } from './organizations/organization-details/manage-projects/manage-single-project/project-withdraw/project-withdraw.component';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { DatePipe } from '@angular/common';
+import { SignInAutoComponent } from './authentication/sign-in-auto/sign-in-auto.component';
 
 const socialAuthServiceConfig = {
     provide: 'SocialAuthServiceConfig',
@@ -189,7 +190,8 @@ const socialAuthServiceConfig = {
         UploadAreaComponent,
         URLValidator,
         ForgotPasswordComponent,
-        ResetPasswordComponent
+        ResetPasswordComponent,
+        SignInAutoComponent
     ],
     imports: [
         BrowserModule,

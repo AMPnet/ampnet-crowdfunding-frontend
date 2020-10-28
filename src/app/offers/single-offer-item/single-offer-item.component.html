@@ -1,54 +1,53 @@
 <div (click)="onClickedItem()" class="card-holder cursor-pointer">
-    <div class="card-left-holder pb-md-3">
-        <div class="card-img-holder">
-            <img alt=""
-                 class="w-100 h-100 card-img-base" src="{{ projectWallet.project.main_image }}">
-        </div>
-        <div class="card-progress-holder">
-            <div class="h3 text-uppercase gray-text mb-3 mt-3 d-lg-none">
-                {{ projectWallet.project.name }}
-            </div>
 
+    <div class="card-left">
+        <div class="left__img">
+            <img class="img__base w-100" src="{{ projectWallet.project.main_image }}">
+        </div>
+        <h1 class="app-basic-title">
+            {{ projectWallet.project.name }}
+        </h1>
+        <div class="left__progress">
             <ng-container *ngIf="(projectWallet$ | async) as wallet else walletLoading">
                 <div style="visibility:hidden" class="fadeIn wow">
-                    <div class="mt-2">
-                        <div class="mt-2 mb-2 raised-info">
+                    <div>
+                        <div class="progress__raised">
                             <div>
                                 <span>{{ wallet.totalFundsRaised | currencyDefault }}</span> raised of
                                 {{ wallet.investmentCap | currencyDefault }} goal
                             </div>
                         </div>
                     </div>
-
                     <div>
                         <div class="progress">
                             <div [style.width.%]="(wallet.totalFundsRaised / wallet.investmentCap) * 100"
-                                 class="progress-bar"
+                                 class="progress__bar"
                                  role="progressbar"></div>
                         </div>
                     </div>
                 </div>
             </ng-container>
-
-            <div class="mt-2 ends-info">
-                <div>Ends on {{ projectWallet.project.end_date | date:'mediumDate' }}</div>
+            <div class="left__ends-info">
+                Ends {{ projectWallet.project.end_date | date:'mediumDate' }}
             </div>
         </div>
     </div>
-    <div class="card-content-holder">
-        <div class="card-content-text-holder">
-            <div class="h3 text-uppercase gray-text mb-3 d-none d-lg-block">
-                {{ projectWallet.project.name }}
-            </div>
-            <div class="explainer-mini text-uppercase mb-4">
+
+    <div class="card-right">
+        <h1 class="app-basic-title">
+            {{ projectWallet.project.name }}
+        </h1>
+        <div class="right__text">
+            <p class="right__roi">
                 Expected yearly return:
-                <span class="roi-info">{{ projectWallet.project.roi.from }}% - {{ projectWallet.project.roi.to }}
-                    %</span>
-            </div>
-            <div [innerHTML]="projectWallet.project.description" class="p gray-text"></div>
+                <span>
+                    {{ projectWallet.project.roi.from }}% - {{ projectWallet.project.roi.to }}%
+                </span>
+            </p>
+            <div [innerHTML]="projectWallet.project.description" class="right__desc"></div>
         </div>
-        <div class="card-content-actions-holder">
-            <button class="btn btn-primary w-100 invest-button">
+        <div class="right__cta">
+            <button class="btn w-100 invest-button">
                 See more
             </button>
         </div>

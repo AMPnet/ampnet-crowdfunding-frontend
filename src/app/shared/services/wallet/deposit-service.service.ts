@@ -7,6 +7,7 @@ import { BackendHttpClient } from '../backend-http-client.service';
 })
 export class DepositServiceService {
     private endpoint = '/api/wallet/deposit';
+    private endpointProjectDeposit = '/api/wallet/deposit/project';
 
     constructor(private http: BackendHttpClient) {
     }
@@ -15,8 +16,16 @@ export class DepositServiceService {
         return this.http.post<Deposit>(this.endpoint, <CreateDepositData>{});
     }
 
+    public createProjectDeposit(projectID: string) {
+        return this.http.post<Deposit>(`${this.endpointProjectDeposit}/${projectID}`, <CreateDepositData>{});
+    }
+
     public getMyPendingDeposit() {
         return this.http.get<Deposit>(this.endpoint);
+    }
+
+    public getProjectPendingDeposit(projectID: string) {
+        return this.http.get<Deposit>(`${this.endpointProjectDeposit}/${projectID}`);
     }
 
     public deleteDeposit(id: number) {

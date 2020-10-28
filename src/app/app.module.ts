@@ -1,3 +1,4 @@
+// tslint:disable:max-line-length
 import { BrowserModule } from '@angular/platform-browser';
 import { DEFAULT_CURRENCY_CODE, NgModule } from '@angular/core';
 import { DisqusModule } from 'ngx-disqus';
@@ -40,19 +41,18 @@ import { CreateOrganizationComponent } from './organizations/create-organization
 import { GeneralSettingsComponent } from './general-settings/general-settings.component';
 import { ManageOrganizationsComponent } from './organizations/manage-organizations/manage-organizations.component';
 import { OrganizationDetailsComponent } from './organizations/organization-details/organization-details.component';
-import { CreateNewProjectComponent } from './projects/create-new-project/create-new-project.component';
+import { CreateNewProjectComponent } from './organizations/organization-details/manage-projects/create-new-project/create-new-project.component';
 import { OnboardingComponent } from './authentication/onboarding/onboarding.component';
-import { ManageProjectsComponent } from './manage-projects/manage-projects.component';
-import { ManageSingleProjectComponent } from './manage-projects/manage-single-project/manage-single-project.component';
-import { VerifySignOfferComponent } from './offers/verify-sign-offer/verify-sign-offer.component';
-import { ManagePaymentsComponent } from './project/manage-payments/manage-payments.component';
+import { ManageProjectsComponent } from './organizations/organization-details/manage-projects/manage-projects.component';
+import { ManageSingleProjectComponent } from './organizations/organization-details/manage-projects/manage-single-project/manage-single-project.component';
+import { VerifySignOfferComponent } from './offers/offer-details/verify-sign-offer/verify-sign-offer.component';
+import { ManagePaymentsComponent } from './organizations/organization-details/manage-projects/manage-single-project/manage-payments/manage-payments.component';
 import { ManageWithdrawalsComponent } from './manage-withdrawals/manage-withdrawals.component';
 import { SingleWithdrawalComponent } from './manage-withdrawals/single-withdrawal/single-withdrawal.component';
 import { DepositComponent } from './deposit/deposit.component';
 import { ManageDepositsComponent } from './manage-deposits/manage-deposits.component';
 import { ManageSingleDepositComponent } from './manage-deposits/manage-single-deposit/manage-single-deposit.component';
 import { WithdrawComponent } from './withdraw/withdraw.component';
-import { EscapeHtmlPipe } from './pipes/unescape';
 import { WalletActivationComponent } from './wallet-activation/wallet-activation.component';
 import { UserActivationComponent } from './wallet-activation/user-activation/user-activation.component';
 import { GroupActivationComponent } from './wallet-activation/group-activation/group-activation.component';
@@ -66,14 +66,11 @@ import { ExchangeComponent } from './exchange/exchange.component';
 import { OwnershipComponent } from './ownership/ownership.component';
 import { CurrencyDefaultPipe } from './pipes/currency-default.pipe';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { RevenueShareComponent } from './revenue-share/revenue-share.component';
 import { TxAmountSign, TxIconStatus, TxIconType } from './wallet/wallet.pipe';
 import { UserStateReminderComponent } from './user-state-reminder/user-state-reminder.component';
 import { FileValidator } from './shared/validators/file.validator';
 import { FileValueAccessorDirective } from './shared/directives/file-value-accessor.directive';
 import { SpinnerComponent } from './shared/components/spinner/spinner.component';
-// tslint:disable-next-line:max-line-length
-import { RevenueShareConfirmModalComponent } from './revenue-share/revenue-share-confirm-modal/revenue-share-confirm-modal.component';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { LocationMapComponent } from './location-map/location-map.component';
 import { MapModalComponent } from './location-map/map-modal/map-modal.component';
@@ -83,6 +80,19 @@ import { environment } from '../environments/environment.prod';
 import { MoneyInputFieldComponent } from './shared/components/money-input-field/money-input-field.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { UploadAreaComponent } from './shared/components/upload-area/upload-area.component';
+import { SafePipe } from './pipes/safe.pipe';
+import { URLValidator } from './shared/validators/url.validator';
+import { ForgotPasswordComponent } from './authentication/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './authentication/reset-password/reset-password.component';
+import { ManageSingleDepositModalComponent } from './manage-deposits/manage-single-deposit/manage-single-deposit-modal/manage-single-deposit-modal.component';
+import { RevenueShareComponent } from './organizations/organization-details/manage-projects/manage-single-project/manage-payments/revenue-share/revenue-share.component';
+import { RevenueShareConfirmModalComponent } from './organizations/organization-details/manage-projects/manage-single-project/manage-payments/revenue-share/revenue-share-confirm-modal/revenue-share-confirm-modal.component';
+import { ProjectDepositComponent } from './organizations/organization-details/manage-projects/manage-single-project/project-deposit/project-deposit.component';
+import { ProjectWithdrawComponent } from './organizations/organization-details/manage-projects/manage-single-project/project-withdraw/project-withdraw.component';
+import { TabsModule } from 'ngx-bootstrap/tabs';
+import { DatePipe } from '@angular/common';
+import { SignInAutoComponent } from './authentication/sign-in-auto/sign-in-auto.component';
 
 const socialAuthServiceConfig = {
     provide: 'SocialAuthServiceConfig',
@@ -148,7 +158,7 @@ const socialAuthServiceConfig = {
         ManageDepositsComponent,
         ManageSingleDepositComponent,
         WithdrawComponent,
-        EscapeHtmlPipe,
+        SafePipe,
         WalletActivationComponent,
         UserActivationComponent,
         GroupActivationComponent,
@@ -171,9 +181,17 @@ const socialAuthServiceConfig = {
         LocationMapComponent,
         MapModalComponent,
         TxIconStatus,
+        ManageSingleDepositModalComponent,
         TxAmountSign,
         ActionButtonComponent,
         MoneyInputFieldComponent,
+        ProjectDepositComponent,
+        ProjectWithdrawComponent,
+        UploadAreaComponent,
+        URLValidator,
+        ForgotPasswordComponent,
+        ResetPasswordComponent,
+        SignInAutoComponent
     ],
     imports: [
         BrowserModule,
@@ -182,6 +200,7 @@ const socialAuthServiceConfig = {
         DisqusModule.forRoot('ampnet.disqus.com/embed.js'),
         TooltipModule.forRoot(),
         ModalModule.forRoot(),
+        TabsModule.forRoot(),
         FormsModule,
         ReactiveFormsModule,
         HttpClientModule,
@@ -199,7 +218,9 @@ const socialAuthServiceConfig = {
         socialAuthServiceConfig,
         {
             provide: DEFAULT_CURRENCY_CODE, useValue: 'EUR',
-        }
+        },
+        DatePipe,
+        SafePipe
     ],
     bootstrap: [AppComponent]
 })

@@ -1,0 +1,46 @@
+@import "colors";
+@import "bootstrap/scss/mixins/buttons";
+
+.btn {
+  @include button-variant($primary-color, darken($primary-color, 7.5%), darken($primary-color, 10%), lighten($primary-color,5%), lighten($primary-color, 10%), darken($primary-color,30%));
+  border-radius: 2px;
+  background: $primary-color;
+  border: none;
+  font-weight: 400;
+  height: 48px;
+  font-size: 14px;
+  padding: 16px 24px;
+  line-height: 0;
+  color: $secondary-color;
+
+  &-primary {
+    height: 64px;
+    font-size: 14px;
+  }
+
+  &-danger {
+    @include button-variant($error-color, darken($error-color, 7.5%), darken($error-color, 10%), lighten($error-color,5%), lighten($error-color, 10%), darken($error-color,30%));
+  }
+
+  &-grey {
+    @include button-variant(darken($background-color, 7.5%), darken($background-color, 30%), darken($background-color, 12%), darken($background-color, 30%), darken($background-color, 10%), darken($background-color, 40%));
+  }
+
+  &-outline-primary {
+    @include button-outline-variant($primary-color, darken($primary-color, 10%), lighten($primary-color,5%), $primary-color);
+  }
+
+  &:focus {
+    box-shadow: none;
+  }
+  
+  &:not(:disabled):not(.disabled):active:focus {
+    box-shadow: none;
+  }
+
+  &:disabled {
+    background-color: darken($background-color, 7.5%);
+    color: darken($border-color, 7.5%);
+    border: none;
+  }
+}

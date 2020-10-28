@@ -1,0 +1,19 @@
+@import "app";
+
+.container {
+  padding: 0;
+}
+
+.alert-info {
+  text-align: center;
+}
+
+.card {
+  margin: 0 15px;
+}
+
+@include media-breakpoint-up(lg) {
+  .container {
+    padding: 0 15px;
+  }
+}

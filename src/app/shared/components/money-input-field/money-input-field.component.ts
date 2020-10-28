@@ -12,7 +12,7 @@ import {
 } from '@angular/core';
 import { baseCurrencyUnitToCents, centsToBaseCurrencyUnit } from '../../../utilities/currency-util';
 import * as Autonumeric from 'autonumeric';
-import { AbstractControl } from '@angular/forms';
+import { AbstractControl, FormControl } from '@angular/forms';
 
 @Component({
     selector: 'app-money-input-field',
@@ -25,7 +25,7 @@ export class MoneyInputFieldComponent implements AfterViewInit, OnChanges {
 
     @Input() placeholder: string;
     @Input() control: AbstractControl;
-    @Input() inputClass = 'w-100 mt-3 py-4 form-control p-4';
+    @Input() inputClass = 'input-lg w-100';
 
     @Input() realValue = 0;
     @Output() realValueChange = new EventEmitter<number>();

@@ -12,8 +12,7 @@ declare var $: any;
 @Component({
     selector: 'app-invest',
     templateUrl: './invest.component.html',
-    styleUrls: ['./invest.component.css'],
-    encapsulation: ViewEncapsulation.None
+    styleUrls: ['./invest.component.scss'],
 })
 export class InvestComponent implements OnInit {
     wallet$: Observable<WalletDetailsWithState>;
@@ -72,5 +71,9 @@ export class InvestComponent implements OnInit {
                 return EMPTY;
             })
         );
+    }
+
+    backToSingleOfferScreen(uuid: string) {
+        this.router.navigate([`/dash/offers/${uuid}`]);
     }
 }

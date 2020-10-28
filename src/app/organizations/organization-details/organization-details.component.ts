@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
-import { displayBackendError, hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
-import swal from 'sweetalert2';
-import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
+import { displayBackendErrorRx } from 'src/app/utilities/error-handler';
 import { WalletService } from '../../shared/services/wallet/wallet.service';
 import { WalletDetails } from '../../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
 import { Organization, OrganizationMember, OrganizationService } from '../../shared/services/project/organization.service';
-import { BroadcastService } from '../../shared/services/broadcast.service';
-
-declare var $: any;
+import { BehaviorSubject, EMPTY, Observable, of } from 'rxjs';
+import { catchError, finalize, map, switchMap, tap } from 'rxjs/operators';
+import { ArkaneService } from '../../shared/services/arkane.service';
+import { PopupService } from '../../shared/services/popup.service';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 
 @Component({
     selector: 'app-organization-details',
@@ -17,105 +17,139 @@ declare var $: any;
     styleUrls: ['./organization-details.component.css']
 })
 export class OrganizationDetailsComponent implements OnInit {
+    refreshOrganizationSubject = new BehaviorSubject<void>(null);
+    refreshOrgWalletSubject = new BehaviorSubject<void>(null);
+    refreshOrgMembersSubject = new BehaviorSubject<void>(null);
 
-    orgWalletInitialized: boolean;
-    txData: string;
-    txID: number;
-    organization: Organization;
-    orgWallet?: WalletDetails;
-    orgMembers: OrganizationMember[];
+    organization$: Observable<Organization>;
+    orgWallet$: Observable<WalletDetails>;
+    orgMembers$: Observable<OrganizationMember[]>;
 
-    qrCodeData: String = '';
+    inviteForm: FormGroup;
 
-    constructor(private activeRoute: ActivatedRoute,
+    constructor(private activatedRoute: ActivatedRoute,
+                private router: Router,
                 private organizationService: OrganizationService,
                 private walletService: WalletService,
-                private broadcastService: BroadcastService) {
+                private arkaneService: ArkaneService,
+                private fb: FormBuilder,
+                private popupService: PopupService) {
+    }
+
+    private static extractEmails(emails: string): string[] {
+        return emails
+            .split(',').flatMap(comma => comma.trim()
+                .split(';')).flatMap(semicolon => semicolon.trim()
+                .split(' ')).filter(space => space !== '');
+    }
+
+    private static emailsValidator(control: AbstractControl): ValidationErrors | null {
+        const emails = OrganizationDetailsComponent.extractEmails(control.value);
+
+        if (emails.length === 0) {
+            return {noEmails: true};
+        }
+
+        for (let i = 0; i < emails.length; i++) {
+            if ((new FormControl(emails[i], Validators.email)).errors) {
+                return {incorrectEmail: true};
+            }
+        }
+
+        return null;
     }
 
     ngOnInit() {
-        const orgID = this.activeRoute.snapshot.params.id;
-        this.organizationService.getSingleOrganization(orgID).subscribe(org => {
-            this.organization = org;
-        }, err => {
-            displayBackendError(err);
-        });
+        const orgID = this.activatedRoute.snapshot.params.id;
+        this.organization$ = this.refreshOrganizationSubject.asObservable().pipe(
+            switchMap(() => this.organizationService.getSingleOrganization(orgID)
+                .pipe(displayBackendErrorRx()))
+        );
+        this.orgWallet$ = this.refreshOrgWalletSubject.asObservable().pipe(
+            switchMap(() => this.walletService.getOrganizationWallet(orgID).pipe(
+                displayBackendErrorRx(),
+                catchError(err => {
+                    if (err.status === 404) {
+                        return this.popupService.new({
+                            type: 'info',
+                            text: 'The organization wallet needs to be created. You will be prompted now.'
+                        }).pipe(
+                            switchMap(popupRes => popupRes.dismiss === undefined ?
+                                this.createOrgWallet(orgID) : this.recoverBack())
+                        );
+                    } else {
+                        return of(err).pipe(
+                            displayBackendErrorRx(),
+                            switchMap(() => this.recoverBack())
+                        );
+                    }
+                })))
+        );
 
-        this.walletService.getOrganizationWallet(orgID).subscribe(res => {
-            this.orgWallet = res;
-        }, err => {
-            if (err.status === 404) {
-                this.orgWallet = null;
-            } else if (err.error.err_code === '0851') {
-                swal('', 'The organization is being created. This can take up to a minute. Please check again later.', 'info')
-                    .then(() => {
-                        window.history.back();
-                    });
-            } else {
-                displayBackendError(err);
-            }
-        });
+        this.orgMembers$ = this.refreshOrgMembersSubject.pipe(
+            switchMap(_ => this.organizationService.getMembersForOrganization(orgID)
+                .pipe(displayBackendErrorRx())),
+            map(res => res.members));
 
-        this.organizationService.getMembersForOrganization(orgID)
-            .subscribe(res => {
-                this.orgMembers = res.members;
-            }, err => {
-                displayBackendError(err);
-            });
-    }
-
-    inviteClicked() {
-        SpinnerUtil.showSpinner();
-        const email = $('#email-invite-input').val();
-        this.organizationService.inviteUser(this.organization.uuid, email).subscribe(res => {
-            SpinnerUtil.hideSpinner();
-            swal('Success', 'Successfully invited user to organization', 'success');
-        }, err => {
-            SpinnerUtil.hideSpinner();
-            displayBackendError(err);
+        this.inviteForm = this.fb.group({
+            emails: ['', OrganizationDetailsComponent.emailsValidator]
         });
     }
 
-    async createOrgWalletClicked() {
-        const arkaneConnect = new ArkaneConnect('AMPnet', {environment: 'staging'});
-        const account = await arkaneConnect.flows.getAccount(SecretType.AETERNITY);
+    inviteClicked(orgUUID: string) {
+        return () => {
+            const emails = OrganizationDetailsComponent.extractEmails(this.inviteForm.get('emails').value);
 
-        this.walletService.createOrganizationWalletTransaction(this.organization.uuid).subscribe(async res => {
-            this.orgWalletInitialized = false;
-            this.txData = JSON.stringify(res.tx);
-            this.txID = res.tx_id;
+            return this.organizationService.inviteUser(orgUUID, emails).pipe(
+                displayBackendErrorRx(),
+                switchMap(() => this.popupService.new({
+                    type: 'success',
+                    title: 'Success',
+                    text: 'Successfully invited user to organization'
+                })),
+                tap(() => this.inviteForm.reset())
+            );
+        };
+    }
 
-            const sigRes = await arkaneConnect.createSigner(WindowMode.POPUP).sign({
-                walletId: account.wallets[0].id,
-                data: res.tx,
-                type: SignatureRequestType.AETERNITY_RAW
-            });
-            this.broadcastService.broadcastSignedTx(sigRes.result.signedTransaction, res.tx_id).subscribe(_ => {
-                swal('', 'Success', 'success');
-                this.ngOnInit();
-            }, displayBackendError);
-        }, err => {
-            displayBackendError(err);
-        });
-
+    createOrgWallet(orgUUID: string) {
+        return this.walletService.createOrganizationWalletTransaction(orgUUID).pipe(
+            displayBackendErrorRx(),
+            switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo)),
+            catchError(() => this.recoverBack()),
+            switchMap(() => this.popupService.new({
+                type: 'success',
+                title: 'Transaction signed',
+                text: 'Transaction is being processed...'
+            })),
+            switchMap(() => of(undefined)),
+            tap(() => {
+                this.refreshOrganizationSubject.next();
+                this.refreshOrgWalletSubject.next();
+                this.refreshOrgMembersSubject.next();
+            })
+        );
     }
 
     deleteMember(orgID: string, memberID: string) {
         SpinnerUtil.showSpinner();
-        this.organizationService.removeMemberFromOrganization(orgID, memberID)
-            .subscribe(() => {
-                    swal({
-                        title: '',
-                        text: 'Success!',
-                        type: 'success'
-                    }).then(function () {
-                        this.organizationService.getMembersForOrganization(orgID)
-                            .subscribe(res => {
-                                this.orgMembers = res.members;
-                                SpinnerUtil.hideSpinner();
-                            }, hideSpinnerAndDisplayError);
-                    }.bind(this));
-                },
-                hideSpinnerAndDisplayError);
+        this.organizationService.removeMemberFromOrganization(orgID, memberID).pipe(
+            displayBackendErrorRx(),
+            switchMap(() => this.popupService.new({
+                type: 'success',
+                text: 'Successfully deleted user from the organization'
+            })),
+            tap(() => this.refreshOrgMembersSubject.next()),
+            finalize(() => SpinnerUtil.hideSpinner())
+        ).subscribe();
+    }
+
+    isWalletVerified(orgWallet: WalletDetails) {
+        return !!orgWallet && !!orgWallet?.hash;
+    }
+
+    private recoverBack(): Observable<never> {
+        this.router.navigate(['/dash/manage_groups']);
+        return EMPTY;
     }
 }

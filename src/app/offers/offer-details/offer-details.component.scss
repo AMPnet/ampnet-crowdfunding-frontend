@@ -1,0 +1,372 @@
+@import "app";
+
+.col-lg-5, .col-lg-7 {
+  padding: 0;
+}
+
+.container {
+  padding: 0;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.right__container,
+.left__desc,
+.left__docs,
+.offer-right-socials {
+  padding: 0 20px;
+}
+
+span {
+  font-weight: bold;
+}
+
+.btn-primary {
+  height: 48px;
+  font-size: 16px;
+  margin-bottom: 32px;
+}
+
+.dropdown-divider {
+  border-top: 1px solid #efefef;
+  margin: 18px 0;
+}
+
+.app-basic-title {
+  margin-bottom: 16px;
+}
+
+.right {
+  &__container {
+    background-color: #F7F7F7;
+  }
+
+  &__text {
+    padding-top: 24px;
+  }
+
+  &__location {
+    margin-bottom: 30px;
+    cursor: pointer;
+    width: fit-content;
+
+    p, .location__icon {
+      font-size: $font-size-desktop-small;
+    }
+
+    .location__icon {
+      margin-right: 10px;
+      vertical-align: baseline;
+    }
+  }
+
+  &__progress {
+    display: table;
+    margin-bottom: 32px;
+    font-size: $font-size-desktop-body2;
+
+    .progress {
+      &__element {
+        margin-top: 8px;
+        height: 4px;
+        border-radius: 2px;
+        background-color: $border-color;
+      }
+
+      &__bar {
+        height: 4px;
+        border-radius: 2px;
+        background-color: $success-color;
+      }
+    }
+  }
+
+  &__info div {
+    font-size: $font-size-desktop-small;
+
+    span {
+      font-size: $font-size-desktop-small;
+      margin-right: 5px;
+    }
+  }
+
+  &__fund-period {
+    margin-bottom: 32px;
+  }
+}
+
+.offer-right-socials {
+  margin-top: 24px;
+
+  .socials__content {
+    display: flex;
+
+    p {
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-size: $font-size-desktop-body2;
+    }
+
+    p, .socials__link {
+      margin-right: 28px;
+    }
+
+    .socials__link {
+      cursor: pointer;
+    }
+
+    .socials__icon {
+      color: $body-color;
+    }
+  }
+}
+
+.left {
+  &__img {
+    max-height: 48vw;
+    object-fit: cover;
+  }
+
+  &__desc {
+    color: $body-color;
+  }
+
+  &__docs {
+    margin: 25px 0 50px 0;
+
+    .docs__links {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      padding-bottom: 20px;
+
+      a {
+        text-decoration: none;
+
+        span {
+          color: $body-color;
+          font-weight: normal;
+        }
+
+        svg {
+          color: $primary-color;
+          font-size: 24px;
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+}
+
+@include media-breakpoint-up(lg) {
+  .container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .offer-right {
+    float: right;
+  }
+
+  .offer-left {
+    float: left;
+  }
+
+  .btn-primary {
+    height: 64px;
+    font-size: 17px;
+  }
+
+  .offer-right-socials {
+    margin: 25px 64px;
+  }
+
+  .right {
+    &__container {
+      margin-top: 16px;
+      border-radius: 1px;
+      padding: 40px 64px 64px 64px;
+    }
+
+    &__progress {
+      width: fit-content;
+    }
+
+    &__text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    &__invest {
+      order: 1;
+    }
+
+    &__info {
+      order: 2;
+    }
+
+    &__location,
+    &__fund-period {
+      margin-bottom: 10px;
+    }
+
+    &__info div {
+      font-size: $font-size-desktop-body2;
+
+      span {
+        font-size: $font-size-desktop-body2;
+      }
+    }
+  }
+
+  .left {
+    &__img {
+      max-height: 330px;
+      border-radius: 1px;
+    }
+
+    &__desc {
+      margin-top: 32px;
+    }
+  }
+}
+
+// Investment details
+.investment__total {
+  background-color: $background-color;
+  margin: 0 -20px;
+  padding: 24px 20px;
+
+  .total {
+    &__title {
+      font-size: $font-size-mobile-title-small;
+      letter-spacing: 2px;
+      color: $title-color;
+      text-transform: uppercase;
+      padding-bottom: 6px;
+    }
+
+    &__amount {
+      font-size: $font-size-mobile-title;
+      letter-spacing: 1px;
+      color: $title-color;
+    }
+  }
+}
+
+.investments__history {
+  padding: 15px 0;
+  border-bottom: 1px solid $border-light-color;
+
+  &:last-of-type {
+    border-bottom: none;
+  }
+
+  .history {
+    &__amount {
+      font-size: $font-size-mobile-body;
+      letter-spacing: 0.18px;
+      line-height: 25px;
+      padding-bottom: 4px;
+    }
+
+    &__date {
+      font-size: $font-size-mobile-title-small;
+      color: $icons-color;
+    }
+
+    &__icon {
+      svg {
+        font-size: $font-size-desktop-body;
+        color: $icons-color;
+      }
+    }
+  }
+}
+
+.portfolio__invest {
+  .btn-primary {
+    margin-bottom: 16px !important;
+    font-size: $font-size-desktop-body2 !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .btn-grey {
+    background-color: $border-light-color;
+    color: $body-color;
+    border: none;
+
+    &:hover {
+      background-color: darken($border-light-color, 10%);
+    }
+
+    &:not(:disabled):not(.disabled):active {
+      background-color: darken($border-light-color, 10%);
+      border: none;
+    }
+
+    &:disabled {
+      background-color: $background-color;
+      color: $border-color;
+      border: none;
+    }
+  }
+
+  .btn:last-of-type {
+    margin-bottom: 32px;
+  }
+}
+
+@include media-breakpoint-up(lg) {
+  .investments__container {
+    margin-left: -20px;
+  }
+  .investment__total {
+    margin: 0 0 8px 0;
+    border-radius: 1px;
+    padding: 24px;
+  }
+  .investments__history {
+    padding: 20px 16px 22px 16px;
+
+    &:last-of-type {
+      border-bottom: 1px solid $border-light-color;
+    }
+
+    .history {
+      &__amount {
+        font-size: $font-size-desktop-body;
+        letter-spacing: 0.2px;
+        color: $title-color;
+      }
+
+      &__icon {
+        align-self: center;
+        margin-left: 14px;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease-in-out;
+
+        &:hover {
+          background-color: $background-color;
+          border-radius: 1px;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+  .portfolio__invest {
+    .btn-primary {
+      font-size: 17px !important;
+    }
+
+    .btn:last-of-type {
+      margin-bottom: 40px;
+    }
+  }
+}

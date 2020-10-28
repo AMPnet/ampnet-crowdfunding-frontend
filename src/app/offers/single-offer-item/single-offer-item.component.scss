@@ -1,0 +1,150 @@
+@import "app";
+
+* {
+  color: #111111;
+}
+
+.card-holder {
+  background: #F7F7F7;
+  padding-bottom: 10px;
+  transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
+  cursor: pointer;
+}
+
+.card-right .app-basic-title {
+  display: none;
+}
+
+.app-basic-title, .left__progress, .card-right {
+  padding: 0 20px;
+}
+
+.img__base {
+  height: 100%;
+  object-fit: cover !important;
+}
+
+.progress {
+  height: 4px;
+  border-radius: 2px;
+  background-color: $border-color;
+  margin-top: 8px;
+
+  &__raised {
+    margin-top: 20px;
+    color: #444444;
+    span {
+      color: #111111;
+      font-weight: bold;
+    }
+  }
+  
+  &__bar {
+    height: 4px;
+    border-radius: 2px;
+    background-color: $success-color;
+  }
+}
+
+.left {
+  &__img {
+    margin-bottom: 24px;
+    height: 48vw;
+  }
+
+  &__progress {
+    display: table;
+  }
+
+  &__ends-info {
+    font-size: $font-size-mobile-title-small;
+    font-weight: lighter;
+    margin-top: 10px;
+    color: #444444;
+  }
+}
+
+.right {
+  &__text{
+    margin-top: 20px;
+  }
+
+  &__roi {
+    text-transform: uppercase;
+    margin-bottom: 25px;
+    color: $title-color;
+    font-size: $font-size-desktop-small;
+    letter-spacing: 2px;
+    span {
+      font-size: $font-size-desktop-small;
+      letter-spacing: 2px;
+      color: $title-color;
+    }
+  }
+
+  &__desc {
+    max-height: 85px;
+    overflow: hidden;
+    line-height: 21px;
+    color: #444444;
+    letter-spacing: 0.2px;
+    margin-bottom: 18px;
+  }
+
+  &__cta {
+    margin-bottom: 32px;
+  }
+}
+
+@include media-breakpoint-up(lg) {
+  .card-holder {
+    display: flex;
+    border-radius: 1px;
+  }
+
+  .left__progress, .card-right {
+    padding: 0;
+  }
+
+  .card-left {
+    margin: 0 64px;
+    width: 60%;
+
+    .app-basic-title {
+      display: none;
+    }
+  }
+
+  .progress__raised {
+    margin: 0;
+  }
+
+  .left__img {
+    height: 300px;
+  }
+
+  .img__base {
+    border-radius: 1px;
+    margin-top: -16px;
+  }
+
+  .left__ends-info {
+    margin-bottom: 32px;
+  }
+
+  .card-right {
+    max-width: 348px;
+    margin-right: 64px;
+
+    .app-basic-title {
+      display: block;
+      padding: 0;
+      margin-top: 40px;
+    }
+  }
+
+  .right__desc {
+    max-height: 100px;
+    line-height: 25px;
+  }
+}

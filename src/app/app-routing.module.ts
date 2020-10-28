@@ -1,3 +1,4 @@
+// tslint:disable:max-line-length
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { WalletComponent } from './wallet/wallet.component';
@@ -22,11 +23,11 @@ import { CreateOrganizationComponent } from './organizations/create-organization
 import { GeneralSettingsComponent } from './general-settings/general-settings.component';
 import { ManageOrganizationsComponent } from './organizations/manage-organizations/manage-organizations.component';
 import { OrganizationDetailsComponent } from './organizations/organization-details/organization-details.component';
-import { CreateNewProjectComponent } from './projects/create-new-project/create-new-project.component';
+import { CreateNewProjectComponent } from './organizations/organization-details/manage-projects/create-new-project/create-new-project.component';
 import { OnboardingComponent } from './authentication/onboarding/onboarding.component';
-import { ManageProjectsComponent } from './manage-projects/manage-projects.component';
-import { ManageSingleProjectComponent } from './manage-projects/manage-single-project/manage-single-project.component';
-import { VerifySignOfferComponent } from './offers/verify-sign-offer/verify-sign-offer.component';
+import { ManageProjectsComponent } from './organizations/organization-details/manage-projects/manage-projects.component';
+import { ManageSingleProjectComponent } from './organizations/organization-details/manage-projects/manage-single-project/manage-single-project.component';
+import { VerifySignOfferComponent } from './offers/offer-details/verify-sign-offer/verify-sign-offer.component';
 import { ManageWithdrawalsComponent } from './manage-withdrawals/manage-withdrawals.component';
 import { SingleWithdrawalComponent } from './manage-withdrawals/single-withdrawal/single-withdrawal.component';
 import { ManageDepositsComponent } from './manage-deposits/manage-deposits.component';
@@ -40,9 +41,14 @@ import { PlatformBankAccountComponent } from './platform-bank-account/platform-b
 import { NewPlatformBankAccountComponent } from './platform-bank-account/new-platform-bank-account/new-platform-bank-account.component';
 import { ExchangeComponent } from './exchange/exchange.component';
 import { OwnershipComponent } from './ownership/ownership.component';
-import { RevenueShareComponent } from './revenue-share/revenue-share.component';
-import { ManagePaymentsComponent } from './project/manage-payments/manage-payments.component';
+import { RevenueShareComponent } from './organizations/organization-details/manage-projects/manage-single-project/manage-payments/revenue-share/revenue-share.component';
+import { ManagePaymentsComponent } from './organizations/organization-details/manage-projects/manage-single-project/manage-payments/manage-payments.component';
 import { OfferDetailsGuard } from './offers/offer-details/offer-details.guard';
+import { ProjectWithdrawComponent } from './organizations/organization-details/manage-projects/manage-single-project/project-withdraw/project-withdraw.component';
+import { ProjectDepositComponent } from './organizations/organization-details/manage-projects/manage-single-project/project-deposit/project-deposit.component';
+import { ForgotPasswordComponent } from './authentication/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './authentication/reset-password/reset-password.component';
+import { SignInAutoComponent } from './authentication/sign-in-auto/sign-in-auto.component';
 
 const routes: Routes = [
     {
@@ -54,6 +60,9 @@ const routes: Routes = [
             {path: 'overview/:isOverview', component: OffersComponent},
             {path: 'overview/:id/:isOverview', component: OfferDetailsComponent, canActivate: [OfferDetailsGuard]},
             {path: 'onboarding', component: OnboardingComponent},
+            {path: 'forgot_password', component: ForgotPasswordComponent},
+            {path: 'reset_password', component: ResetPasswordComponent},
+            {path: 'sign_in_auto/:email/:password', component: SignInAutoComponent},
         ]
     },
     {path: 'summary', component: SummaryComponent},
@@ -83,6 +92,11 @@ const routes: Routes = [
             {path: 'manage_groups/:groupID/manage_project/:projectID', component: ManageSingleProjectComponent},
             {path: 'offers/:offerID/invest/:investAmount/verify_sign', component: VerifySignOfferComponent},
             {path: 'manage_groups/:groupID/manage_project/:projectID/manage_payments', component: ManagePaymentsComponent},
+            {path: 'manage_groups/:groupID/manage_project/:projectID/manage_payments/project_deposit', component: ProjectDepositComponent},
+            {
+                path: 'manage_groups/:groupID/manage_project/:projectID/manage_payments/project_withdraw',
+                component: ProjectWithdrawComponent
+            },
             {
                 path: 'manage_groups/:groupID/manage_project/:projectID/manage_payments/revenue_share/:amount',
                 component: RevenueShareComponent

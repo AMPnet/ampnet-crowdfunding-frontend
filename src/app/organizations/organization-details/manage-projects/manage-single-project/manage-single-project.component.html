@@ -1,0 +1,222 @@
+<div *ngIf="{
+    project: project$ | async,
+    wallet: projectWallet$ | async,
+    updateForm: updateForm$ | async
+} as states" class="container" id="core-root-manager">
+    <ng-container *ngIf="!!states.project && !!states.wallet else spinner">
+        <div class="row row-eq-height" *ngIf="states.wallet !== walletState.EMPTY">
+            <h5 class="text-uppercase mb-3 col-md-8">Manage your project</h5>
+
+            <div class="col-md-4">
+                <button class="btn btn-primary w-100 py-3 float-right"
+                        routerLink="/dash/offers/{{ states.project.uuid }}">
+                    <i class="fas fa-anchor mr-2"></i>
+                    Preview project
+                </button>
+            </div>
+
+            <div *ngIf="!isWalletVerified(states.wallet)" class="col-md-12">
+                <div class="alert alert-warning">
+                    This project is pending approval from admin. During this time, the project cannot be publicly shown.
+                </div>
+            </div>
+
+            <div class="col-md-12 mt-3 mb-5">
+                <button class="w-100 btn btn-info py-3"
+                        [disabled]="!isWalletVerified(states.wallet)"
+                        routerLink="manage_payments">
+                    <i class="fas fa-money-bill-wave mr-2"></i>
+                    Manage payments
+                </button>
+            </div>
+
+            <div class="col-md-8">
+                <div class="explainer-mini text-uppercase mb-2">Project status</div>
+                <span *ngIf="states.project.active">
+        <i class="fas fa-check-circle mr-2"></i>
+        Public
+      </span>
+                <span *ngIf="!states.project.active">
+        <i class="fas fa-toggle-off mr-2"></i>
+        Hidden
+      </span>
+            </div>
+            <div class="col-md-4">
+                <app-action-button text="{{ states.project.active ? 'Hide project' : 'Show project' }}"
+                                   faIcon="{{ states.project.active ? 'fa-eye-slash' : 'fa-eye' }}"
+                                   loadingText="Updating project status"
+                                   [disabled]="!isWalletVerified(states.wallet)"
+                                   [onClick]="toggleProjectStatusClicked(states.project).bind(this)"
+                                   buttonClass="btn btn-info float-right h-100 w-100">
+                </app-action-button>
+            </div>
+
+            <ng-container *ngIf="(updateForm$ | async) as updateForm">
+                <form [formGroup]="updateForm" style="width: 100%">
+                    <!-- Name -->
+                    <div class="col-md-12 mb-2 mt-5">
+                        <div class="explainer-mini text-uppercase">Name</div>
+                    </div>
+
+                    <div class="input-group mb-3 col-md-12">
+                        <input aria-describedby="basic-addon1"
+                               aria-label="Username" class="form-control p-4" id="project-name"
+                               formControlName="name"
+                               type="text">
+                    </div>
+
+                    <!-- Description -->
+                    <div class="col-md-12 mb-2">
+                        <div class="explainer-mini text-uppercase">Description</div>
+                    </div>
+                    <div class="input-group mb-3 col-md-12">
+                        <textarea class="form-control p-4" cols="30" id="project-description" name=""
+                                  formControlName="description"
+                                  rows="10" style="border-radius: 5px!important;"></textarea>
+                    </div>
+
+                    <!-- Location -->
+                    <div class="col-md-12 mb-2">
+                        <div class="explainer-mini text-uppercase">Location</div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <app-location-map [editable]="true"
+                                          [latControl]="updateForm.get('location.lat')"
+                                          [lngControl]="updateForm.get('location.long')">
+                        </app-location-map>
+                    </div>
+
+                    <div class="col-md-12 mb-2">
+                        <div class="explainer-mini text-uppercase">Project image</div>
+                    </div>
+
+                    <div class="d-flex">
+                        <div class="col-md-6">
+                            <ng-container
+                                    *ngIf="updateForm.get('newImage').value || states.project.main_image else noProjectImageSet">
+                                <img alt="" class="img-fluid" height="300"
+                                     [src]="(updateForm.get('newImage').value | safe:'fileUrl') || states.project.main_image">
+                            </ng-container>
+                            <ng-template #noProjectImageSet>
+                                <div class="text-center">
+                                    Project has no image set
+                                </div>
+                            </ng-template>
+                        </div>
+
+                        <div class="col-md-6">
+                            <app-upload-area areaID='project-image' style="width: max-content"
+                                             [restrictions]="{
+                                                allowedFileTypes: ['image/*'],
+                                                maxFileSize: 10 * 1024 * 1024,
+                                                maxNumberOfFiles: 1
+                                             }"
+                                             [firstFileControl]="updateForm.get('newImage')">
+                            </app-upload-area>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 mb-2">
+                        <div class="explainer-mini text-uppercase">Project files</div>
+                    </div>
+
+                    <div class="d-flex">
+                        <div class="col-md-6">
+                            <ng-container *ngIf="states.project.documents?.length > 0 else noDocuments">
+                                <div *ngFor="let file of states.project.documents; let i = index">
+                                    <div class="card">
+                                        <div class="card-body d-flex flex-row justify-content-between">
+                                            <div class="w-75"
+                                                 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis">
+                                                {{ file.name }}
+                                            </div>
+                                            <span class="float-right">
+                                            <span (click)="deleteFile(states.project, file.id).subscribe()"
+                                                  class="mr-3 cursor-pointer gray-text">
+                                              <i class="fas fa-trash"></i>
+                                            </span>
+                                            <a class="cursor-pointer gray-text" href="{{ file.link }}">
+                                              <i class="fas fa-file-download"></i>
+                                            </a>
+                                        </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <ng-template #noDocuments>
+                                <div class="text-center">
+                                    No files added
+                                </div>
+                            </ng-template>
+                        </div>
+
+
+                        <div class="col-md-6">
+                            <app-upload-area areaID='project-image' style="width: max-content"
+                                             [restrictions]="{
+                                                allowedFileTypes: ['image/*', 'application/pdf', 'application/zip', 'audio/*', 'video/*'],
+                                                maxFileSize: 10 * 1024 * 1024,
+                                                maxNumberOfFiles: 20
+                                             }"
+                                             [filesControl]="updateForm.get('newDocuments')">
+                            </app-upload-area>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 mt-5 mb-5">
+                        <app-action-button text="Update"
+                                           loadingText="Updating..."
+                                           [disabled]="!updateForm.dirty || !updateForm.valid"
+                                           [onClick]="updateProject(states.project, updateForm).bind(this)"
+                                           buttonClass="btn btn-primary w-100 py-3 float-right">
+                        </app-action-button>
+                    </div>
+                </form>
+            </ng-container>
+
+
+            <div class="col-md-12">
+                <hr>
+            </div>
+
+            <p class="explainer-mini text-uppercase col-md-8 mt-3">Project news</p>
+
+            <form [formGroup]="newsForm" class="d-flex" style="width: 100%">
+                <div class="col-md-8">
+                    <input class="form-control w-100" id="newsLink"
+                           placeholder="News link (e.g. https://portal.com/news)"
+                           formControlName="newsLink"
+                           type="text">
+                </div>
+                <div class="col-md-4">
+                    <app-action-button text="Add news"
+                                       loadingText="Adding news..."
+                                       faIcon="fa-plus"
+                                       [disabled]="!newsForm.dirty || !newsForm.valid"
+                                       [onClick]="addNewsLink(states.project, newsForm).bind(this)"
+                                       buttonClass="w-100 btn btn-primary h-100">
+                    </app-action-button>
+                </div>
+            </form>
+
+            <div class="col-md-12 mt-3">
+                <ul class="list-group">
+                    <li *ngFor="let item of states.project.news"
+                        class="list-group-item d-flex flex-row justify-content-between">
+                        <a class="w-75" href="{{ item }}"
+                           style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis">
+                            {{ item }}
+                        </a>
+                        <div (click)="deleteNewsClicked(states.project, item).subscribe()" class="cursor-pointer">
+                            <i class="fas fa-trash"></i>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </ng-container>
+    <ng-template #spinner>
+        <app-spinner type="overlay"></app-spinner>
+    </ng-template>
+</div>

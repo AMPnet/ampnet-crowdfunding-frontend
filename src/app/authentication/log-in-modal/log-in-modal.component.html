@@ -2,17 +2,17 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-body">
-                <div class="container root-content-container">
+                <div class="container">
                     <h1>LOGIN</h1>
 
                     <form [formGroup]="emailLoginForm" class="form-group">
                         <input aria-describedby="emailHelp"
                                (keyup.enter)="logInMailButton.click()"
-                               class="form-control p-4"
+                               class="input-lg"
                                formControlName="email"
                                placeholder="Enter email" type="email">
 
-                        <input class="form-control p-4"
+                        <input class="input-lg"
                                formControlName="password"
                                (keyup.enter)="logInMailButton.click()"
                                placeholder="Password" type="password">
@@ -21,6 +21,10 @@
                                            [disabled]="!emailLoginForm.valid">
                         </app-action-button>
                     </form>
+
+                    <div class="w-100" style="text-align: center">
+                        <a style="cursor: pointer" (click)="forgotPasswordClicked()">Forgot Password?</a>
+                    </div>
 
                     <div class="dropdown-divider mt-4 mb-4 mx-auto"></div>
 

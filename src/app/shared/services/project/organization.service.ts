@@ -37,10 +37,9 @@ export class OrganizationService {
         return this.http.get<PageableOrganizationsResponse>('/api/project/organization');
     }
 
-    inviteUser(orgID: string, userEmail: string) {
+    inviteUser(orgID: string, emails: string[]) {
         return this.http.post<void>(`/api/project/invites/organization/${orgID}/invite`, {
-            email: userEmail,
-            role_type: 'ORG_MEMBER'
+            emails: emails
         });
     }
 

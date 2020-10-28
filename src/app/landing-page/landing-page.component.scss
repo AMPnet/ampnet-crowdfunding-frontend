@@ -1,0 +1,20 @@
+h1, h2 {
+  font-weight: 400;
+}
+
+.featured-image {
+    background: linear-gradient(#B25050, rgba(0, 0, 0, 0)), url(../../assets/human.jpg);
+    background-size: cover !important;
+    transition: 0.5s all ease;
+
+}
+
+.featured-image:hover {
+    backdrop-filter: blur(0.8)
+}
+
+@media (max-width: 800px) {
+    .feature-holder {
+        height: 380px;
+    }
+}

@@ -14,7 +14,7 @@ declare var $: any;
 @Component({
     selector: 'app-log-in-modal',
     templateUrl: './log-in-modal.component.html',
-    styleUrls: ['./log-in-modal.component.css']
+    styleUrls: ['./log-in-modal.component.scss']
 })
 export class LogInModalComponent implements OnInit {
     emailLoginForm: FormGroup;
@@ -80,5 +80,10 @@ export class LogInModalComponent implements OnInit {
     private navigateToDash() {
         $('#log-in-modal').modal('toggle');
         this.router.navigate(['/dash']);
+    }
+
+    forgotPasswordClicked() {
+        $('#log-in-modal').modal('toggle');
+        this.router.navigate([`/forgot_password`]);
     }
 }

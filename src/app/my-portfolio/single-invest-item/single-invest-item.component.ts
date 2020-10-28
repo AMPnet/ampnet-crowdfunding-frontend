@@ -5,7 +5,7 @@ import { Portfolio } from '../../shared/services/wallet/portfolio.service';
 @Component({
     selector: 'app-single-invest-item',
     templateUrl: './single-invest-item.component.html',
-    styleUrls: ['./single-invest-item.component.css']
+    styleUrls: ['./single-invest-item.component.scss']
 })
 export class SingleInvestItemComponent {
     @Input() investment: Portfolio;
@@ -14,10 +14,7 @@ export class SingleInvestItemComponent {
     }
 
     onClickedItem() {
-        this.router.navigate(['dash', 'my_portfolio', this.investment.project.uuid, 'in_portfolio']);
-    }
-
-    getImageAsURL() {
-        return `url(${(<any>this.investment.project).image_url})`;
+        this.router.navigate(['dash', 'my_portfolio', this.investment.project.uuid, 'in_portfolio'],
+        {state: {data: this.investment}});
     }
 }

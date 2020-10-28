@@ -1,0 +1,36 @@
+<ng-container *ngIf="(project$ | async) as project else spinner">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class=" card-header">
+                        <div class=" card-title explainer-mini">
+                            Revenue share information
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="float-left">
+                            <div class="explainer-mini">
+                                Project name
+                            </div>
+                            {{ project.name }}
+                        </div>
+                        <div class="float-right">
+                            <div class="explainer-mini">
+                                Amount to distribute
+                            </div>
+                            {{ amount | currencyDefault }}
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-danger w-100 py-3 mt-3" (click)="showConfirmModal()">
+                    Verify and start revenue share
+                </button>
+            </div>
+        </div>
+    </div>
+
+</ng-container>
+<ng-template #spinner>
+    <app-spinner type="overlay"></app-spinner>
+</ng-template>

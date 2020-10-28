@@ -18,7 +18,9 @@ export class WalletService {
         this.changeWalletSubject.pipe(switchMap(wallet => of(wallet))),
         this.refreshWalletSubject.pipe(
             switchMap(() => this.cacheService.setAndGet(this.cacheKey, this.getUserWallet(), 30_000)))
-    ).pipe(catchError(() => EMPTY));
+    ).pipe(
+        catchError(() => EMPTY)
+    );
 
     constructor(private http: BackendHttpClient,
                 private cacheService: CacheService) {
@@ -37,7 +39,6 @@ export class WalletService {
                 const walletState = wallet.hash !== null ? WalletState.READY : WalletState.NOT_VERIFIED;
                 return of({state: walletState, wallet: wallet});
             }),
-            tap(wallet => this.changeWalletSubject.next(wallet)),
             catchError(err => {
                 switch (err.status) {
                     case 404:
@@ -47,6 +48,7 @@ export class WalletService {
                         return throwError(err);
                 }
             }),
+            tap(wallet => this.changeWalletSubject.next(wallet)),
             retry(3),
         );
     }
@@ -118,6 +120,7 @@ export interface UserTransaction {
     to: string;
     to_tx_hash: string;
     type: TransactionType;
+    share: string;
 }
 
 interface UserTransactionResponse {
@@ -125,9 +128,9 @@ interface UserTransactionResponse {
 }
 
 export enum WalletState {
-    EMPTY,
-    NOT_VERIFIED,
-    READY,
+    EMPTY = 'EMPTY',
+    NOT_VERIFIED = 'NOT_VERIFIED',
+    READY = 'READY',
 }
 
 export interface WalletDetailsWithState {

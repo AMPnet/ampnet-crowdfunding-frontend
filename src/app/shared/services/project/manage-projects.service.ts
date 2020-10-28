@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BackendHttpClient } from '../backend-http-client.service';
-import { Project } from './project.service';
+import { Project, ProjectService } from './project.service';
 
 @Injectable({
     providedIn: 'root'
@@ -8,7 +8,8 @@ import { Project } from './project.service';
 export class ManageProjectsService {
     private endpoint = '/api/project/project';
 
-    constructor(private http: BackendHttpClient) {
+    constructor(private http: BackendHttpClient,
+                private projectService: ProjectService) {
     }
 
     deleteDocument(projectID: string, documentID: number) {
@@ -23,28 +24,12 @@ export class ManageProjectsService {
             currentNews = [newsLink];
         }
 
-        return this.http.put<Project>(`${this.endpoint}/${project.uuid}`,
-            <EditProjectData>{
-                news: currentNews
-            });
+        return this.projectService.updateProject(project.uuid, {news: currentNews});
     }
 
     deleteNewsFromProject(project: Project, newsLink: string) {
         const currentNews = project.news.filter(news => news !== newsLink);
 
-        return this.http.put<Project>(`${this.endpoint}/${project.uuid}`,
-            <EditProjectData>{
-                news: currentNews
-            });
+        return this.projectService.updateProject(project.uuid, {news: currentNews});
     }
-}
-
-export interface EditProjectData {
-    name?: string;
-    description?: string;
-    location?: { lat: number, long: number };
-    roi?: { from: number, to: number };
-    active?: boolean;
-    tags?: string[];
-    news?: any;
 }

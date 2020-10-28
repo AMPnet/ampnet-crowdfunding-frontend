@@ -8,7 +8,12 @@
     news: news$ | async,
     user: user$ | async
 } as states" class="wow fadeIn container" style="background: #fdfdfd">
-    <div class="row" *ngIf="states.project !== null else overlaySpinner">
+    <div class="app-page-title-back" (click)="backToPreviousScreen()">
+        <i class="fas fa-long-arrow-alt-left mr-3"></i>
+        {{ !isPortfolioView ? "OFFER DETAILS" : "PORTFOLIO DETAILS" }}
+    </div>
+
+    <div *ngIf="states.project !== null else overlaySpinner">
         <!-- Closed project popup -->
         <div *ngIf="!states.project.active" class="col-lg-12 mb-3">
             <div class="alert alert-danger">
@@ -16,184 +21,125 @@
                 later date.
             </div>
         </div>
-        <!-- Page title -->
-        <div class="col-12 mb-lg-4 ml-lg-3 page-title order-first d-none d-lg-block">
-            <p (click)="backToOffersScreen()" style="cursor: pointer">
-                <i class="fas fa-long-arrow-alt-left mr-3"></i>
-                OFFER DETAILS
-            </p>
-        </div>
-        <div class="col-lg-7 offer-left order-last order-lg-second">
-            <!-- Offer image -->
-            <div class="wow fadeIn d-lg-block">
-                <img class="header-image w-100" src="{{states.project.main_image}}">
-            </div>
-            <!-- Offer desc -->
-            <div class="offer-desc">
-                <div [innerHTML]="states.project.description"></div>
-            </div>
-            <!-- Offer docs -->
-            <div class="offer-docs mb-5 mb-lg-0">
-                <div *ngFor="let doc of states.project.documents" class="w-100 mt-4">
-                    <div class="d-flex flex-row align-items-center">
-                        <a href="{{ doc.link }}">
-                            <i class="fas fa-file-download mr-2"></i>
-                        </a>
-                        <div class=" w-75"
-                             style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                            {{ doc.name }}
-                        </div>
-                    </div>
-                </div>
+        
+        <div class="offer-left col-lg-7">
+            <div class="wow fadeIn">
+                <img class="left__img w-100" src="{{states.project.main_image}}">
             </div>
         </div>
 
-        <div class="col-12 col-lg-5 offer-right order-second order-lg-last">
-            <div class="offer-right-container">
-                <!-- Page title for mobile -->
-                <div class="col-12 pt-3 pt-md-3 ml-4 page-title d-lg-none d-block">
-                    <p (click)="backToOffersScreen()">
-                        <i class="fas fa-long-arrow-alt-left mr-3"></i>
-                        OFFER DETAILS
-                    </p>
-                </div>
+        <div class="offer-right col-lg-5">
+            <div class="right__container">
 
-                <!-- Offer image for mobile -->
-                <div class="wow fadeIn d-lg-none d-block">
-                    <img class="header-image w-100" src="{{ states.project.main_image }}">
-                </div>
-
-                <div class="offer-right-text col-lg-9">
-                    <!-- Offer title -->
+                <div class="right__text">
                     <div>
-                        <h3 class="pt-lg-5 pt-4 offer-title">{{ states.project.name }}</h3>
+                        <h1 class="app-basic-title">{{ states.project.name }}</h1>
                     </div>
 
-                    <!-- Offer location -->
-                    <div class="mt-4 offer-location">
+                    <div class="right__location">
                         <p (click)="openModal(states.project)">
-                            <i class="fas fa-map-marker-alt mr-2"></i>
+                            <i class="location__icon fas fa-map-marker-alt"></i>
                             Show location
                         </p>
                         {{ states.project.location_text }}
                     </div>
 
-                    <!-- Offer progress -->
-                    <div class="progress-text">
-                        <p class="mt-lg-5 mt-4">
-                            <ng-container *ngIf="!!states.walletMW else smallSpinner">
-                                <span>{{ states.walletMW.totalFundsRaised | currencyDefault }}</span> raised of
-                                <span>{{ states.walletMW.investmentCap | currencyDefault }}</span> goal
-                            </ng-container>
-                        </p>
+                    <div class="right__progress">
+                        <ng-container *ngIf="!!states.walletMW else smallSpinner">
+                            <span>{{ states.walletMW.totalFundsRaised | currencyDefault }} </span>raised of 
+                            {{ states.walletMW.investmentCap | currencyDefault }} goal
+                            <div class="progress__element">
+                                <div [style.width.%]="(states.walletMW?.totalFundsRaised / states.walletMW?.investmentCap) * 100"
+                                     class="progress__bar"
+                                     role="progressbar">
+                                </div>
+                            </div>
+                        </ng-container>
                     </div>
-                    <div class="progress">
-                        <div [style.width.%]="(states.walletMW?.totalFundsRaised / states.walletMW?.investmentCap) * 100"
-                             class="progress-bar"
-                             role="progressbar">
+                
+                    <div class="right__info">
+                        <div class="right__return-rate">
+                            <span>{{ states.project.roi.from }}% - {{ states.project.roi.to }}%</span>
+                            Expected yearly return
+                        </div>
+                        <div class="dropdown-divider"></div>
+    
+                        <div class="right__min-invest">
+                            <span>{{ states.project.min_per_user | currencyDefault }}</span>Min Investment
+                        </div>
+                        <div class="dropdown-divider"></div>
+    
+                        <div class="right__max-invest">
+                            <span>{{ states.project.max_per_user | currencyDefault }}</span>Max Investment
+                        </div>
+                        <div class="dropdown-divider"></div>
+    
+                        <div class="right__fund-period">
+                            <span>Funding period</span>
+                            {{ states.project.start_date | date:'mediumDate' }}
+                            - {{ states.project.end_date | date:'mediumDate' }}
                         </div>
                     </div>
+                    
+                    <div class="right__invest">
+                        <div *ngIf="!isPortfolioView">
+                            <ng-container *ngTemplateOutlet="investButtons"></ng-container>
+                        </div>
+                        <div *ngIf="isPortfolioView && !disableInvestButton(states.project, states.walletMW)" 
+                             class="portfolio__invest">
+                            <ng-container *ngTemplateOutlet="investButtons"></ng-container>
 
-                    <!-- Offer Invest btn -->
-                    <div class="invest-button-holder d-none d-lg-block">
-                        <button *ngIf="isOverview" class="btn btn-primary w-100 btn-action-a"
+                            <app-action-button text="Cancel all investments"
+                                               loadingText="Cancelling investments..."
+                                               buttonClass="btn btn-grey mb-4"
+                                               [disabled]="!isCancelable"
+                                               [onClick]="cancelInvestment.bind(this)">
+                            </app-action-button>
+                        </div>
+                        <ng-template #investButtons>
+                            <button *ngIf="isOverview" class="btn btn-primary w-100 btn-action-a"
                                 id="invest-button"
                                 routerLink="/sign_up">
                             <i class="mr-2 fas fa-chart-pie"></i>
                             Sign Up & Invest
                         </button>
-
+    
                         <div *ngIf="!isOverview && !!states.user">
                             <button *ngIf="states.user.verified"
                                     [disabled]="disableInvestButton(states.project, states.walletMW)"
-                                    class="btn btn-primary w-100 btn-action-a" id="invest-button"
+                                    class="btn btn-primary w-100 btn-action-a"
                                     (click)="goToInvest(states.project.uuid)">
                                 <i class="mr-2 fas fa-chart-pie"></i>
                                 Invest
                             </button>
                             <button *ngIf="!states.user.verified" [disabled]="!states.project.active"
                                     class="btn btn-primary w-100 btn-action-a"
-                                    id="invest-button"
                                     routerLink="/dash/general_settings">
                                 <i class="mr-2 fas fa-chart-pie"></i>
                                 Verify Profile & Invest
                             </button>
                         </div>
-                    </div>
-
-                    <!-- Offer return rate -->
-                    <div class="offer-return">
-                        <span class="mr-2">{{ states.project.roi.from }}% - {{ states.project.roi.to }}%</span>
-                        Expected yearly return
-                    </div>
-                    <div class="dropdown-divider mt-lg-3"></div>
-
-                    <!-- Offer min investment -->
-                    <div class="mt-lg-3">
-                        <span class="mr-2">{{ states.project.min_per_user | currencyDefault }}</span>Min Investment
-                    </div>
-                    <div class="dropdown-divider mt-lg-3"></div>
-
-                    <!-- Offer max investment -->
-                    <div class="mt-lg-3">
-                        <span class="mr-2">{{ states.project.max_per_user | currencyDefault }}</span>Max Investment
-                    </div>
-                    <div class="dropdown-divider mt-lg-3"></div>
-
-                    <!-- Offer funding period -->
-                    <div class="mt-lg-3 pb-lg-5 pb-0">
-                        <span class="mr-2">Funding period</span>
-                        {{ states.project.start_date | date:'mediumDate' }}
-                        - {{ states.project.end_date | date:'mediumDate' }}
-                    </div>
-
-                    <!-- Offer Invest btn for mobile -->
-                    <div class="invest-button-holder d-block d-lg-none">
-
-                        <button *ngIf="isOverview" class="btn btn-primary w-100 btn-action-a"
-                                id="invest-button"
-                                routerLink="/sign_up">
-                            <i class="mr-2 fas fa-chart-pie"></i>
-                            Sign Up & Invest
-                        </button>
-
-                        <div *ngIf="!isOverview && !!states.user">
-                            <button *ngIf="states.user.verified"
-                                    [disabled]="disableInvestButton(states.project, states.walletMW)"
-                                    class="btn btn-primary w-100 btn-action-a" id="invest-button"
-                                    routerLink="invest">
-                                <i class="mr-2 fas fa-chart-pie"></i>
-                                Invest
-                            </button>
-                            <button *ngIf="!states.user.verified" [disabled]="!states.project.active"
-                                    class="btn btn-primary w-100 btn-action-a"
-                                    id="invest-button"
-                                    routerLink="/dash/general_settings">
-                                <i class="mr-2 fas fa-chart-pie"></i>
-                                Verify Profile & Invest
-                            </button>
-                        </div>
+                        </ng-template>
                     </div>
                 </div>
             </div>
 
-            <!-- Offer socials share -->
-            <div class="offer-right-socials col-lg-9">
-                <div class="d-flex flex-row align-items-center">
-                    <span class="mr-lg-5">Share</span>
-                    <div class="cursor-pointer mr-lg-5">
+            <div class="offer-right-socials col-lg-5">
+                <div class="socials__content">
+                    <p>Share</p>
+                    <div class="socials__link">
                         <a href="https://twitter.com/intent/tweet?url={{ getProjectURL(states.project.uuid) }}"
                            target="_blank">
-                            <i class="fab fa-twitter"></i>
+                            <i class="socials__icon fab fa-twitter"></i>
                         </a>
                     </div>
-                    <div class="cursor-pointer mr-lg-5">
+                    <div class="socials__link">
                         <a href="https://www.facebook.com/sharer/sharer.php?u={{ getProjectURL(states.project.uuid) }}"
                            target="_blank">
-                            <i class="fab fa-facebook-f"></i>
+                            <i class="socials__icon fab fa-facebook-f"></i>
                         </a>
                     </div>
-                    <div class="cursor-pointer" #copyToClipboard="bs-tooltip"
+                    <div class="socials__link" #copyToClipboard="bs-tooltip"
                          (click)="copyProjectDetailsUrl(copyToClipboard, states.project.uuid)"
                          tooltip="Copied to clipboard."
                          triggers="">
@@ -202,7 +148,69 @@
                 </div>
             </div>
         </div>
+
+        <div class="offer-left col-lg-7">
+            <div class="left__desc">
+                <div *ngIf="!isPortfolioView else tabbedView">
+                    <ng-container *ngTemplateOutlet="projectDetails"></ng-container>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <ng-template #projectDetails>
+        <div class="left__inner">
+            <div [innerHTML]="states.project.description"></div>
+            <div class="left__docs">
+                <div *ngFor="let doc of states.project.documents">
+                    <div class="docs__links">
+                        <a href="{{ doc.link }}">
+                            <i class="fas fa-file-download"></i>
+                            <span>{{ doc.name }}</span>
+                        </a>
+                    </div>
+                 </div>
+            </div>
+        </div>
+    </ng-template>
+
+    <ng-template #tabbedView>
+        <tabset>
+            <tab heading="Transactions">
+                <div class="investments__container">
+                    <div class="investment__total">
+                        <div class="total__title">Total Invested</div>
+                        <div class="total__amount">
+                            <ng-container *ngIf="(investmentTotal$ | async) as investmentTotal else smallSpinner">
+                                {{ investmentTotal | currencyDefault }}
+                            </ng-container>
+                        </div>
+                    </div>
+                    <div class="investments__history flex__center-space"
+                         *ngFor="let singleInvestment of investmentData.transactions">
+                        <div class="history__left">
+                            <div class="history__amount">
+                                {{ singleInvestment.amount | currencyDefault }}
+                            </div>
+                            <div class="history__date">
+                                {{ singleInvestment.date | date:'medium' }}
+                            </div>
+                        </div>
+                        <div class="history__right">
+                            <!-- TODO: Implement download transaction report functionality
+                            <div class="history__icon">
+                                <i class="fas fa-file-chart-line"></i>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+
+            </tab>
+            <tab heading="Details">
+                <ng-container *ngTemplateOutlet="projectDetails"></ng-container>
+            </tab>
+        </tabset>
+    </ng-template>
 </div>
 
 <ng-template #overlaySpinner>

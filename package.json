@@ -1,19 +1,19 @@
 {
   "name": "ampnet-crowdfunding-frontend",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --proxy-config proxy.conf.json --disable-host-check",
     "test": "ng test",
-    "lint-fix": "tslint --fix \"src/**/*.ts\" --project tsconfig.json -s node_modules/tslint-stylish -t stylish",
+    "lint-fix": "tslint --fix \"src/**/*.ts\" --project tsconfig.json",
     "deploy-docker-image": "sh prod-build/deploy-docker-image.sh",
-    "build-prod": "ng build --prod --extract-css=false",
-    "lint:ci": "tslint \"src/**/*.ts\" --project tsconfig.json -s node_modules/tslint-stylish -t stylish",
+    "build-prod": "ng build --prod",
+    "lint:ci": "tslint \"src/**/*.ts\" --project tsconfig.json",
     "test:ci": "ng test -- --no-watch --no-progress --browsers=ChromeHeadlessCI"
   },
   "private": true,
   "dependencies": {
-    "@angular-devkit/build-angular": "^0.1001.0-next.4",
+    "@angular-devkit/build-angular": "^0.1002.0",
     "@angular/animations": "^10.1.0-next.4",
     "@angular/common": "^10.1.0-next.4",
     "@angular/compiler": "^10.1.0-next.4",
@@ -23,10 +23,10 @@
     "@angular/platform-browser": "^10.1.0-next.4",
     "@angular/platform-browser-dynamic": "^10.1.0-next.4",
     "@angular/router": "^10.1.0-next.4",
-    "@arkane-network/arkane-connect": "1.12.0",
+    "@arkane-network/arkane-connect": "1.21.0",
     "@auth0/angular-jwt": "^2.0.0",
     "@chenfengyuan/datepicker": "^1.0.8",
-    "@fortawesome/fontawesome-free": "^5.3.1",
+    "@fortawesome/fontawesome-pro": "^5.15.1",
     "@ng-bootstrap/ng-bootstrap": "^7.0.0",
     "@ng-toolkit/universal": "^1.1.40",
     "@ngx-translate/core": "^11.0.1",
@@ -46,8 +46,6 @@
     "jquery": "^3.3.1",
     "leaflet": "^1.7.1",
     "lodash": "^4.17.19",
-    "metascraper": "^5.4.3",
-    "micromodal": "^0.4.6",
     "moment": "^2.24.0",
     "ngx-bootstrap": "^6.1.0",
     "ngx-cookie-service": "^2.0.2",
@@ -60,7 +58,8 @@
     "reflect-metadata": "~0.1.8",
     "rxjs": "~6.6.2",
     "spin.js": "^4.1.0",
-    "sweetalert2": "^7.32.2",
+    "subsink": "^1.0.1",
+    "sweetalert2": "^7.33.1",
     "tns-core-modules": "~5.1.1",
     "typed-rest-client": "^1.0.11",
     "uppy": "^1.20.2",
@@ -92,7 +91,7 @@
     "protractor": "^7.0.0",
     "ts-node": "~7.0.0",
     "tslint": "~5.11.0",
-    "tslint-stylish": "^2.1.0",
-    "typescript": "3.9.7"
+    "typescript": "3.9.7",
+    "webpack-bundle-analyzer": "^3.9.0"
   }
 }

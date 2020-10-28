@@ -1,129 +1,125 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
-import * as Uppy from 'uppy';
-import { ActivatedRoute } from '@angular/router';
-import { hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
+import { Component, OnInit } from '@angular/core';
+import { displayBackendErrorRx } from 'src/app/utilities/error-handler';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import {
     DepositSearchResponse,
     WalletCooperativeDepositService
 } from '../../shared/services/wallet/wallet-cooperative/wallet-cooperative-deposit.service';
-import { ArkaneConnect, SecretType, SignatureRequestType, WindowMode } from '@arkane-network/arkane-connect';
-import { BroadcastService } from 'src/app/shared/services/broadcast.service';
-import swal from 'sweetalert2';
-import MicroModal from 'micromodal';
-import { BackendHttpClient } from '../../shared/services/backend-http-client.service';
-
-declare var $: any;
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { ManageSingleDepositModalComponent } from './manage-single-deposit-modal/manage-single-deposit-modal.component';
+import { catchError, finalize, switchMap } from 'rxjs/operators';
+import { ArkaneService } from '../../shared/services/arkane.service';
+import { PopupService } from '../../shared/services/popup.service';
+import { EMPTY, Observable, of } from 'rxjs';
+import { CurrencyDefaultPipe } from '../../pipes/currency-default.pipe';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FileValidator } from '../../shared/validators/file.validator';
 
 @Component({
     selector: 'app-manage-single-deposit',
     templateUrl: './manage-single-deposit.component.html',
-    styleUrls: ['./manage-single-deposit.component.css']
+    styleUrls: ['./manage-single-deposit.component.css'],
 })
-export class ManageSingleDepositComponent implements OnInit, AfterViewInit {
-    amount = 0;
-    amountToConfirm = 0;
-    depositModel: DepositSearchResponse;
-    paymentUppy: Uppy.Core.Uppy;
+export class ManageSingleDepositComponent implements OnInit {
+    deposit$: Observable<DepositSearchResponse>;
+
+    confirmDepositForm: FormGroup;
+    confirmationModal: BsModalRef;
 
     constructor(private route: ActivatedRoute,
-                private http: BackendHttpClient,
                 private depositCooperativeService: WalletCooperativeDepositService,
-                private broadService: BroadcastService) {
+                private modalService: BsModalService,
+                private arkaneService: ArkaneService,
+                private popupService: PopupService,
+                private fb: FormBuilder,
+                private currencyPipe: CurrencyDefaultPipe,
+                private router: Router) {
+        const id = this.route.snapshot.params.ID;
+        this.deposit$ = this.getDepositProcedure(id);
     }
 
     ngOnInit() {
-        this.getDeposit();
-    }
-
-    ngAfterViewInit() {
-    }
-
-    createUploadArea() {
-        this.paymentUppy = Uppy.Core();
-
-        this.paymentUppy.use(Uppy.Dashboard, {
-            id: 'reciept-payment',
-            target: document.getElementById('payment-reciept-upload-target'),
-            inline: true,
-            height: 300,
-            width: $('.root-content-container').width(),
-            note: 'Upload payment reciept for deposit',
-            hideUploadButton: true,
+        this.confirmDepositForm = this.fb.group({
+            amount: [0, (c: FormControl) => c.value > 0 ? null : {invalid: true}],
+            document: [null, FileValidator.validate]
         });
     }
 
-    generateSignerAndSign() {
-        SpinnerUtil.showSpinner();
-
-        this.depositCooperativeService.generateDepositMintTx(this.depositModel.deposit.id).subscribe(async res => {
-            SpinnerUtil.hideSpinner();
-            const arkaneConnect = new ArkaneConnect('AMPnet', {
-                environment: 'staging'
-            });
-
-            const account = await arkaneConnect.flows.getAccount(SecretType.AETERNITY);
-
-            const sigRes = await arkaneConnect.createSigner(WindowMode.POPUP).sign({
-                walletId: account.wallets[0].id,
-                data: res.tx,
-                type: SignatureRequestType.AETERNITY_RAW
-            });
-            this.broadService.broadcastSignedTx(sigRes.result.signedTransaction, res.tx_id)
-                .subscribe(_ => {
-                    SpinnerUtil.hideSpinner();
-                    swal('', 'Success', 'success');
-                }, hideSpinnerAndDisplayError);
-        }, hideSpinnerAndDisplayError);
+    getDepositProcedure(reference: string): Observable<DepositSearchResponse> {
+        return this.depositCooperativeService.getDeposit(reference).pipe(
+            displayBackendErrorRx(),
+            catchError(err => {
+                if (err.status === 404) {
+                    return this.popupService.new({
+                        type: 'error',
+                        title: 'Not found',
+                        text: 'Deposit transaction with this reference code was not found.'
+                    }).pipe(switchMap(() => this.recoverBack()));
+                }
+                return this.recoverBack();
+            }),
+            switchMap(res => {
+                if (!res.deposit.approved_at) {
+                    return of(res);
+                } else if (!!res.deposit.approved_at && !res.deposit.tx_hash) {
+                    const amount = this.currencyPipe.transform(res.deposit.amount);
+                    return this.popupService.new({
+                        type: 'info',
+                        title: 'Transaction already approved',
+                        text: `You will be prompted to sign deposit transaction of ${amount}`
+                    }).pipe(
+                        switchMap(popup => !popup.dismiss ?
+                            this.generateSignerAndSign(res.deposit.id) : this.recoverBack()),
+                        switchMap(() => EMPTY)
+                    );
+                } else {
+                    this.router.navigate(['/dash/manage_deposits']);
+                    return EMPTY;
+                }
+            }),
+            finalize(() => SpinnerUtil.hideSpinner()));
     }
 
-    getDeposit() {
-        const id = this.route.snapshot.params.ID;
-        SpinnerUtil.showSpinner();
-        this.depositCooperativeService.getDeposit(id).subscribe(res => {
-            this.depositModel = res;
-
-            if (!this.depositModel.deposit.approved) {
-                setTimeout(() => {
-                    this.createUploadArea();
-                    MicroModal.init();
-                }, 300);
-            } else {
-                this.generateSignerAndSign();
-            }
-
-            SpinnerUtil.hideSpinner();
-        }, hideSpinnerAndDisplayError);
-    }
-
-    approveButtonClicked() {
-        if (this.amount !== this.amountToConfirm) {
-            swal('', 'The deposit amounts don\'t match. Please check the proper deposit amount and try again!',
-                'error').then(() => {
-                (<any>$('#modal-confirm-deposit')).modal('hide');
-                location.reload();
-            });
-            return;
-        }
-
-        const depositApprovalURL = this.depositCooperativeService.generateDepositApprovalURL(
-            location.origin,
-            this.depositModel.deposit.id,
-            this.amount
+    generateSignerAndSign(depositID: number) {
+        return this.depositCooperativeService.generateDepositMintTx(depositID).pipe(
+            displayBackendErrorRx(),
+            switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo)),
+            catchError(() => this.recoverBack()),
+            switchMap(() => this.popupService.new({
+                type: 'success',
+                title: 'Transaction signed',
+                text: 'Transaction is being processed...'
+            })),
+            switchMap(() => this.router.navigate(['/dash/manage_deposits']))
         );
+    }
 
-        this.paymentUppy.use(Uppy.XHRUpload, {
-            endpoint: depositApprovalURL,
-            fieldName: 'file',
-            headers: {
-                'Authorization': this.http.authHttpOptions().headers.get('Authorization')
+    showConfirmModal(form: FormGroup, depositID: number) {
+        const amount = form.get('amount').value;
+        const document = form.get('document').value;
+
+        this.confirmationModal = this.modalService.show(ManageSingleDepositModalComponent, {
+            initialState: {
+                depositAmount: amount
             }
         });
 
-        SpinnerUtil.showSpinner();
-        this.paymentUppy.upload().then(res => {
-            SpinnerUtil.hideSpinner();
-            this.getDeposit();
+        const confirmationSub = this.confirmationModal.content.successfulConfirmation.subscribe(() => {
+            SpinnerUtil.showSpinner();
+            this.depositCooperativeService.approveDeposit(depositID, amount, document).pipe(
+                displayBackendErrorRx(),
+                catchError(() => this.recoverBack()),
+                switchMap(() => this.generateSignerAndSign(depositID)),
+                finalize(() => SpinnerUtil.hideSpinner())
+            ).subscribe();
         });
+
+        this.confirmationModal.onHide.subscribe(() => confirmationSub.unsubscribe());
+    }
+
+    private recoverBack(): Observable<never> {
+        this.router.navigate(['/dash/manage_deposits'], { relativeTo: this.route });
+        return EMPTY;
     }
 }

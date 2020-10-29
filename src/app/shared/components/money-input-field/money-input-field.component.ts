@@ -12,7 +12,7 @@ import {
 } from '@angular/core';
 import { baseCurrencyUnitToCents, centsToBaseCurrencyUnit } from '../../../utilities/currency-util';
 import * as Autonumeric from 'autonumeric';
-import { AbstractControl } from '@angular/forms';
+import { AbstractControl, FormControl } from '@angular/forms';
 
 @Component({
     selector: 'app-money-input-field',

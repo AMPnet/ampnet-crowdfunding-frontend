@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
-import { ProjectService } from '../../../../shared/services/project/project.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import * as moment from 'moment';
-import { ActivatedRoute, Router } from '@angular/router';
-import { displayBackendError } from 'src/app/utilities/error-handler';
-import { catchError, tap } from 'rxjs/operators';
-import { throwError } from 'rxjs';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
+import * as moment from 'moment';
+import { tap } from 'rxjs/operators';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ProjectService } from '../../../../shared/services/project/project.service';
+import { displayBackendErrorRx } from '../../../../utilities/error-handler';
 
 @Component({
     selector: 'app-create-new-project',
@@ -24,14 +23,20 @@ export class CreateNewProjectComponent {
                 private fb: FormBuilder,
                 private activatedRoute: ActivatedRoute,
                 private router: Router) {
+
         this.createForm = this.fb.group({
             name: ['', Validators.required],
             description: ['', Validators.required],
             startDate: ['', Validators.required],
             endDate: ['', Validators.required],
-            expectedFunding: ['', Validators.required],
-            minPerUser: ['', Validators.required],
-            maxPerUser: ['', Validators.required]
+            expectedFunding: [0, [ProjectValidators.greaterThan(0)]],
+            minPerUser: [0, [ProjectValidators.greaterThan(0)]],
+            maxPerUser: [0, [ProjectValidators.greaterThan(0)]]
+        }, {
+            validator: Validators.compose([
+                ProjectValidators.fundingLimits,
+                ProjectValidators.fundingPeriodLimits
+            ])
         });
     }
 
@@ -55,12 +60,9 @@ export class CreateNewProjectComponent {
             max_per_user: formValue.maxPerUser,
             active: false
         }).pipe(
+            displayBackendErrorRx(),
             tap(project => {
                 this.router.navigate([`/dash/manage_groups/${orgID}/manage_project/${project.uuid}`]);
-            }),
-            catchError(err => {
-                displayBackendError(err);
-                return throwError(err);
             })
         );
     }
@@ -73,5 +75,35 @@ export class CreateNewProjectComponent {
             isAnimated: true,
             dateInputFormat: 'DD-MM-YYYY'
         });
+    }
+}
+
+class ProjectValidators {
+    static greaterThan(value: number): ValidatorFn {
+        return (c: FormControl) => c.value > value ? null : {invalid: true};
+    }
+
+    static fundingLimits(c: AbstractControl): ValidationErrors | null {
+        const minPerUser = Number(c.get('minPerUser').value);
+        const maxPerUser = Number(c.get('maxPerUser').value);
+        const expectedFunding = Number(c.get('expectedFunding').value);
+
+        if (minPerUser > maxPerUser) {
+            return {invalidMinMax: true};
+        }
+
+        if (maxPerUser > expectedFunding) {
+            return {invalidMaxExpectedFunding: true};
+        }
+
+        return null;
+    }
+
+    static fundingPeriodLimits(c: AbstractControl): ValidationErrors | null {
+        const startDate = c.get('startDate').value;
+        const endDate = c.get('endDate').value;
+
+        return Date.parse(endDate) >= Date.parse(startDate) ?
+            null : {invalidStartEndDate: true};
     }
 }

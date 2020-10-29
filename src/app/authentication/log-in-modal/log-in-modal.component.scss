@@ -48,23 +48,26 @@ h1 {
 
 @media (min-width: 576px) {
   .modal-dialog {
-      max-width: 700px;
+    max-width: 700px;
   }
 
   .container {
-      width: 500px;
-      margin-bottom: 30px;
+    width: 500px;
+    margin-bottom: 30px;
   }
 
   .dropdown-divider {
-      width: 280px;
+    width: 280px;
   }
 }
 
 /* Mobile inputs */
 @media (max-width: 575px) {
+  .modal-dialog {
+    margin: 30px;
+  }
 
   .dropdown-divider {
-      width: 280px;
+    width: 230px;
   }
 }

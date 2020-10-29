@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AppConfigService } from './shared/services/app-config.service';
+import { Meta, Title } from '@angular/platform-browser';
 
 declare var WOW: any;
 
@@ -8,13 +10,13 @@ declare var WOW: any;
     styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-    title = 'AMPnet';
-
-    constructor() {
+    constructor(private appConfigService: AppConfigService,
+                private title: Title) {
     }
 
     ngOnInit() {
         new WOW().init();
 
+        this.title.setTitle(this.appConfigService.config.title);
     }
 }

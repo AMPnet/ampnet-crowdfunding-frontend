@@ -1,6 +1,6 @@
 // tslint:disable:max-line-length
 import { BrowserModule } from '@angular/platform-browser';
-import { DEFAULT_CURRENCY_CODE, NgModule } from '@angular/core';
+import { APP_INITIALIZER, DEFAULT_CURRENCY_CODE, NgModule } from '@angular/core';
 import { DisqusModule } from 'ngx-disqus';
 import { AppComponent } from './app.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
@@ -93,6 +93,7 @@ import { ProjectWithdrawComponent } from './organizations/organization-details/m
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { DatePipe } from '@angular/common';
 import { SignInAutoComponent } from './authentication/sign-in-auto/sign-in-auto.component';
+import { AppConfigService } from './shared/services/app-config.service';
 
 const socialAuthServiceConfig = {
     provide: 'SocialAuthServiceConfig',
@@ -220,7 +221,14 @@ const socialAuthServiceConfig = {
             provide: DEFAULT_CURRENCY_CODE, useValue: 'EUR',
         },
         DatePipe,
-        SafePipe
+        SafePipe,
+        AppConfigService,
+        {
+            provide: APP_INITIALIZER,
+            useFactory: (config: AppConfigService) => () => config.load(),
+            multi: true,
+            deps: [AppConfigService]
+        }
     ],
     bootstrap: [AppComponent]
 })

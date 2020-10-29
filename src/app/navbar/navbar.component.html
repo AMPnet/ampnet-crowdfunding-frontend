@@ -3,13 +3,13 @@
 
     </div>
 
-    <div class="navbar-logo">
-        <img src="../../assets/genervestlogo.png">
-    </div>
+    <a routerLink="/dash/offers">
+        <div class="navbar-logo">
+            <img src="{{ appConfigService.config.logo_url }}">
+        </div>
+    </a>
 
     <div (click)="menuButtonClicked()" class="navbar-hamburger float-right ml-auto">
         <img src="../../assets/bars.svg">
     </div>
-
 </nav>
-

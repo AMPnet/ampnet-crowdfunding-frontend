@@ -1,13 +1,17 @@
 import { Component } from '@angular/core';
 import * as $ from 'jquery';
+import { AppConfigService } from '../shared/services/app-config.service';
 
 @Component({
     selector: 'app-navbar',
     templateUrl: './navbar.component.html',
-    styleUrls: ['./navbar.component.css']
+    styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent {
     sidebar: JQuery;
+
+    constructor(public appConfigService: AppConfigService) {
+    }
 
     public static toggleSidebar(toVisible: boolean) {
         const sidebar = $('.sidebar-fixer');

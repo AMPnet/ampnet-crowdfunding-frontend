@@ -10,7 +10,7 @@ import { SpinnerUtil } from '../../../utilities/spinner-utilities';
 @Component({
     selector: 'app-manage-projects',
     templateUrl: './manage-projects.component.html',
-    styleUrls: ['./manage-projects.component.css']
+    styleUrls: ['./manage-projects.component.scss']
 })
 export class ManageProjectsComponent {
     @Input() groupID: string;

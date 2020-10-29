@@ -32,8 +32,9 @@
                     </div>
                 </div>
                 <!-- TODO: Style this and check width on mobile/dewktop -->
-                <div *ngIf="!isWalletVerified(states.orgWallet)" class="col-md-12">
-                    <div class="alert alert-warning">
+                <div *ngIf="!isWalletVerified(states.orgWallet)">
+                    <div class="alert alert-warning flex__center col-lg-10">
+                        <i class="fas fa-exclamation-triangle mr-2"></i>
                         This group is pending approval from admin. During this time, you can't create new projects.
                     </div>
                 </div>
@@ -51,13 +52,13 @@
                                     <div class="invite__form">
                                         <form [formGroup]="inviteForm" style="display: contents">
                                             <div class="form__input col-lg-5">
-                                                <input class="form-control input-reg p-4" name=""
+                                                <input class="form-control input-reg" name=""
                                                        placeholder="Add members"
                                                        formControlName="emails"
                                                        type="text" value="">
                                             </div>
                                             <div class="form__cta col-lg-2">
-                                                <app-action-button text="Add members" loadingText="Inviting members..." faIcon="fas fa-plus"
+                                                <app-action-button text="Add members" loadingText="Inviting..." faIcon="fas fa-plus"
                                                                    [onClick]="inviteClicked(states.organization.uuid).bind(this)"
                                                                    [disabled]="!inviteForm.valid" buttonClass="btn btn-success">
                                                 </app-action-button>
@@ -71,13 +72,20 @@
                                     <ng-container *ngIf="!!states.orgMembers else spinner">
                                         <ul class="list-group">
                                             <li *ngFor="let member of states.orgMembers" class="list__item flex__center-space">
-                                                <div class="item__left flex__center">
-                                                    <div class="item__name">{{ member.first_name }} {{ member.last_name }}</div>
-                                                    <!-- TODO: Change this with real data -->
-                                                    <div class="item__email">testmail@test.com</div>
+                                                <div class="item__left">
+                                                    <div class="item__name">{{ member.first_name | titlecase }} {{ member.last_name | titlecase }}</div>
+                                                    <div class="item__email">{{ member.email }}</div>
                                                 </div>
-                                                <div class="item__right flex__center">
-                                                    <div class="item__joined">{{member.member_since | date:'medium'}}</div>
+                                                <div class="item__right">
+                                                    <div class="item__joined">
+                                                        <span class="d-none d-lg-inline-block">
+                                                            Joined {{member.member_since | date: "longDate"}}
+                                                        </span>
+                                                        <span class="d-inline-block d-lg-none">
+                                                            Joined {{member.member_since | date:'mediumDate'}}
+                                                        </span>
+                                                    </div>
+                                                        
                                                     <span class="item__icon"
                                                       (click)="deleteMember(states.organization.uuid, member.uuid)">
                                                         <i class="fas fa-trash-alt cursor-pointer"></i>

@@ -19,6 +19,18 @@
   }
 }
 
+.alert-warning {
+  margin-top: 20px;
+}
+
+.input-reg {
+  border-right: none;
+}
+
+.input-reg.ng-invalid.ng-dirty[_ngcontent-nhd-c169]:not(form) {
+  border-right: none;
+}
+
 .organization {
   &-info {
     margin-top: 20px;
@@ -68,6 +80,30 @@
   }
 }
 
+.manage__members {
+  .col-lg-7,
+  .col-lg-5,
+  .col-lg-2 {
+    padding: 0;
+  }
+
+  .users__list {
+    .list__item {
+      margin-bottom: 6px;
+      border-bottom: 1px solid $border-light-color;
+      padding-bottom: 4px;
+    }
+    .item {
+        &__icon {
+          float: right;
+        }
+        &__left {
+          color: $body-color;
+        }
+    }
+  }
+}
+
 @include media-breakpoint-up(lg) {
   .container {
     padding: 0 20px;
@@ -75,6 +111,10 @@
 
   .content {
     padding: 0;
+  }
+
+  .alert-warning {
+    margin: 20px auto 0 auto;
   }
 
   .app-page-header {
@@ -133,12 +173,6 @@
   }
 
   .manage__members {
-    .col-lg-7,
-    .col-lg-5,
-    .col-lg-2 {
-      padding: 0;
-    }
-
     .invite {
       &-members {
         padding: 25px 0;
@@ -148,6 +182,7 @@
       &__form {
         display: flex;
         justify-content: center;
+        padding-bottom: 4px;
       }
       &__desc {
         font-size: $font-size-desktop-xsmall;
@@ -164,9 +199,31 @@
       .list__item {
         padding: 20px 24px;
         background-color: $background-color;
+        margin-bottom: 2px;
+        border-bottom: none;
       }
       .item {
-        
+        &__left,
+        &__right {
+          display: flex;
+          align-items: center;
+        }
+        &__icon {
+          float: unset;
+          line-height: 0.9;
+          padding-left: 20px;
+        }
+        &__name {
+          padding-right: 20px;
+          font-weight: 500;
+        }
+        &__joined {
+          font-size: $font-size-desktop-small;
+        }
+        &__joined,
+        &__icon {
+          color: $icons-color;
+        }
       }
     }
   }

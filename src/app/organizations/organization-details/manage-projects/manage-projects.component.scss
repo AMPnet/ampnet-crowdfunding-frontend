@@ -1,0 +1,122 @@
+@import "app";
+
+.list-group {
+  .list {
+    &__item {
+      list-style: none;
+      border-bottom: 1px solid $background-color;
+      padding: 16px 0 24px 0;
+      .top {
+        &__left {
+          display: none;
+        }
+      }
+    }
+  }
+  .item {
+    &__title {
+      font-size: $font-size-mobile-title;
+      color: $title-color;
+      letter-spacing: 1px;
+      padding-bottom: 4px;
+      cursor: pointer;
+    }
+    &__funding {
+      font-size: $font-size-mobile-title-small;
+      color: $body-color;
+      b {
+        color: $title-color;
+        font-size: $font-size-mobile-title-small;
+      }
+    }
+    &__bottom {
+      margin-top: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    &__toggle {
+      font-size: $font-size-mobile-title-small;
+      background-color: $background-color;
+      padding: 8px 16px;
+      border-radius: 1px;
+      cursor: pointer;
+      svg {
+        font-size: $font-size-mobile-title-small;
+      }
+    }
+  }
+}
+
+@include media-breakpoint-up(lg) {
+  .list-group {
+    margin-top: 36px;
+    .list {
+      &__item {
+        position: relative;
+        border-bottom: none;
+        padding: 0;
+        height: 140px;
+        background-color: $background-color;
+        margin-bottom: 4px;
+        display: flex;
+        border-radius: 1px;
+        .top {
+          &__left {
+            display: block;
+            margin-right: 32px;
+          }
+          &__left,
+          &__left img {
+            height: 100%;
+            width: 288px;
+            border-radius: 1px;
+          }
+        }
+      }
+    }
+    .item {
+      &__title {
+        font-size: $font-size-desktop-title;
+        letter-spacing: 1.5px;
+        padding-bottom: 12px;
+      }
+      &__funding {
+        font-size: $font-size-mobile-title-small;
+        color: $body-color;
+        b {
+          color: $title-color;
+          font-size: $font-size-desktop-body2;
+        }
+      }
+      &__top {
+        height: 100%;
+        display: flex;
+        align-items: center;
+      }
+      &__bottom {
+        margin-top: 24px;
+        display: block;
+      }
+      &__toggle {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        font-size: $font-size-mobile-title-small;
+        background-color: unset;
+        transition: all 0.3s ease-in-out;
+        &:hover {
+          background-color: $border-light-color;
+        }
+        svg {
+          font-size: $font-size-mobile-title-small;
+        }
+      }
+      &__progress-bar {
+        position: absolute;
+        bottom: 22px;
+        right: 24px;
+      }
+    }
+  }
+}

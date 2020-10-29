@@ -11,7 +11,7 @@ import {
 } from '@arkane-network/arkane-connect';
 import { combineLatest, from, Observable, of, throwError } from 'rxjs';
 import { Account } from '@arkane-network/arkane-connect/dist/src/models/Account';
-import { catchError, find, map, switchMap, take, tap, timeout } from 'rxjs/operators';
+import { catchError, concatMap, find, map, switchMap, take, takeWhile, tap, timeout } from 'rxjs/operators';
 import { WalletService, WalletState } from './wallet/wallet.service';
 import { PopupService } from './popup.service';
 import { displayBackendErrorRx } from '../../utilities/error-handler';
@@ -70,10 +70,12 @@ export class ArkaneService {
 
     private tryToInitWalletProcedure(wallets: Wallet[]): Observable<Wallet> {
         return of(...wallets).pipe(
-            switchMap(wallet => this.walletService.initWallet(wallet.address).pipe(
+            concatMap(wallet => this.walletService.initWallet(wallet.address).pipe(
                 map(res => res.activation_data),
-                catchError(err => err.error?.err_code === '0504' ? of(null) : throwError(err))
+                catchError(err => err.error?.err_code === '0504' ? of(null) : throwError(err)),
+                displayBackendErrorRx()
             )),
+            takeWhile(x => x === null, true),
             find(value => value !== null),
             switchMap(newWalletAddress => newWalletAddress !== undefined ?
                 this.getMatchedWallet().pipe(tap(() => this.walletService.clearAndRefreshWallet())) :
@@ -179,13 +181,23 @@ export class ArkaneService {
         );
     }
 
-    // on Brave browser; returns infinite loop of warnings in browser console.
-    // It turns out that Brave Shield has something to do with this issue. Should be handled on Arkane side.
+    // Method returns infinite loop of warnings in browser console.
+    // It turned out that this occurs when some browsers block 3rd-party cookies.
+    // This should be handled on Arkane side in the future.
     isAuthenticated(): Observable<boolean> {
-        return from(this.arkaneConnect.checkAuthenticated()).pipe(
-            map(res => res.isAuthenticated),
-            timeout(10000),
-        );
+        return from(this.arkaneConnect.checkAuthenticated())
+            .pipe(map(res => res.isAuthenticated))
+            .pipe(
+                timeout(10000),
+                catchError(() => this.popupService.new({
+                        type: 'error',
+                        title: 'Arkane authentication failed.',
+                        text: 'This might be caused by blocking 3rd-party cookies in your browser. ' +
+                            'Consider unblocking them to proceed.'
+                    }).pipe(switchMap(() =>
+                        ArkaneService.throwError(ArkaneError.USER_NOT_AUTHENTICATED)))
+                )
+            );
     }
 
     private ensureAuthenticated(): Observable<void> {

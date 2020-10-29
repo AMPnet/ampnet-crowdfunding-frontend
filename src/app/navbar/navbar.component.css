@@ -6,6 +6,10 @@
     z-index: 10 !important;
 }
 
+.sidebar-hidden {
+    left: -240px!important;
+}
+
 @media (max-width: 800px) {
     .navbar {
         width: 100%;

@@ -3,60 +3,32 @@ import { InvestmentsInProject, PortfolioService } from '../shared/services/walle
 import { ActivatedRoute, Router } from '@angular/router';
 import { displayBackendErrorRx, hideSpinnerAndDisplayError } from '../utilities/error-handler';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
-import { WalletService } from '../shared/services/wallet/wallet.service';
-import { switchMap } from 'rxjs/operators';
-import { PopupService } from '../shared/services/popup.service';
-import { ArkaneService } from '../shared/services/arkane.service';
+import { Observable } from 'rxjs';
+import { map, shareReplay, switchMap } from 'rxjs/operators';
 
 @Component({
     selector: 'app-investment-details',
     templateUrl: './investment-details.component.html',
     styleUrls: ['./investment-details.component.scss']
 })
-export class InvestmentDetailsComponent implements OnInit {
-
-    public investment: InvestmentsInProject;
-    public isCancelable: Boolean;
+export class InvestmentDetailsComponent {
+    investment$: Observable<InvestmentsInProject>;
+    isCancelable$: Observable<boolean>;
 
     constructor(private portfolioService: PortfolioService,
-                private activatedRoute: ActivatedRoute,
-                private walletService: WalletService,
-                private popupService: PopupService,
-                private arkaneService: ArkaneService,
-                private router: Router) {
-    }
-
-    ngOnInit() {
+                private activatedRoute: ActivatedRoute) {
         const id = this.activatedRoute.snapshot.params.id;
+        this.investment$ = this.portfolioService.getInvestmentsInProject(id)
+            .pipe(shareReplay(1));
 
-        SpinnerUtil.showSpinner();
-        this.portfolioService.getInvestmentsInProject(id).subscribe(res => {
-            this.investment = res;
-            this.canCancelInvestment();
-            SpinnerUtil.hideSpinner();
-        }, hideSpinnerAndDisplayError);
-    }
-
-    cancelInvestment() {
-        return this.portfolioService.generateCancelInvestmentTransaction(this.investment.project.uuid).pipe(
-            displayBackendErrorRx(),
-            switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo)),
-            switchMap(() => this.popupService.new({
-                type: 'success',
-                title: 'Transaction signed',
-                text: 'Transaction is being processed...'
-            })),
-            switchMap(() => this.router.navigate(['/dash/wallet']))
+        this.isCancelable$ = this.investment$.pipe(
+            switchMap(investment => {
+                const transaction = investment.transactions[0];
+                return this.portfolioService.isInvestmentCancelable(transaction.to_tx_hash, transaction.from_tx_hash).pipe(
+                    displayBackendErrorRx(),
+                    map(res => res.can_cancel)
+                );
+            })
         );
-    }
-
-    private canCancelInvestment() {
-        if (this.investment.transactions.length > 0) {
-            const transaction = this.investment.transactions[0];
-            this.portfolioService.isInvestmentCancelable(transaction.to_tx_hash, transaction.from_tx_hash)
-                .subscribe((res) => {
-                    this.isCancelable = res.can_cancel;
-                });
-        }
     }
 }

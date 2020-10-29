@@ -102,7 +102,7 @@
 @include media-breakpoint-up(lg) {
   .card-holder {
     display: flex;
-    border-radius: 8px;
+    border-radius: 1px;
   }
 
   .left__progress, .card-right {
@@ -127,7 +127,7 @@
   }
 
   .img__base {
-    border-radius: 8px;
+    border-radius: 1px;
     margin-top: -16px;
   }
 

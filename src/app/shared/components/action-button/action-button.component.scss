@@ -1,3 +1,5 @@
+@import "app";
+
 button {
   width: 100%;
 
@@ -9,5 +11,15 @@ button {
     span {
       padding-left: 0.5rem
     }
+  }
+}
+
+.btn-mobile {
+  height: 48px;
+}
+
+@include media-breakpoint-up(lg) {
+  .btn-mobile {
+    height: 64px;
   }
 }

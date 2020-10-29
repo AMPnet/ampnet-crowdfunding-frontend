@@ -102,11 +102,11 @@ const socialAuthServiceConfig = {
         providers: [
             {
                 id: GoogleLoginProvider.PROVIDER_ID,
-                provider: new GoogleLoginProvider(environment.googleClientId),
+                provider: new GoogleLoginProvider(environment.appConfig.googleClientId),
             },
             {
                 id: FacebookLoginProvider.PROVIDER_ID,
-                provider: new FacebookLoginProvider(environment.facebookAppId),
+                provider: new FacebookLoginProvider(environment.appConfig.facebookAppId),
             },
         ]
     } as SocialAuthServiceConfig

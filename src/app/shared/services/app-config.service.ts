@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BackendHttpClient } from './backend-http-client.service';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { EMPTY, Observable, of } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class AppConfigService {
@@ -66,14 +67,7 @@ export class AppConfigService {
     }
 
     private static get defaultConfig(): AppConfig {
-        return {
-            title: 'AMPnet',
-            logo_url: 'https://ampnet.io/assets/images/logo-amp.png',
-            arkane: {
-                id: 'AMPnet',
-                env: 'staging',
-            }
-        };
+        return environment.appConfig;
     }
 }
 
@@ -93,4 +87,6 @@ export interface AppConfig {
         id: string;
         env: string;
     };
+    googleClientId: string;
+    facebookAppId: string;
 }

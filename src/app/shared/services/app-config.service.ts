@@ -100,6 +100,7 @@ interface AppConfigRes {
 export interface AppConfig {
     title: string;
     logo_url: string;
+    icon_url: string;
     arkane: {
         id: string;
         env: string;

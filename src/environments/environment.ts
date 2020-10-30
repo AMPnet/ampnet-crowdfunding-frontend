@@ -4,7 +4,8 @@ export const environment = {
     production: false,
     appConfig: { // NOTICE: when adding a new config property, add it to AppConfig interface first.
         title: 'AMPnet',
-        logo_url: 'https://ampnet.io/assets/images/logo-amp.png',
+        logo_url: '/assets/logo-amp.png',
+        icon_url: '/assets/favicon.ico',
         arkane: {
             id: 'AMPnet',
             env: 'staging',

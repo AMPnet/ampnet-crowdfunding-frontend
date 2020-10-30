@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BackendHttpClient } from './backend-http-client.service';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
-import { EMPTY, Observable, of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
 @Injectable()
@@ -15,13 +15,26 @@ export class AppConfigService {
     constructor(private http: BackendHttpClient) {
     }
 
+    /**
+     * Gets application configuration.
+     * This is loaded in runtime when the application starts.
+     */
+    get config(): AppConfig {
+        return this.appConfig;
+    }
+
+    /**
+     * Loads application configuration defaults and overriding them from `localStorage` or remote server.
+     * This method is only meant to be used in a provider when the application starts.
+     */
     load(): Promise<AppConfig> {
-        const localConfig = this.localConfig;
-        const offsetMillis = (new Date().getTime()) - (new Date(localConfig.stored_at).getTime());
+        const localConfig = this.localConfig(this.hostname);
+        const configStoredAt = new Date(localConfig[this.hostname].stored_at).getTime();
+        const offsetMillis = (new Date().getTime()) - configStoredAt;
 
         return of(offsetMillis > this.cacheTimeoutMinutes * 60 * 1000).pipe(
             switchMap(shouldRefresh => shouldRefresh ?
-                this.remoteConfig.pipe(tap(config => config ? this.setLocalConfig(config) : EMPTY)) :
+                this.remoteConfig.pipe(tap(config => this.setLocalConfig(config))) :
                 of(localConfig.config)),
             map(config => ({
                 ...AppConfigService.defaultConfig,
@@ -31,10 +44,6 @@ export class AppConfigService {
         ).toPromise();
     }
 
-    get config(): AppConfig {
-        return this.appConfig;
-    }
-
     private get remoteConfig(): Observable<AppConfig> {
         return this.http.get<AppConfigRes>(`/api/user/public/app/config/${this.hostname}`).pipe(
             map(res => res.config),
@@ -42,14 +51,18 @@ export class AppConfigService {
         );
     }
 
-    private get localConfig(): AppConfigStore {
+    private localConfig(hostname: string): AppConfigStore {
         const storageData = localStorage.getItem(this.localStorageKey) || '';
 
         let config: AppConfigStore;
         try {
             config = JSON.parse(storageData);
         } catch (_err) {
-            config = {
+            config = {};
+        }
+
+        if (!config[hostname]) {
+            config[hostname] = {
                 stored_at: new Date(0),
                 config: null
             };
@@ -59,10 +72,12 @@ export class AppConfigService {
     }
 
     private setLocalConfig(config: AppConfig) {
-        const configToStore: AppConfigStore = {
+        const configToStore = this.localConfig(this.hostname);
+        configToStore[this.hostname] = {
             stored_at: new Date(),
             config: config
         };
+
         localStorage.setItem(this.localStorageKey, JSON.stringify(configToStore));
     }
 
@@ -72,8 +87,10 @@ export class AppConfigService {
 }
 
 interface AppConfigStore {
-    stored_at: Date;
-    config: AppConfig;
+    [hostname: string]: {
+        stored_at: Date;
+        config: AppConfig;
+    };
 }
 
 interface AppConfigRes {

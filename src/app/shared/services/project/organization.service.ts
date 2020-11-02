@@ -72,6 +72,7 @@ export interface Organization {
     legal_info: string;
     documents?: DocumentModel[];
     wallet_hash?: string;
+    project_count: number;
 }
 
 export interface DocumentModel {
@@ -97,6 +98,7 @@ export interface OrganizationInvite {
     organization_uuid: string;
     organization_name: string;
     role: string;
+    organization_header_image: string;
 }
 
 interface OrganizationMembersResponse {
@@ -107,6 +109,7 @@ export interface OrganizationMember {
     uuid: string;
     first_name: string;
     last_name: string;
+    email: string;
     role: string;
     member_since: Date;
 }

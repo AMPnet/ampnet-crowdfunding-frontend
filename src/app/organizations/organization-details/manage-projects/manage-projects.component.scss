@@ -53,13 +53,14 @@
     margin-top: 36px;
     .list {
       &__item {
-        position: relative;
+        overflow: hidden;
         border-bottom: none;
         padding: 0;
         height: 140px;
         background-color: $background-color;
         margin-bottom: 4px;
         display: flex;
+        justify-content: space-between;
         border-radius: 1px;
         .top {
           &__left {
@@ -71,6 +72,9 @@
             height: 100%;
             width: 288px;
             border-radius: 1px;
+          }
+          &__left img {
+            object-fit: cover;
           }
         }
       }
@@ -96,12 +100,14 @@
       }
       &__bottom {
         margin-top: 24px;
-        display: block;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        margin: 24px 32px 24px 0;
+        width: 245px;
       }
       &__toggle {
-        position: absolute;
-        top: 16px;
-        right: 16px;
+        order: 1;
         font-size: $font-size-mobile-title-small;
         background-color: unset;
         transition: all 0.3s ease-in-out;
@@ -113,9 +119,7 @@
         }
       }
       &__progress-bar {
-        position: absolute;
-        bottom: 22px;
-        right: 24px;
+        order: 2;
 
         .progress {
           height: 4px;

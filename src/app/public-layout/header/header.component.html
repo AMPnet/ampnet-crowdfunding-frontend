@@ -1,7 +1,7 @@
 <nav class="public-header navbar navbar-collapse navbar-dark bg-light pt-2">
     <div class="ml-2 ml-md-4">
         <a class="navbar-brand" href="#">
-            <img alt="" height="13" src="../../../assets/genervest-logo-dark.png">
+            <img alt="Logo" src="{{ appConfigService.config.logo_url }}">
         </a>
     </div>
     <div *ngIf="!onlyLogo" id="auth-buttons">

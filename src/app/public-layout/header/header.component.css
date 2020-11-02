@@ -11,6 +11,11 @@
     cursor: pointer;
 }
 
+.navbar-brand img {
+    max-width: 150px;
+    max-height: 35px;
+}
+
 @media (min-width: 800px) {
     .signup-button {
         width: 150px;

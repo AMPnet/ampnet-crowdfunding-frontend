@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
-
+import { AppConfigService } from '../../shared/services/app-config.service';
 
 @Component({
     selector: 'app-header',
@@ -7,17 +7,14 @@ import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
     styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit, AfterViewInit {
-
     @Input() onlyLogo = false;
 
-    constructor() {
+    constructor(public appConfigService: AppConfigService) {
     }
 
     ngOnInit() {
     }
 
     ngAfterViewInit() {
-
     }
-
 }

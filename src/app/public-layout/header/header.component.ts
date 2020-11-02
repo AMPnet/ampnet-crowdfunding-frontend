@@ -1,5 +1,7 @@
 import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { PlatformLocation } from '@angular/common';
 
+declare var $: any;
 
 @Component({
     selector: 'app-header',
@@ -10,14 +12,18 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
     @Input() onlyLogo = false;
 
-    constructor() {
+    constructor(private location: PlatformLocation) {
     }
 
     ngOnInit() {
+        this.location.onPopState(() => $('#log-in-modal').modal('hide'));
     }
 
     ngAfterViewInit() {
-
     }
 
+    showLoginModal() {
+        history.pushState(null, 'modalOpened');
+        $('#log-in-modal').modal('show');
+    }
 }

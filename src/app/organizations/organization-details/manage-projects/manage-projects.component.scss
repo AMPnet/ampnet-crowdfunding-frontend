@@ -116,6 +116,28 @@
         position: absolute;
         bottom: 22px;
         right: 24px;
+
+        .progress {
+          height: 4px;
+          border-radius: 2px;
+          background-color: $border-color;
+          margin-top: 8px;
+
+          &__raised {
+            margin-top: 20px;
+            color: #444444;
+            span {
+              color: #111111;
+              font-weight: bold;
+            }
+          }
+
+          &__bar {
+            height: 4px;
+            border-radius: 2px;
+            background-color: $success-color;
+          }
+        }
       }
     }
   }

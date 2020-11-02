@@ -4,8 +4,8 @@ import { OrganizationService } from '../../../shared/services/project/organizati
 import { displayBackendErrorRx } from '../../../utilities/error-handler';
 import { Project, ProjectService } from '../../../shared/services/project/project.service';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { finalize, map, switchMap, tap } from 'rxjs/operators';
-import { SpinnerUtil } from '../../../utilities/spinner-utilities';
+import { map, switchMap, tap } from 'rxjs/operators';
+import { MiddlewareService } from '../../../shared/services/middleware/middleware.service';
 
 @Component({
     selector: 'app-manage-projects',
@@ -20,6 +20,7 @@ export class ManageProjectsComponent {
 
     constructor(private router: Router,
                 private orgService: OrganizationService,
+                private middlewareService: MiddlewareService,
                 private projectService: ProjectService) {
         this.projects$ = this.refreshProjectsSubject.pipe(
             switchMap(() => this.orgService.getAllProjectsForOrganization(this.groupID)
@@ -29,14 +30,18 @@ export class ManageProjectsComponent {
     }
 
     toggleProject(uuid: string, projects: Project[]) {
-        const project = projects.find(proj => proj.uuid === uuid);
-        SpinnerUtil.showSpinner();
-        this.projectService.updateProject(project.uuid, {
-            active: !project.active
-        }).pipe(
-            displayBackendErrorRx(),
-            tap(() => this.refreshProjectsSubject.next()),
-            finalize(() => SpinnerUtil.hideSpinner())
-        ).subscribe();
+        return () => {
+            const project = projects.find(proj => proj.uuid === uuid);
+            return this.projectService.updateProject(project.uuid, {
+                active: !project.active
+            }).pipe(
+                displayBackendErrorRx(),
+                tap(() => this.refreshProjectsSubject.next())
+            );
+        };
+    }
+
+    projectWallet(hash: string) {
+        return this.middlewareService.getProjectWalletInfoCached(hash);
     }
 }

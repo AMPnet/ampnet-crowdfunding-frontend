@@ -18,32 +18,53 @@
                         {{ project.name }}
                     </div>
                     <div class="item__funding">
-                        <b>Funding </b>{{ project.start_date | date: "longDate" }} - {{ project.end_date | date: "longDate" }}
+                        <b>Funding </b>{{ project.start_date | date:'longDate' }}
+                        - {{ project.end_date | date:'longDate' }}
                     </div>
                 </div>
             </div>
             <div class="item__bottom">
                 <div class="item__progress-bar">
-                    <!-- TODO: Implement progress bar here when data is available -->
-                    Progress bar
+                    <!-- TODO: set specific hash when available from API -->
+                    <ng-container
+                            *ngIf="(projectWallet('th_2VzP81QKnZDsnKVGP7ZzTqFPJ2Y1BiRTxhApVRURwyXGu9PtA3') | async) as wallet else walletLoading">
+                        <div style="visibility:hidden" class="fadeIn wow">
+                            <div>
+                                <div class="progress__raised">
+                                    <div>
+                                        <span>{{ wallet.totalFundsRaised | currencyDefault }}</span> raised of
+                                        {{ wallet.investmentCap | currencyDefault }} goal
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="progress">
+                                    <div [style.width.%]="(wallet.totalFundsRaised / wallet.investmentCap) * 100"
+                                         class="progress__bar"
+                                         role="progressbar"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
                 </div>
                 <div class="item__toggle">
-                    <span *ngIf="project.active" (click)="toggleProject(project.uuid, projects)"
-                          class="item__icon flex__center">
-                        <i class="fas fa-eye mr-2"></i>
-                        Publish
-                    </span>
-                    <span *ngIf="!project.active" (click)="toggleProject(project.uuid, projects)"
-                          class="item__icon flex__center">
-                        <i class="fas fa-eye-slash mr-2"></i>
-                        Unpublish
-                    </span>
+                    <app-action-button text="{{ project.active ? 'Unpublish' : 'Publish' }}"
+                                       faIcon="{{ project.active ? 'fa-eye-slash' : 'fa-eye' }}"
+                                       [onClick]="toggleProject(project.uuid, projects).bind(this)"
+                                       buttonClass="d-contents item__icon flex__center mr-2">
+                    </app-action-button>
                 </div>
             </div>
         </li>
     </ul>
 </ng-container>
+
 <ng-template #spinner>
     <app-spinner type="overlay"></app-spinner>
 </ng-template>
 
+<ng-template #walletLoading>
+    <span>
+        <app-spinner type="inline"></app-spinner>
+    </span>
+</ng-template>

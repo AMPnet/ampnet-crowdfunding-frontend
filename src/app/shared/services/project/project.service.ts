@@ -94,7 +94,6 @@ export interface Project {
     documents: DocumentModel[];
     gallery: [string];
     active: boolean;
-    wallet_hash: string;
 }
 
 export interface PageableProjectsResponse {

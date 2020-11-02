@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { PlatformLocation } from '@angular/common';
+import { AppConfigService } from '../../shared/services/app-config.service';
 
 declare var $: any;
 
@@ -12,7 +13,8 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
     @Input() onlyLogo = false;
 
-    constructor(private location: PlatformLocation) {
+    constructor(private location: PlatformLocation,
+                public appConfigService: AppConfigService) {
     }
 
     ngOnInit() {

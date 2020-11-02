@@ -24,10 +24,6 @@ a {
   font-weight: bold;
 }
 
-#logo-image {
-  height: 30px !important;
-}
-
 #main-menu li {
   padding-left: 24px;
   padding-top: 15px;
@@ -41,7 +37,8 @@ a {
 }
 
 #logo-image {
-  height: 17px !important;
+  max-width: 150px;
+  max-height: 35px;
   padding-left: 1.5rem;
   object-fit: contain;
   margin-top: 0.5rem;

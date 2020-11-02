@@ -7,6 +7,7 @@ import { User, UserRole } from '../shared/services/user/signup.service';
 import { WalletDetailsWithState, WalletService, WalletState } from '../shared/services/wallet/wallet.service';
 import { version } from '../../../package.json';
 import { UserAuthService } from '../shared/services/user/user-auth.service';
+import { AppConfigService } from '../shared/services/app-config.service';
 
 
 @Component({
@@ -22,6 +23,7 @@ export class SidebarComponent implements AfterViewInit {
     wallet$ = this.walletService.wallet$;
 
     constructor(private router: Router,
+                public appConfigService: AppConfigService,
                 private userService: UserService,
                 private userAuthService: UserAuthService,
                 private walletService: WalletService) {

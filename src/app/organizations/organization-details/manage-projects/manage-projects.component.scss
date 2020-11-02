@@ -6,6 +6,7 @@
       list-style: none;
       border-bottom: 1px solid $background-color;
       padding: 16px 0 24px 0;
+
       .top {
         &__left {
           display: none;
@@ -21,6 +22,7 @@
       padding-bottom: 4px;
       cursor: pointer;
     }
+
     &__funding {
       font-size: $font-size-mobile-title-small;
       color: $body-color;
@@ -29,20 +31,43 @@
         font-size: $font-size-mobile-title-small;
       }
     }
+
     &__bottom {
       margin-top: 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
-    &__toggle {
-      font-size: $font-size-mobile-title-small;
+
+    &__toggle {  
       background-color: $background-color;
       padding: 8px 16px;
       border-radius: 1px;
       cursor: pointer;
-      svg {
-        font-size: $font-size-mobile-title-small;
+    }
+
+    &__progress-bar {
+      .progress {
+        height: 2px;
+        border-radius: 2px;
+        background-color: $border-color;
+        margin-bottom: 6px;
+        &__raised {
+          color: $body-color;
+          div {
+            font-size: $font-size-desktop-small;
+          }
+          span {
+            color: #111111;
+            font-weight: bold;
+            font-size: $font-size-desktop-small;
+          }
+        }
+        &__bar {
+          height: 2px;
+          border-radius: 2px;
+          background-color: $success-color;
+        }
       }
     }
   }
@@ -51,6 +76,7 @@
 @include media-breakpoint-up(lg) {
   .list-group {
     margin-top: 36px;
+
     .list {
       &__item {
         overflow: hidden;
@@ -62,6 +88,7 @@
         display: flex;
         justify-content: space-between;
         border-radius: 1px;
+
         .top {
           &__left {
             display: block;
@@ -85,6 +112,7 @@
         letter-spacing: 1.5px;
         padding-bottom: 12px;
       }
+      
       &__funding {
         font-size: $font-size-mobile-title-small;
         color: $body-color;
@@ -93,11 +121,13 @@
           font-size: $font-size-desktop-body2;
         }
       }
+
       &__top {
         height: 100%;
         display: flex;
         align-items: center;
       }
+
       &__bottom {
         margin-top: 24px;
         display: flex;
@@ -106,40 +136,31 @@
         margin: 24px 32px 24px 0;
         width: 245px;
       }
+
       &__toggle {
         order: 1;
-        font-size: $font-size-mobile-title-small;
         background-color: unset;
         transition: all 0.3s ease-in-out;
         &:hover {
           background-color: $border-light-color;
         }
-        svg {
-          font-size: $font-size-mobile-title-small;
-        }
       }
+
       &__progress-bar {
         order: 2;
-
         .progress {
           height: 4px;
-          border-radius: 2px;
-          background-color: $border-color;
-          margin-top: 8px;
-
           &__raised {
-            margin-top: 20px;
-            color: #444444;
+            color: $body-color;
+            div {
+              font-size: $font-size-desktop-small;
+            }
             span {
-              color: #111111;
-              font-weight: bold;
+              font-size: $font-size-desktop-small;
             }
           }
-
           &__bar {
             height: 4px;
-            border-radius: 2px;
-            background-color: $success-color;
           }
         }
       }

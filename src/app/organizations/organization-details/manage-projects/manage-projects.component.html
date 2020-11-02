@@ -30,18 +30,18 @@
                             *ngIf="(projectWallet('th_2VzP81QKnZDsnKVGP7ZzTqFPJ2Y1BiRTxhApVRURwyXGu9PtA3') | async) as wallet else walletLoading">
                         <div style="visibility:hidden" class="fadeIn wow">
                             <div>
+                                <div class="progress">
+                                    <div [style.width.%]="(wallet.totalFundsRaised / wallet.investmentCap) * 100"
+                                         class="progress__bar"
+                                         role="progressbar"></div>
+                                </div>
+                            </div>
+                            <div>
                                 <div class="progress__raised">
                                     <div>
                                         <span>{{ wallet.totalFundsRaised | currencyDefault }}</span> raised of
                                         {{ wallet.investmentCap | currencyDefault }} goal
                                     </div>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="progress">
-                                    <div [style.width.%]="(wallet.totalFundsRaised / wallet.investmentCap) * 100"
-                                         class="progress__bar"
-                                         role="progressbar"></div>
                                 </div>
                             </div>
                         </div>

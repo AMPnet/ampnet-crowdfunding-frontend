@@ -69,6 +69,8 @@ export interface Organization {
     name: string;
     created_at: string;
     approved: boolean;
+    description: string;
+    header_image: string;
     legal_info: string;
     documents?: DocumentModel[];
     wallet_hash?: string;

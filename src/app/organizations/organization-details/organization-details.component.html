@@ -21,14 +21,14 @@
             <div class="content">
                 <div class="organization-info">
                     <div class="organization__img">
-                        <img src="{{states.organization.header_image}}" alt="">
+                        <img src="{{ states.organization.header_image }}" alt="">
                     </div>
                     <div class="organization__desc">
-                        <div class="desc__title"> {{states.organization.name}} </div>
-                        <div class="desc__project-count"> <b>{{states.organization.project_count}} </b>
+                        <div class="desc__title"> {{ states.organization.name }} </div>
+                        <div class="desc__project-count"> <b>{{ states.organization.project_count }} </b>
                             {{ states.organization.project_count === 1 ? "Project" : "Projects" }}
                         </div>
-                        <div class="desc__info"> {{states.organization.description}} </div>
+                        <div class="desc__info"> {{ states.organization.description }} </div>
                     </div>
                 </div>
                 

@@ -87,6 +87,7 @@
   .item {
     &__content {
       display: flex;
+      justify-content: space-between;
     }
     &__cta {
       text-align: center;

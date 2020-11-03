@@ -12,13 +12,19 @@ export class NavbarComponent {
 
     constructor(public appConfigService: AppConfigService) {
     }
-
     public static toggleSidebar(toVisible: boolean) {
         const sidebar = $('.sidebar-fixer');
 
         if (toVisible) {
             sidebar.css('left', '0px');
         } else {
+            sidebar.css('left', '-220px');
+        }
+    }
+
+    public static closeSideBar() {
+        const sidebar = $('.sidebar-fixer');
+        if (sidebar.css('left') === '0px') {
             sidebar.css('left', '-220px');
         }
     }

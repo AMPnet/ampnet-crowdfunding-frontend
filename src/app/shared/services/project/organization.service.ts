@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BackendHttpClient } from '../backend-http-client.service';
-import { Project } from './project.service';
+import { ProjectWallet } from './project.service';
 
 @Injectable({
     providedIn: 'root'
@@ -117,7 +117,7 @@ export interface OrganizationMember {
 }
 
 export interface PageableOrganizationProjectsResponse {
-    projects: Project[];
+    projects_wallets: ProjectWallet[];
     page: number;
     total_pages: number;
 }

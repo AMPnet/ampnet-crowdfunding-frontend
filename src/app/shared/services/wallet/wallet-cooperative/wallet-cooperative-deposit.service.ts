@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BackendHttpClient } from '../../backend-http-client.service';
-import { TransactionInfo } from './wallet-cooperative-wallet.service';
 import { Project } from '../../project/project.service';
 import { User } from '../../user/signup.service';
+import { TransactionInfo } from '../wallet.service';
 
 @Injectable({
     providedIn: 'root'

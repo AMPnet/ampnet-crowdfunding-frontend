@@ -94,6 +94,7 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 import { DatePipe } from '@angular/common';
 import { SignInAutoComponent } from './authentication/sign-in-auto/sign-in-auto.component';
 import { AppConfigService } from './shared/services/app-config.service';
+import { ClickOutsideDirective } from './navbar/directives/click-outside.directive';
 
 const socialAuthServiceConfig = {
     provide: 'SocialAuthServiceConfig',
@@ -192,7 +193,8 @@ const socialAuthServiceConfig = {
         URLValidator,
         ForgotPasswordComponent,
         ResetPasswordComponent,
-        SignInAutoComponent
+        SignInAutoComponent,
+        ClickOutsideDirective
     ],
     imports: [
         BrowserModule,

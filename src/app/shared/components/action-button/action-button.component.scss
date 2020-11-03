@@ -1,3 +1,5 @@
+@import "app";
+
 button {
   width: 100%;
 
@@ -8,6 +10,26 @@ button {
 
     span {
       padding-left: 0.5rem
+    }
+  }
+}
+
+.item__icon {
+  span {
+    font-size: $font-size-mobile-title-small;
+  }
+  svg {
+    font-size: $font-size-mobile-title-small;
+  }
+}
+
+@include media-breakpoint-up(lg) {
+  .item__icon {
+    span {
+      font-size: $font-size-desktop-body2;
+    }
+    svg {
+      font-size: $font-size-desktop-body2;
     }
   }
 }

@@ -12,6 +12,7 @@
   padding: 16px 24px;
   line-height: 0;
   color: $secondary-color;
+  border: none;
 
   &-primary {
     height: 64px;
@@ -22,6 +23,10 @@
     @include button-variant($error-color, darken($error-color, 7.5%), darken($error-color, 10%), lighten($error-color,5%), lighten($error-color, 10%), darken($error-color,30%));
   }
 
+  &-success {
+    @include button-variant($success-color, darken($success-color, 7.5%), darken($success-color, 10%), lighten($success-color,5%), lighten($success-color, 10%), darken($success-color,30%));
+  }
+  
   &-grey {
     @include button-variant(darken($background-color, 7.5%), darken($background-color, 30%), darken($background-color, 12%), darken($background-color, 30%), darken($background-color, 10%), darken($background-color, 40%));
   }
@@ -30,8 +35,12 @@
     @include button-outline-variant($primary-color, darken($primary-color, 10%), lighten($primary-color,5%), $primary-color);
   }
 
-  &:focus {
-    box-shadow: none;
+  &-center {
+    display: flex;
+    align-items: center;
+    &:focus {
+      box-shadow: none;
+    }
   }
   
   &:not(:disabled):not(.disabled):active:focus {

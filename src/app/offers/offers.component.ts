@@ -27,7 +27,7 @@ export class OffersComponent implements OnInit {
         }
 
         this.projectsWallets$ = this.projectService.getAllActiveProjectsCached().pipe(
-            map(res => res.projects_with_wallet)
+            map(res => res.projects_wallets)
         );
     }
 }

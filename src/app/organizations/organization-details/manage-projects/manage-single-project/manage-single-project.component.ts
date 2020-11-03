@@ -2,9 +2,8 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { displayBackendErrorRx } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
-import { WalletDetails } from '../../../../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
 import { Project, ProjectService } from '../../../../shared/services/project/project.service';
-import { WalletService, WalletState } from '../../../../shared/services/wallet/wallet.service';
+import { Wallet, WalletService, WalletState } from '../../../../shared/services/wallet/wallet.service';
 import { ManageProjectsService } from '../../../../shared/services/project/manage-projects.service';
 import { catchError, finalize, map, shareReplay, switchMap, tap } from 'rxjs/operators';
 import { BehaviorSubject, EMPTY, Observable, of, throwError } from 'rxjs';
@@ -22,7 +21,7 @@ export class ManageSingleProjectComponent {
     walletState = WalletState;
 
     project$: Observable<Project>;
-    projectWallet$: Observable<WalletDetails | WalletState>;
+    projectWallet$: Observable<Wallet | WalletState>;
     updateForm$: Observable<FormGroup>;
     newsForm: FormGroup;
 
@@ -180,7 +179,7 @@ export class ManageSingleProjectComponent {
         );
     }
 
-    isWalletVerified(wallet: WalletDetails) {
+    isWalletVerified(wallet: Wallet) {
         return !!wallet && !!wallet?.hash;
     }
 }

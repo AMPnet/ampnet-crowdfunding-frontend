@@ -127,7 +127,7 @@
                          class="wow fadeIn">
                         <div class="transactions__history">
                             <ng-container *ngFor="let transaction of transactionHistoryPage">
-                                <ng-container *ngIf="shouldShowTransaction(transaction, transactionHistoryPage)">
+                                <ng-container *ngIf="shouldShowTransaction(transaction, transactionHistory)">
                                     <div class="transactions__single-element"
                                          [class.transactions__grayed-out]="transaction.state !== 'MINED' || transaction.type === 'APPROVE_INVESTMENT'">
                                         <div class="transactions__left">

@@ -9,7 +9,7 @@ import { PopupService } from '../../shared/services/popup.service';
 @Component({
     selector: 'app-manage-organizations',
     templateUrl: './manage-organizations.component.html',
-    styleUrls: ['./manage-organizations.component.css']
+    styleUrls: ['./manage-organizations.component.scss']
 })
 export class ManageOrganizationsComponent {
     organizations$: Observable<Organization[]>;

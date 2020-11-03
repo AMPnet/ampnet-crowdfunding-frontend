@@ -1,5 +1,54 @@
 @import "app";
 
+.container {
+  padding: 0;
+  overflow: hidden;
+}
+
+.row {
+  padding: 0 15px;
+}
+
+.form {
+  &-right {
+    margin-top: 20px;
+    textarea {
+      padding: 16px 16px 0 16px;
+      margin-bottom: 30px;
+      border: 1px solid $border-color;
+      outline: none;
+      resize: none;
+      border-radius: 2px;
+      transition: border-color 0.3s ease-in-out;
+      &:focus {
+        border-color: $primary-color;
+      }
+      &::placeholder {
+        color: $icons-color;
+      }
+    }
+  }
+}
+
+.left {
+  &__title {
+    font-size: $font-size-mobile-title;
+    text-transform: uppercase;
+    color: $title-color;
+    font-weight: normal;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+  &__upload {
+    &__subtitle {
+      font-size: $font-size-mobile-title-small;
+      color: $body-color;
+      letter-spacing: 0.11px;
+      margin-bottom: 6px;
+    }
+  }
+}
+
 @include media-breakpoint-up(lg) {
   .col-lg-6 {
    border: 1px solid $border-light-color;
@@ -11,38 +60,22 @@
     }
     &-right {
       padding: 89px 64px 0 80px;
+      margin-top: 0;
+      border-left: none;
       textarea {
-        padding: 16px 16px 0 16px;
         margin-bottom: 50px;
-        border: 1px solid $border-color;
-        outline: none;
-        resize: none;
-        border-radius: 2px;
-        transition: border-color 0.3s ease-in-out;
-        &:focus {
-          border-color: $primary-color;
-        }
-        &::placeholder {
-          color: $icons-color;
-        }
       }
     }
   }
   .left {
     &__title {
       font-size: $font-size-desktop-title;
-      text-transform: uppercase;
       letter-spacing: 1.5px;
-      color: $title-color;
-      font-weight: normal;
       margin-bottom: 50px;
     }
     &__upload {
       &__subtitle {
         font-size: $font-size-desktop-body2;
-        color: $body-color;
-        letter-spacing: 0.11px;
-        margin-bottom: 6px;
       }
     }
     &__advanced {

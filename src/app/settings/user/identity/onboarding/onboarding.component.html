@@ -1,0 +1,10 @@
+<div class="container">
+    <ng-container *ngIf="(loaded$ | async) !== null as loaded; else spinner"></ng-container>
+
+    <div class="w-100" #identyumContainer></div>
+
+    <ng-container *ngIf="finished$ | async"></ng-container>
+    <ng-template #spinner>
+        <app-spinner type="overlay"></app-spinner>
+    </ng-template>
+</div>

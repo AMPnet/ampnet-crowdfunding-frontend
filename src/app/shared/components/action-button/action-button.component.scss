@@ -33,13 +33,3 @@ button {
     }
   }
 }
-
-.btn-mobile {
-  height: 48px;
-}
-
-@include media-breakpoint-up(lg) {
-  .btn-mobile {
-    height: 64px;
-  }
-}

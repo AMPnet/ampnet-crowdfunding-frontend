@@ -1,35 +1,34 @@
-<ng-container *ngIf="(projects$ | async) as projects else spinner">
-    <div *ngIf="projects.length === 0" class="col-md-12">
+<ng-container *ngIf="(projectsWallets$ | async) as projectsWallets else spinner">
+    <div *ngIf="projectsWallets.length === 0" class="col-md-12">
         <div class="w-100 text-center mt-5 mb-5">
             <p>There are no projects associated with this organization.</p>
         </div>
     </div>
 
     <ul class="list-group">
-        <li *ngFor="let project of projects"
+        <li *ngFor="let projectWallet of projectsWallets"
             class="list__item">
             <div class="item__top">
                 <div class="top__left">
-                    <img src="{{ project.main_image }}"
+                    <img src="{{ projectWallet.project.main_image }}"
                          onerror="this.onerror=null; this.src='../../../../assets/noimage.png'"
                          alt="Project image">
                 </div>
                 <div class="top__right">
                     <div class="item__title"
-                         routerLink="manage_project/{{ project.uuid }}">
-                        {{ project.name }}
+                         routerLink="manage_project/{{ projectWallet.project.uuid }}">
+                        {{ projectWallet.project.name }}
                     </div>
                     <div class="item__funding">
-                        <b>Funding </b>{{ project.start_date | date:'longDate' }}
-                        - {{ project.end_date | date:'longDate' }}
+                        <b>Funding </b>{{ projectWallet.project.start_date | date:'longDate' }}
+                        - {{ projectWallet.project.end_date | date:'longDate' }}
                     </div>
                 </div>
             </div>
             <div class="item__bottom">
                 <div class="item__progress-bar">
-                    <!-- TODO: set specific hash when available from API -->
                     <ng-container
-                            *ngIf="(projectWallet('th_2VzP81QKnZDsnKVGP7ZzTqFPJ2Y1BiRTxhApVRURwyXGu9PtA3') | async) as wallet else walletLoading">
+                            *ngIf="(getWalletInfo(projectWallet.wallet.hash) | async) as wallet else walletLoading">
                         <div style="visibility:hidden" class="fadeIn wow">
                             <div>
                                 <div class="progress">
@@ -50,9 +49,9 @@
                     </ng-container>
                 </div>
                 <div class="item__toggle">
-                    <app-action-button text="{{ project.active ? 'Unpublish' : 'Publish' }}"
-                                       faIcon="{{ project.active ? 'fa-eye-slash' : 'fa-eye' }}"
-                                       [onClick]="toggleProject(project.uuid, projects).bind(this)"
+                    <app-action-button text="{{ projectWallet.project.active ? 'Unpublish' : 'Publish' }}"
+                                       faIcon="{{ projectWallet.project.active ? 'fa-eye-slash' : 'fa-eye' }}"
+                                       [onClick]="toggleProject(projectWallet.project.uuid, projectsWallets).bind(this)"
                                        buttonClass="d-contents item__icon flex__center mr-2">
                     </app-action-button>
                 </div>

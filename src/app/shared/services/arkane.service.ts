@@ -12,11 +12,10 @@ import {
 import { combineLatest, from, Observable, of, throwError } from 'rxjs';
 import { Account } from '@arkane-network/arkane-connect/dist/src/models/Account';
 import { catchError, concatMap, find, map, switchMap, take, takeWhile, tap, timeout } from 'rxjs/operators';
-import { WalletService, WalletState } from './wallet/wallet.service';
+import { TransactionInfo, WalletService, WalletState } from './wallet/wallet.service';
 import { PopupService } from './popup.service';
 import { displayBackendErrorRx } from '../../utilities/error-handler';
 import { BroadcastService } from './broadcast.service';
-import { TransactionInfo } from './wallet/wallet-cooperative/wallet-cooperative-wallet.service';
 import { AppConfigService } from './app-config.service';
 
 @Injectable({

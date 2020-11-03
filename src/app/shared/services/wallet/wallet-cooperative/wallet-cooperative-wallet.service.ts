@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BackendHttpClient } from '../../backend-http-client.service';
+import { TransactionInfo, Wallet } from '../wallet.service';
 
 @Injectable({
     'providedIn': 'root'
@@ -44,18 +45,6 @@ export interface CooperativeUser {
     wallet: Wallet;
 }
 
-export interface Wallet {
-    uuid: string;
-    activation_data: string;
-    type: string;
-    currency: string;
-    created_at: Date;
-    hash?: any;
-    activated_at?: any;
-    alias?: any;
-    balance?: any;
-}
-
 interface CooperativeOrganizationWallet {
     organizations: OrganizationWallet[];
     page: number;
@@ -93,26 +82,4 @@ export interface CooperativeProject {
     };
     wallet: Wallet;
     payout_in_process?: any;
-}
-
-export interface WalletDetails {
-    uuid: string;
-    activation_data: string;
-    type: string;
-    currency: string;
-    created_at: Date;
-    hash?: any;
-    activated_at?: any;
-    alias?: any;
-    balance?: any;
-}
-
-export interface TransactionInfo {
-    tx: string;
-    tx_id: number;
-    info: {
-        tx_type: string;
-        title: string;
-        description: string;
-    };
 }

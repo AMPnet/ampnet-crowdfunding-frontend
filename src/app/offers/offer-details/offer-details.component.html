@@ -90,9 +90,10 @@
                             <ng-container *ngTemplateOutlet="investButtons"></ng-container>
 
                             <ng-container *ngIf="(isProjectCancelable$ | async) as isCancelable">
-                                <app-action-button text="Cancel all investments"
+                                <app-action-button text="Cancel my investment"
                                                    loadingText="Cancelling investments..."
-                                                   buttonClass="btn btn-grey mb-4"
+                                                   faIcon="fa-times-circle"
+                                                   buttonClass="btn btn-danger font-weight-bold mb-4"
                                                    [disabled]="!isCancelable"
                                                    [onClick]="cancelInvestment(states.project.uuid).bind(this)">
                                 </app-action-button>
@@ -112,7 +113,11 @@
                                         class="btn btn-primary w-100 btn-action-a"
                                         (click)="goToInvest(states.project.uuid)">
                                     <i class="mr-2 fas fa-chart-pie"></i>
+<<<<<<< HEAD
                                     Invest
+=======
+                                    {{ isPortfolioView ? 'Increase investment' : 'Invest' }}
+>>>>>>> master
                                 </button>
                                 <button *ngIf="!states.user.verified" [disabled]="!states.project.active"
                                         class="btn btn-primary w-100 btn-action-a"

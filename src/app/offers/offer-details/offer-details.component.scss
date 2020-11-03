@@ -292,31 +292,6 @@ span {
     align-items: center;
     justify-content: center;
   }
-
-  .btn-grey {
-    background-color: $border-light-color;
-    color: $body-color;
-    border: none;
-
-    &:hover {
-      background-color: darken($border-light-color, 10%);
-    }
-
-    &:not(:disabled):not(.disabled):active {
-      background-color: darken($border-light-color, 10%);
-      border: none;
-    }
-
-    &:disabled {
-      background-color: $background-color;
-      color: $border-color;
-      border: none;
-    }
-  }
-
-  .btn:last-of-type {
-    margin-bottom: 32px;
-  }
 }
 
 @include media-breakpoint-up(lg) {
@@ -363,10 +338,6 @@ span {
   .portfolio__invest {
     .btn-primary {
       font-size: 17px !important;
-    }
-
-    .btn:last-of-type {
-      margin-bottom: 40px;
     }
   }
 }

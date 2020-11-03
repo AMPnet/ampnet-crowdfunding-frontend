@@ -12,25 +12,28 @@ import {
 import { combineLatest, from, Observable, of, throwError } from 'rxjs';
 import { Account } from '@arkane-network/arkane-connect/dist/src/models/Account';
 import { catchError, concatMap, find, map, switchMap, take, takeWhile, tap, timeout } from 'rxjs/operators';
-import { WalletService, WalletState } from './wallet/wallet.service';
+import { TransactionInfo, WalletService, WalletState } from './wallet/wallet.service';
 import { PopupService } from './popup.service';
 import { displayBackendErrorRx } from '../../utilities/error-handler';
 import { BroadcastService } from './broadcast.service';
-import { TransactionInfo } from './wallet/wallet-cooperative/wallet-cooperative-wallet.service';
+import { AppConfigService } from './app-config.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ArkaneService {
+    private readonly arkaneConnect: ArkaneConnect;
+    private readonly secretType = SecretType.AETERNITY;
+
     constructor(private walletService: WalletService,
+                private appConfigService: AppConfigService,
                 private broadcastService: BroadcastService,
                 private popupService: PopupService) {
+        const arkaneConfig = this.appConfigService.config.arkane;
+        this.arkaneConnect = new ArkaneConnect(arkaneConfig.id, {
+            environment: arkaneConfig.env,
+        });
     }
-
-    secretType = SecretType.AETERNITY;
-    arkaneConnect = new ArkaneConnect('AMPnet', { // TODO: Extract to environment
-        environment: 'staging', // TODO: Extract to environment
-    });
 
     private static throwError(reason: ArkaneError): Observable<never> {
         return throwError({error: 'ARKANE_SERVICE_ERROR', message: reason});
@@ -211,13 +214,13 @@ export class ArkaneService {
 }
 
 enum ArkaneError {
-    GET_ACCOUNT_FLOW_INTERRUPTED = 'GetAccountFlow interrupted.',
-    USER_NOT_AUTHENTICATED = 'User not authenticated.',
-    SIGNING_ABORTED = 'Transaction signing aborted.',
-    SIGNING_FAILED = 'Transaction signing failed.',
-    NO_WALLETS_POPUP_DISMISSED = 'User dismissed no wallets popup',
-    WRONG_ACCOUNT_POPUP_DISMISSED = 'User dismissed wrong account popup',
-    CREATE_WALLET_POPUP_DISMISSED = 'User dismissed create new wallet popup',
-    MANAGE_WALLETS_ABORTED = 'Manage wallets aborted.',
-    MANAGE_WALLETS_FAILED = 'Manage wallets failed.',
+    GET_ACCOUNT_FLOW_INTERRUPTED = 'GET_ACCOUNT_FLOW_INTERRUPTED',
+    USER_NOT_AUTHENTICATED = 'USER_NOT_AUTHENTICATED',
+    SIGNING_ABORTED = 'SIGNING_ABORTED',
+    SIGNING_FAILED = 'SIGNING_FAILED',
+    NO_WALLETS_POPUP_DISMISSED = 'NO_WALLETS_POPUP_DISMISSED',
+    WRONG_ACCOUNT_POPUP_DISMISSED = 'WRONG_ACCOUNT_POPUP_DISMISSED',
+    CREATE_WALLET_POPUP_DISMISSED = 'CREATE_WALLET_POPUP_DISMISSED',
+    MANAGE_WALLETS_ABORTED = 'MANAGE_WALLETS_ABORTED',
+    MANAGE_WALLETS_FAILED = 'MANAGE_WALLETS_FAILED',
 }

@@ -91,9 +91,7 @@ export class WalletComponent implements OnDestroy {
 
     shouldShowTransaction(transaction: UserTransaction, transactions: UserTransaction[]): boolean {
         const isTransientTransaction = [TransactionType.APPROVE_INVESTMENT, TransactionType.UNRECOGNIZED].includes(transaction.type);
-        // TODO: when backend will return transaction id, compare transaction order by ID, and provide
-        // transactionHistory instead of transactionHistoryPage array to this function.
-        return !(isTransientTransaction && (this.tablePage > 1 || transactions.indexOf(transaction) > 0));
+        return !(isTransientTransaction && (this.tablePage > 1 || transactions.map(t => t.tx_hash).indexOf(transaction.tx_hash) > 0));
     }
 
     downloadReport() {

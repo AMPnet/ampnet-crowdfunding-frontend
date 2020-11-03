@@ -21,7 +21,7 @@
                 later date.
             </div>
         </div>
-        
+
         <div class="offer-left col-lg-7">
             <div class="wow fadeIn">
                 <img class="left__img w-100" src="{{states.project.main_image}}">
@@ -46,7 +46,7 @@
 
                     <div class="right__progress">
                         <ng-container *ngIf="!!states.walletMW else smallSpinner">
-                            <span>{{ states.walletMW.totalFundsRaised | currencyDefault }} </span>raised of 
+                            <span>{{ states.walletMW.totalFundsRaised | currencyDefault }} </span>raised of
                             {{ states.walletMW.investmentCap | currencyDefault }} goal
                             <div class="progress__element">
                                 <div [style.width.%]="(states.walletMW?.totalFundsRaised / states.walletMW?.investmentCap) * 100"
@@ -56,76 +56,72 @@
                             </div>
                         </ng-container>
                     </div>
-                
+
                     <div class="right__info">
                         <div class="right__return-rate">
                             <span>{{ states.project.roi.from }}% - {{ states.project.roi.to }}%</span>
                             Expected yearly return
                         </div>
                         <div class="dropdown-divider"></div>
-    
+
                         <div class="right__min-invest">
                             <span>{{ states.project.min_per_user | currencyDefault }}</span>Min Investment
                         </div>
                         <div class="dropdown-divider"></div>
-    
+
                         <div class="right__max-invest">
                             <span>{{ states.project.max_per_user | currencyDefault }}</span>Max Investment
                         </div>
                         <div class="dropdown-divider"></div>
-    
+
                         <div class="right__fund-period">
                             <span>Funding period</span>
                             {{ states.project.start_date | date:'mediumDate' }}
                             - {{ states.project.end_date | date:'mediumDate' }}
                         </div>
                     </div>
-                    
+
                     <div class="right__invest">
                         <div *ngIf="!isPortfolioView">
                             <ng-container *ngTemplateOutlet="investButtons"></ng-container>
                         </div>
-                        <div *ngIf="isPortfolioView && !disableInvestButton(states.project, states.walletMW)" 
+                        <div *ngIf="isPortfolioView && !disableInvestButton(states.project, states.walletMW)"
                              class="portfolio__invest">
                             <ng-container *ngTemplateOutlet="investButtons"></ng-container>
 
-                            <app-action-button text="Cancel my investment"
-                                               loadingText="Cancelling investments..."
-                                               faIcon="fa-times-circle"
-                                               buttonClass="btn btn-primary btn-danger btn-mobile font-weight-bold mb-4"
-                                               [disabled]="!isCancelable"
-                                               [onClick]="cancelInvestment.bind(this)">
-                            </app-action-button>
+                            <ng-container *ngIf="(isProjectCancelable$ | async) as isCancelable">
+                                <app-action-button text="Cancel my investment"
+                                                   loadingText="Cancelling investments..."
+                                                   faIcon="fa-times-circle"
+                                                   buttonClass="btn btn-primary btn-danger btn-mobile font-weight-bold mb-4"
+                                                   [disabled]="!isCancelable"
+                                                   [onClick]="cancelInvestment(states.project.uuid).bind(this)">
+                                </app-action-button>
+                            </ng-container>
                         </div>
                         <ng-template #investButtons>
                             <button *ngIf="isOverview" class="btn btn-primary w-100 btn-action-a"
-                                id="invest-button"
-                                routerLink="/sign_up">
-                            <i class="mr-2 fas fa-chart-pie"></i>
-                            Sign Up & Invest
-                        </button>
-    
-                        <div *ngIf="!isOverview && !!states.user">
-                            <button *ngIf="states.user.verified"
-                                    [disabled]="disableInvestButton(states.project, states.walletMW)"
-                                    class="btn btn-primary w-100 btn-action-a"
-                                    (click)="goToInvest(states.project.uuid)">
+                                    id="invest-button"
+                                    routerLink="/sign_up">
                                 <i class="mr-2 fas fa-chart-pie"></i>
-                                <span *ngIf="isPortfolioView">
-                                    Increase investment
-                                </span>
-                                <span *ngIf="!isPortfolioView">
-                                    Invest
-                                </span>
-                                
+                                Sign Up & Invest
                             </button>
-                            <button *ngIf="!states.user.verified" [disabled]="!states.project.active"
-                                    class="btn btn-primary w-100 btn-action-a"
-                                    routerLink="/dash/general_settings">
-                                <i class="mr-2 fas fa-chart-pie"></i>
-                                Verify Profile & Invest
-                            </button>
-                        </div>
+
+                            <div *ngIf="!isOverview && !!states.user">
+                                <button *ngIf="states.user.verified"
+                                        [disabled]="disableInvestButton(states.project, states.walletMW)"
+                                        class="btn btn-primary w-100 btn-action-a"
+                                        (click)="goToInvest(states.project.uuid)">
+                                    <i class="mr-2 fas fa-chart-pie"></i>
+                                    {{ isPortfolioView ? 'Increase investment' : 'Invest' }}
+                                </button>
+                                <button *ngIf="!states.user.verified" [disabled]="!states.project.active"
+                                        class="btn btn-primary w-100 btn-action-a"
+                                        routerLink="/dash/general_settings">
+                                    <i class="mr-2 fas fa-chart-pie"></i>
+                                    Verify Profile & Invest
+                                </button>
+                            </div>
                         </ng-template>
                     </div>
                 </div>
@@ -176,7 +172,7 @@
                             <span>{{ doc.name }}</span>
                         </a>
                     </div>
-                 </div>
+                </div>
             </div>
         </div>
     </ng-template>
@@ -193,23 +189,26 @@
                             </ng-container>
                         </div>
                     </div>
-                    <div class="investments__history flex__center-space"
-                         *ngFor="let singleInvestment of investmentData.transactions">
-                        <div class="history__left">
-                            <div class="history__amount">
-                                {{ singleInvestment.amount | currencyDefault }}
+
+                    <ng-container *ngIf="(transactions$ | async) as transactions">
+                        <div class="investments__history flex__center-space"
+                             *ngFor="let transaction of transactions.transactions">
+                            <div class="history__left">
+                                <div class="history__amount">
+                                    {{ transaction.amount | currencyDefault }}
+                                </div>
+                                <div class="history__date">
+                                    {{ transaction.date | date:'medium' }}
+                                </div>
                             </div>
-                            <div class="history__date">
-                                {{ singleInvestment.date | date:'medium' }}
+                            <div class="history__right">
+                                <!-- TODO: Implement download transaction report functionality
+                                <div class="history__icon">
+                                    <i class="fas fa-file-chart-line"></i>
+                                </div> -->
                             </div>
                         </div>
-                        <div class="history__right">
-                            <!-- TODO: Implement download transaction report functionality
-                            <div class="history__icon">
-                                <i class="fas fa-file-chart-line"></i>
-                            </div> -->
-                        </div>
-                    </div>
+                    </ng-container>
                 </div>
 
             </tab>

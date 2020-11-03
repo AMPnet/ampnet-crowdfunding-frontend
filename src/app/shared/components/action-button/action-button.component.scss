@@ -14,6 +14,26 @@ button {
   }
 }
 
+.item__icon {
+  span {
+    font-size: $font-size-mobile-title-small;
+  }
+  svg {
+    font-size: $font-size-mobile-title-small;
+  }
+}
+
+@include media-breakpoint-up(lg) {
+  .item__icon {
+    span {
+      font-size: $font-size-desktop-body2;
+    }
+    svg {
+      font-size: $font-size-desktop-body2;
+    }
+  }
+}
+
 .btn-mobile {
   height: 48px;
 }

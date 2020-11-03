@@ -1,6 +1,6 @@
 <div id="sidebar">
     <div class="mt-2 mb-4">
-        <img id="logo-image" src="../../assets/genervestlogo.png">
+        <img id="logo-image" src="{{ appConfigService.config.logo_url }}">
     </div>
 
     <ng-container *ngIf="{
@@ -124,7 +124,7 @@
         <div class="dropdown-divider" id="divider-menu"></div>
 
         <ul class="list-unstyled components" id="main-menu">
-            <span class="full-name">{{ states.user?.first_name }} {{ states.user?.last_name }}</span>
+            <span class="full-name">{{ states.user?.first_name | titlecase }} {{ states.user?.last_name | titlecase }}</span>
             <li routerLinkActive="side-active" class="mt-2">
                 <a href="mailto://info@ampnet.io" style="all: unset">
                     <i class="menu-icon fas fa-envelope-open"></i>

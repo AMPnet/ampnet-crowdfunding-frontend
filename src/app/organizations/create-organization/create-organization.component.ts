@@ -10,7 +10,7 @@ import { PopupService } from '../../shared/services/popup.service';
 @Component({
     selector: 'app-create-organization',
     templateUrl: './create-organization.component.html',
-    styleUrls: ['./create-organization.component.css']
+    styleUrls: ['./create-organization.component.scss']
 })
 export class CreateOrganizationComponent {
     newOrganizationForm: FormGroup;
@@ -43,5 +43,9 @@ export class CreateOrganizationComponent {
                 );
             })
         );
+    }
+
+    backToGroupsScreen() {
+        this.router.navigate([`/dash/manage_groups`]);
     }
 }

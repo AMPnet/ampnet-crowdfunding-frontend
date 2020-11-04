@@ -47,6 +47,30 @@
       margin-bottom: 6px;
     }
   }
+  &__advanced {
+    &-users {
+      display: flex;
+      margin-top: 30px;
+      color: $body-color;
+      svg {
+        margin: 4px 11px 0 0;
+      }
+    }
+    &__title {
+      font-weight: bold;
+    }
+    &__title,
+    &__desc,
+    &__desc u {
+      font-size: $font-size-mobile-body;
+    }
+    &__desc {
+      margin-bottom: 20px;
+      u {
+        color: $primary-color;
+      }
+    }
+  }
 }
 
 @include media-breakpoint-up(lg) {
@@ -63,6 +87,7 @@
       margin-top: 0;
       border-left: none;
       textarea {
+        // margin-bottom: 230px; TODO: Use this margin value when 2nd wallet is ready
         margin-bottom: 50px;
       }
     }
@@ -80,17 +105,9 @@
     }
     &__advanced {
       &-users {
-        display: flex;
-        margin-top: 225px;
-        color: $body-color;
+        margin-top: 100px;
         line-height: 21px;
         letter-spacing: 0.18px;
-        svg {
-          margin: 4px 11px 0 0;
-        }
-      }
-      &__title {
-        font-weight: bold;
       }
       &__title,
       &__desc,
@@ -98,7 +115,7 @@
         font-size: $font-size-desktop-body2;
       }
       &__desc {
-        margin-bottom: 40px;
+        margin-bottom: 0;
         u {
           color: $primary-color;
         }

@@ -37,7 +37,10 @@ export class CreateOrganizationComponent {
             switchMap(organization => {
                 return this.popupService.new({
                     type: 'success',
-                    title: 'Successfully created a new organization'
+                    title: 'Investment group created!',
+                    text: `Successfully created new investment group. 
+                           Verify group creation with your blockchain wallet. You will be prompted now.`,
+                    confirmButtonText: 'Verify group'
                 }).pipe(
                     tap(() => this.router.navigate([`/dash/manage_groups/${organization.uuid}`]))
                 );

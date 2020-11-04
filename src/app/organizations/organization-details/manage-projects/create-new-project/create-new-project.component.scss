@@ -1,0 +1,12 @@
+@import "app";
+
+@include media-breakpoint-up(lg) {
+  .project {
+    &-right {
+      order: 2;
+    }
+    &-left {
+      order: 1;
+    }
+  }
+}

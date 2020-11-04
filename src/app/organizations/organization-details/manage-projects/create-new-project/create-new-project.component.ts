@@ -10,7 +10,7 @@ import { displayBackendErrorRx } from '../../../../utilities/error-handler';
 @Component({
     selector: 'app-create-new-project',
     templateUrl: './create-new-project.component.html',
-    styleUrls: ['./create-new-project.component.css'],
+    styleUrls: ['./create-new-project.component.scss'],
 })
 export class CreateNewProjectComponent {
     createForm: FormGroup;
@@ -18,6 +18,7 @@ export class CreateNewProjectComponent {
     mapLong: number;
     projectCoords = [];
     bsConfig: Partial<BsDatepickerConfig>;
+    orgID: string;
 
     constructor(private projectService: ProjectService,
                 private fb: FormBuilder,
@@ -38,16 +39,16 @@ export class CreateNewProjectComponent {
                 ProjectValidators.fundingPeriodLimits
             ])
         });
+        this.orgID = this.activatedRoute.snapshot.params.orgId;
     }
 
     submitForm() {
         const formValue = this.createForm.value;
         formValue.startDate = moment(formValue.startDate).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
         formValue.endDate = moment(formValue.endDate).endOf('day').format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
-        const orgID = this.activatedRoute.snapshot.params.orgId;
 
         return this.projectService.createProject({
-            organization_uuid: orgID,
+            organization_uuid: this.orgID,
             name: formValue.name,
             description: formValue.description,
             location: {lat: this.mapLat, long: this.mapLong},
@@ -62,7 +63,7 @@ export class CreateNewProjectComponent {
         }).pipe(
             displayBackendErrorRx(),
             tap(project => {
-                this.router.navigate([`/dash/manage_groups/${orgID}/manage_project/${project.uuid}`]);
+                this.router.navigate([`/dash/manage_groups/${this.orgID}/manage_project/${project.uuid}`]);
             })
         );
     }
@@ -75,6 +76,10 @@ export class CreateNewProjectComponent {
             isAnimated: true,
             dateInputFormat: 'DD-MM-YYYY'
         });
+    }
+
+    backToOrganizationDetailsScreen() {
+        this.router.navigate([`/dash/manage_groups/${this.orgID}`]);
     }
 }
 

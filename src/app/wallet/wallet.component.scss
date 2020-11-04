@@ -16,6 +16,8 @@
 }
 
 .init-left {
+  // TODO: Remove this margin CSS property to remove centering from container
+  margin: 0 auto;
   background-color: $background-color;
   padding: 20px;
   &__title {
@@ -38,21 +40,27 @@
   display: flex;
   justify-content: center;
   border: 1px solid $background-color;
-  padding-top: 30px;
-  &__icon {
-    margin-right: 20px;
+  padding: 30px 20px 0 20px;
+  svg {
+    margin: 5px 20px 0 0;
   }
-  &__desc {
-    font-size: $font-size-desktop-body2;
+  .right__info {
     color: $body-color;
-    line-height: 21px;
-    letter-spacing: 0.2px;
-    span {
+    &__title {
       font-weight: bold;
     }
-    u {
+    &__desc {
+      color: $body-color;
+      line-height: 21px;
+      letter-spacing: 0.2px;
+      u {
+        color: $primary-color;
+      }
+    }
+    &__title,
+    &__desc,
+    &__desc u {
       font-size: $font-size-desktop-body2;
-      color: $primary-color;
     }
   }
 }

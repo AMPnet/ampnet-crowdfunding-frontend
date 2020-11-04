@@ -79,7 +79,7 @@ export class LogInModalComponent implements OnInit {
 
     private navigateToDash() {
         $('#log-in-modal').modal('toggle');
-        this.router.navigate(['/dash']);
+        this.router.navigate(['/dash/offers']);
     }
 
     forgotPasswordClicked() {

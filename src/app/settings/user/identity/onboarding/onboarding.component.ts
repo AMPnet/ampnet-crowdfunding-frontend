@@ -5,7 +5,7 @@ import { displayBackendErrorRx } from 'src/app/utilities/error-handler';
 import { UserAuthService } from '../../../../shared/services/user/user-auth.service';
 import { DOCUMENT } from '@angular/common';
 import { combineLatest, EMPTY, Observable, Subject } from 'rxjs';
-import { catchError, finalize, switchMap, take } from 'rxjs/operators';
+import { catchError, switchMap, take } from 'rxjs/operators';
 import { PopupService } from '../../../../shared/services/popup.service';
 
 @Component({

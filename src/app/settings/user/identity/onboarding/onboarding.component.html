@@ -1,5 +1,5 @@
 <div class="container">
-    <ng-container *ngIf="(loaded$ | async) !== null as loaded; else spinner"></ng-container>
+    <ng-container *ngIf="(loaded$ | async) !== null; else spinner"></ng-container>
 
     <div class="w-100" #identyumContainer></div>
 

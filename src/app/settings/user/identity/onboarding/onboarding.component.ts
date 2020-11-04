@@ -7,6 +7,7 @@ import { DOCUMENT } from '@angular/common';
 import { combineLatest, EMPTY, Observable, Subject } from 'rxjs';
 import { catchError, switchMap, take } from 'rxjs/operators';
 import { PopupService } from '../../../../shared/services/popup.service';
+import { AppConfigService } from '../../../../shared/services/app-config.service';
 
 @Component({
     selector: 'app-onboarding',
@@ -22,13 +23,14 @@ export class OnboardingComponent {
 
     constructor(private renderer2: Renderer2,
                 @Inject(DOCUMENT) private document: Document,
+                private appConfig: AppConfigService,
                 private router: Router,
                 private popupService: PopupService,
                 private onboardingService: OnboardingService,
                 private loginService: UserAuthService) {
         this.loaded$ = combineLatest([this.onboardingService.getSessionID(), this.loadIdentyumScript()]).pipe(
             take(1),
-            switchMap(([clientToken, _]) => this.setFlowManager(clientToken, 'en'))
+            switchMap(([clientToken, _]) => this.setFlowManager(clientToken, this.appConfig.config.identyum.startLanguage))
         );
 
         this.finishedSubject = new Subject();

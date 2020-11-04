@@ -105,6 +105,9 @@ export interface AppConfig {
         id: string;
         env: string;
     };
+    identyum: {
+        startLanguage: string;
+    };
     googleClientId: string;
     facebookAppId: string;
 }

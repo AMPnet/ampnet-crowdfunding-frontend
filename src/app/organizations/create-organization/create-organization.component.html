@@ -32,7 +32,6 @@
                 </div> -->
             </div>
             
-
             <div class="form-right col-lg-6">
                 <label class="right__label" for="group-name">Group name</label>
                 <input class="input-lg w-100"
@@ -53,7 +52,8 @@
                                    loadingText="Creating organization..." faIcon="fa-plus"
                                    [disabled]="!newOrganizationForm.valid"
                                    buttonClass="btn btn-primary btn-success"
-                                   [onClick]="createOrganization.bind(this)">
+                                   [onClick]="createOrganization.bind(this)"
+                                   class="hide-on-mobile">
                 </app-action-button>
             </div>
         </div>

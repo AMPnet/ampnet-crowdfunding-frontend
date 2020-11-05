@@ -20,11 +20,10 @@ import { NewPaymentOptionComponent } from './payment-options/new-payment-option/
 import { ConfirmEmailComponent } from './authentication/confirm-email/confirm-email.component';
 import { AuthGuard } from './authentication/auth.guard';
 import { CreateOrganizationComponent } from './organizations/create-organization/create-organization.component';
-import { GeneralSettingsComponent } from './general-settings/general-settings.component';
 import { ManageOrganizationsComponent } from './organizations/manage-organizations/manage-organizations.component';
 import { OrganizationDetailsComponent } from './organizations/organization-details/organization-details.component';
 import { CreateNewProjectComponent } from './organizations/organization-details/manage-projects/create-new-project/create-new-project.component';
-import { OnboardingComponent } from './authentication/onboarding/onboarding.component';
+import { OnboardingComponent } from './settings/user/identity/onboarding/onboarding.component';
 import { ManageProjectsComponent } from './organizations/organization-details/manage-projects/manage-projects.component';
 import { ManageSingleProjectComponent } from './organizations/organization-details/manage-projects/manage-single-project/manage-single-project.component';
 import { VerifySignOfferComponent } from './offers/offer-details/verify-sign-offer/verify-sign-offer.component';
@@ -49,6 +48,9 @@ import { ProjectDepositComponent } from './organizations/organization-details/ma
 import { ForgotPasswordComponent } from './authentication/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './authentication/reset-password/reset-password.component';
 import { SignInAutoComponent } from './authentication/sign-in-auto/sign-in-auto.component';
+import { IdentityComponent } from './settings/user/identity/identity.component';
+import { UserGuard } from './settings/user/user.guard';
+import { UserComponent } from './settings/user/user.component';
 
 const routes: Routes = [
     {
@@ -84,7 +86,12 @@ const routes: Routes = [
             {path: 'wallet/tx_overview', component: TxOverviewComponent},
             {path: 'payment_options/new', component: NewPaymentOptionComponent},
             {path: 'manage_groups/new', component: CreateOrganizationComponent},
-            {path: 'general_settings', component: GeneralSettingsComponent},
+            {
+                path: 'settings', children: [
+                    {path: 'user', component: UserComponent, canActivate: [UserGuard]},
+                    {path: 'user/identity', component: IdentityComponent}
+                ]
+            },
             {path: 'manage_groups', component: ManageOrganizationsComponent},
             {path: 'manage_groups/:id', component: OrganizationDetailsComponent},
             {path: 'manage_groups/:orgId/create_project', component: CreateNewProjectComponent},

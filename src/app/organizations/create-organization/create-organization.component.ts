@@ -10,7 +10,7 @@ import { PopupService } from '../../shared/services/popup.service';
 @Component({
     selector: 'app-create-organization',
     templateUrl: './create-organization.component.html',
-    styleUrls: ['./create-organization.component.css']
+    styleUrls: ['./create-organization.component.scss']
 })
 export class CreateOrganizationComponent {
     newOrganizationForm: FormGroup;
@@ -37,11 +37,15 @@ export class CreateOrganizationComponent {
             switchMap(organization => {
                 return this.popupService.new({
                     type: 'success',
-                    title: 'Successfully created a new organization'
+                    title: 'Investment group created!'
                 }).pipe(
                     tap(() => this.router.navigate([`/dash/manage_groups/${organization.uuid}`]))
                 );
             })
         );
+    }
+
+    backToGroupsScreen() {
+        this.router.navigate([`/dash/manage_groups`]);
     }
 }

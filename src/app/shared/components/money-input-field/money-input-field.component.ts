@@ -44,7 +44,6 @@ export class MoneyInputFieldComponent implements AfterViewInit, OnChanges {
     ngAfterViewInit() {
         this.an = this.autonumericCurrency(this.inputField.nativeElement);
         this.an.set(this.initialValue(this.control?.value, this.realValue));
-        console.log(this.control.value);
     }
 
     onHTMLInputElementChange() {

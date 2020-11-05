@@ -1,6 +1,8 @@
 <div *ngIf="{
     wallet: wallet$ | async,
-    project: project$ | async
+    project: project$ | async,
+    transactions: projectUserInvestments$ | async,
+    investments: projectTotalInvestments$ | async
 } as states" class="container">
     <ng-container *ngIf="states.wallet !== null && states.project !== null else spinner">
         <div class="row">
@@ -27,9 +29,9 @@
                             <p>{{ states.project.min_per_user | currencyDefault }} Min investment</p>
                             <p>{{ states.project.max_per_user | currencyDefault }} Max investment</p>
                         </div>
-                        
+
                     </div>
-    
+
                     <div class="col-lg-4 invest__button">
                         <button (click)="investButtonClicked()"
                                 [disabled]="!investForm.valid"
@@ -39,7 +41,7 @@
                             Invest
                         </button>
                     </div>
-    
+
                     <div class="col-lg-2 invest__text-right">
                         <p class="right__available">Available funds</p>
                         <p class="right__amount">{{ states.wallet.wallet.balance | currencyDefault }}</p>
@@ -65,7 +67,8 @@
                     </span>
                 </div>
 
-                <div *ngIf="investForm.get('amount').errors?.amountAboveExpFunding" class="alert alert-danger flex__center">
+                <div *ngIf="investForm.get('amount').errors?.amountAboveExpFunding"
+                     class="alert alert-danger flex__center">
                     <i class="fas fa-dizzy"></i>
                     <b>Investment amount too high.&nbsp;</b>
                     <span>
@@ -73,7 +76,23 @@
                     </span>
                 </div>
 
-                <div *ngIf="investForm.get('amount').errors?.amountAboveBalance" class="alert alert-danger flex__center-space">
+                <div *ngIf="investForm.get('amount').errors?.totalProjInvestAboveMax"
+                     class="alert alert-danger flex__center">
+                    <i class="fas fa-dizzy"></i>
+                    <b>Total investments too high.&nbsp;</b>
+                    <span>
+                        The maximum investments is {{ states.project.max_per_user | currencyDefault }}
+                    </span>
+                </div>
+
+                <div *ngIf="investForm.get('amount').errors?.projInvestEqualMaxInvest"
+                     class="alert alert-danger flex__center">
+                    <i class="fas fa-dizzy"></i>
+                    <b>You have already invested a maximum allowed amount for this project..&nbsp;</b>
+                </div>
+
+                <div *ngIf="investForm.get('amount').errors?.amountAboveBalance"
+                     class="alert alert-danger flex__center-space">
                     <div class="flex__center">
                         <i class="fas fa-dizzy"></i>
                         <b>You don't have enough funds on your wallet</b>

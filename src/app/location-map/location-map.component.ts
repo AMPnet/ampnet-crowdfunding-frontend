@@ -15,7 +15,6 @@ export class LocationMapComponent implements AfterViewInit {
     @Output() latChange = new EventEmitter<number>();
     @Output() lngChange = new EventEmitter<number>();
     @Input() editable: boolean;
-    @Input() fullHeight = false;
 
     @ViewChild('mapEl') mapEl;
 

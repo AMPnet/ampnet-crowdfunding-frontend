@@ -43,7 +43,8 @@ export class MoneyInputFieldComponent implements AfterViewInit, OnChanges {
 
     ngAfterViewInit() {
         this.an = this.autonumericCurrency(this.inputField.nativeElement);
-        this.an.set(centsToBaseCurrencyUnit(this.realValue));
+        this.an.set(this.initialValue(this.control?.value, this.realValue));
+        console.log(this.control.value);
     }
 
     onHTMLInputElementChange() {
@@ -72,5 +73,17 @@ export class MoneyInputFieldComponent implements AfterViewInit, OnChanges {
             .replace(currencySymbol, '')
             .split(',').join('')
             .split('.').join('');
+    }
+
+    private initialValue(...values: (number|string)[]): number | '' {
+        for (let i = 0; i < values.length; i++) {
+            if (values[i] === '') {
+                return '';
+            } else if (typeof values[i] === 'number') {
+                return centsToBaseCurrencyUnit(values[i] as number);
+            }
+        }
+    ​
+        return '';
     }
 }

@@ -1,0 +1,17 @@
+@import "app";
+
+.map-container {
+    height: 450px;
+}
+
+.map {
+    height: 100%;
+}
+
+@include media-breakpoint-up(lg) {
+  .map-container {
+    &.full-height {
+      height: 100%;
+    }
+  }
+}

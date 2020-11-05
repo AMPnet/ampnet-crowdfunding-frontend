@@ -27,12 +27,11 @@ export class CreateNewProjectComponent {
 
         this.createForm = this.fb.group({
             name: ['', Validators.required],
-            description: ['', Validators.required],
             startDate: ['', Validators.required],
             endDate: ['', Validators.required],
-            expectedFunding: [0, [ProjectValidators.greaterThan(0)]],
-            minPerUser: [0, [ProjectValidators.greaterThan(0)]],
-            maxPerUser: [0, [ProjectValidators.greaterThan(0)]]
+            expectedFunding: ['', [ProjectValidators.greaterThan(0)]],
+            minPerUser: ['', [ProjectValidators.greaterThan(0)]],
+            maxPerUser: ['', [ProjectValidators.greaterThan(0)]]
         }, {
             validator: Validators.compose([
                 ProjectValidators.fundingLimits,
@@ -50,7 +49,7 @@ export class CreateNewProjectComponent {
         return this.projectService.createProject({
             organization_uuid: this.orgID,
             name: formValue.name,
-            description: formValue.description,
+            description: '',
             location: {lat: this.mapLat, long: this.mapLong},
             roi: {from: 2.1, to: 5.3},
             start_date: formValue.startDate,

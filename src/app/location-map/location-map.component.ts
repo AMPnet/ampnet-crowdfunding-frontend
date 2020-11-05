@@ -5,7 +5,7 @@ import { AbstractControl } from '@angular/forms';
 @Component({
     selector: 'app-location-map',
     templateUrl: './location-map.component.html',
-    styleUrls: ['./location-map.component.css'],
+    styleUrls: ['./location-map.component.scss'],
 })
 export class LocationMapComponent implements AfterViewInit {
     @Input() lat: number;
@@ -15,6 +15,7 @@ export class LocationMapComponent implements AfterViewInit {
     @Output() latChange = new EventEmitter<number>();
     @Output() lngChange = new EventEmitter<number>();
     @Input() editable: boolean;
+    @Input() fullHeight = false;
 
     @ViewChild('mapEl') mapEl;
 

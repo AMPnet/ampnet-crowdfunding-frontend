@@ -4,8 +4,8 @@
   margin: 30px 0 24px 0;
 }
 
-.col-lg-6, 
-.col-lg-4, 
+.col-lg-6,
+.col-lg-4,
 .col-lg-2 {
   padding: 0;
 }
@@ -25,15 +25,18 @@ p {
     justify-content: space-between;
     margin-top: 10px;
   }
+
   &__input-label p {
     text-transform: uppercase;
     color: $title-color;
   }
+
   &__text-right {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-top: 20px;
+
     p {
       margin-bottom: 0;
     }
@@ -44,15 +47,18 @@ p {
   &__available {
     text-transform: uppercase;
   }
+
   &__amount {
     font-size: 18px;
   }
+
   &__link {
     color: $body-color;
     font-size: $font-size-desktop-small;
     text-decoration: underline;
   }
-  &__available, 
+
+  &__available,
   &__amount {
     color: $title-color;
   }
@@ -67,6 +73,7 @@ p {
   .btn-danger {
     display: none;
   }
+
   .btn-mobile {
     display: block;
   }
@@ -79,6 +86,17 @@ p {
   color: $title-color;
 }
 
+.estimated {
+  &-return {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 25px 15px 15px 15px;
+    border: 1px solid #E5E5E5;
+    margin-bottom: 32px;
+  }
+}
+
 .investment {
   &-total {
     display: flex;
@@ -87,16 +105,20 @@ p {
     padding: 25px 15px 15px 15px;
     border: 1px solid #E5E5E5;
     margin-bottom: 32px;
+
     &__right {
       text-align: right;
     }
+
     &__left {
       text-align: left;
     }
+
     p {
       text-transform: uppercase;
       font-size: $font-size-mobile-title-small;
     }
+
     h2 {
       font-size: $font-size-mobile-title;
       font-weight: normal;
@@ -112,7 +134,7 @@ p {
   .col-lg-4 {
     padding: 0 24px;
   }
-  
+
   .app-basic-title {
     margin: 14px 0 24px 0;
   }
@@ -135,6 +157,7 @@ p {
     &__range-labels {
       margin-top: 0;
     }
+
     &__text-right {
       text-align: right;
       display: block;
@@ -143,16 +166,17 @@ p {
   }
   .right {
     &__amount {
-      padding: 32px 0 ;
+      padding: 32px 0;
       font-size: 21px;
       line-height: 25px;
     }
   }
   .alert-danger {
     span,
-    .btn-danger  {
+    .btn-danger {
       display: block;
     }
+
     .btn-mobile {
       display: none;
     }

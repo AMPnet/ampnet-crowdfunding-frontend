@@ -6,54 +6,77 @@
         <div class="app-page-header">
             <h1 class="app-page-title">Investment groups</h1>
             <div *ngIf="states.organizations !== null">
-                <button class="btn btn-primary" routerLink="new">
-                    <i class="fas fa-plus mr-3" ></i>
-                    Create group
+                <button class="btn btn-center" routerLink="new">
+                    <i class="fas fa-plus mr-lg-3" ></i>
+                    <span class="btn__text">Create group</span>
                 </button>
             </div>
         </div>
 
-        <div class="app-page-subtitle">My groups</div>
+        <div class="space">
+            <div *ngIf="states.invites?.length > 0" 
+                class="alert alert-success w-100 flex__center-space col-12 col-lg-4">
+               <div>
+                   <i class="fas fa-bolt"></i>
+                   <b>You have invites pending</b>
+               </div>
+           </div>
+        </div>
+        
+
         <ng-container *ngIf="states.organizations !== null else spinner">
-            <div *ngIf="states.organizations?.length > 0">
-                <ul class="cursor-pointer list-group">
-                    <li *ngFor="let org of states.organizations" class="list-group-item hover-bg"
+            <div *ngIf="states.organizations?.length > 0" class="groups space">
+                <ul class="list-group">
+                    <li *ngFor="let org of states.organizations" class="list__item"
                         routerLink="{{ org.uuid }}">
-                        <span class="float-left explainer-mini">
-                          {{ org.name }}
-                        </span>
+                        <div class="item__desc">
+                            <div class="item__title">{{ org.name }}</div>
+                            <div class="item__projects-count"><b>{{org.project_count}} </b>
+                                {{ org.project_count === 1 ? "Project" : "Projects" }}
+                            </div>
+                        </div>
+                        <div class="item__img">
+                            <img src="{{ org.header_image }}" alt="Organization image">
+                        </div>
                     </li>
                 </ul>
             </div>
             <div *ngIf="states.organizations.length === 0"
-                 class="d-flex justify-content-center mt-5">
-                <div class="d-flex flex-column mt-3">
-                    <div class="d-flex text-center explainer-mini">
-                        You currently don't have access to any groups.
-                    </div>
+                 class="empty-group">
+                <div class="app-page-subtitle">My groups</div>
+                <div class="empty__label">
+                    You currently don't have access to any groups.
                 </div>
             </div>
         </ng-container>
 
-        <div class="app-page-subtitle">My group invites</div>
-        <ng-container *ngIf="states.invites !== null else spinner">
-            <ul *ngIf="states.invites?.length > 0" class="list-group">
-                <li *ngFor="let invite of states.invites" class="list-group-item mt-2">
-                    <span class="float-left explainer-mini">
-                        {{ invite.organization_name }}
-                    </span>
-                    <div class="float-right">
-                    <span (click)="acceptInvite(invite.organization_uuid)"
-                          class="explainer-mini text-uppercase cursor-pointer">
-                        Accept invite
-                    </span>
+        <div class="invites">
+            <div class="app-page-subtitle space">Group invites</div>
+            <ng-container *ngIf="states.invites !== null else spinner" class="space">
+                <div class="space">
+                    <ul *ngIf="states.invites?.length > 0" class="list-group">
+                        <li *ngFor="let invite of states.invites" class="list__item">
+                            <div class="item__content">
+                                <div class="item__title">{{ invite.organization_name }}</div>
+                                <div class="item__img">
+                                    <img src="{{invite.organization_header_image}}" alt="Organization image">
+                                </div>
+                            </div>
+                            <div class="item__cta">
+                                <button (click)="acceptInvite(invite.organization_uuid)"
+                                        class="btn btn-success">
+                                    <i class="far fa-check mr-3"></i>
+                                    <span class="">Join group</span>
+                                </button>
+                            </div>
+                        </li>
+                    </ul>
+                    <div *ngIf="states.invites?.length === 0" class="empty__label">
+                        Not invited to any groups
                     </div>
-                </li>
-            </ul>
-            <div *ngIf="states.invites?.length === 0" class="w-100 text-center pt-5 pb-5 explainer-mini">
-                Not invited to any groups
-            </div>
-        </ng-container>
+                </div>
+            </ng-container>
+        </div>
     </ng-container>
 
     <ng-template #spinner>

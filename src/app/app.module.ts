@@ -38,11 +38,10 @@ import { ConfirmEmailComponent } from './authentication/confirm-email/confirm-em
 import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from 'angularx-social-login';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { CreateOrganizationComponent } from './organizations/create-organization/create-organization.component';
-import { GeneralSettingsComponent } from './general-settings/general-settings.component';
 import { ManageOrganizationsComponent } from './organizations/manage-organizations/manage-organizations.component';
 import { OrganizationDetailsComponent } from './organizations/organization-details/organization-details.component';
 import { CreateNewProjectComponent } from './organizations/organization-details/manage-projects/create-new-project/create-new-project.component';
-import { OnboardingComponent } from './authentication/onboarding/onboarding.component';
+import { OnboardingComponent } from './settings/user/identity/onboarding/onboarding.component';
 import { ManageProjectsComponent } from './organizations/organization-details/manage-projects/manage-projects.component';
 import { ManageSingleProjectComponent } from './organizations/organization-details/manage-projects/manage-single-project/manage-single-project.component';
 import { VerifySignOfferComponent } from './offers/offer-details/verify-sign-offer/verify-sign-offer.component';
@@ -95,6 +94,8 @@ import { DatePipe } from '@angular/common';
 import { SignInAutoComponent } from './authentication/sign-in-auto/sign-in-auto.component';
 import { AppConfigService } from './shared/services/app-config.service';
 import { ClickOutsideDirective } from './navbar/directives/click-outside.directive';
+import { UserComponent } from './settings/user/user.component';
+import { IdentityComponent } from './settings/user/identity/identity.component';
 
 const socialAuthServiceConfig = {
     provide: 'SocialAuthServiceConfig',
@@ -145,7 +146,6 @@ const socialAuthServiceConfig = {
         WithdrawModalComponent,
         ConfirmEmailComponent,
         CreateOrganizationComponent,
-        GeneralSettingsComponent,
         ManageOrganizationsComponent,
         OrganizationDetailsComponent,
         CreateNewProjectComponent,
@@ -194,7 +194,10 @@ const socialAuthServiceConfig = {
         ForgotPasswordComponent,
         ResetPasswordComponent,
         SignInAutoComponent,
-        ClickOutsideDirective
+        ClickOutsideDirective,
+        SignInAutoComponent,
+        UserComponent,
+        IdentityComponent
     ],
     imports: [
         BrowserModule,

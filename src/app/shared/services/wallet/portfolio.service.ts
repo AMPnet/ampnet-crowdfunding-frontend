@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BackendHttpClient } from '../backend-http-client.service';
 import { Project } from '../project/project.service';
-import { TransactionInfo } from './wallet-cooperative/wallet-cooperative-wallet.service';
+import { TransactionInfo } from './wallet.service';
 
 @Injectable({
     providedIn: 'root'
@@ -19,7 +19,7 @@ export class PortfolioService {
     }
 
     getInvestmentsInProject(projectID: string) {
-        return this.http.get<InvestmentsInProject>(`/api/wallet/portfolio/project/${projectID}`);
+        return this.http.get<ProjectTransactions>(`/api/wallet/portfolio/project/${projectID}`);
     }
 
     generateCancelInvestmentTransaction(projectUUID: string) {
@@ -47,7 +47,7 @@ export interface Portfolio {
     investment: number;
 }
 
-export interface InvestmentsInProject {
+export interface ProjectTransactions {
     project: Project;
     transactions: TxData[];
 }

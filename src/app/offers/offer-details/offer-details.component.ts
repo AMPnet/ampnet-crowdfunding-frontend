@@ -3,18 +3,17 @@ import { Meta } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LinkPreview, NewsPreviewService } from 'src/app/shared/services/news-preview.service';
 import { UserService } from 'src/app/shared/services/user/user.service';
-import { displayBackendErrorRx, displayBackendError } from 'src/app/utilities/error-handler';
-import swal from 'sweetalert2';
+import { displayBackendErrorRx } from 'src/app/utilities/error-handler';
 import { Project, ProjectService } from '../../shared/services/project/project.service';
 import { WalletService } from '../../shared/services/wallet/wallet.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { MapModalComponent } from 'src/app/location-map/map-modal/map-modal.component';
-import { EMPTY, forkJoin, Observable, of, throwError, timer } from 'rxjs';
-import { catchError, shareReplay, switchMap, take, tap, map, find } from 'rxjs/operators';
+import { combineLatest, EMPTY, forkJoin, Observable, of, timer } from 'rxjs';
+import { find, map, shareReplay, switchMap, take, tap } from 'rxjs/operators';
 import { User } from '../../shared/services/user/signup.service';
 import { MiddlewareService, ProjectWalletInfo } from '../../shared/services/middleware/middleware.service';
 import { TooltipDirective } from 'ngx-bootstrap/tooltip';
-import { Portfolio, PortfolioService, InvestmentsInProject } from '../../shared/services/wallet/portfolio.service';
+import { PortfolioService, ProjectTransactions } from '../../shared/services/wallet/portfolio.service';
 import { PopupService } from '../../shared/services/popup.service';
 import { ArkaneService } from '../../shared/services/arkane.service';
 
@@ -27,14 +26,14 @@ export class OfferDetailsComponent implements OnInit {
     isOverview = false;
 
     @Input() isPortfolioView = false;
-    @Input() isCancelable: boolean;
-    @Input() investmentData: InvestmentsInProject;
 
     project$: Observable<Project>;
     news$: Observable<LinkPreview[]>;
     user$: Observable<User>;
     projectWalletMW$: Observable<ProjectWalletInfo>;
     investmentTotal$: Observable<number>;
+    transactions$: Observable<ProjectTransactions>;
+    isProjectCancelable$: Observable<boolean>;
 
     bsModalRef: BsModalRef;
 
@@ -52,23 +51,29 @@ export class OfferDetailsComponent implements OnInit {
                 private arkaneService: ArkaneService) {
         const projectID = this.route.snapshot.params.id;
         this.project$ = this.projectService.getProject(projectID).pipe(
+            displayBackendErrorRx(),
             tap(project => this.setMetaTags(project)),
-            this.handleError,
             shareReplay(1)
         );
+
         this.news$ = this.project$.pipe(
             switchMap(project => forkJoin(
                 project.news.map(singleNews => {
-                    return this.newsPreviewService.getLinkPreview(singleNews);
+                    return this.newsPreviewService.getLinkPreview(singleNews).pipe(
+                        displayBackendErrorRx(),
+                    );
                 }))
             ),
-            this.handleError
         );
+
         this.projectWalletMW$ = this.walletService.getProjectWallet(projectID).pipe(
+            displayBackendErrorRx(),
+            shareReplay(),
             switchMap(projectWallet => {
-                return this.middlewareService.getProjectWalletInfoCached(projectWallet.hash);
+                return this.middlewareService.getProjectWalletInfoCached(projectWallet.hash).pipe(
+                    displayBackendErrorRx(),
+                );
             }),
-            this.handleError
         );
 
         this.user$ = of(!this.isOverview).pipe(
@@ -80,6 +85,21 @@ export class OfferDetailsComponent implements OnInit {
             switchMap(res => res.portfolio),
             find(item => item.project.uuid === this.route.snapshot.params.id),
             map(portfolio => portfolio?.investment)
+        );
+
+        this.transactions$ = this.portfolioService.getInvestmentsInProject(projectID).pipe(
+            displayBackendErrorRx(),
+            shareReplay(1)
+        );
+
+        this.isProjectCancelable$ = combineLatest([this.projectWalletMW$, this.walletService.wallet$]).pipe(
+            take(1),
+            switchMap(([projectWallet, wallet]) => {
+                return this.portfolioService.isInvestmentCancelable(projectWallet.projectHash, wallet.wallet.hash).pipe(
+                    displayBackendErrorRx(),
+                    map(res => res.can_cancel)
+                );
+            })
         );
     }
 
@@ -161,33 +181,18 @@ export class OfferDetailsComponent implements OnInit {
         this.router.navigate([`/dash/offers/${projectUUID}/invest`]);
     }
 
-    private handleError<T>(source: Observable<T>) {
-        return source.pipe(
-            catchError(err => {
-                if (err.error.err_code === '0851') {
-                    swal('Pending confirmation',
-                        'The project is being verified - this should take up to 5 minutes. Please check later',
-                        'info').then(() => {
-                        window.history.back();
-                    });
-                } else {
-                    displayBackendError(err);
-                }
-                return throwError(err);
-            })
-        );
-    }
-
-    cancelInvestment() {
-        return this.portfolioService.generateCancelInvestmentTransaction(this.investmentData.project.uuid).pipe(
-            displayBackendErrorRx(),
-            switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo)),
-            switchMap(() => this.popupService.new({
-                type: 'success',
-                title: 'Transaction signed',
-                text: 'Transaction is being processed...'
-            })),
-            switchMap(() => this.router.navigate(['/dash/wallet']))
-        );
+    cancelInvestment(projectUUID: string) {
+        return () => {
+            return this.portfolioService.generateCancelInvestmentTransaction(projectUUID).pipe(
+                displayBackendErrorRx(),
+                switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo)),
+                switchMap(() => this.popupService.new({
+                    type: 'success',
+                    title: 'Transaction signed',
+                    text: 'Transaction is being processed...'
+                })),
+                switchMap(() => this.router.navigate(['/dash/wallet']))
+            );
+        };
     }
 }

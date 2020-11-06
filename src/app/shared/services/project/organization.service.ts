@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BackendHttpClient } from '../backend-http-client.service';
-import { Project } from './project.service';
+import { ProjectWallet } from './project.service';
 
 @Injectable({
     providedIn: 'root'
@@ -69,9 +69,12 @@ export interface Organization {
     name: string;
     created_at: string;
     approved: boolean;
+    description: string;
+    header_image: string;
     legal_info: string;
     documents?: DocumentModel[];
     wallet_hash?: string;
+    project_count: number;
 }
 
 export interface DocumentModel {
@@ -97,6 +100,7 @@ export interface OrganizationInvite {
     organization_uuid: string;
     organization_name: string;
     role: string;
+    organization_header_image: string;
 }
 
 interface OrganizationMembersResponse {
@@ -107,12 +111,13 @@ export interface OrganizationMember {
     uuid: string;
     first_name: string;
     last_name: string;
+    email: string;
     role: string;
     member_since: Date;
 }
 
 export interface PageableOrganizationProjectsResponse {
-    projects: Project[];
+    projects_wallets: ProjectWallet[];
     page: number;
     total_pages: number;
 }

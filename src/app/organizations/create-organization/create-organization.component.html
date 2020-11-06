@@ -1,30 +1,57 @@
 <div class="container">
-    <form [formGroup]="newOrganizationForm" style="display: contents">
-        <div class="row">
-            <div class="col-md-12">
-                <h2 class="app-page-subtitle">Create a new group</h2>
-                <input class="form-control p-4 w-100"
+    <div class="app-page-title-back" (click)="backToGroupsScreen()">
+        <i class="fas fa-long-arrow-alt-left mr-3"></i>
+        Back
+    </div>
+
+    <form [formGroup]="newOrganizationForm">
+        <div class="form-container row">
+            <div class="form-left col-lg-6">
+                <h4 class="left__title">Create a new investment group</h4>
+                <div class="left__upload">
+                    <h2 class="left__upload__subtitle">Add logo</h2>
+                    <app-upload-area areaID='group-image' class="left__upload__area"
+                                     [restrictions]="{
+                                        allowedFileTypes: ['image/*'],
+                                        maxFileSize: 10 * 1024 * 1024,
+                                        maxNumberOfFiles: 1
+                                     }"
+                                     [firstFileControl]="newOrganizationForm.get('photo')">
+                    </app-upload-area>
+                </div>
+                <!-- TODO: This is styled and ready to go, uncomment when we have 2nd wallet integrated -->
+                <!-- <div class="left__advanced-users">
+                    <i class="fas fa-bolt"></i>
+                    <div>
+                        <span class="left__advanced__title">Welcome to investment groups</span>
+                        <p class="left__advanced__desc">This platform is powered by blockchain technology. A "wallet" is
+                            a keystorage service used for signing transactions. If you're an advanced user
+                            and would like to sign transactions yourself, <u>click here</u>
+                        </p>
+                    </div>
+                </div> -->
+            </div>
+            
+            <div class="form-right col-lg-6">
+                <label class="right__label" for="group-name">Group name</label>
+                <input class="input-lg w-100"
                        formControlName="name"
-                       placeholder="Group name"
-                       type="text">
-                <input class="form-control mt-3 p-4 w-100"
-                       formControlName="description"
-                       placeholder="Description"
-                       type="text">
-
-                <h2 class="app-page-subtitle">Attach a group photo</h2>
-                <app-upload-area areaID='group-image' style="width: max-content"
-                                 [restrictions]="{
-                                    allowedFileTypes: ['image/*'],
-                                    maxFileSize: 10 * 1024 * 1024,
-                                    maxNumberOfFiles: 1
-                                 }"
-                                 [firstFileControl]="newOrganizationForm.get('photo')">
-                </app-upload-area>
-
-                <app-action-button text="Create"
+                       placeholder="Enter group name"
+                       type="text"
+                       id="group-name">
+                <label class="right__label" for="group-description">Description</label>
+                <textarea class="w-100"
+                          formControlName="description"
+                          type="text"
+                          rows="7"
+                          placeholder="Enter description"
+                          id="group-description">
+                </textarea>
+                
+                <app-action-button text="Create new group"
                                    loadingText="Creating organization..." faIcon="fa-plus"
                                    [disabled]="!newOrganizationForm.valid"
+                                   buttonClass="btn btn-primary btn-success"
                                    [onClick]="createOrganization.bind(this)">
                 </app-action-button>
             </div>

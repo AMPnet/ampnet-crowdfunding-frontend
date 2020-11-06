@@ -36,25 +36,17 @@
                     </app-action-button>
                 </div>
             </div>
-
-            <div class="init-right col-12 col-lg-6">
-                <div class="init-right__icon">
-                    <svg width="1.2em" height="1.2em" viewBox="0 0 16 16"
-                     fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd"
-                          d="M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09z"/>
-                    </svg>
-                </div>
-                <div>
-                    <p class="init-right__desc">
-                        <span class="init-right__subtitle">Advanced users</span>
-                        <br>
-                        This platform is powered by blockchain technology. A "wallet" is
-                        a keystorage service used for signing transactions. If you're an advanced user and
-                        would like to sign transactions yourself, <u>click here</u>
+            <!-- TODO: This is ready to go, uncomment and hook up once we have support for other wallets -->
+            <!-- <div class="init-right col-12 col-lg-6">
+                <i class="fas fa-bolt"></i>
+                <div class="right__info">
+                    <span class="right__info__title">Advanced users</span>
+                    <p class="right__info__desc">This platform is powered by blockchain technology. A "wallet" is
+                        a keystorage service used for signing transactions. If you're an advanced user
+                        and would like to sign transactions yourself, <u>click here</u>
                     </p>
                 </div>
-            </div>
+            </div> -->
         </div>
 
         <div *ngIf="!!states.wallet && states.wallet.state !== walletState.EMPTY else fetchWalletSpinner">
@@ -127,7 +119,7 @@
                          class="wow fadeIn">
                         <div class="transactions__history">
                             <ng-container *ngFor="let transaction of transactionHistoryPage">
-                                <ng-container *ngIf="shouldShowTransaction(transaction, transactionHistoryPage)">
+                                <ng-container *ngIf="shouldShowTransaction(transaction, transactionHistory)">
                                     <div class="transactions__single-element"
                                          [class.transactions__grayed-out]="transaction.state !== 'MINED' || transaction.type === 'APPROVE_INVESTMENT'">
                                         <div class="transactions__left">

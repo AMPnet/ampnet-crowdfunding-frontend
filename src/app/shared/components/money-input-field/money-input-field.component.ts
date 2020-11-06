@@ -82,7 +82,7 @@ export class MoneyInputFieldComponent implements AfterViewInit, OnChanges {
                 return centsToBaseCurrencyUnit(values[i] as number);
             }
         }
-    ​
+
         return '';
     }
 }

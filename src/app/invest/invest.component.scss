@@ -72,6 +72,38 @@ p {
   }
 }
 
+//--------------------------------------------------------------
+
+.container {
+  padding: 0;
+  color: $title-color;
+}
+
+.investment {
+  &-total {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 25px 15px 15px 15px;
+    border: 1px solid #E5E5E5;
+    margin-bottom: 32px;
+    &__right {
+      text-align: right;
+    }
+    &__left {
+      text-align: left;
+    }
+    p {
+      text-transform: uppercase;
+      font-size: $font-size-mobile-title-small;
+    }
+    h2 {
+      font-size: $font-size-mobile-title;
+      font-weight: normal;
+    }
+  }
+}
+
 @include media-breakpoint-up(lg) {
   p {
     margin-bottom: 0;

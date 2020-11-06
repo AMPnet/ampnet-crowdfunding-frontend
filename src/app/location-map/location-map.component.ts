@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import leaflet from 'leaflet';
 import { AbstractControl } from '@angular/forms';
 

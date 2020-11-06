@@ -1,150 +1,158 @@
 @import "app";
 
-.container {
-  padding: 0;
-}
-
-.row {
-  margin: 0;
-}
-
-.col-lg-6 {
-  padding: 0; 
-}
-
-.project-container {
-  padding: 0 20px;
-
-  .right {
-    &__title {
-      margin: 20px 0;
-      font-size: $font-size-mobile-title;
-      text-transform: uppercase;
-      color: $title-color;
-      letter-spacing: 1px;
-      font-weight: normal;
-    }
-
-    &__input-name,
-    &__input-dates,
-    &__input-investments,
-    &__input-funding {
-      margin-bottom: 20px;
-    }
-
-    &__input-dates input:nth-of-type(2) {
-      border-left: unset;
-      &:focus {
-        border-left: 1px solid $primary-color;
-      }
-    }
-
-    &__warning {
-      color: $body-color;
-      margin-bottom: 20px;
-      display: flex;
-      svg {
-        font-size: $font-size-mobile-title-small;
-        color: $icons-color;
-        margin-right: 10px;
-        margin-top: 4px;
-      }
-      span {
-        font-weight: bold;
-        color: $title-color;
-      }
-    }
-  }
-
-  .input {
-    &__desc {
-      svg {
-        font-size: $font-size-mobile-title-small;
-        color: $icons-color;
-        margin-bottom: 6px;
-      }
-    }
-
-    &__label {
-        font-size: $font-size-mobile-title-small;
-        color: $body-color;
-        letter-spacing: 0.11px;
-        padding-bottom: 6px;
-    }
-  }
-
-  .project {
-    &-left {
-      margin-bottom: 20px;
-    }
-  }
-}
-
-@include media-breakpoint-up(lg) {
+.create-project-component {
   .container {
-    padding: 0 15px;
+    padding: 0;
   }
-
+  
+  .row {
+    margin: 0;
+  }
+  
+  .col-lg-6 {
+    padding: 0; 
+  }
+  
   .project-container {
-    padding: 0px;
+    padding: 0 20px;
+  
     .right {
       &__title {
-        margin: 0 0 34px 0;
-        font-size: $font-size-desktop-title;
-        letter-spacing: 1.5px;
+        margin: 20px 0;
+        font-size: $font-size-mobile-title;
+        text-transform: uppercase;
+        color: $title-color;
+        letter-spacing: 1px;
+        font-weight: normal;
       }
-
+  
       &__input-name,
       &__input-dates,
-      &__input-investments {
-        margin-bottom: 32px;
-      }
+      &__input-investments,
       &__input-funding {
-        margin-bottom: 24px;
+        margin-bottom: 20px;
       }
-
+  
+      &__input-dates input:nth-of-type(2) {
+        border-left: unset;
+        &:focus {
+          border-left: 1px solid $primary-color;
+        }
+      }
+  
       &__warning {
-        margin-bottom: 24px;
+        color: $body-color;
+        margin-bottom: 20px;
+        display: flex;
         svg {
-          font-size: $font-size-desktop-small;
-          margin-top: 5px;
+          font-size: $font-size-mobile-title-small;
+          color: $icons-color;
+          margin-right: 10px;
+          margin-top: 4px;
         }
-        div {
-          font-size: $font-size-desktop-body2;
-          span {
-            font-size: $font-size-desktop-body2;
-          }
+        span {
+          font-weight: bold;
+          color: $title-color;
         }
       }
-      .btn {
+    }
+  
+    .input {
+      &__desc {
+        svg {
+          font-size: $font-size-mobile-title-small;
+          color: $icons-color;
+          margin-bottom: 6px;
+        }
+      }
+  
+      &__label {
+          font-size: $font-size-mobile-title-small;
+          color: $body-color;
+          letter-spacing: 0.11px;
+          padding-bottom: 6px;
+      }
+    }
+  
+    .project {
+      &-left {
         margin-bottom: 20px;
       }
     }
-
-    .input {
-      &__label {
-          font-size: $font-size-desktop-body2;
-      }
+  }
+  
+  @include media-breakpoint-up(lg) {
+    .map-container {
+      height: 100% !important;
     }
-
-    .project {
-      &-left {
-        margin-bottom: 0;
-        order: 1;
-      }
-      &-right {
-        order: 2;
-        padding: 40px 64px 67px 64px;
-        border: 1px solid $border-light-color;
-        border-radius: 1px;
-      }
+  
+    .container {
+      padding: 0 15px;
     }
-
-    .alert-warning {
-      display: flex;
-      svg {
-        margin-top: 4px;
+  
+    .project-container {
+      padding: 0px;
+      .right {
+        &__title {
+          margin: 0 0 34px 0;
+          font-size: $font-size-desktop-title;
+          letter-spacing: 1.5px;
+        }
+  
+        &__input-name,
+        &__input-dates,
+        &__input-investments {
+          margin-bottom: 32px;
+        }
+        &__input-funding {
+          margin-bottom: 24px;
+        }
+  
+        &__warning {
+          margin-bottom: 24px;
+          svg {
+            font-size: $font-size-desktop-small;
+            margin-top: 5px;
+          }
+          div {
+            font-size: $font-size-desktop-body2;
+            span {
+              font-size: $font-size-desktop-body2;
+            }
+          }
+        }
+        .btn {
+          margin-bottom: 20px;
+        }
+      }
+  
+      .input {
+        &__label {
+            font-size: $font-size-desktop-body2;
+        }
+      }
+  
+      .project {
+        &-left {
+          margin-bottom: 0;
+          order: 1;
+        }
+        &-right {
+          order: 2;
+          padding: 40px 64px 67px 64px;
+          border: 1px solid $border-light-color;
+          border-radius: 1px;
+        }
+      }
+  
+      .alert-warning {
+        display: flex;
+        svg {
+          margin-top: 4px;
+        }
       }
     }
   }
 }
+
+

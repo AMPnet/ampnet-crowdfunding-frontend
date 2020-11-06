@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import * as moment from 'moment';
@@ -11,6 +11,7 @@ import { displayBackendErrorRx } from '../../../../utilities/error-handler';
     selector: 'app-create-new-project',
     templateUrl: './create-new-project.component.html',
     styleUrls: ['./create-new-project.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class CreateNewProjectComponent {
     createForm: FormGroup;

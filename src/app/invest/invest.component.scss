@@ -19,13 +19,18 @@ p {
 }
 
 .estimated {
-  .row-cols-3 {
+  &-calculator {
+    .row {
+      padding-left: 15px;
+      padding-right: 15px;
+    }
     .col {
       padding-left: 0;
+      padding-right: 0;
     }
   }
 
-  &_content {
+  &__content {
     align-items: center;
     justify-content: space-between;
     border: 1px solid #E5E5E5;

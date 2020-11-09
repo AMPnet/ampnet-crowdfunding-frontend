@@ -45,7 +45,7 @@ export class AppConfigService {
     }
 
     private get remoteConfig(): Observable<AppConfig> {
-        return this.http.get<AppConfigRes>(`/api/user/public/app/config/${this.hostname}`).pipe(
+        return this.http.get<AppConfigRes>(`/api/user/public/app/config/hostname/${this.hostname}`).pipe(
             map(res => res.config),
             catchError(() => of(null))
         );

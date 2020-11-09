@@ -18,69 +18,6 @@ p {
   margin-bottom: 20px;
 }
 
-.estimated {
-  &-calculator {
-    .row {
-      padding-left: 15px;
-      padding-right: 15px;
-    }
-    .col {
-      padding-left: 0;
-      padding-right: 0;
-    }
-  }
-
-  &__content {
-    align-items: center;
-    justify-content: space-between;
-    border: 1px solid #E5E5E5;
-    margin-bottom: 32px;
-  }
-
-  &__return-label p {
-    padding-bottom: 17px;
-    padding-left: 4px;
-    padding-top: 128px;
-  }
-
-  &__total-label h2 {
-    font-size: $font-size-mobile-title;
-    padding-top: 40px;
-    padding-left: 24px;
-  }
-
-  &__invested-label p {
-    font-size: $font-size-desktop-body;
-    color: $icons-color;
-    padding-top: 8px;
-    padding-left: 24px;
-  }
-
-  &__return-header {
-    background: $background-color;
-    font-size: $font-size-desktop-small;
-    margin-top: 40px;
-  }
-
-  &__header-label p {
-    text-transform: uppercase;
-    color: $title-color;
-    padding-top: 13px;
-    padding-left: 24px;
-    padding-bottom: 13px;
-  }
-
-  &__amount-label p {
-    text-transform: uppercase;
-    color: $title-color;
-    padding-top: 32px;
-    padding-bottom: 32px;
-    font-size: $font-size-desktop-body;
-    border-right: 1px solid #e5e5e5;
-    padding-left: 24px;
-  }
-}
-
 .invest {
   &__range-labels {
     display: flex;
@@ -92,10 +29,11 @@ p {
   &__input-label p {
     text-transform: uppercase;
     color: $title-color;
+    display: none;
   }
 
   &__text-right {
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: space-between;
     margin-top: 20px;
@@ -103,6 +41,27 @@ p {
     p {
       margin-bottom: 0;
     }
+  }
+}
+
+.funds__bottom {
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+
+  h2 {
+    font-size: 18px;
+    text-align: end;
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  p {
+    padding-left: 18px;
+  }
+
+  a {
+    padding-left: 18px;
   }
 }
 
@@ -139,6 +98,73 @@ p {
 
   .btn-mobile {
     display: block;
+  }
+}
+
+.estimated {
+
+  &__table {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &-calculator {
+    .row {
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    .col {
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+  }
+
+  &__content {
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid #E5E5E5;
+  }
+
+  &__return-label p {
+    padding-bottom: 0;
+    padding-left: 4px;
+    padding-top: 32px;
+  }
+
+  &__total-label h2 {
+    font-size: $font-size-mobile-title;
+    padding-top: 40px;
+    padding-left: 8px;
+  }
+
+  &__invested-label p {
+    font-size: $font-size-desktop-body;
+    color: $icons-color;
+    padding-top: 8px;
+    padding-left: 8px;
+  }
+
+  &__return-header {
+    background: $background-color;
+    font-size: $font-size-desktop-small;
+    margin-top: 3px;
+  }
+
+  &__header-label p {
+    text-transform: uppercase;
+    color: $title-color;
+    padding-top: 8px;
+    padding-left: 3px;
+    padding-bottom: 8px;
+  }
+
+  &__amount-label p {
+    text-transform: uppercase;
+    color: $title-color;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    font-size: $font-size-desktop-body;
   }
 }
 
@@ -196,5 +222,74 @@ p {
     .btn-mobile {
       display: none;
     }
+  }
+
+  .estimated {
+    &-calculator {
+      .row {
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+
+      .col-lg {
+        padding-left: 0;
+        padding-right: 0;
+      }
+    }
+
+    &__content {
+      align-items: center;
+      justify-content: space-between;
+      border: 1px solid #E5E5E5;
+      margin-bottom: 32px;
+      padding-left: 4px;
+      padding-right: 4px;
+    }
+
+    &__return-label p {
+      padding-bottom: 17px;
+      padding-left: 14px;
+      padding-top: 128px;
+    }
+
+    &__total-label h2 {
+      font-size: $font-size-mobile-title;
+      padding-top: 40px;
+      padding-left: 8px;
+    }
+
+    &__invested-label p {
+      font-size: $font-size-desktop-body;
+      color: $icons-color;
+      padding-top: 8px;
+      padding-left: 8px;
+    }
+
+    &__return-header {
+      background: $background-color;
+      font-size: $font-size-desktop-small;
+      margin-top: 40px;
+    }
+
+    &__header-label p {
+      text-transform: uppercase;
+      color: $title-color;
+      padding-top: 13px;
+      padding-left: 24px;
+      padding-bottom: 13px;
+    }
+
+    &__amount-label p {
+      text-transform: uppercase;
+      color: $title-color;
+      padding-top: 32px;
+      padding-bottom: 32px;
+      font-size: $font-size-desktop-body;
+      border-right: 1px solid #e5e5e5;
+      padding-left: 24px;
+    }
+  }
+  .funds__bottom {
+    display: none;
   }
 }

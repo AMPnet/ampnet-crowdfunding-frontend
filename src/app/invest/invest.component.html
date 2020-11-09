@@ -109,7 +109,7 @@
             <div class="estimated__return-label">
                 <p>ESTIMATED RETURN</p>
             </div>
-    
+
             <div class="estimated__content">
                 <div>
                     <div class="estimated__total-label col-lg-12">
@@ -119,27 +119,46 @@
                         <p>€2.500 EUR invested so far </p>
                     </div>
                 </div>
-    
-                <div class="estimated__return-header">
-                    <div class="row row-cols-3">
-                        <div class="estimated__header-label col"><p>Return over 1 year</p></div>
-                        <div class="estimated__header-label col"><p>5 Years</p></div>
-                        <div class="estimated__header-label col"><p>10 Years</p></div>
+
+                <div class="row">
+                    <div class="col-lg">
+                        <div class="estimated__return-header">
+                            <div class="estimated__header-label col-lg"><p>Return over 1 year</p></div>
+                        </div>
+                        <div class="return__amounts">
+                            <div class="estimated__amount-label col-lg"><p>€12000 - €345678</p></div>
+                        </div>
                     </div>
-                </div>
-    
-                <div class="return__amounts">
-                    <div class="row row-cols-3">
-                        <div class="estimated__amount-label col"><p>€12000 - €345678</p></div>
-                        <div class="estimated__amount-label col"><p>€12000 - €345678</p></div>
-                        <div class="estimated__amount-label col"><p>€12000 - €345678</p></div>
+                    <div class="col-lg">
+                        <div class="estimated__return-header">
+                            <div class="estimated__header-label col-lg"><p>5 Years</p></div>
+                        </div>
+                        <div class="return__amounts">
+                            <div class="estimated__amount-label col-lg"><p>€12000 - €345678</p></div>
+                        </div>
+                    </div>
+                    <div class="col-lg">
+                        <div class="estimated__return-header">
+                            <div class="estimated__header-label col-lg"><p>10 Years</p></div>
+                        </div>
+                        <div class="return__amounts">
+                            <div class="estimated__amount-label col-lg"><p>€12000 - €345678</p></div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <div class="funds__bottom">
+            <div class="dropdown-divider"></div>
+            <div class="row row-cols-2">
+                <p class="right__available">Available funds</p>
+                <h2>{{ states.wallet.wallet.balance | currencyDefault }}</h2>
+                <a class="right__link" routerLink="/dash/wallet">Open wallet</a>
+            </div>
+        </div>
     </ng-container>
 </div>
-
 
 
 <ng-template #spinner>

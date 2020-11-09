@@ -35,7 +35,7 @@ export class AppConfigService {
         return of(offsetMillis > this.cacheTimeoutMinutes * 60 * 1000).pipe(
             switchMap(shouldRefresh => shouldRefresh ?
                 this.remoteConfig.pipe(tap(config => this.setLocalConfig(config))) :
-                of(localConfig.config)),
+                of(localConfig[this.hostname].config)),
             map(config => ({
                 ...AppConfigService.defaultConfig,
                 ...config

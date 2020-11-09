@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { AppConfigService } from './shared/services/app-config.service';
-import { Meta, Title } from '@angular/platform-browser';
+import { Title } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/common';
 
 declare var WOW: any;

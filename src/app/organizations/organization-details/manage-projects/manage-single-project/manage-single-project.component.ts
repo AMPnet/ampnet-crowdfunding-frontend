@@ -15,7 +15,7 @@ import { URLValidator } from '../../../../shared/validators/url.validator';
 @Component({
     selector: 'app-manage-single-project',
     templateUrl: './manage-single-project.component.html',
-    styleUrls: ['./manage-single-project.component.css'],
+    styleUrls: ['./manage-single-project.component.scss'],
 })
 export class ManageSingleProjectComponent {
     walletState = WalletState;
@@ -181,5 +181,9 @@ export class ManageSingleProjectComponent {
 
     isWalletVerified(wallet: Wallet) {
         return !!wallet && !!wallet?.hash;
+    }
+
+    backToOrganizationDetailsScreen() {
+        this.router.navigate(['../../'], {relativeTo: this.route});
     }
 }

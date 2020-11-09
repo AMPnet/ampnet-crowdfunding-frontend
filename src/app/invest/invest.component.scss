@@ -19,6 +19,12 @@ p {
 }
 
 .estimated {
+  .row-cols-3 {
+    .col {
+      padding-left: 0;
+    }
+  }
+
   &_content {
     align-items: center;
     justify-content: space-between;
@@ -45,29 +51,29 @@ p {
     padding-left: 24px;
   }
 
+  &__return-header {
+    background: $background-color;
+    font-size: $font-size-desktop-small;
+    margin-top: 40px;
+  }
+
   &__header-label p {
     text-transform: uppercase;
     color: $title-color;
     padding-top: 13px;
+    padding-left: 24px;
     padding-bottom: 13px;
-    padding-left: 23px;
   }
 
   &__amount-label p {
     text-transform: uppercase;
     color: $title-color;
     padding-top: 32px;
-    padding-bottom: 13px;
-    padding-left: 24px;
+    padding-bottom: 32px;
     font-size: $font-size-desktop-body;
     border-right: 1px solid #e5e5e5;
+    padding-left: 24px;
   }
-}
-
-.return__header {
-  background: $background-color;
-  font-size: $font-size-desktop-small;
-  margin-top: 40px;
 }
 
 .invest {

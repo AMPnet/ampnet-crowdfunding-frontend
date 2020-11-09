@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { OrganizationService } from '../../../shared/services/project/organization.service';
 import { displayBackendErrorRx } from '../../../utilities/error-handler';
@@ -14,6 +14,7 @@ import { MiddlewareService } from '../../../shared/services/middleware/middlewar
 })
 export class ManageProjectsComponent {
     @Input() groupID: string;
+    @Input() groupName: string;
 
     refreshProjectsSubject = new BehaviorSubject<void>(null);
     projectsWallets$: Observable<ProjectWallet[]>;

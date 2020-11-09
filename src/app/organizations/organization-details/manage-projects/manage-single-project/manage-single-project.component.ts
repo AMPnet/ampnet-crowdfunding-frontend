@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { displayBackendErrorRx } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
@@ -17,7 +17,7 @@ import { URLValidator } from '../../../../shared/validators/url.validator';
     templateUrl: './manage-single-project.component.html',
     styleUrls: ['./manage-single-project.component.scss'],
 })
-export class ManageSingleProjectComponent {
+export class ManageSingleProjectComponent implements OnInit {
     walletState = WalletState;
 
     project$: Observable<Project>;
@@ -185,5 +185,10 @@ export class ManageSingleProjectComponent {
 
     backToOrganizationDetailsScreen() {
         this.router.navigate(['../../'], {relativeTo: this.route});
+    }
+
+    // TODO: remove this if we're not gonna use group name
+    ngOnInit() {
+        console.log(history.state);
     }
 }

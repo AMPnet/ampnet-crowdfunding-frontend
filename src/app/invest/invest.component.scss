@@ -18,6 +18,58 @@ p {
   margin-bottom: 20px;
 }
 
+.estimated {
+  &_content {
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid #E5E5E5;
+    margin-bottom: 32px;
+  }
+
+  &__return-label p {
+    padding-bottom: 17px;
+    padding-left: 4px;
+    padding-top: 128px;
+  }
+
+  &__total-label h2 {
+    font-size: $font-size-mobile-title;
+    padding-top: 40px;
+    padding-left: 24px;
+  }
+
+  &__invested-label p {
+    font-size: $font-size-desktop-body;
+    color: $icons-color;
+    padding-top: 8px;
+    padding-left: 24px;
+  }
+
+  &__header-label p {
+    text-transform: uppercase;
+    color: $title-color;
+    padding-top: 13px;
+    padding-bottom: 13px;
+    padding-left: 23px;
+  }
+
+  &__amount-label p {
+    text-transform: uppercase;
+    color: $title-color;
+    padding-top: 32px;
+    padding-bottom: 13px;
+    padding-left: 24px;
+    font-size: $font-size-desktop-body;
+    border-right: 1px solid #e5e5e5;
+  }
+}
+
+.return__header {
+  background: $background-color;
+  font-size: $font-size-desktop-small;
+  margin-top: 40px;
+}
+
 .invest {
   &__range-labels {
     display: flex;
@@ -76,53 +128,6 @@ p {
 
   .btn-mobile {
     display: block;
-  }
-}
-
-//--------------------------------------------------------------
-
-.container {
-  padding: 0;
-  color: $title-color;
-}
-
-.estimated {
-  &-return {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 25px 15px 15px 15px;
-    border: 1px solid #E5E5E5;
-    margin-bottom: 32px;
-  }
-}
-
-.investment {
-  &-total {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 25px 15px 15px 15px;
-    border: 1px solid #E5E5E5;
-    margin-bottom: 32px;
-
-    &__right {
-      text-align: right;
-    }
-
-    &__left {
-      text-align: left;
-    }
-
-    p {
-      text-transform: uppercase;
-      font-size: $font-size-mobile-title-small;
-    }
-
-    h2 {
-      font-size: $font-size-mobile-title;
-      font-weight: normal;
-    }
   }
 }
 

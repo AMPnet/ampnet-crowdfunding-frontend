@@ -64,12 +64,15 @@
                                         <div class="left_roi">
                                             <div class="roi__label">Expected ROI %</div>
                                             <div class="roi__inputs">
-                                                <input class="input-reg w-50"
-                                                       formControlName="roiMin"
-                                                       type="number">
-                                                <input class="input-reg w-50"
-                                                       formControlName="roiMax"
-                                                       type="number">
+                                                <div formGroupName="roi">
+                                                    <input class="input-reg w-50"
+                                                           formControlName="from"
+                                                           type="number">
+                                                    <input class="input-reg w-50"
+                                                           formControlName="to"
+                                                           type="number">
+                                                </div>
+                                                
                                             </div>
                                         </div>
                                         <div class="left__dates">
@@ -79,12 +82,15 @@
                                                     <i class="fas fa-lock"></i>
                                                 </div>
                                             </div>
-                                            <input class="input-reg w-50"
-                                                   formControlName="dateFrom"
-                                                   type="date" disabled>
-                                            <input class="input-reg w-50"
-                                                   formControlName="dateTo"
-                                                   type="date" disabled>
+                                            <div formGroupName="dates">
+                                                <input class="input-reg w-50"
+                                                       formControlName="from"
+                                                       [value]="updateForm.get('dates.to').value"
+                                                       type="text">
+                                                <input class="input-reg w-50"
+                                                       formControlName="to"
+                                                       type="text">
+                                            </div>
                                         </div>
                                         <!-- TODO: disable these inputs (probably through form control) -->
                                         <div class="left__investments">

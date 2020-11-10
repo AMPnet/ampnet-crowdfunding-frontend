@@ -41,6 +41,7 @@ export class ManageSingleProjectComponent implements OnInit {
             switchMap(project => project !== null ? of(project) : this.projectService.getProject(projectUUID)),
             shareReplay(1)
         );
+        this.project$.subscribe(e => console.log(e));
 
         this.projectWallet$ = this.refreshProjectWalletSubject.pipe(
             switchMap(() => this.walletService.getProjectWallet(projectUUID)
@@ -63,13 +64,17 @@ export class ManageSingleProjectComponent implements OnInit {
                 return fb.group({
                     name: [project.name, Validators.required],
                     description: [project.description, Validators.minLength(3)],
-                    location: fb.group({
-                        lat: [project.location.lat],
-                        long: [project.location.long],
-                    }),
                     roi: fb.group({
                         from: [project.roi.from],
                         to: [project.roi.to],
+                    }),
+                    dates: fb.group({
+                        // from: [{value: project.start_date, disabled: true}],
+                        to: [project.end_date]
+                    }),
+                    location: fb.group({
+                        lat: [project.location.lat],
+                        long: [project.location.long],
                     }),
                     newImage: [null],
                     currentImage: [project.main_image],

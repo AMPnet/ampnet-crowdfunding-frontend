@@ -10,8 +10,7 @@ import { displayBackendErrorRx } from '../../../../utilities/error-handler';
 @Component({
     selector: 'app-create-new-project',
     templateUrl: './create-new-project.component.html',
-    styleUrls: ['./create-new-project.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    styleUrls: ['./create-new-project.component.scss']
 })
 export class CreateNewProjectComponent {
     createForm: FormGroup;

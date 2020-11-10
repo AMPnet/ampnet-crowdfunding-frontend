@@ -4,7 +4,9 @@
     </button>
 </div>
 <div class="modal-body">
-    <app-location-map *ngIf="modalShown"
-                      [lat]="lat" [lng]="lng">
-    </app-location-map>
+    <div class="map-holder">
+        <app-location-map *ngIf="modalShown"
+                          [lat]="lat" [lng]="lng">
+        </app-location-map>
+    </div>
 </div>

@@ -86,7 +86,9 @@
             </div>
 
             <div class="project-left col-lg-6">
-                <app-location-map [editable]="true" [(lat)]="mapLat" [(lng)]="mapLong"></app-location-map>
+                <div class="map-holder">
+                    <app-location-map [editable]="true" [(lat)]="mapLat" [(lng)]="mapLong"></app-location-map>
+                </div>
             </div>
 
             <app-action-button

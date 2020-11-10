@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { displayBackendErrorRx } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
@@ -11,13 +11,16 @@ import { ArkaneService } from '../../../../shared/services/arkane.service';
 import { PopupService } from '../../../../shared/services/popup.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { URLValidator } from '../../../../shared/validators/url.validator';
+import { DatePipe, CurrencyPipe } from '@angular/common';
+
+
 
 @Component({
     selector: 'app-manage-single-project',
     templateUrl: './manage-single-project.component.html',
     styleUrls: ['./manage-single-project.component.scss'],
 })
-export class ManageSingleProjectComponent implements OnInit {
+export class ManageSingleProjectComponent {
     walletState = WalletState;
 
     project$: Observable<Project>;
@@ -35,13 +38,14 @@ export class ManageSingleProjectComponent implements OnInit {
                 private popupService: PopupService,
                 private router: Router,
                 private fb: FormBuilder,
-                private route: ActivatedRoute) {
+                private route: ActivatedRoute,
+                private datePipe: DatePipe,
+                private currencyPipe: CurrencyPipe) {
         const projectUUID = this.route.snapshot.params.projectID;
         this.project$ = this.refreshProjectSubject.pipe(
             switchMap(project => project !== null ? of(project) : this.projectService.getProject(projectUUID)),
             shareReplay(1)
         );
-        this.project$.subscribe(e => console.log(e));
 
         this.projectWallet$ = this.refreshProjectWalletSubject.pipe(
             switchMap(() => this.walletService.getProjectWallet(projectUUID)
@@ -61,6 +65,11 @@ export class ManageSingleProjectComponent implements OnInit {
         );
 
         this.updateForm$ = this.project$.pipe(map(project => {
+            const dateFrom = this.datePipe.transform(project.start_date, 'mediumDate');
+            const dateTo = this.datePipe.transform(project.end_date, 'mediumDate');
+            const investFrom = this.currencyPipe.transform(project.min_per_user, 'EUR', 'symbol', '2.0');
+            const investTo = this.currencyPipe.transform(project.max_per_user, 'EUR', 'symbol', '2.0');
+            const expectedInvest = this.currencyPipe.transform(project.expected_funding, 'EUR', 'symbol', '2.0');
                 return fb.group({
                     name: [project.name, Validators.required],
                     description: [project.description, Validators.minLength(3)],
@@ -69,9 +78,14 @@ export class ManageSingleProjectComponent implements OnInit {
                         to: [project.roi.to],
                     }),
                     dates: fb.group({
-                        // from: [{value: project.start_date, disabled: true}],
-                        to: [project.end_date]
+                        from: [{value: dateFrom, disabled: true}],
+                        to: [{value: dateTo, disabled: true}]
                     }),
+                    investments: fb.group({
+                        from: [{value: investFrom, disabled: true}],
+                        to: [{value: investTo, disabled: true}],
+                    }),
+                    expected: [{value: expectedInvest, disabled: true}],
                     location: fb.group({
                         lat: [project.location.lat],
                         long: [project.location.long],
@@ -157,7 +171,10 @@ export class ManageSingleProjectComponent implements OnInit {
                 name: controls['name'].value,
                 description: controls['description'].value,
                 location: controls['location'].value,
-                roi: controls['roi'].value,
+                roi: {
+                    from: Number(controls['roi'].value.from),
+                    to: Number(controls['roi'].value.to)
+                }
             }, controls['newImage'].value, controls['newDocuments'].value).pipe(
                 displayBackendErrorRx(),
                 tap(() => {
@@ -190,10 +207,5 @@ export class ManageSingleProjectComponent implements OnInit {
 
     backToOrganizationDetailsScreen() {
         this.router.navigate(['../../'], {relativeTo: this.route});
-    }
-
-    // TODO: remove this if we're not gonna use group name
-    ngOnInit() {
-        console.log(history.state);
     }
 }

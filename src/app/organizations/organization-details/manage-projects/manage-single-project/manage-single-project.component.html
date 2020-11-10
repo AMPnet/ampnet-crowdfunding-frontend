@@ -8,8 +8,7 @@
             <div class="app-page-header">
                 <div class="app-page-title-back" (click)="backToOrganizationDetailsScreen()">
                     <i class="fas fa-long-arrow-alt-left mr-3"></i>
-                    <!-- {{ states.project.name }} -->
-                    Back
+                    {{ states.project.organization.name }}
                 </div>
                 <button class="btn btn-center" routerLink="/dash/offers/{{ states.project.uuid }}">
                     <i class="fas fa-caret-right mr-lg-3"></i>
@@ -19,8 +18,7 @@
             <div class="edit-project">
                 <ng-container *ngIf="states.project.main_image">
                     <div class="project__img">
-                        <!-- TODO: style this! -->
-                        <img src="{{states.project.main_image}}" alt="Project image" style="width: 300px; height: 300px;">
+                        <img src="{{states.project.main_image}}" alt="Project image">
                     </div>
                 </ng-container>
 
@@ -61,64 +59,59 @@
                                                 </textarea>
                                             </div>
                                         </div>
-                                        <div class="left_roi">
+                                        <div class="left__roi">
                                             <div class="roi__label">Expected ROI %</div>
                                             <div class="roi__inputs">
                                                 <div formGroupName="roi">
                                                     <input class="input-reg w-50"
                                                            formControlName="from"
-                                                           type="number">
+                                                           type="text">
                                                     <input class="input-reg w-50"
                                                            formControlName="to"
-                                                           type="number">
+                                                           type="text">
                                                 </div>
                                                 
                                             </div>
                                         </div>
                                         <div class="left__dates">
-                                            <div class="dates__label">
-                                                <div class="label__content flex__center-space">
-                                                    Dates (DD/MM/YY)
-                                                    <i class="fas fa-lock"></i>
-                                                </div>
+                                            <div class="dates__label flex__center-space">
+                                                Dates (DD/MM/YY)
+                                                <i class="fas fa-lock"></i>
                                             </div>
                                             <div formGroupName="dates">
                                                 <input class="input-reg w-50"
                                                        formControlName="from"
-                                                       [value]="updateForm.get('dates.to').value"
+                                                       [value]="updateForm.get('dates.from').value"
                                                        type="text">
                                                 <input class="input-reg w-50"
                                                        formControlName="to"
                                                        type="text">
                                             </div>
                                         </div>
-                                        <!-- TODO: disable these inputs (probably through form control) -->
                                         <div class="left__investments">
-                                            <div class="investments__label">
-                                                <div class="label__content flex__center-space">
-                                                    Investment per member €
-                                                    <i class="fas fa-lock"></i>
-                                                </div>
-                                                <app-money-input-field
-                                                        placeholder="Enter invest amount"
-                                                        inputClass="input-reg w-50">
-                                                </app-money-input-field>
-                                                <app-money-input-field
-                                                        placeholder="Enter invest amount"
-                                                        inputClass="input-reg w-50">
-                                                </app-money-input-field>
-                                                <!-- TODO: hook up form control: [control]="investForm.get('amount')" -->
+                                            <div class="investments__label flex__center-space">
+                                                Investment per member €
+                                                <i class="fas fa-lock"></i>
+                                            </div>
+
+                                            <div formGroupName="investments">
+                                                <input class="input-reg w-50"
+                                                       formControlName="from"
+                                                       type="text">
+                                                
+                                                <input class="input-reg w-50"
+                                                       formControlName="to"
+                                                       type="text">
                                             </div>
                                         </div>
                                         <div class="left__expected-funding">
-                                            <div class="label__content flex__center-space">
+                                            <div class="funding__label flex__center-space">
                                                 Expected funding €
                                                 <i class="fas fa-lock"></i>
                                             </div>
-                                            <app-money-input-field
-                                                    placeholder="Enter invest amount"
-                                                    inputClass="input-reg w-100">
-                                            </app-money-input-field>
+                                            <input class="input-reg w-100"
+                                                   formControlName="expected"
+                                                   type="text">
                                         </div>
                                     </div>
 
@@ -127,7 +120,7 @@
                                             <div class="upload__label">Project image</div>
                                             <div class="d-flex">
                                                 <div class="row">
-                                                    <div class="col-12">
+                                                    <div class="col-12 uppy">
                                                         <app-upload-area areaID='project-image' style="width: max-content"
                                                                          [restrictions]="{
                                                                             allowedFileTypes: ['image/*'],
@@ -175,7 +168,7 @@
                                                                          [filesControl]="updateForm.get('newDocuments')">
                                                         </app-upload-area>
                                                     </div>
-                                                    <div class="col-12">
+                                                    <div class="col-12 uppy">
                                                         <ng-container *ngIf="states.project.documents?.length > 0 else noDocuments">
                                                             <div *ngFor="let file of states.project.documents; let i = index">
                                                                 <div class="card">
@@ -221,7 +214,7 @@
                                                                    loadingText="Updating..."
                                                                    [disabled]="!updateForm.dirty || !updateForm.valid"
                                                                    [onClick]="updateProject(states.project, updateForm).bind(this)"
-                                                                   buttonClass="btn btn-primary">
+                                                                   buttonClass="btn">
                                                 </app-action-button>
                                             </div>
                                         </div>

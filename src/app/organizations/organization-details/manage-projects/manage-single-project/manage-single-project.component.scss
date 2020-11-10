@@ -1,18 +1,91 @@
 @import "app";
 
-.proj-image {
-    max-height: 300px;
-    object-fit: cover;
+.container {
+  padding: 0;
+  overflow: hidden;
 }
 
-@media (min-width: 800px) {
-    .pairing-text {
-        width: 50%;
+.app-page-header {
+  .btn {
+    &__text {
+      display: none;
     }
+    svg {
+      font-size: $font-size-mobile-title;
+    }
+  }
 }
+
+.edit-project {
+  padding: 0 20px;
+  .project {
+    &__img {
+      margin-right: -20px;
+      margin-left: -20px;
+    }
+    &__img img {
+      width: 100%;
+      height: 174px;
+      object-fit: cover;
+    }
+  }
+  .edit {
+    &__title {
+      letter-spacing: 1px;
+      color: $title-color;
+      text-transform: uppercase;
+      padding: 24px 0 6px 0;
+      h4 {
+        font-weight: normal;
+        font-size: $font-size-mobile-title;
+        margin-bottom: 0;
+      }
+    }
+    &__state {
+      font-size: $font-size-mobile-body;
+      font-weight: 500;
+      margin-bottom: 32px;
+    }
+    &-left {
+      margin-top: 20px;
+      label,
+      .roi__label,
+      .dates__label,
+      .investments__label,
+      .funding__label {
+        font-size: $font-size-mobile-title-small;
+        color: $body-color;
+        margin-bottom: 6px;
+        svg {
+          font-size: $font-size-mobile-title-small;
+          color: $icons-color;
+        }
+      }
+    }
+  }
+  .left {
+    &__name,
+    &__desc,
+    &__roi,
+    &__dates,
+    &__investments,
+    &__expected-funding {
+      margin-bottom: 24px;
+    }
+    &__desc textarea {
+      height: 180px;
+    }
+  }
+}
+
 
 @include media-breakpoint-up(lg) {
+  .container {
+    padding: 0 15px;
+  }
+
   .edit-project {
+    padding: 0;
     .project {
       &__img {
         display: none;

@@ -292,4 +292,10 @@ p {
   .funds__bottom {
     display: none;
   }
+
+  .col-lg:nth-of-type(3n) {
+    p {
+      border: none;
+    }
+  }
 }

@@ -58,7 +58,7 @@ export class NewPaymentOptionComponent implements OnInit, AfterViewInit {
         this.paymentService.createBankAccount(iban, bankCode, alias)
             .subscribe(() => {
                 SpinnerUtil.hideSpinner();
-                this.router.navigateCoop(['dash', 'payment_options']);
+                this.router.navigateCoop(['/dash', 'payment_options']);
             }, hideSpinnerAndDisplayError);
     }
 }

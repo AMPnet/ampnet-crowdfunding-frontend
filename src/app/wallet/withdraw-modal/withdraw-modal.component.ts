@@ -15,7 +15,7 @@ export class WithdrawModalComponent implements OnInit {
 
     addPaymentOptionClicked() {
         $('#withdraw-modal').modal('toggle');
-        this.router.navigateCoop(['dash', 'payment_options', 'new']);
+        this.router.navigateCoop(['/dash', 'payment_options', 'new']);
     }
 
     ngOnInit() {

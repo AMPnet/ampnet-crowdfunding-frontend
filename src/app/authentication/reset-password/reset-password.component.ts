@@ -45,7 +45,7 @@ export class ResetPasswordComponent implements OnInit {
                 title: 'Success',
                 text: 'Your password has been changed successfully.'
             })),
-            switchMap(() => this.router.navigateCoop(['']))
+            switchMap(() => this.router.navigateCoop(['/']))
         );
     }
 }

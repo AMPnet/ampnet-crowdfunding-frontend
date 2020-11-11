@@ -48,7 +48,7 @@ export class LogInModalComponent implements OnInit {
             this.loginService.socialLogin(res.provider, res.authToken)
                 .subscribe(_ => {
                     SpinnerUtil.hideSpinner();
-                    this.router.navigateCoop(['dash']);
+                    this.router.navigateCoop(['/dash']);
                 }, err => {
                     SpinnerUtil.hideSpinner();
                     swal('', err.error.message, 'warning');

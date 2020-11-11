@@ -53,7 +53,7 @@ export class NewPlatformBankAccountComponent implements OnInit, AfterViewInit {
         SpinnerUtil.showSpinner();
         this.service.createBankAccount(iban, bankCode, alias).subscribe(res => {
             SpinnerUtil.hideSpinner();
-            this.router.navigateCoop(['dash', 'admin', 'platform_bank_account']);
+            this.router.navigateCoop(['/dash', 'admin', 'platform_bank_account']);
         }, err => {
             hideSpinnerAndDisplayError(err);
         });

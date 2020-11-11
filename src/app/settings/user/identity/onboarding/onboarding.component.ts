@@ -30,7 +30,7 @@ export class OnboardingComponent {
                 private loginService: UserAuthService) {
         this.loaded$ = combineLatest([this.onboardingService.getSessionID(), this.loadIdentyumScript()]).pipe(
             take(1),
-            switchMap(([clientToken, _]) => this.setFlowManager(clientToken, this.appConfig.config.customConfig.identyum.startLanguage))
+            switchMap(([clientToken, _]) => this.setFlowManager(clientToken, this.appConfig.config.config.identyum.startLanguage))
         );
 
         this.finishedSubject = new Subject();

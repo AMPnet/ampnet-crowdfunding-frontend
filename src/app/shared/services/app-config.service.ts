@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { BackendHttpClient } from './backend-http-client.service';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
+import { Observable, of, ReplaySubject } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class AppConfigService {
     private appConfig: AppConfig;
+    private appConfigSubject = new ReplaySubject<AppConfig>(1);
 
     private readonly hostname = window.location.hostname;
     // private readonly hostname = 'staging.ampnet.io';
@@ -23,6 +24,8 @@ export class AppConfigService {
     get config(): AppConfig {
         return this.appConfig;
     }
+
+    config$ = this.appConfigSubject.asObservable();
 
     /**
      * Loads application configuration defaults and overriding them from `localStorage` or remote server.
@@ -41,10 +44,16 @@ export class AppConfigService {
                 remoteConfig.pipe(tap(config => this.setLocalConfig(key, config))) :
                 of(localConfig[key].config)),
             map(configRes => ({
-                ...AppConfigService.defaultConfig,
                 ...configRes,
+                config: {
+                    ...AppConfigService.defaultConfig.config,
+                    ...configRes.config
+                }
             } as AppConfig)),
-            tap(config => this.appConfig = config),
+            tap(config => {
+                this.appConfig = config;
+                this.appConfigSubject.next(config);
+            }),
         );
     }
 
@@ -105,7 +114,7 @@ export class AppConfigService {
 
     private static get defaultConfig(): AppConfig {
         return {
-            customConfig: environment.customConfig
+            config: environment.customConfig
         };
     }
 }
@@ -124,7 +133,7 @@ export interface AppConfig {
     name?: string;
     created_at?: Date;
     hostname?: string;
-    customConfig?: CustomConfig;
+    config?: CustomConfig;
 }
 
 export interface CustomConfig {

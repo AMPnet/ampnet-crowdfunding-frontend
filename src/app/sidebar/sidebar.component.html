@@ -1,6 +1,6 @@
 <div id="sidebar" appClickOutside (clickOutsideSidebar)="closeSidebar()">
     <div class="mt-2 mb-4">
-        <img id="logo-image" src="{{ appConfigService.config.customConfig.logo_url }}">
+        <img id="logo-image" alt="Logo" src="{{ appConfigService.config.config.logo_url }}">
     </div>
 
     <ng-container *ngIf="{

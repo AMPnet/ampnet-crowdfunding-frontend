@@ -23,14 +23,6 @@
   margin-top: 20px;
 }
 
-.input-reg {
-  border-right: none;
-}
-
-.input-reg.ng-invalid.ng-dirty[_ngcontent-nhd-c169]:not(form) {
-  border-right: none;
-}
-
 .organization {
   &-info {
     margin-top: 20px;
@@ -90,6 +82,14 @@
     padding: 0;
   }
 
+  .invite {
+    &__form {
+      .form__cta {
+        margin: 15px 0 10px 0;
+      }
+    }
+  }
+
   .users__list {
     .list__item {
       margin-bottom: 6px;
@@ -108,6 +108,14 @@
 }
 
 @include media-breakpoint-up(lg) {
+  .input-reg {
+    border-right: none;
+  }
+  
+  .input-reg.ng-invalid.ng-dirty[_ngcontent-nhd-c169]:not(form) {
+    border-right: none;
+  }
+
   .container {
     padding: 0 20px;
   }

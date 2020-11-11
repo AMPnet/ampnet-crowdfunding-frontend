@@ -19,8 +19,8 @@ export class AppComponent implements OnInit {
     ngOnInit() {
         new WOW().init();
 
-        this.title.setTitle(this.appConfigService.config.title);
+        this.title.setTitle(this.appConfigService.config.customConfig.title);
         this.document.getElementById('appFavicon')
-            .setAttribute('href', this.appConfigService.config.icon_url);
+            .setAttribute('href', this.appConfigService.config.customConfig.icon_url);
     }
 }

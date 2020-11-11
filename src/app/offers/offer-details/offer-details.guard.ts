@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 import { UserAuthService } from '../../shared/services/user/user-auth.service';
+import { RouterService } from '../../shared/services/router.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class OfferDetailsGuard implements CanActivate {
     constructor(private userAuthService: UserAuthService,
-                private router: Router) {
+                private router: RouterService) {
     }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree>
@@ -16,7 +17,7 @@ export class OfferDetailsGuard implements CanActivate {
 
         if (this.userAuthService.isLoggedIn()) {
             const projectUUID = route.params.id;
-            this.router.navigate([`/dash/offers/${projectUUID}`]);
+            this.router.navigateCoop([`/dash/offers/${projectUUID}`]);
             return false;
         }
 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SignupService } from '../../shared/services/user/signup.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import swal from 'sweetalert2';
 import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthService } from 'angularx-social-login';
@@ -9,6 +9,7 @@ import { UserAuthService } from '../../shared/services/user/user-auth.service';
 import { hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
 import { MustMatch } from './confirm-password-validator';
 import { switchMap } from 'rxjs/operators';
+import { RouterService } from '../../shared/services/router.service';
 
 
 @Component({
@@ -21,7 +22,7 @@ export class SignUpComponent implements OnInit {
 
     constructor(
         private signUpService: SignupService,
-        private router: Router,
+        private router: RouterService,
         private socialAuthService: SocialAuthService,
         private route: ActivatedRoute,
         private loginService: UserAuthService,
@@ -57,7 +58,7 @@ export class SignUpComponent implements OnInit {
                 this.loginService.socialLogin(provider, SocialRes.authToken)
                     .subscribe(_ => {
                         SpinnerUtil.hideSpinner();
-                        this.router.navigate(['/dash']);
+                        this.router.navigateCoop(['/dash']);
                     }, hideSpinnerAndDisplayError);
             }, err => {
                 SpinnerUtil.hideSpinner();
@@ -74,7 +75,7 @@ export class SignUpComponent implements OnInit {
             switchMap(_ => this.loginService.emailLogin(user.email, user.password))
         ).subscribe(() => {
             SpinnerUtil.hideSpinner();
-            this.router.navigate(['/dash/offers'])
+            this.router.navigateCoop(['/dash/offers'])
                 .then(() => swal('', 'Sign-up successful!', 'success'));
         }, hideSpinnerAndDisplayError);
     }

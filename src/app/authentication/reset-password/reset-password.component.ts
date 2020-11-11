@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { SignupService } from '../../shared/services/user/signup.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { PopupService } from '../../shared/services/popup.service';
 import { MustMatch } from '../sign-up/confirm-password-validator';
 import { displayBackendErrorRx } from '../../utilities/error-handler';
 import { switchMap } from 'rxjs/operators';
+import { RouterService } from '../../shared/services/router.service';
 
 @Component({
     selector: 'app-reset-password',
@@ -18,7 +19,7 @@ export class ResetPasswordComponent implements OnInit {
 
     constructor(private formBuilder: FormBuilder,
                 private signUpService: SignupService,
-                private router: Router,
+                private router: RouterService,
                 private popupService: PopupService,
                 private route: ActivatedRoute) {
 
@@ -44,7 +45,7 @@ export class ResetPasswordComponent implements OnInit {
                 title: 'Success',
                 text: 'Your password has been changed successfully.'
             })),
-            switchMap(() => this.router.navigate(['']))
+            switchMap(() => this.router.navigateCoop(['']))
         );
     }
 }

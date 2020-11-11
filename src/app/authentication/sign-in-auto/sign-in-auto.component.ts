@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { UserAuthService } from '../../shared/services/user/user-auth.service';
 import { displayBackendErrorRx } from '../../utilities/error-handler';
 import { catchError, tap } from 'rxjs/operators';
 import { EMPTY } from 'rxjs';
+import { RouterService } from '../../shared/services/router.service';
 
 @Component({
     selector: 'app-sign-in-auto',
@@ -12,7 +13,7 @@ import { EMPTY } from 'rxjs';
 export class SignInAutoComponent implements OnInit {
 
     constructor(private route: ActivatedRoute,
-                private router: Router,
+                private router: RouterService,
                 private loginService: UserAuthService) {
     }
 
@@ -30,11 +31,11 @@ export class SignInAutoComponent implements OnInit {
                 this.navigateHome();
                 return EMPTY;
             }),
-            tap(() => this.router.navigate(['/dash']))
+            tap(() => this.router.navigateCoop(['/dash']))
         ).subscribe();
     }
 
     navigateHome() {
-        this.router.navigate(['/']);
+        this.router.navigateCoop(['/']);
     }
 }

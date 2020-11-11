@@ -1,11 +1,11 @@
 import { Component, Input } from '@angular/core';
-import { Router } from '@angular/router';
 import { OrganizationService } from '../../../shared/services/project/organization.service';
 import { displayBackendErrorRx } from '../../../utilities/error-handler';
-import { Project, ProjectService, ProjectWallet } from '../../../shared/services/project/project.service';
+import { ProjectService, ProjectWallet } from '../../../shared/services/project/project.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
 import { MiddlewareService } from '../../../shared/services/middleware/middleware.service';
+import { RouterService } from '../../../shared/services/router.service';
 
 @Component({
     selector: 'app-manage-projects',
@@ -18,7 +18,7 @@ export class ManageProjectsComponent {
     refreshProjectsSubject = new BehaviorSubject<void>(null);
     projectsWallets$: Observable<ProjectWallet[]>;
 
-    constructor(private router: Router,
+    constructor(private router: RouterService,
                 private orgService: OrganizationService,
                 private middlewareService: MiddlewareService,
                 private projectService: ProjectService) {

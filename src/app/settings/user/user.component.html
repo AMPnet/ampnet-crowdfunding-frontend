@@ -28,7 +28,7 @@
                 </div>
             </div>
         </div>
-        <button routerLink="/dash/settings/user/identity"
+        <button [routerLink]="'/dash/settings/user/identity' | coopPath"
                 class="btn btn-primary p-3 mt-5 w-100">
             Update user information
         </button>

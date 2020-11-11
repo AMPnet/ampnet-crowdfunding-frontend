@@ -29,7 +29,7 @@ export class ArkaneService {
                 private appConfigService: AppConfigService,
                 private broadcastService: BroadcastService,
                 private popupService: PopupService) {
-        const arkaneConfig = this.appConfigService.config.arkane;
+        const arkaneConfig = this.appConfigService.config.customConfig.arkane;
         this.arkaneConnect = new ArkaneConnect(arkaneConfig.id, {
             environment: arkaneConfig.env,
         });

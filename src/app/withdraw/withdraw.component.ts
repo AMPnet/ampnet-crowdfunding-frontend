@@ -4,10 +4,10 @@ import { displayBackendErrorRx, hideSpinnerAndDisplayError } from '../utilities/
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { Withdraw, WithdrawService } from '../shared/services/wallet/withdraw.service';
 import { WalletService } from '../shared/services/wallet/wallet.service';
-import { Router } from '@angular/router';
 import { finalize, switchMap, tap } from 'rxjs/operators';
 import { ArkaneService } from '../shared/services/arkane.service';
 import { PopupService } from '../shared/services/popup.service';
+import { RouterService } from '../shared/services/router.service';
 
 @Component({
     selector: 'app-withdraw',
@@ -25,7 +25,7 @@ export class WithdrawComponent implements OnInit {
                 private walletService: WalletService,
                 private arkaneService: ArkaneService,
                 private popupService: PopupService,
-                private router: Router) {
+                private router: RouterService) {
     }
 
     ngOnInit() {
@@ -70,7 +70,7 @@ export class WithdrawComponent implements OnInit {
                 title: 'Transaction signed',
                 text: 'Transaction is being processed...'
             })),
-            switchMap(() => this.router.navigate(['/dash/wallet'])),
+            switchMap(() => this.router.navigateCoop(['/dash/wallet'])),
             finalize(() => SpinnerUtil.hideSpinner()),
         );
     }

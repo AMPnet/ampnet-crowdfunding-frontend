@@ -1,11 +1,12 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { PaymentService } from '../../shared/services/payment.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { BankCodeModel } from './bank-code-model';
 import 'bootstrap-select';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SpinnerUtil } from '../../utilities/spinner-utilities';
 import { hideSpinnerAndDisplayError } from '../../utilities/error-handler';
+import { RouterService } from '../../shared/services/router.service';
 
 declare var $: any;
 
@@ -21,7 +22,7 @@ export class NewPaymentOptionComponent implements OnInit, AfterViewInit {
     bankAccountForm: FormGroup;
 
     constructor(private paymentService: PaymentService,
-                private router: Router,
+                private router: RouterService,
                 private route: ActivatedRoute,
                 private fb: FormBuilder) {
 
@@ -57,7 +58,7 @@ export class NewPaymentOptionComponent implements OnInit, AfterViewInit {
         this.paymentService.createBankAccount(iban, bankCode, alias)
             .subscribe(() => {
                 SpinnerUtil.hideSpinner();
-                this.router.navigate(['dash', 'payment_options']);
+                this.router.navigateCoop(['dash', 'payment_options']);
             }, hideSpinnerAndDisplayError);
     }
 }

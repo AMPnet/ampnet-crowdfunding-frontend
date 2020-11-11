@@ -35,7 +35,6 @@ import { ManageSingleDepositComponent } from './manage-deposits/manage-single-de
 import { WithdrawComponent } from './withdraw/withdraw.component';
 import { WalletActivationComponent } from './wallet-activation/wallet-activation.component';
 import { CompleteOnboardingComponent } from './complete-onboarding/complete-onboarding.component';
-import { SummaryComponent } from './summary/summary.component';
 import { PlatformBankAccountComponent } from './platform-bank-account/platform-bank-account.component';
 import { NewPlatformBankAccountComponent } from './platform-bank-account/new-platform-bank-account/new-platform-bank-account.component';
 import { ExchangeComponent } from './exchange/exchange.component';
@@ -51,8 +50,9 @@ import { SignInAutoComponent } from './authentication/sign-in-auto/sign-in-auto.
 import { IdentityComponent } from './settings/user/identity/identity.component';
 import { UserGuard } from './settings/user/user.guard';
 import { UserComponent } from './settings/user/user.component';
+import { CoopGuard } from './shared/guards/coop.guard';
 
-const routes: Routes = [
+const appRoutes: Routes = [
     {
         path: '', component: PublicLayoutComponent,
         children: [
@@ -67,7 +67,6 @@ const routes: Routes = [
             {path: 'sign_in_auto/:email/:password', component: SignInAutoComponent},
         ]
     },
-    {path: 'summary', component: SummaryComponent},
     {
         path: 'dash', component: SecureLayoutComponent,
         canActivate: [AuthGuard],
@@ -99,7 +98,10 @@ const routes: Routes = [
             {path: 'manage_groups/:groupID/manage_project/:projectID', component: ManageSingleProjectComponent},
             {path: 'offers/:offerID/invest/:investAmount/verify_sign', component: VerifySignOfferComponent},
             {path: 'manage_groups/:groupID/manage_project/:projectID/manage_payments', component: ManagePaymentsComponent},
-            {path: 'manage_groups/:groupID/manage_project/:projectID/manage_payments/project_deposit', component: ProjectDepositComponent},
+            {
+                path: 'manage_groups/:groupID/manage_project/:projectID/manage_payments/project_deposit',
+                component: ProjectDepositComponent
+            },
             {
                 path: 'manage_groups/:groupID/manage_project/:projectID/manage_payments/project_withdraw',
                 component: ProjectWithdrawComponent
@@ -121,6 +123,16 @@ const routes: Routes = [
             {path: 'exchange', component: ExchangeComponent},
             {path: 'ownership', component: OwnershipComponent},
         ]
+    }
+];
+
+const routes: Routes = [
+    {
+        path: ':coopID', canActivate: [CoopGuard], children: appRoutes
+    },
+    {
+        path: '', pathMatch: 'full', canActivate: [CoopGuard], children: appRoutes
+        // redirectTo: '' // Ignore this. Redirect is managed inside the guard.
     }
 ];
 

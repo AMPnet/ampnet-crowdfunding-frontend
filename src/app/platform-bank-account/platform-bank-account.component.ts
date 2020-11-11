@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { PlatformBankAccount, PlatformBankAccountService } from '../shared/services/wallet/platform-bank-account.service';
 import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
+import { RouterService } from '../shared/services/router.service';
 
 @Component({
     selector: 'app-platform-bank-account',
@@ -14,7 +14,7 @@ export class PlatformBankAccountComponent implements OnInit {
 
     constructor(
         private service: PlatformBankAccountService,
-        private router: Router) {
+        private router: RouterService) {
     }
 
     ngOnInit() {
@@ -26,7 +26,7 @@ export class PlatformBankAccountComponent implements OnInit {
         this.service.bankAccounts$.subscribe(res => {
             SpinnerUtil.hideSpinner();
             if (res.bank_accounts.length === 0) {
-                this.router.navigate(['dash', 'admin', 'platform_bank_account', 'new'], {
+                this.router.navigateCoop(['dash', 'admin', 'platform_bank_account', 'new'], {
                     queryParams: {
                         'status': 'empty'
                     }

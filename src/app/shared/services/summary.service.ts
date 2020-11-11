@@ -1,19 +1,25 @@
 import { Injectable } from '@angular/core';
 import { BackendHttpClient } from './backend-http-client.service';
+import { AppConfigService } from './app-config.service';
 
 @Injectable({
-    'providedIn': 'root'
+    providedIn: 'root'
 })
 export class SummaryService {
-    constructor(private http: BackendHttpClient) {
+    constructor(private http: BackendHttpClient,
+                private appConfig: AppConfigService) {
     }
 
     getUsers() {
-        return this.http.get<CountRegisteredUsersResponse>('/api/user/public/user/count');
+        return this.http.get<CountRegisteredUsersResponse>('/api/user/public/user/count', {
+            coop: this.appConfig.config.identifier
+        });
     }
 
     getNumberOfActiveProjects() {
-        return this.http.get<CountActiveProjectsResponse>('/api/project/public/project/active/count');
+        return this.http.get<CountActiveProjectsResponse>('/api/project/public/project/active/count', {
+            coop: this.appConfig.config.identifier
+        });
     }
 
     getBlockchainMiddlewareData() {

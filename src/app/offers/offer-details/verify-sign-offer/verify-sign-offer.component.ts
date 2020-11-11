@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Project, ProjectService } from 'src/app/shared/services/project/project.service';
 import { displayBackendError, displayBackendErrorRx } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
@@ -8,6 +8,7 @@ import { WalletService } from '../../../shared/services/wallet/wallet.service';
 import { ArkaneService } from '../../../shared/services/arkane.service';
 import { switchMap } from 'rxjs/operators';
 import { PopupService } from '../../../shared/services/popup.service';
+import { RouterService } from '../../../shared/services/router.service';
 
 @Component({
     selector: 'app-verify-sign-offer',
@@ -20,7 +21,7 @@ export class VerifySignOfferComponent implements OnInit {
     project: Project;
 
     constructor(private route: ActivatedRoute,
-                private router: Router,
+                private router: RouterService,
                 private projectService: ProjectService,
                 private walletService: WalletService,
                 private arkaneService: ArkaneService,
@@ -54,7 +55,7 @@ export class VerifySignOfferComponent implements OnInit {
                 title: 'Transaction signed',
                 text: 'Transaction is being processed...'
             })),
-            switchMap(() => this.router.navigate(['/dash/wallet']))
+            switchMap(() => this.router.navigateCoop(['/dash/wallet']))
         );
     }
 }

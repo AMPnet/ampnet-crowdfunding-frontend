@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Meta } from '@angular/platform-browser';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { LinkPreview, NewsPreviewService } from 'src/app/shared/services/news-preview.service';
 import { UserService } from 'src/app/shared/services/user/user.service';
 import { displayBackendErrorRx } from 'src/app/utilities/error-handler';
@@ -16,6 +16,7 @@ import { TooltipDirective } from 'ngx-bootstrap/tooltip';
 import { PortfolioService, ProjectTransactions } from '../../shared/services/wallet/portfolio.service';
 import { PopupService } from '../../shared/services/popup.service';
 import { ArkaneService } from '../../shared/services/arkane.service';
+import { RouterService } from '../../shared/services/router.service';
 
 @Component({
     selector: 'app-offer-details',
@@ -44,7 +45,7 @@ export class OfferDetailsComponent implements OnInit {
                 private route: ActivatedRoute,
                 private userService: UserService,
                 private meta: Meta,
-                private router: Router,
+                private router: RouterService,
                 private modalService: BsModalService,
                 private portfolioService: PortfolioService,
                 private popupService: PopupService,
@@ -148,12 +149,12 @@ export class OfferDetailsComponent implements OnInit {
     backToPreviousScreen() {
         if (!this.isPortfolioView) {
             if (this.isOverview) {
-                this.router.navigate(['/overview/discover']);
+                this.router.navigateCoop(['/overview/discover']);
             } else {
-                this.router.navigate(['/dash/offers']);
+                this.router.navigateCoop(['/dash/offers']);
             }
         } else {
-            this.router.navigate(['/dash/my_portfolio']);
+            this.router.navigateCoop(['/dash/my_portfolio']);
         }
     }
 
@@ -178,7 +179,7 @@ export class OfferDetailsComponent implements OnInit {
     }
 
     goToInvest(projectUUID: string) {
-        this.router.navigate([`/dash/offers/${projectUUID}/invest`]);
+        this.router.navigateCoop([`/dash/offers/${projectUUID}/invest`]);
     }
 
     cancelInvestment(projectUUID: string) {
@@ -191,7 +192,7 @@ export class OfferDetailsComponent implements OnInit {
                     title: 'Transaction signed',
                     text: 'Transaction is being processed...'
                 })),
-                switchMap(() => this.router.navigate(['/dash/wallet']))
+                switchMap(() => this.router.navigateCoop(['/dash/wallet']))
             );
         };
     }

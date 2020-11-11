@@ -9,8 +9,9 @@ export class AppConfigService {
     private appConfig: AppConfig;
 
     private readonly hostname = window.location.hostname;
+    // private readonly hostname = 'staging.ampnet.io';
     private readonly localStorageKey = 'app_config';
-    private readonly cacheTimeoutMinutes = 10;
+    private readonly cacheTimeoutMinutes = 1;
 
     constructor(private http: BackendHttpClient) {
     }
@@ -25,33 +26,45 @@ export class AppConfigService {
 
     /**
      * Loads application configuration defaults and overriding them from `localStorage` or remote server.
-     * This method is only meant to be used in a provider when the application starts.
      */
-    load(): Promise<AppConfig> {
-        const localConfig = this.localConfig(this.hostname);
-        const configStoredAt = new Date(localConfig[this.hostname].stored_at).getTime();
+    load(identifier?: ConfigKey): Observable<AppConfig> {
+        const remoteConfig = identifier !== undefined ? this.remoteConfigByIdentifier(identifier) :
+            this.remoteConfigByHostname(this.hostname);
+
+        const key = !!identifier ? identifier : this.hostname;
+        const localConfig = this.localConfig(key);
+        const configStoredAt = new Date(localConfig[key].stored_at).getTime();
         const offsetMillis = (new Date().getTime()) - configStoredAt;
 
         return of(offsetMillis > this.cacheTimeoutMinutes * 60 * 1000).pipe(
             switchMap(shouldRefresh => shouldRefresh ?
-                this.remoteConfig.pipe(tap(config => this.setLocalConfig(config))) :
-                of(localConfig.config)),
-            map(config => ({
+                remoteConfig.pipe(tap(config => this.setLocalConfig(key, config))) :
+                of(localConfig[key].config)),
+            map(configRes => ({
                 ...AppConfigService.defaultConfig,
-                ...config
+                ...configRes,
             } as AppConfig)),
-            tap(config => this.appConfig = config)
-        ).toPromise();
-    }
-
-    private get remoteConfig(): Observable<AppConfig> {
-        return this.http.get<AppConfigRes>(`/api/user/public/app/config/${this.hostname}`).pipe(
-            map(res => res.config),
-            catchError(() => of(null))
+            tap(config => this.appConfig = config),
         );
     }
 
-    private localConfig(hostname: string): AppConfigStore {
+    private remoteConfigByHostname(hostname: string) {
+        return this.http.get<AppConfig>(`/api/user/public/app/config/hostname/${hostname}`).pipe(
+            catchError(() => of(<AppConfig>{
+                config: null
+            }))
+        );
+    }
+
+    private remoteConfigByIdentifier(identifier: string): Observable<AppConfig> {
+        return this.http.get<AppConfig>(`/api/user/public/app/config/identifier/${identifier}`).pipe(
+            catchError(() => of(<AppConfig>{
+                config: null
+            }))
+        );
+    }
+
+    private localConfig(key: ConfigKey): AppConfigStore {
         const storageData = localStorage.getItem(this.localStorageKey) || '';
 
         let config: AppConfigStore;
@@ -61,8 +74,8 @@ export class AppConfigService {
             config = {};
         }
 
-        if (!config[hostname]) {
-            config[hostname] = {
+        if (!!key && !config[key]) {
+            config[key] = {
                 stored_at: new Date(0),
                 config: null
             };
@@ -71,33 +84,50 @@ export class AppConfigService {
         return config;
     }
 
-    private setLocalConfig(config: AppConfig) {
-        const configToStore = this.localConfig(this.hostname);
-        configToStore[this.hostname] = {
+    private setLocalConfig(key: ConfigKey, appConfig: AppConfig) {
+        if (!this.shouldSetLocalConfig(key, appConfig)) { return; }
+
+        const configToStore = this.localConfig(key);
+        configToStore[key] = {
             stored_at: new Date(),
-            config: config
+            config: appConfig
         };
 
         localStorage.setItem(this.localStorageKey, JSON.stringify(configToStore));
     }
 
+    private shouldSetLocalConfig(key: ConfigKey, appConfig: AppConfig): boolean {
+        const noCoopFound = !appConfig.hostname && !appConfig.identifier;
+        const keyMatch = key === appConfig.hostname || key === appConfig.identifier;
+
+        return !!key && (noCoopFound || keyMatch);
+    }
+
     private static get defaultConfig(): AppConfig {
-        return environment.appConfig;
+        return {
+            customConfig: environment.customConfig
+        };
     }
 }
 
+export type ConfigKey = string | null | undefined;
+
 interface AppConfigStore {
-    [hostname: string]: {
+    [hostnameOrIdentifier: string]: {
         stored_at: Date;
         config: AppConfig;
     };
 }
 
-interface AppConfigRes {
-    config: AppConfig;
+export interface AppConfig {
+    identifier?: string;
+    name?: string;
+    created_at?: Date;
+    hostname?: string;
+    customConfig?: CustomConfig;
 }
 
-export interface AppConfig {
+export interface CustomConfig {
     title: string;
     logo_url: string;
     icon_url: string;

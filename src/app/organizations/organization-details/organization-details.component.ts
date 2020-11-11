@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { displayBackendErrorRx } from 'src/app/utilities/error-handler';
 import { Wallet, WalletService } from '../../shared/services/wallet/wallet.service';
@@ -9,6 +9,7 @@ import { catchError, finalize, map, switchMap, tap } from 'rxjs/operators';
 import { ArkaneService } from '../../shared/services/arkane.service';
 import { PopupService } from '../../shared/services/popup.service';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { RouterService } from '../../shared/services/router.service';
 
 @Component({
     selector: 'app-organization-details',
@@ -27,7 +28,7 @@ export class OrganizationDetailsComponent implements OnInit {
     inviteForm: FormGroup;
 
     constructor(private activatedRoute: ActivatedRoute,
-                private router: Router,
+                private router: RouterService,
                 private organizationService: OrganizationService,
                 private walletService: WalletService,
                 private arkaneService: ArkaneService,
@@ -148,11 +149,11 @@ export class OrganizationDetailsComponent implements OnInit {
     }
 
     private recoverBack(): Observable<never> {
-        this.router.navigate(['/dash/manage_groups']);
+        this.router.navigateCoop(['/dash/manage_groups']);
         return EMPTY;
     }
 
     backToGroupsScreen() {
-        this.router.navigate(['/dash/manage_groups']);
+        this.router.navigateCoop(['/dash/manage_groups']);
     }
 }

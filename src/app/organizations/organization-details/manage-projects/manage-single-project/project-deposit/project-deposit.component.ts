@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { EMPTY, Observable } from 'rxjs';
 import { Deposit, DepositServiceService } from '../../../../../shared/services/wallet/deposit-service.service';
 import { PlatformBankAccountService } from '../../../../../shared/services/wallet/platform-bank-account.service';
 import { displayBackendErrorRx } from '../../../../../utilities/error-handler';
 import { PopupService } from '../../../../../shared/services/popup.service';
+import { RouterService } from '../../../../../shared/services/router.service';
 
 @Component({
     selector: 'app-project-deposit',
@@ -18,7 +19,7 @@ export class ProjectDepositComponent {
 
     constructor(private depositService: DepositServiceService,
                 private route: ActivatedRoute,
-                private router: Router,
+                private router: RouterService,
                 private popupService: PopupService,
                 private bankAccountService: PlatformBankAccountService) {
         const projectUUID = this.route.snapshot.params.projectID;
@@ -46,7 +47,7 @@ export class ProjectDepositComponent {
     }
 
     private recoverBack(): Observable<never> {
-        this.router.navigate(['../'], { relativeTo: this.route });
+        this.router.navigateCoop(['../'], {relativeTo: this.route});
         return EMPTY;
     }
 }

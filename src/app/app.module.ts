@@ -57,13 +57,12 @@ import { UserActivationComponent } from './wallet-activation/user-activation/use
 import { GroupActivationComponent } from './wallet-activation/group-activation/group-activation.component';
 import { ProjectActivationComponent } from './wallet-activation/project-activation/project-activation.component';
 import { CompleteOnboardingComponent } from './complete-onboarding/complete-onboarding.component';
-import { SummaryComponent } from './summary/summary.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { PlatformBankAccountComponent } from './platform-bank-account/platform-bank-account.component';
 import { NewPlatformBankAccountComponent } from './platform-bank-account/new-platform-bank-account/new-platform-bank-account.component';
 import { ExchangeComponent } from './exchange/exchange.component';
 import { OwnershipComponent } from './ownership/ownership.component';
-import { CurrencyDefaultPipe } from './pipes/currency-default.pipe';
+import { CurrencyDefaultPipe } from './shared/pipes/currency-default.pipe';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TxAmountSign, TxIconStatus, TxIconType } from './wallet/wallet.pipe';
 import { UserStateReminderComponent } from './user-state-reminder/user-state-reminder.component';
@@ -74,13 +73,13 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { LocationMapComponent } from './location-map/location-map.component';
 import { MapModalComponent } from './location-map/map-modal/map-modal.component';
 import { ActionButtonComponent } from './shared/components/action-button/action-button.component';
-import { CurrencyCentsPipe } from './pipes/currency-cents.pipe';
+import { CurrencyCentsPipe } from './shared/pipes/currency-cents.pipe';
 import { environment } from '../environments/environment.prod';
 import { MoneyInputFieldComponent } from './shared/components/money-input-field/money-input-field.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { UploadAreaComponent } from './shared/components/upload-area/upload-area.component';
-import { SafePipe } from './pipes/safe.pipe';
+import { SafePipe } from './shared/pipes/safe.pipe';
 import { URLValidator } from './shared/validators/url.validator';
 import { ForgotPasswordComponent } from './authentication/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './authentication/reset-password/reset-password.component';
@@ -90,13 +89,15 @@ import { RevenueShareConfirmModalComponent } from './organizations/organization-
 import { ProjectDepositComponent } from './organizations/organization-details/manage-projects/manage-single-project/project-deposit/project-deposit.component';
 import { ProjectWithdrawComponent } from './organizations/organization-details/manage-projects/manage-single-project/project-withdraw/project-withdraw.component';
 import { TabsModule } from 'ngx-bootstrap/tabs';
-import { DatePipe } from '@angular/common';
+import { APP_BASE_HREF, DatePipe } from '@angular/common';
 import { SignInAutoComponent } from './authentication/sign-in-auto/sign-in-auto.component';
 import { AppConfigService } from './shared/services/app-config.service';
 import { ClickOutsideDirective } from './navbar/directives/click-outside.directive';
 import { UserComponent } from './settings/user/user.component';
 import { IdentityComponent } from './settings/user/identity/identity.component';
+import { CoopPathPipe } from './shared/pipes/coop-path.pipe';
 
+// TODO: setup config to use values from app config service.
 const socialAuthServiceConfig = {
     provide: 'SocialAuthServiceConfig',
     useValue: {
@@ -104,11 +105,11 @@ const socialAuthServiceConfig = {
         providers: [
             {
                 id: GoogleLoginProvider.PROVIDER_ID,
-                provider: new GoogleLoginProvider(environment.appConfig.googleClientId),
+                provider: new GoogleLoginProvider(environment.customConfig.googleClientId),
             },
             {
                 id: FacebookLoginProvider.PROVIDER_ID,
-                provider: new FacebookLoginProvider(environment.appConfig.facebookAppId),
+                provider: new FacebookLoginProvider(environment.customConfig.facebookAppId),
             },
         ]
     } as SocialAuthServiceConfig
@@ -166,13 +167,13 @@ const socialAuthServiceConfig = {
         GroupActivationComponent,
         ProjectActivationComponent,
         CompleteOnboardingComponent,
-        SummaryComponent,
         PlatformBankAccountComponent,
         NewPlatformBankAccountComponent,
         ExchangeComponent,
         OwnershipComponent,
         CurrencyDefaultPipe,
         CurrencyCentsPipe,
+        CoopPathPipe,
         RevenueShareComponent,
         TxIconType,
         UserStateReminderComponent,
@@ -197,7 +198,7 @@ const socialAuthServiceConfig = {
         ClickOutsideDirective,
         SignInAutoComponent,
         UserComponent,
-        IdentityComponent
+        IdentityComponent,
     ],
     imports: [
         BrowserModule,
@@ -221,19 +222,26 @@ const socialAuthServiceConfig = {
         MapModalComponent
     ],
     providers: [
-        socialAuthServiceConfig,
-        {
-            provide: DEFAULT_CURRENCY_CODE, useValue: 'EUR',
-        },
-        DatePipe,
-        SafePipe,
         AppConfigService,
         {
             provide: APP_INITIALIZER,
-            useFactory: (config: AppConfigService) => () => config.load(),
+            useFactory: (config: AppConfigService) =>
+                () => config.load().toPromise(),
             multi: true,
             deps: [AppConfigService]
-        }
+        },
+        {
+            provide: APP_BASE_HREF,
+            useValue: environment.baseHref,
+        },
+        socialAuthServiceConfig,
+        {
+            provide: DEFAULT_CURRENCY_CODE,
+            useValue: 'EUR', // TODO: Set this from app config service.
+        },
+        DatePipe,
+        SafePipe,
+        CoopPathPipe
     ],
     bootstrap: [AppComponent]
 })

@@ -4,11 +4,11 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 import { SpinnerUtil } from '../../../../../../../utilities/spinner-utilities';
 import { displayBackendErrorRx } from '../../../../../../../utilities/error-handler';
 import { RevenueShareService } from '../../../../../../../shared/services/wallet/revenue-share.service';
-import { ActivatedRoute, Route, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { finalize, switchMap, tap } from 'rxjs/operators';
 import { ArkaneService } from '../../../../../../../shared/services/arkane.service';
 import { PopupService } from '../../../../../../../shared/services/popup.service';
-import { EMPTY, from } from 'rxjs';
+import { RouterService } from '../../../../../../../shared/services/router.service';
 
 @Component({
     selector: 'app-revenue-share-confirm-modal',
@@ -23,7 +23,7 @@ export class RevenueShareConfirmModalComponent implements OnInit {
 
     confirmForm: FormGroup;
 
-    constructor(private router: Router,
+    constructor(private router: RouterService,
                 private bsModalRef: BsModalRef,
                 private formBuilder: FormBuilder,
                 private revenueShareService: RevenueShareService,
@@ -48,7 +48,7 @@ export class RevenueShareConfirmModalComponent implements OnInit {
                 title: 'Transaction signed',
                 text: 'Transaction is being processed...'
             })),
-            tap(() => this.router.navigate([`/dash/manage_groups/${this.orgID}/manage_project/${this.projectID}/manage_payments`])),
+            tap(() => this.router.navigateCoop([`/dash/manage_groups/${this.orgID}/manage_project/${this.projectID}/manage_payments`])),
             finalize(() => SpinnerUtil.hideSpinner())
         );
     }

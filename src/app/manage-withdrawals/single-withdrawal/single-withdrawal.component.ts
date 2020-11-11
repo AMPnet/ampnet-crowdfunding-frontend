@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { displayBackendErrorRx } from 'src/app/utilities/error-handler';
 import {
     CoopWithdraw,
@@ -9,6 +9,7 @@ import { PopupService } from '../../shared/services/popup.service';
 import { switchMap } from 'rxjs/operators';
 import { ArkaneService } from '../../shared/services/arkane.service';
 import { Observable } from 'rxjs';
+import { RouterService } from '../../shared/services/router.service';
 
 @Component({
     selector: 'app-single-withdrawal',
@@ -23,7 +24,7 @@ export class SingleWithdrawalComponent implements OnInit {
                 private withdrawCoopService: WalletCooperativeWithdrawService,
                 private arkaneService: ArkaneService,
                 private popupService: PopupService,
-                private router: Router) {
+                private router: RouterService) {
     }
 
     ngOnInit() {
@@ -40,7 +41,7 @@ export class SingleWithdrawalComponent implements OnInit {
                 title: 'Transaction signed',
                 text: 'Transaction is being processed...'
             })),
-            switchMap(() => this.router.navigate(['/dash/manage_withdrawals']))
+            switchMap(() => this.router.navigateCoop(['/dash/manage_withdrawals']))
         );
     }
 }

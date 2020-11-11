@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { displayBackendErrorRx } from 'src/app/utilities/error-handler';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import {
     DepositSearchResponse,
@@ -12,9 +12,10 @@ import { catchError, finalize, switchMap } from 'rxjs/operators';
 import { ArkaneService } from '../../shared/services/arkane.service';
 import { PopupService } from '../../shared/services/popup.service';
 import { EMPTY, Observable, of } from 'rxjs';
-import { CurrencyDefaultPipe } from '../../pipes/currency-default.pipe';
+import { CurrencyDefaultPipe } from '../../shared/pipes/currency-default.pipe';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { FileValidator } from '../../shared/validators/file.validator';
+import { RouterService } from '../../shared/services/router.service';
 
 @Component({
     selector: 'app-manage-single-deposit',
@@ -34,7 +35,7 @@ export class ManageSingleDepositComponent implements OnInit {
                 private popupService: PopupService,
                 private fb: FormBuilder,
                 private currencyPipe: CurrencyDefaultPipe,
-                private router: Router) {
+                private router: RouterService) {
         const id = this.route.snapshot.params.ID;
         this.deposit$ = this.getDepositProcedure(id);
     }
@@ -74,7 +75,7 @@ export class ManageSingleDepositComponent implements OnInit {
                         switchMap(() => EMPTY)
                     );
                 } else {
-                    this.router.navigate(['/dash/manage_deposits']);
+                    this.router.navigateCoop(['/dash/manage_deposits']);
                     return EMPTY;
                 }
             }),
@@ -91,7 +92,7 @@ export class ManageSingleDepositComponent implements OnInit {
                 title: 'Transaction signed',
                 text: 'Transaction is being processed...'
             })),
-            switchMap(() => this.router.navigate(['/dash/manage_deposits']))
+            switchMap(() => this.router.navigateCoop(['/dash/manage_deposits']))
         );
     }
 
@@ -119,7 +120,7 @@ export class ManageSingleDepositComponent implements OnInit {
     }
 
     private recoverBack(): Observable<never> {
-        this.router.navigate(['/dash/manage_deposits'], { relativeTo: this.route });
+        this.router.navigateCoop(['/dash/manage_deposits'], {relativeTo: this.route});
         return EMPTY;
     }
 }

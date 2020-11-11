@@ -119,3 +119,13 @@
 .d-contents {
   display: contents;
 }
+
+@include media-breakpoint-up(lg) {
+  .container {
+    max-width: 1192px;
+  }
+}
+
+.map-holder {
+  height: 450px;
+}

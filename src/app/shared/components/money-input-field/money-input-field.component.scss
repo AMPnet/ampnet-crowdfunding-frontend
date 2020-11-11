@@ -1,5 +1,12 @@
 @import "app";
 
+.border-left-none {
+  border-left: unset;
+  &:focus {
+    border-left: 1px solid $primary-color;
+  }
+}
+
 @include media-breakpoint-up(lg) {
   .invest {
     margin: 17px 0 8px 0;

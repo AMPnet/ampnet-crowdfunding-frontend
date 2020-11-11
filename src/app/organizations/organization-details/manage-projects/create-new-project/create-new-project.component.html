@@ -1,98 +1,101 @@
-<div class="container root-content-container">
-    <h5 class=" gray-text"><b>Create a new project</b></h5>
-    <div class="mt-3 mb-3 w-100">
-        <div class="alert alert-info text-left">
-            <div class="ml-4">
-                Once a project is created, the following parameters cannot be changed:
-                <ul class="mt-3">
-                    <li>Start date</li>
-                    <li>End date</li>
-                    <li>Minimum funding per user</li>
-                    <li>Maximum funding per user</li>
-                    <li>Expected funding</li>
-                </ul>
-                <div class="mt-3">
-                    Please make sure these parameters are finalized <i>before</i> creating the project.
-                </div>
-            </div>
-        </div>
+<div class="container">
+    <div class="app-page-title-back" (click)="backToOrganizationDetailsScreen()">
+        <i class="fas fa-long-arrow-alt-left mr-3"></i>
+        Back
     </div>
     <form [formGroup]="createForm" class="mb-5">
-        <div class="explainer-mini mb-2 mt-3">Project name</div>
-        <input class="w-100 p-4 form-control" formControlName="name" id="" name="" type="text">
-
-        <div class="explainer-mini mb-2 mt-3">Project description</div>
-        <textarea class="form-control p-4" cols="30" id="project-description" name=""
-                  formControlName="description"
-                  rows="10" style="border-radius: 5px!important;">
-        </textarea>
-
-        <div class="explainer-mini mb-2 mt-3">Project location</div>
-        <app-location-map [editable]="true"
-                          [(lat)]="mapLat" [(lng)]="mapLong">
-        </app-location-map>
-
-        <div class="explainer-mini mb-2 mt-3">Start date</div>
-        <input class="w-100 p-4 form-control" formControlName="startDate"
-               id="start-date" placeholder="dd/mm/yyyy" bsDatepicker
-               [bsConfig]="bsConfig" (click)="setDatepickerOptions()">
-
-        <div class="explainer-mini mb-2 mt-3">End date</div>
-        <input class="w-100 p-4 form-control" formControlName="endDate"
-               id="end-date" placeholder="dd/mm/yyyy" bsDatepicker
-               [bsConfig]="bsConfig" (click)="setDatepickerOptions()">
-
-        <div class="explainer-mini mb-2 mt-3">Expected funding</div>
-        <app-money-input-field
-                placeholder="Enter expected funding amount"
-                inputClass="form-control p-4"
-                [control]="createForm.get('expectedFunding')">
-        </app-money-input-field>
-
-        <div class="explainer-mini mb-2 mt-3">Minimum investment per user</div>
-        <app-money-input-field
-                placeholder="Enter minimum investment per user"
-                inputClass="form-control p-4"
-                [control]="createForm.get('minPerUser')">
-        </app-money-input-field>
-
-        <div class="explainer-mini mb-2 mt-3">Maximum investment per user</div>
-        <app-money-input-field
-                placeholder="Enter maximum investment per user"
-                inputClass="form-control p-4"
-                [control]="createForm.get('maxPerUser')">
-        </app-money-input-field>
-
-        <div *ngIf="createForm.dirty && createForm.invalid">
-            <ng-container *ngIf="createForm.get('startDate').dirty
-                                    && createForm.get('endDate').dirty">
-                <div class="alert alert-warning flex__center mb-2 mt-3"
-                     *ngIf="createForm.hasError('invalidStartEndDate')">
-                    <i class="fas fa-exclamation-triangle mr-2"></i>
-                    Start date has to be lower than the end date.
+        <div class="row project-container">
+            <div class="project-right col-lg-6">
+                <h4 class="right__title">Create a new project</h4>
+                <div class="right__input-name">
+                    <div class="input__label">Project name</div>
+                    <input class="input-reg w-100" formControlName="name"
+                           type="text" placeholder="Enter project name"/>
                 </div>
-            </ng-container>
-
-            <ng-container *ngIf="createForm.get('expectedFunding').dirty
-                                    && createForm.get('minPerUser').dirty
-                                    && createForm.get('maxPerUser').dirty">
-                <div class="alert alert-warning flex__center mb-2 mt-3"
-                     *ngIf="createForm.hasError('invalidMaxExpectedFunding')">
-                    <i class="fas fa-exclamation-triangle mr-2"></i>
-                    Maximum investment per user cannot be greater than project expected funding.
+                <div class="right__input-dates">
+                    <div class="input__desc flex__center-space">
+                        <div class="input__label">Dates (DD/MM/YY)</div>
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <input class="input-reg w-50" formControlName="startDate"
+                           id="start-date" placeholder="Enter start date" bsDatepicker
+                           [bsConfig]="bsConfig" (click)="setDatepickerOptions()"/>
+                    <input class="input-reg w-50" formControlName="endDate"
+                           id="end-date" placeholder="Enter end date" bsDatepicker
+                           [bsConfig]="bsConfig" (click)="setDatepickerOptions()"/>
                 </div>
-                <div class="alert alert-warning flex__center mb-2 mt-3"
-                     *ngIf="createForm.hasError('invalidMinMax')">
-                    <i class="fas fa-exclamation-triangle mr-2"></i>
-                    Minimum investment per user cannot be greater than maximum investment per user.
+                <div class="right__input-investments">
+                    <div class="input__desc flex__center-space">
+                        <div class="input__label">Investment per member €</div>
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <app-money-input-field
+                        placeholder="Enter minimal amount" inputClass="input-reg w-50"
+                        [control]="createForm.get('minPerUser')">
+                    </app-money-input-field>
+                    <app-money-input-field
+                        placeholder="Enter maximal amount" inputClass="input-reg w-50 border-left-none"
+                        [control]="createForm.get('maxPerUser')">
+                    </app-money-input-field>
                 </div>
-            </ng-container>
-        </div>
+                <div class="right__input-funding">
+                    <div class="input__desc flex__center-space">
+                        <div class="input__label">Expected funding €</div>
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <app-money-input-field
+                        placeholder="Enter expected funding amount"
+                        inputClass="input-reg w-100"
+                        [control]="createForm.get('expectedFunding')">
+                    </app-money-input-field>
+                </div>
+                <div class="right__warning">
+                    <i class="fas fa-lock"></i>
+                    <div>
+                        <span>Date, Investment per member</span> and <span>Expected funding</span> can't be changed once
+                        project is created.
+                    </div>
+                </div>
+                <div *ngIf="createForm.dirty && createForm.invalid">
+                    <ng-container *ngIf="createForm.get('startDate').dirty && createForm.get('endDate').dirty">
+                        <div class="alert alert-warning my-3" *ngIf="createForm.hasError('invalidStartEndDate')">
+                            <i class="fas fa-exclamation-triangle mr-2"></i>
+                            <div>Start date has to be lower than the end date.</div>
+                        </div>
+                    </ng-container>
 
-        <div class="explainer-mini mb-2 mt-3">
-            <app-action-button text="Create" loadingText="Creating project..."
-                               [onClick]="submitForm.bind(this)"
-                               [disabled]="!createForm.valid">
+                    <ng-container
+                        *ngIf="createForm.get('expectedFunding').dirty && createForm.get('minPerUser').dirty &&
+                               createForm.get('maxPerUser').dirty">
+                        <div class="alert alert-warning my-3" *ngIf="createForm.hasError('invalidMaxExpectedFunding')">
+                            <i class="fas fa-exclamation-triangle mr-2"></i>
+                            <div>Maximum investment per user cannot be greater than project expected funding.</div>
+                        </div>
+                        <div class="alert alert-warning my-3" *ngIf="createForm.hasError('invalidMinMax')">
+                            <i class="fas fa-exclamation-triangle mr-2"></i>
+                            <div>Minimum investment per user cannot be greater than maximum investment per user.</div>
+                        </div>
+                    </ng-container>
+                </div>
+                <app-action-button
+                    text="Create new project" loadingText="Creating project..."
+                    [onClick]="submitForm.bind(this)" [disabled]="!createForm.valid"
+                    buttonClass="btn btn-primary btn-success d-none d-lg-block"
+                    faIcon="fa-plus">
+                </app-action-button>
+            </div>
+
+            <div class="project-left col-lg-6">
+                <div class="map-holder">
+                    <app-location-map [editable]="true" [(lat)]="mapLat" [(lng)]="mapLong"></app-location-map>
+                </div>
+            </div>
+
+            <app-action-button
+                text="Create new project" loadingText="Creating project..."
+                [onClick]="submitForm.bind(this)" [disabled]="!createForm.valid"
+                buttonClass="btn btn-success d-block d-lg-none"
+                faIcon="fa-plus" class="w-100">
             </app-action-button>
         </div>
     </form>

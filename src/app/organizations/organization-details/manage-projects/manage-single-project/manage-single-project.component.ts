@@ -73,10 +73,8 @@ export class ManageSingleProjectComponent {
                 return fb.group({
                     name: [project.name, Validators.required],
                     description: [project.description, Validators.minLength(3)],
-                    roi: fb.group({
-                        from: [project.roi.from],
-                        to: [project.roi.to],
-                    }),
+                    roiFrom: [project.roi.from],
+                    roiTo: [project.roi.to],
                     dates: fb.group({
                         from: [{value: dateFrom, disabled: true}],
                         to: [{value: dateTo, disabled: true}]
@@ -172,8 +170,8 @@ export class ManageSingleProjectComponent {
                 description: controls['description'].value,
                 location: controls['location'].value,
                 roi: {
-                    from: Number(controls['roi'].value.from),
-                    to: Number(controls['roi'].value.to)
+                    from: Number(controls['roiFrom'].value),
+                    to: Number(controls['roiTo'].value)
                 }
             }, controls['newImage'].value, controls['newDocuments'].value).pipe(
                 displayBackendErrorRx(),

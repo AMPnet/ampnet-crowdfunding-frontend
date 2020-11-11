@@ -22,10 +22,10 @@
                     </div>
                 </ng-container>
 
-                <!-- TODO: Check this alert and style properly -->
                 <div *ngIf="!isWalletVerified(states.wallet)">
-                    <div class="alert alert-warning">
-                        This project is pending approval from admin. During this time, the project cannot be publicly shown.
+                    <div class="alert alert-warning flex__center">
+                        <i class="fas fa-exclamation-triangle mr-3"></i>
+                        <b>This project is pending approval from admin. During this time, the project cannot be publicly shown.</b>
                     </div>
                 </div>
 
@@ -62,15 +62,12 @@
                                         <div class="left__roi">
                                             <div class="roi__label">Expected ROI %</div>
                                             <div class="roi__inputs">
-                                                <div formGroupName="roi">
-                                                    <input class="input-reg w-50"
-                                                           formControlName="from"
-                                                           type="text">
-                                                    <input class="input-reg w-50"
-                                                           formControlName="to"
-                                                           type="text">
-                                                </div>
-                                                
+                                                <input class="input-reg w-50"
+                                                       formControlName="roiFrom"
+                                                       type="text">
+                                                <input class="input-reg w-50"
+                                                       formControlName="roiTo"
+                                                       type="text">
                                             </div>
                                         </div>
                                         <div class="left__dates">
@@ -120,17 +117,17 @@
                                             <div class="upload__label">Project image</div>
                                             <div class="d-flex">
                                                 <div class="row">
-                                                    <div class="col-12 uppy">
-                                                        <app-upload-area areaID='project-image' style="width: max-content"
+                                                    <div class="col-12 uppy-img">
+                                                        <app-upload-area areaID='project-image' style="width: max-content;"
                                                                          [restrictions]="{
                                                                             allowedFileTypes: ['image/*'],
                                                                             maxFileSize: 10 * 1024 * 1024,
                                                                             maxNumberOfFiles: 1
                                                                          }"
                                                                          [firstFileControl]="updateForm.get('newImage')">
-                                                        </app-upload-area>   
+                                                        </app-upload-area> 
                                                     </div>
-                                                    <div class="col-12">
+                                                    <div class="col-12 uppy-img__content">
                                                         <ng-container
                                                                 *ngIf="updateForm.get('newImage').value || states.project.main_image else noProjectImageSet">
                                                             <img [src]="(updateForm.get('newImage').value | safe:'fileUrl') || states.project.main_image"
@@ -148,10 +145,12 @@
     
                                         <div class="right__location">
                                             <div class="location__label">Location</div>
-                                            <app-location-map [editable]="true"
-                                                              [latControl]="updateForm.get('location.lat')"
-                                                              [lngControl]="updateForm.get('location.long')">
-                                            </app-location-map>
+                                            <div class="map-holder">
+                                                <app-location-map [editable]="true"
+                                                                  [latControl]="updateForm.get('location.lat')"
+                                                                  [lngControl]="updateForm.get('location.long')">
+                                                </app-location-map>
+                                            </div>
                                         </div>
     
                                         <div class="right__upload-docs">
@@ -168,7 +167,7 @@
                                                                          [filesControl]="updateForm.get('newDocuments')">
                                                         </app-upload-area>
                                                     </div>
-                                                    <div class="col-12 uppy">
+                                                    <div class="col-12 uppy-docs">
                                                         <ng-container *ngIf="states.project.documents?.length > 0 else noDocuments">
                                                             <div *ngFor="let file of states.project.documents; let i = index">
                                                                 <div class="card">
@@ -191,7 +190,7 @@
                                                             </div>
                                                         </ng-container>
                                                         <ng-template #noDocuments>
-                                                            <div class="text-center">
+                                                            <div class="text-center uppy-docs__content">
                                                                 No files added
                                                             </div>
                                                         </ng-template>
@@ -214,11 +213,11 @@
                                                                    loadingText="Updating..."
                                                                    [disabled]="!updateForm.dirty || !updateForm.valid"
                                                                    [onClick]="updateProject(states.project, updateForm).bind(this)"
-                                                                   buttonClass="btn">
+                                                                   buttonClass="btn"
+                                                                   faIcon="far fa-check mr-3">
                                                 </app-action-button>
                                             </div>
                                         </div>
-                                        
                                     </div>
                                 </div>
                             </form>

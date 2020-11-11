@@ -18,10 +18,12 @@
 
 .edit-project {
   padding: 0 20px;
+  .alert {
+    margin-top: 20px;
+  }
   .project {
     &__img {
-      margin-right: -20px;
-      margin-left: -20px;
+      margin: 0 -20px;
     }
     &__img img {
       width: 100%;
@@ -62,6 +64,34 @@
         }
       }
     }
+    &-right {
+      .uppy-img {
+        margin-bottom: 20px;
+        &__content {
+          margin-bottom: 20px;
+        }
+      }
+      .uppy-docs {
+        margin-bottom: 20px;
+        &__content {
+          margin-top: 20px;
+        }
+      }
+      .upload__label,
+      .location__label,
+      .upload__label {
+        font-size: $font-size-mobile-title-small;
+        color: $body-color;
+        margin-bottom: 6px;
+        svg {
+          font-size: $font-size-mobile-title-small;
+          color: $icons-color;
+        }
+      }
+      .map-holder {
+        margin: 0 -20px 20px -20px;
+      }
+    }
   }
   .left {
     &__name,
@@ -76,6 +106,16 @@
       height: 180px;
     }
   }
+  .right {
+    &__cta {
+      .col-5 {
+        padding-right: 10px;
+      }
+      .col-7 {
+        padding-left: 0;
+      }
+    }
+  }
 }
 
 
@@ -84,11 +124,83 @@
     padding: 0 15px;
   }
 
+  .app-page-header {
+    .btn {
+      padding: 16px 32px;
+      &__text {
+        display: inline-block;
+      }
+    }
+  }
+
   .edit-project {
     padding: 0;
+    .alert {
+      margin-bottom: 4px;
+    }
     .project {
       &__img {
         display: none;
+      }
+    }
+    .edit {
+      &__header {
+        border-bottom: 1px solid $border-light-color;
+      }
+      &__title {
+        letter-spacing: 1.5px;
+        h4 {
+          font-size: $font-size-desktop-title;
+          margin-bottom: 4px;
+        }
+      }
+      &__state {
+        font-size: $font-size-desktop-body2;
+        margin-bottom: 30px;
+      }
+      &-left {
+        margin-top: 20px;
+        label,
+        .roi__label,
+        .dates__label,
+        .investments__label,
+        .funding__label {
+          font-size: $font-size-mobile-title-small;
+          color: $body-color;
+          margin-bottom: 6px;
+          svg {
+            font-size: $font-size-mobile-title-small;
+            color: $icons-color;
+          }
+        }
+      }
+      &-right {
+        .uppy-img {
+          margin-bottom: 20px;
+          &__content {
+            margin-bottom: 20px;
+          }
+        }
+        .uppy-docs {
+          margin-bottom: 20px;
+          &__content {
+            margin-top: 20px;
+          }
+        }
+        .upload__label,
+        .location__label,
+        .upload__label {
+          font-size: $font-size-mobile-title-small;
+          color: $body-color;
+          margin-bottom: 6px;
+          svg {
+            font-size: $font-size-mobile-title-small;
+            color: $icons-color;
+          }
+        }
+        .map-holder {
+          margin: 0 -20px 20px -20px;
+        }
       }
     }
   }

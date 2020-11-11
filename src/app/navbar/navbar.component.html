@@ -3,7 +3,7 @@
 
     </div>
 
-    <a routerLink="/dash/offers">
+    <a [routerLink]="'/dash/offers' | coopPath">
         <div class="navbar-logo">
             <img src="{{ appConfigService.config.customConfig.logo_url }}">
         </div>

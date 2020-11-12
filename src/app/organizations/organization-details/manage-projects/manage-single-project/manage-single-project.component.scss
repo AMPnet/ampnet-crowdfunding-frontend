@@ -116,6 +116,7 @@
       }
     }
     &-news {
+      margin-top: 40px;
       .col-11,
       .col-1 {
         padding: 0;
@@ -164,6 +165,9 @@
           }
         }
       }
+    }
+    &-payments {
+      margin: 40px -15px 0 -15px;
     }
   }
 }
@@ -244,7 +248,7 @@
         .edit {
           &-left {
             margin-top: 30px;
-            padding-left: 0;
+            padding-left: 5px;
             .left {
               &__desc textarea {
                 height: 220px;
@@ -254,19 +258,13 @@
           &-right {
             margin-top: 30px;
             padding-left: 49px;
-            padding-right: 0;
-            .col-12 {
-              padding-right: 0;
-            }
             .uppy-img {
-              padding-right: 15px;
               margin-bottom: 16px;
               &__content {
                 margin-bottom: 16px;
               }
             }
             .uppy-docs {
-              padding-right: 15px;
               margin-bottom: 20px;
             }
             .map-holder {
@@ -277,6 +275,7 @@
       }
       &-news {
         margin-left: -10px;
+        margin-top: 58px;
         .news {
           &__form {
             .form__btn {
@@ -296,8 +295,7 @@
         }
       }
       &-payments {
-        margin-left: -30px;
-        margin-right: -30px;
+        margin: 50px -40px 0 -50px;
       }
     }
   }
@@ -306,6 +304,9 @@
     width: 86.9%;
     &__inner {
       float: right;
+    }
+    .container {
+      padding: 0 6px;
     }
     .btn {
       align-items: center;

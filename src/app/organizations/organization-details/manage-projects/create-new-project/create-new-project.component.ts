@@ -50,7 +50,7 @@ export class CreateNewProjectComponent {
             name: formValue.name,
             description: '',
             location: {lat: this.mapLat, long: this.mapLong},
-            roi: {from: 2.1, to: 5.3},
+            roi: {from: 0, to: 0},
             start_date: formValue.startDate,
             end_date: formValue.endDate,
             expected_funding: formValue.expectedFunding,

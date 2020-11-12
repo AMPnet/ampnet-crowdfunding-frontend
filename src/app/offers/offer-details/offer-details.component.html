@@ -24,7 +24,8 @@
 
         <div class="offer-left col-lg-7">
             <div class="wow fadeIn">
-                <img class="left__img w-100" src="{{states.project.main_image}}">
+                <img class="left__img w-100" src="{{states.project.main_image}}"
+                     onerror="this.onerror=null; this.src='../../../../assets/noimage.png'">
             </div>
         </div>
 
@@ -58,11 +59,14 @@
                     </div>
 
                     <div class="right__info">
-                        <div class="right__return-rate">
-                            <span>{{ states.project.roi.from }}% - {{ states.project.roi.to }}%</span>
-                            Expected yearly return
-                        </div>
-                        <div class="dropdown-divider"></div>
+                        <ng-container *ngIf="states.project.roi.from != 0">
+                            <div class="right__return-rate">
+                                <span>{{ states.project.roi.from }}% - {{ states.project.roi.to }}%</span>
+                                Expected yearly return
+                            </div>
+
+                            <div class="dropdown-divider"></div>
+                        </ng-container>
 
                         <div class="right__min-invest">
                             <span>{{ states.project.min_per_user | currencyDefault }}</span>Min Investment

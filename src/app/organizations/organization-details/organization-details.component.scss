@@ -194,6 +194,9 @@
         display: flex;
         justify-content: center;
         padding-bottom: 4px;
+        .form__cta {
+          margin: 0;
+        }
       }
       &__desc {
         font-size: $font-size-desktop-xsmall;

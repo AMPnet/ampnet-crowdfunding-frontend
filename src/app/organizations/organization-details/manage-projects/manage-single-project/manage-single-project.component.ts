@@ -73,8 +73,8 @@ export class ManageSingleProjectComponent {
                 return fb.group({
                     name: [project.name, Validators.required],
                     description: [project.description, Validators.minLength(3)],
-                    roiFrom: [project.roi.from],
-                    roiTo: [project.roi.to],
+                    roiFrom: [project.roi.from, Validators.pattern('^[0-9]*$')],
+                    roiTo: [project.roi.to, Validators.pattern('^[0-9]*$')],
                     dates: fb.group({
                         from: [{value: dateFrom, disabled: true}],
                         to: [{value: dateTo, disabled: true}]

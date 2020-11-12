@@ -10,9 +10,8 @@ export class AppConfigService {
     private appConfigSubject = new ReplaySubject<AppConfig>(1);
 
     private readonly hostname = window.location.hostname;
-    // private readonly hostname = 'staging.ampnet.io';
     private readonly localStorageKey = 'app_config';
-    private readonly cacheTimeoutMinutes = 1;
+    private readonly cacheTimeoutMinutes = 1; // TODO: after testing, set back to 10
 
     constructor(private http: BackendHttpClient) {
     }
@@ -94,7 +93,9 @@ export class AppConfigService {
     }
 
     private setLocalConfig(key: ConfigKey, appConfig: AppConfig) {
-        if (!this.shouldSetLocalConfig(key, appConfig)) { return; }
+        if (!this.shouldSetLocalConfig(key, appConfig)) {
+            return;
+        }
 
         const configToStore = this.localConfig(key);
         configToStore[key] = {

@@ -81,10 +81,12 @@
                     </div>
 
                     <div class="col-md-12">
-                        <app-location-map [editable]="true"
-                                          [latControl]="updateForm.get('location.lat')"
-                                          [lngControl]="updateForm.get('location.long')">
-                        </app-location-map>
+                        <div class="map-holder">
+                            <app-location-map [editable]="true"
+                                              [latControl]="updateForm.get('location.lat')"
+                                              [lngControl]="updateForm.get('location.long')">
+                            </app-location-map>
+                        </div>
                     </div>
 
                     <div class="col-md-12 mb-2">

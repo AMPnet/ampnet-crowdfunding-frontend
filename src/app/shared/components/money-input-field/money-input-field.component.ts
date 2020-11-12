@@ -12,7 +12,7 @@ import {
 } from '@angular/core';
 import { baseCurrencyUnitToCents, centsToBaseCurrencyUnit } from '../../../utilities/currency-util';
 import * as Autonumeric from 'autonumeric';
-import { AbstractControl, FormControl } from '@angular/forms';
+import { AbstractControl } from '@angular/forms';
 
 @Component({
     selector: 'app-money-input-field',
@@ -43,7 +43,7 @@ export class MoneyInputFieldComponent implements AfterViewInit, OnChanges {
 
     ngAfterViewInit() {
         this.an = this.autonumericCurrency(this.inputField.nativeElement);
-        this.an.set(centsToBaseCurrencyUnit(this.realValue));
+        this.an.set(this.initialValue(this.control?.value, this.realValue));
     }
 
     onHTMLInputElementChange() {
@@ -72,5 +72,17 @@ export class MoneyInputFieldComponent implements AfterViewInit, OnChanges {
             .replace(currencySymbol, '')
             .split(',').join('')
             .split('.').join('');
+    }
+
+    private initialValue(...values: (number | string)[]): number | '' {
+        for (let i = 0; i < values.length; i++) {
+            if (values[i] === '') {
+                return '';
+            } else if (typeof values[i] === 'number') {
+                return centsToBaseCurrencyUnit(values[i] as number);
+            }
+        }
+
+        return '';
     }
 }

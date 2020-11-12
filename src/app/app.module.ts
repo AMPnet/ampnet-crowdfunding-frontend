@@ -90,7 +90,7 @@ import { RevenueShareConfirmModalComponent } from './organizations/organization-
 import { ProjectDepositComponent } from './organizations/organization-details/manage-projects/manage-single-project/project-deposit/project-deposit.component';
 import { ProjectWithdrawComponent } from './organizations/organization-details/manage-projects/manage-single-project/project-withdraw/project-withdraw.component';
 import { TabsModule } from 'ngx-bootstrap/tabs';
-import { DatePipe } from '@angular/common';
+import { CurrencyPipe, DatePipe } from '@angular/common';
 import { SignInAutoComponent } from './authentication/sign-in-auto/sign-in-auto.component';
 import { AppConfigService } from './shared/services/app-config.service';
 import { ClickOutsideDirective } from './navbar/directives/click-outside.directive';
@@ -227,6 +227,7 @@ const socialAuthServiceConfig = {
         },
         DatePipe,
         SafePipe,
+        CurrencyPipe,
         AppConfigService,
         {
             provide: APP_INITIALIZER,

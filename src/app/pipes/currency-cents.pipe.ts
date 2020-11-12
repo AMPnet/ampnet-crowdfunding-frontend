@@ -1,10 +1,16 @@
 import { CurrencyPipe } from '@angular/common';
-import { Pipe, PipeTransform } from '@angular/core';
+import { Injectable, Pipe, PipeTransform } from '@angular/core';
 
+@Injectable({
+    providedIn: 'root',
+})
 @Pipe({
     name: 'currencyCents'
 })
-export class CurrencyCentsPipe extends CurrencyPipe implements PipeTransform {
+export class CurrencyCentsPipe implements PipeTransform {
+    constructor(private currencyPipe: CurrencyPipe) {
+    }
+
     transform(
         value: number,
         code = 'EUR',
@@ -12,6 +18,6 @@ export class CurrencyCentsPipe extends CurrencyPipe implements PipeTransform {
         digitsInfo = '1.2-2',
         locale = 'en'
     ) {
-        return super.transform(value / 100, code, display, digitsInfo, locale);
+        return this.currencyPipe.transform(value / 100, code, display, digitsInfo, locale);
     }
 }

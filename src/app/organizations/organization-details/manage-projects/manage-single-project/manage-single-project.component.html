@@ -2,279 +2,301 @@
     project: project$ | async,
     wallet: projectWallet$ | async,
     updateForm: updateForm$ | async
-} as states" class="container" id="core-root-manager">
-    <ng-container *ngIf="!!states.project && !!states.wallet else spinner">
-        <div *ngIf="states.wallet !== walletState.EMPTY">
-            <div class="app-page-header">
-                <div class="app-page-title-back" (click)="backToOrganizationDetailsScreen()">
-                    <i class="fas fa-long-arrow-alt-left mr-3"></i>
-                    {{ states.project.organization.name }}
+} as states">
+    <div class="container" id="core-root-manager">
+        <ng-container *ngIf="!!states.project && !!states.wallet else spinner">
+            <div *ngIf="states.wallet !== walletState.EMPTY">
+                <div class="app-page-header flex__center">
+                    <div class="app-page-title-back" (click)="backToOrganizationDetailsScreen()">
+                        <i class="fas fa-long-arrow-alt-left mr-3"></i>
+                        {{ states.project.organization.name }}
+                    </div>
+                    <button class="btn btn-center" routerLink="/dash/offers/{{ states.project.uuid }}">
+                        <i class="fas fa-caret-right mr-lg-3"></i>
+                        <span class="btn__text">Preview</span>
+                    </button>
                 </div>
-                <button class="btn btn-center" routerLink="/dash/offers/{{ states.project.uuid }}">
-                    <i class="fas fa-caret-right mr-lg-3"></i>
-                    <span class="btn__text">Preview</span>
-                </button>
-            </div>
-            <div class="edit-project">
-                <ng-container *ngIf="states.project.main_image">
-                    <div class="project__img">
-                        <img src="{{states.project.main_image}}" alt="Project image">
+                <div class="edit-project">
+                    <ng-container *ngIf="states.project.main_image">
+                        <div class="project__img">
+                            <img src="{{states.project.main_image}}" alt="Project image">
+                        </div>
+                    </ng-container>
+    
+                    <div *ngIf="!isWalletVerified(states.wallet)">
+                        <div class="alert alert-warning flex__center">
+                            <i class="fas fa-exclamation-triangle mr-3"></i>
+                            <b>This project is pending approval from admin. During this time, the project cannot be publicly shown.</b>
+                        </div>
                     </div>
-                </ng-container>
-
-                <div *ngIf="!isWalletVerified(states.wallet)">
-                    <div class="alert alert-warning flex__center">
-                        <i class="fas fa-exclamation-triangle mr-3"></i>
-                        <b>This project is pending approval from admin. During this time, the project cannot be publicly shown.</b>
+    
+                    <div class="edit__header">
+                        <div class="edit__title">
+                            <h4>{{states.project.name}}</h4>
+                        </div>
+                        <div class="edit__state">
+                            {{ states.project.active ? "Public" : "Hidden" }}
+                        </div>
                     </div>
-                </div>
-
-                <div class="edit__header">
-                    <div class="edit__title">
-                        <h4>{{states.project.name}}</h4>
-                    </div>
-                    <div class="edit__state">
-                        {{ states.project.active ? "Public" : "Hidden" }}
-                    </div>
-                </div>
-                <tabset>
-                    <tab heading="Details">
-                        <ng-container *ngIf="(updateForm$ | async) as updateForm">
-                            <form [formGroup]="updateForm" style="width: 100%">
-                                <div class="row">
-                                    <div class="edit-left col-lg-6">
-                                        <div class="left__name">
-                                            <label for="project-name">Project name</label>
-                                            <input aria-describedby="basic-addon1"
-                                                       aria-label="Username" class="input-reg w-100" id="project-name"
-                                                       formControlName="name"
-                                                       type="text">
-                                        </div>
-                                        <div class="left__desc">
-                                            <label for="project-description">Description</label>
-                                            <div class="input-group">
-                                                <textarea class="input-reg w-100" cols="30" 
-                                                          id="project-description" formControlName="description"
-                                                          rows="10">
-                                                </textarea>
-                                            </div>
-                                        </div>
-                                        <div class="left__roi">
-                                            <div class="roi__label">Expected ROI %</div>
-                                            <div class="roi__inputs">
-                                                <input class="input-reg w-50"
-                                                       formControlName="roiFrom"
-                                                       type="text">
-                                                <input class="input-reg w-50"
-                                                       formControlName="roiTo"
-                                                       type="text">
-                                            </div>
-                                        </div>
-                                        <div class="left__dates">
-                                            <div class="dates__label flex__center-space">
-                                                Dates (DD/MM/YY)
-                                                <i class="fas fa-lock"></i>
-                                            </div>
-                                            <div formGroupName="dates">
-                                                <input class="input-reg w-50"
-                                                       formControlName="from"
-                                                       [value]="updateForm.get('dates.from').value"
-                                                       type="text">
-                                                <input class="input-reg w-50"
-                                                       formControlName="to"
-                                                       type="text">
-                                            </div>
-                                        </div>
-                                        <div class="left__investments">
-                                            <div class="investments__label flex__center-space">
-                                                Investment per member €
-                                                <i class="fas fa-lock"></i>
-                                            </div>
-
-                                            <div formGroupName="investments">
-                                                <input class="input-reg w-50"
-                                                       formControlName="from"
-                                                       type="text">
-                                                
-                                                <input class="input-reg w-50"
-                                                       formControlName="to"
-                                                       type="text">
-                                            </div>
-                                        </div>
-                                        <div class="left__expected-funding">
-                                            <div class="funding__label flex__center-space">
-                                                Expected funding €
-                                                <i class="fas fa-lock"></i>
-                                            </div>
-                                            <input class="input-reg w-100"
-                                                   formControlName="expected"
-                                                   type="text">
-                                        </div>
-                                    </div>
-
-                                    <div class="edit-right col-lg-6">
-                                        <div class="right__upload-img">
-                                            <div class="upload__label">Project image</div>
-                                            <div class="d-flex">
-                                                <div class="row">
-                                                    <div class="col-12 uppy-img">
-                                                        <app-upload-area areaID='project-image' style="width: max-content;"
-                                                                         [restrictions]="{
-                                                                            allowedFileTypes: ['image/*'],
-                                                                            maxFileSize: 10 * 1024 * 1024,
-                                                                            maxNumberOfFiles: 1
-                                                                         }"
-                                                                         [firstFileControl]="updateForm.get('newImage')">
-                                                        </app-upload-area> 
-                                                    </div>
-                                                    <div class="col-12 uppy-img__content">
-                                                        <ng-container
-                                                                *ngIf="updateForm.get('newImage').value || states.project.main_image else noProjectImageSet">
-                                                            <img [src]="(updateForm.get('newImage').value | safe:'fileUrl') || states.project.main_image"
-                                                                  style="width: 100%;">
-                                                        </ng-container>
-                                                        <ng-template #noProjectImageSet>
-                                                            <div class="text-center">
-                                                                Project has no image set
-                                                            </div>
-                                                        </ng-template>
+                    <div class="tabs">
+                        <tabset>
+                            <tab heading="Details" (selectTab)="detailsShown=true">
+                                <ng-container *ngIf="(updateForm$ | async) as updateForm">
+                                    <form [formGroup]="updateForm" style="width: 100%">
+                                        <div class="row">
+                                            <div class="edit-left col-lg-6">
+                                                <div class="left__name">
+                                                    <label for="project-name">Project name</label>
+                                                    <input aria-describedby="basic-addon1"
+                                                               aria-label="Username" class="input-reg w-100" id="project-name"
+                                                               formControlName="name"
+                                                               type="text">
+                                                </div>
+                                                <div class="left__desc">
+                                                    <label for="project-description">Description</label>
+                                                    <div class="input-group">
+                                                        <textarea class="input-reg w-100" cols="30" 
+                                                                  id="project-description" formControlName="description"
+                                                                  rows="10">
+                                                        </textarea>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>
-    
-                                        <div class="right__location">
-                                            <div class="location__label">Location</div>
-                                            <div class="map-holder">
-                                                <app-location-map [editable]="true"
-                                                                  [latControl]="updateForm.get('location.lat')"
-                                                                  [lngControl]="updateForm.get('location.long')">
-                                                </app-location-map>
-                                            </div>
-                                        </div>
-    
-                                        <div class="right__upload-docs">
-                                            <div class="upload__label">Project files</div>
-                                            <div class="d-flex">
-                                                <div class="row">
-                                                    <div class="col-12">
-                                                        <app-upload-area areaID='project-image' style="width: max-content"
-                                                                         [restrictions]="{
-                                                                            allowedFileTypes: ['image/*', 'application/pdf', 'application/zip', 'audio/*', 'video/*'],
-                                                                            maxFileSize: 10 * 1024 * 1024,
-                                                                            maxNumberOfFiles: 20
-                                                                         }"
-                                                                         [filesControl]="updateForm.get('newDocuments')">
-                                                        </app-upload-area>
+                                                <div class="left__roi">
+                                                    <div class="roi__label">Expected ROI %</div>
+                                                    <div class="roi__inputs">
+                                                        <input class="input-reg w-50"
+                                                               formControlName="roiFrom"
+                                                               type="text">
+                                                        <input class="input-reg w-50"
+                                                               formControlName="roiTo"
+                                                               type="text">
                                                     </div>
-                                                    <div class="col-12 uppy-docs">
-                                                        <ng-container *ngIf="states.project.documents?.length > 0 else noDocuments">
-                                                            <div *ngFor="let file of states.project.documents; let i = index">
-                                                                <div class="card">
-                                                                    <div class="card-body d-flex flex-row justify-content-between">
-                                                                        <div class="w-75"
-                                                                             style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis">
-                                                                            {{ file.name }}
-                                                                        </div>
-                                                                        <span class="float-right">
-                                                                        <span (click)="deleteFile(states.project, file.id).subscribe()"
-                                                                              class="mr-3 cursor-pointer gray-text">
-                                                                          <i class="fas fa-trash"></i>
-                                                                        </span>
-                                                                        <a class="cursor-pointer gray-text" href="{{ file.link }}">
-                                                                          <i class="fas fa-file-download"></i>
-                                                                        </a>
-                                                                    </span>
+                                                </div>
+                                                <div class="left__dates">
+                                                    <div class="dates__label flex__center-space">
+                                                        Dates (DD/MM/YY)
+                                                        <i class="fas fa-lock"></i>
+                                                    </div>
+                                                    <div formGroupName="dates">
+                                                        <input class="input-reg w-50"
+                                                               formControlName="from"
+                                                               [value]="updateForm.get('dates.from').value"
+                                                               type="text">
+                                                        <input class="input-reg w-50"
+                                                               formControlName="to"
+                                                               type="text">
+                                                    </div>
+                                                </div>
+                                                <div class="left__investments">
+                                                    <div class="investments__label flex__center-space">
+                                                        Investment per member €
+                                                        <i class="fas fa-lock"></i>
+                                                    </div>
+        
+                                                    <div formGroupName="investments">
+                                                        <input class="input-reg w-50"
+                                                               formControlName="from"
+                                                               type="text">
+                                                        
+                                                        <input class="input-reg w-50"
+                                                               formControlName="to"
+                                                               type="text">
+                                                    </div>
+                                                </div>
+                                                <div class="left__expected-funding">
+                                                    <div class="funding__label flex__center-space">
+                                                        Expected funding €
+                                                        <i class="fas fa-lock"></i>
+                                                    </div>
+                                                    <input class="input-reg w-100"
+                                                           formControlName="expected"
+                                                           type="text">
+                                                </div>
+                                            </div>
+        
+                                            <div class="edit-right col-lg-6">
+                                                <div class="right__upload-img">
+                                                    <div class="upload__label">Project image</div>
+                                                    <div class="d-flex">
+                                                        <div class="row">
+                                                            <div class="col-12 uppy-img">
+                                                                <app-upload-area areaID='project-image' style="width: max-content;"
+                                                                                 [restrictions]="{
+                                                                                    allowedFileTypes: ['image/*'],
+                                                                                    maxFileSize: 10 * 1024 * 1024,
+                                                                                    maxNumberOfFiles: 1
+                                                                                 }"
+                                                                                 [firstFileControl]="updateForm.get('newImage')">
+                                                                </app-upload-area> 
+                                                            </div>
+                                                            <div class="col-12 uppy-img__content">
+                                                                <ng-container
+                                                                        *ngIf="updateForm.get('newImage').value || states.project.main_image else noProjectImageSet">
+                                                                    <img [src]="(updateForm.get('newImage').value | safe:'fileUrl') || states.project.main_image"
+                                                                          style="width: 100%;">
+                                                                </ng-container>
+                                                                <ng-template #noProjectImageSet>
+                                                                    <div class="text-center">
+                                                                        Project has no image set
                                                                     </div>
-                                                                </div>
+                                                                </ng-template>
                                                             </div>
-                                                        </ng-container>
-                                                        <ng-template #noDocuments>
-                                                            <div class="text-center uppy-docs__content">
-                                                                No files added
+                                                        </div>
+                                                    </div>
+                                                </div>
+            
+                                                <div class="right__location">
+                                                    <div class="location__label">Location</div>
+                                                    <div class="map-holder">
+                                                        <app-location-map [editable]="true"
+                                                                          [latControl]="updateForm.get('location.lat')"
+                                                                          [lngControl]="updateForm.get('location.long')">
+                                                        </app-location-map>
+                                                    </div>
+                                                </div>
+            
+                                                <div class="right__upload-docs">
+                                                    <div class="upload__label">Project files</div>
+                                                    <div class="d-flex">
+                                                        <div class="row">
+                                                            <div class="col-12">
+                                                                <app-upload-area areaID='project-image' style="width: max-content"
+                                                                                 [restrictions]="{
+                                                                                    allowedFileTypes: ['image/*', 'application/pdf', 'application/zip', 'audio/*', 'video/*'],
+                                                                                    maxFileSize: 10 * 1024 * 1024,
+                                                                                    maxNumberOfFiles: 20
+                                                                                 }"
+                                                                                 [filesControl]="updateForm.get('newDocuments')">
+                                                                </app-upload-area>
                                                             </div>
-                                                        </ng-template>
+                                                            <div class="col-12 uppy-docs">
+                                                                <ng-container *ngIf="states.project.documents?.length > 0 else noDocuments">
+                                                                    <div *ngFor="let file of states.project.documents; let i = index">
+                                                                        <div class="uppy-docs__content">
+                                                                            <div class="flex__center-space">
+                                                                                <div class="docs__name"
+                                                                                     style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis">
+                                                                                    {{ file.name }}
+                                                                                </div>
+                                                                                <div class="docs__icons">
+                                                                                    <span (click)="deleteFile(states.project, file.id).subscribe()"
+                                                                                          class="mr-3 cursor-pointer gray-text">
+                                                                                    <i class="fas fa-trash"></i>
+                                                                                    </span>
+                                                                                    <a class="cursor-pointer gray-text" href="{{ file.link }}">
+                                                                                    <i class="fas fa-file-download"></i>
+                                                                                    </a>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </ng-container>
+                                                                <ng-template #noDocuments>
+                                                                    <div class="text-center uppy-docs__content">
+                                                                        No files added
+                                                                    </div>
+                                                                </ng-template>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="right__cta row">
-                                            <div class="col-5 col-lg-6">
-                                                <app-action-button text="{{ states.project.active ? 'Hide' : 'Show' }}"
-                                                                   faIcon="{{ states.project.active ? 'fa-eye-slash' : 'fa-eye' }}"
-                                                                   loadingText="Updating project status"
-                                                                   [disabled]="!isWalletVerified(states.wallet)"
-                                                                   [onClick]="toggleProjectStatusClicked(states.project).bind(this)"
-                                                                   buttonClass="btn btn-info">
-                                                </app-action-button>
-                                            </div>
-                                            <div class="col-7 col-lg-6">
-                                                <app-action-button text="Update all"
-                                                                   loadingText="Updating..."
-                                                                   [disabled]="!updateForm.dirty || !updateForm.valid"
-                                                                   [onClick]="updateProject(states.project, updateForm).bind(this)"
-                                                                   buttonClass="btn"
-                                                                   faIcon="far fa-check mr-3">
-                                                </app-action-button>
-                                            </div>
-                                        </div>
+                                    </form>
+                                </ng-container>
+                                
+                            </tab>
+                            <tab heading="News" (selectTab)="detailsShown=false">
+                                <p class="explainer-mini text-uppercase col-md-8 mt-3">Project news</p>
+        
+                                <form [formGroup]="newsForm" class="d-flex" style="width: 100%">
+                                    <div class="col-md-8">
+                                        <input class="form-control w-100" id="newsLink"
+                                               placeholder="News link (e.g. https://portal.com/news)"
+                                               formControlName="newsLink"
+                                               type="text">
                                     </div>
+                                    <div class="col-md-4">
+                                        <app-action-button 
+                                            text="Add news"
+                                            loadingText="Adding news..."
+                                            faIcon="fa-plus"
+                                            [disabled]="!newsForm.dirty || !newsForm.valid"
+                                            [onClick]="addNewsLink(states.project, newsForm).bind(this)"
+                                            buttonClass="w-100 btn btn-primary h-100">
+                                        </app-action-button>
+                                    </div>
+                                </form>
+        
+                                <div class="col-md-12 mt-3">
+                                    <ul class="list-group">
+                                        <li *ngFor="let item of states.project.news"
+                                            class="list-group-item d-flex flex-row justify-content-between">
+                                            <a class="w-75" href="{{ item }}"
+                                            style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis">
+                                                {{ item }}
+                                            </a>
+                                            <div (click)="deleteNewsClicked(states.project, item).subscribe()" class="cursor-pointer">
+                                                <i class="fas fa-trash"></i>
+                                            </div>
+                                        </li>
+                                    </ul>
                                 </div>
-                            </form>
-                        </ng-container>
-                        
-                    </tab>
-                    <tab heading="News">
-                        <p class="explainer-mini text-uppercase col-md-8 mt-3">Project news</p>
-
-                        <form [formGroup]="newsForm" class="d-flex" style="width: 100%">
-                            <div class="col-md-8">
-                                <input class="form-control w-100" id="newsLink"
-                                       placeholder="News link (e.g. https://portal.com/news)"
-                                       formControlName="newsLink"
-                                       type="text">
-                            </div>
-                            <div class="col-md-4">
-                                <app-action-button 
-                                    text="Add news"
-                                    loadingText="Adding news..."
-                                    faIcon="fa-plus"
-                                    [disabled]="!newsForm.dirty || !newsForm.valid"
-                                    [onClick]="addNewsLink(states.project, newsForm).bind(this)"
-                                    buttonClass="w-100 btn btn-primary h-100">
-                                </app-action-button>
-                            </div>
-                        </form>
-
-                        <div class="col-md-12 mt-3">
-                            <ul class="list-group">
-                                <li *ngFor="let item of states.project.news"
-                                    class="list-group-item d-flex flex-row justify-content-between">
-                                    <a class="w-75" href="{{ item }}"
-                                    style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis">
-                                        {{ item }}
-                                    </a>
-                                    <div (click)="deleteNewsClicked(states.project, item).subscribe()" class="cursor-pointer">
-                                        <i class="fas fa-trash"></i>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </tab>
-                    <tab heading="Manage Payments">
-                        <div class="col-md-12 mt-3 mb-5">
-                            <button class="w-100 btn btn-info py-3"
-                                    [disabled]="!isWalletVerified(states.wallet)"
-                                    routerLink="manage_payments">
-                                <i class="fas fa-money-bill-wave mr-2"></i>
-                                Manage payments
-                            </button>
-                        </div>
-                    </tab>
-                </tabset>
+                            </tab>
+                            <tab heading="Manage Payments" (selectTab)="detailsShown=false">
+                                <div class="col-md-12 mt-3 mb-5">
+                                    <button class="w-100 btn btn-info py-3"
+                                            [disabled]="!isWalletVerified(states.wallet)"
+                                            routerLink="manage_payments">
+                                        <i class="fas fa-money-bill-wave mr-2"></i>
+                                        Manage payments
+                                    </button>
+                                </div>
+                            </tab>
+                        </tabset>
+                    </div>
+                    
+                </div>
             </div>
-        </div>
-    </ng-container>
+        </ng-container>
+    </div>
+    
+    <div class="cta" *ngIf="detailsShown">
+        <ng-container *ngIf="(updateForm$ | async) as updateForm">
+            <div class="container">
+                <div class="cta__inner row col-lg-4">
+                    <div class="col-5 col-lg-6 d-lg-none">
+                        <app-action-button text="{{ states.project.active ? 'Hide' : 'Show' }}"
+                                           faIcon="{{ states.project.active ? 'fa-eye-slash' : 'fa-eye' }}"
+                                           loadingText="Updating..."
+                                           [disabled]="!isWalletVerified(states.wallet)"
+                                           [onClick]="toggleProjectStatusClicked(states.project).bind(this)"
+                                           buttonClass="btn btn-info">
+                        </app-action-button>
+                    </div>
+                    <div class="col-5 col-lg-6 d-none d-lg-block">
+                        <app-action-button text="{{ states.project.active ? 'Hide project' : 'Show project' }}"
+                                           faIcon="{{ states.project.active ? 'fa-eye-slash' : 'fa-eye' }}"
+                                           loadingText="Updating..."
+                                           [disabled]="!isWalletVerified(states.wallet)"
+                                           [onClick]="toggleProjectStatusClicked(states.project).bind(this)"
+                                           buttonClass="btn btn-info">
+                        </app-action-button>
+                    </div>
+                    <div class="col-7 col-lg-6">
+                        <app-action-button text="Update all"
+                                           loadingText="Updating..."
+                                           [disabled]="!updateForm.dirty || !updateForm.valid"
+                                           [onClick]="updateProject(states.project, updateForm).bind(this)"
+                                           buttonClass="btn"
+                                           faIcon="far fa-check mr-3">
+                        </app-action-button>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+
     <ng-template #spinner>
         <app-spinner type="overlay"></app-spinner>
     </ng-template>

@@ -13,8 +13,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { URLValidator } from '../../../../shared/validators/url.validator';
 import { DatePipe, CurrencyPipe } from '@angular/common';
 
-
-
 @Component({
     selector: 'app-manage-single-project',
     templateUrl: './manage-single-project.component.html',
@@ -30,6 +28,8 @@ export class ManageSingleProjectComponent {
 
     refreshProjectSubject = new BehaviorSubject<Project>(null);
     refreshProjectWalletSubject = new BehaviorSubject<void>(null);
+
+    detailsShown = true;
 
     constructor(private projectService: ProjectService,
                 private walletService: WalletService,

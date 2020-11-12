@@ -72,7 +72,7 @@ const routes: Routes = [
         path: 'dash', component: SecureLayoutComponent,
         canActivate: [AuthGuard],
         children: [
-            {path: '', component: OffersComponent},
+            {path: '', redirectTo: 'offers', pathMatch: 'full'},
             {path: 'wallet', component: WalletComponent},
             {path: 'offers', component: OffersComponent},
             {path: 'offers/:id', component: OfferDetailsComponent},

@@ -14,7 +14,6 @@ import { MiddlewareService } from '../../../shared/services/middleware/middlewar
 })
 export class ManageProjectsComponent {
     @Input() groupID: string;
-    @Input() groupName: string;
 
     refreshProjectsSubject = new BehaviorSubject<void>(null);
     projectsWallets$: Observable<ProjectWallet[]>;

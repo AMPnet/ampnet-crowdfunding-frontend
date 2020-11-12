@@ -43,10 +43,7 @@
                     <tabset>
                         <tab heading="Projects">
                             <div class="manage__projects">
-                                <app-manage-projects 
-                                    [groupID]="states.organization.uuid"
-                                    [groupName]="states.organization.name">
-                                </app-manage-projects>
+                                <app-manage-projects [groupID]="states.organization.uuid"></app-manage-projects>
                             </div>
                         </tab>
                         <tab heading="Members">

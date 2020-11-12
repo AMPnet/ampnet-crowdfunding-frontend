@@ -15,8 +15,7 @@
                          alt="Project image">
                 </div>
                 <div class="top__right">
-                    <div class="item__title" [state]="{data: {orgName: groupName}}"
-                         routerLink="manage_project/{{ projectWallet.project.uuid }}">
+                    <div class="item__title" routerLink="manage_project/{{ projectWallet.project.uuid }}">
                         {{ projectWallet.project.name }}
                     </div>
                     <div class="item__funding">

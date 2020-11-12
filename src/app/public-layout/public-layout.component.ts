@@ -11,7 +11,7 @@ export class PublicLayoutComponent implements OnInit {
 
     constructor(private router: RouterService) {
         if (AuthGuard.checkLogin()) {
-            router.navigateCoop(['/dash']);
+            router.navigate(['/dash']);
         }
     }
 

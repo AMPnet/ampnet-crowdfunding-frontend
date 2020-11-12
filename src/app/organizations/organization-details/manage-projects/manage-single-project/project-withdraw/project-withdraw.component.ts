@@ -91,7 +91,7 @@ export class ProjectWithdrawComponent {
     }
 
     private recoverBack(): Observable<never> {
-        this.router.navigateCoop(['../'], {relativeTo: this.route});
+        this.router.navigate(['../'], {relativeTo: this.route});
         return EMPTY;
     }
 }

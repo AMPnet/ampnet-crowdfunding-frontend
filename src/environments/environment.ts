@@ -2,7 +2,7 @@ import { CustomConfig } from '../app/shared/services/app-config.service';
 
 export const environment = {
     production: false,
-    baseHref: '/app',
+    baseHref: '/',
     customConfig: { // NOTICE: when adding a new config property, add it to AppConfig interface first.
         title: 'AMPnet',
         logo_url: '/assets/logo-amp.png',

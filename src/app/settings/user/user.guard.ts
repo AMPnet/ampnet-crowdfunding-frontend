@@ -17,7 +17,7 @@ export class UserGuard implements CanActivate {
             map(([latestUser]) => latestUser), take(1),
             map(user => user.verified),
             switchMap(isVerified => isVerified ? of(true) :
-                of(false).pipe(tap(() => this.router.navigateCoop(['/dash/settings/user/identity']))))
+                of(false).pipe(tap(() => this.router.navigate(['/dash/settings/user/identity']))))
         );
     }
 }

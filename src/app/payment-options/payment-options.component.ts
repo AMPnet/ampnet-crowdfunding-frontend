@@ -24,7 +24,7 @@ export class PaymentOptionsComponent {
     }
 
     toNewBankAccount() {
-        return this.router.navigateCoop(['/dash/payment_options/new']);
+        return this.router.navigate(['/dash/payment_options/new']);
     }
 
     deleteBankAccountClicked(id: number) {

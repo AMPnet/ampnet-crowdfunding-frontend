@@ -58,7 +58,7 @@ export class SignUpComponent implements OnInit {
                 this.loginService.socialLogin(provider, SocialRes.authToken)
                     .subscribe(_ => {
                         SpinnerUtil.hideSpinner();
-                        this.router.navigateCoop(['/dash']);
+                        this.router.navigate(['/dash']);
                     }, hideSpinnerAndDisplayError);
             }, err => {
                 SpinnerUtil.hideSpinner();
@@ -75,7 +75,7 @@ export class SignUpComponent implements OnInit {
             switchMap(_ => this.loginService.emailLogin(user.email, user.password))
         ).subscribe(() => {
             SpinnerUtil.hideSpinner();
-            this.router.navigateCoop(['/dash/offers'])
+            this.router.navigate(['/dash/offers'])
                 .then(() => swal('', 'Sign-up successful!', 'success'));
         }, hideSpinnerAndDisplayError);
     }

@@ -127,13 +127,8 @@ const appRoutes: Routes = [
 ];
 
 const routes: Routes = [
-    {
-        path: ':coopID', canActivate: [CoopGuard], children: appRoutes
-    },
-    {
-        path: '', pathMatch: 'full', canActivate: [CoopGuard], children: appRoutes
-        // redirectTo: '' // Ignore this. Redirect is managed inside the guard.
-    }
+    {path: ':coopID', canActivate: [CoopGuard], children: appRoutes},
+    {path: '', pathMatch: 'full', canActivate: [CoopGuard], children: appRoutes}
 ];
 
 @NgModule({

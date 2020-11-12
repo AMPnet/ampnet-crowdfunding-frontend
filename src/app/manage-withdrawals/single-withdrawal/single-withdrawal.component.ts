@@ -41,7 +41,7 @@ export class SingleWithdrawalComponent implements OnInit {
                 title: 'Transaction signed',
                 text: 'Transaction is being processed...'
             })),
-            switchMap(() => this.router.navigateCoop(['/dash/manage_withdrawals']))
+            switchMap(() => this.router.navigate(['/dash/manage_withdrawals']))
         );
     }
 }

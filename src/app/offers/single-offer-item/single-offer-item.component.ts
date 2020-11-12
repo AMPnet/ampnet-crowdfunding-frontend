@@ -28,9 +28,9 @@ export class SingleOfferItemComponent implements OnInit {
 
     onClickedItem() {
         if (this.route.snapshot.params.isOverview) {
-            this.router.navigateCoop(['/overview', this.projectWallet.project.uuid, 'discover']);
+            this.router.navigate(['/overview', this.projectWallet.project.uuid, 'discover']);
         } else {
-            this.router.navigateCoop(['/dash', 'offers', this.projectWallet.project.uuid]);
+            this.router.navigate(['/dash', 'offers', this.projectWallet.project.uuid]);
         }
     }
 }

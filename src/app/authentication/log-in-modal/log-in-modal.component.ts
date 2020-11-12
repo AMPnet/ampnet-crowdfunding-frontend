@@ -48,7 +48,7 @@ export class LogInModalComponent implements OnInit {
             this.loginService.socialLogin(res.provider, res.authToken)
                 .subscribe(_ => {
                     SpinnerUtil.hideSpinner();
-                    this.router.navigateCoop(['/dash']);
+                    this.router.navigate(['/dash']);
                 }, err => {
                     SpinnerUtil.hideSpinner();
                     swal('', err.error.message, 'warning');
@@ -79,11 +79,11 @@ export class LogInModalComponent implements OnInit {
 
     private navigateToDash() {
         $('#log-in-modal').modal('toggle');
-        this.router.navigateCoop(['/dash/offers']);
+        this.router.navigate(['/dash/offers']);
     }
 
     forgotPasswordClicked() {
         $('#log-in-modal').modal('toggle');
-        this.router.navigateCoop([`/forgot_password`]);
+        this.router.navigate([`/forgot_password`]);
     }
 }

@@ -17,7 +17,7 @@ export class OfferDetailsGuard implements CanActivate {
 
         if (this.userAuthService.isLoggedIn()) {
             const projectUUID = route.params.id;
-            this.router.navigateCoop([`/dash/offers/${projectUUID}`]);
+            this.router.navigate([`/dash/offers/${projectUUID}`]);
             return false;
         }
 

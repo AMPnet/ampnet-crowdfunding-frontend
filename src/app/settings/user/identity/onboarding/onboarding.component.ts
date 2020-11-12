@@ -42,11 +42,11 @@ export class OnboardingComponent {
             switchMap(() => this.loginService.refreshUserToken()
                 .pipe(displayBackendErrorRx())),
             catchError(() => {
-                this.router.navigateCoop(['/dash/settings/user']);
+                this.router.navigate(['/dash/settings/user']);
                 return EMPTY;
             }),
             switchMap(() => {
-                this.router.navigateCoop(['/dash/wallet']);
+                this.router.navigate(['/dash/wallet']);
                 return EMPTY;
             })
         );

@@ -55,7 +55,7 @@ export class VerifySignOfferComponent implements OnInit {
                 title: 'Transaction signed',
                 text: 'Transaction is being processed...'
             })),
-            switchMap(() => this.router.navigateCoop(['/dash/wallet']))
+            switchMap(() => this.router.navigate(['/dash/wallet']))
         );
     }
 }

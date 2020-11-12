@@ -31,11 +31,11 @@ export class SignInAutoComponent implements OnInit {
                 this.navigateHome();
                 return EMPTY;
             }),
-            tap(() => this.router.navigateCoop(['/dash']))
+            tap(() => this.router.navigate(['/dash']))
         ).subscribe();
     }
 
     navigateHome() {
-        this.router.navigateCoop(['/']);
+        this.router.navigate(['/']);
     }
 }

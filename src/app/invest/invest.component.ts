@@ -59,7 +59,7 @@ export class InvestComponent implements OnInit {
     }
 
     investButtonClicked() {
-        this.router.navigateCoop(['./',
+        this.router.navigate(['./',
                 this.investForm.controls['amount'].value,
                 'verify_sign'],
             {relativeTo: this.route});
@@ -75,6 +75,6 @@ export class InvestComponent implements OnInit {
     }
 
     backToSingleOfferScreen(uuid: string) {
-        this.router.navigateCoop([`/dash/offers/${uuid}`]);
+        this.router.navigate([`/dash/offers/${uuid}`]);
     }
 }

@@ -149,12 +149,12 @@ export class OfferDetailsComponent implements OnInit {
     backToPreviousScreen() {
         if (!this.isPortfolioView) {
             if (this.isOverview) {
-                this.router.navigateCoop(['/overview/discover']);
+                this.router.navigate(['/overview/discover']);
             } else {
-                this.router.navigateCoop(['/dash/offers']);
+                this.router.navigate(['/dash/offers']);
             }
         } else {
-            this.router.navigateCoop(['/dash/my_portfolio']);
+            this.router.navigate(['/dash/my_portfolio']);
         }
     }
 
@@ -179,7 +179,7 @@ export class OfferDetailsComponent implements OnInit {
     }
 
     goToInvest(projectUUID: string) {
-        this.router.navigateCoop([`/dash/offers/${projectUUID}/invest`]);
+        this.router.navigate([`/dash/offers/${projectUUID}/invest`]);
     }
 
     cancelInvestment(projectUUID: string) {
@@ -192,7 +192,7 @@ export class OfferDetailsComponent implements OnInit {
                     title: 'Transaction signed',
                     text: 'Transaction is being processed...'
                 })),
-                switchMap(() => this.router.navigateCoop(['/dash/wallet']))
+                switchMap(() => this.router.navigate(['/dash/wallet']))
             );
         };
     }

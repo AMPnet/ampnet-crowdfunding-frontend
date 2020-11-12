@@ -59,8 +59,4 @@ export class ManagePaymentsComponent {
     isProjectFullyFunded(walletInfo: ProjectWalletInfo) {
         return !!walletInfo && walletInfo.totalFundsRaised === walletInfo.investmentCap;
     }
-
-    lol() {
-        this.router.navigateCoop(['manage_groups']);
-    }
 }

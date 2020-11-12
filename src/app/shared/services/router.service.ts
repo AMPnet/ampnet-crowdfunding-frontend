@@ -10,7 +10,7 @@ export class RouterService {
                 private coopPathPipe: CoopPathPipe) {
     }
 
-    navigateCoop(commands: any[], extras?: NavigationExtras): Promise<boolean> {
+    navigate(commands: any[], extras?: NavigationExtras): Promise<boolean> {
         return this.router.navigate([this.coopPathPipe.transform(commands)], extras);
     }
 }

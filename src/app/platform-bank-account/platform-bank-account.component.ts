@@ -26,7 +26,7 @@ export class PlatformBankAccountComponent implements OnInit {
         this.service.bankAccounts$.subscribe(res => {
             SpinnerUtil.hideSpinner();
             if (res.bank_accounts.length === 0) {
-                this.router.navigateCoop(['/dash', 'admin', 'platform_bank_account', 'new'], {
+                this.router.navigate(['/dash', 'admin', 'platform_bank_account', 'new'], {
                     queryParams: {
                         'status': 'empty'
                     }

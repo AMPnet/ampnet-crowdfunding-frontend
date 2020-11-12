@@ -75,7 +75,7 @@ export class ManageSingleDepositComponent implements OnInit {
                         switchMap(() => EMPTY)
                     );
                 } else {
-                    this.router.navigateCoop(['/dash/manage_deposits']);
+                    this.router.navigate(['/dash/manage_deposits']);
                     return EMPTY;
                 }
             }),
@@ -92,7 +92,7 @@ export class ManageSingleDepositComponent implements OnInit {
                 title: 'Transaction signed',
                 text: 'Transaction is being processed...'
             })),
-            switchMap(() => this.router.navigateCoop(['/dash/manage_deposits']))
+            switchMap(() => this.router.navigate(['/dash/manage_deposits']))
         );
     }
 
@@ -120,7 +120,7 @@ export class ManageSingleDepositComponent implements OnInit {
     }
 
     private recoverBack(): Observable<never> {
-        this.router.navigateCoop(['/dash/manage_deposits'], {relativeTo: this.route});
+        this.router.navigate(['/dash/manage_deposits'], {relativeTo: this.route});
         return EMPTY;
     }
 }

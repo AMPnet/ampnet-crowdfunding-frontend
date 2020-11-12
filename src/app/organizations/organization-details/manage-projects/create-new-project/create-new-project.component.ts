@@ -62,7 +62,7 @@ export class CreateNewProjectComponent {
         }).pipe(
             displayBackendErrorRx(),
             tap(project => {
-                this.router.navigateCoop([`/dash/manage_groups/${orgID}/manage_project/${project.uuid}`]);
+                this.router.navigate([`/dash/manage_groups/${orgID}/manage_project/${project.uuid}`]);
             })
         );
     }

@@ -55,6 +55,6 @@ export class ForgotPasswordComponent {
                 type: 'success',
                 title: 'Success',
                 text: 'We have sent you an e-mail containing your password reset link.'
-            }).pipe(switchMap(() => this.router.navigateCoop(['/'])))));
+            }).pipe(switchMap(() => this.router.navigate(['/'])))));
     }
 }

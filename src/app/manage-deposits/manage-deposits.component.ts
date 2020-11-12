@@ -38,7 +38,7 @@ export class ManageDepositsComponent {
     }
 
     getDepositInfoClicked(reference: string) {
-        this.router.navigateCoop(['/dash', 'manage_deposits', reference]);
+        this.router.navigate(['/dash', 'manage_deposits', reference]);
     }
 
     // TODO: Implement adding a comment to decline deposit

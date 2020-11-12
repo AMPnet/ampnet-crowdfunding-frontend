@@ -37,7 +37,7 @@ export class SidebarComponent implements AfterViewInit {
 
     onLogout() {
         this.userAuthService.logout();
-        this.router.navigateCoop(['/']);
+        this.router.navigate(['/']);
     }
 
     isWalletEagerReady(wallet: WalletDetailsWithState) {

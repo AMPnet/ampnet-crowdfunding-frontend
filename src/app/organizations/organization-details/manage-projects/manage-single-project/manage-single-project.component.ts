@@ -96,7 +96,7 @@ export class ManageSingleProjectComponent {
                     .pipe(displayBackendErrorRx())),
             switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo).pipe(
                 catchError(_ => {
-                    this.router.navigateCoop([`/dash/manage_groups/${this.route.snapshot.params.groupID}`]);
+                    this.router.navigate([`/dash/manage_groups/${this.route.snapshot.params.groupID}`]);
                     return EMPTY;
                 })
             )),

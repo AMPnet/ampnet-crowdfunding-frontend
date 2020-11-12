@@ -26,7 +26,7 @@ export class CoopGuard implements CanActivate {
                 if (!config.identifier) {
                     return of(false).pipe(tap(() => this.router.router.navigate([`/${config.identifier}`])));
                 } else if (config.identifier !== route.params.coopID) {
-                    return of(false).pipe(tap(() => this.router.navigateCoop(['/'])));
+                    return of(false).pipe(tap(() => this.router.navigate(['/'])));
                 } else {
                     return of(true);
                 }

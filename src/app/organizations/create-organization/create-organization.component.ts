@@ -39,13 +39,13 @@ export class CreateOrganizationComponent {
                     type: 'success',
                     title: 'Investment group created!'
                 }).pipe(
-                    tap(() => this.router.navigateCoop([`/dash/manage_groups/${organization.uuid}`]))
+                    tap(() => this.router.navigate([`/dash/manage_groups/${organization.uuid}`]))
                 );
             })
         );
     }
 
     backToGroupsScreen() {
-        this.router.navigateCoop([`/dash/manage_groups`]);
+        this.router.navigate([`/dash/manage_groups`]);
     }
 }

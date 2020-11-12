@@ -149,11 +149,11 @@ export class OrganizationDetailsComponent implements OnInit {
     }
 
     private recoverBack(): Observable<never> {
-        this.router.navigateCoop(['/dash/manage_groups']);
+        this.router.navigate(['/dash/manage_groups']);
         return EMPTY;
     }
 
     backToGroupsScreen() {
-        this.router.navigateCoop(['/dash/manage_groups']);
+        this.router.navigate(['/dash/manage_groups']);
     }
 }

@@ -1,10 +1,8 @@
 <div *ngIf="{
-    wallet: wallet$ | async,
     project: project$ | async,
-    transactions: projectUserInvestments$ | async,
-    investments: projectTotalInvestments$ | async
+    investment: investment$ | async
 } as states" class="container">
-    <ng-container *ngIf="states.wallet !== null && states.project !== null else spinner">
+    <ng-container *ngIf="states.investment !== null && states.project !== null else spinner">
         <div class="row">
             <div class="app-page-title-back" (click)="backToSingleOfferScreen(states.project.uuid)">
                 <i class="fas fa-long-arrow-alt-left mr-3"></i>
@@ -26,10 +24,9 @@
                         </div>
 
                         <div class="invest__range-labels">
-                            <p>{{ states.project.min_per_user | currencyDefault }} Min investment</p>
-                            <p>{{ states.project.max_per_user | currencyDefault }} Max investment</p>
+                            <p>{{ minUserInvest | currencyDefault }} Min investment</p>
+                            <p>{{ maxUserInvest | currencyDefault }} Max investment</p>
                         </div>
-
                     </div>
 
                     <div class="col-lg-4 invest__button">
@@ -44,7 +41,7 @@
 
                     <div class="col-lg-2 invest__text-right">
                         <p class="right__available">Available funds</p>
-                        <p class="right__amount">{{ states.wallet.wallet.balance | currencyDefault }}</p>
+                        <p class="right__amount">{{ states.investment.walletBalance | currencyDefault }}</p>
                         <a class="right__link" routerLink="/dash/wallet">Open wallet</a>
                     </div>
                 </div>
@@ -55,7 +52,7 @@
                     <i class="fas fa-dizzy"></i>
                     <b>Investment amount too low.&nbsp;</b>
                     <span>
-                        The minimum investment is {{ states.project.min_per_user | currencyDefault }}
+                        The minimum investment is {{ minUserInvest | currencyDefault }}
                     </span>
                 </div>
 
@@ -63,7 +60,7 @@
                     <i class="fas fa-dizzy"></i>
                     <b>Investment amount too high.&nbsp;</b>
                     <span>
-                        The maximum investment is {{ states.project.max_per_user | currencyDefault }}
+                        The maximum investment is {{ maxUserInvest | currencyDefault }}
                     </span>
                 </div>
 
@@ -81,14 +78,8 @@
                     <i class="fas fa-dizzy"></i>
                     <b>Total investments too high.&nbsp;</b>
                     <span>
-                        The maximum investments is {{ states.project.max_per_user | currencyDefault }}
+                        The maximum investments is {{ maxUserInvest | currencyDefault }}
                     </span>
-                </div>
-
-                <div *ngIf="investForm.get('amount').errors?.projInvestEqualMaxInvest"
-                     class="alert alert-danger flex__center">
-                    <i class="fas fa-dizzy"></i>
-                    <b>You have already invested a maximum allowed amount for this project..&nbsp;</b>
                 </div>
 
                 <div *ngIf="investForm.get('amount').errors?.amountAboveBalance"
@@ -102,9 +93,16 @@
                 </div>
             </div>
         </div>
+
+        <div *ngIf="maxInvestReached"
+             class="alert alert-danger flex__center">
+            <i class="fas fa-dizzy"></i>
+            <b>You have already invested a maximum allowed amount for this project..&nbsp;</b>
+        </div>
+
     </ng-container>
 
-    <ng-container>
+    <ng-container *ngIf="!investForm.invalid && investForm.get('amount').value">
         <div class="estimated-calculator">
             <div class="estimated__return-label">
                 <p>ESTIMATED RETURN</p>
@@ -113,10 +111,10 @@
             <div class="estimated__content">
                 <div>
                     <div class="estimated__total-label col-lg-12">
-                        <h2>Total investment = €3.700 EUR</h2>
+                        <h2>Total investment = {{ totalInvestment | currencyDefault }}</h2>
                     </div>
                     <div class="estimated__invested-label col-lg-12">
-                        <p>€2.500 EUR invested so far </p>
+                        <p>{{ states.investment.amountInvested  | currencyDefault}} invested so far </p>
                     </div>
                 </div>
 
@@ -126,7 +124,8 @@
                             <div class="estimated__header-label col-lg"><p>Return over 1 year</p></div>
                         </div>
                         <div class="return__amounts">
-                            <div class="estimated__amount-label col-lg"><p>€12000 - €345678</p></div>
+                            <div class="estimated__amount-label col-lg"><p>{{ oneYearReturn }}</p>
+                            </div>
                         </div>
                     </div>
                     <div class="col-lg">
@@ -134,7 +133,8 @@
                             <div class="estimated__header-label col-lg"><p>5 Years</p></div>
                         </div>
                         <div class="return__amounts">
-                            <div class="estimated__amount-label col-lg"><p>€12000 - €345678</p></div>
+                            <div class="estimated__amount-label col-lg"><p>{{ fiveYearsReturn }}</p>
+                            </div>
                         </div>
                     </div>
                     <div class="col-lg">
@@ -142,7 +142,8 @@
                             <div class="estimated__header-label col-lg"><p>10 Years</p></div>
                         </div>
                         <div class="return__amounts">
-                            <div class="estimated__amount-label col-lg"><p>€12000 - €345678</p></div>
+                            <div class="estimated__amount-label col-lg"><p>{{ tenYearsReturn }}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -153,7 +154,7 @@
             <div class="dropdown-divider"></div>
             <div class="row row-cols-2">
                 <p class="right__available">Available funds</p>
-                <h2>{{ states.wallet.wallet.balance | currencyDefault }}</h2>
+                <h2>{{ states.investment.walletBalance | currencyDefault }}</h2>
                 <a class="right__link" routerLink="/dash/wallet">Open wallet</a>
             </div>
         </div>

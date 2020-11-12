@@ -3,6 +3,7 @@ import { BackendHttpClient } from '../backend-http-client.service';
 import { DocumentModel } from './organization.service';
 import { CacheService } from '../cache.service';
 import { Wallet } from '../wallet/wallet.service';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
     'providedIn': 'root'
@@ -48,6 +49,26 @@ export class ProjectService {
     getAllActiveProjectsCached() {
         return this.cacheService.setAndGet('projects/active', this.getAllActiveProjects(), 30_000);
     }
+
+    getInvestmentDetails(): Observable<InvestmentDetails> {
+        // Todo: fake data - create http request
+        const investmentDetails: InvestmentDetails = {
+            amountInvested: 2000000,
+            investmentCancelable: true,
+            payoutInProcess: false,
+            totalFundsRaised: 120000,
+            walletBalance: 800000
+        };
+        return of(investmentDetails);
+    }
+}
+
+export interface InvestmentDetails {
+    walletBalance: number;
+    amountInvested: number;
+    totalFundsRaised: number;
+    investmentCancelable: boolean;
+    payoutInProcess: boolean;
 }
 
 interface CreateProjectData {

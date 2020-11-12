@@ -2,9 +2,6 @@ import { Injectable } from '@angular/core';
 import { BackendHttpClient } from '../backend-http-client.service';
 import { Project } from '../project/project.service';
 import { TransactionInfo } from './wallet.service';
-import { catchError, map } from 'rxjs/operators';
-import { displayBackendError } from '../../../utilities/error-handler';
-import { EMPTY } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -19,15 +16,6 @@ export class PortfolioService {
 
     getPortfolio() {
         return this.http.get<PortfolioResponse>('/api/wallet/portfolio');
-    }
-
-    getProjectInvestments(uuid: string) {
-        return this.http.get<PortfolioResponse>('/api/wallet/portfolio').pipe(
-            catchError(err => {
-                displayBackendError(err);
-                return EMPTY;
-            }),
-            map((response: PortfolioResponse) => response.portfolio.filter(p => p.project.uuid === uuid)));
     }
 
     getInvestmentsInProject(projectID: string) {

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { OrganizationService } from '../../../shared/services/project/organization.service';
 import { displayBackendErrorRx } from '../../../utilities/error-handler';

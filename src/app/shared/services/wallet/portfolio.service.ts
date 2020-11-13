@@ -26,8 +26,8 @@ export class PortfolioService {
         return this.http.post<TransactionInfo>(`/api/wallet/invest/project/${projectUUID}/cancel`, {});
     }
 
-    isInvestmentCancelable(projectWallet: string, userWallet: string) {
-        return this.http.get<CancelableResult>(`/api/middleware/projects/${projectWallet}/investors/${userWallet}/cancelable`);
+    investmentDetails(projectWallet: string, userWallet: string) {
+        return this.http.get<DetailsResult>(`/api/middleware/projects/${projectWallet}/investors/${userWallet}/details`);
     }
 }
 
@@ -60,6 +60,10 @@ export interface TxData {
     date: string;
 }
 
-interface CancelableResult {
-    can_cancel: boolean;
+interface DetailsResult {
+    walletBalance: number;
+    amountInvested: number;
+    totalFundsRaised: number;
+    investmentCancelable: boolean;
+    payoutInProcess: boolean;
 }

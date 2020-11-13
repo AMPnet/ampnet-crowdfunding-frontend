@@ -55,4 +55,8 @@ export class SidebarComponent implements AfterViewInit {
     isWalletInitialized(wallet: WalletDetailsWithState) {
         return !wallet ? true : wallet.state !== WalletState.EMPTY;
     }
+
+    closeSidebar() {
+        NavbarComponent.closeSideBar();
+    }
 }

@@ -95,9 +95,9 @@ export class OfferDetailsComponent implements OnInit {
         this.isProjectCancelable$ = combineLatest([this.projectWalletMW$, this.walletService.wallet$]).pipe(
             take(1),
             switchMap(([projectWallet, wallet]) => {
-                return this.portfolioService.isInvestmentCancelable(projectWallet.projectHash, wallet.wallet.hash).pipe(
+                return this.portfolioService.investmentDetails(projectWallet.projectHash, wallet.wallet.hash).pipe(
                     displayBackendErrorRx(),
-                    map(res => res.can_cancel)
+                    map(res => res.investmentCancelable)
                 );
             })
         );

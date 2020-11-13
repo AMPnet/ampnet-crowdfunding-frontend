@@ -35,7 +35,7 @@ export class AppConfigService {
         return of(offsetMillis > this.cacheTimeoutMinutes * 60 * 1000).pipe(
             switchMap(shouldRefresh => shouldRefresh ?
                 this.remoteConfig.pipe(tap(config => this.setLocalConfig(config))) :
-                of(localConfig.config)),
+                of(localConfig[this.hostname].config)),
             map(config => ({
                 ...AppConfigService.defaultConfig,
                 ...config
@@ -45,7 +45,7 @@ export class AppConfigService {
     }
 
     private get remoteConfig(): Observable<AppConfig> {
-        return this.http.get<AppConfigRes>(`/api/user/public/app/config/${this.hostname}`).pipe(
+        return this.http.get<AppConfigRes>(`/api/user/public/app/config/hostname/${this.hostname}`).pipe(
             map(res => res.config),
             catchError(() => of(null))
         );

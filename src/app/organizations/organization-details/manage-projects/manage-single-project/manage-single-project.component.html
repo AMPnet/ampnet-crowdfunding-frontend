@@ -9,7 +9,7 @@
                 <div class="app-page-header flex__center">
                     <div class="app-page-title-back" (click)="backToOrganizationDetailsScreen()">
                         <i class="fas fa-long-arrow-alt-left mr-3"></i>
-                        {{ states.project.organization.name }}
+                        {{ states.project.organization?.name }}
                     </div>
                     <button class="btn btn-center" routerLink="/dash/offers/{{ states.project.uuid }}">
                         <i class="fas fa-caret-right mr-lg-3"></i>
@@ -32,7 +32,7 @@
     
                     <div class="edit-header">
                         <div class="edit__title">
-                            <h4>{{states.project.name}}</h4>
+                            <h4>{{ states.project.name }}</h4>
                         </div>
                         <div class="edit__state">
                             {{ states.project.active ? "Public" : "Hidden" }}
@@ -41,7 +41,7 @@
                     <div class="tabs">
                         <tabset>
                             <tab heading="Details" (selectTab)="detailsShown=true">
-                                <ng-container *ngIf="(updateForm$ | async) as updateForm">
+                                <ng-container *ngIf="states.updateForm as updateForm">
                                     <div class="edit-info">
                                         <form [formGroup]="updateForm" style="width: 100%">
                                             <div class="row">
@@ -56,51 +56,50 @@
                                                     <div class="left__desc">
                                                         <label for="project-description">Description</label>
                                                         <div class="input-group">
-                                                            <textarea class="input-reg w-100" cols="30" 
+                                                            <textarea class="input-reg w-100" cols="30"
                                                                       id="project-description" formControlName="description"
                                                                       rows="10">
                                                             </textarea>
                                                         </div>
                                                     </div>
                                                     <div class="left__roi">
-                                                        <div class="roi__label">Expected ROI %</div>
-                                                        <div class="roi__inputs">
+                                                        <div class="roi__label">Expected ROI % (From - To)</div>
+                                                        <form class="roi__inputs" formGroupName="roi">
                                                             <input class="input-reg w-50"
-                                                                   formControlName="roiFrom"
-                                                                   type="text">
+                                                                   formControlName="from"
+                                                                   type="number">
                                                             <input class="input-reg w-50"
-                                                                   formControlName="roiTo"
-                                                                   type="text">
-                                                        </div>
+                                                                   formControlName="to"
+                                                                   type="number">
+                                                        </form>
                                                     </div>
                                                     <div class="left__dates">
                                                         <div class="dates__label flex__center-space">
-                                                            Dates (DD/MM/YY)
+                                                            Dates (From - To)
                                                             <i class="fas fa-lock"></i>
                                                         </div>
-                                                        <div formGroupName="dates">
-                                                            <input class="input-reg w-50"
-                                                                   formControlName="from"
-                                                                   [value]="updateForm.get('dates.from').value"
+                                                        <div>
+                                                            <input class="input-reg w-50" disabled
+                                                                   [value]="states.project.start_date | date:'mediumDate'"
                                                                    type="text">
-                                                            <input class="input-reg w-50"
-                                                                   formControlName="to"
+                                                            <input class="input-reg w-50" disabled
+                                                                   [value]="states.project.end_date | date:'mediumDate'"
                                                                    type="text">
                                                         </div>
                                                     </div>
                                                     <div class="left__investments">
                                                         <div class="investments__label flex__center-space">
-                                                            Investment per member €
+                                                            Investment per member € (From - To)
                                                             <i class="fas fa-lock"></i>
                                                         </div>
             
-                                                        <div formGroupName="investments">
-                                                            <input class="input-reg w-50"
-                                                                   formControlName="from"
+                                                        <div>
+                                                            <input class="input-reg w-50" disabled
+                                                                   [value]="states.project.min_per_user | currencyDefault"
                                                                    type="text">
                                                             
-                                                            <input class="input-reg w-50"
-                                                                   formControlName="to"
+                                                            <input class="input-reg w-50" disabled
+                                                                   [value]="states.project.max_per_user | currencyDefault"
                                                                    type="text">
                                                         </div>
                                                     </div>
@@ -109,8 +108,8 @@
                                                             Expected funding €
                                                             <i class="fas fa-lock"></i>
                                                         </div>
-                                                        <input class="input-reg w-100"
-                                                               formControlName="expected"
+                                                        <input class="input-reg w-100" disabled
+                                                               [value]="states.project.expected_funding | currencyDefault"
                                                                type="text">
                                                     </div>
                                                 </div>
@@ -262,23 +261,12 @@
     </div>
     
     <div class="cta" *ngIf="detailsShown">
-        <!-- TODO: Hook up this functionality -->
-        <ng-container *ngIf="(updateForm$ | async) as updateForm">
+        <ng-container *ngIf="states.updateForm as updateForm">
             <div class="container">
                 <div class="cta__inner row col-lg-4">
-                    <div class="col-5 col-lg-6 d-lg-none">
-                        <app-action-button text="{{ states.project.active ? 'Hide' : 'Show' }}"
-                                           faIcon="{{ states.project.active ? 'fa-eye-slash' : 'fa-eye' }}"
-                                           loadingText="Updating..."
-                                           [disabled]="!isWalletVerified(states.wallet)"
-                                           [onClick]="toggleProjectStatusClicked(states.project).bind(this)"
-                                           buttonClass="btn btn-info">
-                        </app-action-button>
-                    </div>
                     <div class="col-5 col-lg-6 d-none d-lg-block">
                         <app-action-button text="{{ states.project.active ? 'Hide project' : 'Show project' }}"
                                            faIcon="{{ states.project.active ? 'fa-eye-slash' : 'fa-eye' }}"
-                                           loadingText="Updating..."
                                            [disabled]="!isWalletVerified(states.wallet)"
                                            [onClick]="toggleProjectStatusClicked(states.project).bind(this)"
                                            buttonClass="btn btn-info">
@@ -287,7 +275,7 @@
                     <div class="col-7 col-lg-6">
                         <app-action-button text="Update all"
                                            loadingText="Updating..."
-                                           [disabled]="!updateForm.dirty || !updateForm.valid"
+                                           [disabled]="!(updateForm.dirty && updateForm.valid)"
                                            [onClick]="updateProject(states.project, updateForm).bind(this)"
                                            buttonClass="btn"
                                            faIcon="far fa-check mr-3">

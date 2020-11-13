@@ -94,7 +94,7 @@ export interface Project {
     documents: DocumentModel[];
     gallery: string[];
     active: boolean;
-    organization: Organization[];
+    organization: Organization;
 }
 
 export interface PageableProjectsResponse {

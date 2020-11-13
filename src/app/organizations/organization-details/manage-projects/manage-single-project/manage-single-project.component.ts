@@ -9,9 +9,9 @@ import { catchError, finalize, map, shareReplay, switchMap, tap } from 'rxjs/ope
 import { BehaviorSubject, EMPTY, Observable, of, throwError } from 'rxjs';
 import { ArkaneService } from '../../../../shared/services/arkane.service';
 import { PopupService } from '../../../../shared/services/popup.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { URLValidator } from '../../../../shared/validators/url.validator';
-import { DatePipe, CurrencyPipe } from '@angular/common';
+import { CurrencyPipe, DatePipe } from '@angular/common';
 
 @Component({
     selector: 'app-manage-single-project',
@@ -38,9 +38,7 @@ export class ManageSingleProjectComponent {
                 private popupService: PopupService,
                 private router: Router,
                 private fb: FormBuilder,
-                private route: ActivatedRoute,
-                private datePipe: DatePipe,
-                private currencyPipe: CurrencyPipe) {
+                private route: ActivatedRoute) {
         const projectUUID = this.route.snapshot.params.projectID;
         this.project$ = this.refreshProjectSubject.pipe(
             switchMap(project => project !== null ? of(project) : this.projectService.getProject(projectUUID)),
@@ -65,25 +63,13 @@ export class ManageSingleProjectComponent {
         );
 
         this.updateForm$ = this.project$.pipe(map(project => {
-            const dateFrom = this.datePipe.transform(project.start_date, 'mediumDate');
-            const dateTo = this.datePipe.transform(project.end_date, 'mediumDate');
-            const investFrom = this.currencyPipe.transform(project.min_per_user, 'EUR', 'symbol', '2.0');
-            const investTo = this.currencyPipe.transform(project.max_per_user, 'EUR', 'symbol', '2.0');
-            const expectedInvest = this.currencyPipe.transform(project.expected_funding, 'EUR', 'symbol', '2.0');
                 return fb.group({
                     name: [project.name, Validators.required],
                     description: [project.description, Validators.minLength(3)],
-                    roiFrom: [project.roi.from, Validators.pattern('^[0-9]*$')],
-                    roiTo: [project.roi.to, Validators.pattern('^[0-9]*$')],
-                    dates: fb.group({
-                        from: [{value: dateFrom, disabled: true}],
-                        to: [{value: dateTo, disabled: true}]
-                    }),
-                    investments: fb.group({
-                        from: [{value: investFrom, disabled: true}],
-                        to: [{value: investTo, disabled: true}],
-                    }),
-                    expected: [{value: expectedInvest, disabled: true}],
+                    roi: fb.group({
+                        from: [project.roi.from, Validators.pattern(/^\d*\.?\d+$/)],
+                        to: [project.roi.to, Validators.pattern(/^\d*\.?\d+$/)],
+                    }, { validators: this.roiValidator}),
                     location: fb.group({
                         lat: [project.location.lat],
                         long: [project.location.long],
@@ -122,7 +108,6 @@ export class ManageSingleProjectComponent {
                 text: 'Transaction is being processed...'
             })),
             tap(() => {
-
                 this.refreshProjectSubject.next(null);
                 this.refreshProjectWalletSubject.next();
             }),
@@ -205,5 +190,11 @@ export class ManageSingleProjectComponent {
 
     backToOrganizationDetailsScreen() {
         this.router.navigate(['../../'], {relativeTo: this.route});
+    }
+
+    private roiValidator: ValidatorFn = (roiFromGroup: FormGroup) => {
+        const from = roiFromGroup.get('from').value;
+        const to = roiFromGroup.get('to').value;
+        return from !== null && to !== null && from <= to ? null : { invalidROI: true };
     }
 }

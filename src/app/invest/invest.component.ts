@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { WalletService } from '../shared/services/wallet/wallet.service';
 import { displayBackendError } from '../utilities/error-handler';
-import { InvestmentDetails, Project, ProjectService } from '../shared/services/project/project.service';
+import { InvestmentDetails, Project, ProjectInfo, ProjectService } from '../shared/services/project/project.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
-import { combineLatest, EMPTY, Observable, of } from 'rxjs';
+import { combineLatest, EMPTY, Observable } from 'rxjs';
 import { catchError, map, shareReplay } from 'rxjs/operators';
 import { PortfolioService } from '../shared/services/wallet/portfolio.service';
 import { CurrencyDefaultPipe } from '../pipes/currency-default.pipe';
+import { logger } from 'codelyzer/util/logger';
 
 @Component({
     selector: 'app-invest',
@@ -17,6 +18,9 @@ import { CurrencyDefaultPipe } from '../pipes/currency-default.pipe';
 export class InvestComponent implements OnInit {
     project$: Observable<Project>;
     investment$: Observable<InvestmentDetails>;
+
+    projectInfo$: Observable<ProjectInfo>;
+    investmentDetails$: Observable<InvestmentDetails>;
 
     maxInvestReached = false;
     minUserInvest: number;
@@ -39,6 +43,9 @@ export class InvestComponent implements OnInit {
         const projectID = this.route.snapshot.params.id;
         this.project$ = this.projectService.getProject(projectID).pipe(this.handleError, shareReplay(1));
         this.investment$ = this.projectService.getInvestmentDetails().pipe(this.handleError);
+
+        // this.projectService.getProjectInfo(projectID).pipe(this.handleError).subscribe(res => console.log('Export: ', res));
+        this.projectService.getInvestmenDetails2().subscribe(data => console.log(data));
     }
 
     ngOnInit() {
@@ -107,6 +114,7 @@ export class InvestComponent implements OnInit {
     private handleError<T>(source: Observable<T>) {
         return source.pipe(
             catchError(err => {
+                console.log('Error: ', err);
                 displayBackendError(err);
                 return EMPTY;
             })

@@ -50,10 +50,20 @@ export class ProjectService {
         return this.cacheService.setAndGet('projects/active', this.getAllActiveProjects(), 30_000);
     }
 
+    getProjectInfo(projectID: string) {
+        return this.http.get<ProjectInfo>(`/api/projects/${projectID}`);
+    }
+
+    // getInvestmentDetails(projectID: string, investorHash: string) {
+    // return this.http.get<InvestmentDetails>(`/projects/${projectID}/investors/${investorHash}/details`);
+    getInvestmenDetails2() {
+        return this.http.get<InvestmentDetails>(`/api/projects/th_22gRkbS2NE5bjByvMvHhA95nDqXTuUCAkD14p1pnPVBbzsBbj9/investors/th_pJ66jnJUcWauoYyRVU1afzXRGnGYR3wYoM8UNoyy44WDRarJP/details`);
+    }
+
     getInvestmentDetails(): Observable<InvestmentDetails> {
         // Todo: fake data - create http request
         const investmentDetails: InvestmentDetails = {
-            amountInvested: 2000000,
+            amountInvested: 10000000,
             investmentCancelable: true,
             payoutInProcess: false,
             totalFundsRaised: 120000,
@@ -61,6 +71,17 @@ export class ProjectService {
         };
         return of(investmentDetails);
     }
+}
+
+export interface ProjectInfo {
+    projectHash: string;
+    minPerUserInvestment: number;
+    maxPerUserInvestment: number;
+    investmentCap: number;
+    endsAt: Date;
+    totalFundsRaised: number;
+    payoutInProcess: boolean;
+    balance: number;
 }
 
 export interface InvestmentDetails {

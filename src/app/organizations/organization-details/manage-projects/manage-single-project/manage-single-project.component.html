@@ -9,7 +9,7 @@
 
             <div class="col-md-4">
                 <button class="btn btn-primary w-100 py-3 float-right"
-                        routerLink="/dash/offers/{{ states.project.uuid }}">
+                        [routerLink]="['/dash', 'offers', states.project.uuid] | coopPath">
                     <i class="fas fa-anchor mr-2"></i>
                     Preview project
                 </button>

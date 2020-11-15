@@ -1,5 +1,4 @@
 import { Component, ElementRef, Inject, Renderer2, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
 import { OnboardingService } from '../../../../shared/services/user/onboarding.service';
 import { displayBackendErrorRx } from 'src/app/utilities/error-handler';
 import { UserAuthService } from '../../../../shared/services/user/user-auth.service';
@@ -8,6 +7,7 @@ import { combineLatest, EMPTY, Observable, Subject } from 'rxjs';
 import { catchError, switchMap, take } from 'rxjs/operators';
 import { PopupService } from '../../../../shared/services/popup.service';
 import { AppConfigService } from '../../../../shared/services/app-config.service';
+import { RouterService } from '../../../../shared/services/router.service';
 
 @Component({
     selector: 'app-onboarding',
@@ -24,13 +24,13 @@ export class OnboardingComponent {
     constructor(private renderer2: Renderer2,
                 @Inject(DOCUMENT) private document: Document,
                 private appConfig: AppConfigService,
-                private router: Router,
+                private router: RouterService,
                 private popupService: PopupService,
                 private onboardingService: OnboardingService,
                 private loginService: UserAuthService) {
         this.loaded$ = combineLatest([this.onboardingService.getSessionID(), this.loadIdentyumScript()]).pipe(
             take(1),
-            switchMap(([clientToken, _]) => this.setFlowManager(clientToken, this.appConfig.config.identyum.startLanguage))
+            switchMap(([clientToken, _]) => this.setFlowManager(clientToken, this.appConfig.config.config.identyum.startLanguage))
         );
 
         this.finishedSubject = new Subject();

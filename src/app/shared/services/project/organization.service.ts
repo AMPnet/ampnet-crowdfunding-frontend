@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { BackendHttpClient } from '../backend-http-client.service';
 import { ProjectWallet } from './project.service';
+import { AppConfigService } from '../app-config.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class OrganizationService {
-    constructor(private http: BackendHttpClient) {
+    constructor(private http: BackendHttpClient,
+                private appConfig: AppConfigService) {
     }
 
     createOrganization(name: string, description: string, photo: File) {
@@ -52,7 +54,9 @@ export class OrganizationService {
     }
 
     getAllProjectsForOrganization(orgID: string) {
-        return this.http.get<PageableOrganizationProjectsResponse>(`/api/project/public/project/organization/${orgID}`);
+        return this.http.get<PageableOrganizationProjectsResponse>(`/api/project/public/project/organization/${orgID}`, {
+            coop: this.appConfig.config.identifier
+        });
     }
 
     getMembersForOrganization(orgID: string) {

@@ -1,8 +1,8 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { SpinnerUtil } from '../../../utilities/spinner-utilities';
+import { RouterService } from '../../../shared/services/router.service';
 
 @Component({
     selector: 'app-manage-single-deposit-modal',
@@ -15,7 +15,7 @@ export class ManageSingleDepositModalComponent implements OnInit {
 
     confirmForm: FormGroup;
 
-    constructor(private router: Router,
+    constructor(private router: RouterService,
                 private formBuilder: FormBuilder,
                 private bsModalRef: BsModalRef) {
     }

@@ -3,12 +3,14 @@ import { BackendHttpClient } from '../backend-http-client.service';
 import { DocumentModel } from './organization.service';
 import { CacheService } from '../cache.service';
 import { Wallet } from '../wallet/wallet.service';
+import { AppConfigService } from '../app-config.service';
 
 @Injectable({
-    'providedIn': 'root'
+    providedIn: 'root'
 })
 export class ProjectService {
     constructor(private http: BackendHttpClient,
+                private appConfig: AppConfigService,
                 private cacheService: CacheService) {
     }
 
@@ -17,7 +19,9 @@ export class ProjectService {
     }
 
     getProject(projectID: string) {
-        return this.http.get<Project>(`/api/project/public/project/${projectID}`);
+        return this.http.get<Project>(`/api/project/public/project/${projectID}`, {
+            coop: this.appConfig.config.identifier
+        });
     }
 
     updateProject(projectID: string, data: UpdateProjectData,
@@ -42,7 +46,9 @@ export class ProjectService {
     }
 
     getAllActiveProjects() {
-        return this.http.get<PageableProjectsResponse>('/api/project/public/project/active');
+        return this.http.get<PageableProjectsResponse>('/api/project/public/project/active', {
+            coop: this.appConfig.config.identifier
+        });
     }
 
     getAllActiveProjectsCached() {
@@ -94,6 +100,7 @@ export interface Project {
     documents: DocumentModel[];
     gallery: string[];
     active: boolean;
+    coop: string;
 }
 
 export interface PageableProjectsResponse {

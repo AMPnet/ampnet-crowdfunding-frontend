@@ -1,9 +1,10 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { BankCodeModel } from 'src/app/payment-options/new-payment-option/bank-code-model';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { PlatformBankAccountService } from '../../shared/services/wallet/platform-bank-account.service';
 import { hideSpinnerAndDisplayError } from '../../utilities/error-handler';
+import { RouterService } from '../../shared/services/router.service';
 
 declare var $: any;
 
@@ -20,7 +21,7 @@ export class NewPlatformBankAccountComponent implements OnInit, AfterViewInit {
 
     bankCodes: BankCodeModel[];
 
-    constructor(private router: Router,
+    constructor(private router: RouterService,
                 private route: ActivatedRoute,
                 private service: PlatformBankAccountService) {
     }
@@ -52,7 +53,7 @@ export class NewPlatformBankAccountComponent implements OnInit, AfterViewInit {
         SpinnerUtil.showSpinner();
         this.service.createBankAccount(iban, bankCode, alias).subscribe(res => {
             SpinnerUtil.hideSpinner();
-            this.router.navigate(['dash', 'admin', 'platform_bank_account']);
+            this.router.navigate(['/dash', 'admin', 'platform_bank_account']);
         }, err => {
             hideSpinnerAndDisplayError(err);
         });

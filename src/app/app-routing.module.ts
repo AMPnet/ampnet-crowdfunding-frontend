@@ -61,7 +61,6 @@ const appRoutes: Routes = [
             {path: 'confirm_email', component: ConfirmEmailComponent},
             {path: 'overview/:isOverview', component: OffersComponent},
             {path: 'overview/:id/:isOverview', component: OfferDetailsComponent, canActivate: [OfferDetailsGuard]},
-            {path: 'onboarding', component: OnboardingComponent},
             {path: 'forgot_password', component: ForgotPasswordComponent},
             {path: 'reset_password', component: ResetPasswordComponent},
             {path: 'sign_in_auto/:email/:password', component: SignInAutoComponent},
@@ -71,9 +70,9 @@ const appRoutes: Routes = [
         path: 'dash', component: SecureLayoutComponent,
         canActivate: [AuthGuard],
         children: [
-            {path: '', component: OffersComponent},
-            {path: 'wallet', component: WalletComponent},
+            {path: '', pathMatch: 'full', redirectTo: 'offers'},
             {path: 'offers', component: OffersComponent},
+            {path: 'wallet', component: WalletComponent},
             {path: 'offers/:id', component: OfferDetailsComponent},
             {path: 'offers/:id/invest', component: InvestComponent},
             {path: 'my_portfolio', component: MyPortfolioComponent},
@@ -127,8 +126,8 @@ const appRoutes: Routes = [
 ];
 
 const routes: Routes = [
+    {path: '', pathMatch: 'full', canActivate: [CoopGuard], children: appRoutes},
     {path: ':coopID', canActivate: [CoopGuard], children: appRoutes},
-    {path: '', pathMatch: 'full', canActivate: [CoopGuard], children: appRoutes}
 ];
 
 @NgModule({

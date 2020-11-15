@@ -22,16 +22,18 @@ import { AppConfigService } from './app-config.service';
     providedIn: 'root'
 })
 export class ArkaneService {
-    private readonly arkaneConnect: ArkaneConnect;
-    private readonly secretType = SecretType.AETERNITY;
+    private arkaneConnect: ArkaneConnect;
+    private secretType = SecretType.AETERNITY;
 
     constructor(private walletService: WalletService,
                 private appConfigService: AppConfigService,
                 private broadcastService: BroadcastService,
                 private popupService: PopupService) {
-        const arkaneConfig = this.appConfigService.config.config.arkane;
-        this.arkaneConnect = new ArkaneConnect(arkaneConfig.id, {
-            environment: arkaneConfig.env,
+        this.appConfigService.config$.subscribe(config => {
+            const arkaneConfig = config.config.arkane;
+            this.arkaneConnect = new ArkaneConnect(arkaneConfig.id, {
+                environment: arkaneConfig.env,
+            });
         });
     }
 

@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 import { displayBackendErrorRx } from '../utilities/error-handler';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import {
@@ -10,6 +9,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { finalize, map, switchMap, tap } from 'rxjs/operators';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PopupService } from '../shared/services/popup.service';
+import { RouterService } from '../shared/services/router.service';
 
 @Component({
     selector: 'app-manage-deposits',
@@ -22,7 +22,7 @@ export class ManageDepositsComponent {
 
     referenceForm: FormGroup;
 
-    constructor(private router: Router,
+    constructor(private router: RouterService,
                 private fb: FormBuilder,
                 private popupService: PopupService,
                 private depositCooperativeService: WalletCooperativeDepositService) {

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { displayBackendErrorRx } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { Project, ProjectService } from '../../../../shared/services/project/project.service';
@@ -11,6 +11,7 @@ import { ArkaneService } from '../../../../shared/services/arkane.service';
 import { PopupService } from '../../../../shared/services/popup.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { URLValidator } from '../../../../shared/validators/url.validator';
+import { RouterService } from '../../../../shared/services/router.service';
 
 @Component({
     selector: 'app-manage-single-project',
@@ -33,7 +34,7 @@ export class ManageSingleProjectComponent {
                 private manageProjectsService: ManageProjectsService,
                 private arkaneService: ArkaneService,
                 private popupService: PopupService,
-                private router: Router,
+                private router: RouterService,
                 private fb: FormBuilder,
                 private route: ActivatedRoute) {
         const projectUUID = this.route.snapshot.params.projectID;

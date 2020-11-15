@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Meta } from '@angular/platform-browser';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { LinkPreview, NewsPreviewService } from 'src/app/shared/services/news-preview.service';
 import { UserService } from 'src/app/shared/services/user/user.service';
 import { displayBackendErrorRx } from 'src/app/utilities/error-handler';
@@ -16,6 +16,7 @@ import { TooltipDirective } from 'ngx-bootstrap/tooltip';
 import { PortfolioService, ProjectTransactions } from '../../shared/services/wallet/portfolio.service';
 import { PopupService } from '../../shared/services/popup.service';
 import { ArkaneService } from '../../shared/services/arkane.service';
+import { RouterService } from '../../shared/services/router.service';
 
 @Component({
     selector: 'app-offer-details',
@@ -44,7 +45,7 @@ export class OfferDetailsComponent implements OnInit {
                 private route: ActivatedRoute,
                 private userService: UserService,
                 private meta: Meta,
-                private router: Router,
+                private router: RouterService,
                 private modalService: BsModalService,
                 private portfolioService: PortfolioService,
                 private popupService: PopupService,
@@ -95,9 +96,9 @@ export class OfferDetailsComponent implements OnInit {
         this.isProjectCancelable$ = combineLatest([this.projectWalletMW$, this.walletService.wallet$]).pipe(
             take(1),
             switchMap(([projectWallet, wallet]) => {
-                return this.portfolioService.isInvestmentCancelable(projectWallet.projectHash, wallet.wallet.hash).pipe(
+                return this.portfolioService.investmentDetails(projectWallet.projectHash, wallet.wallet.hash).pipe(
                     displayBackendErrorRx(),
-                    map(res => res.can_cancel)
+                    map(res => res.investmentCancelable)
                 );
             })
         );

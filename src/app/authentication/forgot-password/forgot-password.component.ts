@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { PopupService } from '../../shared/services/popup.service';
 import { EMPTY, throwError } from 'rxjs';
 import { displayBackendErrorRx } from '../../utilities/error-handler';
+import { RouterService } from '../../shared/services/router.service';
 
 @Component({
     selector: 'app-forgot-password',
@@ -17,7 +18,7 @@ export class ForgotPasswordComponent {
 
     constructor(private formBuilder: FormBuilder,
                 private signUpService: SignupService,
-                private router: Router,
+                private router: RouterService,
                 private popupService: PopupService) {
 
         this.forgotPasswordForm = this.formBuilder.group({
@@ -54,6 +55,6 @@ export class ForgotPasswordComponent {
                 type: 'success',
                 title: 'Success',
                 text: 'We have sent you an e-mail containing your password reset link.'
-            }).pipe(switchMap(() => this.router.navigate([''])))));
+            }).pipe(switchMap(() => this.router.navigate(['/'])))));
     }
 }

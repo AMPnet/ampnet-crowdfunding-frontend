@@ -11,7 +11,8 @@
                         <i class="fas fa-long-arrow-alt-left mr-3"></i>
                         {{ states.project.organization?.name }}
                     </div>
-                    <button class="btn btn-center" routerLink="/dash/offers/{{ states.project.uuid }}">
+                    <button class="btn btn-center"
+                            [routerLink]="['/dash', 'offers', states.project.uuid] | coopPath">
                         <i class="fas fa-caret-right mr-lg-3"></i>
                         <span class="btn__text">Preview</span>
                     </button>
@@ -22,14 +23,15 @@
                             <img src="{{states.project.main_image}}" alt="Project image">
                         </div>
                     </ng-container>
-    
+
                     <div *ngIf="!isWalletVerified(states.wallet)">
                         <div class="alert alert-warning flex__center">
                             <i class="fas fa-exclamation-triangle mr-3"></i>
-                            <b>This project is pending approval from admin. During this time, the project cannot be publicly shown.</b>
+                            <b>This project is pending approval from admin. During this time, the project cannot be
+                                publicly shown.</b>
                         </div>
                     </div>
-    
+
                     <div class="edit-header">
                         <div class="edit__title">
                             <h4>{{ states.project.name }}</h4>
@@ -49,15 +51,17 @@
                                                     <div class="left__name">
                                                         <label for="project-name">Project name</label>
                                                         <input aria-describedby="basic-addon1"
-                                                                   aria-label="Username" class="input-reg w-100" id="project-name"
-                                                                   formControlName="name"
-                                                                   type="text">
+                                                               aria-label="Username" class="input-reg w-100"
+                                                               id="project-name"
+                                                               formControlName="name"
+                                                               type="text">
                                                     </div>
                                                     <div class="left__desc">
                                                         <label for="project-description">Description</label>
                                                         <div class="input-group">
                                                             <textarea class="input-reg w-100" cols="30"
-                                                                      id="project-description" formControlName="description"
+                                                                      id="project-description"
+                                                                      formControlName="description"
                                                                       rows="10">
                                                             </textarea>
                                                         </div>
@@ -92,12 +96,12 @@
                                                             Investment per member € (From - To)
                                                             <i class="fas fa-lock"></i>
                                                         </div>
-            
+
                                                         <div>
                                                             <input class="input-reg w-50" disabled
                                                                    [value]="states.project.min_per_user | currencyDefault"
                                                                    type="text">
-                                                            
+
                                                             <input class="input-reg w-50" disabled
                                                                    [value]="states.project.max_per_user | currencyDefault"
                                                                    type="text">
@@ -113,27 +117,28 @@
                                                                type="text">
                                                     </div>
                                                 </div>
-            
+
                                                 <div class="edit-right col-lg-5">
                                                     <div class="right__upload-img">
                                                         <div class="upload__label">Project image</div>
                                                         <div class="d-flex">
                                                             <div class="row">
                                                                 <div class="col-12 uppy-img">
-                                                                    <app-upload-area areaID='project-image' style="width: max-content;"
+                                                                    <app-upload-area areaID='project-image'
+                                                                                     style="width: max-content;"
                                                                                      [restrictions]="{
                                                                                         allowedFileTypes: ['image/*'],
                                                                                         maxFileSize: 10 * 1024 * 1024,
                                                                                         maxNumberOfFiles: 1
                                                                                      }"
                                                                                      [firstFileControl]="updateForm.get('newImage')">
-                                                                    </app-upload-area> 
+                                                                    </app-upload-area>
                                                                 </div>
                                                                 <div class="col-12 uppy-img__content">
                                                                     <ng-container
                                                                             *ngIf="updateForm.get('newImage').value || states.project.main_image else noProjectImageSet">
                                                                         <img [src]="(updateForm.get('newImage').value | safe:'fileUrl') || states.project.main_image"
-                                                                              style="width: 100%;">
+                                                                             style="width: 100%;">
                                                                     </ng-container>
                                                                     <ng-template #noProjectImageSet>
                                                                         <div class="text-center">
@@ -144,7 +149,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                
+
                                                     <div class="right__location">
                                                         <div class="location__label">Location</div>
                                                         <div class="map-holder">
@@ -154,13 +159,14 @@
                                                             </app-location-map>
                                                         </div>
                                                     </div>
-                
+
                                                     <div class="right__upload-docs">
                                                         <div class="upload__label">Project files</div>
                                                         <div class="d-flex">
                                                             <div class="row">
                                                                 <div class="col-12 uppy-docs">
-                                                                    <app-upload-area areaID='project-image' style="width: max-content"
+                                                                    <app-upload-area areaID='project-image'
+                                                                                     style="width: max-content"
                                                                                      [restrictions]="{
                                                                                         allowedFileTypes: ['image/*', 'application/pdf', 'application/zip', 'audio/*', 'video/*'],
                                                                                         maxFileSize: 10 * 1024 * 1024,
@@ -170,7 +176,8 @@
                                                                     </app-upload-area>
                                                                 </div>
                                                                 <div class="col-12 uppy-docs__content">
-                                                                    <ng-container *ngIf="states.project.documents?.length > 0 else noDocuments">
+                                                                    <ng-container
+                                                                            *ngIf="states.project.documents?.length > 0 else noDocuments">
                                                                         <div *ngFor="let file of states.project.documents; let i = index">
                                                                             <div class="uppy-docs__content">
                                                                                 <div class="flex__center-space">
@@ -183,8 +190,9 @@
                                                                                               class="mr-3 cursor-pointer gray-text">
                                                                                         <i class="fas fa-trash"></i>
                                                                                         </span>
-                                                                                        <a class="cursor-pointer gray-text" href="{{ file.link }}">
-                                                                                        <i class="fas fa-file-download"></i>
+                                                                                        <a class="cursor-pointer gray-text"
+                                                                                           href="{{ file.link }}">
+                                                                                            <i class="fas fa-file-download"></i>
                                                                                         </a>
                                                                                     </div>
                                                                                 </div>
@@ -215,16 +223,16 @@
                                             <div class="col-lg-8 row">
                                                 <div class="col-11 form__input">
                                                     <input class="input-reg w-100" id="newsLink"
-                                                       placeholder="Enter link (e.g. https://portal.com/news)"
-                                                       formControlName="newsLink"
-                                                       type="text">
+                                                           placeholder="Enter link (e.g. https://portal.com/news)"
+                                                           formControlName="newsLink"
+                                                           type="text">
                                                 </div>
                                                 <div class="col-1 form__btn">
-                                                    <app-action-button 
-                                                        faIcon="fa-plus ml-n2 ml-lg-0"
-                                                        [disabled]="!newsForm.dirty || !newsForm.valid"
-                                                        [onClick]="addNewsLink(states.project, newsForm).bind(this)"
-                                                        buttonClass="w-100 btn">
+                                                    <app-action-button
+                                                            faIcon="fa-plus ml-n2 ml-lg-0"
+                                                            [disabled]="!newsForm.dirty || !newsForm.valid"
+                                                            [onClick]="addNewsLink(states.project, newsForm).bind(this)"
+                                                            buttonClass="w-100 btn">
                                                     </app-action-button>
                                                 </div>
                                             </div>
@@ -234,17 +242,19 @@
                                         <ul class="list-group">
                                             <li *ngFor="let item of states.project.news"
                                                 class="list__item flex__center-space">
-                                                <a href="{{ item }}" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis">
+                                                <a href="{{ item }}"
+                                                   style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis">
                                                     {{ item }}
                                                 </a>
-                                                <div (click)="deleteNewsClicked(states.project, item).subscribe()" class="cursor-pointer">
+                                                <div (click)="deleteNewsClicked(states.project, item).subscribe()"
+                                                     class="cursor-pointer">
                                                     <i class="fas fa-trash-alt"></i>
                                                 </div>
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
-                                
+
                             </tab>
 
                             <tab heading="Manage Payments" (selectTab)="detailsShown=false">
@@ -254,12 +264,12 @@
                             </tab>
                         </tabset>
                     </div>
-                    
+
                 </div>
             </div>
         </ng-container>
     </div>
-    
+
     <div class="cta" *ngIf="detailsShown">
         <ng-container *ngIf="states.updateForm as updateForm">
             <div class="container">

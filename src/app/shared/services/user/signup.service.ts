@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BackendHttpClient } from '../backend-http-client.service';
 import { tap } from 'rxjs/operators';
 import { UserService } from './user.service';
+import { AppConfigService } from '../app-config.service';
 
 
 @Injectable({
@@ -12,11 +13,13 @@ export class SignupService {
     private endpointForgotPassword = '/api/user/forgot-password';
 
     constructor(private http: BackendHttpClient,
+                private appConfig: AppConfigService,
                 private userService: UserService) {
     }
 
     signupEmail(email: string, firstName: string, lastName: string, password: string) {
         return this.http.post<User>(this.endpoint, <EmailSignupData>{
+            coop: this.appConfig.config.identifier,
             signup_method: 'EMAIL',
             user_info: {
                 first_name: firstName,
@@ -29,6 +32,7 @@ export class SignupService {
 
     signupSocial(provider: string, authToken: string) {
         return this.http.post<User>(this.endpoint, <SocialSignupData>{
+            coop: this.appConfig.config.identifier,
             signup_method: provider,
             user_info: {
                 token: authToken
@@ -38,6 +42,7 @@ export class SignupService {
 
     forgotPassword(email: string) {
         return this.http.post(`${this.endpointForgotPassword}/token`, {
+            coop: this.appConfig.config.identifier,
             email: email
         });
     }

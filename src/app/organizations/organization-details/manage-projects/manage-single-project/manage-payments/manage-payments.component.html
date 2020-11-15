@@ -17,7 +17,7 @@
                                 <div class="explainer-mini mb-3">Project wallet</div>
                                 <div class="row w-100">
                                     <div class="col-lg-6">
-                                        <button class="btn btn-primary w-100 mb-3" routerLink="project_deposit">
+                                        <button class="btn btn-primary w-100 mb-3" routerLink="manage_payments/project_deposit">
                                             <i class="fas fa-arrow-circle-down mr-2"></i>
                                             Deposit
                                         </button>
@@ -25,7 +25,7 @@
                                     <div class="col-lg-6">
                                         <button class="btn btn-primary w-100 py-3"
                                                 [disabled]="!states.walletInfo || !isProjectFullyFunded(states.walletInfo)"
-                                                routerLink="project_withdraw">
+                                                routerLink="manage_payments/project_withdraw">
                                             <i class="fas fa-arrow-circle-up mr-2"></i>
                                             Withdraw
                                         </button>

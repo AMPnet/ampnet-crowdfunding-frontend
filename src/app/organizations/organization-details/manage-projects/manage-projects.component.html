@@ -6,65 +6,12 @@
     </div>
 
     <ul class="list-group">
-        <li *ngFor="let projectWallet of projectsWallets"
-            class="list__item">
-            <div class="item__top">
-                <div class="top__left">
-                    <img src="{{ projectWallet.project.main_image }}"
-                         onerror="this.onerror=null; this.src='../../../../assets/noimage.png'"
-                         alt="Project image">
-                </div>
-                <div class="top__right">
-                    <div class="item__title" routerLink="manage_project/{{ projectWallet.project.uuid }}">
-                        {{ projectWallet.project.name }}
-                    </div>
-                    <div class="item__funding">
-                        <b>Funding </b>{{ projectWallet.project.start_date | date:'longDate' }}
-                        - {{ projectWallet.project.end_date | date:'longDate' }}
-                    </div>
-                </div>
-            </div>
-            <div class="item__bottom">
-                <div class="item__progress-bar">
-                    <ng-container
-                            *ngIf="(getWalletInfo(projectWallet.wallet.hash) | async) as wallet else walletLoading">
-                        <div style="visibility:hidden" class="fadeIn wow">
-                            <div>
-                                <div class="progress">
-                                    <div [style.width.%]="(wallet.totalFundsRaised / wallet.investmentCap) * 100"
-                                         class="progress__bar"
-                                         role="progressbar"></div>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="progress__raised">
-                                    <div>
-                                        <span>{{ wallet.totalFundsRaised | currencyDefault }}</span> raised of
-                                        {{ wallet.investmentCap | currencyDefault }} goal
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </ng-container>
-                </div>
-                <div class="item__toggle">
-                    <app-action-button text="{{ projectWallet.project.active ? 'Unpublish' : 'Publish' }}"
-                                       faIcon="{{ projectWallet.project.active ? 'fa-eye-slash' : 'fa-eye' }}"
-                                       [onClick]="toggleProject(projectWallet.project.uuid, projectsWallets).bind(this)"
-                                       buttonClass="d-contents item__icon flex__center mr-2">
-                    </app-action-button>
-                </div>
-            </div>
+        <li *ngFor="let x of projectsWallets" class="list__item"
+            app-single-project-item [projectWallet]="x">
         </li>
     </ul>
 </ng-container>
 
 <ng-template #spinner>
     <app-spinner type="overlay"></app-spinner>
-</ng-template>
-
-<ng-template #walletLoading>
-    <span>
-        <app-spinner type="inline"></app-spinner>
-    </span>
 </ng-template>

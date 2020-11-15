@@ -1,11 +1,12 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { WalletDetailsWithState, WalletService } from '../shared/services/wallet/wallet.service';
 import { displayBackendError } from '../utilities/error-handler';
 import { Project, ProjectService } from '../shared/services/project/project.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { combineLatest, EMPTY, Observable } from 'rxjs';
 import { catchError, map, shareReplay, take } from 'rxjs/operators';
+import { RouterService } from '../shared/services/router.service';
 
 declare var $: any;
 
@@ -24,7 +25,7 @@ export class InvestComponent implements OnInit {
                 private projectService: ProjectService,
                 private route: ActivatedRoute,
                 private fb: FormBuilder,
-                private router: Router) {
+                private router: RouterService) {
         const projectID = this.route.snapshot.params.id;
         this.project$ = this.projectService.getProject(projectID).pipe(this.handleError, shareReplay(1));
         this.wallet$ = this.walletService.wallet$.pipe(this.handleError, take(1));

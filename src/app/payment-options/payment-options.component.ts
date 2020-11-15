@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { PaymentService, UserBankAccount } from '../shared/services/payment.service';
-import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
+import { RouterService } from '../shared/services/router.service';
 
 
 @Component({
@@ -20,7 +20,7 @@ export class PaymentOptionsComponent {
     );
 
     constructor(private paymentService: PaymentService,
-                private router: Router) {
+                private router: RouterService) {
     }
 
     toNewBankAccount() {

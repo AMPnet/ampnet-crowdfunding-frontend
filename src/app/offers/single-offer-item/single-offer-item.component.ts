@@ -1,9 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ProjectWallet } from 'src/app/shared/services/project/project.service';
 import { WalletService } from '../../shared/services/wallet/wallet.service';
 import { Observable } from 'rxjs';
 import { MiddlewareService, ProjectWalletInfo } from '../../shared/services/middleware/middleware.service';
+import { RouterService } from '../../shared/services/router.service';
 
 @Component({
     selector: 'app-single-offer-item',
@@ -14,7 +15,7 @@ export class SingleOfferItemComponent implements OnInit {
     @Input() projectWallet: ProjectWallet;
     projectWallet$: Observable<ProjectWalletInfo>;
 
-    constructor(private router: Router,
+    constructor(private router: RouterService,
                 private walletService: WalletService,
                 private middlewareService: MiddlewareService,
                 private route: ActivatedRoute) {
@@ -27,9 +28,9 @@ export class SingleOfferItemComponent implements OnInit {
 
     onClickedItem() {
         if (this.route.snapshot.params.isOverview) {
-            this.router.navigate(['overview', this.projectWallet.project.uuid, 'discover']);
+            this.router.navigate(['/overview', this.projectWallet.project.uuid, 'discover']);
         } else {
-            this.router.navigate(['dash', 'offers', this.projectWallet.project.uuid]);
+            this.router.navigate(['/dash', 'offers', this.projectWallet.project.uuid]);
         }
     }
 }

@@ -106,7 +106,7 @@
                         <ng-template #investButtons>
                             <button *ngIf="isOverview" class="btn btn-primary w-100 btn-action-a"
                                     id="invest-button"
-                                    routerLink="/sign_up">
+                                    [routerLink]="'/sign_up' | coopPath">
                                 <i class="mr-2 fas fa-chart-pie"></i>
                                 Sign Up & Invest
                             </button>
@@ -121,7 +121,7 @@
                                 </button>
                                 <button *ngIf="!states.user.verified" [disabled]="!states.project.active"
                                         class="btn btn-primary w-100 btn-action-a"
-                                        routerLink="/dash/settings/user">
+                                        [routerLink]="'/dash/settings/user' | coopPath">
                                     <i class="mr-2 fas fa-chart-pie"></i>
                                     Verify Profile & Invest
                                 </button>

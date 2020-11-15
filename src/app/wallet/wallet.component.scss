@@ -83,6 +83,9 @@
       letter-spacing: 1.5px;
     }
     &__buttons {
+      .btn {
+        justify-content: center;
+      }
       margin-top: 20px;
       .col-6 {
         padding: 0;

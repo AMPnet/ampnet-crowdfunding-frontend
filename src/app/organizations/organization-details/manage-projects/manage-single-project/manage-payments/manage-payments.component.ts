@@ -1,12 +1,13 @@
 import { Component, Input } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { displayBackendErrorRx } from 'src/app/utilities/error-handler';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
-import { catchError, map, shareReplay, startWith, switchMap } from 'rxjs/operators';
+import { catchError, map, shareReplay, switchMap } from 'rxjs/operators';
 import { MiddlewareService, ProjectWalletInfo } from '../../../../../shared/services/middleware/middleware.service';
 import { Project, ProjectService } from '../../../../../shared/services/project/project.service';
 import { WalletService } from '../../../../../shared/services/wallet/wallet.service';
 import { Observable, of } from 'rxjs';
+import { RouterService } from '../../../../../shared/services/router.service';
 
 @Component({
     selector: 'app-manage-payments',
@@ -23,7 +24,7 @@ export class ManagePaymentsComponent {
 
     constructor(private walletService: WalletService,
                 private route: ActivatedRoute,
-                private router: Router,
+                private router: RouterService,
                 private projectService: ProjectService,
                 private fb: FormBuilder,
                 private middlewareService: MiddlewareService) {

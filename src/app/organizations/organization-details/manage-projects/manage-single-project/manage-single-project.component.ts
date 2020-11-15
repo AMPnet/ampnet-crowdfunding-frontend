@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { displayBackendErrorRx } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { Project, ProjectService } from '../../../../shared/services/project/project.service';
@@ -11,6 +11,7 @@ import { ArkaneService } from '../../../../shared/services/arkane.service';
 import { PopupService } from '../../../../shared/services/popup.service';
 import { FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { URLValidator } from '../../../../shared/validators/url.validator';
+import { RouterService } from '../../../../shared/services/router.service';
 import { CurrencyPipe, DatePipe } from '@angular/common';
 
 @Component({
@@ -36,7 +37,7 @@ export class ManageSingleProjectComponent {
                 private manageProjectsService: ManageProjectsService,
                 private arkaneService: ArkaneService,
                 private popupService: PopupService,
-                private router: Router,
+                private router: RouterService,
                 private fb: FormBuilder,
                 private route: ActivatedRoute) {
         const projectUUID = this.route.snapshot.params.projectID;
@@ -149,16 +150,15 @@ export class ManageSingleProjectComponent {
 
     updateProject(project: Project, form: FormGroup) {
         return () => {
-            const controls = form.controls;
             return this.projectService.updateProject(project.uuid, {
-                name: controls['name'].value,
-                description: controls['description'].value,
-                location: controls['location'].value,
+                name: form.get('name').value,
+                description: form.get('description').value,
+                location: form.get('location').value,
                 roi: {
-                    from: Number(controls['roiFrom'].value),
-                    to: Number(controls['roiTo'].value)
+                    from: Number(form.get('roi.from').value),
+                    to: Number(form.get('roi.to').value)
                 }
-            }, controls['newImage'].value, controls['newDocuments'].value).pipe(
+            }, form.get('newImage').value, form.get('newDocuments').value).pipe(
                 displayBackendErrorRx(),
                 tap(() => {
                     form.get('newImage').reset();

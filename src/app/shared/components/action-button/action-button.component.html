@@ -1,7 +1,8 @@
 <button class="{{ buttonClass }}" [disabled]="disabled || loading" type="submit">
     <div *ngIf="!loading">
         <i class="mr-2 {{ faIcon ? 'fas' : '' }} {{ faIcon }}" *ngIf="!loading"></i>
-        <span>{{ text }}</span>
+        <span class="d-none d-lg-inline-block">{{ text }}</span>
+        <span class="d-inline-block d-lg-none">{{ textShort }}</span>
     </div>
 
     <div *ngIf="loading" class="loading-text">

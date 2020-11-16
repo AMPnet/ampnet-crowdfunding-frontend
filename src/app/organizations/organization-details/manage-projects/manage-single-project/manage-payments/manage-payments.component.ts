@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { displayBackendErrorRx } from 'src/app/utilities/error-handler';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
@@ -12,13 +12,15 @@ import { RouterService } from '../../../../../shared/services/router.service';
 @Component({
     selector: 'app-manage-payments',
     templateUrl: './manage-payments.component.html',
-    styleUrls: ['./manage-payments.component.css']
+    styleUrls: ['./manage-payments.component.scss']
 })
 export class ManagePaymentsComponent {
     project$: Observable<Project>;
     projectWalletInfo$: Observable<ProjectWalletInfo>;
 
     revenueShareForm: FormGroup;
+
+    @Input() showProjectTitle = true;
 
     constructor(private walletService: WalletService,
                 private route: ActivatedRoute,

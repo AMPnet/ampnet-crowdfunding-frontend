@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BackendHttpClient } from '../backend-http-client.service';
-import { DocumentModel } from './organization.service';
+import { DocumentModel, Organization } from './organization.service';
 import { CacheService } from '../cache.service';
 import { Wallet } from '../wallet/wallet.service';
 import { AppConfigService } from '../app-config.service';
@@ -101,6 +101,7 @@ export interface Project {
     gallery: string[];
     active: boolean;
     coop: string;
+    organization: Organization;
 }
 
 export interface PageableProjectsResponse {

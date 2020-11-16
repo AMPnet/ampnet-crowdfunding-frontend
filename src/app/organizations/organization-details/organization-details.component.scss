@@ -108,12 +108,10 @@
 }
 
 @include media-breakpoint-up(lg) {
-  .input-reg {
-    border-right: none;
-  }
-  
-  .input-reg.ng-invalid.ng-dirty[_ngcontent-nhd-c169]:not(form) {
-    border-right: none;
+  .input-reg,
+  .input-reg.ng-invalid.ng-dirty,
+  .input-reg.ng-valid.ng-dirty {
+    border-right: none !important;
   }
 
   .container {
@@ -194,6 +192,9 @@
         display: flex;
         justify-content: center;
         padding-bottom: 4px;
+        .form__cta {
+          margin: 0;
+        }
       }
       &__desc {
         font-size: $font-size-desktop-xsmall;

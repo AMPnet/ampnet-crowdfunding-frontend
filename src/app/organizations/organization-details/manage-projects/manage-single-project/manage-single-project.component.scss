@@ -301,7 +301,7 @@
   }
   .cta {
     box-shadow: 0 -6px 6px 0 rgba(17, 17, 17, 0.04);
-    width: 86.9%;
+    width: calc(100% - 220px);
     &__inner {
       float: right;
     }

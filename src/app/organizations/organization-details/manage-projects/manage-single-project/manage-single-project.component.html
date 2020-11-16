@@ -274,14 +274,6 @@
         <ng-container *ngIf="states.updateForm as updateForm">
             <div class="container">
                 <div class="cta__inner row col-lg-4">
-                    <div class="col-5 col-lg-6 d-none d-lg-block">
-                        <app-action-button text="{{ states.project.active ? 'Hide project' : 'Show project' }}"
-                                           faIcon="{{ states.project.active ? 'fa-eye-slash' : 'fa-eye' }}"
-                                           [disabled]="!isWalletVerified(states.wallet)"
-                                           [onClick]="toggleProjectStatusClicked(states.project).bind(this)"
-                                           buttonClass="btn btn-info">
-                        </app-action-button>
-                    </div>
                     <div class="col-7 col-lg-6">
                         <app-action-button text="Update all"
                                            loadingText="Updating..."

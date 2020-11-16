@@ -23,7 +23,6 @@ import { CreateOrganizationComponent } from './organizations/create-organization
 import { ManageOrganizationsComponent } from './organizations/manage-organizations/manage-organizations.component';
 import { OrganizationDetailsComponent } from './organizations/organization-details/organization-details.component';
 import { CreateNewProjectComponent } from './organizations/organization-details/manage-projects/create-new-project/create-new-project.component';
-import { OnboardingComponent } from './settings/user/identity/onboarding/onboarding.component';
 import { ManageProjectsComponent } from './organizations/organization-details/manage-projects/manage-projects.component';
 import { ManageSingleProjectComponent } from './organizations/organization-details/manage-projects/manage-single-project/manage-single-project.component';
 import { VerifySignOfferComponent } from './offers/offer-details/verify-sign-offer/verify-sign-offer.component';
@@ -35,7 +34,6 @@ import { ManageSingleDepositComponent } from './manage-deposits/manage-single-de
 import { WithdrawComponent } from './withdraw/withdraw.component';
 import { WalletActivationComponent } from './wallet-activation/wallet-activation.component';
 import { CompleteOnboardingComponent } from './complete-onboarding/complete-onboarding.component';
-import { SummaryComponent } from './summary/summary.component';
 import { PlatformBankAccountComponent } from './platform-bank-account/platform-bank-account.component';
 import { NewPlatformBankAccountComponent } from './platform-bank-account/new-platform-bank-account/new-platform-bank-account.component';
 import { ExchangeComponent } from './exchange/exchange.component';
@@ -51,8 +49,9 @@ import { SignInAutoComponent } from './authentication/sign-in-auto/sign-in-auto.
 import { IdentityComponent } from './settings/user/identity/identity.component';
 import { UserGuard } from './settings/user/user.guard';
 import { UserComponent } from './settings/user/user.component';
+import { CoopGuard } from './shared/guards/coop.guard';
 
-const routes: Routes = [
+const appRoutes: Routes = [
     {
         path: '', component: PublicLayoutComponent,
         children: [
@@ -61,20 +60,18 @@ const routes: Routes = [
             {path: 'confirm_email', component: ConfirmEmailComponent},
             {path: 'overview/:isOverview', component: OffersComponent},
             {path: 'overview/:id/:isOverview', component: OfferDetailsComponent, canActivate: [OfferDetailsGuard]},
-            {path: 'onboarding', component: OnboardingComponent},
             {path: 'forgot_password', component: ForgotPasswordComponent},
             {path: 'reset_password', component: ResetPasswordComponent},
             {path: 'sign_in_auto/:email/:password', component: SignInAutoComponent},
         ]
     },
-    {path: 'summary', component: SummaryComponent},
     {
         path: 'dash', component: SecureLayoutComponent,
         canActivate: [AuthGuard],
         children: [
-            {path: '', component: OffersComponent},
-            {path: 'wallet', component: WalletComponent},
+            {path: '', pathMatch: 'full', redirectTo: 'offers'},
             {path: 'offers', component: OffersComponent},
+            {path: 'wallet', component: WalletComponent},
             {path: 'offers/:id', component: OfferDetailsComponent},
             {path: 'offers/:id/invest', component: InvestComponent},
             {path: 'my_portfolio', component: MyPortfolioComponent},
@@ -99,7 +96,10 @@ const routes: Routes = [
             {path: 'manage_groups/:groupID/manage_project/:projectID', component: ManageSingleProjectComponent},
             {path: 'offers/:offerID/invest/:investAmount/verify_sign', component: VerifySignOfferComponent},
             {path: 'manage_groups/:groupID/manage_project/:projectID/manage_payments', component: ManagePaymentsComponent},
-            {path: 'manage_groups/:groupID/manage_project/:projectID/manage_payments/project_deposit', component: ProjectDepositComponent},
+            {
+                path: 'manage_groups/:groupID/manage_project/:projectID/manage_payments/project_deposit',
+                component: ProjectDepositComponent
+            },
             {
                 path: 'manage_groups/:groupID/manage_project/:projectID/manage_payments/project_withdraw',
                 component: ProjectWithdrawComponent
@@ -124,8 +124,13 @@ const routes: Routes = [
     }
 ];
 
+const routes: Routes = [
+    {path: '', pathMatch: 'full', canActivate: [CoopGuard], children: appRoutes},
+    {path: ':coopID', canActivate: [CoopGuard], children: appRoutes},
+];
+
 @NgModule({
-    imports: [RouterModule.forRoot(routes, {scrollPositionRestoration: 'enabled'})],
+    imports: [RouterModule.forRoot(routes, {scrollPositionRestoration: 'enabled', relativeLinkResolution: 'legacy'})],
     exports: [RouterModule]
 })
 export class AppRoutingModule {

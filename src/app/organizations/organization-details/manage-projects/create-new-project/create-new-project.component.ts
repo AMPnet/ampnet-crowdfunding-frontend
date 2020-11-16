@@ -3,9 +3,10 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors,
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import * as moment from 'moment';
 import { tap } from 'rxjs/operators';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ProjectService } from '../../../../shared/services/project/project.service';
 import { displayBackendErrorRx } from '../../../../utilities/error-handler';
+import { RouterService } from '../../../../shared/services/router.service';
 
 @Component({
     selector: 'app-create-new-project',
@@ -22,7 +23,7 @@ export class CreateNewProjectComponent {
     constructor(private projectService: ProjectService,
                 private fb: FormBuilder,
                 private activatedRoute: ActivatedRoute,
-                private router: Router) {
+                private router: RouterService) {
 
         this.createForm = this.fb.group({
             name: ['', Validators.required],
@@ -50,7 +51,7 @@ export class CreateNewProjectComponent {
             name: formValue.name,
             description: '',
             location: {lat: this.mapLat, long: this.mapLong},
-            roi: {from: 2.1, to: 5.3},
+            roi: {from: 0, to: 0},
             start_date: formValue.startDate,
             end_date: formValue.endDate,
             expected_funding: formValue.expectedFunding,

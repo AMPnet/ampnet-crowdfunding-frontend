@@ -28,6 +28,7 @@
                             <p>{{ minUserInvest | currencyDefault }} Min investment</p>
                             <p>{{ maxUserInvest | currencyDefault }} Max investment</p>
                         </div>
+
                     </div>
 
                     <div class="col-lg-4 invest__button">
@@ -43,7 +44,7 @@
                     <div class="col-lg-2 invest__text-right">
                         <p class="right__available">Available funds</p>
                         <p class="right__amount">{{ states.investment.walletBalance | currencyDefault }}</p>
-                        <a class="right__link" routerLink="/dash/wallet">Open wallet</a>
+                        <a class="right__link" [routerLink]="'/dash/wallet' | coopPath">Open wallet</a>
                     </div>
                 </div>
             </div>
@@ -89,8 +90,8 @@
                         <i class="fas fa-dizzy"></i>
                         <b>You don't have enough funds on your wallet</b>
                     </div>
-                    <button class="btn btn-danger" routerLink="/dash/wallet">Please deposit funds</button>
-                    <button class="btn btn-danger btn-mobile" routerLink="/dash/wallet">Deposit</button>
+                    <button class="btn btn-danger" [routerLink]="'/dash/wallet' | coopPath">Please deposit funds</button>
+                    <button class="btn btn-danger btn-mobile" [routerLink]="'/dash/wallet' | coopPath">Deposit</button>
                 </div>
             </div>
         </div>
@@ -161,7 +162,6 @@
         </div>
     </ng-container>
 </div>
-
 
 <ng-template #spinner>
     <app-spinner type="overlay"></app-spinner>

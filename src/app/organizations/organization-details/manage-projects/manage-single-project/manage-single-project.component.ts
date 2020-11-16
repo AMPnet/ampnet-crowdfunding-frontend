@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { displayBackendErrorRx } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { Project, ProjectService } from '../../../../shared/services/project/project.service';
@@ -9,13 +9,15 @@ import { catchError, finalize, map, shareReplay, switchMap, tap } from 'rxjs/ope
 import { BehaviorSubject, EMPTY, Observable, of, throwError } from 'rxjs';
 import { ArkaneService } from '../../../../shared/services/arkane.service';
 import { PopupService } from '../../../../shared/services/popup.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { URLValidator } from '../../../../shared/validators/url.validator';
+import { RouterService } from '../../../../shared/services/router.service';
+import { CurrencyPipe, DatePipe } from '@angular/common';
 
 @Component({
     selector: 'app-manage-single-project',
     templateUrl: './manage-single-project.component.html',
-    styleUrls: ['./manage-single-project.component.css'],
+    styleUrls: ['./manage-single-project.component.scss'],
 })
 export class ManageSingleProjectComponent {
     walletState = WalletState;
@@ -28,12 +30,14 @@ export class ManageSingleProjectComponent {
     refreshProjectSubject = new BehaviorSubject<Project>(null);
     refreshProjectWalletSubject = new BehaviorSubject<void>(null);
 
+    detailsShown = true;
+
     constructor(private projectService: ProjectService,
                 private walletService: WalletService,
                 private manageProjectsService: ManageProjectsService,
                 private arkaneService: ArkaneService,
                 private popupService: PopupService,
-                private router: Router,
+                private router: RouterService,
                 private fb: FormBuilder,
                 private route: ActivatedRoute) {
         const projectUUID = this.route.snapshot.params.projectID;
@@ -63,13 +67,13 @@ export class ManageSingleProjectComponent {
                 return fb.group({
                     name: [project.name, Validators.required],
                     description: [project.description, Validators.minLength(3)],
+                    roi: fb.group({
+                        from: [project.roi.from, Validators.pattern(/^\d*\.?\d+$/)],
+                        to: [project.roi.to, Validators.pattern(/^\d*\.?\d+$/)],
+                    }, { validators: this.roiValidator}),
                     location: fb.group({
                         lat: [project.location.lat],
                         long: [project.location.long],
-                    }),
-                    roi: fb.group({
-                        from: [project.roi.from],
-                        to: [project.roi.to],
                     }),
                     newImage: [null],
                     currentImage: [project.main_image],
@@ -105,7 +109,6 @@ export class ManageSingleProjectComponent {
                 text: 'Transaction is being processed...'
             })),
             tap(() => {
-
                 this.refreshProjectSubject.next(null);
                 this.refreshProjectWalletSubject.next();
             }),
@@ -147,13 +150,15 @@ export class ManageSingleProjectComponent {
 
     updateProject(project: Project, form: FormGroup) {
         return () => {
-            const controls = form.controls;
             return this.projectService.updateProject(project.uuid, {
-                name: controls['name'].value,
-                description: controls['description'].value,
-                location: controls['location'].value,
-                roi: controls['roi'].value,
-            }, controls['newImage'].value, controls['newDocuments'].value).pipe(
+                name: form.get('name').value,
+                description: form.get('description').value,
+                location: form.get('location').value,
+                roi: {
+                    from: Number(form.get('roi.from').value),
+                    to: Number(form.get('roi.to').value)
+                }
+            }, form.get('newImage').value, form.get('newDocuments').value).pipe(
                 displayBackendErrorRx(),
                 tap(() => {
                     form.get('newImage').reset();
@@ -181,5 +186,15 @@ export class ManageSingleProjectComponent {
 
     isWalletVerified(wallet: Wallet) {
         return !!wallet && !!wallet?.hash;
+    }
+
+    backToOrganizationDetailsScreen() {
+        this.router.navigate(['../../'], {relativeTo: this.route});
+    }
+
+    private roiValidator: ValidatorFn = (roiFromGroup: FormGroup) => {
+        const from = roiFromGroup.get('from').value;
+        const to = roiFromGroup.get('to').value;
+        return from !== null && to !== null && from <= to ? null : { invalidROI: true };
     }
 }

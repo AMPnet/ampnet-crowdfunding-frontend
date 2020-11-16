@@ -38,12 +38,14 @@
             {{ projectWallet.project.name }}
         </h1>
         <div class="right__text">
-            <p class="right__roi">
-                Expected yearly return:
-                <span>
-                    {{ projectWallet.project.roi.from }}% - {{ projectWallet.project.roi.to }}%
-                </span>
-            </p>
+            <ng-container *ngIf="projectWallet.project.roi.from != 0">
+                <p class="right__roi">
+                    Expected yearly return:
+                    <span>
+                        {{ projectWallet.project.roi.from }}% - {{ projectWallet.project.roi.to }}%
+                    </span>
+                </p>
+            </ng-container>
             <div [innerHTML]="projectWallet.project.description" class="right__desc"></div>
         </div>
         <div class="right__cta">

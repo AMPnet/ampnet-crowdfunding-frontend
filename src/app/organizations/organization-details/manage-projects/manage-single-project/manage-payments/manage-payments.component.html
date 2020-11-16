@@ -4,26 +4,28 @@
 } as states">
     <div class="container">
         <div class="row">
-            <div class="col-md-12 mb-3">
-                <h4>{{ states.project?.name }}</h4>
-            </div>
-            <div class="col-md-12">
+            <ng-container *ngIf="showProjectTitle">
+                <div class="col-lg-12 mb-3">
+                    <h4>{{ states.project?.name }}</h4>
+                </div>
+            </ng-container>
+            <div class="col-lg-12">
                 <div class="card w-100 h-100">
                     <div class="card-body">
                         <div class="card-title">
                             <div class="d-flex flex-column justify-content-between w-100">
                                 <div class="explainer-mini mb-3">Project wallet</div>
                                 <div class="row w-100">
-                                    <div class="col-md-6">
-                                        <button class="btn btn-primary w-100 py-3" routerLink="project_deposit">
+                                    <div class="col-lg-6">
+                                        <button class="btn btn-primary w-100 mb-3" routerLink="manage_payments/project_deposit">
                                             <i class="fas fa-arrow-circle-down mr-2"></i>
                                             Deposit
                                         </button>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-lg-6">
                                         <button class="btn btn-primary w-100 py-3"
                                                 [disabled]="!states.walletInfo || !isProjectFullyFunded(states.walletInfo)"
-                                                routerLink="project_withdraw">
+                                                routerLink="manage_payments/project_withdraw">
                                             <i class="fas fa-arrow-circle-up mr-2"></i>
                                             Withdraw
                                         </button>
@@ -46,15 +48,15 @@
                 </div>
             </div>
 
-            <div class="col-md-12 px-3 mt-2">
+            <div class="col-lg-12 mt-4">
                 <h5>Revenue share</h5>
             </div>
-            <div class="explainer-mini px-3 mt-2 mb-2">Enter amount of money to be paid out to investors</div>
+            <div class="explainer-mini mt-2 mb-2">Enter amount of money to be paid out to investors</div>
 
-            <div class="col-md-12">
+            <div class="col-lg-12">
                 <form [formGroup]="revenueShareForm">
                     <div class="row w-100">
-                        <div class="col-md-6 align-self-center">
+                        <div class="col-lg-6 align-self-center mb-3">
                             <div class="w-40 h-auto d-flex flex-column">
                                 <app-money-input-field
                                         placeholder="Enter maximum investment per user"
@@ -67,16 +69,14 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="float-left w-40 h-auto p-1">
-                                <button [disabled]="!revenueShareForm.dirty || revenueShareForm.invalid"
-                                        id="buttonStartPayout"
-                                        routerLink="revenue_share/{{ revenueShareForm.get('amount').value }}"
-                                        class="btn btn-danger btn-action w-100 p-3 h-auto float-right w-auto">
-                                    <i class="fas fa-chart-pie mr-2"></i>
-                                    Start payout
-                                </button>
-                            </div>
+                        <div class="col-lg-3 flex__center">
+                            <button [disabled]="!revenueShareForm.dirty || revenueShareForm.invalid"
+                                    id="buttonStartPayout"
+                                    routerLink="revenue_share/{{ revenueShareForm.get('amount').value }}"
+                                    class="btn btn-danger btn-action w-100">
+                                <i class="fas fa-chart-pie mr-2"></i>
+                                Start payout
+                            </button>
                         </div>
                     </div>
                 </form>

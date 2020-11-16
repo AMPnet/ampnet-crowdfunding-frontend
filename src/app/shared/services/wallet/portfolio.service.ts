@@ -60,7 +60,7 @@ export interface TxData {
     date: string;
 }
 
-interface DetailsResult {
+export interface DetailsResult {
     walletBalance: number;
     amountInvested: number;
     totalFundsRaised: number;

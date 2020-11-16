@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { WalletService } from '../shared/services/wallet/wallet.service';
-import { displayBackendError } from '../utilities/error-handler';
-import { InvestmentDetails, Project, ProjectInfo, ProjectService } from '../shared/services/project/project.service';
+import { displayBackendError, displayBackendErrorRx } from '../utilities/error-handler';
+import { Project, ProjectService } from '../shared/services/project/project.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { combineLatest, EMPTY, Observable } from 'rxjs';
-import { catchError, map, shareReplay } from 'rxjs/operators';
-import { PortfolioService } from '../shared/services/wallet/portfolio.service';
+import { catchError, map, shareReplay, switchMap, take, tap } from 'rxjs/operators';
+import { DetailsResult, PortfolioService } from '../shared/services/wallet/portfolio.service';
 import { CurrencyDefaultPipe } from '../pipes/currency-default.pipe';
-import { logger } from 'codelyzer/util/logger';
+import { MiddlewareService, ProjectWalletInfo } from '../shared/services/middleware/middleware.service';
 
 @Component({
     selector: 'app-invest',
@@ -17,10 +17,8 @@ import { logger } from 'codelyzer/util/logger';
 })
 export class InvestComponent implements OnInit {
     project$: Observable<Project>;
-    investment$: Observable<InvestmentDetails>;
-
-    projectInfo$: Observable<ProjectInfo>;
-    investmentDetails$: Observable<InvestmentDetails>;
+    projectWalletMW$: Observable<ProjectWalletInfo>;
+    investment$: Observable<DetailsResult>;
 
     maxInvestReached = false;
     minUserInvest: number;
@@ -36,41 +34,52 @@ export class InvestComponent implements OnInit {
     constructor(private walletService: WalletService,
                 private projectService: ProjectService,
                 private portfolioService: PortfolioService,
+                private middlewareService: MiddlewareService,
                 private route: ActivatedRoute,
                 private fb: FormBuilder,
                 private router: Router,
                 private currencyPipe: CurrencyDefaultPipe) {
         const projectID = this.route.snapshot.params.id;
         this.project$ = this.projectService.getProject(projectID).pipe(this.handleError, shareReplay(1));
-        this.investment$ = this.projectService.getInvestmentDetails().pipe(this.handleError);
+        this.projectWalletMW$ = this.walletService.getProjectWallet(projectID).pipe(
+            displayBackendErrorRx(),
+            switchMap(projectWallet => {
+                return this.middlewareService.getProjectWalletInfoCached(projectWallet.hash).pipe(
+                    displayBackendErrorRx(),
+                );
+            }),
+        );
 
-        // this.projectService.getProjectInfo(projectID).pipe(this.handleError).subscribe(res => console.log('Export: ', res));
-        this.projectService.getInvestmenDetails2().subscribe(data => console.log(data));
+        this.investment$ = combineLatest([this.projectWalletMW$, this.walletService.wallet$]).pipe(take(1),
+            switchMap(([projectWallet, wallet]) => {
+                return this.portfolioService.investmentDetails(projectWallet.projectHash, wallet.wallet.hash).pipe(
+                    displayBackendErrorRx()).pipe(
+                    tap(res => {
+                            const maxInvest = projectWallet.maxPerUserInvestment;
+                            const minInvest = projectWallet.minPerUserInvestment;
+                            const amountInvested = res.amountInvested;
+
+                            if (amountInvested > minInvest && amountInvested < maxInvest) {
+                                this.minUserInvest = 0;
+                                this.maxUserInvest = maxInvest - amountInvested;
+                            } else {
+                                this.minUserInvest = minInvest;
+                                this.maxUserInvest = maxInvest;
+                            }
+
+                            if (amountInvested === maxInvest) {
+                                this.maxInvestReached = true;
+                            }
+                        }
+                    ));
+            })
+        );
     }
 
     ngOnInit() {
         this.investForm = this.fb.group({
             amount: ['', [Validators.required], this.validAmount.bind(this)]
         });
-
-        combineLatest(this.project$, this.investment$, (project, investment) => ({project, investment}))
-            .subscribe(pair => {
-                const maxInvest = pair.project.max_per_user;
-                const minInvest = pair.project.min_per_user;
-                const amountInvested = pair.investment.amountInvested;
-
-                if (amountInvested > minInvest && amountInvested < maxInvest) {
-                    this.minUserInvest = 0;
-                    this.maxUserInvest = maxInvest - amountInvested;
-                } else {
-                    this.minUserInvest = minInvest;
-                    this.maxUserInvest = maxInvest;
-                }
-
-                if (amountInvested === maxInvest) {
-                    this.maxInvestReached = true;
-                }
-            });
     }
 
     private validAmount(control: AbstractControl): Observable<ValidationErrors> {
@@ -78,6 +87,10 @@ export class InvestComponent implements OnInit {
             map(([project, investment]) => {
                     const amount = control.value;
                     const amountInvested = investment.amountInvested;
+
+                    if (project.roi === null || project.roi === undefined) {
+                        return null;
+                    }
 
                     if (amount < this.minUserInvest) {
                         return {amountBelowMin: true};

@@ -1,5 +1,6 @@
 <div *ngIf="{
     project: project$ | async,
+    projectWallet: projectWalletMW$ | async,
     investment: investment$ | async
 } as states" class="container">
     <ng-container *ngIf="states.investment !== null && states.project !== null else spinner">
@@ -102,7 +103,7 @@
 
     </ng-container>
 
-    <ng-container *ngIf="!investForm.invalid && investForm.get('amount').value">
+    <ng-container *ngIf="investForm.valid && investForm.get('amount').value">
         <div class="estimated-calculator">
             <div class="estimated__return-label">
                 <p>ESTIMATED RETURN</p>
@@ -114,7 +115,7 @@
                         <h2>Total investment = {{ totalInvestment | currencyDefault }}</h2>
                     </div>
                     <div class="estimated__invested-label col-lg-12">
-                        <p>{{ states.investment.amountInvested  | currencyDefault}} invested so far </p>
+                        <p>{{ states.investment.amountInvested  | currencyDefault }} invested so far </p>
                     </div>
                 </div>
 

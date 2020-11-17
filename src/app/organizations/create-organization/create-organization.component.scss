@@ -9,9 +9,13 @@
   padding: 0 15px;
 }
 
+.btn-primary {
+  height: 48px;
+}
+
 .form {
   &-right {
-    margin-top: 30px;
+    margin-top: 40px;
     textarea {
       padding: 16px 16px 0 16px;
       margin-bottom: 40px;
@@ -88,6 +92,9 @@
   .col-lg-6 {
    border: 1px solid $border-light-color;
    border-radius: 1px; 
+  }
+  .btn-primary {
+    height: 64px;
   }
   .form {
     &-left {

@@ -47,13 +47,19 @@
                           placeholder="Enter description"
                           id="group-description">
                 </textarea>
+
+                <button class="btn btn-primary w-100" disabled="!newOrganizationForm.valid"
+                        (onClick)="createOrganization.bind(this)">
+                    <i class="mr-2 fas fa-plus"></i>
+                    Create new group
+                </button>
                 
-                <app-action-button text="Create new group"
+                <!-- <app-action-button text="Create new group"
                                    loadingText="Creating organization..." faIcon="fa-plus"
                                    [disabled]="!newOrganizationForm.valid"
                                    buttonClass="btn btn-primary btn-success"
                                    [onClick]="createOrganization.bind(this)">
-                </app-action-button>
+                </app-action-button> -->
             </div>
         </div>
     </form>

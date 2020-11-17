@@ -7,8 +7,8 @@ import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators }
 import { combineLatest, EMPTY, Observable } from 'rxjs';
 import { catchError, map, shareReplay, switchMap, take, tap } from 'rxjs/operators';
 import { DetailsResult, PortfolioService } from '../shared/services/wallet/portfolio.service';
-import { CurrencyDefaultPipe } from '../pipes/currency-default.pipe';
 import { MiddlewareService, ProjectWalletInfo } from '../shared/services/middleware/middleware.service';
+import { CurrencyDefaultPipe } from '../shared/pipes/currency-default.pipe';
 
 @Component({
     selector: 'app-invest',
@@ -127,7 +127,6 @@ export class InvestComponent implements OnInit {
     private handleError<T>(source: Observable<T>) {
         return source.pipe(
             catchError(err => {
-                console.log('Error: ', err);
                 displayBackendError(err);
                 return EMPTY;
             })

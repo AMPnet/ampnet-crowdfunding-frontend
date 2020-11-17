@@ -13,6 +13,7 @@ import {
 import { baseCurrencyUnitToCents, centsToBaseCurrencyUnit } from '../../../utilities/currency-util';
 import * as Autonumeric from 'autonumeric';
 import { AbstractControl } from '@angular/forms';
+import { disable } from 'tns-core-modules/trace';
 
 @Component({
     selector: 'app-money-input-field',
@@ -23,6 +24,7 @@ import { AbstractControl } from '@angular/forms';
 export class MoneyInputFieldComponent implements AfterViewInit, OnChanges {
     @ViewChild('inputField') inputField: ElementRef;
 
+    @Input() disable: boolean;
     @Input() placeholder: string;
     @Input() control: AbstractControl;
     @Input() inputClass = 'input-lg w-100';

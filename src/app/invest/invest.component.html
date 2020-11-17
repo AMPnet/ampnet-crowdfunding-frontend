@@ -18,6 +18,7 @@
                         <div class="invest__input-label">
                             <p>I want to invest</p>
                             <app-money-input-field
+                                    [disable]="investForm.invalid"
                                     placeholder="Enter invest amount"
                                     [control]="investForm.get('amount')"
                                     inputClass="input-lg w-100 invest">
@@ -90,7 +91,8 @@
                         <i class="fas fa-dizzy"></i>
                         <b>You don't have enough funds on your wallet</b>
                     </div>
-                    <button class="btn btn-danger" [routerLink]="'/dash/wallet' | coopPath">Please deposit funds</button>
+                    <button class="btn btn-danger" [routerLink]="'/dash/wallet' | coopPath">Please deposit funds
+                    </button>
                     <button class="btn btn-danger btn-mobile" [routerLink]="'/dash/wallet' | coopPath">Deposit</button>
                 </div>
             </div>

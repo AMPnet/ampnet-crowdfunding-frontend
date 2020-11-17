@@ -55,6 +55,7 @@ export class InvestComponent implements OnInit {
             map(([projectWallet, wallet]) => {
                 return this.portfolioService.investmentDetails(projectWallet.projectHash, wallet.wallet.hash).pipe(
                     displayBackendErrorRx()).subscribe(res => {
+                    this.investmentDetails = res;
                     const maxInvest = projectWallet.maxPerUserInvestment;
                     const minInvest = projectWallet.minPerUserInvestment;
                     const amountInvested = res.amountInvested;
@@ -70,7 +71,6 @@ export class InvestComponent implements OnInit {
                     if (amountInvested === maxInvest) {
                         this.maxInvestReached = true;
                     }
-                    this.investmentDetails = res;
                 });
             })
         ).subscribe();

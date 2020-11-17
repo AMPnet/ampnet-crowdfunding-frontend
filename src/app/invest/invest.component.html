@@ -17,6 +17,7 @@
                         <div class="invest__input-label">
                             <p>I want to invest</p>
                             <app-money-input-field
+                                    [disabled]="maxInvestReached"
                                     placeholder="Enter invest amount"
                                     [control]="investForm.get('amount')"
                                     inputClass="input-lg w-100 invest">
@@ -104,7 +105,7 @@
 
     </ng-container>
 
-    <ng-container *ngIf="investForm.valid && investForm.get('amount').value">
+    <ng-container *ngIf="investForm.valid && investForm.get('amount').value && states.project.roi.to > 0">
         <div class="estimated-calculator">
             <div class="estimated__return-label">
                 <p>ESTIMATED RETURN</p>

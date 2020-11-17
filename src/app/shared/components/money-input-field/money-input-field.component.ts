@@ -23,7 +23,7 @@ import { disable } from 'tns-core-modules/trace';
 })
 export class MoneyInputFieldComponent implements AfterViewInit, OnChanges {
     @ViewChild('inputField') inputField: ElementRef;
-
+    @Input() disabled: boolean;
     @Input() placeholder: string;
     @Input() control: AbstractControl;
     @Input() inputClass = 'input-lg w-100';

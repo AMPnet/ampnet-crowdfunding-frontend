@@ -5,7 +5,7 @@ import { Project, ProjectService } from '../shared/services/project/project.serv
 import { ActivatedRoute, Router } from '@angular/router';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { combineLatest, EMPTY, Observable } from 'rxjs';
-import { catchError, map, shareReplay, switchMap, take, tap } from 'rxjs/operators';
+import { catchError, map, shareReplay, switchMap, take } from 'rxjs/operators';
 import { DetailsResult, PortfolioService } from '../shared/services/wallet/portfolio.service';
 import { MiddlewareService, ProjectWalletInfo } from '../shared/services/middleware/middleware.service';
 import { CurrencyDefaultPipe } from '../shared/pipes/currency-default.pipe';
@@ -18,7 +18,8 @@ import { CurrencyDefaultPipe } from '../shared/pipes/currency-default.pipe';
 export class InvestComponent implements OnInit {
     project$: Observable<Project>;
     projectWalletMW$: Observable<ProjectWalletInfo>;
-    investment$: Observable<DetailsResult>;
+
+    investmentDetails: DetailsResult;
 
     maxInvestReached = false;
     minUserInvest: number;
@@ -50,30 +51,29 @@ export class InvestComponent implements OnInit {
             }),
         );
 
-        this.investment$ = combineLatest([this.projectWalletMW$, this.walletService.wallet$]).pipe(take(1),
-            switchMap(([projectWallet, wallet]) => {
+        combineLatest([this.projectWalletMW$, this.walletService.wallet$]).pipe(take(1),
+            map(([projectWallet, wallet]) => {
                 return this.portfolioService.investmentDetails(projectWallet.projectHash, wallet.wallet.hash).pipe(
-                    displayBackendErrorRx()).pipe(
-                    tap(res => {
-                            const maxInvest = projectWallet.maxPerUserInvestment;
-                            const minInvest = projectWallet.minPerUserInvestment;
-                            const amountInvested = res.amountInvested;
+                    displayBackendErrorRx()).subscribe(res => {
+                    const maxInvest = projectWallet.maxPerUserInvestment;
+                    const minInvest = projectWallet.minPerUserInvestment;
+                    const amountInvested = res.amountInvested;
 
-                            if (amountInvested > minInvest && amountInvested < maxInvest) {
-                                this.minUserInvest = 0;
-                                this.maxUserInvest = maxInvest - amountInvested;
-                            } else {
-                                this.minUserInvest = minInvest;
-                                this.maxUserInvest = maxInvest;
-                            }
+                    if (amountInvested > minInvest && amountInvested < maxInvest) {
+                        this.minUserInvest = 0;
+                        this.maxUserInvest = maxInvest - amountInvested;
+                    } else {
+                        this.minUserInvest = minInvest;
+                        this.maxUserInvest = maxInvest;
+                    }
 
-                            if (amountInvested === maxInvest) {
-                                this.maxInvestReached = true;
-                            }
-                        }
-                    ));
+                    if (amountInvested === maxInvest) {
+                        this.maxInvestReached = true;
+                    }
+                    this.investmentDetails = res;
+                });
             })
-        );
+        ).subscribe();
     }
 
     ngOnInit() {
@@ -83,12 +83,12 @@ export class InvestComponent implements OnInit {
     }
 
     private validAmount(control: AbstractControl): Observable<ValidationErrors> {
-        return combineLatest([this.project$, this.investment$]).pipe(
-            map(([project, investment]) => {
+        return combineLatest([this.project$]).pipe(
+            map(([project]) => {
                     const amount = control.value;
-                    const amountInvested = investment.amountInvested;
+                    const amountInvested = this.investmentDetails.amountInvested;
 
-                    if (project.roi === null || project.roi === undefined) {
+                    if (project.roi.to === 0) {
                         return null;
                     }
 
@@ -98,7 +98,7 @@ export class InvestComponent implements OnInit {
                         return {amountAboveMax: true};
                     } else if (amount > project.expected_funding) {
                         return {amountAboveExpFunding: true};
-                    } else if (amount > investment.walletBalance) {
+                    } else if (amount > this.investmentDetails.walletBalance) {
                         return {amountAboveBalance: true};
                     } else {
                         this.totalInvestment = amountInvested + amount;
@@ -113,8 +113,8 @@ export class InvestComponent implements OnInit {
     }
 
     calculateReturn(totalInvestment: number, year: number, roiFrom: number, roiTo: number) {
-        return (this.currencyPipe.transform(Math.floor(totalInvestment * (roiFrom * year)))) + ' - '
-            + (this.currencyPipe.transform(Math.trunc(totalInvestment * (roiTo * year))));
+        return this.currencyPipe.transform(Math.floor(totalInvestment * (roiFrom * year))) + ' - '
+            + this.currencyPipe.transform(Math.round(totalInvestment * (roiTo * year)));
     }
 
     investButtonClicked() {

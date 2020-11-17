@@ -1,9 +1,8 @@
 <div *ngIf="{
     project: project$ | async,
-    projectWallet: projectWalletMW$ | async,
-    investment: investment$ | async
+    projectWallet: projectWalletMW$ | async
 } as states" class="container">
-    <ng-container *ngIf="states.investment !== null && states.project !== null else spinner">
+    <ng-container *ngIf="investmentDetails !== undefined && states.project !== null else spinner">
         <div class="row">
             <div class="app-page-title-back" (click)="backToSingleOfferScreen(states.project.uuid)">
                 <i class="fas fa-long-arrow-alt-left mr-3"></i>
@@ -18,7 +17,6 @@
                         <div class="invest__input-label">
                             <p>I want to invest</p>
                             <app-money-input-field
-                                    [disable]="investForm.invalid"
                                     placeholder="Enter invest amount"
                                     [control]="investForm.get('amount')"
                                     inputClass="input-lg w-100 invest">
@@ -44,7 +42,7 @@
 
                     <div class="col-lg-2 invest__text-right">
                         <p class="right__available">Available funds</p>
-                        <p class="right__amount">{{ states.investment.walletBalance | currencyDefault }}</p>
+                        <p class="right__amount">{{ investmentDetails.walletBalance | currencyDefault }}</p>
                         <a class="right__link" [routerLink]="'/dash/wallet' | coopPath">Open wallet</a>
                     </div>
                 </div>
@@ -118,7 +116,7 @@
                         <h2>Total investment = {{ totalInvestment | currencyDefault }}</h2>
                     </div>
                     <div class="estimated__invested-label col-lg-12">
-                        <p>{{ states.investment.amountInvested  | currencyDefault }} invested so far </p>
+                        <p>{{ investmentDetails?.amountInvested | currencyDefault }} invested so far </p>
                     </div>
                 </div>
 
@@ -158,7 +156,7 @@
             <div class="dropdown-divider"></div>
             <div class="row row-cols-2">
                 <p class="right__available">Available funds</p>
-                <h2>{{ states.investment.walletBalance | currencyDefault }}</h2>
+                <h2>{{ investmentDetails.walletBalance | currencyDefault }}</h2>
                 <a class="right__link" routerLink="/dash/wallet">Open wallet</a>
             </div>
         </div>

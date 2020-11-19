@@ -75,15 +75,6 @@
                     </span>
                 </div>
 
-                <div *ngIf="investForm.get('amount').errors?.totalProjInvestAboveMax"
-                     class="alert alert-danger flex__center">
-                    <i class="fas fa-dizzy"></i>
-                    <b>Total investments too high.&nbsp;</b>
-                    <span>
-                        The maximum investments is {{ maxUserInvest | currencyDefault }}
-                    </span>
-                </div>
-
                 <div *ngIf="investForm.get('amount').errors?.amountAboveBalance"
                      class="alert alert-danger flex__center-space">
                     <div class="flex__center">

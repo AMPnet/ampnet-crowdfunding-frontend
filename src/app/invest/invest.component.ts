@@ -109,8 +109,8 @@ export class InvestComponent implements OnInit {
     }
 
     calculateReturn(totalInvestment: number, year: number, roiFrom: number, roiTo: number) {
-        return this.currencyPipe.transform((totalInvestment * (roiFrom * year))) + ' - '
-            + this.currencyPipe.transform((totalInvestment * (roiTo * year)));
+        return this.currencyPipe.transform((totalInvestment * (roiFrom * year)) / 100) + ' - '
+            + this.currencyPipe.transform((totalInvestment * (roiTo * year)) / 100);
     }
 
     investButtonClicked() {

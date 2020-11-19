@@ -7,12 +7,18 @@
 }
 
 .row {
-  padding: 0 5px;
+  padding: 0 15px;
 }
 
 .alert {
   padding: 12px 10px 12px 18px;
   margin-bottom: 40px;
+}
+
+.alert-warning {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 }
 
 .init-left {
@@ -104,6 +110,11 @@
 .wallet-alerts {
   margin-top: 20px;
   .alert-success {
+    div {
+      svg {
+        display: none;
+      }
+    }
     .btn {
       display: none;
     }
@@ -272,6 +283,11 @@
     margin: 30px auto 0 auto;
     .alert-success {
       font-weight: bold;
+      div {
+        svg {
+          display: inline-block;
+        }
+      }
       .btn {
         display: inline-block;
       }

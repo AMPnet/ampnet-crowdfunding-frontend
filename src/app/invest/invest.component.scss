@@ -67,9 +67,6 @@ p {
   .btn-danger {
     display: none;
   }
-  .btn-mobile {
-    display: block;
-  }
 }
 
 @include media-breakpoint-up(lg) {
@@ -117,12 +114,11 @@ p {
     }
   }
   .alert-danger {
+    display: flex;
+    align-items: center;
     span,
     .btn-danger  {
       display: block;
-    }
-    .btn-mobile {
-      display: none;
     }
   }
 }

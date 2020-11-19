@@ -21,6 +21,9 @@
 
 .alert-warning {
   margin-top: 20px;
+  svg {
+    display: none;
+  }
 }
 
 .input-reg,
@@ -175,6 +178,9 @@
 
   .alert-warning {
     margin: 20px auto 0 auto;
+    svg {
+      display: inline-block;
+    }
   }
 
   .app-page-header {

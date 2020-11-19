@@ -49,7 +49,7 @@
             </div>
 
             <div class="error-messages col-12 col-lg-8" *ngIf="investForm.dirty && investForm.invalid">
-                <div *ngIf="investForm.get('amount').errors?.amountBelowMin" class="alert alert-danger flex__center">
+                <div *ngIf="investForm.get('amount').errors?.amountBelowMin" class="alert alert-danger">
                     <i class="fas fa-dizzy"></i>
                     <b>Investment amount too low.&nbsp;</b>
                     <span>
@@ -57,7 +57,7 @@
                     </span>
                 </div>
 
-                <div *ngIf="investForm.get('amount').errors?.amountAboveMax" class="alert alert-danger flex__center">
+                <div *ngIf="investForm.get('amount').errors?.amountAboveMax" class="alert alert-danger">
                     <i class="fas fa-dizzy"></i>
                     <b>Investment amount too high.&nbsp;</b>
                     <span>
@@ -65,7 +65,7 @@
                     </span>
                 </div>
 
-                <div *ngIf="investForm.get('amount').errors?.amountAboveExpFunding" class="alert alert-danger flex__center">
+                <div *ngIf="investForm.get('amount').errors?.amountAboveExpFunding" class="alert alert-danger">
                     <i class="fas fa-dizzy"></i>
                     <b>Investment amount too high.&nbsp;</b>
                     <span>
@@ -78,8 +78,8 @@
                         <i class="fas fa-dizzy"></i>
                         <b>You don't have enough funds on your wallet</b>
                     </div>
-                    <button class="btn btn-danger" [routerLink]="'/dash/wallet' | coopPath">Please deposit funds</button>
-                    <button class="btn btn-danger btn-mobile" [routerLink]="'/dash/wallet' | coopPath">Deposit</button>
+                    <button class="btn btn-danger d-none d-lg-block" [routerLink]="'/dash/wallet' | coopPath">Please deposit funds</button>
+                    <button class="btn btn-danger d-lg-none" [routerLink]="'/dash/wallet' | coopPath">Deposit</button>
                 </div>
             </div>
         </div>

@@ -18,6 +18,12 @@
   padding: 0;
 }
 
+.alert-warning {
+  svg {
+    display: none;
+  }
+}
+
 .project-container {
   padding: 0 20px;
 
@@ -166,6 +172,7 @@
       display: flex;
       svg {
         margin-top: 4px;
+        display: inline-block;
       }
     }
   }

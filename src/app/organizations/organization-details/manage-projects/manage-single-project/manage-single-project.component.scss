@@ -20,6 +20,9 @@
   padding: 0 20px;
   .alert {
     margin-top: 20px;
+    svg {
+      display: none;
+    }
   }
   .project {
     &__img {
@@ -218,6 +221,9 @@
     padding: 0;
     .alert {
       margin-bottom: 4px;
+      svg {
+        display: inline-block;
+      }
     }
     .tabs {
       padding-left: 10px;

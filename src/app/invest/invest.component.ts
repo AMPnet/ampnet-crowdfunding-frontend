@@ -83,14 +83,10 @@ export class InvestComponent implements OnInit {
     }
 
     private validAmount(control: AbstractControl): Observable<ValidationErrors> {
-        return combineLatest([this.project$]).pipe(
-            map(([project]) => {
+        return this.project$.pipe(
+            map(project => {
                     const amount = control.value;
                     const amountInvested = this.investmentDetails.amountInvested;
-
-                    if (project.roi.to === 0) {
-                        return null;
-                    }
 
                     if (amount < this.minUserInvest) {
                         return {amountBelowMin: true};
@@ -113,8 +109,8 @@ export class InvestComponent implements OnInit {
     }
 
     calculateReturn(totalInvestment: number, year: number, roiFrom: number, roiTo: number) {
-        return this.currencyPipe.transform(Math.floor(totalInvestment * (roiFrom * year))) + ' - '
-            + this.currencyPipe.transform(Math.round(totalInvestment * (roiTo * year)));
+        return this.currencyPipe.transform((totalInvestment * (roiFrom * year))) + ' - '
+            + this.currencyPipe.transform((totalInvestment * (roiTo * year)));
     }
 
     investButtonClicked() {

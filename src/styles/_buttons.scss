@@ -19,6 +19,13 @@
     font-size: 14px;
   }
 
+  &-responsive-size {
+    @include media-breakpoint-up(lg) {
+      height: 64px;
+      font-size: 14px;
+    }
+  }
+
   &-danger {
     @include button-variant($error-color, darken($error-color, 7.5%), darken($error-color, 10%), lighten($error-color,5%), lighten($error-color, 10%), darken($error-color,30%));
   }

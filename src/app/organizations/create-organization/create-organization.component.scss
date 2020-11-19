@@ -6,11 +6,7 @@
 }
 
 .row {
-  padding: 0 15px;
-}
-
-.btn-primary {
-  height: 48px;
+  padding: 0 20px;
 }
 
 .form {
@@ -89,12 +85,12 @@
 }
 
 @include media-breakpoint-up(lg) {
+  .row {
+    padding: 0 15px;
+  }
   .col-lg-6 {
    border: 1px solid $border-light-color;
    border-radius: 1px; 
-  }
-  .btn-primary {
-    height: 64px;
   }
   .form {
     &-left {

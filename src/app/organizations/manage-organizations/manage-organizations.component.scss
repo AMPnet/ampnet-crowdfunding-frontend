@@ -43,9 +43,6 @@
     justify-content: space-between;
     border-bottom: 2px solid $background-color;
     margin-top: 20px;
-    &:last-of-type {
-      border-bottom: none;
-    }
     &:focus {
       outline: none;
     }
@@ -78,7 +75,7 @@
 }
 
 .invites {
-  margin-top: 32px;
+  margin-top: 64px;
   .list {
     &__item {
       display: block;
@@ -90,8 +87,12 @@
       justify-content: space-between;
     }
     &__cta {
+      float: left;
       text-align: center;
-      margin: 10px 0 20px 0;
+      margin: 24px 0 20px 0;
+    }
+    &__projects-count {
+      padding-bottom: 0;
     }
   }
 }
@@ -155,6 +156,7 @@
   }
   
   .invites {
+    margin-top: 32px;
     .app-page-subtitle {
       margin-bottom: 24px;
     }
@@ -170,6 +172,9 @@
         display: flex;
         align-items: center;
         flex-direction: row-reverse;
+      }
+      &__title {
+        padding-bottom: 0;
       }
       &__cta {
         margin: 0 30px 0 0;

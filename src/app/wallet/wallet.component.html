@@ -104,14 +104,14 @@
             </div>
 
             <div class="transactions col-12" *ngIf="states.wallet.state === walletState.READY">
-                <div class="d-flex justify-content-between">
-                    <div class="transactions__title">Transaction History</div>
-                    <div class="transactions__report">
-                        <ng-template [ngTemplateOutlet]="downloadReportButton"></ng-template>
-                    </div>
-                </div>
-
                 <ng-container *ngIf="(transactionHistory$ | async) else transactionHistorySpinner">
+                    <div class="d-flex justify-content-between">
+                        <div class="transactions__title">Transaction History</div>
+                        <div class="transactions__report">
+                            <ng-template *ngIf="transactionHistory.length != 0" [ngTemplateOutlet]="downloadReportButton"></ng-template>
+                        </div>
+                    </div>
+
                     <div *ngIf="transactionHistory.length === 0" class="row justify-content-center">
                         <span class="transactions__empty"></span>Your transaction history is empty.
                     </div>

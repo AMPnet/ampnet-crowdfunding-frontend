@@ -19,6 +19,9 @@ p {
 }
 
 .invest {
+  &__content {
+    margin-top: 46px;
+  }
   &__range-labels {
     display: flex;
     align-items: center;
@@ -161,6 +164,10 @@ p {
   }
 
   .invest {
+    &__content {
+      margin-top: 0;
+    }
+
     &__range-labels {
       margin-top: 0;
     }

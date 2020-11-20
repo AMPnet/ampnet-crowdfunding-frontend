@@ -1,4 +1,4 @@
-<div class="container root-content-container">
+<div class="container">
     <div class="row">
         <div *ngIf="hasNoBankAccounts" class="col-md-12 text-center mb-5 mt-3 h6 gray-text">
             You currently have no bank accounts registered.
@@ -15,8 +15,8 @@
                 <input class="form-control w-100 p-4" id="iban-holder"
                        formControlName="iban" placeholder="IBAN"
                        type="text">
-
-                <select class="form-control mt-3 p-2  bank-code-picker"
+                <!-- TODO: Find new solution with SWITFT code or BIC autocomplete for entire europe -->
+                <select class="form-control mt-3 p-2 bank-code-picker test"
                         data-live-search="true" id="bankcode-holder"
                         formControlName="bankCode"
                         placeholder="SWIFT/BIC (Optional)"
@@ -31,7 +31,6 @@
                        placeholder="Bank account alias" type="text">
             </form>
         </div>
-        <div class="col-md-8"></div>
         <div class="col-md-4 mt-3">
             <button (click)="addNewBankAccountClicked()" [disabled]="!bankAccountForm.valid"
                     class="btn btn-primary py-3 w-100">

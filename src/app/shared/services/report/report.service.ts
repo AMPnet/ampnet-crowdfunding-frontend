@@ -43,4 +43,25 @@ export class ReportService {
             })
         );
     }
+
+    singleUserTransaction(txHash: string, fromTxHash: string, toTxHash: string, date: Date): Observable<void> {
+        return this.http.http.get(`/api/report/report/user/transaction?txHash=${txHash}&fromTxHash=${fromTxHash}&toTxHash=${toTxHash}`, {
+            headers: this.http.authHttpOptions().headers,
+            responseType: 'arraybuffer'
+        }).pipe(
+            map(data => {
+                const file = new Blob([data], {type: 'application/pdf'});
+                const fileName = [
+                    'UserTransaction',
+                    this.datePipe.transform(date, 'yMdhhmmss'),
+                ].filter(text => !!text).join('_') + '.pdf';
+
+                const fileURL = URL.createObjectURL(file);
+                const link = document.createElement('a');
+                link.href = fileURL;
+                link.download = fileName;
+                link.click();
+            })
+        );
+    }
 }

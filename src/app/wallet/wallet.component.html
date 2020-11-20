@@ -82,23 +82,25 @@
 
 
                 <div class="wallet-alerts col-12 col-lg-11">
-                    <div *ngIf="states.wallet?.wallet?.activated_at === null" class="alert alert-success w-100 flex__center-space">
+                    <div *ngIf="states.wallet?.wallet?.activated_at === null"
+                         class="alert alert-success w-100 flex__center-space">
                         <div>
                             <i class="fas fa-bolt"></i>
                             Your wallet is pending approval from admin. You can deposit funds while pending approval.
                         </div>
                         <button class="btn" routerLink="deposit">
-                                Deposit funds
+                            Deposit funds
                         </button>
                     </div>
-                    <div *ngIf="states.wallet?.wallet?.balance === 0" class="alert alert-success w-100 flex__center-space">
+                    <div *ngIf="states.wallet?.wallet?.balance === 0"
+                         class="alert alert-success w-100 flex__center-space">
                         <div>
                             <i class="fas fa-bolt"></i>
                             Your wallet is empty. Deposit funds to get started!
                         </div>
                         <button class="btn" routerLink="deposit">
                             Deposit funds
-                    </button>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -134,14 +136,19 @@
                                                     <ng-container *ngIf="transaction.type === transactionType.WITHDRAW">
                                                         <b>Withdraw</b>
                                                     </ng-container>
-                                                    <ng-container *ngIf="transaction.type === transactionType.SHARE_PAYOUT">
+                                                    <ng-container
+                                                            *ngIf="transaction.type === transactionType.SHARE_PAYOUT">
                                                         <b>Dividend </b><span class="left__conjuctor">from</span>
                                                     </ng-container>
-                                                    <ng-container *ngIf="transaction.type === transactionType.CANCEL_INVESTMENT">
-                                                        <b>Cancel investment </b><span class="left__conjuctor">from</span>
+                                                    <ng-container
+                                                            *ngIf="transaction.type === transactionType.CANCEL_INVESTMENT">
+                                                        <b>Cancel investment </b><span
+                                                            class="left__conjuctor">from</span>
                                                     </ng-container>
-                                                    <ng-container *ngIf="transaction.type === transactionType.APPROVE_INVESTMENT">
-                                                        <b>Approve investment </b><span class="left__conjuctor">to</span>
+                                                    <ng-container
+                                                            *ngIf="transaction.type === transactionType.APPROVE_INVESTMENT">
+                                                        <b>Approve investment </b><span
+                                                            class="left__conjuctor">to</span>
                                                     </ng-container>
                                                 </div>
                                                 {{ transaction.description }}
@@ -154,7 +161,8 @@
                                                         {{ transaction.share | percent:'1.0-10'}} Invested —
                                                     </span>
                                                 </span>
-                                                <span class="info__state-pending" *ngIf="transaction.state === 'PENDING'">
+                                                <span class="info__state-pending"
+                                                      *ngIf="transaction.state === 'PENDING'">
                                                     Pending
                                                 </span>
                                                 <span class="info__state-failed" *ngIf="transaction.state === 'FAILED'">
@@ -169,11 +177,16 @@
                                                     {{ transaction.type | txAmountSign }} {{ transaction.amount | currencyCents }}
                                                 </span>
                                             </div>
-
-                                            <!-- TODO: Implement downloading statement -->
-                                            <!-- <div class="right__icon"> -->
-                                            <!--    <i class="fas fa-file-chart-line"></i> -->
-                                            <!-- </div> -->
+                                            <ng-container
+                                                    *ngIf="transaction.state === transactionState.MINED else singlePDFReportDisabled">
+                                                <div class="right__icon"
+                                                     (click)="downloadSingleReport(transaction.tx_hash,
+                                                     transaction.from_tx_hash,
+                                                     transaction.to_tx_hash,
+                                                     transaction.date).subscribe()">
+                                                    <i class="fas fa-file-chart-line" style="color: black"></i>
+                                                </div>
+                                            </ng-container>
                                         </div>
                                     </div>
                                 </ng-container>
@@ -206,6 +219,12 @@
         </ng-template>
     </ng-container>
 </div>
+
+<ng-template #singlePDFReportDisabled>
+        <div class="right__icon" style="pointer-events: none">
+            <i class="fas fa-file-chart-line" style="color: darkgrey"></i>
+        </div>
+</ng-template>
 
 <ng-template #downloadReportButton>
     <app-action-button

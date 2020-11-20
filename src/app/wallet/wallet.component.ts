@@ -2,12 +2,11 @@ import { Component, OnDestroy } from '@angular/core';
 import { ArkaneConnect } from '@arkane-network/arkane-connect';
 import { TransactionState, TransactionType, UserTransaction, WalletService, WalletState } from '../shared/services/wallet/wallet.service';
 import { BehaviorSubject, combineLatest, EMPTY } from 'rxjs';
-import { finalize, map, switchMap, take, tap } from 'rxjs/operators';
+import { map, switchMap, take, tap } from 'rxjs/operators';
 import { WebsocketService } from '../shared/services/websocket.service';
 import { ArkaneService } from '../shared/services/arkane.service';
 import { ReportService } from '../shared/services/report/report.service';
 import { displayBackendErrorRx } from '../utilities/error-handler';
-import { SpinnerUtil } from '../utilities/spinner-utilities';
 
 @Component({
     selector: 'app-wallet',
@@ -98,4 +97,9 @@ export class WalletComponent implements OnDestroy {
         return this.reportService.userTransactions()
             .pipe(displayBackendErrorRx());
     }
+
+    downloadSingleReport(txHash: string, fromTxHash: string, toTxHash: string, date: Date) {
+            return this.reportService.singleUserTransaction(txHash, fromTxHash, toTxHash, date)
+                .pipe(displayBackendErrorRx());
+        }
 }

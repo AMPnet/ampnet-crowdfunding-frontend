@@ -129,7 +129,7 @@ export class InvestComponent implements OnInit {
         );
     }
 
-    backToSingleOfferScreen(uuid: string) {
-        this.router.navigate([`/dash/offers/${uuid}`]);
+    backToSingleOfferScreen() {
+        this.router.navigate(['../'], {relativeTo: this.route});
     }
 }

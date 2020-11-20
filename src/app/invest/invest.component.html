@@ -4,7 +4,7 @@
 } as states" class="container">
     <ng-container *ngIf="investmentDetails !== undefined && states.project !== null else spinner">
         <div class="row">
-            <div class="app-page-title-back" (click)="backToSingleOfferScreen(states.project.uuid)">
+            <div class="app-page-title-back" (click)="backToSingleOfferScreen()">
                 <i class="fas fa-long-arrow-alt-left mr-3"></i>
                 Invest in
             </div>
@@ -41,10 +41,14 @@
                         </button>
                     </div>
 
-                    <div class="col-lg-2 invest__text-right">
-                        <p class="right__available">Available funds</p>
-                        <p class="right__amount">{{ investmentDetails.walletBalance | currencyDefault }}</p>
-                        <a class="right__link" [routerLink]="'/dash/wallet' | coopPath">Open wallet</a>
+                    <div class="col-lg-2 invest__text-right flex__center-space">
+                        <div>
+                            <p class="right__available">Available funds</p>
+                            <!-- Amount data for desktop screens! -->
+                            <p class="right__amount d-none d-lg-block">{{ investmentDetails.walletBalance | currencyDefault }}</p>
+                            <a class="right__link" [routerLink]="'/dash/wallet' | coopPath">Open wallet</a>
+                        </div>
+                        <p class="right__amount d-lg-none">{{ investmentDetails.walletBalance | currencyDefault }}</p>
                     </div>
                 </div>
             </div>
@@ -103,51 +107,42 @@
             </div>
 
             <div class="estimated__content">
-                    <div class="estimated__total-label col-lg-12">
+                    <div class="estimated__total-label">
                         <h2>Total investment = {{ totalInvestment | currencyDefault }}</h2>
                     </div>
-                    <div class="estimated__invested-label col-lg-12">
+                    <div class="estimated__invested-label">
                         <p>{{ investmentDetails?.amountInvested | currencyDefault }} invested so far </p>
                     </div>
 
                 <div class="row">
-                    <div class="col-lg">
+                    <div class="col-lg-4">
                         <div class="estimated__return-header">
-                            <div class="estimated__header-label col-lg"><p>Return over 1 year</p></div>
+                            <div class="estimated__header-label"><p>Return over 1 year</p></div>
                         </div>
                         <div class="return__amounts">
-                            <div class="estimated__amount-label col-lg"><p>{{ oneYearReturn }}</p>
+                            <div class="estimated__amount-label"><p>{{ oneYearReturn }}</p>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg">
+                    <div class="col-lg-4">
                         <div class="estimated__return-header">
-                            <div class="estimated__header-label col-lg"><p>5 Years</p></div>
+                            <div class="estimated__header-label"><p>5 Years</p></div>
                         </div>
                         <div class="return__amounts">
-                            <div class="estimated__amount-label col-lg"><p>{{ fiveYearsReturn }}</p>
+                            <div class="estimated__amount-label"><p>{{ fiveYearsReturn }}</p>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg">
+                    <div class="col-lg-4">
                         <div class="estimated__return-header">
-                            <div class="estimated__header-label col-lg"><p>10 Years</p></div>
+                            <div class="estimated__header-label"><p>10 Years</p></div>
                         </div>
                         <div class="return__amounts">
-                            <div class="estimated__amount-label col-lg"><p>{{ tenYearsReturn }}</p>
+                            <div class="estimated__amount-label"><p>{{ tenYearsReturn }}</p>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <div class="funds__bottom">
-            <div class="dropdown-divider"></div>
-            <div class="row row-cols-2">
-                <p class="right__available">Available funds</p>
-                <h2>{{ investmentDetails.walletBalance | currencyDefault }}</h2>
-                <a class="right__link" routerLink="/dash/wallet">Open wallet</a>
             </div>
         </div>
     </ng-container>

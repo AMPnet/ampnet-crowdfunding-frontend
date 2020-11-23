@@ -1,13 +1,15 @@
 <div *ngIf="{
     project: project$ | async,
-    projectWallet: projectWalletMW$ | async
+    investmentData: investmentData$ | async
 } as states" class="container">
-    <ng-container *ngIf="investmentDetails !== undefined && states.project !== null else spinner">
+    <ng-container *ngIf="states.project && states.investmentData else spinner">
         <div class="row">
-            <div class="app-page-title-back" (click)="backToSingleOfferScreen(states.project.uuid)">
+            <div [routerLink]="['/dash', 'offers', states.project.uuid] | coopPath"
+                 class="app-page-title-back">
                 <i class="fas fa-long-arrow-alt-left mr-3"></i>
                 Invest in
             </div>
+
             <div class="invest col-12">
                 <h1 class="app-basic-title">{{ states.project.name }}</h1>
                 <div class="dropdown-divider"></div>
@@ -17,22 +19,21 @@
                         <div class="invest__input-label">
                             <p>I want to invest</p>
                             <app-money-input-field
-                                    [disabled]="maxInvestReached"
+                                    [disabled]="states.investmentData.investDisabled"
                                     placeholder="Enter invest amount"
                                     [control]="investForm.get('amount')"
                                     inputClass="input-lg w-100 invest">
                             </app-money-input-field>
                         </div>
 
-                        <div class="invest__range-labels">
-                            <p>{{ minUserInvest | currencyDefault }} Min investment</p>
-                            <p>{{ maxUserInvest | currencyDefault }} Max investment</p>
+                        <div class="invest__range-labels" *ngIf="!states.investmentData.investDisabled">
+                            <p>{{ states.investmentData.userMinInvest | currencyDefault }} Min investment</p>
+                            <p>{{ states.investmentData.userMaxInvest | currencyDefault }} Max investment</p>
                         </div>
-
                     </div>
 
                     <div class="col-lg-4 invest__button">
-                        <button (click)="investButtonClicked()"
+                        <button [routerLink]="[investForm.get('amount').value, 'verify_sign']"
                                 [disabled]="!investForm.valid"
                                 type="submit"
                                 class="btn btn-primary w-100">
@@ -43,7 +44,7 @@
 
                     <div class="col-lg-2 invest__text-right">
                         <p class="right__available">Available funds</p>
-                        <p class="right__amount">{{ investmentDetails.walletBalance | currencyDefault }}</p>
+                        <p class="right__amount">{{ states.investmentData.userBalance | currencyDefault }}</p>
                         <a class="right__link" [routerLink]="'/dash/wallet' | coopPath">Open wallet</a>
                     </div>
                 </div>
@@ -54,7 +55,7 @@
                     <i class="fas fa-dizzy"></i>
                     <b>Investment amount too low.&nbsp;</b>
                     <span>
-                        The minimum investment is {{ minUserInvest | currencyDefault }}
+                        The minimum investment is {{ states.investmentData.userMinInvest | currencyDefault }}
                     </span>
                 </div>
 
@@ -62,18 +63,10 @@
                     <i class="fas fa-dizzy"></i>
                     <b>Investment amount too high.&nbsp;</b>
                     <span>
-                        The maximum investment is {{ maxUserInvest | currencyDefault }}
+                        The maximum investment is {{ states.investmentData.userMaxInvest | currencyDefault }}
                     </span>
                 </div>
 
-                <div *ngIf="investForm.get('amount').errors?.amountAboveExpFunding"
-                     class="alert alert-danger flex__center">
-                    <i class="fas fa-dizzy"></i>
-                    <b>Investment amount too high.&nbsp;</b>
-                    <span>
-                        The expected funding for this project is {{ states.project.expected_funding | currencyDefault }}
-                    </span>
-                </div>
 
                 <div *ngIf="investForm.get('amount').errors?.amountAboveBalance"
                      class="alert alert-danger flex__center-space">
@@ -81,33 +74,37 @@
                         <i class="fas fa-dizzy"></i>
                         <b>You don't have enough funds on your wallet</b>
                     </div>
-                    <button class="btn btn-danger" [routerLink]="'/dash/wallet' | coopPath">Please deposit funds
-                    </button>
-                    <button class="btn btn-danger btn-mobile" [routerLink]="'/dash/wallet' | coopPath">Deposit</button>
+                    <ng-container *ngTemplateOutlet="buttonToWalletScreen"></ng-container>
                 </div>
             </div>
         </div>
 
-        <div *ngIf="maxInvestReached"
+        <div *ngIf="states.investmentData.maximumReached"
              class="alert alert-danger flex__center">
             <i class="fas fa-dizzy"></i>
-            <b>You have already invested a maximum allowed amount for this project..&nbsp;</b>
+            <b class="mr-2">You have already invested a maximum allowed amount for this project.</b>
         </div>
 
+        <div *ngIf="states.investmentData.notEnoughFunds"
+             class="alert alert-danger flex__center">
+            <i class="fas fa-dizzy"></i>
+            <b class="mr-2">You don't have enough funds for minimal investment. </b>
+            <ng-container *ngTemplateOutlet="buttonToWalletScreen"></ng-container>
+        </div>
     </ng-container>
 
-    <ng-container *ngIf="investForm.valid && investForm.get('amount').value && states.project.roi.to > 0">
-        <div class="estimated-calculator">
+    <ng-container *ngIf="(projection$ | async) as projection">
+        <div class="estimated-calculator" *ngIf="states.project?.roi?.to > 0">
             <div class="estimated__return-label">
                 <p>ESTIMATED RETURN</p>
             </div>
 
             <div class="estimated__content">
                     <div class="estimated__total-label col-lg-12">
-                        <h2>Total investment = {{ totalInvestment | currencyDefault }}</h2>
+                        <h2>Total investment = {{ projection.totalInvestment | currencyDefault }}</h2>
                     </div>
                     <div class="estimated__invested-label col-lg-12">
-                        <p>{{ investmentDetails?.amountInvested | currencyDefault }} invested so far </p>
+                        <p>{{ states.investmentData.userInvested | currencyDefault }} invested so far </p>
                     </div>
 
                 <div class="row">
@@ -116,7 +113,11 @@
                             <div class="estimated__header-label col-lg"><p>Return over 1 year</p></div>
                         </div>
                         <div class="return__amounts">
-                            <div class="estimated__amount-label col-lg"><p>{{ oneYearReturn }}</p>
+                            <div class="estimated__amount-label col-lg">
+                                <p>
+                                    {{ projection.oneYearReturn.from | currencyDefault }} -
+                                    {{ projection.oneYearReturn.to | currencyDefault}}
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -125,7 +126,11 @@
                             <div class="estimated__header-label col-lg"><p>5 Years</p></div>
                         </div>
                         <div class="return__amounts">
-                            <div class="estimated__amount-label col-lg"><p>{{ fiveYearsReturn }}</p>
+                            <div class="estimated__amount-label col-lg">
+                                <p>
+                                    {{ projection.fiveYearsReturn.from | currencyDefault }} -
+                                    {{ projection.fiveYearsReturn.to | currencyDefault}}
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -134,7 +139,11 @@
                             <div class="estimated__header-label col-lg"><p>10 Years</p></div>
                         </div>
                         <div class="return__amounts">
-                            <div class="estimated__amount-label col-lg"><p>{{ tenYearsReturn }}</p>
+                            <div class="estimated__amount-label col-lg">
+                                <p>
+                                    {{ projection.tenYearsReturn.from | currencyDefault }} -
+                                    {{ projection.tenYearsReturn.to | currencyDefault}}
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -146,8 +155,8 @@
             <div class="dropdown-divider"></div>
             <div class="row row-cols-2">
                 <p class="right__available">Available funds</p>
-                <h2>{{ investmentDetails.walletBalance | currencyDefault }}</h2>
-                <a class="right__link" routerLink="/dash/wallet">Open wallet</a>
+                <h2>{{ states.investmentData?.userBalance | currencyDefault }}</h2>
+                <a class="right__link" [routerLink]="'/dash/wallet' | coopPath">Open wallet</a>
             </div>
         </div>
     </ng-container>
@@ -155,4 +164,9 @@
 
 <ng-template #spinner>
     <app-spinner type="overlay"></app-spinner>
+</ng-template>
+
+<ng-template #buttonToWalletScreen>
+    <button class="btn btn-danger" [routerLink]="'/dash/wallet' | coopPath">Please deposit funds</button>
+    <button class="btn btn-danger btn-mobile" [routerLink]="'/dash/wallet' | coopPath">Deposit</button>
 </ng-template>

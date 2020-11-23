@@ -102,6 +102,7 @@ export interface Project {
     active: boolean;
     coop: string;
     organization: Organization;
+    wallet: Wallet;
 }
 
 export interface PageableProjectsResponse {

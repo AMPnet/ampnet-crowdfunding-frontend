@@ -1,14 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { WalletService } from '../shared/services/wallet/wallet.service';
-import { displayBackendError, displayBackendErrorRx } from '../utilities/error-handler';
+import { WalletDetailsWithState, WalletService } from '../shared/services/wallet/wallet.service';
+import { displayBackendErrorRx } from '../utilities/error-handler';
 import { Project, ProjectService } from '../shared/services/project/project.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
-import { combineLatest, EMPTY, Observable } from 'rxjs';
-import { catchError, map, shareReplay, switchMap, take } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
+import { map, shareReplay, switchMap, take } from 'rxjs/operators';
 import { DetailsResult, PortfolioService } from '../shared/services/wallet/portfolio.service';
-import { MiddlewareService, ProjectWalletInfo } from '../shared/services/middleware/middleware.service';
-import { CurrencyDefaultPipe } from '../shared/pipes/currency-default.pipe';
 
 @Component({
     selector: 'app-invest',
@@ -17,63 +15,34 @@ import { CurrencyDefaultPipe } from '../shared/pipes/currency-default.pipe';
 })
 export class InvestComponent implements OnInit {
     project$: Observable<Project>;
-    projectWalletMW$: Observable<ProjectWalletInfo>;
+    investmentData$: Observable<InvestmentData>;
 
-    investmentDetails: DetailsResult;
-
-    maxInvestReached = false;
-    minUserInvest: number;
-    maxUserInvest: number;
-    totalInvestment: number;
-
-    oneYearReturn: string;
-    fiveYearsReturn: string;
-    tenYearsReturn: string;
+    private projectionSubject = new BehaviorSubject<ProjectionData>(null);
+    projection$ = this.projectionSubject.asObservable();
 
     investForm: FormGroup;
 
     constructor(private walletService: WalletService,
                 private projectService: ProjectService,
                 private portfolioService: PortfolioService,
-                private middlewareService: MiddlewareService,
                 private route: ActivatedRoute,
-                private fb: FormBuilder,
-                private router: Router,
-                private currencyPipe: CurrencyDefaultPipe) {
+                private fb: FormBuilder) {
         const projectID = this.route.snapshot.params.id;
-        this.project$ = this.projectService.getProject(projectID).pipe(this.handleError, shareReplay(1));
-        this.projectWalletMW$ = this.walletService.getProjectWallet(projectID).pipe(
+
+        this.project$ = this.projectService.getProject(projectID).pipe(
             displayBackendErrorRx(),
-            switchMap(projectWallet => {
-                return this.middlewareService.getProjectWalletInfoCached(projectWallet.hash).pipe(
-                    displayBackendErrorRx(),
-                );
-            }),
+            shareReplay(1)
         );
 
-        combineLatest([this.projectWalletMW$, this.walletService.wallet$]).pipe(take(1),
-            map(([projectWallet, wallet]) => {
-                return this.portfolioService.investmentDetails(projectWallet.projectHash, wallet.wallet.hash).pipe(
-                    displayBackendErrorRx()).subscribe(res => {
-                    this.investmentDetails = res;
-                    const maxInvest = projectWallet.maxPerUserInvestment;
-                    const minInvest = projectWallet.minPerUserInvestment;
-                    const amountInvested = res.amountInvested;
-
-                    if (amountInvested > minInvest && amountInvested < maxInvest) {
-                        this.minUserInvest = 0;
-                        this.maxUserInvest = maxInvest - amountInvested;
-                    } else {
-                        this.minUserInvest = minInvest;
-                        this.maxUserInvest = maxInvest;
-                    }
-
-                    if (amountInvested === maxInvest) {
-                        this.maxInvestReached = true;
-                    }
-                });
-            })
-        ).subscribe();
+        this.investmentData$ = combineLatest([this.project$, this.walletService.wallet$]).pipe(take(1),
+            switchMap(([project, wallet]) =>
+                this.portfolioService.investmentDetails(project.wallet.hash, wallet.wallet.hash).pipe(
+                    displayBackendErrorRx(),
+                    map(invDetails => this.computeInvestmentData(project, wallet, invDetails))
+                )
+            ),
+            shareReplay(1)
+        );
     }
 
     ngOnInit() {
@@ -82,25 +51,60 @@ export class InvestComponent implements OnInit {
         });
     }
 
-    private validAmount(control: AbstractControl): Observable<ValidationErrors> {
-        return this.project$.pipe(
-            map(project => {
-                    const amount = control.value;
-                    const amountInvested = this.investmentDetails.amountInvested;
+    private computeInvestmentData(project: Project,
+                                  wallet: WalletDetailsWithState,
+                                  invDetails: DetailsResult): InvestmentData {
+        const expected = project.expected_funding;
+        const min = project.min_per_user;
+        const max = project.max_per_user;
+        const funded = invDetails.totalFundsRaised;
+        const userBalance = wallet.wallet.balance;
+        const userInvested = invDetails.amountInvested;
 
-                    if (amount < this.minUserInvest) {
+        const projectInvestGap = expected - funded;
+        const userInvestGap = max - userInvested;
+
+        const userMinInvest = min > userInvested ? min : 1_00;
+        const userMaxInvest = Math.min(projectInvestGap, userInvestGap);
+
+        const maximumReached = max === userInvested;
+
+        return <InvestmentData>{
+            roi: project.roi,
+
+            projectExpected: expected,
+            projectMinPerTx: min,
+            projectMaxPerUser: max,
+            projectFunded: funded,
+            userBalance: userBalance,
+            userInvested: userInvested,
+
+            projectInvestGap: projectInvestGap,
+            userInvestGap: userInvestGap,
+
+            userMinInvest: userMinInvest,
+            userMaxInvest: userMaxInvest,
+
+            investDisabled: userMinInvest > userBalance || maximumReached,
+            notEnoughFunds: userMinInvest > userBalance,
+            maximumReached: maximumReached
+        };
+    }
+
+    private validAmount(control: AbstractControl): Observable<ValidationErrors | null> {
+        return combineLatest([this.investmentData$]).pipe(take(1),
+            map(([investmentData]) => {
+                    this.projectionSubject.next(null);
+                    const amount = control.value;
+
+                    if (amount < investmentData.userMinInvest) {
                         return {amountBelowMin: true};
-                    } else if (amount > this.maxUserInvest) {
+                    } else if (amount > investmentData.userMaxInvest) {
                         return {amountAboveMax: true};
-                    } else if (amount > project.expected_funding) {
-                        return {amountAboveExpFunding: true};
-                    } else if (amount > this.investmentDetails.walletBalance) {
+                    } else if (amount > investmentData.userBalance) {
                         return {amountAboveBalance: true};
                     } else {
-                        this.totalInvestment = amountInvested + amount;
-                        this.oneYearReturn = this.calculateReturn(this.totalInvestment, 1, project.roi.from, project.roi.to);
-                        this.fiveYearsReturn = this.calculateReturn(this.totalInvestment, 5, project.roi.from, project.roi.to);
-                        this.tenYearsReturn = this.calculateReturn(this.totalInvestment, 10, project.roi.from, project.roi.to);
+                        this.calculatePredictions(amount, investmentData);
                         return null;
                     }
                 }
@@ -108,28 +112,56 @@ export class InvestComponent implements OnInit {
         );
     }
 
-    calculateReturn(totalInvestment: number, year: number, roiFrom: number, roiTo: number) {
-        return this.currencyPipe.transform((totalInvestment * (roiFrom * year)) / 100) + ' - '
-            + this.currencyPipe.transform((totalInvestment * (roiTo * year)) / 100);
-    }
+    calculatePredictions(amount: number, data: InvestmentData) {
+        const total = data.userInvested + amount;
+        const prediction = (investment: number, roiRange: ProjectionRange, year: number): ProjectionRange => {
+            const predictionFunc = (i: number, roi: number, y: number) =>
+                i * (roi / 100) * y;
 
-    investButtonClicked() {
-        this.router.navigate(['./',
-                this.investForm.controls['amount'].value,
-                'verify_sign'],
-            {relativeTo: this.route});
-    }
+            return {
+                from: predictionFunc(investment, roiRange.from, year),
+                to: predictionFunc(investment, roiRange.to, year),
+            };
+        };
 
-    private handleError<T>(source: Observable<T>) {
-        return source.pipe(
-            catchError(err => {
-                displayBackendError(err);
-                return EMPTY;
-            })
-        );
+        this.projectionSubject.next({
+            totalInvestment: total,
+            oneYearReturn: prediction(total, data.roi, 1),
+            fiveYearsReturn: prediction(total, data.roi, 5),
+            tenYearsReturn: prediction(total, data.roi, 10),
+        });
     }
+}
 
-    backToSingleOfferScreen(uuid: string) {
-        this.router.navigate([`/dash/offers/${uuid}`]);
-    }
+interface ProjectionData {
+    totalInvestment: number;
+    oneYearReturn: ProjectionRange;
+    fiveYearsReturn: ProjectionRange;
+    tenYearsReturn: ProjectionRange;
+}
+
+interface ProjectionRange {
+    from: number;
+    to: number;
+}
+
+interface InvestmentData {
+    roi: ProjectionRange;
+
+    projectExpected: number;
+    projectMinPerTx: number;
+    projectMaxPerUser: number;
+    projectFunded: number;
+    userBalance: number;
+    userInvested: number;
+
+    projectInvestGap: number;
+    userInvestGap: number;
+
+    userMinInvest: number;
+    userMaxInvest: number;
+
+    notEnoughFunds: boolean;
+    maximumReached: boolean;
+    investDisabled: boolean;
 }

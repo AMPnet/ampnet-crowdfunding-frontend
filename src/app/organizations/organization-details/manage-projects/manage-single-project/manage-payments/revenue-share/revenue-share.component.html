@@ -1,32 +1,26 @@
 <ng-container *ngIf="(project$ | async) as project else spinner">
     <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class=" card-header">
-                        <div class=" card-title explainer-mini">
-                            Revenue share information
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="float-left">
-                            <div class="explainer-mini">
-                                Project name
-                            </div>
-                            {{ project.name }}
-                        </div>
-                        <div class="float-right">
-                            <div class="explainer-mini">
-                                Amount to distribute
-                            </div>
-                            {{ amount | currencyDefault }}
-                        </div>
-                    </div>
+        <div class="app-page-title-back" (click)="backToEditProjectScreen()">
+            <i class="fas fa-long-arrow-alt-left mr-3"></i>
+            Revenue share
+        </div>
+        <div class="revenue-info">
+            <div class="info__title">Revenue share information</div>
+            <div class="info__content flex__center-space">
+                <div class="info__project">
+                    <p>Project name</p>
+                    <p>{{ project.name }}</p>
                 </div>
-                <button class="btn btn-danger w-100 py-3 mt-3" (click)="showConfirmModal()">
-                    Verify and start revenue share
-                </button>
+                <div class="info__amount">
+                    <p>Amount to distribute</p>
+                    <p>{{ amount | currencyDefault }}</p>
+                </div>
             </div>
+        </div>
+        <div class="revenue-cta">
+            <button class="btn btn-danger w-100" (click)="showConfirmModal()">
+                Verify and start revenue share
+            </button>
         </div>
     </div>
 

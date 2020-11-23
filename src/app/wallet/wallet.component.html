@@ -177,15 +177,18 @@
                                                     {{ transaction.type | txAmountSign }} {{ transaction.amount | currencyCents }}
                                                 </span>
                                             </div>
-                                            <ng-container
-                                                    *ngIf="transaction.state === transactionState.MINED else singleReportDownloadDisabled">
-                                                <div class="right__icon"
-                                                     (click)="downloadSingleReport(transaction.tx_hash,
-                                                    transaction.from_tx_hash, transaction.to_tx_hash,
-                                                    transaction.date).subscribe()">
-                                                    <i class="fas fa-file-chart-line" style="color: black"></i>
-                                                </div>
-                                            </ng-container>
+                                            <div class="right__icon">
+                                                <ng-container
+                                                        *ngIf="transaction.state === transactionState.MINED else singleReportPDFDisabled">
+                                                    <app-action-button
+                                                            buttonClass="btn text-dark bg-transparent"
+                                                            spinnerColor="black"
+                                                            faIcon="fa-file-chart-line"
+                                                            [onClick]="downloadSingleReport(transaction.tx_hash, transaction.from_tx_hash,
+                                                           transaction.to_tx_hash, transaction.date).bind(this)">
+                                                    </app-action-button>
+                                                </ng-container>
+                                            </div>
                                         </div>
                                     </div>
                                 </ng-container>
@@ -219,10 +222,12 @@
     </ng-container>
 </div>
 
-<ng-template #singleReportDownloadDisabled>
-    <div class="right__icon" style="pointer-events: none">
-        <i class="fas fa-file-chart-line" style="color: darkgrey"></i>
-    </div>
+<ng-template #singleReportPDFDisabled>
+    <app-action-button
+            buttonClass="btn bg-transparent"
+            disabled="disabled"
+            faIcon="fa-file-chart-line">
+    </app-action-button>
 </ng-template>
 
 <ng-template #downloadReportButton>

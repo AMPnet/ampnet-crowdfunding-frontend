@@ -12,7 +12,7 @@
 
             <div class="invest col-12">
                 <h1 class="app-basic-title">{{ states.project.name }}</h1>
-                <div class="dropdown-divider"></div>
+                <div class="dropdown-divider d-none d-lg-block"></div>
 
                 <div class="invest__content">
                     <div class="invest__text-left col-lg-6">
@@ -42,10 +42,14 @@
                         </button>
                     </div>
 
-                    <div class="col-lg-2 invest__text-right">
-                        <p class="right__available">Available funds</p>
-                        <p class="right__amount">{{ states.investmentData.userBalance | currencyDefault }}</p>
-                        <a class="right__link" [routerLink]="'/dash/wallet' | coopPath">Open wallet</a>
+                    <div class="col-lg-2 invest__text-right flex__center-space">
+                        <div>
+                            <p class="right__available">Available funds</p>
+                            <!-- Amount data for desktop screens! -->
+                            <p class="right__amount d-none d-lg-block">{{ states.investmentData.userBalance | currencyDefault }}</p>
+                            <a class="right__link" [routerLink]="'/dash/wallet' | coopPath">Open wallet</a>
+                        </div>
+                        <p class="right__amount d-lg-none">{{ states.investmentData.userBalance | currencyDefault }}</p>
                     </div>
                 </div>
             </div>
@@ -100,20 +104,20 @@
             </div>
 
             <div class="estimated__content">
-                    <div class="estimated__total-label col-lg-12">
-                        <h2>Total investment = {{ projection.totalInvestment | currencyDefault }}</h2>
-                    </div>
-                    <div class="estimated__invested-label col-lg-12">
-                        <p>{{ states.investmentData.userInvested | currencyDefault }} invested so far </p>
-                    </div>
+                <div class="estimated__total-label">
+                    <h2>Total investment = {{ projection.totalInvestment | currencyDefault }}</h2>
+                </div>
+                <div class="estimated__invested-label">
+                    <p>{{ states.investmentData.userInvested | currencyDefault }} invested so far </p>
+                </div>
 
                 <div class="row">
-                    <div class="col-lg">
+                    <div class="col-lg-4">
                         <div class="estimated__return-header">
-                            <div class="estimated__header-label col-lg"><p>Return over 1 year</p></div>
+                            <div class="estimated__header-label"><p>Return over 1 year</p></div>
                         </div>
                         <div class="return__amounts">
-                            <div class="estimated__amount-label col-lg">
+                            <div class="estimated__amount-label">
                                 <p>
                                     {{ projection.oneYearReturn.from | currencyDefault }} -
                                     {{ projection.oneYearReturn.to | currencyDefault}}
@@ -121,12 +125,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg">
+                    <div class="col-lg-4">
                         <div class="estimated__return-header">
-                            <div class="estimated__header-label col-lg"><p>5 Years</p></div>
+                            <div class="estimated__header-label"><p>5 Years</p></div>
                         </div>
                         <div class="return__amounts">
-                            <div class="estimated__amount-label col-lg">
+                            <div class="estimated__amount-label">
                                 <p>
                                     {{ projection.fiveYearsReturn.from | currencyDefault }} -
                                     {{ projection.fiveYearsReturn.to | currencyDefault}}
@@ -134,12 +138,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg">
+                    <div class="col-lg-4">
                         <div class="estimated__return-header">
-                            <div class="estimated__header-label col-lg"><p>10 Years</p></div>
+                            <div class="estimated__header-label"><p>10 Years</p></div>
                         </div>
                         <div class="return__amounts">
-                            <div class="estimated__amount-label col-lg">
+                            <div class="estimated__amount-label">
                                 <p>
                                     {{ projection.tenYearsReturn.from | currencyDefault }} -
                                     {{ projection.tenYearsReturn.to | currencyDefault}}
@@ -148,15 +152,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <div class="funds__bottom">
-            <div class="dropdown-divider"></div>
-            <div class="row row-cols-2">
-                <p class="right__available">Available funds</p>
-                <h2>{{ states.investmentData?.userBalance | currencyDefault }}</h2>
-                <a class="right__link" [routerLink]="'/dash/wallet' | coopPath">Open wallet</a>
             </div>
         </div>
     </ng-container>

@@ -19,6 +19,10 @@ p {
 }
 
 .invest {
+  &__content {
+    margin-top: 46px;
+  }
+
   &__range-labels {
     display: flex;
     align-items: center;
@@ -29,39 +33,20 @@ p {
   &__input-label p {
     text-transform: uppercase;
     color: $title-color;
-    display: none;
   }
 
   &__text-right {
-    display: none;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 20px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    padding: 24px 20px;
+    z-index: 1001;
+    background-color: $secondary-color;
+    border-top: 1px solid $background-color;
 
     p {
       margin-bottom: 0;
     }
-  }
-}
-
-.funds__bottom {
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 20px;
-
-  h2 {
-    font-size: 18px;
-    text-align: end;
-    padding-left: 18px;
-    padding-right: 18px;
-  }
-
-  p {
-    padding-left: 18px;
-  }
-
-  a {
-    padding-left: 18px;
   }
 }
 
@@ -102,21 +87,13 @@ p {
 }
 
 .estimated {
-
-  &__table {
-    display: flex;
-    flex-direction: column;
-  }
-
   &-calculator {
     .row {
-      padding-left: 0;
-      padding-right: 0;
+      padding: 0;
     }
 
-    .col {
-      padding-left: 24px;
-      padding-right: 24px;
+    .col-lg-4 {
+      padding: 0 15px;
     }
   }
 
@@ -127,22 +104,18 @@ p {
   }
 
   &__return-label p {
-    padding-bottom: 0;
-    padding-left: 4px;
-    padding-top: 32px;
+    padding: 32px 0 0 4px;
   }
 
   &__total-label h2 {
     font-size: $font-size-mobile-title2;
-    padding-top: 29px;
-    padding-left: 8px;
+    padding: 29px 0 0 8px;
   }
 
   &__invested-label p {
     font-size: $font-size-desktop-body;
     color: $icons-color;
-    padding-top: 0;
-    padding-left: 8px;
+    padding: 0 0 0 8px;
   }
 
   &__return-header {
@@ -152,20 +125,18 @@ p {
   }
 
   &__header-label p {
-    text-transform: uppercase;
-    color: $title-color;
-    padding-top: 8px;
-    padding-left: 10px;
-    padding-bottom: 8px;
+    padding: 8px 0 8px 10px;
   }
 
   &__amount-label p {
+    padding: 3px 0 3px 10px;
+    font-size: $font-size-desktop-body;
+  }
+
+  &__header-label p,
+  &__amount-label p {
     text-transform: uppercase;
     color: $title-color;
-    padding-top: 3px;
-    padding-bottom: 3px;
-    padding-left: 10px;
-    font-size: $font-size-desktop-body;
   }
 }
 
@@ -193,18 +164,26 @@ p {
   .invest__content {
     display: flex;
     flex-direction: row;
-    align-items: flex-start;
+    align-items: center;
   }
 
   .invest {
+    &__content {
+      margin-top: 0;
+    }
+
     &__range-labels {
       margin-top: 0;
     }
 
     &__text-right {
+      position: unset;
       text-align: right;
       display: block;
       margin-top: 0;
+      padding: 0;
+      background-color: unset;
+      border-top: unset;
     }
   }
   .right {
@@ -227,41 +206,37 @@ p {
 
   .estimated {
     &-calculator {
-      .row {
-        padding-left: 15px;
-        padding-right: 15px;
-      }
+      margin-top: 128px;
 
-      .col-lg {
-        padding-left: 0;
-        padding-right: 0;
+      .row {
+        padding: 0 15px;
       }
     }
 
     &__content {
+      .col-lg-4 {
+        padding: 0;
+      }
+
       align-items: center;
       justify-content: space-between;
       border: 1px solid #E5E5E5;
       margin-bottom: 32px;
-
     }
 
     &__return-label p {
-      padding-bottom: 17px;
-      padding-left: 4px;
-      padding-top: 128px;
+      padding: 0 0 17px 4px;
     }
 
     &__total-label h2 {
       font-size: $font-size-mobile-title;
-      padding-top: 40px;
-      padding-left: 11px;
+      padding: 40px 0 0 24px;
     }
 
     &__invested-label p {
       font-size: $font-size-desktop-body;
       color: $icons-color;
-      padding-left: 13px;
+      padding-left: 24px;
     }
 
     &__return-header {
@@ -271,26 +246,21 @@ p {
     }
 
     &__header-label p {
-      text-transform: uppercase;
-      color: $title-color;
-      padding-top: 13px;
-      padding-left: 24px;
-      padding-bottom: 13px;
+      padding: 13px 0 13px 24px;
     }
 
     &__amount-label p {
-      text-transform: uppercase;
-      color: $title-color;
-      padding-top: 30px;
-      padding-bottom: 30px;
+      padding: 30px 0 30px 24px;
       font-size: $font-size-desktop-body;
       border-right: 1px solid #e5e5e5;
-      padding-left: 24px;
       margin-right: -1px;
     }
-  }
-  .funds__bottom {
-    display: none;
+
+    &__header-label p,
+    &__amount-label p {
+      text-transform: uppercase;
+      color: $title-color;
+    }
   }
 
   .col-lg:nth-of-type(3n) {

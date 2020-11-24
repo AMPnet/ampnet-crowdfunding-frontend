@@ -1,43 +1,5 @@
-<div class="container root-content-container">
-    <div class="row">
-        <div *ngIf="hasNoBankAccounts" class="col-md-12 text-center mb-5 mt-3 h6 gray-text">
-            You currently have no bank accounts registered.
-        </div>
-        <div class="col-md-12">
-            <div class="explainer-mini text-uppercase">
-                Enter bank account details
-            </div>
-        </div>
-
-        <div class="col-md-12 mt-3">
-            <form [formGroup]="bankAccountForm">
-
-                <input class="form-control w-100 p-4" id="iban-holder"
-                       formControlName="iban" placeholder="IBAN"
-                       type="text">
-
-                <select class="form-control mt-3 p-2  bank-code-picker"
-                        data-live-search="true" id="bankcode-holder"
-                        formControlName="bankCode"
-                        placeholder="SWIFT/BIC (Optional)"
-                        type="text">
-                    <option *ngFor="let bankCode of bankCodes; let i = index" value="{{ bankCode.swift_code }}">
-                        {{ bankCode.bank }} ({{ bankCode.city }}) : {{ bankCode.swift_code }}
-                    </option>
-                </select>
-
-                <input class="form-control mt-3 p-4" id="alias-holder"
-                       formControlName="bankAccountAlias"
-                       placeholder="Bank account alias" type="text">
-            </form>
-        </div>
-        <div class="col-md-8"></div>
-        <div class="col-md-4 mt-3">
-            <button (click)="addNewBankAccountClicked()" [disabled]="!bankAccountForm.valid"
-                    class="btn btn-primary py-3 w-100">
-                <i class="fas fa-plus-circle mr-2"></i>
-                Add new bank account
-            </button>
-        </div>
-    </div>
+<h1 class="app-page-title">New Bank Account</h1>
+<div class="container">
+    <app-new-bank-account [onAdd]="addNewBankAccount.bind(this)">
+    </app-new-bank-account>
 </div>

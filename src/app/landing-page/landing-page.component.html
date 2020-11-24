@@ -1,51 +1,31 @@
 <div class="" style="overflow-x: hidden; height: 100vh; ">
     <app-header></app-header>
-    <div class="row" style="height: calc(100% - 58px)">
-        <div class="col-md-6 feature-holder featured-image text-white cursor-pointer">
-            <div class="p-3 pl-4">
-                <h1>Explore</h1>
-                <div class="font-weight-lighter w-50">
-                    Find out more about how investments help combat climate change
-                </div>
-            </div>
+    <div class="container w-75">
+        <div class="row justify-content-center align-items-center">
+            <img src="{{ appConfig.config.config.logo_url }}"
+                 alt="Cooperative logo"
+                 class="p-5">
         </div>
-        <div class="col-md-6" style="background-color: black;">
-            <div class="row">
-                <div class="col-md-12" [routerLink]="'/overview/discover' | coopPath"
-                     style="background-color: #1E4B3A; height: calc(50vh - 58px)">
-                    <div class="p-3 text-white cursor-pointer">
-                        <h1>Invest</h1>
-                        <div class="font-weight-lighter w-50">
-                            Get started by creating an account and choosing your projects
-                        </div>
-                    </div>
-                </div>
-                <div [queryParams]="{ filter: 'solar' }"
-                     [routerLink]="['/overview/discover']" class="col-md-6"
-                     style="background-color: #DEA546; height: 25vh;">
-                    <div class="p-3 cursor-pointer">
-                        <div class="font-weight-lighter">
-                            Featured
-                        </div>
-                        <h2 class="pt-3">Solar projects</h2>
-                    </div>
-                </div>
-                <div [queryParams]="{ filter: ['wind', 'bio'] }"
-                     [routerLink]="['/overview/discover']" class="col-md-6"
-                     style="background-color: #23C8C3; height: 25vh;">
-                    <div class="p-3 cursor-pointer">
-                        <div class="font-weight-lighter">
-                            Featured
-                        </div>
-                        <h2 class="pt-3">Wind projects</h2>
-                    </div>
-                </div>
-                <div class="col-md-6" style="background-color: white; height: 25vh;">
-                    <h2 class="p-3 pt-5">About us</h2>
-                </div>
-                <div class="col-md-6" style="background: url(../../assets/africa.jpg); height: 25vh;">a</div>
-            </div>
-        </div>
-    </div>
 
+        <div class="row mt-3 justify-content-center">
+            <p class="mx-3">Welcome to {{ appConfig.config.name }} investing platform.</p>
+        </div>
+
+        <div class="row mt-3 justify-content-center align-items-center">
+            <button class="btn btn-primary"
+                    [routerLink]="'/overview/discover' | coopPath">
+                Explore projects
+            </button>
+        </div>
+
+        <!--        TODO: implement this section -->
+        <!--        <div class="row mt-3 mx-3 flex-column align-content-center"-->
+        <!--             *ngIf="(summary$ | async) as summary">-->
+        <!--            <h2 class="app-page-subtitle">Platform information</h2>-->
+
+        <!--            <ul>-->
+        <!--                <li>Total money raised: {{ summary.total_money_raised | currencyDefault }}</li>-->
+        <!--            </ul>-->
+        <!--        </div>-->
+    </div>
 </div>

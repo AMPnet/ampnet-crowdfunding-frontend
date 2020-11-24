@@ -108,7 +108,7 @@
             <div class="transactions col-12" *ngIf="states.wallet.state === walletState.READY">
                 <div class="d-flex justify-content-between">
                     <div class="transactions__title">Transaction History</div>
-                    <div class="transactions__report">
+                    <div class="transactions__report" *ngIf="transactionHistory.length > 0">
                         <ng-template [ngTemplateOutlet]="downloadReportButton"></ng-template>
                     </div>
                 </div>
@@ -213,7 +213,7 @@
                 </ng-template>
             </div>
 
-            <div class="bottom-report col-12 pb-3">
+            <div class="bottom-report col-12 pb-3" *ngIf="transactionHistory.length > 0">
                 <ng-template [ngTemplateOutlet]="downloadReportButton"></ng-template>
             </div>
         </div>

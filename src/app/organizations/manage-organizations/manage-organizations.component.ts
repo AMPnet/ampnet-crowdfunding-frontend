@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Organization, OrganizationInvite, OrganizationService } from '../../shared/services/project/organization.service';
 import { displayBackendErrorRx } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
@@ -11,7 +11,7 @@ import { PopupService } from '../../shared/services/popup.service';
     templateUrl: './manage-organizations.component.html',
     styleUrls: ['./manage-organizations.component.scss']
 })
-export class ManageOrganizationsComponent implements OnInit {
+export class ManageOrganizationsComponent {
     organizations$: Observable<Organization[]>;
     organizationInvites$: Observable<OrganizationInvite[]>;
 
@@ -48,11 +48,5 @@ export class ManageOrganizationsComponent implements OnInit {
             tap(() => this.refreshState()),
             finalize(() => SpinnerUtil.hideSpinner())
         ).subscribe();
-    }
-
-    ngOnInit() {
-        /* this.popupService.new({
-            type: 'error', text: 'Accepted invitation to organization'
-        }); */
     }
 }

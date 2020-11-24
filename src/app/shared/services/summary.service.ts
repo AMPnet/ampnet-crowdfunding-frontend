@@ -23,7 +23,9 @@ export class SummaryService {
     }
 
     getBlockchainMiddlewareData() {
-        return this.http.get<MiddlewareSummaryResponse>('/api/middleware/summary');
+        return this.http.get<MiddlewareSummaryResponse>('/api/middleware/summary', {
+            coop: this.appConfig.config.identifier
+        });
     }
 }
 

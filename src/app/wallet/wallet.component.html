@@ -112,7 +112,7 @@
                 </div>
 
                 <ng-container *ngIf="(transactionHistory$ | async) else transactionHistorySpinner">
-                    <div *ngIf="transactionHistory.length === 0">
+                    <div *ngIf="transactionHistory.length === 0" class="row justify-content-center">
                         <span class="transactions__empty"></span>Your transaction history is empty.
                     </div>
                     <div *ngIf="transactionHistory !== undefined && transactionHistory.length > 0"

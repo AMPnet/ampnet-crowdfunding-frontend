@@ -228,8 +228,10 @@
 
   .right {
     &__icon {
+      display: flex;
+      align-items: center;
       align-self: flex-end;
-      margin-right: -2.0rem !important;
+      justify-content: flex-end;
       svg {
         font-size: $font-size-desktop-body;
         color: $icons-color;

@@ -104,4 +104,8 @@ export class WalletComponent implements OnDestroy {
                 .pipe(displayBackendErrorRx());
         };
     }
+
+    getExplorerLink(txHash: string) {
+        return this.arkaneService.getExplorerLink(txHash);
+    }
 }

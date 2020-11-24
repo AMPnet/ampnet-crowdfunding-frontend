@@ -179,7 +179,7 @@
                                             </div>
                                             <div class="right__icon">
                                                 <ng-container
-                                                        *ngIf="transaction.state === transactionState.MINED else singleReportPDFDisabled">
+                                                        *ngIf="transaction.state === transactionState.MINED else singleReportButtonDisabled">
                                                     <app-action-button
                                                             buttonClass="btn text-dark bg-transparent text-right"
                                                             spinnerColor="black"
@@ -222,7 +222,7 @@
     </ng-container>
 </div>
 
-<ng-template #singleReportPDFDisabled>
+<ng-template #singleReportButtonDisabled>
     <app-action-button
             buttonClass="btn bg-transparent text-right"
             disabled="disabled"

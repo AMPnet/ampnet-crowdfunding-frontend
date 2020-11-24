@@ -53,7 +53,7 @@ export class ReportService {
                 const file = new Blob([data], {type: 'application/pdf'});
                 const fileName = [
                     'UserTransaction',
-                    this.datePipe.transform(date, 'yMdhhmmss'),
+                    this.datePipe.transform(`${!!date ? date : ''}`, 'yMdhhmmss'),
                 ].filter(text => !!text).join('_') + '.pdf';
 
                 const fileURL = URL.createObjectURL(file);

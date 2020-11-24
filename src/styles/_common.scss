@@ -77,9 +77,16 @@
   padding-bottom: 18px;
   text-transform: uppercase;
 }
+
 .app-page-header {
   display: flex;
   justify-content: space-between;
+}
+
+.app-page-label {
+  font-size: $font-size-mobile-body;
+  color: $body-color;
+  margin-bottom: 6px;
 }
 
 .full-overlay {

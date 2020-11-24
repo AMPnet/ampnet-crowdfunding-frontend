@@ -1,49 +1,58 @@
-<div class="container root-content-container">
+<h1 class="app-page-title">Platform Bank Accounts</h1>
+<div class="container">
     <div class="row">
-        <div class="col-md-8 mb-5">
-            <h5 class=" gray-text">Platform Bank Accounts</h5>
-        </div>
+        <ng-container *ngIf="(banks$ | async) as banks; else spinner">
+            <div class="col-md-8 mb-5">
+                <h5 class=" gray-text">Platform Bank Accounts</h5>
+            </div>
 
-        <div *ngFor="let paymentOption of banks" class="col-md-12 mb-3">
-            <div class="card">
-                <div class="card-body d-flex flex-column gray-text">
-                    <div class="d-flex flex-row justify-content-between text-left">
-                        <div>
-                            <div class="explainer-mini text-uppercase mb-2">IBAN</div>
-                            <b>{{ paymentOption.iban }}</b>
-                        </div>
+            <div *ngFor="let paymentOption of banks" class="col-md-12 mb-3">
+                <div class="card">
+                    <div class="card-body d-flex flex-column gray-text">
+                        <div class="d-flex flex-row justify-content-between text-left">
+                            <div>
+                                <div class="explainer-mini text-uppercase mb-2">IBAN</div>
+                                <b>{{ paymentOption.iban }}</b>
+                            </div>
 
-                        <div *ngIf="paymentOption.alias">
-                            <div class="explainer-mini text-uppercase mb-2">Alias</div>
-                            <b>{{ paymentOption.alias }}</b>
-                        </div>
+                            <div *ngIf="paymentOption.alias">
+                                <div class="explainer-mini text-uppercase mb-2">Alias</div>
+                                <b>{{ paymentOption.alias }}</b>
+                            </div>
 
-                        <div>
-                            <div class="explainer-mini text-uppercase mb-2">Swift/BIC</div>
-                            <b>{{ paymentOption.bank_code }}</b>
-                        </div>
+                            <div>
+                                <div class="explainer-mini text-uppercase mb-2">Swift/BIC</div>
+                                <b>{{ paymentOption.bank_code }}</b>
+                            </div>
 
-                        <div>
-                            <div class="explainer-mini text-uppercase mb-2">Actions</div>
-                            <span (click)="deleteBankAccountClicked(paymentOption.id)"
-                                  class="float-right align-middle cursor-pointer">
+                            <div>
+                                <div class="explainer-mini text-uppercase mb-2">Actions</div>
+                                <span (click)="deleteBankAccountClicked(paymentOption.id)"
+                                      class="float-right align-middle cursor-pointer">
 								<i class="fas fa-trash-alt"></i>
 							</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div *ngIf="banks !== undefined && banks.length ===  0" class="col-md-12">
-            <div class="text-center">
-                No payment options available. Please add a new payment option
+            <div *ngIf="banks !== undefined && banks.length === 0" class="col-md-12">
+                <div class="text-center">
+                    No payment options available. Please add a new payment option
+                </div>
+                <div class="col-md-12 mb-5 mt-5">
+                    <button class="btn btn-primary w-100 py-3 float-right" routerLink="new">
+                        <i class="mr-2 fas fa-plus-circle"></i>
+                        <span>Add new</span>
+                    </button>
+                </div>
             </div>
-            <div class="col-md-12 mb-5 mt-5">
-                <button class="btn btn-primary w-100 py-3 float-right" routerLink="new">
-                    <i class="mr-2 fas fa-plus-circle"></i>
-                    <span>Add new</span>
-                </button>
-            </div>
-        </div>
+        </ng-container>
     </div>
 </div>
+
+<ng-template #spinner>
+    <div class="justify-content-center" style="width: 100%">
+        <app-spinner type="overlay"></app-spinner>
+    </div>
+</ng-template>

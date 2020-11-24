@@ -70,10 +70,9 @@ export class OrganizationDetailsComponent implements OnInit {
                 displayBackendErrorRx(),
                 catchError(err => {
                     if (err.status === 404) {
-                        return this.popupService.new({
-                            type: 'info',
-                            text: 'The organization wallet needs to be created. You will be prompted now.'
-                        }).pipe(
+                        return this.popupService.info(
+                            'The organization wallet needs to be created. You will be prompted now.'
+                        ).pipe(
                             switchMap(popupRes => popupRes.dismiss === undefined ?
                                 this.createOrgWallet(orgID) : this.recoverBack())
                         );
@@ -102,11 +101,7 @@ export class OrganizationDetailsComponent implements OnInit {
 
             return this.organizationService.inviteUser(orgUUID, emails).pipe(
                 displayBackendErrorRx(),
-                switchMap(() => this.popupService.new({
-                    type: 'success',
-                    title: 'Success',
-                    text: 'Successfully invited user to organization'
-                })),
+                switchMap(() => this.popupService.success('Successfully invited user to organization')),
                 tap(() => this.inviteForm.reset())
             );
         };
@@ -120,7 +115,9 @@ export class OrganizationDetailsComponent implements OnInit {
             switchMap(() => this.popupService.new({
                 type: 'success',
                 title: 'Transaction signed',
-                text: 'Transaction is being processed...'
+                text: 'Transaction is being processed...',
+                customClass: 'popup-success',
+                position: 'top'
             })),
             switchMap(() => of(undefined)),
             tap(() => {
@@ -135,10 +132,7 @@ export class OrganizationDetailsComponent implements OnInit {
         SpinnerUtil.showSpinner();
         this.organizationService.removeMemberFromOrganization(orgID, memberID).pipe(
             displayBackendErrorRx(),
-            switchMap(() => this.popupService.new({
-                type: 'success',
-                text: 'Successfully deleted user from the organization'
-            })),
+            switchMap(() => this.popupService.success('Successfully deleted user from the organization')),
             tap(() => this.refreshOrgMembersSubject.next()),
             finalize(() => SpinnerUtil.hideSpinner())
         ).subscribe();

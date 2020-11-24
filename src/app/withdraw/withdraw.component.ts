@@ -68,7 +68,9 @@ export class WithdrawComponent implements OnInit {
             switchMap(() => this.popupService.new({
                 type: 'success',
                 title: 'Transaction signed',
-                text: 'Transaction is being processed...'
+                text: 'Transaction is being processed...',
+                customClass: 'popup-success',
+                position: 'top'
             })),
             switchMap(() => this.router.navigate(['/dash/wallet'])),
             finalize(() => SpinnerUtil.hideSpinner()),

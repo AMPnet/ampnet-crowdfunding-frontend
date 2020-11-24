@@ -44,7 +44,9 @@ export class UserActivationComponent implements OnInit {
             switchMap(() => this.popupService.new({
                 type: 'success',
                 title: 'Transaction signed',
-                text: 'Transaction is being processed...'
+                text: 'Transaction is being processed...',
+                customClass: 'popup-success',
+                position: 'top'
             })),
             tap(() => this.fetchUnactivatedUserWallets()),
             finalize(() => SpinnerUtil.hideSpinner())

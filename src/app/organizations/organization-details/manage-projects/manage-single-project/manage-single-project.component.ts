@@ -89,10 +89,9 @@ export class ManageSingleProjectComponent {
     }
 
     createProjectWallet(projectUUID: string) {
-        return this.popupService.new({
-            type: 'info',
-            text: 'Verify the project creation with your blockchain wallet. You will be prompted now!'
-        }).pipe(
+        return this.popupService.info(
+            'Verify the project creation with your blockchain wallet. You will be prompted now!'
+        ).pipe(
             tap(() => SpinnerUtil.showSpinner()),
             switchMap(() =>
                 this.walletService.createProjectWalletTransaction(projectUUID)
@@ -106,7 +105,9 @@ export class ManageSingleProjectComponent {
             switchMap(() => this.popupService.new({
                 type: 'success',
                 title: 'Transaction signed',
-                text: 'Transaction is being processed...'
+                text: 'Transaction is being processed...',
+                customClass: 'popup-success',
+                position: 'top'
             })),
             tap(() => {
                 this.refreshProjectSubject.next(null);

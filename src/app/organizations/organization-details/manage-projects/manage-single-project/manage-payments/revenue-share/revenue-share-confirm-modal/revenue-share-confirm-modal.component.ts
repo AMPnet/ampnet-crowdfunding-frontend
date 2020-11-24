@@ -46,7 +46,9 @@ export class RevenueShareConfirmModalComponent implements OnInit {
             switchMap(() => this.popupService.new({
                 type: 'success',
                 title: 'Transaction signed',
-                text: 'Transaction is being processed...'
+                text: 'Transaction is being processed...',
+                customClass: 'popup-success',
+                position: 'top'
             })),
             tap(() => this.router.navigate([`/dash/manage_groups/${this.orgID}/manage_project/${this.projectID}/manage_payments`])),
             finalize(() => SpinnerUtil.hideSpinner())

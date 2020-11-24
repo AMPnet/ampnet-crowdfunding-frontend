@@ -198,7 +198,9 @@ export class ArkaneService {
                         type: 'error',
                         title: 'Arkane authentication failed.',
                         text: 'This might be caused by blocking 3rd-party cookies in your browser. ' +
-                            'Consider unblocking them to proceed.'
+                            'Consider unblocking them to proceed.',
+                        customClass: 'popup-error',
+                        position: 'top'
                     }).pipe(switchMap(() =>
                         ArkaneService.throwError(ArkaneError.USER_NOT_AUTHENTICATED)))
                 )

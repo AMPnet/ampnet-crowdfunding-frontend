@@ -36,7 +36,9 @@ export class ForgotPasswordComponent {
                         return this.popupService.new({
                             type: 'error',
                             title: 'Not found',
-                            text: `User doesn't exist on the platform`
+                            text: `User doesn't exist on the platform`,
+                            customClass: 'popup-error',
+                            position: 'top'
                         }).pipe(switchMap(() => EMPTY));
 
                     case 400:
@@ -44,17 +46,17 @@ export class ForgotPasswordComponent {
                             return this.popupService.new({
                                 type: 'error',
                                 title: 'Error changing password',
-                                text: `User did not use email authentication method`
+                                text: `User did not use email authentication method`,
+                                customClass: 'popup-error',
+                                position: 'top'
                             }).pipe(switchMap(() => EMPTY));
                         }
                 }
                 return throwError(err);
             }),
             displayBackendErrorRx())
-            .pipe(switchMap(() => this.popupService.new({
-                type: 'success',
-                title: 'Success',
-                text: 'We have sent you an e-mail containing your password reset link.'
-            }).pipe(switchMap(() => this.router.navigate(['/'])))));
+            .pipe(switchMap(() => this.popupService.success(
+                'We have sent you an e-mail containing your password reset link.'
+            ).pipe(switchMap(() => this.router.navigate(['/'])))));
     }
 }

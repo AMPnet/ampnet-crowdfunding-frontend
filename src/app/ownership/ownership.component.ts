@@ -43,7 +43,9 @@ export class OwnershipComponent implements OnInit, OnDestroy {
             switchMap(() => this.popupService.new({
                 type: 'success',
                 title: 'Transaction signed',
-                text: 'Transaction is being processed...'
+                text: 'Transaction is being processed...',
+                customClass: 'popup-success',
+                position: 'top'
             })),
             finalize(() => SpinnerUtil.hideSpinner())
         );
@@ -58,7 +60,9 @@ export class OwnershipComponent implements OnInit, OnDestroy {
             switchMap(() => this.popupService.new({
                 type: 'success',
                 title: 'Transaction signed',
-                text: 'Transaction is being processed...'
+                text: 'Transaction is being processed...',
+                customClass: 'popup-success',
+                position: 'top'
             })),
             finalize(() => SpinnerUtil.hideSpinner())
         );

@@ -1,6 +1,7 @@
 <ng-container *ngIf="(project$ | async) as project else spinner">
     <div class="container">
-        <div class="app-page-title-back" (click)="backToEditProjectScreen()">
+        <div [routerLink]="['/dash', 'manage_groups', project.organization.uuid, 
+             'manage_project', project.uuid] | coopPath" class="app-page-title-back" >
             <i class="fas fa-long-arrow-alt-left mr-3"></i>
             {{ project.name }}
         </div>

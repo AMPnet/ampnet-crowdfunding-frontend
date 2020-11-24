@@ -6,7 +6,6 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 // tslint:disable-next-line:max-line-length
 import { RevenueShareConfirmModalComponent } from './revenue-share-confirm-modal/revenue-share-confirm-modal.component';
 import { Observable } from 'rxjs';
-import { RouterService } from '../../../../../../shared/services/router.service';
 
 @Component({
     selector: 'app-revenue-share',
@@ -22,8 +21,7 @@ export class RevenueShareComponent {
 
     constructor(private route: ActivatedRoute,
                 private projectService: ProjectService,
-                private modalService: BsModalService,
-                private router: RouterService) {
+                private modalService: BsModalService) {
         this.orgID = this.route.snapshot.params.groupID;
         this.projectID = this.route.snapshot.params.projectID;
         this.amount = Number(this.route.snapshot.params.amount);
@@ -41,10 +39,5 @@ export class RevenueShareComponent {
                 amountInvestedConfirm: String(this.amount)
             }
         });
-    }
-
-    backToEditProjectScreen () {
-        this.router.navigate([`/dash/manage_groups/${this.orgID}
-        /manage_project/${this.projectID}`]);
     }
 }

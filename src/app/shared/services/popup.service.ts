@@ -16,18 +16,45 @@ export class PopupService {
     info(message: string, footer?: string): Observable<SweetAlertResult> {
         return from(swal({
             type: 'info',
-            titleText: 'Info',
+            titleText: 'Info!',
             text: message,
-            footer: footer
+            footer: footer,
+            customClass: 'popup-info',
+            position: 'top'
         }));
     }
 
     success(message: string, footer?: string): Observable<SweetAlertResult> {
         return from(swal({
-            type: 'info',
-            titleText: 'Success',
+            type: 'success',
+            titleText: 'Success!',
             text: message,
-            footer: footer
+            footer: footer,
+            confirmButtonText: 'Continue <i class="fas fa-arrow-right ml-3"></i>',
+            customClass: 'popup-success',
+            position: 'top'
+        }));
+    }
+
+    warning(message: string, footer?: string): Observable<SweetAlertResult> {
+        return from(swal({
+            type: 'warning',
+            titleText: 'Warning!',
+            text: message,
+            footer: footer,
+            customClass: 'popup-warning',
+            position: 'top'
+        }));
+    }
+
+    error(message: string, footer?: string): Observable<SweetAlertResult> {
+        return from(swal({
+            type: 'error',
+            titleText: 'Error!',
+            text: message,
+            footer: footer,
+            customClass: 'popup-error',
+            position: 'top'
         }));
     }
 }

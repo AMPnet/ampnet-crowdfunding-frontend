@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserAuthService } from '../../shared/services/user/user-auth.service';
-import swal from 'sweetalert2';
+import { PopupService } from '../../shared/services/popup.service';
 import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthService } from 'angularx-social-login';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { displayBackendError } from 'src/app/utilities/error-handler';
@@ -22,7 +22,8 @@ export class LogInModalComponent implements OnInit {
     constructor(private router: RouterService,
                 private loginService: UserAuthService,
                 private auth: SocialAuthService,
-                private fb: FormBuilder) {
+                private fb: FormBuilder,
+                private popupService: PopupService) {
         this.emailLoginForm = this.fb.group({
             email: fb.control('', Validators.required),
             password: fb.control('', Validators.required)
@@ -51,11 +52,11 @@ export class LogInModalComponent implements OnInit {
                     this.router.navigate(['/dash']);
                 }, err => {
                     SpinnerUtil.hideSpinner();
-                    swal('', err.error.message, 'warning');
+                    this.popupService.warning(err.error.message);
                 });
         }, err => {
             SpinnerUtil.hideSpinner();
-            swal('', err, 'warning');
+            this.popupService.warning(err);
         });
     }
 
@@ -67,7 +68,7 @@ export class LogInModalComponent implements OnInit {
             }),
             catchError(err => {
                 if (err.status === 401) {
-                    swal('', 'Invalid email and/or password', 'warning');
+                    this.popupService.warning('Invalid email and/or password');
                 } else {
                     displayBackendError(err);
                 }

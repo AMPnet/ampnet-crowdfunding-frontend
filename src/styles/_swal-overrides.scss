@@ -1,0 +1,68 @@
+@import "colors";
+@import "fonts";
+
+@mixin popup-buttton-color($color) {
+  button {
+    background-color: $color !important;
+  }
+}
+
+.popup-success,
+.popup-info,
+.popup-error,
+.popup-warning {
+  width: 480px !important;
+  box-shadow: 0 2px 34px 0 rgba(17,17,17, 0.1);
+  margin-top: 120px;
+  padding: 80px 40px 64px 40px !important;
+  border-radius: 2px;
+  align-items: flex-start;
+  justify-content: unset;
+
+  .swal2-icon {
+    display: none !important;
+  }
+
+  .swal2-title,
+  .swal2-content div {
+    font-size: $font-size-mobile-title !important;
+    letter-spacing: 1px;
+    font-weight: normal !important;
+    color: $title-color !important;
+  }
+
+  .swal2-title {
+    margin-bottom: 32px !important;
+  }
+
+  .swal2-actions {
+    margin: 65px 0 0 0 !important;
+  }
+  
+  button {
+    width: 400px;
+    height: 64px;
+    margin: 0 !important;
+    border-radius: 2px;
+    text-transform: capitalize;
+    &:focus {
+      box-shadow: unset !important;
+    }
+  }
+}
+
+.popup-success {
+  @include popup-buttton-color($success-color);
+}
+
+.popup-warning {
+  @include popup-buttton-color($warning-color);
+}
+
+.popup-error {
+  @include popup-buttton-color($error-color);
+}
+
+.popup-info {
+  @include popup-buttton-color($primary-color);
+}

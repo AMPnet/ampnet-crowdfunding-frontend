@@ -184,8 +184,7 @@
                                                             buttonClass="btn text-dark bg-transparent text-right"
                                                             spinnerColor="black"
                                                             faIcon="fa-file-chart-line"
-                                                            [onClick]="downloadSingleReport(transaction.tx_hash, transaction.from_tx_hash,
-                                                           transaction.to_tx_hash, transaction.date).bind(this)">
+                                                            [onClick]="downloadSingleReport(transaction).bind(this)">
                                                     </app-action-button>
                                                 </ng-container>
                                             </div>

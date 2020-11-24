@@ -98,9 +98,9 @@ export class WalletComponent implements OnDestroy {
             .pipe(displayBackendErrorRx());
     }
 
-    downloadSingleReport(txHash: string, fromTxHash: string, toTxHash: string, date: Date) {
+    downloadSingleReport(transaction: UserTransaction) {
         return () => {
-            return this.reportService.singleUserTransaction(txHash, fromTxHash, toTxHash, date)
+            return this.reportService.singleUserTransaction(transaction)
                 .pipe(displayBackendErrorRx());
         };
     }

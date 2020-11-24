@@ -3,6 +3,7 @@ import { BackendHttpClient } from '../backend-http-client.service';
 import { DatePipe } from '@angular/common';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { UserTransaction } from '../wallet/wallet.service';
 
 @Injectable({
     providedIn: 'root',
@@ -27,7 +28,6 @@ export class ReportService {
             responseType: 'arraybuffer'
         }).pipe(
             map(data => {
-                const file = new Blob([data], {type: 'application/pdf'});
                 const fileName = [
                     'UserTransactions',
                     this.datePipe.transform(new Date(), 'yMdhhmmss'),
@@ -35,33 +35,38 @@ export class ReportService {
                     `${!!to ? 'to' + params['to'] : ''}`
                 ].filter(text => !!text).join('_') + '.pdf';
 
-                const fileURL = URL.createObjectURL(file);
-                const link = document.createElement('a');
-                link.href = fileURL;
-                link.download = fileName;
-                link.click();
+                this.downloadFile(data, fileName);
             })
         );
     }
 
-    singleUserTransaction(txHash: string, fromTxHash: string, toTxHash: string, date: Date): Observable<void> {
-        return this.http.http.get(`/api/report/report/user/transaction?txHash=${txHash}&fromTxHash=${fromTxHash}&toTxHash=${toTxHash}`, {
+    singleUserTransaction(transaction: UserTransaction): Observable<void> {
+        return this.http.http.get(`/api/report/report/user/transaction`, {
             headers: this.http.authHttpOptions().headers,
+            params: {
+                txHash: transaction.tx_hash,
+                fromTxHash: transaction.from_tx_hash,
+                toTxHash: transaction.to_tx_hash
+            },
             responseType: 'arraybuffer'
         }).pipe(
             map(data => {
-                const file = new Blob([data], {type: 'application/pdf'});
                 const fileName = [
                     'UserTransaction',
-                    this.datePipe.transform(`${!!date ? date : ''}`, 'yMdhhmmss'),
+                    this.datePipe.transform(transaction.date, 'yMdhhmmss'),
                 ].filter(text => !!text).join('_') + '.pdf';
 
-                const fileURL = URL.createObjectURL(file);
-                const link = document.createElement('a');
-                link.href = fileURL;
-                link.download = fileName;
-                link.click();
+                this.downloadFile(data, fileName);
             })
         );
+    }
+
+    downloadFile(data: ArrayBuffer, fileName: string): void {
+        const file = new Blob([data], {type: 'application/pdf'});
+        const fileURL = URL.createObjectURL(file);
+        const link = document.createElement('a');
+        link.href = fileURL;
+        link.download = fileName;
+        link.click();
     }
 }

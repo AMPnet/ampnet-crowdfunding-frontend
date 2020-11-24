@@ -34,7 +34,7 @@
                     <span>Investment groups</span>
                 </li>
             </div>
-<!--            Todo Remove hidden when project market is implemented -->
+            <!-- TODO: Remove hidden when project market is implemented -->
             <div hidden [tooltip]="!isUserVerified(states.user) || !isWalletLazyReady(states.wallet) ? ToolTipNotVerified : null">
                 <li routerLink="exchange" routerLinkActive="side-active"
                     [class.unverified-user-disabled]="!isUserVerified(states.user) || !isWalletEagerReady(states.wallet)">

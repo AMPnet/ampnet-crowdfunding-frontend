@@ -68,6 +68,34 @@ export class UserAuthService {
     }
 
     isLoggedIn(): boolean {
-        return localStorage.getItem('access_token') !== null;
+        const jwtUser = this.getJWTUser();
+
+        return jwtUser && jwtUser.coop === this.appConfig.config.identifier;
     }
+
+    getJWTUser(): JWTUser | null {
+        try {
+            const payload: JWTPayload = JSON.parse(atob(localStorage.getItem('access_token').split('.')[1]));
+            return JSON.parse(payload.user);
+        } catch (_err) {
+            return null;
+        }
+    }
+}
+
+interface JWTPayload {
+    sub: string;
+    user: string;
+    iat: number;
+    exp: number;
+}
+
+interface JWTUser {
+    uuid: string;
+    email: string;
+    name: string;
+    authorities: string[];
+    enabled: boolean;
+    verified: boolean;
+    coop: string;
 }

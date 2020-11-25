@@ -57,7 +57,7 @@ export class AppConfigService {
     }
 
     private remoteConfigByHostname(hostname: string) {
-        return this.http.get<AppConfig>(`/api/user/public/app/config/hostname/${hostname}`).pipe(
+        return this.http.get<AppConfig>(`/api/user/public/app/config/hostname/${hostname}`, {}, true).pipe(
             catchError(() => of(<AppConfig>{
                 config: null
             }))
@@ -65,7 +65,7 @@ export class AppConfigService {
     }
 
     private remoteConfigByIdentifier(identifier: string): Observable<AppConfig> {
-        return this.http.get<AppConfig>(`/api/user/public/app/config/identifier/${identifier}`).pipe(
+        return this.http.get<AppConfig>(`/api/user/public/app/config/identifier/${identifier}`, {}, true).pipe(
             catchError(() => of(<AppConfig>{
                 config: null
             }))

@@ -14,6 +14,7 @@ export class ActionButtonComponent implements OnInit, OnDestroy {
     @Input() disabled = false;
     @Input() buttonClass = 'btn btn-primary';
     @Input() textShort: string;
+    @Input() spinnerColor = 'white';
 
     loading = false;
     sub: Subscription;

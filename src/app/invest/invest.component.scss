@@ -79,6 +79,8 @@ p {
 }
 
 .alert-danger {
+  display: flex;
+  align-items: center;
   span,
   .btn-danger {
     display: none;

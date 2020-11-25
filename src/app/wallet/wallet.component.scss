@@ -341,6 +341,11 @@
 
     .alert-success {
       font-weight: bold;
+      div {
+        svg {
+          display: inline-block;
+        }
+      }
       .btn {
         display: inline-block;
       }

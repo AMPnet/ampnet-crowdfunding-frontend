@@ -41,6 +41,15 @@ export class ArkaneService {
         return throwError({error: 'ARKANE_SERVICE_ERROR', message: reason});
     }
 
+    getExplorerLink(txHash: string): string {
+        switch (this.appConfigService.config.config.arkane.env) {
+            case 'prod':
+                return `https://explorer.aeternity.io/transactions/${txHash}`;
+            default:
+                return `https://explorer.testnet.aeternity.io/transactions/${txHash}`;
+        }
+    }
+
     getMatchedWallet(): Observable<Wallet> {
         return combineLatest([this.getUserWalletAddress(), this.getWallets()]).pipe(
             switchMap(([userWalletAddress, wallets]) => {

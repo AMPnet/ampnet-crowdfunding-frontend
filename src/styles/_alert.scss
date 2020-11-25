@@ -57,4 +57,7 @@
   &-danger {
     @include alert-colors($error-color-bg, $error-color);
   }
+  &-info {
+    @include alert-colors(lighten($primary-color, 45%), $primary-color);
+  }
 }

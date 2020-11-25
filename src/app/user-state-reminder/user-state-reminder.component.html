@@ -6,7 +6,7 @@
         <div class="wallet-init-reminder">
             <p>
                 Profile not verified.
-                Please go <span class="reminder-link" routerLink="general_settings">here</span> to verify
+                Please go <span class="reminder-link" [routerLink]="'/dash/settings/user' | coopPath">here</span> to verify
                 your profile and finish onboarding procedure.
             </p>
         </div>
@@ -17,7 +17,7 @@
             <p>
                 Thank you for verifying your profile.
                 In order to manage funds, you need to have your wallet initialized.
-                Please initialize your wallet <span class="reminder-link" routerLink="wallet">here</span>.
+                Please initialize your wallet <span class="reminder-link" [routerLink]="'/dash/wallet' | coopPath">here</span>.
             </p>
         </div>
     </div>

@@ -1,12 +1,13 @@
 import { AfterViewInit, Component } from '@angular/core';
 import { NavbarComponent } from '../navbar/navbar.component';
-import { Router } from '@angular/router';
 import * as $ from 'jquery';
 import { UserService } from '../shared/services/user/user.service';
 import { User, UserRole } from '../shared/services/user/signup.service';
 import { WalletDetailsWithState, WalletService, WalletState } from '../shared/services/wallet/wallet.service';
 import { version } from '../../../package.json';
 import { UserAuthService } from '../shared/services/user/user-auth.service';
+import { AppConfigService } from '../shared/services/app-config.service';
+import { RouterService } from '../shared/services/router.service';
 
 
 @Component({
@@ -21,7 +22,8 @@ export class SidebarComponent implements AfterViewInit {
     user$ = this.userService.user$;
     wallet$ = this.walletService.wallet$;
 
-    constructor(private router: Router,
+    constructor(private router: RouterService,
+                public appConfigService: AppConfigService,
                 private userService: UserService,
                 private userAuthService: UserAuthService,
                 private walletService: WalletService) {
@@ -35,7 +37,7 @@ export class SidebarComponent implements AfterViewInit {
 
     onLogout() {
         this.userAuthService.logout();
-        this.router.navigate(['']);
+        this.router.navigate(['/']);
     }
 
     isWalletEagerReady(wallet: WalletDetailsWithState) {
@@ -52,5 +54,9 @@ export class SidebarComponent implements AfterViewInit {
 
     isWalletInitialized(wallet: WalletDetailsWithState) {
         return !wallet ? true : wallet.state !== WalletState.EMPTY;
+    }
+
+    closeSidebar() {
+        NavbarComponent.closeSideBar();
     }
 }

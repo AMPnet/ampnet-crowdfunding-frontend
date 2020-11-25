@@ -1,0 +1,144 @@
+@import "app";
+
+.container {
+  padding: 0;
+  overflow: hidden;
+}
+
+.row {
+  padding: 0 15px;
+}
+
+.form {
+  &-right {
+    margin-top: 30px;
+    textarea {
+      padding: 16px 16px 0 16px;
+      margin-bottom: 40px;
+      border: 1px solid $border-color;
+      outline: none;
+      resize: none;
+      border-radius: 2px;
+      transition: border-color 0.3s ease-in-out;
+      &:focus {
+        border-color: $primary-color;
+      }
+      &::placeholder {
+        color: $icons-color;
+      }
+    }
+  }
+}
+
+.left {
+  &__title {
+    font-size: $font-size-mobile-title;
+    text-transform: uppercase;
+    color: $title-color;
+    font-weight: normal;
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
+  &__upload {
+    &__subtitle {
+      font-size: $font-size-mobile-body;
+      color: $body-color;
+      letter-spacing: 0.11px;
+      margin-bottom: 6px;
+    }
+  }
+  &__advanced {
+    &-users {
+      display: flex;
+      margin-top: 30px;
+      color: $body-color;
+      svg {
+        margin: 4px 11px 0 0;
+      }
+    }
+    &__title {
+      font-weight: bold;
+    }
+    &__title,
+    &__desc,
+    &__desc u {
+      font-size: $font-size-mobile-body;
+    }
+    &__desc {
+      margin-bottom: 20px;
+      u {
+        color: $primary-color;
+      }
+    }
+  }
+}
+
+.right {
+  &__label {
+    font-size: $font-size-mobile-body;
+    color: $body-color;
+    margin-bottom: 6px;
+    &:nth-of-type(2) {
+      margin-top: 20px;
+    }
+  }
+}
+
+@include media-breakpoint-up(lg) {
+  .col-lg-6 {
+   border: 1px solid $border-light-color;
+   border-radius: 1px; 
+  }
+  .form {
+    &-left {
+      padding: 64px 80px 80px 64px;
+    }
+    &-right {
+      padding: 89px 64px 0 80px;
+      margin-top: 0;
+      border-left: none;
+      textarea {
+        // margin-bottom: 230px; TODO: Use this margin value when 2nd wallet is ready
+        margin-bottom: 50px;
+      }
+    }
+  }
+  .left {
+    &__title {
+      font-size: $font-size-desktop-title;
+      letter-spacing: 1.5px;
+      margin-bottom: 50px;
+    }
+    &__upload {
+      &__subtitle {
+        font-size: $font-size-desktop-body2;
+      }
+    }
+    &__advanced {
+      &-users {
+        margin-top: 100px;
+        line-height: 21px;
+        letter-spacing: 0.18px;
+      }
+      &__title,
+      &__desc,
+      &__desc u {
+        font-size: $font-size-desktop-body2;
+      }
+      &__desc {
+        margin-bottom: 0;
+        u {
+          color: $primary-color;
+        }
+      }
+    }
+  }
+  .right {
+    &__label {
+      margin-bottom: 6px;
+      &:nth-of-type(2) {
+        margin-top: 24px;
+      }
+    }
+  }
+}

@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
 import { OrganizationService } from '../../shared/services/project/organization.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { FileValidator } from '../../shared/validators/file.validator';
 import { switchMap, tap } from 'rxjs/operators';
 import { displayBackendErrorRx } from '../../utilities/error-handler';
 import { PopupService } from '../../shared/services/popup.service';
+import { RouterService } from '../../shared/services/router.service';
 
 @Component({
     selector: 'app-create-organization',
     templateUrl: './create-organization.component.html',
-    styleUrls: ['./create-organization.component.css']
+    styleUrls: ['./create-organization.component.scss']
 })
 export class CreateOrganizationComponent {
     newOrganizationForm: FormGroup;
@@ -18,7 +18,7 @@ export class CreateOrganizationComponent {
     constructor(private organizationService: OrganizationService,
                 private fb: FormBuilder,
                 private popupService: PopupService,
-                private router: Router) {
+                private router: RouterService) {
 
         this.newOrganizationForm = fb.group({
             name: ['', Validators.minLength(3)],
@@ -37,11 +37,15 @@ export class CreateOrganizationComponent {
             switchMap(organization => {
                 return this.popupService.new({
                     type: 'success',
-                    title: 'Successfully created a new organization'
+                    title: 'Investment group created!'
                 }).pipe(
                     tap(() => this.router.navigate([`/dash/manage_groups/${organization.uuid}`]))
                 );
             })
         );
+    }
+
+    backToGroupsScreen() {
+        this.router.navigate([`/dash/manage_groups`]);
     }
 }

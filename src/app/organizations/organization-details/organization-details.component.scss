@@ -1,0 +1,242 @@
+@import "app";
+
+.container {
+  padding: 0;
+}
+
+.content {
+  padding: 0 20px;
+}
+
+.app-page-header {
+  background-color: $background-color;
+}
+
+.btn {
+  border-radius: 0;
+  &__text {
+    display: none;
+  }
+}
+
+.alert-warning {
+  margin-top: 20px;
+}
+
+.organization {
+  &-info {
+    margin-top: 20px;
+  }
+  &__img, 
+  &__img img {
+    width: 64px;
+    height: 64px;
+    border-radius: 1px;
+    border: 1px solid $background-color;
+  }
+  &__img img {
+    object-fit: contain;
+  }
+  &__desc {
+    .desc {
+      &__title {
+        margin-top: 20px;
+        font-size: $font-size-mobile-title;
+        letter-spacing: 1px;
+        color: $title-color;
+        text-transform: uppercase;
+        padding-bottom: 4px;
+      }
+      &__project-count {
+        color: $body-color;
+        letter-spacing: 0.1px;
+        b {
+          color: $title-color;
+        }
+      }
+      &__info {
+        color: $body-color;
+        line-height: 22px;
+        letter-spacing: 0.1px;
+        margin-top: 16px;
+      }
+    }
+  }
+}
+
+.tabs {
+  margin-top: 50px;
+}
+
+.users__list {
+  margin-top: 24px;
+  .list-group {
+    list-style: none;
+  }
+}
+
+.manage__members {
+  .col-lg-7,
+  .col-lg-5,
+  .col-lg-2 {
+    padding: 0;
+  }
+
+  .invite {
+    &__form {
+      .form__cta {
+        margin: 15px 0 10px 0;
+      }
+    }
+  }
+
+  .users__list {
+    .list__item {
+      margin-bottom: 6px;
+      border-bottom: 1px solid $border-light-color;
+      padding-bottom: 4px;
+    }
+    .item {
+        &__icon {
+          float: right;
+        }
+        &__left {
+          color: $body-color;
+        }
+    }
+  }
+}
+
+@include media-breakpoint-up(lg) {
+  .input-reg,
+  .input-reg.ng-invalid.ng-dirty,
+  .input-reg.ng-valid.ng-dirty {
+    border-right: none !important;
+  }
+
+  .container {
+    padding: 0 20px;
+  }
+
+  .content {
+    padding: 0;
+  }
+
+  .alert-warning {
+    margin: 20px auto 0 auto;
+  }
+
+  .app-page-header {
+    background-color: unset;
+  }
+
+  .btn {
+    border-radius: 2px;
+    &__text {
+      display: inline-block;
+    }
+  }
+
+  .organization {
+    &-info {
+      display: flex;
+      align-items: center;
+      padding-bottom: 41px;
+      border-bottom: 1px solid $border-light-color;
+    }
+    &__img, 
+    &__img img {
+      width: 140px;
+      height: 140px;
+      margin-right: 32px;
+    }
+    &__desc {
+      .desc {
+        &__title {
+          margin-top: 0;
+          font-size: $font-size-desktop-title;
+          letter-spacing: 1.5px;
+        }
+        &__project-count {
+          font-size: $font-size-desktop-body2;
+          b {
+            font-size: $font-size-desktop-body2;
+          }
+        }
+        &__info {
+          font-size: $font-size-desktop-body2;
+          margin-top: 8px;
+        }
+      }
+    }
+  }
+
+  .tabs {
+    margin-top: 36px;
+    padding-left: 20px;
+  }
+
+  .manage__projects,
+  .manage__members {
+    margin-left: -20px;
+  }
+
+  .manage__members {
+    .invite {
+      &-members {
+        padding: 25px 0;
+        background-color: $background-color;
+        border-radius: 1px;
+      }
+      &__form {
+        display: flex;
+        justify-content: center;
+        padding-bottom: 4px;
+        .form__cta {
+          margin: 0;
+        }
+      }
+      &__desc {
+        font-size: $font-size-desktop-xsmall;
+        color: $body-color;
+        padding-left: 14px !important;
+        margin: 0 auto;
+        b {
+          font-size: $font-size-desktop-xsmall;
+        }
+      }
+    }
+
+    .users__list {
+      .list__item {
+        padding: 20px 24px;
+        background-color: $background-color;
+        margin-bottom: 2px;
+        border-bottom: none;
+      }
+      .item {
+        &__left,
+        &__right {
+          display: flex;
+          align-items: center;
+        }
+        &__icon {
+          float: unset;
+          line-height: 0.9;
+          padding-left: 20px;
+        }
+        &__name {
+          padding-right: 20px;
+          font-weight: 500;
+        }
+        &__joined {
+          font-size: $font-size-desktop-small;
+        }
+        &__joined,
+        &__icon {
+          color: $icons-color;
+        }
+      }
+    }
+  }
+}

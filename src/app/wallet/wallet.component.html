@@ -36,25 +36,17 @@
                     </app-action-button>
                 </div>
             </div>
-
-            <div class="init-right col-12 col-lg-6">
-                <div class="init-right__icon">
-                    <svg width="1.2em" height="1.2em" viewBox="0 0 16 16"
-                     fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd"
-                          d="M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09z"/>
-                    </svg>
-                </div>
-                <div>
-                    <p class="init-right__desc">
-                        <span class="init-right__subtitle">Advanced users</span>
-                        <br>
-                        This platform is powered by blockchain technology. A "wallet" is
-                        a keystorage service used for signing transactions. If you're an advanced user and
-                        would like to sign transactions yourself, <u>click here</u>
+            <!-- TODO: This is ready to go, uncomment and hook up once we have support for other wallets -->
+            <!-- <div class="init-right col-12 col-lg-6">
+                <i class="fas fa-bolt"></i>
+                <div class="right__info">
+                    <span class="right__info__title">Advanced users</span>
+                    <p class="right__info__desc">This platform is powered by blockchain technology. A "wallet" is
+                        a keystorage service used for signing transactions. If you're an advanced user
+                        and would like to sign transactions yourself, <u>click here</u>
                     </p>
                 </div>
-            </div>
+            </div> -->
         </div>
 
         <div *ngIf="!!states.wallet && states.wallet.state !== walletState.EMPTY else fetchWalletSpinner">
@@ -90,23 +82,25 @@
 
 
                 <div class="wallet-alerts col-12 col-lg-11">
-                    <div *ngIf="states.wallet?.wallet?.activated_at === null" class="alert alert-success w-100 flex__center-space">
+                    <div *ngIf="states.wallet?.wallet?.activated_at === null"
+                         class="alert alert-success w-100 flex__center-space">
                         <div>
                             <i class="fas fa-bolt"></i>
                             Your wallet is pending approval from admin. You can deposit funds while pending approval.
                         </div>
                         <button class="btn" routerLink="deposit">
-                                Deposit funds
+                            Deposit funds
                         </button>
                     </div>
-                    <div *ngIf="states.wallet?.wallet?.balance === 0" class="alert alert-success w-100 flex__center-space">
+                    <div *ngIf="states.wallet?.wallet?.balance === 0"
+                         class="alert alert-success w-100 flex__center-space">
                         <div>
                             <i class="fas fa-bolt"></i>
                             Your wallet is empty. Deposit funds to get started!
                         </div>
                         <button class="btn" routerLink="deposit">
                             Deposit funds
-                    </button>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -114,20 +108,20 @@
             <div class="transactions col-12" *ngIf="states.wallet.state === walletState.READY">
                 <div class="d-flex justify-content-between">
                     <div class="transactions__title">Transaction History</div>
-                    <div class="transactions__report">
+                    <div class="transactions__report" *ngIf="transactionHistory.length > 0">
                         <ng-template [ngTemplateOutlet]="downloadReportButton"></ng-template>
                     </div>
                 </div>
 
                 <ng-container *ngIf="(transactionHistory$ | async) else transactionHistorySpinner">
-                    <div *ngIf="transactionHistory.length === 0">
+                    <div *ngIf="transactionHistory.length === 0" class="row justify-content-center">
                         <span class="transactions__empty"></span>Your transaction history is empty.
                     </div>
                     <div *ngIf="transactionHistory !== undefined && transactionHistory.length > 0"
                          class="wow fadeIn">
                         <div class="transactions__history">
                             <ng-container *ngFor="let transaction of transactionHistoryPage">
-                                <ng-container *ngIf="shouldShowTransaction(transaction, transactionHistoryPage)">
+                                <ng-container *ngIf="shouldShowTransaction(transaction, transactionHistory)">
                                     <div class="transactions__single-element"
                                          [class.transactions__grayed-out]="transaction.state !== 'MINED' || transaction.type === 'APPROVE_INVESTMENT'">
                                         <div class="transactions__left">
@@ -142,14 +136,19 @@
                                                     <ng-container *ngIf="transaction.type === transactionType.WITHDRAW">
                                                         <b>Withdraw</b>
                                                     </ng-container>
-                                                    <ng-container *ngIf="transaction.type === transactionType.SHARE_PAYOUT">
+                                                    <ng-container
+                                                            *ngIf="transaction.type === transactionType.SHARE_PAYOUT">
                                                         <b>Dividend </b><span class="left__conjuctor">from</span>
                                                     </ng-container>
-                                                    <ng-container *ngIf="transaction.type === transactionType.CANCEL_INVESTMENT">
-                                                        <b>Cancel investment </b><span class="left__conjuctor">from</span>
+                                                    <ng-container
+                                                            *ngIf="transaction.type === transactionType.CANCEL_INVESTMENT">
+                                                        <b>Cancel investment </b><span
+                                                            class="left__conjuctor">from</span>
                                                     </ng-container>
-                                                    <ng-container *ngIf="transaction.type === transactionType.APPROVE_INVESTMENT">
-                                                        <b>Approve investment </b><span class="left__conjuctor">to</span>
+                                                    <ng-container
+                                                            *ngIf="transaction.type === transactionType.APPROVE_INVESTMENT">
+                                                        <b>Approve investment </b><span
+                                                            class="left__conjuctor">to</span>
                                                     </ng-container>
                                                 </div>
                                                 {{ transaction.description }}
@@ -162,7 +161,8 @@
                                                         {{ transaction.share | percent:'1.0-10'}} Invested —
                                                     </span>
                                                 </span>
-                                                <span class="info__state-pending" *ngIf="transaction.state === 'PENDING'">
+                                                <span class="info__state-pending"
+                                                      *ngIf="transaction.state === 'PENDING'">
                                                     Pending
                                                 </span>
                                                 <span class="info__state-failed" *ngIf="transaction.state === 'FAILED'">
@@ -177,11 +177,21 @@
                                                     {{ transaction.type | txAmountSign }} {{ transaction.amount | currencyCents }}
                                                 </span>
                                             </div>
-
-                                            <!-- TODO: Implement downloading statement -->
-                                            <!-- <div class="right__icon"> -->
-                                            <!--    <i class="fas fa-file-chart-line"></i> -->
-                                            <!-- </div> -->
+                                            <div class="right__icon">
+                                                <ng-container
+                                                        *ngIf="transaction.state === transactionState.MINED else singleReportButtonDisabled">
+                                                    <app-action-button
+                                                            buttonClass="btn text-dark bg-transparent text-right p-0"
+                                                            spinnerColor="black"
+                                                            faIcon="fa-file-chart-line"
+                                                            [onClick]="downloadSingleReport(transaction).bind(this)">
+                                                    </app-action-button>
+                                                </ng-container>
+                                                <a href="{{ getExplorerLink(transaction.tx_hash) }}"
+                                                   target="_blank" rel="noopener noreferrer" class="ml-2">
+                                                    <i class="fas fa-search" style="color: black"></i>
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
                                 </ng-container>
@@ -203,7 +213,7 @@
                 </ng-template>
             </div>
 
-            <div class="bottom-report col-12 pb-3">
+            <div class="bottom-report col-12 pb-3" *ngIf="transactionHistory.length > 0">
                 <ng-template [ngTemplateOutlet]="downloadReportButton"></ng-template>
             </div>
         </div>
@@ -214,6 +224,14 @@
         </ng-template>
     </ng-container>
 </div>
+
+<ng-template #singleReportButtonDisabled>
+    <app-action-button
+            buttonClass="btn bg-transparent text-right p-0"
+            disabled="disabled"
+            faIcon="fa-file-chart-line">
+    </app-action-button>
+</ng-template>
 
 <ng-template #downloadReportButton>
     <app-action-button

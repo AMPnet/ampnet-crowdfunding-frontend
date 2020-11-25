@@ -1,6 +1,6 @@
 // tslint:disable:max-line-length
 import { BrowserModule } from '@angular/platform-browser';
-import { DEFAULT_CURRENCY_CODE, NgModule } from '@angular/core';
+import { APP_INITIALIZER, DEFAULT_CURRENCY_CODE, NgModule } from '@angular/core';
 import { DisqusModule } from 'ngx-disqus';
 import { AppComponent } from './app.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
@@ -38,11 +38,10 @@ import { ConfirmEmailComponent } from './authentication/confirm-email/confirm-em
 import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from 'angularx-social-login';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { CreateOrganizationComponent } from './organizations/create-organization/create-organization.component';
-import { GeneralSettingsComponent } from './general-settings/general-settings.component';
 import { ManageOrganizationsComponent } from './organizations/manage-organizations/manage-organizations.component';
 import { OrganizationDetailsComponent } from './organizations/organization-details/organization-details.component';
 import { CreateNewProjectComponent } from './organizations/organization-details/manage-projects/create-new-project/create-new-project.component';
-import { OnboardingComponent } from './authentication/onboarding/onboarding.component';
+import { OnboardingComponent } from './settings/user/identity/onboarding/onboarding.component';
 import { ManageProjectsComponent } from './organizations/organization-details/manage-projects/manage-projects.component';
 import { ManageSingleProjectComponent } from './organizations/organization-details/manage-projects/manage-single-project/manage-single-project.component';
 import { VerifySignOfferComponent } from './offers/offer-details/verify-sign-offer/verify-sign-offer.component';
@@ -58,13 +57,12 @@ import { UserActivationComponent } from './wallet-activation/user-activation/use
 import { GroupActivationComponent } from './wallet-activation/group-activation/group-activation.component';
 import { ProjectActivationComponent } from './wallet-activation/project-activation/project-activation.component';
 import { CompleteOnboardingComponent } from './complete-onboarding/complete-onboarding.component';
-import { SummaryComponent } from './summary/summary.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { PlatformBankAccountComponent } from './platform-bank-account/platform-bank-account.component';
 import { NewPlatformBankAccountComponent } from './platform-bank-account/new-platform-bank-account/new-platform-bank-account.component';
 import { ExchangeComponent } from './exchange/exchange.component';
 import { OwnershipComponent } from './ownership/ownership.component';
-import { CurrencyDefaultPipe } from './pipes/currency-default.pipe';
+import { CurrencyDefaultPipe } from './shared/pipes/currency-default.pipe';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TxAmountSign, TxIconStatus, TxIconType } from './wallet/wallet.pipe';
 import { UserStateReminderComponent } from './user-state-reminder/user-state-reminder.component';
@@ -75,13 +73,13 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { LocationMapComponent } from './location-map/location-map.component';
 import { MapModalComponent } from './location-map/map-modal/map-modal.component';
 import { ActionButtonComponent } from './shared/components/action-button/action-button.component';
-import { CurrencyCentsPipe } from './pipes/currency-cents.pipe';
+import { CurrencyCentsPipe } from './shared/pipes/currency-cents.pipe';
 import { environment } from '../environments/environment.prod';
 import { MoneyInputFieldComponent } from './shared/components/money-input-field/money-input-field.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { UploadAreaComponent } from './shared/components/upload-area/upload-area.component';
-import { SafePipe } from './pipes/safe.pipe';
+import { SafePipe } from './shared/pipes/safe.pipe';
 import { URLValidator } from './shared/validators/url.validator';
 import { ForgotPasswordComponent } from './authentication/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './authentication/reset-password/reset-password.component';
@@ -91,9 +89,17 @@ import { RevenueShareConfirmModalComponent } from './organizations/organization-
 import { ProjectDepositComponent } from './organizations/organization-details/manage-projects/manage-single-project/project-deposit/project-deposit.component';
 import { ProjectWithdrawComponent } from './organizations/organization-details/manage-projects/manage-single-project/project-withdraw/project-withdraw.component';
 import { TabsModule } from 'ngx-bootstrap/tabs';
-import { DatePipe } from '@angular/common';
+import { APP_BASE_HREF, CurrencyPipe, DatePipe } from '@angular/common';
 import { SignInAutoComponent } from './authentication/sign-in-auto/sign-in-auto.component';
+import { AppConfigService } from './shared/services/app-config.service';
+import { ClickOutsideDirective } from './navbar/directives/click-outside.directive';
+import { UserComponent } from './settings/user/user.component';
+import { IdentityComponent } from './settings/user/identity/identity.component';
+import { CoopPathPipe } from './shared/pipes/coop-path.pipe';
+import { SingleProjectItemComponent } from './organizations/organization-details/manage-projects/single-project-item/single-project-item.component';
+import { NewBankAccountComponent } from './shared/components/new-bank-account/new-bank-account.component';
 
+// TODO: setup config to use values from app config service.
 const socialAuthServiceConfig = {
     provide: 'SocialAuthServiceConfig',
     useValue: {
@@ -101,11 +107,11 @@ const socialAuthServiceConfig = {
         providers: [
             {
                 id: GoogleLoginProvider.PROVIDER_ID,
-                provider: new GoogleLoginProvider(environment.googleClientId),
+                provider: new GoogleLoginProvider(environment.customConfig.googleClientId),
             },
             {
                 id: FacebookLoginProvider.PROVIDER_ID,
-                provider: new FacebookLoginProvider(environment.facebookAppId),
+                provider: new FacebookLoginProvider(environment.customConfig.facebookAppId),
             },
         ]
     } as SocialAuthServiceConfig
@@ -143,13 +149,13 @@ const socialAuthServiceConfig = {
         WithdrawModalComponent,
         ConfirmEmailComponent,
         CreateOrganizationComponent,
-        GeneralSettingsComponent,
         ManageOrganizationsComponent,
         OrganizationDetailsComponent,
         CreateNewProjectComponent,
         OnboardingComponent,
         ManageProjectsComponent,
         ManageSingleProjectComponent,
+        SingleProjectItemComponent,
         VerifySignOfferComponent,
         ManagePaymentsComponent,
         ManageWithdrawalsComponent,
@@ -164,13 +170,13 @@ const socialAuthServiceConfig = {
         GroupActivationComponent,
         ProjectActivationComponent,
         CompleteOnboardingComponent,
-        SummaryComponent,
         PlatformBankAccountComponent,
         NewPlatformBankAccountComponent,
         ExchangeComponent,
         OwnershipComponent,
         CurrencyDefaultPipe,
         CurrencyCentsPipe,
+        CoopPathPipe,
         RevenueShareComponent,
         TxIconType,
         UserStateReminderComponent,
@@ -191,7 +197,12 @@ const socialAuthServiceConfig = {
         URLValidator,
         ForgotPasswordComponent,
         ResetPasswordComponent,
-        SignInAutoComponent
+        SignInAutoComponent,
+        ClickOutsideDirective,
+        SignInAutoComponent,
+        UserComponent,
+        IdentityComponent,
+        NewBankAccountComponent,
     ],
     imports: [
         BrowserModule,
@@ -215,12 +226,27 @@ const socialAuthServiceConfig = {
         MapModalComponent
     ],
     providers: [
+        AppConfigService,
+        {
+            provide: APP_INITIALIZER,
+            useFactory: (config: AppConfigService) =>
+                () => config.load().toPromise(),
+            multi: true,
+            deps: [AppConfigService]
+        },
+        {
+            provide: APP_BASE_HREF,
+            useValue: environment.baseHref,
+        },
         socialAuthServiceConfig,
         {
-            provide: DEFAULT_CURRENCY_CODE, useValue: 'EUR',
+            provide: DEFAULT_CURRENCY_CODE,
+            useValue: 'EUR', // TODO: Set this from app config service.
         },
         DatePipe,
-        SafePipe
+        SafePipe,
+        CurrencyPipe,
+        CoopPathPipe
     ],
     bootstrap: [AppComponent]
 })

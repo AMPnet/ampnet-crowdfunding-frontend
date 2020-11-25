@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BackendHttpClient } from '../backend-http-client.service';
 import { Project } from '../project/project.service';
-import { TransactionInfo } from './wallet-cooperative/wallet-cooperative-wallet.service';
+import { TransactionInfo } from './wallet.service';
 
 @Injectable({
     providedIn: 'root'
@@ -19,15 +19,15 @@ export class PortfolioService {
     }
 
     getInvestmentsInProject(projectID: string) {
-        return this.http.get<InvestmentsInProject>(`/api/wallet/portfolio/project/${projectID}`);
+        return this.http.get<ProjectTransactions>(`/api/wallet/portfolio/project/${projectID}`);
     }
 
     generateCancelInvestmentTransaction(projectUUID: string) {
         return this.http.post<TransactionInfo>(`/api/wallet/invest/project/${projectUUID}/cancel`, {});
     }
 
-    isInvestmentCancelable(projectWallet: string, userWallet: string) {
-        return this.http.get<CancelableResult>(`/api/middleware/projects/${projectWallet}/investors/${userWallet}/cancelable`);
+    investmentDetails(projectWallet: string, userWallet: string) {
+        return this.http.get<DetailsResult>(`/api/middleware/projects/${projectWallet}/investors/${userWallet}/details`);
     }
 }
 
@@ -47,7 +47,7 @@ export interface Portfolio {
     investment: number;
 }
 
-export interface InvestmentsInProject {
+export interface ProjectTransactions {
     project: Project;
     transactions: TxData[];
 }
@@ -60,6 +60,10 @@ export interface TxData {
     date: string;
 }
 
-interface CancelableResult {
-    can_cancel: boolean;
+export interface DetailsResult {
+    walletBalance: number;
+    amountInvested: number;
+    totalFundsRaised: number;
+    investmentCancelable: boolean;
+    payoutInProcess: boolean;
 }

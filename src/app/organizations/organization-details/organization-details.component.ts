@@ -1,20 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { displayBackendErrorRx } from 'src/app/utilities/error-handler';
-import { WalletService } from '../../shared/services/wallet/wallet.service';
-import { WalletDetails } from '../../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
+import { Wallet, WalletService } from '../../shared/services/wallet/wallet.service';
 import { Organization, OrganizationMember, OrganizationService } from '../../shared/services/project/organization.service';
 import { BehaviorSubject, EMPTY, Observable, of } from 'rxjs';
 import { catchError, finalize, map, switchMap, tap } from 'rxjs/operators';
 import { ArkaneService } from '../../shared/services/arkane.service';
 import { PopupService } from '../../shared/services/popup.service';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { RouterService } from '../../shared/services/router.service';
 
 @Component({
     selector: 'app-organization-details',
     templateUrl: './organization-details.component.html',
-    styleUrls: ['./organization-details.component.css']
+    styleUrls: ['./organization-details.component.scss']
 })
 export class OrganizationDetailsComponent implements OnInit {
     refreshOrganizationSubject = new BehaviorSubject<void>(null);
@@ -22,13 +22,13 @@ export class OrganizationDetailsComponent implements OnInit {
     refreshOrgMembersSubject = new BehaviorSubject<void>(null);
 
     organization$: Observable<Organization>;
-    orgWallet$: Observable<WalletDetails>;
+    orgWallet$: Observable<Wallet>;
     orgMembers$: Observable<OrganizationMember[]>;
 
     inviteForm: FormGroup;
 
     constructor(private activatedRoute: ActivatedRoute,
-                private router: Router,
+                private router: RouterService,
                 private organizationService: OrganizationService,
                 private walletService: WalletService,
                 private arkaneService: ArkaneService,
@@ -144,12 +144,16 @@ export class OrganizationDetailsComponent implements OnInit {
         ).subscribe();
     }
 
-    isWalletVerified(orgWallet: WalletDetails) {
+    isWalletVerified(orgWallet: Wallet) {
         return !!orgWallet && !!orgWallet?.hash;
     }
 
     private recoverBack(): Observable<never> {
         this.router.navigate(['/dash/manage_groups']);
         return EMPTY;
+    }
+
+    backToGroupsScreen() {
+        this.router.navigate(['/dash/manage_groups']);
     }
 }

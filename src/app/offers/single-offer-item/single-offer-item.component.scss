@@ -89,6 +89,9 @@
     color: #444444;
     letter-spacing: 0.2px;
     margin-bottom: 18px;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
   }
 
   &__cta {

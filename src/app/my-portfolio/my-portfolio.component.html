@@ -9,26 +9,22 @@
         <div class="investment-total">
             <div class="investment-total__left">
                 <p>Total investment</p>
-                <h2>
-                    <ng-container *ngIf="!!states.stats else smallSpinner">
-                        {{ states.stats.investments | currencyDefault }}
-                    </ng-container>
-                </h2>
+                <ng-container *ngIf="!!states.stats else smallSpinner">
+                    <h2>{{ states.stats.investments | currencyDefault }}</h2>
+                </ng-container>
             </div>
             <div class="investment-total__right">
                 <p>Total earnings</p>
-                <h2>
-                    <ng-container *ngIf="!!states.stats else smallSpinner">
-                        {{ states.stats.earnings | currencyDefault }}
-                    </ng-container>
-                </h2>
+                <ng-container *ngIf="!!states.stats else smallSpinner">
+                    <h2>{{ states.stats.earnings | currencyDefault }}</h2>
+                </ng-container>
             </div>
         </div>
 
         <div class="investment-history">
             <p class="history__title">Investments</p>
-            <div *ngIf="states.portfolio?.length === 0">
-                <div class="w-100">
+            <div *ngIf="states.portfolio?.length === 0" class="row justify-content-center">
+                <div class="history__empty">
                     You don't have any active investments
                 </div>
             </div>
@@ -44,13 +40,13 @@
         </ng-container>
     </div>
 
-    <div *ngIf="!walletActivated" class="root-content-container">
-        <div class="conatiner wow fadeIn mt-5">
+    <ng-container *ngIf="!walletActivated">
+        <div class="container wow fadeIn mt-5">
             <h6 class="text-center w-100">
                 Your portfolio will be available after you've invested into a project.
             </h6>
         </div>
-    </div>
+    </ng-container>
 </ng-container>
 
 <ng-template #overlaySpinner>
@@ -60,5 +56,5 @@
 </ng-template>
 
 <ng-template #smallSpinner>
-    <app-spinner type="inline" color="white"></app-spinner>
+    <app-spinner type="inline" color="black"></app-spinner>
 </ng-template>

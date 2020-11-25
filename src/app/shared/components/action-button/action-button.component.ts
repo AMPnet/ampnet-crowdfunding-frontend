@@ -13,6 +13,8 @@ export class ActionButtonComponent implements OnInit, OnDestroy {
     @Input() faIcon: string;
     @Input() disabled = false;
     @Input() buttonClass = 'btn btn-primary';
+    @Input() textShort: string;
+    @Input() spinnerColor = 'white';
 
     loading = false;
     sub: Subscription;
@@ -38,6 +40,7 @@ export class ActionButtonComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.loadingText = this.loadingText !== undefined ? this.loadingText : this.text;
+        this.textShort = this.textShort !== undefined ? this.textShort : this.text;
     }
 
     ngOnDestroy() {

@@ -5,6 +5,7 @@ import { EMPTY, Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { UserService } from './user.service';
 import { CacheService } from '../cache.service';
+import { AppConfigService } from '../app-config.service';
 
 
 @Injectable({
@@ -13,11 +14,13 @@ import { CacheService } from '../cache.service';
 export class UserAuthService {
     constructor(private http: BackendHttpClient,
                 private userService: UserService,
+                private appConfig: AppConfigService,
                 private cacheService: CacheService) {
     }
 
     emailLogin(email: string, password: string) {
         return this.http.post<TokenModel>('/api/user/token', {
+            coop: this.appConfig.config.identifier,
             login_method: 'EMAIL',
             credentials: {
                 email: email,
@@ -28,6 +31,7 @@ export class UserAuthService {
 
     socialLogin(provider: string, authToken: string) {
         return this.http.post<TokenModel>('/api/user/token', {
+            coop: this.appConfig.config.identifier,
             login_method: provider,
             credentials: {
                 token: authToken
@@ -64,6 +68,34 @@ export class UserAuthService {
     }
 
     isLoggedIn(): boolean {
-        return localStorage.getItem('access_token') !== null;
+        const jwtUser = this.getJWTUser();
+
+        return jwtUser && jwtUser.coop === this.appConfig.config.identifier;
     }
+
+    getJWTUser(): JWTUser | null {
+        try {
+            const payload: JWTPayload = JSON.parse(atob(localStorage.getItem('access_token').split('.')[1]));
+            return JSON.parse(payload.user);
+        } catch (_err) {
+            return null;
+        }
+    }
+}
+
+interface JWTPayload {
+    sub: string;
+    user: string;
+    iat: number;
+    exp: number;
+}
+
+interface JWTUser {
+    uuid: string;
+    email: string;
+    name: string;
+    authorities: string[];
+    enabled: boolean;
+    verified: boolean;
+    coop: string;
 }

@@ -1,0 +1,31 @@
+@import "app";
+
+.list-group {
+  .list {
+    &__item {
+      list-style: none;
+      border-bottom: 1px solid $background-color;
+      padding: 16px 0 24px 0;
+    }
+  }
+}
+
+@include media-breakpoint-up(lg) {
+  .list-group {
+    margin-top: 36px;
+
+    .list {
+      &__item {
+        overflow: hidden;
+        border-bottom: none;
+        padding: 0;
+        height: 140px;
+        background-color: $background-color;
+        margin-bottom: 4px;
+        display: flex;
+        justify-content: space-between;
+        border-radius: 1px;
+      }
+    }
+  }
+}

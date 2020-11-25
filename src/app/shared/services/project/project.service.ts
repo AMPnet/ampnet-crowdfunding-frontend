@@ -1,14 +1,16 @@
 import { Injectable } from '@angular/core';
 import { BackendHttpClient } from '../backend-http-client.service';
-import { DocumentModel } from './organization.service';
-import { Wallet } from '../wallet/wallet-cooperative/wallet-cooperative-wallet.service';
+import { DocumentModel, Organization } from './organization.service';
 import { CacheService } from '../cache.service';
+import { Wallet } from '../wallet/wallet.service';
+import { AppConfigService } from '../app-config.service';
 
 @Injectable({
-    'providedIn': 'root'
+    providedIn: 'root'
 })
 export class ProjectService {
     constructor(private http: BackendHttpClient,
+                private appConfig: AppConfigService,
                 private cacheService: CacheService) {
     }
 
@@ -17,7 +19,9 @@ export class ProjectService {
     }
 
     getProject(projectID: string) {
-        return this.http.get<Project>(`/api/project/public/project/${projectID}`);
+        return this.http.get<Project>(`/api/project/public/project/${projectID}`, {
+            coop: this.appConfig.config.identifier
+        });
     }
 
     updateProject(projectID: string, data: UpdateProjectData,
@@ -42,7 +46,9 @@ export class ProjectService {
     }
 
     getAllActiveProjects() {
-        return this.http.get<PageableProjectsResponse>('/api/project/public/project/active');
+        return this.http.get<PageableProjectsResponse>('/api/project/public/project/active', {
+            coop: this.appConfig.config.identifier
+        });
     }
 
     getAllActiveProjectsCached() {
@@ -92,13 +98,15 @@ export interface Project {
     main_image: string;
     news: string[];
     documents: DocumentModel[];
-    gallery: [string];
+    gallery: string[];
     active: boolean;
-    wallet_hash: string;
+    coop: string;
+    organization: Organization;
+    wallet: Wallet;
 }
 
 export interface PageableProjectsResponse {
-    projects_with_wallet: ProjectWallet[];
+    projects_wallets: ProjectWallet[];
     page: number;
     total_pages: number;
 }

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { BackendHttpClient } from '../backend-http-client.service';
-import { TransactionInfo, WalletDetails } from './wallet-cooperative/wallet-cooperative-wallet.service';
 import { catchError, retry, switchMap, tap } from 'rxjs/operators';
 import { BehaviorSubject, EMPTY, merge, Observable, of, ReplaySubject, throwError } from 'rxjs';
 import { CacheService } from '../cache.service';
@@ -27,7 +26,7 @@ export class WalletService {
     }
 
     initWallet(address: string) {
-        return this.http.post<WalletDetails>('/api/wallet/wallet',
+        return this.http.post<Wallet>('/api/wallet/wallet',
             <InitWalletData>{
                 public_key: address
             }).pipe(tap(() => this.clearAndRefreshWallet()));
@@ -54,7 +53,7 @@ export class WalletService {
     }
 
     getFreshUserWallet() {
-        return this.http.get<WalletDetails>('/api/wallet/wallet');
+        return this.http.get<Wallet>('/api/wallet/wallet');
     }
 
     setWallet(wallet: WalletDetailsWithState) {
@@ -81,11 +80,11 @@ export class WalletService {
     }
 
     getProjectWallet(projectID: number | string) {
-        return this.http.get<WalletDetails>(`/api/wallet/public/wallet/project/${projectID}`);
+        return this.http.get<Wallet>(`/api/wallet/public/wallet/project/${projectID}`);
     }
 
     getOrganizationWallet(orgID: string) {
-        return this.http.get<WalletDetails>(`/api/wallet/wallet/organization/${orgID}`);
+        return this.http.get<Wallet>(`/api/wallet/wallet/organization/${orgID}`);
     }
 
     createProjectWalletTransaction(projectID: string) {
@@ -110,15 +109,26 @@ interface WalletPairInfo {
     public_key: string;
 }
 
+export interface TransactionInfo {
+    tx: string;
+    tx_id: number;
+    info: {
+        tx_type: string;
+        title: string;
+        description: string;
+    };
+}
+
 export interface UserTransaction {
+    tx_hash: string; // Identifier
+    from_tx_hash: string;
+    to_tx_hash: string;
     amount: number;
     date: Date;
     description: string;
     from: string;
-    from_tx_hash: string;
-    state: TransactionState;
     to: string;
-    to_tx_hash: string;
+    state: TransactionState;
     type: TransactionType;
     share: string;
 }
@@ -134,8 +144,20 @@ export enum WalletState {
 }
 
 export interface WalletDetailsWithState {
-    wallet?: WalletDetails;
+    wallet?: Wallet;
     state: WalletState;
+}
+
+export interface Wallet {
+    uuid: string;
+    activation_data: string;
+    type: string;
+    currency: string;
+    created_at: Date;
+    hash?: any;
+    activated_at?: any;
+    alias?: any;
+    balance?: any;
 }
 
 export enum TransactionType {

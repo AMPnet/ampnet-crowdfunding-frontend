@@ -15,7 +15,7 @@
     height: 100%;
 }
 
-@media (min-width: 800px) {
+@media (min-width: 992px) {
     .sidebar-fixer {
         left: 0px !important;
     }
@@ -27,7 +27,7 @@
 }
 
 
-@media (max-width: 800px) {
+@media (max-width: 992px) {
     .sidebar-fixer {
         left: -220px;
     }

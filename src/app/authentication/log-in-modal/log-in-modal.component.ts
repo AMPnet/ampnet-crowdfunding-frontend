@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { UserAuthService } from '../../shared/services/user/user-auth.service';
 import swal from 'sweetalert2';
 import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthService } from 'angularx-social-login';
@@ -8,6 +7,7 @@ import { displayBackendError } from 'src/app/utilities/error-handler';
 import { catchError, tap } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { RouterService } from '../../shared/services/router.service';
 
 declare var $: any;
 
@@ -19,7 +19,7 @@ declare var $: any;
 export class LogInModalComponent implements OnInit {
     emailLoginForm: FormGroup;
 
-    constructor(private router: Router,
+    constructor(private router: RouterService,
                 private loginService: UserAuthService,
                 private auth: SocialAuthService,
                 private fb: FormBuilder) {
@@ -48,7 +48,7 @@ export class LogInModalComponent implements OnInit {
             this.loginService.socialLogin(res.provider, res.authToken)
                 .subscribe(_ => {
                     SpinnerUtil.hideSpinner();
-                    this.router.navigate(['dash']);
+                    this.router.navigate(['/dash']);
                 }, err => {
                     SpinnerUtil.hideSpinner();
                     swal('', err.error.message, 'warning');
@@ -79,7 +79,7 @@ export class LogInModalComponent implements OnInit {
 
     private navigateToDash() {
         $('#log-in-modal').modal('toggle');
-        this.router.navigate(['/dash']);
+        this.router.navigate(['/dash/offers']);
     }
 
     forgotPasswordClicked() {

@@ -3,12 +3,13 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { catchError, finalize, switchMap, tap } from 'rxjs/operators';
 import { ArkaneService } from '../../../../../shared/services/arkane.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Withdraw, WithdrawService } from '../../../../../shared/services/wallet/withdraw.service';
 import { displayBackendErrorRx } from '../../../../../utilities/error-handler';
 import { SpinnerUtil } from '../../../../../utilities/spinner-utilities';
 import { PopupService } from '../../../../../shared/services/popup.service';
 import { BehaviorSubject, EMPTY, Observable, of } from 'rxjs';
+import { RouterService } from '../../../../../shared/services/router.service';
 
 @Component({
     selector: 'app-project-withdraw',
@@ -25,7 +26,7 @@ export class ProjectWithdrawComponent {
     requestWithdrawForm: FormGroup;
 
     constructor(private withdrawService: WithdrawService,
-                private router: Router,
+                private router: RouterService,
                 private popupService: PopupService,
                 private arkaneService: ArkaneService,
                 private route: ActivatedRoute,
@@ -90,7 +91,7 @@ export class ProjectWithdrawComponent {
     }
 
     private recoverBack(): Observable<never> {
-        this.router.navigate(['../'], { relativeTo: this.route });
+        this.router.navigate(['../'], {relativeTo: this.route});
         return EMPTY;
     }
 }

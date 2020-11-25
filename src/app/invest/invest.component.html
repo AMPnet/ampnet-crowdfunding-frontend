@@ -36,7 +36,8 @@
                         <button [routerLink]="[investForm.get('amount').value, 'verify_sign']"
                                 [disabled]="!investForm.valid"
                                 type="submit"
-                                class="btn btn-primary w-100">
+                                class="btn btn-primary w-100"
+                                [class.disabled-margin] = "states.investmentData.investDisabled">
                             <i class="fas fa-chart-pie mr-2"></i>
                             Invest
                         </button>
@@ -80,19 +81,23 @@
                     <ng-container *ngTemplateOutlet="buttonToWalletScreen"></ng-container>
                 </div>
             </div>
-        </div>
 
-        <div *ngIf="states.investmentData.maximumReached"
-             class="alert alert-danger flex__center">
-            <i class="fas fa-dizzy"></i>
-            <b class="mr-2">You have already invested a maximum allowed amount for this project.</b>
-        </div>
-
-        <div *ngIf="states.investmentData.notEnoughFunds"
-             class="alert alert-danger flex__center">
-            <i class="fas fa-dizzy"></i>
-            <b class="mr-2">You don't have enough funds for minimal investment. </b>
-            <ng-container *ngTemplateOutlet="buttonToWalletScreen"></ng-container>
+            <div class="error-messages col-12 col-lg-8">
+                <div *ngIf="states.investmentData.maximumReached"
+                     class="alert alert-danger flex__center">
+                    <i class="fas fa-dizzy"></i>
+                    <b class="mr-2">You have already invested a maximum allowed amount for this project.</b>
+                </div>
+    
+                <div *ngIf="states.investmentData.notEnoughFunds"
+                     class="alert alert-danger flex__center-space">
+                     <div class="flex__center">
+                        <i class="fas fa-dizzy"></i>
+                        <b class="mr-2">You don't have enough funds for minimal investment. </b>
+                     </div>
+                    <ng-container *ngTemplateOutlet="buttonToWalletScreen"></ng-container>
+                </div>
+            </div>
         </div>
     </ng-container>
 

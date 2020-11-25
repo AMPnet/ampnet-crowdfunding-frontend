@@ -18,6 +18,10 @@ p {
   margin-bottom: 20px;
 }
 
+.disabled-margin {
+  margin: 20px 0 0 0;
+}
+
 .invest {
   &__content {
     margin-top: 46px;
@@ -167,6 +171,10 @@ p {
 
   .btn-primary {
     margin: 17px 0 8px 0;
+  }
+
+  .disabled-margin {
+    margin: 24px 0 0 0;
   }
 
   .invest__content {

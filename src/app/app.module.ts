@@ -97,6 +97,7 @@ import { UserComponent } from './settings/user/user.component';
 import { IdentityComponent } from './settings/user/identity/identity.component';
 import { CoopPathPipe } from './shared/pipes/coop-path.pipe';
 import { SingleProjectItemComponent } from './organizations/organization-details/manage-projects/single-project-item/single-project-item.component';
+import { AuthLayoutComponent } from './shared/components/auth-layout/auth-layout.component';
 
 // TODO: setup config to use values from app config service.
 const socialAuthServiceConfig = {
@@ -201,6 +202,7 @@ const socialAuthServiceConfig = {
         SignInAutoComponent,
         UserComponent,
         IdentityComponent,
+        AuthLayoutComponent,
     ],
     imports: [
         BrowserModule,

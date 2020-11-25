@@ -11,7 +11,6 @@ import { MustMatch } from './confirm-password-validator';
 import { switchMap } from 'rxjs/operators';
 import { RouterService } from '../../shared/services/router.service';
 
-
 @Component({
     selector: 'app-sign-up',
     templateUrl: './sign-up.component.html',

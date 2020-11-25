@@ -50,19 +50,24 @@ import { IdentityComponent } from './settings/user/identity/identity.component';
 import { UserGuard } from './settings/user/user.guard';
 import { UserComponent } from './settings/user/user.component';
 import { CoopGuard } from './shared/guards/coop.guard';
+import { AuthLayoutComponent } from './shared/components/auth-layout/auth-layout.component';
 
 const appRoutes: Routes = [
     {
         path: '', component: PublicLayoutComponent,
         children: [
             {path: '', component: LandingPageComponent},
-            {path: 'sign_up', component: SignUpComponent},
             {path: 'confirm_email', component: ConfirmEmailComponent},
             {path: 'overview/:isOverview', component: OffersComponent},
             {path: 'overview/:id/:isOverview', component: OfferDetailsComponent, canActivate: [OfferDetailsGuard]},
             {path: 'forgot_password', component: ForgotPasswordComponent},
             {path: 'reset_password', component: ResetPasswordComponent},
             {path: 'sign_in_auto/:email/:password', component: SignInAutoComponent},
+            {
+                path: '', component: AuthLayoutComponent, children: [
+                    {path: 'sign_up', component: SignUpComponent},
+                ]
+            },
         ]
     },
     {

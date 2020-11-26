@@ -114,4 +114,5 @@ export interface PageableProjectsResponse {
 export interface ProjectWallet {
     project: Project;
     wallet: Wallet;
+    organization: Organization;
 }

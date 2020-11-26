@@ -1,8 +1,8 @@
-<div (click)="onClickedItem()" class="card-holder cursor-pointer">
-
+<div class="card-holder">
     <div class="card-left">
         <div class="left__img">
-            <img class="img__base w-100" src="{{ projectWallet.project.main_image }}">
+            <img (click)="onClickedItem()" class="img__base w-100"
+                 src="{{ projectWallet.project.main_image }}">
         </div>
         <h1 class="app-basic-title">
             {{ projectWallet.project.name }}
@@ -34,9 +34,16 @@
     </div>
 
     <div class="card-right">
-        <h1 class="app-basic-title">
+        <h1 class="app-basic-title" (click)="onClickedItem()">
             {{ projectWallet.project.name }}
         </h1>
+        <div class="right__text">
+            <p class="right__published">
+                Published by:
+                <a [routerLink]="" (click)="onPublishedClicked()">
+                    {{ projectWallet.organization.name }} </a>
+        </div>
+
         <div class="right__text">
             <ng-container *ngIf="projectWallet.project.roi.from != 0">
                 <p class="right__roi">

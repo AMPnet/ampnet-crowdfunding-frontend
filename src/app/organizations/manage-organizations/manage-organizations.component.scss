@@ -58,7 +58,8 @@
       border-radius: 1px;
     }
     &__img img {
-      object-fit: fill;
+      object-fit: cover;
+      filter: blur(0.5px);
     }
     &__title {
       font-size: $font-size-mobile-title;

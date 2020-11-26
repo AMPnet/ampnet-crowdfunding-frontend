@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { PopupService } from '../../shared/services/popup.service';
 import { MustMatch } from '../sign-up/confirm-password-validator';
 import { displayBackendErrorRx } from '../../utilities/error-handler';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, tap } from 'rxjs/operators';
 import { RouterService } from '../../shared/services/router.service';
 
 @Component({
@@ -40,12 +40,8 @@ export class ResetPasswordComponent implements OnInit {
 
         return this.signUpService.resetPassword(newPassword, this.token).pipe(
             displayBackendErrorRx(),
-            switchMap(() => this.popupService.new({
-                type: 'success',
-                title: 'Success',
-                text: 'Your password has been changed successfully.'
-            })),
-            switchMap(() => this.router.navigate(['/']))
+            switchMap(() => this.popupService.success('Your password has been changed successfully.')),
+            tap(() => this.router.navigate(['/sign_in']))
         );
     }
 }

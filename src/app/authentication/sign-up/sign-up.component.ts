@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { SignupService } from '../../shared/services/user/signup.service';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -16,7 +16,7 @@ import { from } from 'rxjs';
     templateUrl: './sign-up.component.html',
     styleUrls: ['./sign-up.component.css']
 })
-export class SignUpComponent implements OnInit {
+export class SignUpComponent {
     signupForm: FormGroup;
 
     constructor(private signUpService: SignupService,
@@ -36,9 +36,6 @@ export class SignUpComponent implements OnInit {
         }, {
             validator: MustMatch('password', 'confirmPassword')
         });
-    }
-
-    ngOnInit() {
     }
 
     performGoogleSignup() {
@@ -65,10 +62,10 @@ export class SignUpComponent implements OnInit {
         const user = this.signupForm.value;
 
         return this.signUpService.signupEmail(user.email, user.firstName, user.lastName, user.password).pipe(
-            displayBackendErrorRx(),
             switchMap(_ => this.loginService.emailLogin(user.email, user.password)),
+            displayBackendErrorRx(),
+            switchMap(() => this.popupService.success('Sign up successful!')),
             tap(() => this.router.navigate(['/dash'])),
-            tap(() => this.popupService.success('Sign up successful!'))
         );
     }
 }

@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { catchError, switchMap } from 'rxjs/operators';
+import { catchError, switchMap, tap } from 'rxjs/operators';
 import { SignupService } from '../../shared/services/user/signup.service';
-import { Router } from '@angular/router';
 import { PopupService } from '../../shared/services/popup.service';
 import { EMPTY, throwError } from 'rxjs';
 import { displayBackendErrorRx } from '../../utilities/error-handler';
@@ -50,11 +49,9 @@ export class ForgotPasswordComponent {
                 }
                 return throwError(err);
             }),
-            displayBackendErrorRx())
-            .pipe(switchMap(() => this.popupService.new({
-                type: 'success',
-                title: 'Success',
-                text: 'We have sent you an e-mail containing your password reset link.'
-            }).pipe(switchMap(() => this.router.navigate(['/'])))));
+            displayBackendErrorRx(),
+            switchMap(() => this.popupService.success('We have sent you an e-mail containing your password reset link.')),
+            tap(() => this.router.navigate(['/'])),
+        );
     }
 }

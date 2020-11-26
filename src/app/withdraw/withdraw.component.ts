@@ -85,8 +85,4 @@ export class WithdrawComponent implements OnInit {
             finalize(() => SpinnerUtil.hideSpinner()),
         );
     }
-
-    backToWalletScreen() {
-        this.router.navigate(['/dash/wallet']);
-    }
 }

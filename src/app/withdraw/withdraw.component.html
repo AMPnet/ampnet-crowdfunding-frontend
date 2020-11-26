@@ -1,5 +1,5 @@
 <div class="container">
-    <div class="app-page-title-back" (click)="backToWalletScreen()">
+    <div class="app-page-title-back" [routerLink]="['/dash', 'wallet'] | coopPath">
         <i class="fas fa-long-arrow-alt-left mr-3"></i>
         Withdrawal
     </div>

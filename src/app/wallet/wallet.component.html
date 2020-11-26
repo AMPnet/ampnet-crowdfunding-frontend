@@ -104,7 +104,7 @@
                     </div>
                 </div>
 
-                <ng-container *ngIf="transactionHistory$ | async; else transactionHistorySpinner">
+                <ng-container *ngIf="(transactionHistory$ | async) else transactionHistorySpinner">
                     <div *ngIf="transactionHistory.length === 0" class="row justify-content-center">
                         <span class="transactions__empty">Your transaction history is empty.</span>
                     </div>
@@ -113,8 +113,7 @@
                             <ng-container *ngFor="let transaction of transactionHistoryPage">
                                 <ng-container *ngIf="shouldShowTransaction(transaction, transactionHistory)">
                                     <div class="transactions__single-element"
-                                         [class.transactions__grayed-out]=" transaction.state !== 'MINED' || 
-                                         transaction.type === 'APPROVE_INVESTMENT'">
+                                         [class.transactions__grayed-out]=" transaction.state !== 'MINED' || transaction.type === 'APPROVE_INVESTMENT'">
                                         <div class="transactions__left">
                                             <div class="left__desc">
                                                 <div class="left__transaction-type">
@@ -131,12 +130,12 @@
                                                         <b>Dividend </b><span class="left__conjuctor">from</span>
                                                     </ng-container>
                                                     <ng-container *ngIf="transaction.type === transactionType.CANCEL_INVESTMENT">
-                                                        <b>Cancel investment </b
-                                                        ><span class="left__conjuctor">from</span>
+                                                        <b>Cancel investment </b>
+                                                        <span class="left__conjuctor">from</span>
                                                     </ng-container>
                                                     <ng-container *ngIf="transaction.type === transactionType.APPROVE_INVESTMENT">
-                                                        <b>Approve investment </b
-                                                        ><span class="left__conjuctor">to</span>
+                                                        <b>Approve investment </b>
+                                                        <span class="left__conjuctor">to</span>
                                                     </ng-container>
                                                 </div>
                                                 {{ transaction.description }}
@@ -162,14 +161,12 @@
                                         <div class="transactions__right">
                                             <div class="right__amount">
                                                 <span [class.amount__plus]="(transaction.type | txAmountSign) === '+'">
-                                                    {{ transaction.type | txAmountSign }}
-                                                    {{ transaction.amount | currencyCents }}
+                                                    {{ transaction.type | txAmountSign }} {{ transaction.amount | currencyCents }}
                                                 </span>
                                             </div>
                                             <div class="right__icon">
                                                 <ng-container
-                                                    *ngIf="transaction.state === transactionState.MINED;
-                                                    else singleReportButtonDisabled">
+                                                    *ngIf="transaction.state === transactionState.MINED else singleReportButtonDisabled">
                                                     <app-action-button
                                                         buttonClass="btn text-dark bg-transparent text-right p-0"
                                                         spinnerColor="black" faIcon="fa-file-chart-line"

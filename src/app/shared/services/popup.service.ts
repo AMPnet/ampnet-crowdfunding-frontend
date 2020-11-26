@@ -30,9 +30,9 @@ export class PopupService {
             titleText: 'Success!',
             text: message,
             footer: footer,
-            confirmButtonText: 'Continue <i class="fas fa-arrow-right ml-3"></i>',
             customClass: 'popup-success',
-            position: 'top'
+            position: 'top',
+            confirmButtonText: 'Continue <i class="fas fa-arrow-right ml-3"></i>'
         }));
     }
 

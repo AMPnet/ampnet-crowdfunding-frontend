@@ -44,7 +44,8 @@ export class ProjectActivationComponent implements OnInit {
                 title: 'Transaction signed',
                 text: 'Transaction is being processed...',
                 customClass: 'popup-success',
-                position: 'top'
+                position: 'top',
+                confirmButtonText: 'Continue <i class="fas fa-arrow-right ml-3"></i>'
             })),
             tap(() => this.fetchUnactivatedProjectWallets()),
             finalize(() => SpinnerUtil.hideSpinner())

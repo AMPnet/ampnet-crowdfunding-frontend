@@ -45,7 +45,8 @@ export class OwnershipComponent implements OnInit, OnDestroy {
                 title: 'Transaction signed',
                 text: 'Transaction is being processed...',
                 customClass: 'popup-success',
-                position: 'top'
+                position: 'top',
+                confirmButtonText: 'Continue <i class="fas fa-arrow-right ml-3"></i>'
             })),
             finalize(() => SpinnerUtil.hideSpinner())
         );
@@ -62,7 +63,8 @@ export class OwnershipComponent implements OnInit, OnDestroy {
                 title: 'Transaction signed',
                 text: 'Transaction is being processed...',
                 customClass: 'popup-success',
-                position: 'top'
+                position: 'top',
+                confirmButtonText: 'Continue <i class="fas fa-arrow-right ml-3"></i>'
             })),
             finalize(() => SpinnerUtil.hideSpinner())
         );

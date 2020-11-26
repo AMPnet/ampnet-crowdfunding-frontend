@@ -41,9 +41,9 @@ export class ManageOrganizationsComponent {
         return this.organizationService.acceptInvite(orgID).pipe(
             displayBackendErrorRx(),
             switchMap(() =>
-                this.popupService.new({
-                    type: 'success', text: 'Accepted invitation to organization'
-                })
+                this.popupService.success(
+                    'Accepted invitation to organization'
+                )
             ),
             tap(() => this.refreshState()),
             finalize(() => SpinnerUtil.hideSpinner())

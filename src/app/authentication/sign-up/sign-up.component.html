@@ -1,44 +1,63 @@
-<h1 class="app-page-header">Sign up</h1>
+<h1 class="app-page-header">SIGN UP</h1>
 
 <div class="row">
-    <div class="col-md-6">
-        <button (click)="performFacebookSignup()"
-                class="btn w-100 btn-action-a socials-facebook">
-            <i class="fab fa-facebook-square mr-3"></i>
-            <span>Signup with Facebook</span>
+    <div class="col-xl-6 align-self-center">
+        <button app-action-button
+                text="Signup with Facebook"
+                faStyle="fab"
+                faIcon="fa-facebook-square"
+                [onClick]="performFacebookSignup.bind(this)"
+                class="btn w-100 btn-action-a my-2 socials-facebook">
         </button>
     </div>
-    <div class="col-md-6">
-        <button (click)="performGoogleSignup()"
-                class="btn w-100 btn-action-a mt-4 mt-md-0 socials-google">
-            <i class="fab fa-google mr-3"></i>
-            <span>Signup with Google</span>
+    <div class="col-xl-6 align-self-center">
+        <button app-action-button
+                text="Signup with Google"
+                faStyle="fab"
+                faIcon="fa-google"
+                [onClick]="performGoogleSignup.bind(this)"
+                class="btn w-100 btn-action-a my-2 socials-google">
         </button>
     </div>
 </div>
 
 <div class="dropdown-divider"></div>
 
-<form (ngSubmit)="onSubmitEmailForm()" [formGroup]="emailSignupForm"
-      id="emailForm">
-    <input class="form-control mt-3 p-4"
+<form [formGroup]="signupForm" id="emailForm">
+    <label for="email" class="app-page-label">Email</label>
+    <input class="form-control p-4"
            formControlName="email" id="email"
-           placeholder="Email"
+           placeholder="john.smith@email.com"
            type="text">
-    <input class="form-control mt-3 p-4" formControlName="firstName"
-           placeholder="First name" type="text">
-    <input class="form-control mt-3 p-4" formControlName="lastName" placeholder="Last name"
-           type="text">
-    <input class="form-control mt-3 p-4" formControlName="password" placeholder="Password"
+
+    <label for="firstName" class="app-page-label mt-3">First name</label>
+    <input class="form-control p-4" id="firstName" formControlName="firstName"
+           placeholder="John" type="text">
+
+    <label for="lastName" class="app-page-label mt-3">Last name</label>
+    <input class="form-control p-4" id="lastName" formControlName="lastName"
+           placeholder="Smith" type="text">
+
+    <label for="password" class="app-page-label mt-3">Password</label>
+    <input class="form-control p-4" id="password" formControlName="password"
            type="password">
-    <small class="form-text text-muted mt-2 mb-2">
-        Password must be 8 characters or longer.
+    <small class="form-text text-muted mt-2">
+        Password must be at least 8 characters long.
     </small>
-    <input class="form-control mt-3 p-4" formControlName="confirmPassword"
-           placeholder="Confirm password"
+
+    <label for="confirmPassword" class="app-page-label mt-3">Confirm Password</label>
+    <input class="form-control p-4" id="confirmPassword" formControlName="confirmPassword"
            type="password">
-    <button [disabled]="emailSignupForm.invalid" class="btn btn-primary w-100 mt-3 py-3" type="submit">
-        <i class="fas fa-paper-plane mr-2"></i>
-        Submit
+
+    <button app-action-button
+            text="Submit"
+            faIcon="fa-paper-plane"
+            [onClick]="onFormSubmit.bind(this)"
+            [disabled]="!signupForm.dirty || !signupForm.valid"
+            class="btn btn-primary w-100 mt-3">
     </button>
+
+    <small class="form-text text-muted mt-2">
+        Already have an account? Sign In <a [routerLink]="'/sign_in' | coopPath"><small>here</small></a>.
+    </small>
 </form>

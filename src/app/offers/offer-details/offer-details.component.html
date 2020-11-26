@@ -94,13 +94,14 @@
                             <ng-container *ngTemplateOutlet="investButtons"></ng-container>
 
                             <ng-container *ngIf="(isProjectCancelable$ | async) as isCancelable">
-                                <app-action-button text="Cancel my investment"
-                                                   loadingText="Cancelling investments..."
-                                                   faIcon="fa-times-circle"
-                                                   buttonClass="btn btn-danger font-weight-bold mb-4"
-                                                   [disabled]="!isCancelable"
-                                                   [onClick]="cancelInvestment(states.project.uuid).bind(this)">
-                                </app-action-button>
+                                <button app-action-button
+                                        text="Cancel my investment"
+                                        loadingText="Cancelling investments..."
+                                        faIcon="fa-times-circle"
+                                        class="btn btn-danger font-weight-bold mb-4"
+                                        [disabled]="!isCancelable"
+                                        [onClick]="cancelInvestment(states.project.uuid).bind(this)">
+                                </button>
                             </ng-container>
                         </div>
                         <ng-template #investButtons>

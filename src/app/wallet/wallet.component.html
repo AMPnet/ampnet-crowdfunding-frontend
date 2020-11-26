@@ -32,8 +32,10 @@
                     </p>
                 </div>
                 <div class="init-left__btn">
-                    <app-action-button text="Initialize secure wallet" [onClick]="setUpArkane.bind(this)">
-                    </app-action-button>
+                    <button app-action-button
+                            text="Initialize secure wallet"
+                            [onClick]="setUpArkane.bind(this)">
+                    </button>
                 </div>
             </div>
             <!-- TODO: This is ready to go, uncomment and hook up once we have support for other wallets -->
@@ -180,12 +182,12 @@
                                             <div class="right__icon">
                                                 <ng-container
                                                         *ngIf="transaction.state === transactionState.MINED else singleReportButtonDisabled">
-                                                    <app-action-button
-                                                            buttonClass="btn text-dark bg-transparent text-right p-0"
+                                                    <button app-action-button
+                                                            class="btn text-dark bg-transparent text-right p-0"
                                                             spinnerColor="black"
                                                             faIcon="fa-file-chart-line"
                                                             [onClick]="downloadSingleReport(transaction).bind(this)">
-                                                    </app-action-button>
+                                                    </button>
                                                 </ng-container>
                                                 <a href="{{ getExplorerLink(transaction.tx_hash) }}"
                                                    target="_blank" rel="noopener noreferrer" class="ml-2">
@@ -226,19 +228,19 @@
 </div>
 
 <ng-template #singleReportButtonDisabled>
-    <app-action-button
-            buttonClass="btn bg-transparent text-right p-0"
+    <button app-action-button
+            class="btn bg-transparent text-right p-0"
             disabled="disabled"
             faIcon="fa-file-chart-line">
-    </app-action-button>
+    </button>
 </ng-template>
 
 <ng-template #downloadReportButton>
-    <app-action-button
+    <button app-action-button
             text="Generate PDF Report"
             loadingText="Downloading PDF Report..."
             faIcon="fa-file-chart-line"
-            buttonClass="btn normal-text w-100"
+            class="btn normal-text w-100"
             [onClick]="downloadReport.bind(this)">
-    </app-action-button>
+    </button>
 </ng-template>

@@ -40,11 +40,12 @@
         </ng-container>
     </div>
     <div class="item__toggle">
-        <app-action-button text="{{ projectWallet.project.active ? 'Unpublish' : 'Publish' }}"
-                           faIcon="{{ projectWallet.project.active ? 'fa-eye-slash' : 'fa-eye' }}"
-                           [onClick]="toggleProject(projectWallet.project).bind(this)"
-                           buttonClass="d-contents item__icon flex__center mr-2">
-        </app-action-button>
+        <button app-action-button
+                text="{{ projectWallet.project.active ? 'Unpublish' : 'Publish' }}"
+                faIcon="{{ projectWallet.project.active ? 'fa-eye-slash' : 'fa-eye' }}"
+                [onClick]="toggleProject(projectWallet.project).bind(this)"
+                class="d-contents item__icon flex__center mr-2">
+        </button>
     </div>
 </div>
 

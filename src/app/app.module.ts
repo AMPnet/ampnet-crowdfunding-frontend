@@ -28,13 +28,11 @@ import { SecureLayoutComponent } from './secure-layout/secure-layout.component';
 import { HeaderComponent } from './public-layout/header/header.component';
 import { SignUpComponent } from './authentication/sign-up/sign-up.component';
 import { TxOverviewComponent } from './wallet/tx-overview/tx-overview.component';
-import { LogInModalComponent } from './authentication/log-in-modal/log-in-modal.component';
 import { NewPaymentOptionComponent } from './payment-options/new-payment-option/new-payment-option.component';
 import { WithdrawModalComponent } from './wallet/withdraw-modal/withdraw-modal.component';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { ConfirmEmailComponent } from './authentication/confirm-email/confirm-email.component';
 import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from 'angularx-social-login';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { CreateOrganizationComponent } from './organizations/create-organization/create-organization.component';
@@ -98,7 +96,8 @@ import { IdentityComponent } from './settings/user/identity/identity.component';
 import { CoopPathPipe } from './shared/pipes/coop-path.pipe';
 import { SingleProjectItemComponent } from './organizations/organization-details/manage-projects/single-project-item/single-project-item.component';
 import { NewBankAccountComponent } from './shared/components/new-bank-account/new-bank-account.component';
-import { AuthLayoutComponent } from './shared/components/auth-layout/auth-layout.component';
+import { AuthLayoutComponent } from './authentication/auth-layout/auth-layout.component';
+import { SignInComponent } from './authentication/sign-in/sign-in.component';
 
 // TODO: setup config to use values from app config service.
 const socialAuthServiceConfig = {
@@ -145,10 +144,8 @@ const socialAuthServiceConfig = {
         HeaderComponent,
         SignUpComponent,
         TxOverviewComponent,
-        LogInModalComponent,
         NewPaymentOptionComponent,
         WithdrawModalComponent,
-        ConfirmEmailComponent,
         CreateOrganizationComponent,
         ManageOrganizationsComponent,
         OrganizationDetailsComponent,
@@ -205,6 +202,7 @@ const socialAuthServiceConfig = {
         IdentityComponent,
         NewBankAccountComponent,
         AuthLayoutComponent,
+        SignInComponent,
     ],
     imports: [
         BrowserModule,

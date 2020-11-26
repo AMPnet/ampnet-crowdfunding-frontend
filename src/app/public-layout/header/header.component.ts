@@ -9,23 +9,9 @@ declare var $: any;
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit, AfterViewInit {
-
+export class HeaderComponent {
     @Input() onlyLogo = false;
 
-    constructor(private location: PlatformLocation,
-                public appConfigService: AppConfigService) {
-    }
-
-    ngOnInit() {
-        this.location.onPopState(() => $('#log-in-modal').modal('hide'));
-    }
-
-    ngAfterViewInit() {
-    }
-
-    showLoginModal() {
-        history.pushState(null, 'modalOpened');
-        $('#log-in-modal').modal('show');
+    constructor(public appConfigService: AppConfigService) {
     }
 }

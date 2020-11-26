@@ -35,9 +35,10 @@
             </div>
 
             <div class="col-md-12 mt-1">
-                <app-action-button text="Finalize withdrawal" loadingText="Generating transaction..."
-                                   [onClick]="approveAndGenerateCodeClicked.bind(this)">
-                </app-action-button>
+                <button app-action-button
+                        text="Finalize withdrawal" loadingText="Generating transaction..."
+                        [onClick]="approveAndGenerateCodeClicked.bind(this)">
+                </button>
             </div>
         </ng-container>
 

@@ -228,12 +228,12 @@
                                                            type="text">
                                                 </div>
                                                 <div class="col-1 form__btn">
-                                                    <app-action-button
+                                                    <button app-action-button
                                                             faIcon="fa-plus ml-n2 ml-lg-0"
                                                             [disabled]="!newsForm.dirty || !newsForm.valid"
                                                             [onClick]="addNewsLink(states.project, newsForm).bind(this)"
-                                                            buttonClass="w-100 btn">
-                                                    </app-action-button>
+                                                            class="w-100 btn">
+                                                    </button>
                                                 </div>
                                             </div>
                                         </form>
@@ -276,23 +276,25 @@
             <div class="container">
                 <div class="cta__inner row col-lg-4">
                     <div class="col-5 col-lg-6">
-                        <app-action-button text="{{ states.project.active ? 'Hide project' : 'Show project' }}"
-                                           textShort="{{ states.project.active ? 'Hide' : 'Show' }}"
-                                           faIcon="{{ states.project.active ? 'fa-eye-slash' : 'fa-eye' }}"
-                                           loadingText="Updating..."
-                                           [disabled]="!isWalletVerified(states.wallet)"
-                                           [onClick]="toggleProjectStatusClicked(states.project).bind(this)"
-                                           buttonClass="btn btn-info">
-                        </app-action-button>
+                        <button app-action-button
+                                text="{{ states.project.active ? 'Hide project' : 'Show project' }}"
+                                textShort="{{ states.project.active ? 'Hide' : 'Show' }}"
+                                faIcon="{{ states.project.active ? 'fa-eye-slash' : 'fa-eye' }}"
+                                loadingText="Updating..."
+                                [disabled]="!isWalletVerified(states.wallet)"
+                                [onClick]="toggleProjectStatusClicked(states.project).bind(this)"
+                                class="btn btn-info">
+                        </button>
                     </div>
                     <div class="col-7 col-lg-6">
-                        <app-action-button text="Update all"
-                                           loadingText="Updating..."
-                                           [disabled]="!(updateForm.dirty && updateForm.valid)"
-                                           [onClick]="updateProject(states.project, updateForm).bind(this)"
-                                           buttonClass="btn"
-                                           faIcon="far fa-check mr-3">
-                        </app-action-button>
+                        <button app-action-button
+                                text="Update all"
+                                loadingText="Updating..."
+                                [disabled]="!(updateForm.dirty && updateForm.valid)"
+                                [onClick]="updateProject(states.project, updateForm).bind(this)"
+                                class="btn"
+                                faIcon="far fa-check mr-3">
+                        </button>
                     </div>
                 </div>
             </div>

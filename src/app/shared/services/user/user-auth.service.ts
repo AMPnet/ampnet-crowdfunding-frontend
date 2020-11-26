@@ -26,7 +26,7 @@ export class UserAuthService {
                 email: email,
                 password: password
             }
-        }).pipe(this.saveTokens);
+        }, true).pipe(this.saveTokens);
     }
 
     socialLogin(provider: string, authToken: string) {
@@ -36,13 +36,13 @@ export class UserAuthService {
             credentials: {
                 token: authToken
             }
-        }).pipe(this.saveTokens);
+        }, true).pipe(this.saveTokens);
     }
 
     refreshUserToken() {
         return this.http.post<TokenModel>('/api/user/token/refresh', {
             refresh_token: localStorage.getItem('refresh_token')
-        }).pipe(
+        }, true).pipe(
             this.saveTokens,
             tap(() => this.userService.refreshUser())
         );

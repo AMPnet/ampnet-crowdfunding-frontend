@@ -27,7 +27,7 @@ export class SignupService {
                 email: email,
                 password: password
             }
-        }).pipe(tap(() => this.userService.refreshUser()));
+        }, true).pipe(tap(() => this.userService.refreshUser()));
     }
 
     signupSocial(provider: string, authToken: string) {
@@ -37,21 +37,21 @@ export class SignupService {
             user_info: {
                 token: authToken
             }
-        }).pipe(tap(() => this.userService.refreshUser()));
+        }, true).pipe(tap(() => this.userService.refreshUser()));
     }
 
     forgotPassword(email: string) {
         return this.http.post(`${this.endpointForgotPassword}/token`, {
             coop: this.appConfig.config.identifier,
             email: email
-        });
+        }, true);
     }
 
     resetPassword(newPassword: string, token: string) {
         return this.http.post<User>(`${this.endpointForgotPassword}`, {
             new_password: newPassword,
             token: token
-        });
+        }, true);
     }
 }
 

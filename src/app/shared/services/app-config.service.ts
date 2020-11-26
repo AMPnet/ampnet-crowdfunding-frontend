@@ -138,16 +138,16 @@ export interface AppConfig {
 }
 
 export interface CustomConfig {
-    title: string;
-    logo_url: string;
-    icon_url: string;
-    arkane: {
+    title?: string;
+    logo_url?: string;
+    icon_url?: string;
+    arkane?: {
         id: string;
         env: string;
     };
-    identyum: {
+    identyum?: {
         startLanguage: string;
     };
-    googleClientId: string;
-    facebookAppId: string;
+    googleClientId?: string;
+    facebookAppId?: string;
 }

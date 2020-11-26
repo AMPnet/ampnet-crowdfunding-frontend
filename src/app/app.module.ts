@@ -98,6 +98,7 @@ import { SingleProjectItemComponent } from './organizations/organization-details
 import { NewBankAccountComponent } from './shared/components/new-bank-account/new-bank-account.component';
 import { AuthLayoutComponent } from './authentication/auth-layout/auth-layout.component';
 import { SignInComponent } from './authentication/sign-in/sign-in.component';
+import { NewCoopComponent } from './authentication/new-coop/new-coop.component';
 
 // TODO: setup config to use values from app config service.
 const socialAuthServiceConfig = {
@@ -203,6 +204,7 @@ const socialAuthServiceConfig = {
         NewBankAccountComponent,
         AuthLayoutComponent,
         SignInComponent,
+        NewCoopComponent,
     ],
     imports: [
         BrowserModule,

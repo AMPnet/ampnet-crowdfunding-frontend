@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { BackendHttpClient } from './backend-http-client.service';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { Observable, of, ReplaySubject } from 'rxjs';
 import { environment } from '../../../environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class AppConfigService {
@@ -13,7 +13,7 @@ export class AppConfigService {
     private readonly localStorageKey = 'app_config';
     private readonly cacheTimeoutMinutes = 1; // TODO: after testing, set back to 10
 
-    constructor(private http: BackendHttpClient) {
+    constructor(private http: HttpClient) {
     }
 
     /**
@@ -57,7 +57,7 @@ export class AppConfigService {
     }
 
     private remoteConfigByHostname(hostname: string) {
-        return this.http.get<AppConfig>(`/api/user/public/app/config/hostname/${hostname}`, {}, true).pipe(
+        return this.http.get<AppConfig>(`/api/user/public/app/config/hostname/${hostname}`).pipe(
             catchError(() => of(<AppConfig>{
                 config: null
             }))
@@ -65,7 +65,7 @@ export class AppConfigService {
     }
 
     private remoteConfigByIdentifier(identifier: string): Observable<AppConfig> {
-        return this.http.get<AppConfig>(`/api/user/public/app/config/identifier/${identifier}`, {}, true).pipe(
+        return this.http.get<AppConfig>(`/api/user/public/app/config/identifier/${identifier}`).pipe(
             catchError(() => of(<AppConfig>{
                 config: null
             }))

@@ -26,7 +26,7 @@ export class UserAuthService {
                 email: email,
                 password: password
             }
-        }, true).pipe(this.saveTokens);
+        }, true).pipe(this.saveTokens.bind(this));
     }
 
     socialLogin(provider: string, authToken: string) {
@@ -36,14 +36,14 @@ export class UserAuthService {
             credentials: {
                 token: authToken
             }
-        }, true).pipe(this.saveTokens);
+        }, true).pipe(this.saveTokens.bind(this));
     }
 
     refreshUserToken() {
         return this.http.post<TokenModel>('/api/user/token/refresh', {
-            refresh_token: localStorage.getItem('refresh_token')
+            refresh_token: this.http.refreshToken
         }, true).pipe(
-            this.saveTokens,
+            this.saveTokens.bind(this),
             tap(() => this.userService.refreshUser())
         );
     }
@@ -52,8 +52,8 @@ export class UserAuthService {
         this.http.post<void>(`/api/user/logout`, {})
             .pipe(catchError(_ => EMPTY)).subscribe();
 
-        localStorage.removeItem('access_token');
-        localStorage.removeItem('refresh_token');
+        this.http.accessToken = null;
+        this.http.refreshToken = null;
 
         this.cacheService.clearAll();
     }
@@ -61,41 +61,15 @@ export class UserAuthService {
     private saveTokens(source: Observable<TokenModel>) {
         return source.pipe(
             tap(res => {
-                localStorage.setItem('access_token', res.access_token);
-                localStorage.setItem('refresh_token', res.refresh_token);
+                this.http.accessToken = res.access_token;
+                this.http.refreshToken = res.refresh_token;
             })
         );
     }
 
     isLoggedIn(): boolean {
-        const jwtUser = this.getJWTUser();
+        const jwtUser = this.http.getJWTUser();
 
         return jwtUser && jwtUser.coop === this.appConfig.config.identifier;
     }
-
-    getJWTUser(): JWTUser | null {
-        try {
-            const payload: JWTPayload = JSON.parse(atob(localStorage.getItem('access_token').split('.')[1]));
-            return JSON.parse(payload.user);
-        } catch (_err) {
-            return null;
-        }
-    }
-}
-
-interface JWTPayload {
-    sub: string;
-    user: string;
-    iat: number;
-    exp: number;
-}
-
-interface JWTUser {
-    uuid: string;
-    email: string;
-    name: string;
-    authorities: string[];
-    enabled: boolean;
-    verified: boolean;
-    coop: string;
 }

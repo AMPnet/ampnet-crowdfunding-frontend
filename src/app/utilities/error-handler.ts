@@ -6,7 +6,7 @@ import { Observable, throwError } from 'rxjs';
 export function displayBackendError(resp: any) {
     const error = resp.error;
 
-    if (error === null) {
+    if (!error) {
         return;
     }
 

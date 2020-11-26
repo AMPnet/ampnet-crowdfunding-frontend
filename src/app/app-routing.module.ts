@@ -50,6 +50,7 @@ import { IdentityComponent } from './settings/user/identity/identity.component';
 import { UserGuard } from './settings/user/user.guard';
 import { UserComponent } from './settings/user/user.component';
 import { CoopGuard } from './shared/guards/coop.guard';
+import { InvestmentGroupDetailsComponent } from './organizations/investment-group-details/investment-group-details.component';
 
 const appRoutes: Routes = [
     {
@@ -58,6 +59,7 @@ const appRoutes: Routes = [
             {path: '', component: LandingPageComponent},
             {path: 'sign_up', component: SignUpComponent},
             {path: 'confirm_email', component: ConfirmEmailComponent},
+            {path: 'overview/orgs/:id/:isOverview', component: InvestmentGroupDetailsComponent},
             {path: 'overview/:isOverview', component: OffersComponent},
             {path: 'overview/:id/:isOverview', component: OfferDetailsComponent, canActivate: [OfferDetailsGuard]},
             {path: 'forgot_password', component: ForgotPasswordComponent},
@@ -72,6 +74,7 @@ const appRoutes: Routes = [
             {path: '', pathMatch: 'full', redirectTo: 'offers'},
             {path: 'offers', component: OffersComponent},
             {path: 'wallet', component: WalletComponent},
+            {path: 'orgs/:id', component: InvestmentGroupDetailsComponent},
             {path: 'offers/:id', component: OfferDetailsComponent},
             {path: 'offers/:id/invest', component: InvestComponent},
             {path: 'my_portfolio', component: MyPortfolioComponent},

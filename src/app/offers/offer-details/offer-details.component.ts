@@ -196,4 +196,12 @@ export class OfferDetailsComponent implements OnInit {
             );
         };
     }
+
+    onPublishedClicked(organizationUUID: string) {
+        if (this.route.snapshot.params.isOverview) {
+            this.router.navigate([`/overview/orgs/${organizationUUID}/discover`]);
+        } else {
+            this.router.navigate([`/dash/orgs/${organizationUUID}`]);
+        }
+    }
 }

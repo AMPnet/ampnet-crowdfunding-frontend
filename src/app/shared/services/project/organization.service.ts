@@ -32,7 +32,7 @@ export class OrganizationService {
     }
 
     getSingleOrganization(orgID: string) {
-        return this.http.get<Organization>(`/api/project/organization/${orgID}`);
+        return this.http.get<Organization>(`/api/project/public/organization/${orgID}`);
     }
 
     getAllOrganizations() {
@@ -60,7 +60,7 @@ export class OrganizationService {
     }
 
     getMembersForOrganization(orgID: string) {
-        return this.http.get<OrganizationMembersResponse>(`/api/project/organization/${orgID}/members`);
+        return this.http.get<OrganizationMembersResponse>(`/api/project/public/organization/${orgID}/members`);
     }
 
     removeMemberFromOrganization(orgID: string, memberID: string) {

@@ -15,7 +15,6 @@ import { DepositModalComponent } from './wallet/deposit-modal/deposit-modal.comp
 import { InvestComponent } from './invest/invest.component';
 import { MyPortfolioComponent } from './my-portfolio/my-portfolio.component';
 import { SingleInvestItemComponent } from './my-portfolio/single-invest-item/single-invest-item.component';
-import { InvestmentDetailsComponent } from './investment-details/investment-details.component';
 import { SingleProposalItemComponent } from './investment-details/single-proposal-item/single-proposal-item.component';
 import { PaymentOptionsComponent } from './payment-options/payment-options.component';
 import { FooterComponent } from './footer/footer.component';
@@ -98,6 +97,8 @@ import { IdentityComponent } from './settings/user/identity/identity.component';
 import { CoopPathPipe } from './shared/pipes/coop-path.pipe';
 import { SingleProjectItemComponent } from './organizations/organization-details/manage-projects/single-project-item/single-project-item.component';
 import { NewBankAccountComponent } from './shared/components/new-bank-account/new-bank-account.component';
+import { InvestmentDetailsComponent } from './investment-details/investment-details.component';
+import { InvestmentGroupDetailsComponent } from './organizations/investment-group-details/investment-group-details.component';
 
 // TODO: setup config to use values from app config service.
 const socialAuthServiceConfig = {
@@ -131,7 +132,6 @@ const socialAuthServiceConfig = {
         InvestComponent,
         MyPortfolioComponent,
         SingleInvestItemComponent,
-        InvestmentDetailsComponent,
         SingleProposalItemComponent,
         PaymentOptionsComponent,
         FooterComponent,
@@ -203,6 +203,8 @@ const socialAuthServiceConfig = {
         UserComponent,
         IdentityComponent,
         NewBankAccountComponent,
+        InvestmentDetailsComponent,
+        InvestmentGroupDetailsComponent,
     ],
     imports: [
         BrowserModule,

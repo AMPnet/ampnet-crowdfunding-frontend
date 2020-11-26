@@ -38,10 +38,11 @@
             {{ projectWallet.project.name }}
         </h1>
         <div class="right__text">
-            <p class="right__published">
+            <div class="right__published">
                 Published by:
-                <a [routerLink]="" (click)="onPublishedClicked()">
+                <a routerLink="" (click)="onPublishedClicked()">
                     {{ projectWallet.organization.name }} </a>
+            </div>
         </div>
 
         <div class="right__text">

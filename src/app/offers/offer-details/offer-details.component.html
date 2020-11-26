@@ -37,6 +37,12 @@
                         <h1 class="app-basic-title">{{ states.project.name }}</h1>
                     </div>
 
+                    <p class="right__published">
+                        Published by:
+                        <a routerLink="" (click)="onPublishedClicked(states.project.organization.uuid)">
+                            {{ states.project.organization.name }} </a>
+                    </p>
+
                     <div class="right__location">
                         <p (click)="openModal(states.project)">
                             <i class="location__icon fas fa-map-marker-alt"></i>

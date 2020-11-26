@@ -6,7 +6,7 @@
     </div>
 
     <div *ngIf="loading" class="loading-text">
-        <app-spinner type="inline" color="white"></app-spinner>
+        <app-spinner type="inline" color="{{ spinnerColor }}"></app-spinner>
         <span>{{ loadingText }}</span>
     </div>
 </button>

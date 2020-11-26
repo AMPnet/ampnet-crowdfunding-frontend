@@ -9,8 +9,9 @@ export class BackendHttpClient {
     constructor(public http: HttpClient) {
     }
 
-    get<T>(path: string, params?: object): Observable<T> {
-        const httpOptions = this.authHttpOptions();
+    get<T>(path: string, params?: object, publicRoute = false): Observable<T> {
+        const httpOptions = this.authHttpOptions(publicRoute);
+
         if (params !== undefined) {
             httpOptions['params'] = params;
         }
@@ -18,8 +19,8 @@ export class BackendHttpClient {
         return this.http.get<T>(path, httpOptions);
     }
 
-    post<T>(path: string, body: any): Observable<T> {
-        return this.http.post<T>(path, body, this.authHttpOptions());
+    post<T>(path: string, body: any, publicRoute = false): Observable<T> {
+        return this.http.post<T>(path, body, this.authHttpOptions(publicRoute));
     }
 
     put<T>(path: string, body: object): Observable<T> {
@@ -35,14 +36,14 @@ export class BackendHttpClient {
         return this.http.delete<T>(path, httpOptions);
     }
 
-    public authHttpOptions() {
+    public authHttpOptions(publicRoute = false) {
         const httpOptions = {
             headers: new HttpHeaders()
         };
         httpOptions.headers.append('Connection', 'Keep-Alive');
 
         const accessToken = localStorage.getItem('access_token');
-        if (accessToken !== null) {
+        if (accessToken !== null && !publicRoute) {
             httpOptions.headers = httpOptions
                 .headers.append('Authorization', `Bearer ${accessToken}`);
         }

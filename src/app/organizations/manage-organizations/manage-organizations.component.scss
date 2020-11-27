@@ -59,7 +59,6 @@
     }
     &__img img {
       object-fit: cover;
-      filter: blur(0.5px);
     }
     &__title {
       font-size: $font-size-mobile-title;

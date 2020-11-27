@@ -37,7 +37,7 @@ export class UserStateReminderComponent implements OnDestroy {
             switchMap(wallet => this.websocketService.walletNotifier(wallet.wallet?.activation_data)),
             tap(wallet => {
                 if (!this.isWalletReady(wallet)) {
-                    this.walletService.refreshWallet();
+                    this.walletService.clearAndRefreshWallet();
                 } else {
                     this.userWalletSubs.unsubscribe();
                 }

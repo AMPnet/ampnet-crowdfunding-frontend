@@ -50,6 +50,7 @@
     "ngx-cookie-service": "^2.0.2",
     "ngx-disqus": "^2.4.0",
     "ngx-spinner": "^6.1.2",
+    "ngx-captcha": "^8.0.1",
     "popper.js": "^1.15.0",
     "process": "^0.11.10",
     "qrcode": "^1.4.0",

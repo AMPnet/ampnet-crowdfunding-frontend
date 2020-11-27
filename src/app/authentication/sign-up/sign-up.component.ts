@@ -61,11 +61,12 @@ export class SignUpComponent {
     onFormSubmit() {
         const user = this.signupForm.value;
 
-        return this.signUpService.signupEmail(user.email, user.firstName, user.lastName, user.password).pipe(
-            switchMap(_ => this.loginService.emailLogin(user.email, user.password)),
-            displayBackendErrorRx(),
-            switchMap(() => this.popupService.success('Sign up successful!')),
-            tap(() => this.router.navigate(['/dash'])),
-        );
+        return this.signUpService.signupEmail(user.email, user.firstName, user.lastName, user.password)
+            .pipe(
+                switchMap(_ => this.loginService.emailLogin(user.email, user.password)),
+                displayBackendErrorRx(),
+                switchMap(() => this.popupService.success('Sign up successful!')),
+                tap(() => this.router.navigate(['/dash'])),
+            );
     }
 }

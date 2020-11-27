@@ -1,4 +1,4 @@
-import { Component, Inject, Injectable, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { displayBackendErrorRx } from '../../utilities/error-handler';
 import { switchMap, tap } from 'rxjs/operators';
@@ -11,7 +11,7 @@ import { PopupService } from '../../shared/services/popup.service';
     templateUrl: './new-coop.component.html',
     styleUrls: ['./new-coop.component.css'],
     providers: [
-        { provide: 'WINDOW', useValue: window }
+        {provide: 'WINDOW', useValue: window}
     ]
 })
 export class NewCoopComponent implements OnInit {

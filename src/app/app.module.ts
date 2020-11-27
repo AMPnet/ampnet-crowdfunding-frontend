@@ -99,6 +99,7 @@ import { NewBankAccountComponent } from './shared/components/new-bank-account/ne
 import { AuthLayoutComponent } from './authentication/auth-layout/auth-layout.component';
 import { SignInComponent } from './authentication/sign-in/sign-in.component';
 import { NewCoopComponent } from './authentication/new-coop/new-coop.component';
+import { NgxCaptchaModule } from 'ngx-captcha';
 
 // TODO: setup config to use values from app config service.
 const socialAuthServiceConfig = {
@@ -223,6 +224,7 @@ const socialAuthServiceConfig = {
         ModalModule.forRoot(),
         BrowserAnimationsModule,
         BsDatepickerModule.forRoot(),
+        NgxCaptchaModule
     ],
     entryComponents: [
         MapModalComponent

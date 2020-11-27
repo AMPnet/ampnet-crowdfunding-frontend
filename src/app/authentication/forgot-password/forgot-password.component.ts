@@ -36,8 +36,7 @@ export class ForgotPasswordComponent {
                         return this.popupService.new({
                             type: 'error',
                             title: 'Not found',
-                            // tslint:disable-next-line
-                            text: "User doesn't exist on the platform"
+                            text: `User doesn't exist on the platform`
                         }).pipe(switchMap(() => EMPTY));
 
                     case 400:

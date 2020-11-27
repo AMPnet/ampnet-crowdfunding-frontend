@@ -27,7 +27,13 @@ export class UserStateReminderComponent implements OnDestroy {
                 private userService: UserService) {
         this.userWalletSubs = combineLatest([this.user$, this.wallet$]).pipe(
             tap(([user, wallet]) => {
+                if (this.isWalletReady(wallet)) {
+                    this.userWalletSubs.unsubscribe();
+                    this.walletWSSubs.unsubscribe();
+                }
+
                 if (this.isWaitingWalletReady(user, wallet)) {
+                    this.userWalletSubs.unsubscribe();
                     this.walletWSSub.next(wallet);
                 }
             })
@@ -35,13 +41,7 @@ export class UserStateReminderComponent implements OnDestroy {
 
         this.walletWSSubs = this.walletWSSub.asObservable().pipe(
             switchMap(wallet => this.websocketService.walletNotifier(wallet.wallet?.activation_data)),
-            tap(wallet => {
-                if (!this.isWalletReady(wallet)) {
-                    this.walletService.clearAndRefreshWallet();
-                } else {
-                    this.userWalletSubs.unsubscribe();
-                }
-            })
+            tap(() => this.walletService.clearAndRefreshWallet()),
         ).subscribe();
     }
 
@@ -54,7 +54,7 @@ export class UserStateReminderComponent implements OnDestroy {
     }
 
     isWalletReady(wallet: WalletDetailsWithState) {
-        return !wallet ? true : wallet.state === WalletState.READY;
+        return !wallet ? true : wallet.state === WalletState.READY && wallet.wallet.balance !== null;
     }
 
     isWaitingWalletReady(user: User, wallet: WalletDetailsWithState) {

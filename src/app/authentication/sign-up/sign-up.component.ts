@@ -56,8 +56,8 @@ export class SignUpComponent {
                     switchMap(() => this.loginService.socialLogin(provider, socialRes.authToken))
                 )),
             displayBackendErrorRx(),
+            switchMap(() => this.popupService.success('Sign up successful!')),
             tap(() => this.router.navigate(['/dash'])),
-            tap(() => this.popupService.success('Sign up successful!'))
         );
     }
 

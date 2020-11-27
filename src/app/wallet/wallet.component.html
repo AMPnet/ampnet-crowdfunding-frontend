@@ -145,7 +145,7 @@
                                                       *ngIf="transaction.state === transactionState.MINED">
                                                     <span class="state__invested"
                                                           *ngIf="transaction.type === transactionType.INVEST">
-                                                        {{ transaction.share | percent: '1.0-10' }} Invested —
+                                                        {{ transaction.share | percent:'1.0-10' }} Invested —
                                                     </span>
                                                 </span>
                                                 <span class="info__state-pending"
@@ -155,7 +155,7 @@
                                                 <span class="info__state-failed" *ngIf="transaction.state === 'FAILED'">
                                                     Failed
                                                 </span>
-                                                {{ transaction.date | date: 'medium' }}
+                                                {{ transaction.date | date:'medium' }}
                                             </div>
                                         </div>
                                         <div class="transactions__right">

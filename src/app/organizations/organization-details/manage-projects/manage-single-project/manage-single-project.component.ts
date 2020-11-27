@@ -105,10 +105,7 @@ export class ManageSingleProjectComponent {
             switchMap(() => this.popupService.new({
                 type: 'success',
                 title: 'Transaction signed',
-                text: 'Transaction is being processed...',
-                customClass: 'popup-success',
-                position: 'top',
-                confirmButtonText: 'Continue <i class="fas fa-arrow-right ml-3"></i>'
+                text: 'Transaction is being processed...'
             })),
             tap(() => {
                 this.refreshProjectSubject.next(null);

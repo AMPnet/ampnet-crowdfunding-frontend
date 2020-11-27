@@ -55,9 +55,7 @@ export class ManageSingleDepositComponent implements OnInit {
                     return this.popupService.new({
                         type: 'error',
                         title: 'Not found',
-                        text: 'Deposit transaction with this reference code was not found.',
-                        customClass: 'popup-error',
-                        position: 'top'
+                        text: 'Deposit transaction with this reference code was not found.'
                     }).pipe(switchMap(() => this.recoverBack()));
                 }
                 return this.recoverBack();
@@ -70,9 +68,7 @@ export class ManageSingleDepositComponent implements OnInit {
                     return this.popupService.new({
                         type: 'info',
                         title: 'Transaction already approved',
-                        text: `You will be prompted to sign deposit transaction of ${amount}`,
-                        customClass: 'popup-info',
-                        position: 'top'
+                        text: `You will be prompted to sign deposit transaction of ${amount}`
                     }).pipe(
                         switchMap(popup => !popup.dismiss ?
                             this.generateSignerAndSign(res.deposit.id) : this.recoverBack()),
@@ -94,10 +90,7 @@ export class ManageSingleDepositComponent implements OnInit {
             switchMap(() => this.popupService.new({
                 type: 'success',
                 title: 'Transaction signed',
-                text: 'Transaction is being processed...',
-                customClass: 'popup-success',
-                position: 'top',
-                confirmButtonText: 'Continue <i class="fas fa-arrow-right ml-3"></i>'
+                text: 'Transaction is being processed...'
             })),
             switchMap(() => this.router.navigate(['/dash/manage_deposits']))
         );

@@ -63,7 +63,7 @@ export class SignUpComponent implements OnInit {
                     }, hideSpinnerAndDisplayError);
             }, err => {
                 SpinnerUtil.hideSpinner();
-                this.popupService.warning(err.errror.message);
+                this.popupService.warning(err.error.message);
             });
         }).catch(hideSpinnerAndDisplayError);
     }

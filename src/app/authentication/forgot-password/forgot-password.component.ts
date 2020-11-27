@@ -36,9 +36,8 @@ export class ForgotPasswordComponent {
                         return this.popupService.new({
                             type: 'error',
                             title: 'Not found',
-                            text: `User doesn't exist on the platform`,
-                            customClass: 'popup-error',
-                            position: 'top'
+                            // tslint:disable-next-line
+                            text: "User doesn't exist on the platform"
                         }).pipe(switchMap(() => EMPTY));
 
                     case 400:
@@ -46,9 +45,7 @@ export class ForgotPasswordComponent {
                             return this.popupService.new({
                                 type: 'error',
                                 title: 'Error changing password',
-                                text: `User did not use email authentication method`,
-                                customClass: 'popup-error',
-                                position: 'top'
+                                text: 'User did not use email authentication method'
                             }).pipe(switchMap(() => EMPTY));
                         }
                 }

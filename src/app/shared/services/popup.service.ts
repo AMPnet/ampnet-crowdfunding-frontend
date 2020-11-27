@@ -10,13 +10,13 @@ export class PopupService {
     }
 
     new(options: SweetAlertOptions): Observable<SweetAlertResult> {
-        return from(swal(options));
+        return from(swal({...options, ...this.setDefaultOptions(options)}));
     }
 
     info(message: string, footer?: string): Observable<SweetAlertResult> {
         return from(swal({
             type: 'info',
-            titleText: 'Info!',
+            titleText: 'Info',
             text: message,
             footer: footer,
             customClass: 'popup-info',
@@ -56,5 +56,27 @@ export class PopupService {
             customClass: 'popup-error',
             position: 'top'
         }));
+    }
+
+    setDefaultOptions(options: SweetAlertOptions): SweetAlertOptions {
+        const defaults: SweetAlertOptions = {
+            position: 'top',
+            customClass: '',
+            confirmButtonText: 'Ok'
+        };
+        if (options.type === 'success') {
+            defaults.customClass = 'popup-success';
+            defaults.confirmButtonText = 'Continue <i class="fas fa-arrow-right ml-3"></i>';
+        }
+        if (options.type === 'error') {
+            defaults.customClass = 'popup-error';
+        }
+        if (options.type === 'info') {
+            defaults.customClass = 'popup-info';
+        }
+        if (options.type === 'warning') {
+            defaults.customClass = 'popup-warning';
+        }
+        return(defaults);
     }
 }

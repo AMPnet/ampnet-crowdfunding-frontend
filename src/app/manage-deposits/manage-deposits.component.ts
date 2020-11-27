@@ -55,9 +55,7 @@ export class ManageDepositsComponent {
         return this.popupService.new({
             type: 'info',
             title: 'Contact phone',
-            text: '+385 95 354 6106',
-            customClass: 'popup-info',
-            position: 'top'
+            text: '+385 95 354 6106'
         });
     }
 }

@@ -127,10 +127,6 @@
   display: contents;
 }
 
-.uppy-Dashboard-AddFiles-info {
-  display: inline-block;
-}
-
 @include media-breakpoint-up(lg) {
   .container {
     max-width: 1192px;

@@ -10,7 +10,7 @@ export class PopupService {
     }
 
     new(options: SweetAlertOptions): Observable<SweetAlertResult> {
-        return from(swal({...options, ...this.setDefaultOptions(options)}));
+        return from(swal({...this.setDefaultOptions(options), ...options}));
     }
 
     info(message: string, footer?: string): Observable<SweetAlertResult> {
@@ -69,6 +69,6 @@ export class PopupService {
         if (options.type === 'success') {
             defaults.confirmButtonText = 'Continue <i class="fas fa-arrow-right ml-3"></i>';
         }
-        return (defaults);
+        return defaults;
     }
 }

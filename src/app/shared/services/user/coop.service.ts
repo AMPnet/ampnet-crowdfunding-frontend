@@ -13,7 +13,7 @@ export class CoopService {
     }
 
     createCoop(data: CreateCoopData) {
-        return this.captchaService.getToken(CaptchaAction.SIGN_UP).pipe(
+        return this.captchaService.getToken(CaptchaAction.NEW_COOP).pipe(
             switchMap(captchaToken =>
                 this.http.post<AppConfig>(`/api/user/coop`, <CreateCoopReqData>{
                     ...data,

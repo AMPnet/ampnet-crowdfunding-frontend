@@ -64,19 +64,11 @@ export class PopupService {
             customClass: '',
             confirmButtonText: 'Ok'
         };
+        defaults.customClass = `popup-${options.type}`;
+
         if (options.type === 'success') {
-            defaults.customClass = 'popup-success';
             defaults.confirmButtonText = 'Continue <i class="fas fa-arrow-right ml-3"></i>';
         }
-        if (options.type === 'error') {
-            defaults.customClass = 'popup-error';
-        }
-        if (options.type === 'info') {
-            defaults.customClass = 'popup-info';
-        }
-        if (options.type === 'warning') {
-            defaults.customClass = 'popup-warning';
-        }
-        return(defaults);
+        return (defaults);
     }
 }

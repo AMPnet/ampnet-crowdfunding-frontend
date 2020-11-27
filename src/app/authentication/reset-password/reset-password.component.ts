@@ -11,7 +11,10 @@ import { RouterService } from '../../shared/services/router.service';
 @Component({
     selector: 'app-reset-password',
     templateUrl: './reset-password.component.html',
-    styleUrls: ['./reset-password.component.scss']
+    styleUrls: [
+        '../auth-layout/auth-layout.component.scss',
+        './reset-password.component.scss'
+    ],
 })
 export class ResetPasswordComponent implements OnInit {
     resetPasswordForm: FormGroup;

@@ -10,7 +10,10 @@ import { RouterService } from '../../shared/services/router.service';
 @Component({
     selector: 'app-forgot-password',
     templateUrl: './forgot-password.component.html',
-    styleUrls: ['./forgot-password.component.scss']
+    styleUrls: [
+        '../auth-layout/auth-layout.component.scss',
+        './forgot-password.component.scss'
+    ]
 })
 export class ForgotPasswordComponent {
     forgotPasswordForm: FormGroup;

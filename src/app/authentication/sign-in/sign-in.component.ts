@@ -10,7 +10,10 @@ import { displayBackendErrorRx } from '../../utilities/error-handler';
 @Component({
     selector: 'app-sign-in',
     templateUrl: './sign-in.component.html',
-    styleUrls: ['./sign-in.component.css']
+    styleUrls: [
+        '../auth-layout/auth-layout.component.scss',
+        './sign-in.component.css'
+    ],
 })
 export class SignInComponent {
     signInForm: FormGroup;

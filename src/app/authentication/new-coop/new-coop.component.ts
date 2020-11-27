@@ -9,7 +9,10 @@ import { PopupService } from '../../shared/services/popup.service';
 @Component({
     selector: 'app-new-coop',
     templateUrl: './new-coop.component.html',
-    styleUrls: ['./new-coop.component.css'],
+    styleUrls: [
+        '../auth-layout/auth-layout.component.scss',
+        './new-coop.component.css'
+    ],
     providers: [
         {provide: 'WINDOW', useValue: window}
     ]

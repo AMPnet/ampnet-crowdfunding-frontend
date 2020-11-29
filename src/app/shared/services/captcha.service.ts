@@ -21,5 +21,5 @@ export class CaptchaService {
 
 export enum CaptchaAction {
     SIGN_UP = 'SIGN_UP',
-    NEW_COOP = 'NEW_COOP',
+    NEW_INSTANCE = 'NEW_INSTANCE',
 }

@@ -1,23 +1,23 @@
-<h1 class="app-page-header">NEW COOPERATIVE</h1>
+<h1 class="app-page-header">NEW INSTANCE</h1>
 
 <div class="dropdown-divider"></div>
 
 <form [formGroup]="createCoopForm" id="emailForm">
-    <label for="name" class="app-page-label">Cooperative name</label>
+    <label for="name" class="app-page-label">Instance name</label>
     <input class="form-control p-4" id="name" formControlName="name"
-           placeholder="Cooperative Name" type="text">
+           placeholder="Instance Name" type="text">
 
     <label for="identifier" class="app-page-label mt-3">Identifier</label>
     <input class="form-control p-4" id="identifier" formControlName="identifier"
-           placeholder="cooperative-name" type="text">
+           placeholder="instance-name" type="text">
     <small class="form-text text-muted mt-2">
-        Your cooperative will be served on:
-        {{ window.location.protocol}}//{{ window.location.host }}/{{ createCoopForm.get('identifier').value || 'cooperative-name' }}
+        Your instance will be served on:
+        {{ window.location.protocol}}//{{ window.location.host }}/{{ createCoopForm.get('identifier').value || 'instance-name' }}
     </small>
 
     <label for="webTitle" class="app-page-label mt-3">Web title</label>
     <input class="form-control p-4" id="webTitle" formControlName="webTitle"
-           placeholder="Cooperative" type="text">
+           placeholder="Instance" type="text">
 
     <button app-action-button
             text="Create"

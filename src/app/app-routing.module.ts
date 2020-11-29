@@ -51,7 +51,7 @@ import { UserComponent } from './settings/user/user.component';
 import { CoopGuard } from './shared/guards/coop.guard';
 import { AuthLayoutComponent } from './authentication/auth-layout/auth-layout.component';
 import { SignInComponent } from './authentication/sign-in/sign-in.component';
-import { NewCoopComponent } from './authentication/new-coop/new-coop.component';
+import { NewInstanceComponent } from './authentication/new-instance/new-instance.component';
 
 const appRoutes: Routes = [
     {
@@ -64,7 +64,7 @@ const appRoutes: Routes = [
                     {path: 'sign_in', component: SignInComponent},
                     {path: 'forgot_password', component: ForgotPasswordComponent},
                     {path: 'reset_password', component: ResetPasswordComponent},
-                    {path: 'new_coop', component: NewCoopComponent},
+                    {path: 'new_instance', component: NewInstanceComponent},
                 ]
             },
             {path: 'overview/:isOverview', component: OffersComponent},

@@ -7,17 +7,17 @@ import { RouterService } from '../../shared/services/router.service';
 import { PopupService } from '../../shared/services/popup.service';
 
 @Component({
-    selector: 'app-new-coop',
-    templateUrl: './new-coop.component.html',
+    selector: 'app-new-instance',
+    templateUrl: './new-instance.component.html',
     styleUrls: [
         '../auth-layout/auth-layout.component.scss',
-        './new-coop.component.css'
+        './new-instance.component.css'
     ],
     providers: [
         {provide: 'WINDOW', useValue: window}
     ]
 })
-export class NewCoopComponent implements OnInit {
+export class NewInstanceComponent implements OnInit {
     createCoopForm: FormGroup;
 
     constructor(private coopService: CoopService,

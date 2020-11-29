@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { TokenModel } from 'src/app/models/auth/TokenModel';
 import { BackendHttpClient } from '../backend-http-client.service';
 import { EMPTY, Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
@@ -19,7 +18,7 @@ export class UserAuthService {
     }
 
     emailLogin(email: string, password: string) {
-        return this.http.post<TokenModel>('/api/user/token', {
+        return this.http.post<UserAuthResponse>('/api/user/token', {
             coop: this.appConfig.config.identifier,
             login_method: 'EMAIL',
             credentials: {
@@ -30,7 +29,7 @@ export class UserAuthService {
     }
 
     socialLogin(provider: string, authToken: string) {
-        return this.http.post<TokenModel>('/api/user/token', {
+        return this.http.post<UserAuthResponse>('/api/user/token', {
             coop: this.appConfig.config.identifier,
             login_method: provider,
             credentials: {
@@ -40,7 +39,7 @@ export class UserAuthService {
     }
 
     refreshUserToken() {
-        return this.http.post<TokenModel>('/api/user/token/refresh', {
+        return this.http.post<UserAuthResponse>('/api/user/token/refresh', {
             refresh_token: this.http.refreshToken
         }, true).pipe(
             this.saveTokens.bind(this),
@@ -58,7 +57,7 @@ export class UserAuthService {
         this.cacheService.clearAll();
     }
 
-    private saveTokens(source: Observable<TokenModel>) {
+    private saveTokens(source: Observable<UserAuthResponse>) {
         return source.pipe(
             tap(res => {
                 this.http.accessToken = res.access_token;
@@ -72,4 +71,11 @@ export class UserAuthService {
 
         return jwtUser && jwtUser.coop === this.appConfig.config.identifier;
     }
+}
+
+export class UserAuthResponse {
+    access_token: string;
+    expires_in: number;
+    refresh_token: string;
+    refresh_token_expires_in: number;
 }

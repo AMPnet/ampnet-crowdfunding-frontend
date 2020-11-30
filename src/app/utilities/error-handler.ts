@@ -3,6 +3,7 @@ import { SpinnerUtil } from './spinner-utilities';
 import { catchError } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
 
+// TODO: refactor this method to use popupService
 export function displayBackendError(resp: any) {
     const error = resp.error;
 

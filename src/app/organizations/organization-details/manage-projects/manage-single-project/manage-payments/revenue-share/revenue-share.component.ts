@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 @Component({
     selector: 'app-revenue-share',
     templateUrl: './revenue-share.component.html',
-    styleUrls: ['./revenue-share.component.css']
+    styleUrls: ['./revenue-share.component.scss']
 })
 export class RevenueShareComponent {
     orgID: string;

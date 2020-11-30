@@ -52,6 +52,7 @@ import { CoopGuard } from './shared/guards/coop.guard';
 import { AuthLayoutComponent } from './authentication/auth-layout/auth-layout.component';
 import { SignInComponent } from './authentication/sign-in/sign-in.component';
 import { NewInstanceComponent } from './authentication/new-instance/new-instance.component';
+import { PlatformConfigComponent } from './admin/platform-config/platform-config.component';
 
 const appRoutes: Routes = [
     {
@@ -127,6 +128,7 @@ const appRoutes: Routes = [
             {path: 'admin/platform_bank_account/new', component: NewPlatformBankAccountComponent},
             {path: 'exchange', component: ExchangeComponent},
             {path: 'ownership', component: OwnershipComponent},
+            {path: 'platform_config', component: PlatformConfigComponent},
         ]
     }
 ];

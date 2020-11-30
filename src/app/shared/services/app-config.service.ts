@@ -3,6 +3,7 @@ import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { Observable, of, ReplaySubject } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { merge as _merge } from 'lodash';
 
 @Injectable()
 export class AppConfigService {
@@ -24,6 +25,13 @@ export class AppConfigService {
         return this.appConfig;
     }
 
+    set config(appConfig: AppConfig) {
+        of(appConfig).pipe(
+            tap(cfg => this.setLocalConfig(cfg.identifier, cfg)),
+            this.mergeAndSave.bind(this)
+        ).subscribe();
+    }
+
     config$ = this.appConfigSubject.asObservable();
 
     /**
@@ -42,12 +50,15 @@ export class AppConfigService {
             switchMap(shouldRefresh => shouldRefresh ?
                 remoteConfig.pipe(tap(config => this.setLocalConfig(key, config))) :
                 of(localConfig[key].config)),
+            this.mergeAndSave.bind(this)
+        );
+    }
+
+    private mergeAndSave(source: Observable<AppConfig>) {
+        return source.pipe(
             map(configRes => ({
                 ...configRes,
-                config: {
-                    ...AppConfigService.defaultConfig.config,
-                    ...configRes.config
-                }
+                config: _merge(AppConfigService.defaultConfig.config, configRes.config)
             } as AppConfig)),
             tap(config => {
                 this.appConfig = config;

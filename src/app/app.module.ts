@@ -98,6 +98,7 @@ import { AuthLayoutComponent } from './authentication/auth-layout/auth-layout.co
 import { SignInComponent } from './authentication/sign-in/sign-in.component';
 import { NgxCaptchaModule } from 'ngx-captcha';
 import { NewInstanceComponent } from './authentication/new-instance/new-instance.component';
+import { PlatformConfigComponent } from './admin/platform-config/platform-config.component';
 
 // TODO: setup config to use values from app config service.
 const socialAuthServiceConfig = {
@@ -202,6 +203,7 @@ const socialAuthServiceConfig = {
         AuthLayoutComponent,
         SignInComponent,
         NewInstanceComponent,
+        PlatformConfigComponent,
     ],
     imports: [
         BrowserModule,

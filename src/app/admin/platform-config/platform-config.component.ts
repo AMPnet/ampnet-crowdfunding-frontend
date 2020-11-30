@@ -16,7 +16,6 @@ export class PlatformConfigComponent {
     appConfig$: Observable<AppConfig>;
     updateForm$: Observable<FormGroup>;
 
-
     constructor(private coopService: CoopService,
                 private appConfigService: AppConfigService,
                 private fb: FormBuilder) {

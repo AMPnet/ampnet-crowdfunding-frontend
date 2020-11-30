@@ -4,6 +4,7 @@ import { catchError } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
 import { ErrorHandler } from '@angular/core';
 
+// TODO: refactor this method to use popupService
 export function displayBackendError(resp: any) {
     const error = resp.error;
 

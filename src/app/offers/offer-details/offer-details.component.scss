@@ -91,7 +91,7 @@ span {
   }
 
   &__fund-period {
-    margin-bottom: 32px;
+    padding-bottom: 32px;
   }
 }
 
@@ -180,6 +180,7 @@ span {
 
   .offer-right-socials {
     margin: 25px 64px;
+    padding: 0;
   }
 
   .right {
@@ -208,7 +209,7 @@ span {
 
     &__location,
     &__fund-period {
-      margin-bottom: 10px;
+      padding-bottom: 10px;
     }
 
     &__info div {
@@ -228,6 +229,11 @@ span {
 
     &__desc {
       margin-top: 32px;
+      padding: 0 12px 0 0;
+    }
+
+    &__docs {
+      padding: 0;
     }
   }
 }
@@ -296,9 +302,6 @@ span {
 }
 
 @include media-breakpoint-up(lg) {
-  .investments__container {
-    margin-left: -20px;
-  }
   .investment__total {
     margin: 0 0 8px 0;
     border-radius: 1px;

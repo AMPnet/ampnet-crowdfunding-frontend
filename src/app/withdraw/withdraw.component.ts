@@ -12,7 +12,7 @@ import { RouterService } from '../shared/services/router.service';
 @Component({
     selector: 'app-withdraw',
     templateUrl: './withdraw.component.html',
-    styleUrls: ['./withdraw.component.css']
+    styleUrls: ['./withdraw.component.scss']
 })
 export class WithdrawComponent implements OnInit {
     activeBankAccount = 0;

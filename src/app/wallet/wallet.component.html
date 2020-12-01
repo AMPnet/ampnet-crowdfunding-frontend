@@ -17,18 +17,15 @@
                     <b>You must initialize your wallet to invest</b>
                 </div>
                 <div>
-                    <h4 class="init-left__title">
-                        Your private, secure wallet
-                    </h4>
+                    <h4 class="init-left__title">Your private, secure wallet</h4>
                     <p class="init-left__desc">
-                        We're commited to making sure your funds are as safe as they can possibly be when
-                        using our platform. <br> To do this, we prevent the management of your money by anyone
-                        other than you.
+                        We're commited to making sure your funds are as safe as they can possibly be when using our
+                        platform. <br/>
+                        To do this, we prevent the management of your money by anyone other than you.
                     </p>
                     <p class="init-left__desc">
-                        This is why we use a third-party secure wallet to store
-                        your money and approve investments into projects. To start
-                        the process of initializing your wallet - click on the button below.
+                        This is why we use a third-party secure wallet to store your money and approve investments into
+                        projects. To start the process of initializing your wallet - click on the button below.
                     </p>
                 </div>
                 <div class="init-left__btn">
@@ -51,8 +48,7 @@
             </div> -->
         </div>
 
-        <div *ngIf="!!states.wallet && states.wallet.state !== walletState.EMPTY else fetchWalletSpinner">
-
+        <div *ngIf="!!states.wallet && states.wallet.state !== walletState.EMPTY; else fetchWalletSpinner">
             <div class="col-12">
                 <div class="wallet-balance flex__center row">
                     <div class="col-12 col-lg-6 col-xl-8">
@@ -82,7 +78,6 @@
                     </div>
                 </div>
 
-
                 <div class="wallet-alerts col-12 col-lg-11">
                     <div *ngIf="states.wallet?.wallet?.activated_at === null"
                          class="alert alert-success w-100 flex__center-space">
@@ -90,9 +85,7 @@
                             <i class="fas fa-bolt"></i>
                             Your wallet is pending approval from admin. You can deposit funds while pending approval.
                         </div>
-                        <button class="btn" routerLink="deposit">
-                            Deposit funds
-                        </button>
+                        <button class="btn" routerLink="deposit">Deposit funds</button>
                     </div>
                     <div *ngIf="states.wallet?.wallet?.balance === 0"
                          class="alert alert-success w-100 flex__center-space">
@@ -100,9 +93,7 @@
                             <i class="fas fa-bolt"></i>
                             Your wallet is empty. Deposit funds to get started!
                         </div>
-                        <button class="btn" routerLink="deposit">
-                            Deposit funds
-                        </button>
+                        <button class="btn" routerLink="deposit">Deposit funds</button>
                     </div>
                 </div>
             </div>
@@ -117,15 +108,14 @@
 
                 <ng-container *ngIf="(transactionHistory$ | async) else transactionHistorySpinner">
                     <div *ngIf="transactionHistory.length === 0" class="row justify-content-center">
-                        <span class="transactions__empty"></span>Your transaction history is empty.
+                        <span class="transactions__empty">Your transaction history is empty.</span>
                     </div>
-                    <div *ngIf="transactionHistory !== undefined && transactionHistory.length > 0"
-                         class="wow fadeIn">
+                    <div *ngIf="transactionHistory !== undefined && transactionHistory.length > 0" class="wow fadeIn">
                         <div class="transactions__history">
                             <ng-container *ngFor="let transaction of transactionHistoryPage">
                                 <ng-container *ngIf="shouldShowTransaction(transaction, transactionHistory)">
                                     <div class="transactions__single-element"
-                                         [class.transactions__grayed-out]="transaction.state !== 'MINED' || transaction.type === 'APPROVE_INVESTMENT'">
+                                         [class.transactions__grayed-out]=" transaction.state !== 'MINED' || transaction.type === 'APPROVE_INVESTMENT'">
                                         <div class="transactions__left">
                                             <div class="left__desc">
                                                 <div class="left__transaction-type">
@@ -144,13 +134,13 @@
                                                     </ng-container>
                                                     <ng-container
                                                             *ngIf="transaction.type === transactionType.CANCEL_INVESTMENT">
-                                                        <b>Cancel investment </b><span
-                                                            class="left__conjuctor">from</span>
+                                                        <b>Cancel investment </b>
+                                                        <span class="left__conjuctor">from</span>
                                                     </ng-container>
                                                     <ng-container
                                                             *ngIf="transaction.type === transactionType.APPROVE_INVESTMENT">
-                                                        <b>Approve investment </b><span
-                                                            class="left__conjuctor">to</span>
+                                                        <b>Approve investment </b>
+                                                        <span class="left__conjuctor">to</span>
                                                     </ng-container>
                                                 </div>
                                                 {{ transaction.description }}
@@ -160,7 +150,7 @@
                                                       *ngIf="transaction.state === transactionState.MINED">
                                                     <span class="state__invested"
                                                           *ngIf="transaction.type === transactionType.INVEST">
-                                                        {{ transaction.share | percent:'1.0-10'}} Invested —
+                                                        {{ transaction.share | percent:'1.0-10' }} Invested —
                                                     </span>
                                                 </span>
                                                 <span class="info__state-pending"
@@ -184,8 +174,7 @@
                                                         *ngIf="transaction.state === transactionState.MINED else singleReportButtonDisabled">
                                                     <button app-action-button
                                                             class="btn text-dark bg-transparent text-right p-0"
-                                                            spinnerColor="black"
-                                                            faIcon="fa-file-chart-line"
+                                                            spinnerColor="black" faIcon="fa-file-chart-line"
                                                             [onClick]="downloadSingleReport(transaction).bind(this)">
                                                     </button>
                                                 </ng-container>
@@ -202,8 +191,8 @@
 
                         <div class="transactions__pagination">
                             <ngb-pagination [collectionSize]="transactionItems" [(page)]="tablePage"
-                                            [pageSize]="tablePageSize"
-                                            (pageChange)="refreshTransactionHistoryPage()">
+                                            (pageChange)="refreshTransactionHistoryPage()"
+                                            [pageSize]="tablePageSize">
                             </ngb-pagination>
                         </div>
                     </div>

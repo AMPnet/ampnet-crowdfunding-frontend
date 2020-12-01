@@ -32,11 +32,12 @@
       margin-bottom: 20px;
     }
 
+    &__input-dates input {
+      padding: 16px;
+    }
+
     &__input-dates input:nth-of-type(2) {
-      border-left: unset;
-      &:focus {
-        border-left: 1px solid $primary-color;
-      }
+      margin-top: 10px;
     }
 
     &__warning {
@@ -105,6 +106,14 @@
       }
       &__input-funding {
         margin-bottom: 24px;
+      }
+
+      &__input-dates input:nth-of-type(2) {
+        border-left: unset;
+        margin-top: 0;
+        &:focus {
+          border-left: 1px solid $primary-color;
+        }
       }
 
       &__warning {

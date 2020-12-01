@@ -7,6 +7,7 @@
 @import "common";
 @import "pagination";
 @import "tabs";
+@import "overrides";
 
 // TODO: move this to _overrides.scss (implemented in another PR)
 .grecaptcha-badge { visibility: hidden; }

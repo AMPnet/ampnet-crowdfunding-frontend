@@ -17,12 +17,15 @@
                         <div class="input__label">Dates (DD/MM/YY)</div>
                         <i class="fas fa-lock"></i>
                     </div>
-                    <input class="input-reg w-50" formControlName="startDate"
-                           id="start-date" placeholder="Enter start date" bsDatepicker
-                           [bsConfig]="bsConfig" (click)="setDatepickerOptions()"/>
-                    <input class="input-reg w-50" formControlName="endDate"
-                           id="end-date" placeholder="Enter end date" bsDatepicker
-                           [bsConfig]="bsConfig" (click)="setDatepickerOptions()"/>
+                    <div class="row">
+                        <input class="input-reg col-12 col-lg-6 w-100" formControlName="startDate" autocomplete="off"
+                               id="start-date" placeholder="Enter start date" bsDatepicker
+                               [bsConfig]="bsConfig" (click)="setDatepickerOptions()" container="div"/>
+                        <input class="input-reg col-12 col-lg-6 w-100" formControlName="endDate" autocomplete="off"
+                               id="end-date" placeholder="Enter end date" bsDatepicker
+                               [bsConfig]="bsConfig" (click)="setDatepickerOptions()"/>
+                    </div>
+                    
                 </div>
                 <div class="right__input-investments">
                     <div class="input__desc flex__center-space">

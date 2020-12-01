@@ -1,0 +1,12 @@
+@import "app";
+
+.app-page-title {
+  margin-left: -15px;
+  margin-right: -15px;
+}
+
+@include media-breakpoint-up(lg) {
+  .app-page-title {
+    margin: 0;
+  }
+}

@@ -12,14 +12,26 @@ export class CoopService {
                 private captchaService: CaptchaService) {
     }
 
-    createCoop(data: CreateCoopData) {
+    createCoop(data: CreateCoopData, logo: File) {
         return this.captchaService.getToken(CaptchaAction.NEW_INSTANCE).pipe(
-            switchMap(captchaToken =>
-                this.http.post<AppConfig>(`/api/user/coop`, <CreateCoopReqData>{
+            switchMap(captchaToken => {
+                const reqData: CreateCoopReqData = {
                     ...data,
                     re_captcha_token: captchaToken
-                }, true)
-            ));
+                };
+
+                const formData = new FormData();
+
+                if (logo) {
+                    formData.append('logo', logo, 'logo.png');
+                }
+
+                formData.append('request', new Blob([JSON.stringify(reqData)], {
+                    type: 'application/json'
+                }), 'request.json');
+
+                return this.http.post<AppConfig>(`/api/user/coop`, formData, true);
+            }));
     }
 
     updateCoop(data: UpdateCoopData) {

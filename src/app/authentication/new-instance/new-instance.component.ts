@@ -26,9 +26,10 @@ export class NewInstanceComponent implements OnInit {
                 private fb: FormBuilder,
                 @Inject('WINDOW') public window: Window) {
         this.createCoopForm = this.fb.group({
-            name: new FormControl('', [Validators.required]),
-            identifier: new FormControl('', [Validators.required, Validators.pattern(/^[a-z0-9\-_]{3,}$/)]),
-            webTitle: new FormControl('', [Validators.required]),
+            name: ['', [Validators.required]],
+            identifier: ['', [Validators.required, Validators.pattern(/^[a-z0-9\-_]{3,}$/)]],
+            webTitle: ['', [Validators.required]],
+            logo: [null]
         });
     }
 
@@ -45,7 +46,7 @@ export class NewInstanceComponent implements OnInit {
             }
         };
 
-        return this.coopService.createCoop(createCoopData).pipe(
+        return this.coopService.createCoop(createCoopData, coop.logo).pipe(
             displayBackendErrorRx(),
             switchMap(() => this.popupService.success('Cooperative has been created!')),
             tap(() => this.router.router.navigate([`/${coop.identifier}`])),

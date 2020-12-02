@@ -145,6 +145,7 @@ export interface AppConfig {
     name?: string;
     created_at?: Date;
     hostname?: string;
+    logo?: string;
     config?: CustomConfig;
 }
 

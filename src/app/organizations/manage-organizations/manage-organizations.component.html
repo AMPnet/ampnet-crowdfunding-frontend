@@ -13,7 +13,7 @@
             </div>
         </div>
 
-        <div class="space">
+        <div class="mobile-spacing">
             <div *ngIf="states.invites?.length > 0" 
                 class="alert alert-success w-100 flex__center-space col-12 col-lg-4">
                <div>
@@ -25,7 +25,7 @@
         
 
         <ng-container *ngIf="states.organizations !== null else spinner">
-            <div *ngIf="states.organizations?.length > 0" class="groups space">
+            <div *ngIf="states.organizations?.length > 0" class="groups mobile-spacing">
                 <ul class="list-group">
                     <li *ngFor="let org of states.organizations" class="list__item"
                         routerLink="{{ org.uuid }}">
@@ -42,7 +42,7 @@
                 </ul>
             </div>
             <div *ngIf="states.organizations.length === 0"
-                 class="empty-group space">
+                 class="empty-group mobile-spacing">
                 <div class="app-page-subtitle">My groups</div>
                 <div class="empty__label" class="row justify-content-center">
                     You currently don't have access to any groups.
@@ -51,9 +51,9 @@
         </ng-container>
 
         <div class="invites">
-            <div class="app-page-subtitle space">Group invites</div>
-            <ng-container *ngIf="states.invites !== null else spinner" class="space">
-                <div class="space">
+            <div class="app-page-subtitle mobile-spacing">Group invites</div>
+            <ng-container *ngIf="states.invites !== null else spinner" class="mobile-spacing">
+                <div class="mobile-spacing">
                     <ul *ngIf="states.invites?.length > 0" class="list-group">
                         <li *ngFor="let invite of states.invites" class="list__item">
                             <div class="item__content">

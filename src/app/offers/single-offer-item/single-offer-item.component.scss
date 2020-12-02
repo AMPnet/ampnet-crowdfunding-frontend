@@ -5,7 +5,7 @@
 }
 
 .card-holder {
-  background: #F7F7F7;
+  background: $background-color;
   padding-bottom: 10px;
   transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
   cursor: pointer;
@@ -13,10 +13,6 @@
 
 .card-right .app-basic-title {
   display: none;
-}
-
-.app-basic-title, .left__progress, .card-right {
-  padding: 0 20px;
 }
 
 .img__base {
@@ -105,10 +101,6 @@
     border-radius: 1px;
   }
 
-  .left__progress, .card-right {
-    padding: 0;
-  }
-
   .card-left {
     margin: 0 64px;
     width: 60%;
@@ -141,7 +133,6 @@
 
     .app-basic-title {
       display: block;
-      padding: 0;
       margin-top: 40px;
     }
   }

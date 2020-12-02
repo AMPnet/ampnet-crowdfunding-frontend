@@ -1,19 +1,10 @@
 @import "app";
 
-.container {
-  padding: 0;
-}
-
 .single-item {
   margin-bottom: 10px;
 }
 
 @include media-breakpoint-up(lg) {
-  .container {
-    padding-right: 15px;
-    padding-left: 15px;
-  }
-
   .overview-modifier {
     margin-top: 40px;
   }

@@ -1,4 +1,5 @@
-@import "swal-overrides";
+@import './overrides/swal-overrides';
+@import './overrides/bootstrap-overrides';
 
 .uppy-Dashboard-AddFiles-info {
   display: inline-block;

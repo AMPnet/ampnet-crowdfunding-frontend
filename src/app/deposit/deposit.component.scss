@@ -1,9 +1,5 @@
 @import "app";
 
-.container {
-  padding: 0;
-}
-
 .alert-info {
   text-align: center;
   svg {
@@ -12,16 +8,17 @@
 }
 
 .card {
-  margin: 0 15px;
+  margin: 0 20px;
 }
 
 @include media-breakpoint-up(lg) {
-  .container {
-    padding: 0 15px;
-  }
   .alert-info {
     svg {
       display: inline-block;
     }
+  }
+  
+  .card {
+    margin: 0;
   }
 }

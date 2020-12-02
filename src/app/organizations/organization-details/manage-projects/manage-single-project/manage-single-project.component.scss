@@ -1,7 +1,6 @@
 @import "app";
 
 .container {
-  padding: 0;
   overflow: hidden;
 }
 
@@ -17,7 +16,6 @@
 }
 
 .edit-project {
-  padding: 0 20px;
   .alert {
     margin-top: 20px;
     svg {
@@ -56,6 +54,10 @@
       }
     }
     &-info {
+      .col-lg-5,
+      .col-lg-7 {
+        padding: 0;
+      }
       .edit {
         &-left {
           margin-top: 20px;
@@ -74,13 +76,17 @@
           }
         }
         &-right {
+          .col-12 {
+            padding: 0;
+          }
           .uppy-img {
             margin-bottom: 20px;
             &__content {
               margin-bottom: 20px;
             }
           }
-          .uppy-docs {
+          .uppy-docs,
+          .uppy-docs__content {
             margin-bottom: 20px;
           }
           .upload__label,
@@ -134,7 +140,7 @@
         }
         &__form {
           .row {
-            padding-right: 0;
+            padding-left: 0;
           }
           input {
             border-right: none !important;
@@ -183,9 +189,6 @@
   background-color: $secondary-color;
   border-top: 1px solid $background-color;
   width: 100%;
-  .container {
-    padding: 0 20px;
-  }
   &__inner {
     padding: 0;
     margin: 0;
@@ -201,10 +204,6 @@
 
 
 @include media-breakpoint-up(lg) {
-  .container {
-    padding: 0 15px;
-  }
-
   .app-page-header {
     .app-page-title-back {
       margin-bottom: 0;
@@ -218,7 +217,6 @@
   }
 
   .edit-project {
-    padding: 0;
     .alert {
       margin-bottom: 4px;
       svg {
@@ -251,6 +249,7 @@
         .edit {
           &-left {
             margin-top: 30px;
+            padding-right: 15px;
             .left {
               &__desc textarea {
                 height: 220px;
@@ -268,6 +267,9 @@
             }
             .uppy-docs {
               margin-bottom: 20px;
+            }
+            .uppy-docs__content {
+              margin-bottom: 0;
             }
             .map-holder {
               margin: 0 0 16px 0;
@@ -305,9 +307,6 @@
     width: calc(100% - 220px);
     &__inner {
       float: right;
-    }
-    .container {
-      padding: 0 12px;
     }
     .btn {
       align-items: center;

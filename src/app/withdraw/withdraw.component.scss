@@ -1,9 +1,5 @@
 @import "app";
 
-.container {
-  padding: 0;
-}
-
 .wrapper {
   padding: 0 20px;
 }
@@ -64,10 +60,6 @@
 
 
 @include media-breakpoint-up(lg) {
-  .container {
-    padding: 0 20px;
-  }
-
   .wrapper {
     padding: 0;
   }

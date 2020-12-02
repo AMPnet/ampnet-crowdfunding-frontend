@@ -1,7 +1,6 @@
 @import "app";
 
 .container {
-  padding: 0;
   overflow: hidden;
 }
 
@@ -109,10 +108,6 @@
 }
 
 @include media-breakpoint-up(lg) {
-  .container {
-    padding: 0 15px;
-  }
-
   .map-holder {
     height: 100%;
   }

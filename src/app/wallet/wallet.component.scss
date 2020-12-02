@@ -1,13 +1,12 @@
 @import "app";
 
 .container {
-  padding: 0;
   overflow: hidden;
   color: $title-color;
 }
 
-.row {
-  padding: 0 15px;
+.col-12 {
+  padding: 0;
 }
 
 .alert {
@@ -82,13 +81,13 @@
 
 .wallet-balance {
 
-  .col-12,
+  /* .col-12,
   .col-lg-6,
   .col-xl-4,
   .col-6 {
     padding-right: 5px;
     padding-left: 5px;
-  }
+  } */
 
   .balance {
     &__content {
@@ -133,6 +132,7 @@
 
 .wallet-alerts {
   margin-top: 20px;
+  padding: 0 20px;
 
   .alert-success {
     div {
@@ -275,13 +275,10 @@
 
 .bottom-report {
   margin-top: 20px;
+  padding: 0 20px;
 }
 
 @include media-breakpoint-up(lg) {
-  .container {
-    padding: 0 15px;
-  }
-
   .init-left {
     padding: 40px 64px 80px 64px;
 

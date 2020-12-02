@@ -10,7 +10,7 @@
                 Invest in
             </div>
 
-            <div class="invest col-12">
+            <div class="invest col-12 mobile-spacing">
                 <h1 class="app-basic-title">{{ states.project.name }}</h1>
                 <div class="dropdown-divider d-none d-lg-block"></div>
 
@@ -102,7 +102,7 @@
     </ng-container>
 
     <ng-container *ngIf="(projection$ | async) as projection">
-        <div class="estimated-calculator" *ngIf="states.project?.roi?.to > 0">
+        <div class="estimated-calculator mobile-spacing" *ngIf="states.project?.roi?.to > 0">
             <div class="estimated__return-label">
                 <p>ESTIMATED RETURN</p>
             </div>

@@ -1,13 +1,5 @@
 @import "app";
 
-.container {
-  padding: 0;
-}
-
-.space {
-  padding: 0 20px;
-}
-
 .alert-success {
   margin: 20px auto 0 auto;
   height: 48px;
@@ -98,14 +90,6 @@
 }
 
 @include media-breakpoint-up(lg) {
-  .container {
-    padding: 0 20px;
-  }
-
-  .space {
-    padding: 0;
-  }
-
   .btn {
     border-radius: 2px;
     &__text {

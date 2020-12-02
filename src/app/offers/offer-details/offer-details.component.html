@@ -30,8 +30,7 @@
         </div>
 
         <div class="offer-right col-lg-5">
-            <div class="right__container">
-
+            <div class="right__container mobile-spacing">
                 <div class="right__text">
                     <div>
                         <h1 class="app-basic-title">{{ states.project.name }}</h1>
@@ -98,7 +97,7 @@
                                         text="Cancel my investment"
                                         loadingText="Cancelling investments..."
                                         faIcon="fa-times-circle"
-                                        class="btn btn-danger font-weight-bold mb-4"
+                                        class="btn btn-danger font-weight-bold mb-4 w-100"
                                         [disabled]="!isCancelable"
                                         [onClick]="cancelInvestment(states.project.uuid).bind(this)">
                                 </button>
@@ -133,7 +132,7 @@
             </div>
 
             <div class="offer-right-socials col-lg-5">
-                <div class="socials__content">
+                <div class="socials__content mobile-spacing">
                     <p>Share</p>
                     <div class="socials__link">
                         <a href="https://twitter.com/intent/tweet?url={{ getProjectURL(states.project.uuid) }}"
@@ -158,7 +157,7 @@
         </div>
 
         <div class="offer-left col-lg-7">
-            <div class="left__desc">
+            <div class="left__desc mobile-spacing">
                 <div *ngIf="!isPortfolioView else tabbedView">
                     <ng-container *ngTemplateOutlet="projectDetails"></ng-container>
                 </div>
@@ -169,7 +168,7 @@
     <ng-template #projectDetails>
         <div class="left__inner">
             <div [innerHTML]="states.project.description"></div>
-            <div class="left__docs">
+            <div class="left__docs mobile-spacing">
                 <div *ngFor="let doc of states.project.documents">
                     <div class="docs__links">
                         <a href="{{ doc.link }}">

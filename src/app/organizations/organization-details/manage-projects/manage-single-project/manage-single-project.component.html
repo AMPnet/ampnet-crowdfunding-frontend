@@ -17,7 +17,7 @@
                         <span class="btn__text">Preview</span>
                     </button>
                 </div>
-                <div class="edit-project">
+                <div class="edit-project mobile-spacing">
                     <ng-container *ngIf="states.project.main_image">
                         <div class="project__img">
                             <img src="{{states.project.main_image}}" alt="Project image">
@@ -261,7 +261,7 @@
                             </tab>
 
                             <tab heading="Manage Payments" (selectTab)="detailsShown=false">
-                                <div class="edit-payments">
+                                <div class="edit-payments mobile-spacing">
                                     <app-manage-payments [showProjectTitle]="false"></app-manage-payments>
                                 </div>
                             </tab>
@@ -273,7 +273,7 @@
         </ng-container>
     </div>
 
-    <div class="cta" *ngIf="detailsShown">
+    <div class="cta mobile-spacing" *ngIf="detailsShown">
         <ng-container *ngIf="states.updateForm as updateForm">
             <div class="container">
                 <div class="cta__inner row col-lg-4">
@@ -294,7 +294,7 @@
                                 loadingText="Updating..."
                                 [disabled]="!(updateForm.dirty && updateForm.valid)"
                                 [onClick]="updateProject(states.project, updateForm).bind(this)"
-                                class="btn"
+                                class="btn w-100"
                                 faIcon="far fa-check mr-3">
                         </button>
                     </div>

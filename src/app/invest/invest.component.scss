@@ -79,7 +79,8 @@ p {
 }
 
 .error-messages {
-  margin: 30px auto
+  margin: 30px auto;
+  padding: 0 20px;
 }
 
 .alert-danger {
@@ -97,12 +98,9 @@ p {
 
 .estimated {
   &-calculator {
+    margin-bottom: 40px;
     .row {
       padding: 0;
-    }
-
-    .col-lg-4 {
-      padding: 0 15px;
     }
   }
 
@@ -177,6 +175,10 @@ p {
     margin: 24px 0 0 0;
   }
 
+  .error-messages {
+    padding: 0;
+  }
+
   .invest__content {
     display: flex;
     flex-direction: row;
@@ -225,10 +227,7 @@ p {
   .estimated {
     &-calculator {
       margin-top: 128px;
-
-      .row {
-        padding: 0 15px;
-      }
+      margin-bottom: 0;
     }
 
     &__content {

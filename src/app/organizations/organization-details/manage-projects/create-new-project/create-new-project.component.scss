@@ -2,6 +2,12 @@
 
 .container {
   padding: 0;
+  overflow: hidden;
+}
+
+.map-holder {
+  margin: 0 -20px;
+  height: 320px;
 }
 
 .row {
@@ -12,17 +18,18 @@
   padding: 0;
 }
 
+.alert-warning {
+  svg {
+    display: none;
+  }
+}
+
 .project-container {
   padding: 0 20px;
 
   .right {
     &__title {
       margin: 20px 0;
-      font-size: $font-size-mobile-title;
-      text-transform: uppercase;
-      color: $title-color;
-      letter-spacing: 1px;
-      font-weight: normal;
     }
 
     &__input-name,
@@ -54,6 +61,26 @@
         font-weight: bold;
         color: $title-color;
       }
+      span, div {
+        font-size: $font-size-mobile-title-small;
+      }
+    }
+  }
+
+  .left {
+    &__title {
+      margin: 32px 0;
+    }
+  }
+
+  .right,
+  .left {
+    &__title {
+      font-size: $font-size-mobile-title;
+      text-transform: uppercase;
+      color: $title-color;
+      letter-spacing: 1px;
+      font-weight: normal;
     }
   }
 
@@ -122,11 +149,8 @@
           font-size: $font-size-desktop-small;
           margin-top: 5px;
         }
-        div {
+        span, div {
           font-size: $font-size-desktop-body2;
-          span {
-            font-size: $font-size-desktop-body2;
-          }
         }
       }
       .btn {
@@ -157,6 +181,7 @@
       display: flex;
       svg {
         margin-top: 4px;
+        display: inline-block;
       }
     }
   }

@@ -105,7 +105,7 @@
                             </ng-container>
                         </div>
                         <ng-template #investButtons>
-                            <button *ngIf="isOverview" class="btn btn-primary w-100 btn-action-a"
+                            <button *ngIf="isOverview" class="btn btn-primary w-100"
                                     id="invest-button"
                                     [routerLink]="'/sign_up' | coopPath">
                                 <i class="mr-2 fas fa-chart-pie"></i>
@@ -115,13 +115,13 @@
                             <div *ngIf="!isOverview && !!states.user">
                                 <button *ngIf="states.user.verified"
                                         [disabled]="disableInvestButton(states.project, states.walletMW)"
-                                        class="btn btn-primary w-100 btn-action-a"
+                                        class="btn btn-primary w-100"
                                         (click)="goToInvest(states.project.uuid)">
                                     <i class="mr-2 fas fa-chart-pie"></i>
                                     {{ isPortfolioView ? 'Increase investment' : 'Invest' }}
                                 </button>
                                 <button *ngIf="!states.user.verified" [disabled]="!states.project.active"
-                                        class="btn btn-primary w-100 btn-action-a"
+                                        class="btn btn-primary w-100"
                                         [routerLink]="'/dash/settings/user' | coopPath">
                                     <i class="mr-2 fas fa-chart-pie"></i>
                                     Verify Profile & Invest

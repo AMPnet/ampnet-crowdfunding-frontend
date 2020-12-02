@@ -6,6 +6,9 @@
 
 .alert-info {
   text-align: center;
+  svg {
+    display: none;
+  }
 }
 
 .card {
@@ -15,5 +18,10 @@
 @include media-breakpoint-up(lg) {
   .container {
     padding: 0 15px;
+  }
+  .alert-info {
+    svg {
+      display: inline-block;
+    }
   }
 }

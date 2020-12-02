@@ -46,7 +46,7 @@ export class ForgotPasswordComponent {
                             return this.popupService.new({
                                 type: 'error',
                                 title: 'Error changing password',
-                                text: `User did not use email authentication method`
+                                text: 'User did not use email authentication method'
                             }).pipe(switchMap(() => EMPTY));
                         }
                 }

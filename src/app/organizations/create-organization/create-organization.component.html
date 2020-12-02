@@ -49,14 +49,15 @@
                           placeholder="Enter description"
                           id="group-description">
                 </textarea>
-
-                <button app-action-button
-                        text="Create new group"
-                        loadingText="Creating organization..." faIcon="fa-plus"
-                        [disabled]="!newOrganizationForm.valid"
-                        class="btn btn-primary btn-success"
-                        [onClick]="createOrganization.bind(this)">
-                </button>
+                <div>
+                    <button app-action-button
+                            text="Create new group"
+                            loadingText="Creating organization..." faIcon="fa-plus"
+                            [disabled]="!newOrganizationForm.valid"
+                            class="btn btn-responsive-size btn-success"
+                            [onClick]="createOrganization.bind(this)">
+                    </button>
+                </div>
             </div>
         </div>
     </form>

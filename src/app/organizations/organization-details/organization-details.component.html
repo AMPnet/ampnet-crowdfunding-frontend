@@ -51,8 +51,8 @@
                                 <div class="invite-members">
                                     <div class="invite__form">
                                         <form [formGroup]="inviteForm" style="display: contents">
-                                            <div class="form__input col-lg-5">
-                                                <input class="form-control input-reg" name=""
+                                            <div class="form__input col-11 col-lg-5">
+                                                <input class="input-reg w-100" name=""
                                                        placeholder="Add members"
                                                        formControlName="emails"
                                                        type="text" value="">
@@ -79,14 +79,14 @@
                                                 <div class="item__left">
                                                     <div class="item__name">{{ member.first_name | titlecase }} {{ member.last_name | titlecase }}</div>
                                                     <div class="item__email">{{ member.email }}</div>
+                                                    <span class="d-inline-block d-lg-none item__joined">
+                                                        Joined {{ member.member_since | date:'mediumDate' }}
+                                                    </span>
                                                 </div>
                                                 <div class="item__right">
                                                     <div class="item__joined">
                                                         <span class="d-none d-lg-inline-block">
                                                             Joined {{member.member_since | date: "longDate"}}
-                                                        </span>
-                                                        <span class="d-inline-block d-lg-none">
-                                                            Joined {{member.member_since | date:'mediumDate'}}
                                                         </span>
                                                     </div>
 

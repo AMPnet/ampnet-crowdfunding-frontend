@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { catchError, switchMap, tap } from 'rxjs/operators';
 import { SignupService } from '../../shared/services/user/signup.service';
-import { Router } from '@angular/router';
 import { PopupService } from '../../shared/services/popup.service';
 import { EMPTY, throwError } from 'rxjs';
 import { displayBackendErrorRx } from '../../utilities/error-handler';
@@ -11,7 +10,10 @@ import { RouterService } from '../../shared/services/router.service';
 @Component({
     selector: 'app-forgot-password',
     templateUrl: './forgot-password.component.html',
-    styleUrls: ['./forgot-password.component.scss']
+    styleUrls: [
+        '../auth-layout/auth-layout.component.scss',
+        './forgot-password.component.scss'
+    ]
 })
 export class ForgotPasswordComponent {
     forgotPasswordForm: FormGroup;
@@ -52,6 +54,7 @@ export class ForgotPasswordComponent {
             }),
             displayBackendErrorRx(),
             switchMap(() => this.popupService.success('We have sent you an e-mail containing your password reset link.')),
-            tap(() => this.router.navigate(['/'])));
+            tap(() => this.router.navigate(['/'])),
+        );
     }
 }

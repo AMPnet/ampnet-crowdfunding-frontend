@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BackendHttpClient } from '../backend-http-client.service';
-import { tap } from 'rxjs/operators';
+import { switchMap, tap } from 'rxjs/operators';
 import { UserService } from './user.service';
 import { AppConfigService } from '../app-config.service';
+import { CaptchaAction, CaptchaService } from '../captcha.service';
 
 
 @Injectable({
@@ -14,44 +15,54 @@ export class SignupService {
 
     constructor(private http: BackendHttpClient,
                 private appConfig: AppConfigService,
+                private captchaService: CaptchaService,
                 private userService: UserService) {
     }
 
     signupEmail(email: string, firstName: string, lastName: string, password: string) {
-        return this.http.post<User>(this.endpoint, <EmailSignupData>{
-            coop: this.appConfig.config.identifier,
-            signup_method: 'EMAIL',
-            user_info: {
-                first_name: firstName,
-                last_name: lastName,
-                email: email,
-                password: password
-            }
-        }).pipe(tap(() => this.userService.refreshUser()));
+        return this.captchaService.getToken(CaptchaAction.SIGN_UP).pipe(
+            switchMap(captchaToken => {
+                return this.http.post<User>(this.endpoint, <EmailSignupData>{
+                    coop: this.appConfig.config.identifier,
+                    signup_method: 'EMAIL',
+                    user_info: {
+                        first_name: firstName,
+                        last_name: lastName,
+                        email: email,
+                        password: password
+                    },
+                    re_captcha_token: captchaToken
+                }, true).pipe(tap(() => this.userService.refreshUser()));
+            })
+        );
     }
 
     signupSocial(provider: string, authToken: string) {
-        return this.http.post<User>(this.endpoint, <SocialSignupData>{
-            coop: this.appConfig.config.identifier,
-            signup_method: provider,
-            user_info: {
-                token: authToken
-            }
-        }).pipe(tap(() => this.userService.refreshUser()));
+        return this.captchaService.getToken(CaptchaAction.SIGN_UP).pipe(
+            switchMap(captchaToken => {
+                return this.http.post<User>(this.endpoint, <SocialSignupData>{
+                    coop: this.appConfig.config.identifier,
+                    signup_method: provider,
+                    user_info: {
+                        token: authToken
+                    },
+                    re_captcha_token: captchaToken
+                }, true).pipe(tap(() => this.userService.refreshUser()));
+            }));
     }
 
     forgotPassword(email: string) {
         return this.http.post(`${this.endpointForgotPassword}/token`, {
             coop: this.appConfig.config.identifier,
             email: email
-        });
+        }, true);
     }
 
     resetPassword(newPassword: string, token: string) {
         return this.http.post<User>(`${this.endpointForgotPassword}`, {
             new_password: newPassword,
             token: token
-        });
+        }, true);
     }
 }
 
@@ -80,6 +91,7 @@ interface EmailSignupData {
         first_name: string;
         email: string;
     };
+    re_captcha_token: string;
 }
 
 interface SocialSignupData {
@@ -87,4 +99,5 @@ interface SocialSignupData {
     user_info: {
         token: string
     };
+    re_captcha_token: string;
 }

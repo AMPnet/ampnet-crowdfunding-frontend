@@ -34,11 +34,12 @@
 
     <div class="row">
         <div class="col-md-6 mt-3">
-            <app-action-button text="Add new bank account"
-                               faIcon="fa-plus-circle"
-                               [disabled]="!newBankAccountForm.dirty || !newBankAccountForm.valid"
-                               [onClick]="onSubmit.bind(this)">
-            </app-action-button>
+            <button app-action-button
+                    text="Add new bank account"
+                    faIcon="fa-plus-circle"
+                    [disabled]="!newBankAccountForm.dirty || !newBankAccountForm.valid"
+                    [onClick]="onSubmit.bind(this)">
+            </button>
         </div>
     </div>
 </form>

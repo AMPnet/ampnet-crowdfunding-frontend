@@ -14,7 +14,7 @@ export function displayBackendError(resp: any) {
         position: 'top'
     };
 
-    if (error === null) {
+    if (!error) {
         return;
     }
 

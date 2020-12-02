@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { BackendHttpClient } from './backend-http-client.service';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { Observable, of, ReplaySubject } from 'rxjs';
 import { environment } from '../../../environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { merge as _merge } from 'lodash';
 
 @Injectable()
 export class AppConfigService {
@@ -13,7 +14,7 @@ export class AppConfigService {
     private readonly localStorageKey = 'app_config';
     private readonly cacheTimeoutMinutes = 1; // TODO: after testing, set back to 10
 
-    constructor(private http: BackendHttpClient) {
+    constructor(private http: HttpClient) {
     }
 
     /**
@@ -22,6 +23,13 @@ export class AppConfigService {
      */
     get config(): AppConfig {
         return this.appConfig;
+    }
+
+    set config(appConfig: AppConfig) {
+        of(appConfig).pipe(
+            tap(cfg => this.setLocalConfig(cfg.identifier, cfg)),
+            this.mergeAndSave.bind(this)
+        ).subscribe();
     }
 
     config$ = this.appConfigSubject.asObservable();
@@ -42,12 +50,15 @@ export class AppConfigService {
             switchMap(shouldRefresh => shouldRefresh ?
                 remoteConfig.pipe(tap(config => this.setLocalConfig(key, config))) :
                 of(localConfig[key].config)),
+            this.mergeAndSave.bind(this)
+        );
+    }
+
+    private mergeAndSave(source: Observable<AppConfig>) {
+        return source.pipe(
             map(configRes => ({
                 ...configRes,
-                config: {
-                    ...AppConfigService.defaultConfig.config,
-                    ...configRes.config
-                }
+                config: _merge(AppConfigService.defaultConfig.config, configRes.config)
             } as AppConfig)),
             tap(config => {
                 this.appConfig = config;
@@ -57,7 +68,7 @@ export class AppConfigService {
     }
 
     private remoteConfigByHostname(hostname: string) {
-        return this.http.get<AppConfig>(`/api/user/public/app/config/hostname/${hostname}`, {}, true).pipe(
+        return this.http.get<AppConfig>(`/api/user/public/app/config/hostname/${hostname}`).pipe(
             catchError(() => of(<AppConfig>{
                 config: null
             }))
@@ -65,7 +76,7 @@ export class AppConfigService {
     }
 
     private remoteConfigByIdentifier(identifier: string): Observable<AppConfig> {
-        return this.http.get<AppConfig>(`/api/user/public/app/config/identifier/${identifier}`, {}, true).pipe(
+        return this.http.get<AppConfig>(`/api/user/public/app/config/identifier/${identifier}`).pipe(
             catchError(() => of(<AppConfig>{
                 config: null
             }))
@@ -138,16 +149,17 @@ export interface AppConfig {
 }
 
 export interface CustomConfig {
-    title: string;
-    logo_url: string;
-    icon_url: string;
-    arkane: {
+    title?: string;
+    logo_url?: string;
+    icon_url?: string;
+    arkane?: {
         id: string;
         env: string;
     };
-    identyum: {
+    identyum?: {
         startLanguage: string;
     };
-    googleClientId: string;
-    facebookAppId: string;
+    googleClientId?: string;
+    facebookAppId?: string;
+    reCaptchaSiteKey?: string;
 }

@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { TokenModel } from 'src/app/models/auth/TokenModel';
 import { BackendHttpClient } from '../backend-http-client.service';
 import { EMPTY, Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
@@ -19,31 +18,31 @@ export class UserAuthService {
     }
 
     emailLogin(email: string, password: string) {
-        return this.http.post<TokenModel>('/api/user/token', {
+        return this.http.post<UserAuthResponse>('/api/user/token', {
             coop: this.appConfig.config.identifier,
             login_method: 'EMAIL',
             credentials: {
                 email: email,
                 password: password
             }
-        }).pipe(this.saveTokens);
+        }, true).pipe(this.saveTokens.bind(this));
     }
 
     socialLogin(provider: string, authToken: string) {
-        return this.http.post<TokenModel>('/api/user/token', {
+        return this.http.post<UserAuthResponse>('/api/user/token', {
             coop: this.appConfig.config.identifier,
             login_method: provider,
             credentials: {
                 token: authToken
             }
-        }).pipe(this.saveTokens);
+        }, true).pipe(this.saveTokens.bind(this));
     }
 
     refreshUserToken() {
-        return this.http.post<TokenModel>('/api/user/token/refresh', {
-            refresh_token: localStorage.getItem('refresh_token')
-        }).pipe(
-            this.saveTokens,
+        return this.http.post<UserAuthResponse>('/api/user/token/refresh', {
+            refresh_token: this.http.refreshToken
+        }, true).pipe(
+            this.saveTokens.bind(this),
             tap(() => this.userService.refreshUser())
         );
     }
@@ -52,50 +51,31 @@ export class UserAuthService {
         this.http.post<void>(`/api/user/logout`, {})
             .pipe(catchError(_ => EMPTY)).subscribe();
 
-        localStorage.removeItem('access_token');
-        localStorage.removeItem('refresh_token');
+        this.http.accessToken = null;
+        this.http.refreshToken = null;
 
         this.cacheService.clearAll();
     }
 
-    private saveTokens(source: Observable<TokenModel>) {
+    private saveTokens(source: Observable<UserAuthResponse>) {
         return source.pipe(
             tap(res => {
-                localStorage.setItem('access_token', res.access_token);
-                localStorage.setItem('refresh_token', res.refresh_token);
+                this.http.accessToken = res.access_token;
+                this.http.refreshToken = res.refresh_token;
             })
         );
     }
 
     isLoggedIn(): boolean {
-        const jwtUser = this.getJWTUser();
+        const jwtUser = this.http.getJWTUser();
 
         return jwtUser && jwtUser.coop === this.appConfig.config.identifier;
     }
-
-    getJWTUser(): JWTUser | null {
-        try {
-            const payload: JWTPayload = JSON.parse(atob(localStorage.getItem('access_token').split('.')[1]));
-            return JSON.parse(payload.user);
-        } catch (_err) {
-            return null;
-        }
-    }
 }
 
-interface JWTPayload {
-    sub: string;
-    user: string;
-    iat: number;
-    exp: number;
-}
-
-interface JWTUser {
-    uuid: string;
-    email: string;
-    name: string;
-    authorities: string[];
-    enabled: boolean;
-    verified: boolean;
-    coop: string;
+export class UserAuthResponse {
+    access_token: string;
+    expires_in: number;
+    refresh_token: string;
+    refresh_token_expires_in: number;
 }

@@ -5,7 +5,6 @@
     </div>
     <form [formGroup]="createForm" class="mb-5">
         <div class="row project-container">
-
             <div class="project-left col-lg-6">
                 <!-- Mobile title! -->
                 <h4 class="left__title d-lg-none">Create a new project</h4>
@@ -34,7 +33,7 @@
                                id="end-date" placeholder="Enter end date" bsDatepicker
                                [bsConfig]="bsConfig" (click)="setDatepickerOptions()"/>
                     </div>
-                    
+
                 </div>
                 <div class="right__input-investments">
                     <div class="input__desc flex__center-space">
@@ -42,12 +41,12 @@
                         <i class="fas fa-lock"></i>
                     </div>
                     <app-money-input-field
-                        placeholder="Enter minimal amount" inputClass="input-reg w-50"
-                        [control]="createForm.get('minPerUser')">
+                            placeholder="Enter minimal amount" inputClass="input-reg w-50"
+                            [control]="createForm.get('minPerUser')">
                     </app-money-input-field>
                     <app-money-input-field
-                        placeholder="Enter maximal amount" inputClass="input-reg w-50 border-left-none"
-                        [control]="createForm.get('maxPerUser')">
+                            placeholder="Enter maximal amount" inputClass="input-reg w-50 border-left-none"
+                            [control]="createForm.get('maxPerUser')">
                     </app-money-input-field>
                 </div>
                 <div class="right__input-funding">
@@ -56,9 +55,9 @@
                         <i class="fas fa-lock"></i>
                     </div>
                     <app-money-input-field
-                        placeholder="Enter expected funding amount"
-                        inputClass="input-reg w-100"
-                        [control]="createForm.get('expectedFunding')">
+                            placeholder="Enter expected funding amount"
+                            inputClass="input-reg w-100"
+                            [control]="createForm.get('expectedFunding')">
                     </app-money-input-field>
                 </div>
                 <div class="right__warning">
@@ -77,7 +76,7 @@
                     </ng-container>
 
                     <ng-container
-                        *ngIf="createForm.get('expectedFunding').dirty && createForm.get('minPerUser').dirty &&
+                            *ngIf="createForm.get('expectedFunding').dirty && createForm.get('minPerUser').dirty &&
                                createForm.get('maxPerUser').dirty">
                         <div class="alert alert-warning my-3" *ngIf="createForm.hasError('invalidMaxExpectedFunding')">
                             <i class="fas fa-exclamation-triangle mr-2"></i>
@@ -89,20 +88,20 @@
                         </div>
                     </ng-container>
                 </div>
-                <app-action-button
-                    text="Create new project" loadingText="Creating project..."
-                    [onClick]="submitForm.bind(this)" [disabled]="!createForm.valid"
-                    buttonClass="btn btn-primary btn-success d-none d-lg-block"
-                    faIcon="fa-plus">
-                </app-action-button>
+                <button app-action-button
+                        text="Create new project" loadingText="Creating project..."
+                        [onClick]="submitForm.bind(this)" [disabled]="!createForm.valid"
+                        class="btn btn-primary btn-success d-none d-lg-block"
+                        faIcon="fa-plus">
+                </button>
             </div>
 
-            <app-action-button
-                text="Create new project" loadingText="Creating project..."
-                [onClick]="submitForm.bind(this)" [disabled]="!createForm.valid"
-                buttonClass="btn btn-success d-block d-lg-none"
-                faIcon="fa-plus" class="w-100">
-            </app-action-button>
+            <button app-action-button
+                    text="Create new project" loadingText="Creating project..."
+                    [onClick]="submitForm.bind(this)" [disabled]="!createForm.valid"
+                    class="btn btn-success d-block d-lg-none w-100"
+                    faIcon="fa-plus">
+            </button>
         </div>
     </form>
 </div>

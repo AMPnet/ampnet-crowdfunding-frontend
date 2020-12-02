@@ -28,7 +28,10 @@
         </div>
 
         <div class="withdraw__cta">
-            <app-action-button text="Withdraw money" [onClick]="requestWithdrawal.bind(this)"> </app-action-button>
+            <button app-action-button
+                    text="Withdraw money"
+                    [onClick]="requestWithdrawal.bind(this)">
+            </button>
         </div>
     </div>
 
@@ -54,11 +57,11 @@
             </div>
         </div>
         <div class="pending__cta">
-            <app-action-button
-                text="Confirm withdrawal"
-                loadingText="Processing transaction..."
-                [onClick]="burnWithdraw.bind(this)">
-            </app-action-button>
+            <button app-action-button
+                    text="Confirm withdrawal"
+                    loadingText="Processing transaction..."
+                    [onClick]="burnWithdraw.bind(this)">
+            </button>
         </div>
     </div>
 

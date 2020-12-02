@@ -20,7 +20,7 @@
                     <h4 class="init-left__title">Your private, secure wallet</h4>
                     <p class="init-left__desc">
                         We're commited to making sure your funds are as safe as they can possibly be when using our
-                        platform. <br />
+                        platform. <br/>
                         To do this, we prevent the management of your money by anyone other than you.
                     </p>
                     <p class="init-left__desc">
@@ -29,8 +29,10 @@
                     </p>
                 </div>
                 <div class="init-left__btn">
-                    <app-action-button text="Initialize secure wallet" [onClick]="setUpArkane.bind(this)">
-                    </app-action-button>
+                    <button app-action-button
+                            text="Initialize secure wallet"
+                            [onClick]="setUpArkane.bind(this)">
+                    </button>
                 </div>
             </div>
             <!-- TODO: This is ready to go, uncomment and hook up once we have support for other wallets -->
@@ -126,14 +128,17 @@
                                                     <ng-container *ngIf="transaction.type === transactionType.WITHDRAW">
                                                         <b>Withdraw</b>
                                                     </ng-container>
-                                                    <ng-container *ngIf="transaction.type === transactionType.SHARE_PAYOUT">
+                                                    <ng-container
+                                                            *ngIf="transaction.type === transactionType.SHARE_PAYOUT">
                                                         <b>Dividend </b><span class="left__conjuctor">from</span>
                                                     </ng-container>
-                                                    <ng-container *ngIf="transaction.type === transactionType.CANCEL_INVESTMENT">
+                                                    <ng-container
+                                                            *ngIf="transaction.type === transactionType.CANCEL_INVESTMENT">
                                                         <b>Cancel investment </b>
                                                         <span class="left__conjuctor">from</span>
                                                     </ng-container>
-                                                    <ng-container *ngIf="transaction.type === transactionType.APPROVE_INVESTMENT">
+                                                    <ng-container
+                                                            *ngIf="transaction.type === transactionType.APPROVE_INVESTMENT">
                                                         <b>Approve investment </b>
                                                         <span class="left__conjuctor">to</span>
                                                     </ng-container>
@@ -166,15 +171,15 @@
                                             </div>
                                             <div class="right__icon">
                                                 <ng-container
-                                                    *ngIf="transaction.state === transactionState.MINED else singleReportButtonDisabled">
-                                                    <app-action-button
-                                                        buttonClass="btn text-dark bg-transparent text-right p-0"
-                                                        spinnerColor="black" faIcon="fa-file-chart-line"
-                                                        [onClick]="downloadSingleReport(transaction).bind(this)">
-                                                    </app-action-button>
+                                                        *ngIf="transaction.state === transactionState.MINED else singleReportButtonDisabled">
+                                                    <button app-action-button
+                                                            class="btn text-dark bg-transparent text-right p-0"
+                                                            spinnerColor="black" faIcon="fa-file-chart-line"
+                                                            [onClick]="downloadSingleReport(transaction).bind(this)">
+                                                    </button>
                                                 </ng-container>
                                                 <a href="{{ getExplorerLink(transaction.tx_hash) }}"
-                                                    target="_blank" rel="noopener noreferrer" class="ml-2">
+                                                   target="_blank" rel="noopener noreferrer" class="ml-2">
                                                     <i class="fas fa-search" style="color: black"></i>
                                                 </a>
                                             </div>
@@ -212,14 +217,19 @@
 </div>
 
 <ng-template #singleReportButtonDisabled>
-    <app-action-button buttonClass="btn bg-transparent text-right p-0" disabled="disabled" 
-                       faIcon="fa-file-chart-line">
-    </app-action-button>
+    <button app-action-button
+            class="btn bg-transparent text-right p-0"
+            disabled="disabled"
+            faIcon="fa-file-chart-line">
+    </button>
 </ng-template>
 
 <ng-template #downloadReportButton>
-    <app-action-button text="Generate PDF Report" loadingText="Downloading PDF Report..."
-                       faIcon="fa-file-chart-line" buttonClass="btn normal-text w-100"
-                       [onClick]="downloadReport.bind(this)">
-    </app-action-button>
+    <button app-action-button
+            text="Generate PDF Report"
+            loadingText="Downloading PDF Report..."
+            faIcon="fa-file-chart-line"
+            class="btn normal-text w-100"
+            [onClick]="downloadReport.bind(this)">
+    </button>
 </ng-template>

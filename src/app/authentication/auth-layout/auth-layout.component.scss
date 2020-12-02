@@ -1,0 +1,54 @@
+@import "app";
+
+.top-container {
+  background-color: var(--primary-color);
+  min-height: 100vh;
+}
+
+.content-container {
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+.card {
+  margin-left: 10px !important;
+  margin-right: 10px !important;
+  border-radius: unset !important;
+}
+
+h1 {
+  font-size: 2rem;
+  margin-top: 20px;
+  margin-bottom: 50px;
+  color: #111111;
+}
+
+.socials-facebook, .socials-google {
+  border: none;
+  color: #FFFFFF;
+}
+
+.socials-facebook {
+  background-color: #39579A;
+}
+
+.socials-google {
+  background-color: #3B4BE0;
+}
+
+.socials-facebook:hover, .socials-google:hover {
+  background-color: rgb(30, 75, 58);
+  box-shadow: 0 10px 20px rgba(105, 190, 148, 0.4);
+}
+
+.dropdown-divider {
+  width: 60%;
+  margin: 40px auto;
+}
+
+@include media-breakpoint-up(lg) {
+  .card {
+    width: 50%;
+    margin: auto !important;
+  }
+}

@@ -17,7 +17,6 @@ import { SecureLayoutComponent } from './secure-layout/secure-layout.component';
 import { SignUpComponent } from './authentication/sign-up/sign-up.component';
 import { TxOverviewComponent } from './wallet/tx-overview/tx-overview.component';
 import { NewPaymentOptionComponent } from './payment-options/new-payment-option/new-payment-option.component';
-import { ConfirmEmailComponent } from './authentication/confirm-email/confirm-email.component';
 import { AuthGuard } from './authentication/auth.guard';
 import { CreateOrganizationComponent } from './organizations/create-organization/create-organization.component';
 import { ManageOrganizationsComponent } from './organizations/manage-organizations/manage-organizations.component';
@@ -26,18 +25,18 @@ import { CreateNewProjectComponent } from './organizations/organization-details/
 import { ManageProjectsComponent } from './organizations/organization-details/manage-projects/manage-projects.component';
 import { ManageSingleProjectComponent } from './organizations/organization-details/manage-projects/manage-single-project/manage-single-project.component';
 import { VerifySignOfferComponent } from './offers/offer-details/verify-sign-offer/verify-sign-offer.component';
-import { ManageWithdrawalsComponent } from './manage-withdrawals/manage-withdrawals.component';
-import { SingleWithdrawalComponent } from './manage-withdrawals/single-withdrawal/single-withdrawal.component';
-import { ManageDepositsComponent } from './manage-deposits/manage-deposits.component';
+import { ManageWithdrawalsComponent } from './admin/manage-withdrawals/manage-withdrawals.component';
+import { SingleWithdrawalComponent } from './admin/manage-withdrawals/single-withdrawal/single-withdrawal.component';
+import { ManageDepositsComponent } from './admin/manage-deposits/manage-deposits.component';
 import { DepositComponent } from './deposit/deposit.component';
-import { ManageSingleDepositComponent } from './manage-deposits/manage-single-deposit/manage-single-deposit.component';
+import { ManageSingleDepositComponent } from './admin/manage-deposits/manage-single-deposit/manage-single-deposit.component';
 import { WithdrawComponent } from './withdraw/withdraw.component';
-import { WalletActivationComponent } from './wallet-activation/wallet-activation.component';
+import { WalletActivationComponent } from './admin/wallet-activation/wallet-activation.component';
 import { CompleteOnboardingComponent } from './complete-onboarding/complete-onboarding.component';
-import { PlatformBankAccountComponent } from './platform-bank-account/platform-bank-account.component';
-import { NewPlatformBankAccountComponent } from './platform-bank-account/new-platform-bank-account/new-platform-bank-account.component';
+import { PlatformBankAccountComponent } from './admin/platform-bank-account/platform-bank-account.component';
+import { NewPlatformBankAccountComponent } from './admin/platform-bank-account/new-platform-bank-account/new-platform-bank-account.component';
 import { ExchangeComponent } from './exchange/exchange.component';
-import { OwnershipComponent } from './ownership/ownership.component';
+import { OwnershipComponent } from './admin/ownership/ownership.component';
 import { RevenueShareComponent } from './organizations/organization-details/manage-projects/manage-single-project/manage-payments/revenue-share/revenue-share.component';
 import { ManagePaymentsComponent } from './organizations/organization-details/manage-projects/manage-single-project/manage-payments/manage-payments.component';
 import { OfferDetailsGuard } from './offers/offer-details/offer-details.guard';
@@ -50,18 +49,27 @@ import { IdentityComponent } from './settings/user/identity/identity.component';
 import { UserGuard } from './settings/user/user.guard';
 import { UserComponent } from './settings/user/user.component';
 import { CoopGuard } from './shared/guards/coop.guard';
+import { AuthLayoutComponent } from './authentication/auth-layout/auth-layout.component';
+import { SignInComponent } from './authentication/sign-in/sign-in.component';
+import { NewInstanceComponent } from './authentication/new-instance/new-instance.component';
+import { PlatformConfigComponent } from './admin/platform-config/platform-config.component';
 
 const appRoutes: Routes = [
     {
         path: '', component: PublicLayoutComponent,
         children: [
             {path: '', component: LandingPageComponent},
-            {path: 'sign_up', component: SignUpComponent},
-            {path: 'confirm_email', component: ConfirmEmailComponent},
+            {
+                path: '', component: AuthLayoutComponent, children: [
+                    {path: 'sign_up', component: SignUpComponent},
+                    {path: 'sign_in', component: SignInComponent},
+                    {path: 'forgot_password', component: ForgotPasswordComponent},
+                    {path: 'reset_password', component: ResetPasswordComponent},
+                    {path: 'new_instance', component: NewInstanceComponent},
+                ]
+            },
             {path: 'overview/:isOverview', component: OffersComponent},
             {path: 'overview/:id/:isOverview', component: OfferDetailsComponent, canActivate: [OfferDetailsGuard]},
-            {path: 'forgot_password', component: ForgotPasswordComponent},
-            {path: 'reset_password', component: ResetPasswordComponent},
             {path: 'sign_in_auto/:email/:password', component: SignInAutoComponent},
         ]
     },
@@ -120,6 +128,7 @@ const appRoutes: Routes = [
             {path: 'admin/platform_bank_account/new', component: NewPlatformBankAccountComponent},
             {path: 'exchange', component: ExchangeComponent},
             {path: 'ownership', component: OwnershipComponent},
+            {path: 'platform_config', component: PlatformConfigComponent},
         ]
     }
 ];

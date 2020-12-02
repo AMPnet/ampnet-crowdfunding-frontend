@@ -1,21 +1,35 @@
-import swal from 'sweetalert2';
+import swal, { SweetAlertOptions } from 'sweetalert2';
 import { SpinnerUtil } from './spinner-utilities';
 import { catchError } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
 
+// TODO: refactor this method to use popupService
 export function displayBackendError(resp: any) {
     const error = resp.error;
+
+    const defaultSettings: SweetAlertOptions = {
+        titleText: 'Warning!',
+        type: 'warning',
+        customClass: 'popup-warning',
+        position: 'top'
+    };
 
     if (error === null) {
         return;
     }
 
     if (error.description !== undefined) {
-        swal('', error.description, 'warning');
+        swal(Object.assign(defaultSettings, {text: error.description}));
     } else if (error.message !== undefined) {
-        swal('', error.message, 'warning');
+        swal(Object.assign(defaultSettings, {text: error.message}));
     } else {
-        swal('', 'An unknown error occurred.', 'error');
+        swal({
+            titleText: 'Error!',
+            text: 'An unknown error occurred.',
+            type: 'error',
+            customClass: 'popup-error',
+            position: 'top'
+        });
     }
 }
 

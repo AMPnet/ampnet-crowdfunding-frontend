@@ -51,6 +51,7 @@
   margin-bottom: 0px;
   cursor: pointer;
   width: 100%;
+  color: $title-color;
 
   @include media-breakpoint-up(lg) {
     margin-bottom: 10px;

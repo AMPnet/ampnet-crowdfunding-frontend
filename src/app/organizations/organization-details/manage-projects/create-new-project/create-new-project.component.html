@@ -5,8 +5,17 @@
     </div>
     <form [formGroup]="createForm" class="mb-5">
         <div class="row project-container">
+
+            <div class="project-left col-lg-6">
+                <!-- Mobile title! -->
+                <h4 class="left__title d-lg-none">Create a new project</h4>
+                <div class="map-holder">
+                    <app-location-map [editable]="true" [(lat)]="mapLat" [(lng)]="mapLong"></app-location-map>
+                </div>
+            </div>
+
             <div class="project-right col-lg-6">
-                <h4 class="right__title">Create a new project</h4>
+                <h4 class="right__title d-none d-lg-block">Create a new project</h4>
                 <div class="right__input-name">
                     <div class="input__label">Project name</div>
                     <input class="input-reg w-100" formControlName="name"
@@ -86,12 +95,6 @@
                     buttonClass="btn btn-primary btn-success d-none d-lg-block"
                     faIcon="fa-plus">
                 </app-action-button>
-            </div>
-
-            <div class="project-left col-lg-6">
-                <div class="map-holder">
-                    <app-location-map [editable]="true" [(lat)]="mapLat" [(lng)]="mapLong"></app-location-map>
-                </div>
             </div>
 
             <app-action-button

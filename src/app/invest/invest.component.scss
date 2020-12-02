@@ -18,6 +18,10 @@ p {
   margin-bottom: 20px;
 }
 
+.disabled-margin {
+  margin: 20px 0 0 0;
+}
+
 .invest {
   &__content {
     margin-top: 46px;
@@ -79,6 +83,8 @@ p {
 }
 
 .alert-danger {
+  display: flex;
+  align-items: center;
   span,
   .btn-danger {
     display: none;
@@ -167,6 +173,10 @@ p {
     margin: 17px 0 8px 0;
   }
 
+  .disabled-margin {
+    margin: 24px 0 0 0;
+  }
+
   .invest__content {
     display: flex;
     flex-direction: row;
@@ -200,6 +210,8 @@ p {
     }
   }
   .alert-danger {
+    display: flex;
+    align-items: center;
     span,
     .btn-danger {
       display: block;

@@ -40,11 +40,9 @@ export class ResetPasswordComponent implements OnInit {
 
         return this.signUpService.resetPassword(newPassword, this.token).pipe(
             displayBackendErrorRx(),
-            switchMap(() => this.popupService.new({
-                type: 'success',
-                title: 'Success',
-                text: 'Your password has been changed successfully.'
-            })),
+            switchMap(() => this.popupService.success(
+                'Your password has been changed successfully.'
+            )),
             switchMap(() => this.router.navigate(['/']))
         );
     }

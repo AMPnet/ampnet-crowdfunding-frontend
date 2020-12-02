@@ -30,7 +30,7 @@
                     <li *ngFor="let org of states.organizations" class="list__item"
                         routerLink="{{ org.uuid }}">
                         <div class="item__desc">
-                            <div class="item__title">{{ org.name }}</div>
+                            <div class="item__title">{{ org.name | titlecase }}</div>
                             <div class="item__projects-count"><b>{{org.project_count}} </b>
                                 {{ org.project_count === 1 ? "Project" : "Projects" }}
                             </div>
@@ -57,7 +57,15 @@
                     <ul *ngIf="states.invites?.length > 0" class="list-group">
                         <li *ngFor="let invite of states.invites" class="list__item">
                             <div class="item__content">
-                                <div class="item__title">{{ invite.organization_name }}</div>
+                                <div class="item__desc">
+                                    <div class="item__title">{{ invite.organization_name | titlecase }}</div>
+
+                                    <!-- TODO: implement when data is available from API -->
+                                    <!-- <div class="item__projects-count d-lg-none"><b>3 </b>
+                                        Projects
+                                    </div> -->
+                                </div>
+
                                 <div class="item__img">
                                     <img src="{{invite.organization_header_image}}" alt="Organization image">
                                 </div>

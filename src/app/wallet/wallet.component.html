@@ -12,7 +12,7 @@
     <ng-container *ngIf="{ wallet: wallet$ | async } as states">
         <div *ngIf="states.wallet?.state === walletState.EMPTY" class="row">
             <div class="init-left col-12 col-lg-6">
-                <div class="alert alert-small alert-warning flex__center">
+                <div class="alert alert-warning flex__center">
                     <i class="fas fa-exclamation-triangle mr-2"></i>
                     <b>You must initialize your wallet to invest</b>
                 </div>
@@ -199,7 +199,7 @@
                 </ng-template>
             </div>
 
-            <div class="bottom-report col-12 pb-3" *ngIf="transactionHistory.length > 0">
+            <div class="bottom-report col-12" *ngIf="transactionHistory.length > 0">
                 <ng-template [ngTemplateOutlet]="downloadReportButton"></ng-template>
             </div>
         </div>

@@ -39,10 +39,9 @@ export class ProjectDepositComponent {
         return this.depositService.createProjectDeposit(projectUUID).pipe(
             displayBackendErrorRx(),
             catchError(err =>
-                err.error.err_code === '0509' ? this.popupService.new({
-                    type: 'info',
-                    text: 'You already have an existing deposit. Please wait until it\'s approved'
-                }).pipe(switchMap(() => this.recoverBack())) : this.recoverBack())
+                err.error.err_code === '0509' ? this.popupService.info(
+                    'You already have an existing deposit. Please wait until it\'s approved'
+                ).pipe(switchMap(() => this.recoverBack())) : this.recoverBack())
         );
     }
 

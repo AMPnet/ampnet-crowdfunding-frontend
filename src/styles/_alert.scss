@@ -25,7 +25,6 @@
     font-size: $font-size-desktop-small;
   }
   svg {
-    display: none;
     margin-right: 15px;
     font-size: 24px;
   }
@@ -37,10 +36,6 @@
     
     b {
       font-size: $font-size-desktop-body;
-    }
-
-    svg {
-      display: inline-block;
     }
   }
 
@@ -61,5 +56,8 @@
   }
   &-danger {
     @include alert-colors($error-color-bg, $error-color);
+  }
+  &-info {
+    @include alert-colors(lighten($primary-color, 45%), $primary-color);
   }
 }

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SignupService } from '../../shared/services/user/signup.service';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import swal from 'sweetalert2';
+import { PopupService } from '../../shared/services/popup.service';
 import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthService } from 'angularx-social-login';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { UserAuthService } from '../../shared/services/user/user-auth.service';
@@ -26,7 +26,8 @@ export class SignUpComponent implements OnInit {
         private socialAuthService: SocialAuthService,
         private route: ActivatedRoute,
         private loginService: UserAuthService,
-        private formBuilder: FormBuilder
+        private formBuilder: FormBuilder,
+        private popupService: PopupService
     ) {
         this.emailSignupForm = this.formBuilder.group({
             firstName: new FormControl('', [Validators.required]),
@@ -62,7 +63,7 @@ export class SignUpComponent implements OnInit {
                     }, hideSpinnerAndDisplayError);
             }, err => {
                 SpinnerUtil.hideSpinner();
-                swal('', err.error.message, 'warning');
+                this.popupService.warning(err.error.message);
             });
         }).catch(hideSpinnerAndDisplayError);
     }
@@ -76,7 +77,7 @@ export class SignUpComponent implements OnInit {
         ).subscribe(() => {
             SpinnerUtil.hideSpinner();
             this.router.navigate(['/dash/offers'])
-                .then(() => swal('', 'Sign-up successful!', 'success'));
+                .then(() => this.popupService.success('Sign-up successful!'));
         }, hideSpinnerAndDisplayError);
     }
 }

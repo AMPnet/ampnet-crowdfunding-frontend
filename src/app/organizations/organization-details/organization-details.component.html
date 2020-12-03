@@ -51,7 +51,7 @@
                                 <div class="invite-members">
                                     <div class="invite__form">
                                         <form [formGroup]="inviteForm" style="display: contents">
-                                            <div class="form__input col-11 col-lg-5">
+                                            <div class="form__input col-lg-5">
                                                 <input class="input-reg w-100" name=""
                                                        placeholder="Add members"
                                                        formControlName="emails"
@@ -59,8 +59,8 @@
                                             </div>
                                             <div class="form__cta col-lg-2">
                                                 <button app-action-button
-                                                        text="Add members" loadingText="Inviting..."
-                                                        faIcon="fas fa-plus"
+                                                        text="Add members" textShort="" 
+                                                        loadingText="Inviting..." faIcon="fas fa-plus"
                                                         [onClick]="inviteClicked(states.organization.uuid).bind(this)"
                                                         [disabled]="!inviteForm.valid" class="btn btn-success">
                                                 </button>

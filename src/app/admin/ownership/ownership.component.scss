@@ -1,0 +1,15 @@
+@import "app";
+
+.col-md-4,
+.col-md-8 {
+  padding: 0;
+}
+
+@include media-breakpoint-up(lg) {
+  .col-md-4 {
+    padding-left: 15px;
+  }
+  .col-md-8 {
+    padding-right: 15px;
+  }
+}

@@ -11,7 +11,7 @@ import { RouterService } from '../../../../../shared/services/router.service';
 @Component({
     selector: 'app-project-deposit',
     templateUrl: './project-deposit.component.html',
-    styleUrls: ['./project-deposit.component.css']
+    styleUrls: ['./project-deposit.component.scss']
 })
 export class ProjectDepositComponent {
     masterIBAN$: Observable<string>;
@@ -48,5 +48,9 @@ export class ProjectDepositComponent {
     private recoverBack(): Observable<never> {
         this.router.navigate(['../'], {relativeTo: this.route});
         return EMPTY;
+    }
+
+    backToProjectEditScreen() {
+        this.router.navigate(['../../'], {relativeTo: this.route});
     }
 }

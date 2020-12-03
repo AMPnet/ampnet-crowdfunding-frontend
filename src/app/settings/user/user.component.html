@@ -2,35 +2,39 @@
     <div class="container">
         <h1 class="app-page-title">USER PROFILE</h1>
 
-        <div class="row">
-            <div class="col-md-3">
-                <div class="mt-4">
-                    <div class="explainer-mini">First name</div>
-                    {{ user.first_name }}
+        <div class="mobile-spacing">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="mt-4">
+                        <div class="explainer-mini">First name</div>
+                        {{ user.first_name }}
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-3">
-                <div class="mt-4">
-                    <div class="explainer-mini">Last name</div>
-                    {{ user.last_name }}
+                <div class="col-md-3">
+                    <div class="mt-4">
+                        <div class="explainer-mini">Last name</div>
+                        {{ user.last_name }}
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-3">
-                <div class="mt-4">
-                    <div class="explainer-mini">Email</div>
-                    {{ user.email }}
+                <div class="col-md-3">
+                    <div class="mt-4">
+                        <div class="explainer-mini">Email</div>
+                        {{ user.email }}
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-3">
-                <div class="mt-4" style="width: fit-content; text-align: center;">
-                    <div class="explainer-mini">Approved</div>
-                    <i [class]="user.enabled ? 'fa-check' : 'fa-close'" class="fa"></i>
+                <div class="col-md-3">
+                    <div class="mt-4" style="width: fit-content; text-align: center;">
+                        <div class="explainer-mini">Approved</div>
+                        <i [class]="user.enabled ? 'fa-check' : 'fa-close'" class="fa"></i>
+                    </div>
                 </div>
-            </div>
+            </div>   
         </div>
-        <button [routerLink]="'/dash/settings/user/identity' | coopPath"
-                class="btn btn-primary p-3 mt-5 w-100">
-            Update user information
+        <div class="mobile-spacing">
+            <button [routerLink]="'/dash/settings/user/identity' | coopPath"
+                    class="btn btn-primary p-3 mt-5 w-100">
+                Update user information
         </button>
+        </div>
     </div>
 </ng-container>

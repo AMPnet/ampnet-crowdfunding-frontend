@@ -1,5 +1,6 @@
 <div *ngIf="user !== undefined" class="container root-content-container">
-    <div class="explainer-mini">Your role on the platform is</div>
+    <div class="mobile-spacing">
+        <div class="explainer-mini">Your role on the platform is</div>
     <div *ngIf="user.role === 'ADMIN'">ADMIN</div>
     <div *ngIf="user.role === 'TOKEN_ISSUER'">TOKEN ISSUER</div>
     <div *ngIf="user.role === 'PLATFORM_MANAGER'">PLATFORM MANAGER</div>
@@ -38,5 +39,5 @@
             </div>
         </div>
     </div>
-
+    </div>
 </div>

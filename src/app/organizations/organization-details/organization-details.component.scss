@@ -94,14 +94,15 @@
       background-color: $background-color;
     }
     &__form {
-      margin: 0 8px;
+      margin: 0 20px;
       display: flex;
       justify-content: center;
       padding-bottom: 8px;
       .form__input {
-        margin-left: -18px;
+        width: calc(80% + 18px);
       }
       .form__cta {
+        width: 20%;
         margin-left: -18px;
         background-color: $background-color;
       }

@@ -9,7 +9,7 @@ import { AppConfig, AppConfigService } from '../../shared/services/app-config.se
 @Component({
     selector: 'app-platform-config',
     templateUrl: './platform-config.component.html',
-    styleUrls: ['./platform-config.component.css']
+    styleUrls: ['./platform-config.component.scss']
 })
 export class PlatformConfigComponent {
     private refreshAppConfig = new BehaviorSubject<AppConfig>(null);

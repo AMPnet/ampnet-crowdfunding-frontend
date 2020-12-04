@@ -7,18 +7,10 @@
   }
 }
 
-.card {
-  margin: 0 20px;
-}
-
 @include media-breakpoint-up(lg) {
   .alert-info {
     svg {
       display: inline-block;
     }
-  }
-  
-  .card {
-    margin: 0;
   }
 }

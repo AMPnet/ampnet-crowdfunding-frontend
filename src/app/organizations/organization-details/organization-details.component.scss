@@ -90,11 +90,10 @@
   .invite {
     &-members {
       padding: 15px 0;
-      margin: 0 -20px;
       background-color: $background-color;
     }
     &__form {
-      margin: 0 20px;
+      margin: 0 15px;
       display: flex;
       justify-content: center;
       padding-bottom: 8px;
@@ -110,8 +109,8 @@
     &__desc {
       font-size: $font-size-desktop-xsmall;
       color: $body-color;
-      padding-left: 20px;
-      padding-right: 20px;
+      padding-left: 15px;
+      padding-right: 15px;
       b {
         font-size: $font-size-desktop-xsmall;
       }
@@ -222,7 +221,6 @@
     .invite {
       &-members {
         padding: 25px 0;
-        margin: 0;
         border-radius: 1px;
       }
       &__form {

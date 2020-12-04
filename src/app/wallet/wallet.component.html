@@ -49,7 +49,7 @@
         </div>
 
         <div *ngIf="!!states.wallet && states.wallet.state !== walletState.EMPTY; else fetchWalletSpinner">
-            <div class="col-12">
+            <!-- <div class="col-12"> -->
                 <div class="wallet-balance flex__center row mobile-spacing">
                     <div class="col-12 col-lg-6 col-xl-8">
                         <div class="balance__content">
@@ -80,7 +80,7 @@
 
                 <div class="wallet-alerts col-12 col-lg-11">
                     <div *ngIf="states.wallet?.wallet?.activated_at === null"
-                         class="alert alert-success w-100 flex__center-space">
+                         class="alert alert-success w-100 flex__center--space">
                         <div>
                             <i class="fas fa-bolt"></i>
                             Your wallet is pending approval from admin. You can deposit funds while pending approval.
@@ -88,7 +88,7 @@
                         <button class="btn" routerLink="deposit">Deposit funds</button>
                     </div>
                     <div *ngIf="states.wallet?.wallet?.balance === 0"
-                         class="alert alert-success w-100 flex__center-space">
+                         class="alert alert-success w-100 flex__center--space">
                         <div>
                             <i class="fas fa-bolt"></i>
                             Your wallet is empty. Deposit funds to get started!
@@ -96,9 +96,9 @@
                         <button class="btn" routerLink="deposit">Deposit funds</button>
                     </div>
                 </div>
-            </div>
+            <!-- </div> -->
 
-            <div class="transactions col-12" *ngIf="states.wallet.state === walletState.READY">
+            <div class="transactions" *ngIf="states.wallet.state === walletState.READY">
                 <div class="d-flex justify-content-between">
                     <div class="transactions__title">Transaction History</div>
                     <div class="transactions__report" *ngIf="transactionHistory.length > 0">
@@ -204,7 +204,7 @@
                 </ng-template>
             </div>
 
-            <div class="bottom-report col-12" *ngIf="transactionHistory.length > 0">
+            <div class="bottom-report" *ngIf="transactionHistory.length > 0">
                 <ng-template [ngTemplateOutlet]="downloadReportButton"></ng-template>
             </div>
         </div>

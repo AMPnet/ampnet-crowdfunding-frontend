@@ -3,13 +3,12 @@
     investmentData: investmentData$ | async
 } as states" class="container">
     <ng-container *ngIf="states.project && states.investmentData else spinner">
+        <div [routerLink]="['/dash', 'offers', states.project.uuid] | coopPath"
+             class="app-page-title-back">
+            <i class="fas fa-long-arrow-alt-left mr-3"></i>
+            Invest in
+        </div>
         <div class="row">
-            <div [routerLink]="['/dash', 'offers', states.project.uuid] | coopPath"
-                 class="app-page-title-back">
-                <i class="fas fa-long-arrow-alt-left mr-3"></i>
-                Invest in
-            </div>
-
             <div class="invest col-12 mobile-spacing">
                 <h1 class="app-basic-title">{{ states.project.name }}</h1>
                 <div class="dropdown-divider d-none d-lg-block"></div>
@@ -43,7 +42,7 @@
                         </button>
                     </div>
 
-                    <div class="col-lg-2 invest__text-right flex__center-space">
+                    <div class="col-lg-2 invest__text-right flex__center--space">
                         <div>
                             <p class="right__available">Available funds</p>
                             <!-- Amount data for desktop screens! -->
@@ -73,7 +72,7 @@
                 </div>
                 
                 <div *ngIf="investForm.get('amount').errors?.amountAboveBalance"
-                     class="alert alert-danger flex__center-space">
+                     class="alert alert-danger flex__center--space">
                     <div class="flex__center">
                         <i class="fas fa-dizzy"></i>
                         <b>You don't have enough funds on your wallet</b>
@@ -90,7 +89,7 @@
                 </div>
     
                 <div *ngIf="states.investmentData.notEnoughFunds"
-                     class="alert alert-danger flex__center-space">
+                     class="alert alert-danger flex__center--space">
                      <div class="flex__center">
                         <i class="fas fa-dizzy"></i>
                         <b class="mr-2">You don't have enough funds for minimal investment. </b>

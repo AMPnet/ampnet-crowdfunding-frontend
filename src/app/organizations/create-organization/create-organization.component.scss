@@ -4,14 +4,6 @@
   overflow: hidden;
 }
 
-.row {
-  padding: 0 20px;
-}
-
-.col-lg-6 {
-  padding: 0;
-}
-
 .form {
   &-right {
     margin-top: 40px;
@@ -88,14 +80,14 @@
 }
 
 @include media-breakpoint-up(lg) {
-  .row {
-    padding: 0;
-  }
   .col-lg-6 {
    border: 1px solid $border-light-color;
    border-radius: 1px; 
   }
   .form {
+    &-container {
+      padding: 0 20px;
+    }
     &-left {
       padding: 64px 80px 80px 64px;
     }

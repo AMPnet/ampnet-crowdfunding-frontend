@@ -48,7 +48,7 @@
                         </tab>
                         <tab heading="Members">
                             <div class="manage__members">
-                                <div class="invite-members">
+                                <div class="invite-members app__full-width">
                                     <div class="invite__form">
                                         <form [formGroup]="inviteForm" style="display: contents">
                                             <div class="form__input col-lg-5">
@@ -75,7 +75,7 @@
                                     <ng-container *ngIf="!!states.orgMembers else spinner">
                                         <ul class="list-group">
                                             <li *ngFor="let member of states.orgMembers"
-                                                class="list__item flex__center-space">
+                                                class="list__item flex__center--space">
                                                 <div class="item__left">
                                                     <div class="item__name">{{ member.first_name | titlecase }} {{ member.last_name | titlecase }}</div>
                                                     <div class="item__email">{{ member.email }}</div>

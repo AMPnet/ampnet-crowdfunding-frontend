@@ -15,22 +15,24 @@
 
     <div *ngIf="states.project !== null else overlaySpinner">
         <!-- Closed project popup -->
-        <div *ngIf="!states.project.active" class="col-lg-12 mb-3">
+        <div *ngIf="!states.project.active" class="mb-3">
             <div class="alert alert-danger">
                 The project is not open for funding. If you wish to invest, please check project at a
                 later date.
             </div>
         </div>
 
-        <div class="offer-left col-lg-7">
-            <div class="wow fadeIn">
-                <img class="left__img w-100" src="{{states.project.main_image}}"
-                     onerror="this.onerror=null; this.src='../../../../assets/noimage.png'">
+        <div class="app__full-width">
+            <div class="offer-left col-lg-7">
+                <div class="wow fadeIn">
+                    <img class="left__img w-100" src="{{states.project.main_image}}"
+                         onerror="this.onerror=null; this.src='../../../../assets/noimage.png'">
+                </div>
             </div>
         </div>
 
         <div class="offer-right col-lg-5">
-            <div class="right__container mobile-spacing">
+            <div class="right__container app__full-width--padding">
                 <div class="right__text">
                     <div>
                         <h1 class="app-basic-title">{{ states.project.name }}</h1>
@@ -195,7 +197,7 @@
                     </div>
 
                     <ng-container *ngIf="(transactions$ | async) as transactions">
-                        <div class="investments__history flex__center-space"
+                        <div class="investments__history flex__center--space"
                              *ngFor="let transaction of transactions.transactions">
                             <div class="history__left">
                                 <div class="history__amount">

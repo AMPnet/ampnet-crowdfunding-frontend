@@ -4,6 +4,7 @@ import { AppConfig, CustomConfig } from '../app-config.service';
 import { CaptchaAction, CaptchaService } from '../captcha.service';
 import { switchMap } from 'rxjs/operators';
 
+
 @Injectable({
     providedIn: 'root'
 })
@@ -23,7 +24,21 @@ export class CoopService {
     }
 
     updateCoop(data: UpdateCoopData) {
-        return this.http.put<AppConfig>(`/api/user/coop`, data);
+        const removeEmpty = (obj) => {
+            Object.keys(obj).forEach(key => {
+                if (obj[key] && typeof obj[key] === 'object') {
+                    removeEmpty(obj[key]);
+                    if (Object.keys(obj[key]).length === 0) {
+                        delete obj[key];
+                    }
+                } else if (!obj[key]) {
+                    delete obj[key];
+                }
+            });
+            return obj;
+        };
+
+        return this.http.put<AppConfig>(`/api/user/coop`, removeEmpty(data));
     }
 
     getCoop() {

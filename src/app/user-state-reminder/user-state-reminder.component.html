@@ -15,7 +15,7 @@
     <div *ngIf="isUserVerified(states.user) && !isWalletInitialized(states.wallet)" class="container">
         <div class="wallet-init-reminder">
             <p>
-                <span *ngIf="states.user.role !== userRole.ADMIN">Thank you for verifying your profile.</span>
+                <span *ngIf="states.user?.role !== userRole.ADMIN">Thank you for verifying your profile.</span>
                 In order to manage funds, you need to have your wallet initialized.
                 Please initialize your wallet <span class="reminder-link" [routerLink]="'/dash/wallet' | coopPath">here</span>.
             </p>
@@ -27,7 +27,7 @@
         <div class="wallet-init-reminder">
             <p>
                 Thank you for initializing your wallet.
-                <span *ngIf="states.user.role === userRole.ADMIN; else notAdmin">
+                <span *ngIf="states.user?.role === userRole.ADMIN; else notAdmin">
                     Please wait for a few moments to get everything set up.
                 </span>
                 <ng-template #notAdmin>

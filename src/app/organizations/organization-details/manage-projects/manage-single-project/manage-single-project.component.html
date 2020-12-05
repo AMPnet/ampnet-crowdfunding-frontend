@@ -220,18 +220,18 @@
                             <tab heading="News" (selectTab)="detailsShown=false">
                                 <div class="edit-news">
                                     <p class="news__title">Project news</p>
-                                    <div class="news__form">
+                                    <div class="news__form col-lg-8">
                                         <form [formGroup]="newsForm">
-                                            <div class="col-lg-8 row">
-                                                <div class="col-11 form__input">
+                                            <div class="row">
+                                                <div class="col-lg-11 form__input">
                                                     <input class="input-reg w-100" id="newsLink"
                                                            placeholder="Enter link (e.g. https://portal.com/news)"
                                                            formControlName="newsLink"
                                                            type="text">
                                                 </div>
-                                                <div class="col-1 form__btn">
+                                                <div class="col-lg-1 form__btn">
                                                     <button app-action-button
-                                                            faIcon="fa-plus ml-n2 ml-lg-0"
+                                                            faIcon="fa-plus ml-lg-0"
                                                             [disabled]="!newsForm.dirty || !newsForm.valid"
                                                             [onClick]="addNewsLink(states.project, newsForm).bind(this)"
                                                             class="w-100 btn">

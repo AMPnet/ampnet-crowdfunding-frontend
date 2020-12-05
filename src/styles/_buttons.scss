@@ -33,6 +33,14 @@
   &-success {
     @include button-variant($success-color, darken($success-color, 7.5%), darken($success-color, 10%), lighten($success-color,5%), lighten($success-color, 10%), darken($success-color,30%));
   }
+
+  &-socials-facebook {
+    @include button-variant($socials-facebook, darken($socials-facebook, 7.5%), darken($socials-facebook, 10%), lighten($socials-facebook,5%), lighten($socials-facebook, 10%), darken($socials-facebook,30%));
+  }
+
+  &-socials-google {
+    @include button-variant($socials-google, darken($socials-google, 7.5%), darken($socials-google, 10%), lighten($socials-google,5%), lighten($socials-google, 10%), darken($socials-google,30%));
+  }
   
   &-grey {
     @include button-variant(darken($background-color, 7.5%), darken($background-color, 30%), darken($background-color, 12%), darken($background-color, 30%), darken($background-color, 10%), darken($background-color, 40%));

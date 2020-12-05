@@ -51,10 +51,6 @@
       }
     }
     &-info {
-      .col-lg-5,
-      .col-lg-7 {
-        padding: 0;
-      }
       .edit {
         &-left {
           margin-top: 20px;
@@ -73,9 +69,6 @@
           }
         }
         &-right {
-          .col-12 {
-            padding: 0;
-          }
           .uppy-img {
             margin-bottom: 20px;
             &__content {
@@ -123,8 +116,8 @@
     }
     &-news {
       margin-top: 40px;
-      .col-11,
-      .col-1 {
+      .col-lg-1,
+      .col-lg-11 {
         padding: 0;
       }
       .news {
@@ -136,14 +129,12 @@
           padding-bottom: 6px;
         }
         &__form {
-          .row {
-            padding-left: 0;
-          }
-          input {
-            border-right: none !important;
+          .form__input {
+            width: calc(85% + 18px);
           }
           .form__btn {
-            margin-left: -10px;
+            width: 15%;
+            margin-left: -18px;
             background-color: $background-color;
           }
         }
@@ -173,7 +164,6 @@
       }
     }
     &-payments {
-      padding: 0 15px;
       margin: 40px -15px 0 -15px;
     }
   }
@@ -278,25 +268,16 @@
       &-news {
         margin-top: 58px;
         .news {
-          &__form {
-            .form__btn {
-              margin-left: 0px;
-            }
-            input {
-              padding-right: 26px;
-            }
-          }
           &__list {
             .list {
               &__item {
-                margin-right: 10px;
+                margin-right: 18px;
               }
             }
           }
         }
       }
       &-payments {
-        padding: 0;
         margin: 50px -15px 0 -15px;
       }
     }
@@ -311,5 +292,4 @@
       align-items: center;
     }
   }
-  
 }

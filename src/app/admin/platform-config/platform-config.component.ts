@@ -27,15 +27,15 @@ export class PlatformConfigComponent {
         this.updateForm$ = this.appConfig$.pipe(map(appConfig => {
                 return fb.group({
                     name: [appConfig.name, Validators.required],
-                    title: [appConfig.config?.title || undefined],
-                    logo: [appConfig.config?.logo_url || undefined],
-                    icon: [appConfig.config?.icon_url || undefined],
-                    hostname: [appConfig.hostname || undefined],
-                    arkaneID: [appConfig.config?.arkane?.id || undefined],
-                    arkaneEnv: [appConfig.config?.arkane?.env || undefined],
-                    googleClientID: [appConfig.config?.googleClientId || undefined],
-                    facebookAppID: [appConfig.config?.facebookAppId || undefined],
-                    reCaptchaSiteKey: [appConfig.config?.reCaptchaSiteKey || undefined],
+                    title: [appConfig.config?.title],
+                    logo: [appConfig.config?.logo_url],
+                    icon: [appConfig.config?.icon_url],
+                    hostname: [appConfig.hostname],
+                    arkaneID: [appConfig.config?.arkane?.id],
+                    arkaneEnv: [appConfig.config?.arkane?.env],
+                    googleClientID: [appConfig.config?.googleClientId],
+                    facebookAppID: [appConfig.config?.facebookAppId],
+                    reCaptchaSiteKey: [appConfig.config?.reCaptchaSiteKey],
                 });
             })
         );

@@ -13,14 +13,12 @@
             </div>
         </div>
 
-        <div>
-            <div *ngIf="states.invites?.length > 0" 
-                class="alert alert-success w-100 flex__center--space col-12 col-lg-6 col-xl-4">
-               <div>
-                   <i class="fas fa-bolt"></i>
-                   <b>You have invites pending</b>
-               </div>
-           </div>
+        <div *ngIf="states.invites?.length > 0" 
+             class="alert alert-success w-100 flex__center--space col-12 col-lg-6 col-xl-4">
+            <div>
+                <i class="fas fa-bolt"></i>
+                <b>You have invites pending</b>
+            </div>
         </div>
         
 

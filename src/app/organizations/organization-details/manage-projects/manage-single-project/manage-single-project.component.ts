@@ -196,5 +196,5 @@ export class ManageSingleProjectComponent {
         const from = roiFromGroup.get('from').value;
         const to = roiFromGroup.get('to').value;
         return from !== null && to !== null && from <= to ? null : {invalidROI: true};
-    };
+    }
 }

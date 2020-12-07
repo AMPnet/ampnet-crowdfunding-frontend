@@ -4,7 +4,6 @@ import { AppConfig, CustomConfig } from '../app-config.service';
 import { CaptchaAction, CaptchaService } from '../captcha.service';
 import { switchMap } from 'rxjs/operators';
 
-
 @Injectable({
     providedIn: 'root'
 })

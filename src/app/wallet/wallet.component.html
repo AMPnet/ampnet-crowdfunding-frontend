@@ -49,54 +49,52 @@
         </div>
 
         <div *ngIf="!!states.wallet && states.wallet.state !== walletState.EMPTY; else fetchWalletSpinner">
-            <!-- <div class="col-12"> -->
-                <div class="wallet-balance flex__center row">
-                    <div class="col-12 col-lg-6 col-xl-8">
-                        <div class="balance__content">
-                            <p class="balance__title">Balance</p>
-                            <p class="balance__amount">
-                                {{ states.wallet?.wallet?.balance | currencyCents }}
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="balance__buttons col-12 col-lg-6 col-xl-4 flex__center">
-                        <div class="col-6">
-                            <button class="btn w-100 flex__center" routerLink="deposit">
-                                <i class="fas fa-arrow-circle-down mr-2"></i>
-                                Deposit
-                            </button>
-                        </div>
-
-                        <div class="col-6">
-                            <button class="btn w-100 flex__center" routerLink="withdraw"
-                                    [disabled]="states.wallet.state !== walletState.READY">
-                                <i class="fas fa-arrow-circle-up mr-2"></i>
-                                Withdraw
-                            </button>
-                        </div>
+            <div class="wallet-balance flex__center row">
+                <div class="col-12 col-lg-6 col-xl-8">
+                    <div class="balance__content">
+                        <p class="balance__title">Balance</p>
+                        <p class="balance__amount">
+                            {{ states.wallet?.wallet?.balance | currencyCents }}
+                        </p>
                     </div>
                 </div>
 
-                <div class="wallet-alerts col-12 col-lg-11">
-                    <div *ngIf="states.wallet?.wallet?.activated_at === null"
-                         class="alert alert-success w-100 flex__center--space">
-                        <div>
-                            <i class="fas fa-bolt"></i>
-                            Your wallet is pending approval from admin. You can deposit funds while pending approval.
-                        </div>
-                        <button class="btn" routerLink="deposit">Deposit funds</button>
+                <div class="balance__buttons col-12 col-lg-6 col-xl-4 flex__center">
+                    <div class="col-6">
+                        <button class="btn w-100 flex__center" routerLink="deposit">
+                            <i class="fas fa-arrow-circle-down mr-2"></i>
+                            Deposit
+                        </button>
                     </div>
-                    <div *ngIf="states.wallet?.wallet?.balance === 0"
-                         class="alert alert-success w-100 flex__center--space">
-                        <div>
-                            <i class="fas fa-bolt"></i>
-                            Your wallet is empty. Deposit funds to get started!
-                        </div>
-                        <button class="btn" routerLink="deposit">Deposit funds</button>
+
+                    <div class="col-6">
+                        <button class="btn w-100 flex__center" routerLink="withdraw"
+                                [disabled]="states.wallet.state !== walletState.READY">
+                            <i class="fas fa-arrow-circle-up mr-2"></i>
+                            Withdraw
+                        </button>
                     </div>
                 </div>
-            <!-- </div> -->
+            </div>
+
+            <div class="wallet-alerts col-12 col-lg-11">
+                <div *ngIf="states.wallet?.wallet?.activated_at === null"
+                     class="alert alert-success w-100 flex__center--space">
+                    <div>
+                        <i class="fas fa-bolt"></i>
+                        Your wallet is pending approval from admin. You can deposit funds while pending approval.
+                    </div>
+                    <button class="btn" routerLink="deposit">Deposit funds</button>
+                </div>
+                <div *ngIf="states.wallet?.wallet?.balance === 0"
+                     class="alert alert-success w-100 flex__center--space">
+                    <div>
+                        <i class="fas fa-bolt"></i>
+                        Your wallet is empty. Deposit funds to get started!
+                    </div>
+                    <button class="btn" routerLink="deposit">Deposit funds</button>
+                </div>
+            </div>
 
             <div class="transactions" *ngIf="states.wallet.state === walletState.READY">
                 <div class="d-flex justify-content-between">

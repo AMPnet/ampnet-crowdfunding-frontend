@@ -15,29 +15,27 @@
                 on the platform. You will be notified by email when your money has been received.
             </div>
         </div>
-        <div>
-            <ng-container *ngIf="!!states.deposit && !!states.masterIBAN; else spinner">
-                <div class="deposit-details">
-                    <h4>Deposit payment details</h4>
-                    <div class="row">
-                        <div class="deposit__iban col-lg-6">
-                            <div class="iban__title flex__center">
-                                <i class="fas fa-piggy-bank mr-2"></i>
-                                IBAN
-                            </div>
-                            <div class="iban__content">{{ states.masterIBAN }}</div>
+        <ng-container *ngIf="!!states.deposit && !!states.masterIBAN; else spinner">
+            <div class="deposit-details">
+                <h4>Deposit payment details</h4>
+                <div class="row">
+                    <div class="deposit__iban col-lg-6">
+                        <div class="iban__title flex__center">
+                            <i class="fas fa-piggy-bank mr-2"></i>
+                            IBAN
                         </div>
-                        <div class="deposit__desc col-lg-6">
-                            <div class="desc__title flex__center">
-                                <i class="fas fa-address-book mr-2"></i>
-                                Description
-                            </div>
-                            <div class="desc__content">{{ states.deposit.reference }}</div>
+                        <div class="iban__content">{{ states.masterIBAN }}</div>
+                    </div>
+                    <div class="deposit__desc col-lg-6">
+                        <div class="desc__title flex__center">
+                            <i class="fas fa-address-book mr-2"></i>
+                            Description
                         </div>
+                        <div class="desc__content">{{ states.deposit.reference }}</div>
                     </div>
                 </div>
-            </ng-container>
-        </div>
+            </div>
+        </ng-container>
         <ng-template #spinner>
             <app-spinner type="overlay"></app-spinner>
         </ng-template>

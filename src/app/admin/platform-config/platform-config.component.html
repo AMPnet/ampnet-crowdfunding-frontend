@@ -1,41 +1,39 @@
 <div class="container">
     <h1 class="app-page-title">PLATFORM CONFIGURATION</h1>
 
-    <div>
-        <ng-container *ngIf="(appConfig$ | async) as appConfig; else spinner">
-            <ng-container *ngIf="(updateForm$ | async) as updateForm; else spinner">
-                <form [formGroup]="updateForm" id="updateCoopForm">
-                    <label for="name" class="app-page-label">Instance name</label>
-                    <input class="input-reg w-100" id="name" formControlName="name"
-                           placeholder="Instance Name" type="text">
+    <ng-container *ngIf="(appConfig$ | async) as appConfig; else spinner">
+        <ng-container *ngIf="(updateForm$ | async) as updateForm; else spinner">
+            <form [formGroup]="updateForm" id="updateCoopForm">
+                <label for="name" class="app-page-label">Instance name</label>
+                <input class="input-reg w-100" id="name" formControlName="name"
+                       placeholder="Instance Name" type="text">
     
-                    <label for="identifier" class="app-page-label mt-3">Identifier</label>
-                    <input class="input-reg w-100" id="identifier" [value]="appConfig.identifier"
-                           [disabled]="true" type="text">
+                <label for="identifier" class="app-page-label mt-3">Identifier</label>
+                <input class="input-reg w-100" id="identifier" [value]="appConfig.identifier"
+                       [disabled]="true" type="text">
     
-                    <label for="title" class="app-page-label mt-3">Web title</label>
-                    <input class="input-reg w-100" id="title" formControlName="title"
-                           placeholder="Instance" type="text">
+                <label for="title" class="app-page-label mt-3">Web title</label>
+                <input class="input-reg w-100" id="title" formControlName="title"
+                       placeholder="Instance" type="text">
     
-                    <label for="logo" class="app-page-label mt-3">Logo</label>
-                    <input class="input-reg w-100" id="logo" formControlName="logo"
-                           placeholder="https://path/to/logo.png" type="text">
+                <label for="logo" class="app-page-label mt-3">Logo</label>
+                <input class="input-reg w-100" id="logo" formControlName="logo"
+                       placeholder="https://path/to/logo.png" type="text">
     
-                    <label for="icon" class="app-page-label mt-3">Icon</label>
-                    <input class="input-reg w-100" id="icon" formControlName="icon"
-                           placeholder="https://path/to/icon.png" type="text">
+                <label for="icon" class="app-page-label mt-3">Icon</label>
+                <input class="input-reg w-100" id="icon" formControlName="icon"
+                       placeholder="https://path/to/icon.png" type="text">
     
-                    <button app-action-button
-                            text="Update configuration"
-                            faIcon="fa-paper-plane"
-                            [onClick]="updateAppConfig(updateForm).bind(this)"
-                            [disabled]="!updateForm.dirty || !updateForm.valid"
-                            class="btn btn-primary w-100 mt-3">
-                    </button>
-                </form>
-            </ng-container>
+                <button app-action-button
+                        text="Update configuration"
+                        faIcon="fa-paper-plane"
+                        [onClick]="updateAppConfig(updateForm).bind(this)"
+                        [disabled]="!updateForm.dirty || !updateForm.valid"
+                        class="btn btn-primary w-100 mt-3">
+                </button>
+            </form>
         </ng-container>
-    </div>
+    </ng-container>
     
     <ng-template #spinner>
         <app-spinner type="overlay"></app-spinner>

@@ -5,10 +5,10 @@
             <img class="img__base w-100" src="{{ projectWallet.project.main_image }}">
         </div>
         <!-- title for mobile view -->
-        <h1 class="app-basic-title mobile-spacing">
+        <h1 class="app-basic-title">
             {{ projectWallet.project.name }}
         </h1>
-        <div class="left__progress mobile-spacing">
+        <div class="left__progress">
             <ng-container *ngIf="(projectWallet$ | async) as wallet else walletLoading">
                 <div style="visibility:hidden" class="fadeIn wow">
                     <div>
@@ -34,7 +34,7 @@
         </div>
     </div>
 
-    <div class="card-right mobile-spacing">
+    <div class="card-right">
         <h1 class="app-basic-title">
             {{ projectWallet.project.name }}
         </h1>

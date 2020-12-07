@@ -9,7 +9,7 @@
             Invest in
         </div>
         <div class="row">
-            <div class="invest col-12 mobile-spacing">
+            <div class="invest col-12">
                 <h1 class="app-basic-title">{{ states.project.name }}</h1>
                 <div class="dropdown-divider d-none d-lg-block"></div>
 
@@ -54,7 +54,7 @@
                 </div>
             </div>
 
-            <div class="error-messages col-12 col-lg-8" *ngIf="investForm.dirty && investForm.invalid">
+            <div class="error-messages col-12 col-xl-8" *ngIf="investForm.dirty && investForm.invalid">
                 <div *ngIf="investForm.get('amount').errors?.amountBelowMin" class="alert alert-danger">
                     <i class="fas fa-dizzy"></i>
                     <b>Investment amount too low.&nbsp;</b>
@@ -81,7 +81,7 @@
                 </div>
             </div>
 
-            <div class="error-messages col-12 col-lg-8">
+            <div class="error-messages col-12 col-xl-8">
                 <div *ngIf="states.investmentData.maximumReached"
                      class="alert alert-danger flex__center">
                     <i class="fas fa-dizzy"></i>
@@ -101,7 +101,7 @@
     </ng-container>
 
     <ng-container *ngIf="(projection$ | async) as projection">
-        <div class="estimated-calculator mobile-spacing" *ngIf="states.project?.roi?.to > 0">
+        <div class="estimated-calculator" *ngIf="states.project?.roi?.to > 0">
             <div class="estimated__return-label">
                 <p>ESTIMATED RETURN</p>
             </div>

@@ -1,5 +1,5 @@
 <div *ngIf="user !== undefined" class="container root-content-container">
-    <div class="mobile-spacing">
+    <div>
         <div class="explainer-mini">Your role on the platform is</div>
     <div *ngIf="user.role === 'ADMIN'">ADMIN</div>
     <div *ngIf="user.role === 'TOKEN_ISSUER'">TOKEN ISSUER</div>
@@ -11,7 +11,7 @@
         </div>
         <div class="row">
             <div class="col-md-8">
-                <input class="form-control w-100 p-4" id="platform-manager-address"
+                <input class="input-reg w-100" id="platform-manager-address"
                        placeholder="Enter address of new platform manager"
                        type="text">
             </div>
@@ -29,7 +29,7 @@
         </div>
         <div class="row">
             <div class="col-md-8">
-                <input class="form-control w-100 p-4" id="token-issuer-address"
+                <input class="input-reg w-100" id="token-issuer-address"
                        placeholder="Enter address of new token issuer"
                        type="text">
             </div>

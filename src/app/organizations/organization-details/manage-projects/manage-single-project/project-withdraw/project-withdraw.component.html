@@ -4,7 +4,7 @@
             <i class="fas fa-long-arrow-alt-left mr-3"></i>
             Withdraw
         </div>
-        <div class="withdraw__form mobile-spacing">
+        <div class="withdraw__form">
             <form [formGroup]="requestWithdrawForm">
                 <h2 class="app-page-subtitle">Withdrawal amount</h2>
                 <app-money-input-field
@@ -28,7 +28,7 @@
     </div>
 
     <div *ngIf="withdrawal !== withdrawalState.EMPTY" class="container">
-        <div class="withdrawal__details mobile-spacing">
+        <div class="withdrawal__details">
             <div class="details__content">
                 <p>You have a pending withdrawal request.</p>
                 <p>To have the money deposited into your bank account, you need to sign the transaction.</p>

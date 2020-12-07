@@ -99,33 +99,54 @@
                                         text="Cancel my investment"
                                         loadingText="Cancelling investments..."
                                         faIcon="fa-times-circle"
-                                        class="btn btn-danger font-weight-bold mb-4 w-100"
+                                        class="btn btn-danger w-100 d-lg-none d-xl-block"
+                                        [disabled]="!isCancelable"
+                                        [onClick]="cancelInvestment(states.project.uuid).bind(this)">
+                                </button>
+                                <!-- Lapotop size screen button -->
+                                <button app-action-button
+                                        text="Cancel"
+                                        loadingText="Cancelling investments..."
+                                        faIcon="fa-times-circle"
+                                        class="btn btn-danger w-100 d-none d-lg-block d-xl-none"
                                         [disabled]="!isCancelable"
                                         [onClick]="cancelInvestment(states.project.uuid).bind(this)">
                                 </button>
                             </ng-container>
                         </div>
                         <ng-template #investButtons>
-                            <button *ngIf="isOverview" class="btn btn-primary w-100"
+                            <button *ngIf="isOverview" class="btn btn-primary w-100 flex__center"
                                     id="invest-button"
                                     [routerLink]="'/sign_up' | coopPath">
                                 <i class="mr-2 fas fa-chart-pie"></i>
-                                Sign Up & Invest
+                                <span>Sign Up & Invest</span>
                             </button>
 
                             <div *ngIf="!isOverview && !!states.user">
                                 <button *ngIf="states.user.verified"
                                         [disabled]="disableInvestButton(states.project, states.walletMW)"
-                                        class="btn btn-primary w-100"
+                                        class="btn btn-primary w-100 flex__center"
                                         (click)="goToInvest(states.project.uuid)">
                                     <i class="mr-2 fas fa-chart-pie"></i>
-                                    {{ isPortfolioView ? 'Increase investment' : 'Invest' }}
+                                    <!-- Button content for laptop sizes -->
+                                    <span class="d-none d-lg-block d-xl-none">
+                                        {{ isPortfolioView ? 'Reinvest' : 'Invest' }}
+                                    </span>
+                                    <span class="d-lg-none d-xl-block">
+                                        {{ isPortfolioView ? 'Increase investment' : 'Invest' }}
+                                    </span>
                                 </button>
                                 <button *ngIf="!states.user.verified" [disabled]="!states.project.active"
-                                        class="btn btn-primary w-100"
+                                        class="btn btn-primary w-100 flex__center"
                                         [routerLink]="'/dash/settings/user' | coopPath">
                                     <i class="mr-2 fas fa-chart-pie"></i>
-                                    Verify Profile & Invest
+                                    <!-- Button content for laptop sizes -->
+                                    <span class="d-none d-lg-inline-block d-xl-none">
+                                        Verify Profile
+                                    </span>
+                                    <span class="d-lg-none d-xl-inline-block">
+                                        Verify Profile & Invest
+                                    </span>
                                 </button>
                             </div>
                         </ng-template>
@@ -134,7 +155,7 @@
             </div>
 
             <div class="offer-right-socials col-lg-5">
-                <div class="socials__content mobile-spacing">
+                <div class="socials__content">
                     <p>Share</p>
                     <div class="socials__link">
                         <a href="https://twitter.com/intent/tweet?url={{ getProjectURL(states.project.uuid) }}"
@@ -159,7 +180,7 @@
         </div>
 
         <div class="offer-left col-lg-7">
-            <div class="left__desc mobile-spacing">
+            <div class="left__desc">
                 <div *ngIf="!isPortfolioView else tabbedView">
                     <ng-container *ngTemplateOutlet="projectDetails"></ng-container>
                 </div>
@@ -170,7 +191,7 @@
     <ng-template #projectDetails>
         <div class="left__inner">
             <div [innerHTML]="states.project.description"></div>
-            <div class="left__docs mobile-spacing">
+            <div class="left__docs">
                 <div *ngFor="let doc of states.project.documents">
                     <div class="docs__links">
                         <a href="{{ doc.link }}">

@@ -160,15 +160,7 @@
   padding-right: 15px;
 }
 
-/* .mobile-spacing {
-  padding: 0 20px
-} */
-
-@include media-breakpoint-up(lg) {
-  /* .mobile-spacing {
-    padding: 0;
-  } */
-  
+@include media-breakpoint-up(lg) {  
   .app__full-width--padding {
     padding-left: 0;
     padding-right: 0;

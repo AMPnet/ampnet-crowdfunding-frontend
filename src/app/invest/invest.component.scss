@@ -80,12 +80,12 @@ p {
 
 .error-messages {
   margin: 30px auto;
-  padding: 0 20px;
 }
 
 .alert-danger {
   display: flex;
   align-items: center;
+  justify-content: start;
   span,
   .btn-danger {
     display: none;
@@ -99,15 +99,15 @@ p {
 .estimated {
   &-calculator {
     margin-bottom: 40px;
-    .row {
-      padding: 0;
-    }
   }
 
   &__content {
     align-items: center;
     justify-content: space-between;
     border: 1px solid #E5E5E5;
+    .col-lg-4 {
+      padding: 0 15px;
+    }
   }
 
   &__return-label p {
@@ -175,10 +175,6 @@ p {
     margin: 24px 0 0 0;
   }
 
-  .error-messages {
-    padding: 0;
-  }
-
   .invest__content {
     display: flex;
     flex-direction: row;
@@ -233,6 +229,12 @@ p {
     &__content {
       .col-lg-4 {
         padding: 0;
+      }
+      .col-lg-4:first-of-type {
+        padding-left: 15px;
+      }
+      .col-lg-4:last-of-type {
+        padding-right: 15px;
       }
 
       align-items: center;

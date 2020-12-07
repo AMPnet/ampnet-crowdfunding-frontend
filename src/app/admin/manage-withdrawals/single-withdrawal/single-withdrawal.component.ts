@@ -30,6 +30,8 @@ export class SingleWithdrawalComponent implements OnInit {
     ngOnInit() {
         this.withdrawalID = Number(this.route.snapshot.params.ID);
         this.withdrawal$ = this.withdrawCoopService.getApprovedWithdrawal(this.withdrawalID);
+
+        this.popupService.success('More content for test message with test text yea cool more yea');
     }
 
     approveAndGenerateCodeClicked() {

@@ -162,6 +162,7 @@
       }
       &__cta {
         margin: 0 30px 0 0;
+        width: 30%;
       }
       &__img,
       &__img img {
@@ -169,6 +170,16 @@
       }
       &__img img {
         object-fit: cover;
+      }
+    }
+  }
+}
+
+@include media-breakpoint-up(xl) {
+  .invites {
+    .item {
+      &__cta {
+        width: initial;
       }
     }
   }

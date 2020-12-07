@@ -1,10 +1,7 @@
 <div class="container">
-    <ng-container *ngIf="(loaded$ | async) !== null; else spinner"></ng-container>
+    <ng-container *ngIf="loaded$ | async"></ng-container>
 
-    <div class="w-100" #identyumContainer></div>
+    <div class="w-100 mx-auto" id='veriff-root'></div>
 
     <ng-container *ngIf="finished$ | async"></ng-container>
-    <ng-template #spinner>
-        <app-spinner type="overlay"></app-spinner>
-    </ng-template>
 </div>

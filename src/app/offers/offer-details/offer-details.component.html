@@ -190,7 +190,10 @@
 
     <ng-template #projectDetails>
         <div class="left__inner">
-            <div [innerHTML]="states.project.description"></div>
+            <quill-view [content]="states.project.description"
+                        format="html" theme="snow">
+            </quill-view>
+
             <div class="left__docs">
                 <div *ngFor="let doc of states.project.documents">
                     <div class="docs__links">

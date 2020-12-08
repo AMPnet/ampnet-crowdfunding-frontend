@@ -57,13 +57,22 @@
                                                                type="text">
                                                     </div>
                                                     <div class="left__desc">
-                                                        <label for="project-description">Description</label>
+                                                        <label for="project-short-description">Short description</label>
                                                         <div class="input-group">
                                                             <textarea class="input-reg w-100" cols="30"
-                                                                      id="project-description"
-                                                                      formControlName="description"
+                                                                      id="project-short-description"
+                                                                      formControlName="short_description"
                                                                       rows="10">
                                                             </textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="left__desc">
+                                                        <label for="project-description">Description</label>
+                                                        <div class="input-group">
+                                                            <quill-editor id="project-description"
+                                                                          formControlName="description"
+                                                                          [styles]="{ height: '50vh' }">
+                                                            </quill-editor>
                                                         </div>
                                                     </div>
                                                     <div class="left__roi">

@@ -1,7 +1,24 @@
 <div class="container">
-    <ng-container *ngIf="loaded$ | async"></ng-container>
+    <ng-container *ngIf="(session$ | async) as session; else spinner">
+        <p>
+            {{ session | json }}
+        </p>
 
-    <div class="w-100 mx-auto" id='veriff-root'></div>
+        <ng-container *ngIf="showDecision(session)">
+            <!-- TODO: replace decision reason with translations of reason codes -->
+            <p>{{ session.decision.reason }}</p>
+        </ng-container>
+
+        <ng-container *ngIf="showVerificationButton(session)">
+            <button app-action-button
+                    [onClick]="createVeriffFrame(session.verification_url)"
+                    text="Start verification">
+            </button>
+        </ng-container>
+    </ng-container>
 
     <ng-container *ngIf="finished$ | async"></ng-container>
+    <ng-template #spinner>
+        <app-spinner type="overlay"></app-spinner>
+    </ng-template>
 </div>

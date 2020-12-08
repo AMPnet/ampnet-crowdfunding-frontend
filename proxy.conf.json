@@ -1,6 +1,6 @@
 {
   "/api/*": {
-    "target": "https://test.edruzin.me",
+    "target": "https://staging.ampnet.io",
     "secure": true,
     "ws": true,
     "logLevel": "debug",

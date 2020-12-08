@@ -1,23 +1,32 @@
 <div class="container">
     <ng-container *ngIf="(session$ | async) as session; else spinner">
-        <p>
-            {{ session | json }}
-        </p>
+        <div *ngIf="showDecision(session)" class="text-center">
+            <h2 *ngIf="session.decision.status === decisionStatus.RESUBMISSION_REQUESTED">
+                Resubmission requested
+            </h2>
 
-        <ng-container *ngIf="showDecision(session)">
+            <h2 *ngIf="session.decision.status === decisionStatus.DECLINED">
+                Declined
+            </h2>
+
             <!-- TODO: replace decision reason with translations of reason codes -->
             <p>{{ session.decision.reason }}</p>
+        </div>
+
+        <ng-container *ngIf="decisionPending(session)">
+            <p class="text-center">Your account is in process of verification. Please wait...</p>
         </ng-container>
 
-        <ng-container *ngIf="showVerificationButton(session)">
+        <div *ngIf="!decisionPending(session)" class="d-flex justify-content-center">
             <button app-action-button
+                    class="btn btn-primary w-auto"
                     [onClick]="createVeriffFrame(session.verification_url)"
                     text="Start verification">
             </button>
-        </ng-container>
+        </div>
     </ng-container>
 
-    <ng-container *ngIf="finished$ | async"></ng-container>
+    <ng-container *ngIf="approved$ | async"></ng-container>
     <ng-template #spinner>
         <app-spinner type="overlay"></app-spinner>
     </ng-template>

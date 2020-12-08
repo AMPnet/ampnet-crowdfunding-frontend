@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { catchError, finalize, switchMap, tap } from 'rxjs/operators';
@@ -16,7 +16,7 @@ import { RouterService } from '../../../../../shared/services/router.service';
     templateUrl: './project-withdraw.component.html',
     styleUrls: ['./project-withdraw.component.scss']
 })
-export class ProjectWithdrawComponent implements OnInit {
+export class ProjectWithdrawComponent {
     withdrawalState = WithdrawalState;
     projectID: string;
 
@@ -93,10 +93,6 @@ export class ProjectWithdrawComponent implements OnInit {
     navigateBack(): Observable<never> {
         this.router.navigate(['../../'], {relativeTo: this.route});
         return EMPTY;
-    }
-
-    ngOnInit() {
-        this.withdrawal$.subscribe(e => console.log(e));
     }
 }
 

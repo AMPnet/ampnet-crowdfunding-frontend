@@ -99,6 +99,7 @@ import { SignInComponent } from './authentication/sign-in/sign-in.component';
 import { NgxCaptchaModule } from 'ngx-captcha';
 import { NewInstanceComponent } from './authentication/new-instance/new-instance.component';
 import { PlatformConfigComponent } from './admin/platform-config/platform-config.component';
+import { QuillModule } from 'ngx-quill';
 
 // TODO: setup config to use values from app config service.
 const socialAuthServiceConfig = {
@@ -220,6 +221,7 @@ const socialAuthServiceConfig = {
         NgxSpinnerModule,
         NgbModule,
         ModalModule.forRoot(),
+        QuillModule.forRoot(),
         BrowserAnimationsModule,
         BsDatepickerModule.forRoot(),
         NgxCaptchaModule

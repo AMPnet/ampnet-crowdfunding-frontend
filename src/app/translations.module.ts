@@ -19,7 +19,6 @@ export class TranslationsLoader implements TranslateLoader {
 @NgModule({
     imports: [
         TranslateModule.forRoot({
-            useDefaultLang: true,
             loader: {
                 provide: TranslateLoader,
                 useFactory: (translationsLoaderFactory),

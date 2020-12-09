@@ -20,24 +20,27 @@ export class LanguageService {
         registerLocaleData(localeHr, 'hr');
 
         this.translate.addLangs(this.supportedLanguages);
-        this.translate.setDefaultLang(this.supportedLanguages[0]);
+
+        // TODO: used to set fallback language. Set it optionally through
+        // the configuration.
+        // this.translate.setDefaultLang(null);
 
         this.setLanguage(this.getCurrentLanguage());
     }
 
     setLanguage(lang: string) {
         this.setPreferredLang(lang);
+
+        // TODO: override current language to always see missing translation.
+        this.translate.setDefaultLang(this.getCurrentLanguage());
+
         this.translate.use(this.getCurrentLanguage()).pipe(
-            tap(newLang => {
-                console.log('new lang', newLang, lang);
-            }),
             tap(newLang => this.languageChange$.next(newLang))
         ).subscribe();
     }
 
     getCurrentLanguage(): string {
         const preferredLang = this.getPreferredLang() ||
-            this.translate.getDefaultLang() ||
             this.translate.getBrowserLang() ||
             this.supportedLanguages[0];
 

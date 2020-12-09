@@ -1,0 +1,14 @@
+{
+  "offers": {
+    "title": "Offers=="
+  },
+  "settings": {
+    "user": {
+      "title": "User profile=="
+    }
+  },
+  "languages": {
+    "en": "English",
+    "hr": "Hrvatski"
+  }
+}

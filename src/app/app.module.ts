@@ -100,6 +100,7 @@ import { NgxCaptchaModule } from 'ngx-captcha';
 import { NewInstanceComponent } from './authentication/new-instance/new-instance.component';
 import { PlatformConfigComponent } from './admin/platform-config/platform-config.component';
 import { QuillModule } from 'ngx-quill';
+import { TranslationsModule } from './translations.module';
 
 // TODO: setup config to use values from app config service.
 const socialAuthServiceConfig = {
@@ -210,6 +211,7 @@ const socialAuthServiceConfig = {
         BrowserModule,
         RouterModule,
         AppRoutingModule,
+        TranslationsModule,
         DisqusModule.forRoot('ampnet.disqus.com/embed.js'),
         TooltipModule.forRoot(),
         ModalModule.forRoot(),

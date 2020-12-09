@@ -1,33 +1,39 @@
 <ng-container *ngIf="(user$ | async) as user">
     <div class="container">
-        <h1 class="app-page-title">USER PROFILE</h1>
+        <h1 class="app-page-title">{{ 'settings.user.title' | translate }}</h1>
 
-        <div class="row">
-            <div class="col-md-3">
-                <div class="mt-4">
-                    <div class="explainer-mini">First name</div>
-                    {{ user.first_name }}
-                </div>
+
+        <div class="row mt-3">
+            <div class="col-md-4">
+                <label for="first_name" class="app-page-label">First name</label>
+                <input class="form-control p-4" id="first_name" disabled type="text"
+                       [value]="user.first_name">
             </div>
-            <div class="col-md-3">
-                <div class="mt-4">
-                    <div class="explainer-mini">Last name</div>
-                    {{ user.last_name }}
-                </div>
+            <div class="col-md-4">
+                <label for="last_name" class="app-page-label">Last name</label>
+                <input class="form-control p-4" id="last_name" disabled type="text"
+                       [value]="user.last_name">
             </div>
-            <div class="col-md-3">
-                <div class="mt-4">
-                    <div class="explainer-mini">Email</div>
-                    {{ user.email }}
-                </div>
+            <div class="col-md-4">
+                <label for="email" class="app-page-label">Email</label>
+                <input class="form-control p-4" id="email" disabled type="text"
+                       [value]="user.email">
             </div>
-            <div class="col-md-3">
-                <div class="mt-4" style="width: fit-content; text-align: center;">
-                    <div class="explainer-mini">Approved</div>
-                    <i [class]="user.enabled ? 'fa-check' : 'fa-close'" class="fa"></i>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col">
+                <label for="languages" class="app-page-label">Languages</label>
+
+                <div *ngFor="let lang of languageService.supportedLanguages" id="languages">
+                    <a [routerLink]="" (click)="languageService.setLanguage(lang)"
+                       [class.font-weight-bold]="lang === languageService.getCurrentLanguage()">
+                        {{ ('languages.' + lang) | translate }}
+                    </a>
                 </div>
             </div>
         </div>
+
         <!--        TODO: Updating user info is disabled when using Veriff -->
         <!--        <button [routerLink]="'/dash/settings/user/identity' | coopPath"-->
         <!--                class="btn btn-primary p-3 mt-5 w-100">-->

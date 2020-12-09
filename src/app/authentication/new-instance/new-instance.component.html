@@ -12,8 +12,7 @@
            placeholder="instance-name" type="text">
     <small class="form-text text-muted mt-2">
         Your instance will be served on:
-        {{ window.location.protocol}}//{{ window.location.host }}
-        /{{ createCoopForm.get('identifier').value || 'instance-name' }}
+        {{ window.location.protocol}}//{{ window.location.host }}/{{ createCoopForm.get('identifier').value || 'instance-name' }}
     </small>
 
     <label for="webTitle" class="app-page-label mt-3">Web title</label>

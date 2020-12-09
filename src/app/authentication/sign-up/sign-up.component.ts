@@ -3,7 +3,7 @@ import { SignupService } from '../../shared/services/user/signup.service';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthService } from 'angularx-social-login';
-import { UserAuthService } from '../../shared/services/user/user-auth.service';
+import { socialAuthServiceProvider, UserAuthService } from '../../shared/services/user/user-auth.service';
 import { displayBackendErrorRx } from 'src/app/utilities/error-handler';
 import { MustMatch } from './confirm-password-validator';
 import { switchMap, tap } from 'rxjs/operators';
@@ -18,6 +18,9 @@ import { from } from 'rxjs';
         '../auth-layout/auth-layout.component.scss',
         './sign-up.component.css'
     ],
+    providers: [
+        socialAuthServiceProvider
+    ]
 })
 export class SignUpComponent {
     signupForm: FormGroup;

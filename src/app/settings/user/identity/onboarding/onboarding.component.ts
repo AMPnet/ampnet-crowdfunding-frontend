@@ -1,7 +1,7 @@
 import { Component, Renderer2 } from '@angular/core';
 import { DecisionStatus, OnboardingService, State, VeriffSession } from '../../../../shared/services/user/onboarding.service';
 import { UserAuthService } from '../../../../shared/services/user/user-auth.service';
-import { BehaviorSubject, EMPTY, Observable, of, Subject, timer } from 'rxjs';
+import { BehaviorSubject, EMPTY, Observable, Subject, timer } from 'rxjs';
 import { catchError, switchMap, tap } from 'rxjs/operators';
 import { PopupService } from '../../../../shared/services/popup.service';
 import { AppConfigService } from '../../../../shared/services/app-config.service';
@@ -20,7 +20,7 @@ export class OnboardingComponent {
     decisionStatus = DecisionStatus;
 
     session$: Observable<VeriffSession>;
-    private sessionSubject = new BehaviorSubject<VeriffSession>(null);
+    private sessionSubject = new BehaviorSubject<void>(null);
 
     approved$: Observable<void>;
     private approvedSubject = new Subject<void>();
@@ -33,10 +33,10 @@ export class OnboardingComponent {
                 private onboardingService: OnboardingService,
                 private loginService: UserAuthService) {
         this.session$ = this.sessionSubject.asObservable().pipe(
-            switchMap(session => session !== null ? of(session) : this.onboardingService.getVeriffSession()),
+            switchMap(_ => this.onboardingService.getVeriffSession()),
             tap(session => {
                 if (this.decisionPending(session)) {
-                    timer(5000).pipe(tap(() => this.sessionSubject.next(null))).subscribe();
+                    timer(5000).pipe(tap(() => this.sessionSubject.next())).subscribe();
                 }
             }),
             tap(session => {
@@ -47,7 +47,7 @@ export class OnboardingComponent {
         );
 
         this.approved$ = this.approvedSubject.asObservable().pipe(
-            switchMap(() => this.popupService.success('Successfully verified user data.')),
+            switchMap(() => this.popupService.success('User data has been successfully verified.')),
             switchMap(() => this.loginService.refreshUserToken()
                 .pipe(displayBackendErrorRx())),
             catchError(() => {
@@ -67,19 +67,20 @@ export class OnboardingComponent {
                 const veriffFrame = createVeriffFrame({
                     url: verification_url,
                     onEvent: (msg) => {
+                        subscriber.next(msg);
+
                         switch (msg) {
                             case MESSAGES.STARTED:
                                 break;
                             case MESSAGES.FINISHED:
-                                this.sessionSubject.next(null);
+                                this.sessionSubject.next();
+                                subscriber.complete();
                                 break;
                             case MESSAGES.CANCELED:
                                 veriffFrame.close();
+                                subscriber.complete();
                                 break;
                         }
-
-                        subscriber.next(msg);
-                        subscriber.complete();
                     }
                 });
             });

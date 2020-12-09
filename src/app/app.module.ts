@@ -31,13 +31,7 @@ import { WithdrawModalComponent } from './wallet/withdraw-modal/withdraw-modal.c
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import {
-    FacebookLoginProvider,
-    GoogleLoginProvider,
-    SocialAuthService,
-    SocialAuthServiceConfig,
-    SocialLoginModule
-} from 'angularx-social-login';
+import { SocialLoginModule } from 'angularx-social-login';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { CreateOrganizationComponent } from './organizations/create-organization/create-organization.component';
 import { ManageOrganizationsComponent } from './organizations/manage-organizations/manage-organizations.component';

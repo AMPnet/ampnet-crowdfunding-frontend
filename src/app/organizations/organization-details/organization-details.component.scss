@@ -81,13 +81,6 @@
 }
 
 .manage__members {
-  .col-lg-7,
-  .col-lg-6,
-  .col-lg-1,
-  .col-xl-5,
-  .col-xl-2 {
-    padding: 0;
-  }
 
   .invite {
     &-members {
@@ -111,8 +104,6 @@
     &__desc {
       font-size: $font-size-desktop-xsmall;
       color: $body-color;
-      padding-left: 15px;
-      padding-right: 15px;
       b {
         font-size: $font-size-desktop-xsmall;
       }
@@ -233,7 +224,7 @@
         }
       }
       &__desc {
-        padding-left: 14px !important;
+        padding-left: 20px !important;
         margin: 0 auto;
       }
     }

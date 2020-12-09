@@ -1,9 +1,32 @@
 <div class="container">
-    <ng-container *ngIf="(loaded$ | async) !== null; else spinner"></ng-container>
+    <ng-container *ngIf="(session$ | async) as session; else spinner">
+        <div *ngIf="showDecision(session)" class="mt-3 text-center">
+            <h2 *ngIf="session.decision.status === decisionStatus.RESUBMISSION_REQUESTED">
+                Resubmission requested
+            </h2>
 
-    <div class="w-100" #identyumContainer></div>
+            <h2 *ngIf="session.decision.status === decisionStatus.DECLINED">
+                Declined
+            </h2>
 
-    <ng-container *ngIf="finished$ | async"></ng-container>
+            <!-- TODO: replace decision reason with translations of reason codes -->
+            <p class="mt-1">{{ session.decision.reason }}</p>
+        </div>
+
+        <div *ngIf="decisionPending(session)" class="mt-3">
+            <p class="text-center">Your account is in process of verification. Please wait...</p>
+        </div>
+
+        <div *ngIf="!decisionPending(session)" class="d-flex justify-content-center mt-3">
+            <button app-action-button
+                    class="btn btn-primary w-auto"
+                    [onClick]="createVeriffFrame(session.verification_url)"
+                    text="Start verification">
+            </button>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="approved$ | async"></ng-container>
     <ng-template #spinner>
         <app-spinner type="overlay"></app-spinner>
     </ng-template>

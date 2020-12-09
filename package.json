@@ -32,6 +32,7 @@
     "@stomp/stompjs": "^5.4.2",
     "@types/leaflet": "^1.5.17",
     "@types/request": "^2.48.1",
+    "@veriff/incontext-sdk": "^1.1.0",
     "@yaireo/tagify": "^3.8.0",
     "angular-rest-client": "^2.0.0",
     "angularx-social-login": "3.2.1",

@@ -1,6 +1,6 @@
 <div class="container">
     <ng-container *ngIf="(session$ | async) as session; else spinner">
-        <div *ngIf="showDecision(session)" class="text-center">
+        <div *ngIf="showDecision(session)" class="mt-3 text-center">
             <h2 *ngIf="session.decision.status === decisionStatus.RESUBMISSION_REQUESTED">
                 Resubmission requested
             </h2>
@@ -10,14 +10,14 @@
             </h2>
 
             <!-- TODO: replace decision reason with translations of reason codes -->
-            <p>{{ session.decision.reason }}</p>
+            <p class="mt-1">{{ session.decision.reason }}</p>
         </div>
 
-        <ng-container *ngIf="decisionPending(session)">
+        <div *ngIf="decisionPending(session)" class="mt-3">
             <p class="text-center">Your account is in process of verification. Please wait...</p>
-        </ng-container>
+        </div>
 
-        <div *ngIf="!decisionPending(session)" class="d-flex justify-content-center">
+        <div *ngIf="!decisionPending(session)" class="d-flex justify-content-center mt-3">
             <button app-action-button
                     class="btn btn-primary w-auto"
                     [onClick]="createVeriffFrame(session.verification_url)"

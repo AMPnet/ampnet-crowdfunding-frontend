@@ -17,8 +17,14 @@
                        placeholder="Instance" type="text">
 
                 <label for="logo" class="app-page-label mt-3">Logo</label>
-                <input class="form-control p-4" id="logo" formControlName="logo"
-                       placeholder="https://path/to/logo.png" type="text">
+                <app-upload-area areaID='logo-image' id="logo"
+                                    [restrictions]="{
+                                    allowedFileTypes: ['image/*'],
+                                    maxFileSize: 10 * 1024 * 1024,
+                                    maxNumberOfFiles: 1
+                                 }"
+                                 [firstFileControl]="updateForm.get('logo')">
+                </app-upload-area>
 
                 <label for="icon" class="app-page-label mt-3">Icon</label>
                 <input class="form-control p-4" id="icon" formControlName="icon"

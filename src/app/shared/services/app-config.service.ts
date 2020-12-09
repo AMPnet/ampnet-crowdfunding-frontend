@@ -151,7 +151,6 @@ export interface AppConfig {
 
 export interface CustomConfig {
     title?: string;
-    logo_url?: string;
     icon_url?: string;
     arkane?: {
         id: string;

@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { displayBackendErrorRx } from '../../utilities/error-handler';
 import { CoopService } from '../../shared/services/user/coop.service';
 import { AppConfig, AppConfigService } from '../../shared/services/app-config.service';
+import { FileValidator } from '../../shared/validators/file.validator';
 
 @Component({
     selector: 'app-platform-config',
@@ -28,7 +29,7 @@ export class PlatformConfigComponent {
                 return fb.group({
                     name: [appConfig.name, Validators.required],
                     title: [appConfig.config?.title],
-                    logo: [appConfig.config?.logo_url],
+                    logo: [null, FileValidator.validate],
                     icon: [appConfig.config?.icon_url],
                     hostname: [appConfig.hostname],
                     arkaneID: [appConfig.config?.arkane?.id],
@@ -49,7 +50,6 @@ export class PlatformConfigComponent {
                 hostname: appConfig.hostname,
                 config: {
                     title: appConfig.title,
-                    logo_url: appConfig.logo,
                     icon_url: appConfig.icon,
                     arkane: {
                         id: appConfig.arkaneID,
@@ -59,9 +59,10 @@ export class PlatformConfigComponent {
                     facebookAppId: appConfig.facebookAppID,
                     reCaptchaSiteKey: appConfig.reCaptchaSiteKey
                 }
-            }).pipe(
+            }, appConfig.logo).pipe(
                 displayBackendErrorRx(),
                 tap(newAppConfig => {
+                    form.get('logo').reset();
                     this.appConfigService.config = newAppConfig;
                     this.refreshAppConfig.next(newAppConfig);
                 })

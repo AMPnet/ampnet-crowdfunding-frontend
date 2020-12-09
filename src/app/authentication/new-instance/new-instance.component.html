@@ -26,8 +26,8 @@
             [disabled]="!createCoopForm.dirty || !createCoopForm.valid"
             class="btn btn-primary w-100 mt-3">
     </button>
-    <label for="webTitle" class="app-page-label mt-3">Logo image</label>
-    <app-upload-area areaID='logo-image'
+    <label for="logo-image" class="app-page-label mt-3">Logo image</label>
+    <app-upload-area areaID='logo-image' id="logo-image"
                      [restrictions]="{
                         allowedFileTypes: ['image/*'],
                         maxFileSize: 10 * 1024 * 1024,

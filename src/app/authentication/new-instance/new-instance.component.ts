@@ -5,6 +5,7 @@ import { switchMap, tap } from 'rxjs/operators';
 import { CoopService, CreateCoopData } from '../../shared/services/user/coop.service';
 import { RouterService } from '../../shared/services/router.service';
 import { PopupService } from '../../shared/services/popup.service';
+import { FileValidator } from '../../shared/validators/file.validator';
 
 @Component({
     selector: 'app-new-instance',
@@ -29,7 +30,7 @@ export class NewInstanceComponent implements OnInit {
             name: ['', [Validators.required]],
             identifier: ['', [Validators.required, Validators.pattern(/^[a-z0-9\-_]{3,}$/)]],
             webTitle: ['', [Validators.required]],
-            logo: [null]
+            logo: [null, FileValidator.validate]
         });
     }
 

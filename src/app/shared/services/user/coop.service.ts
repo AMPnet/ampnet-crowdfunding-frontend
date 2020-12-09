@@ -22,9 +22,7 @@ export class CoopService {
 
                 const formData = new FormData();
 
-                if (logo) {
-                    formData.append('logo', logo, 'logo.png');
-                }
+                formData.append('logo', logo, 'logo.png');
 
                 formData.append('request', new Blob([JSON.stringify(reqData)], {
                     type: 'application/json'
@@ -34,7 +32,7 @@ export class CoopService {
             }));
     }
 
-    updateCoop(data: UpdateCoopData) {
+    updateCoop(data: UpdateCoopData, logo: File) {
         const removeEmpty = (obj) => {
             Object.keys(obj).forEach(key => {
                 if (obj[key] && typeof obj[key] === 'object') {
@@ -49,7 +47,15 @@ export class CoopService {
             return obj;
         };
 
-        return this.http.put<AppConfig>(`/api/user/coop`, removeEmpty(data));
+        const formData = new FormData();
+
+        formData.append('logo', logo, 'logo.png');
+
+        formData.append('request', new Blob([JSON.stringify(removeEmpty(data))], {
+            type: 'application/json'
+        }), 'request.json');
+
+        return this.http.put<AppConfig>(`/api/user/coop`, formData);
     }
 
     getCoop() {

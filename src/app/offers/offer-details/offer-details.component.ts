@@ -111,22 +111,11 @@ export class OfferDetailsComponent implements OnInit {
     }
 
     setMetaTags(project: Project) {
-        this.meta.addTag({
-            name: 'og:title',
-            content: project.name
-        });
-        this.meta.addTag({
-            name: 'og:description',
-            content: project.description
-        });
-        this.meta.addTag({
-            name: 'og:image:secure_url',
-            content: project.main_image
-        });
-        this.meta.addTag({
-            name: 'og:url',
-            content: window.location.href
-        });
+        this.meta.addTag({property: 'og:title', content: project.name});
+        this.meta.addTag({property: 'og:description', content: project.short_description});
+        this.meta.addTag({property: 'og:image', content: project.main_image});
+        this.meta.addTag({property: 'og:url', content: window.location.href});
+        this.meta.addTag({name: 'twitter:card', content: 'summary_large_image'});
     }
 
     copyProjectDetailsUrl(el: TooltipDirective, projectUUID: string) {

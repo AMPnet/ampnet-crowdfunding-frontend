@@ -4,11 +4,11 @@
             <img alt="Logo" src="{{ appConfigService.config.config.logo_url }}">
         </a>
     </div>
-    <div *ngIf="!onlyLogo" id="auth-buttons">
-        <button class="btn px-4 py-2 mr-md-3 mr-2"
+    <div *ngIf="!onlyLogo" id="auth-buttons" class="flex__center">
+        <button class="btn mr-md-3 mr-2"
                 [routerLink]="'/sign_up' | coopPath">Sign Up</button>
 
-        <button class="btn btn-grey py-2"
+        <button class="btn btn-grey"
                 [routerLink]="'/sign_in' | coopPath">Sign In</button>
     </div>
 </nav>

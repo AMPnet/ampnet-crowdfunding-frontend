@@ -1,7 +1,15 @@
 @import "app";
 
+small {
+  font-size: $font-size-desktop-xsmall;
+}
+
 @include media-breakpoint-up(lg) {
   .app-page-subtitle {
     padding-top: 0;
+  }
+
+  small {
+    font-size: $font-size-desktop-small;
   }
 }

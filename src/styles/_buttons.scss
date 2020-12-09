@@ -3,8 +3,8 @@
 
 .btn,
 .btn span {
-  font-weight: normal;
-  font-size: 14px;
+  font-weight: 300;
+  font-size: $font-size-desktop-body;
   color: $secondary-color;
   line-height: 0;
 }
@@ -16,22 +16,20 @@
   border: none;
   height: 48px;
   padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  svg {
+    font-size: $font-size-desktop-body;
+  }
 
   &-primary {
     height: 64px;
-    font-size: 14px;
-    span {
-      font-size: 14px;
-    }
   }
 
   &-responsive-size {
     @include media-breakpoint-up(lg) {
       height: 64px;
-      font-size: 14px;
-      span {
-      font-size: 14px;
-      }
     }
   }
 

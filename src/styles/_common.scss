@@ -62,9 +62,15 @@
   cursor: pointer;
   color: $title-color;
   margin-bottom: 0;
+  svg {
+    font-size: $font-size-mobile-body;
+  }
 
   @include media-breakpoint-up(lg) {
     margin-bottom: 10px;
+    svg {
+      font-size: $font-size-desktop-body;
+    }
   }
 }
 
@@ -103,6 +109,9 @@
     .app-page-title,
     .app-page-title-back {
       width: fit-content;
+    }
+    button {
+      margin: 1rem 0 1rem 0;
     }
   }
 }

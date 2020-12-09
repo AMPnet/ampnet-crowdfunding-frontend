@@ -96,11 +96,14 @@ span {
 
   .socials__content {
     display: flex;
+    align-items: center;
+    margin-bottom: 36px;
 
     p {
       text-transform: uppercase;
       letter-spacing: 2px;
       font-size: $font-size-desktop-body2;
+      margin-bottom: 0;
     }
 
     p, .socials__link {

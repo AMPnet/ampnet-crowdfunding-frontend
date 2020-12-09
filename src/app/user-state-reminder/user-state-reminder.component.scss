@@ -20,21 +20,11 @@
   outline: none;
 }
 
-.wallet-init-reminder p,
-.reminder-link {
-  font-size: $font-size-mobile-title-small;
-}
-
 @include media-breakpoint-up(lg) {
   .wallet-init-reminder {
     position: absolute;
     top: -60px;
     left: 0;
-  }
-
-  .wallet-init-reminder p,
-  .reminder-link {
-    font-size: $font-size-desktop-body;
   }
 }
 

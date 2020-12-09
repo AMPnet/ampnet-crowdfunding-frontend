@@ -12,20 +12,14 @@
            placeholder="instance-name" type="text">
     <small class="form-text text-muted mt-2">
         Your instance will be served on:
-        {{ window.location.protocol}}//{{ window.location.host }}/{{ createCoopForm.get('identifier').value || 'instance-name' }}
+        {{ window.location.protocol}}//{{ window.location.host }}
+        /{{ createCoopForm.get('identifier').value || 'instance-name' }}
     </small>
 
     <label for="webTitle" class="app-page-label mt-3">Web title</label>
     <input class="form-control p-4" id="webTitle" formControlName="webTitle"
            placeholder="Instance" type="text">
 
-    <button app-action-button
-            text="Create"
-            faIcon="fa-paper-plane"
-            [onClick]="onFormSubmit.bind(this)"
-            [disabled]="!createCoopForm.dirty || !createCoopForm.valid"
-            class="btn btn-primary w-100 mt-3">
-    </button>
     <label for="logo-image" class="app-page-label mt-3">Logo image</label>
     <app-upload-area areaID='logo-image' id="logo-image"
                      [restrictions]="{
@@ -35,6 +29,14 @@
                      }"
                      [firstFileControl]="createCoopForm.get('logo')">
     </app-upload-area>
+
+    <button app-action-button
+            text="Create"
+            faIcon="fa-paper-plane"
+            [onClick]="onFormSubmit.bind(this)"
+            [disabled]="!createCoopForm.dirty || !createCoopForm.valid"
+            class="btn btn-primary w-100 mt-3">
+    </button>
 
     <div class="dropdown-divider"></div>
 

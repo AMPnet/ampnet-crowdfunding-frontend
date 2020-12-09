@@ -5,7 +5,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { displayBackendErrorRx } from '../../utilities/error-handler';
 import { CoopService } from '../../shared/services/user/coop.service';
 import { AppConfig, AppConfigService } from '../../shared/services/app-config.service';
-import { FileValidator } from '../../shared/validators/file.validator';
 
 @Component({
     selector: 'app-platform-config',
@@ -29,14 +28,15 @@ export class PlatformConfigComponent {
                 return fb.group({
                     name: [appConfig.name, Validators.required],
                     title: [appConfig.config?.title],
-                    logo: [null, FileValidator.validate],
+                    logo: [null],
                     icon: [appConfig.config?.icon_url],
                     hostname: [appConfig.hostname],
                     arkaneID: [appConfig.config?.arkane?.id],
                     arkaneEnv: [appConfig.config?.arkane?.env],
+                    needUserVerification: [appConfig.need_user_verification],
+                    reCaptchaSiteKey: [appConfig.config?.reCaptchaSiteKey],
                     googleClientID: [appConfig.config?.googleClientId],
                     facebookAppID: [appConfig.config?.facebookAppId],
-                    reCaptchaSiteKey: [appConfig.config?.reCaptchaSiteKey],
                 });
             })
         );
@@ -48,6 +48,7 @@ export class PlatformConfigComponent {
             return this.coopService.updateCoop({
                 name: appConfig.name,
                 hostname: appConfig.hostname,
+                need_user_verification: appConfig.needUserVerification,
                 config: {
                     title: appConfig.title,
                     icon_url: appConfig.icon,

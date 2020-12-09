@@ -4,6 +4,7 @@ import { Observable, of, ReplaySubject } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { merge as _merge } from 'lodash';
+import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthServiceConfig } from 'angularx-social-login';
 
 @Injectable()
 export class AppConfigService {
@@ -58,7 +59,7 @@ export class AppConfigService {
         return source.pipe(
             map(configRes => ({
                 ...configRes,
-                config: _merge(AppConfigService.defaultConfig.config, configRes.config)
+                config: _merge({}, AppConfigService.defaultConfig.config, configRes.config)
             } as AppConfig)),
             tap(config => {
                 this.appConfig = config;
@@ -129,6 +130,24 @@ export class AppConfigService {
             config: environment.customConfig
         };
     }
+
+    get socialAuthConfig(): () => SocialAuthServiceConfig {
+        return () => {
+            return {
+                autoLogin: false,
+                providers: [
+                    {
+                        id: GoogleLoginProvider.PROVIDER_ID,
+                        provider: new GoogleLoginProvider(this.config.config.googleClientId),
+                    },
+                    {
+                        id: FacebookLoginProvider.PROVIDER_ID,
+                        provider: new FacebookLoginProvider(this.config.config.facebookAppId),
+                    },
+                ]
+            };
+        };
+    }
 }
 
 export type ConfigKey = string | null | undefined;
@@ -146,6 +165,7 @@ export interface AppConfig {
     created_at?: Date;
     hostname?: string;
     logo?: string;
+    need_user_verification?: boolean;
     config?: CustomConfig;
 }
 

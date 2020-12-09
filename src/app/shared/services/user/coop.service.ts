@@ -40,7 +40,7 @@ export class CoopService {
                     if (Object.keys(obj[key]).length === 0) {
                         delete obj[key];
                     }
-                } else if (!obj[key]) {
+                } else if ([undefined, null, ''].includes(obj[key])) {
                     delete obj[key];
                 }
             });
@@ -49,7 +49,9 @@ export class CoopService {
 
         const formData = new FormData();
 
-        formData.append('logo', logo, 'logo.png');
+        if (logo) {
+            formData.append('logo', logo, 'logo.png');
+        }
 
         formData.append('request', new Blob([JSON.stringify(removeEmpty(data))], {
             type: 'application/json'
@@ -77,5 +79,6 @@ interface CreateCoopReqData extends CreateCoopData {
 interface UpdateCoopData {
     name: string;
     hostname: string;
+    need_user_verification: boolean;
     config: CustomConfig;
 }

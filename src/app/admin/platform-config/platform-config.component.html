@@ -18,7 +18,7 @@
 
                 <label for="logo" class="app-page-label mt-3">Logo</label>
                 <app-upload-area areaID='logo-image' id="logo"
-                                    [restrictions]="{
+                                 [restrictions]="{
                                     allowedFileTypes: ['image/*'],
                                     maxFileSize: 10 * 1024 * 1024,
                                     maxNumberOfFiles: 1
@@ -29,6 +29,35 @@
                 <label for="icon" class="app-page-label mt-3">Icon</label>
                 <input class="form-control p-4" id="icon" formControlName="icon"
                        placeholder="https://path/to/icon.png" type="text">
+
+                <!-- Hidden because of security reasons. -->
+                <div [hidden]="true">
+                    <label for="arkane-id" class="app-page-label mt-3">Arkane ID</label>
+                    <input class="form-control p-4" id="arkane-id" formControlName="arkaneID"
+                           placeholder="arkaneID" type="text">
+
+                    <label for="arkane-env" class="app-page-label mt-3">Arkane ID</label>
+                    <input class="form-control p-4" id="arkane-env" formControlName="arkaneEnv"
+                           placeholder="arkaneEnv" type="text">
+
+                    <label for="need-user-verification" class="app-page-label mt-3">
+                        Need user verification
+                    </label>
+                    <input class="form-control p-4 ml-1 w-auto" id="need-user-verification"
+                           formControlName="needUserVerification" type="checkbox">
+
+                    <label for="recaptcha-site-key" class="app-page-label mt-3">ReCaptcha Site Key</label>
+                    <input class="form-control p-4" id="recaptcha-site-key" formControlName="reCaptchaSiteKey"
+                           placeholder="reCaptchaSiteKey" type="text">
+
+                    <label for="google-client-id" class="app-page-label mt-3">Google Client ID</label>
+                    <input class="form-control p-4" id="google-client-id" formControlName="googleClientID"
+                           placeholder="googleClientID" type="text">
+
+                    <label for="facebook-app-id" class="app-page-label mt-3">Facebook App ID</label>
+                    <input class="form-control p-4" id="facebook-app-id" formControlName="facebookAppID"
+                           placeholder="facebookAppID" type="text">
+                </div>
 
                 <button app-action-button
                         text="Update configuration"

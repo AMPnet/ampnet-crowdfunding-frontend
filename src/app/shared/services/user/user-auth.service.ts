@@ -5,6 +5,7 @@ import { catchError, tap } from 'rxjs/operators';
 import { UserService } from './user.service';
 import { CacheService } from '../cache.service';
 import { AppConfigService } from '../app-config.service';
+import { SocialAuthService } from 'angularx-social-login';
 
 
 @Injectable({
@@ -79,3 +80,13 @@ export class UserAuthResponse {
     refresh_token: string;
     refresh_token_expires_in: number;
 }
+
+export const socialAuthServiceFactory = (appConfig: AppConfigService) => {
+    return new SocialAuthService(appConfig.socialAuthConfig());
+};
+
+export const socialAuthServiceProvider = {
+    provide: SocialAuthService,
+    useFactory: socialAuthServiceFactory,
+    deps: [AppConfigService]
+};

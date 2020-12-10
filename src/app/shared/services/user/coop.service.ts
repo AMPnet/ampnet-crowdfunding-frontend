@@ -12,17 +12,27 @@ export class CoopService {
                 private captchaService: CaptchaService) {
     }
 
-    createCoop(data: CreateCoopData) {
+    createCoop(data: CreateCoopData, logo: File) {
         return this.captchaService.getToken(CaptchaAction.NEW_INSTANCE).pipe(
-            switchMap(captchaToken =>
-                this.http.post<AppConfig>(`/api/user/coop`, <CreateCoopReqData>{
+            switchMap(captchaToken => {
+                const reqData: CreateCoopReqData = {
                     ...data,
                     re_captcha_token: captchaToken
-                }, true)
-            ));
+                };
+
+                const formData = new FormData();
+
+                formData.append('logo', logo, 'logo.png');
+
+                formData.append('request', new Blob([JSON.stringify(reqData)], {
+                    type: 'application/json'
+                }), 'request.json');
+
+                return this.http.post<AppConfig>(`/api/user/coop`, formData, true);
+            }));
     }
 
-    updateCoop(data: UpdateCoopData) {
+    updateCoop(data: UpdateCoopData, logo: File) {
         const removeEmpty = (obj) => {
             Object.keys(obj).forEach(key => {
                 if (obj[key] && typeof obj[key] === 'object') {
@@ -30,14 +40,24 @@ export class CoopService {
                     if (Object.keys(obj[key]).length === 0) {
                         delete obj[key];
                     }
-                } else if (!obj[key]) {
+                } else if ([undefined, null, ''].includes(obj[key])) {
                     delete obj[key];
                 }
             });
             return obj;
         };
 
-        return this.http.put<AppConfig>(`/api/user/coop`, removeEmpty(data));
+        const formData = new FormData();
+
+        if (logo) {
+            formData.append('logo', logo, 'logo.png');
+        }
+
+        formData.append('request', new Blob([JSON.stringify(removeEmpty(data))], {
+            type: 'application/json'
+        }), 'request.json');
+
+        return this.http.put<AppConfig>(`/api/user/coop`, formData);
     }
 
     getCoop() {
@@ -59,5 +79,6 @@ interface CreateCoopReqData extends CreateCoopData {
 interface UpdateCoopData {
     name: string;
     hostname: string;
+    need_user_verification: boolean;
     config: CustomConfig;
 }

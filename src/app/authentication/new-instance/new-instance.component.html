@@ -19,6 +19,16 @@
     <input class="input-lg w-100" id="webTitle" formControlName="webTitle"
            placeholder="Instance" type="text">
 
+    <label for="logo-image" class="app-page-label mt-3">Logo image</label>
+    <app-upload-area areaID='logo-image' id="logo-image"
+                     [restrictions]="{
+                        allowedFileTypes: ['image/*'],
+                        maxFileSize: 10 * 1024 * 1024,
+                        maxNumberOfFiles: 1
+                     }"
+                     [firstFileControl]="createCoopForm.get('logo')">
+    </app-upload-area>
+
     <button app-action-button
             text="Create"
             faIcon="fa-paper-plane"

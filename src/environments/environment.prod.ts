@@ -5,7 +5,6 @@ export const environment = {
     baseHref: '/',
     customConfig: { // NOTICE: when adding a new config property, add it to AppConfig interface first.
         title: 'AMPnet',
-        logo_url: '/assets/logo-amp.png',
         icon_url: '/assets/favicon.ico',
         arkane: {
             id: 'AMPnet',

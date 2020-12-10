@@ -1,7 +1,7 @@
 <nav class="public-header navbar navbar-collapse navbar-dark bg-light pt-2">
     <div class="ml-2 ml-md-4">
         <a class="navbar-brand" [routerLink]="'/' | coopPath">
-            <img alt="Logo" src="{{ appConfigService.config.config.logo_url }}">
+            <img alt="Logo" src="{{ appConfigService.config.logo }}">
         </a>
     </div>
     <div *ngIf="!onlyLogo" id="auth-buttons" class="flex__center">

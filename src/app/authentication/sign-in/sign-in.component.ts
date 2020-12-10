@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthService } from 'angularx-social-login';
 import { RouterService } from '../../shared/services/router.service';
-import { UserAuthService } from '../../shared/services/user/user-auth.service';
+import { socialAuthServiceProvider, UserAuthService } from '../../shared/services/user/user-auth.service';
 import { from } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 import { displayBackendErrorRx } from '../../utilities/error-handler';
@@ -14,6 +14,9 @@ import { displayBackendErrorRx } from '../../utilities/error-handler';
         '../auth-layout/auth-layout.component.scss',
         './sign-in.component.scss'
     ],
+    providers: [
+        socialAuthServiceProvider
+    ]
 })
 export class SignInComponent {
     signInForm: FormGroup;

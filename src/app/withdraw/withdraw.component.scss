@@ -1,12 +1,5 @@
 @import "app";
 
-.container {
-  padding: 0;
-}
-
-.wrapper {
-  padding: 0 20px;
-}
 
 .withdraw {
   &__amount {
@@ -64,14 +57,6 @@
 
 
 @include media-breakpoint-up(lg) {
-  .container {
-    padding: 0 20px;
-  }
-
-  .wrapper {
-    padding: 0;
-  }
-
   .pending {
     &__desc {
       p {

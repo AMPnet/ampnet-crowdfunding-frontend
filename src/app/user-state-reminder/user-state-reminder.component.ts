@@ -9,7 +9,7 @@ import { switchMap, tap } from 'rxjs/operators';
 @Component({
     selector: 'app-user-state-reminder',
     templateUrl: './user-state-reminder.component.html',
-    styleUrls: ['./user-state-reminder.component.css']
+    styleUrls: ['./user-state-reminder.component.scss']
 })
 export class UserStateReminderComponent implements OnDestroy {
     wallet$ = this.walletService.wallet$;

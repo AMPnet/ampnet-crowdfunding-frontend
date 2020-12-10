@@ -2,17 +2,17 @@
     <app-header></app-header>
     <div class="container w-75">
         <div class="row justify-content-center align-items-center">
-            <img src="{{ appConfig.config.config.logo_url }}"
+            <img src="{{ appConfig.config.logo }}"
                  alt="Cooperative logo"
                  class="w-100 p-5">
         </div>
 
         <div class="row mt-3 justify-content-center">
-            <p class="mx-3">Welcome to {{ appConfig.config.name }} investing platform.</p>
+            <p>Welcome to {{ appConfig.config.name }} investing platform.</p>
         </div>
 
         <div class="row mt-3 justify-content-center align-items-center">
-            <button class="btn btn-primary"
+            <button class="btn btn-responsive-size"
                     [routerLink]="'/overview/discover' | coopPath">
                 Explore projects
             </button>

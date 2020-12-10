@@ -24,15 +24,19 @@
 
   .swal2-title,
   .swal2-content div {
-    font-size: $font-size-mobile-title !important;
-    letter-spacing: 1px;
     font-weight: normal !important;
     color: $title-color !important;
     text-align: left !important;
   }
 
   .swal2-title {
+    font-size: $font-size-mobile-title !important;
+    letter-spacing: 1px;
     margin-bottom: 32px !important;
+  }
+
+  .swal2-content div {
+    font-size: $font-size-desktop-body !important;
   }
 
   .swal2-actions {

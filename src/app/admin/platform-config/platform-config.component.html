@@ -5,24 +5,59 @@
         <ng-container *ngIf="(updateForm$ | async) as updateForm; else spinner">
             <form [formGroup]="updateForm" id="updateCoopForm">
                 <label for="name" class="app-page-label">Instance name</label>
-                <input class="form-control p-4" id="name" formControlName="name"
+                <input class="input-reg w-100" id="name" formControlName="name"
                        placeholder="Instance Name" type="text">
 
                 <label for="identifier" class="app-page-label mt-3">Identifier</label>
-                <input class="form-control p-4" id="identifier" [value]="appConfig.identifier"
+                <input class="input-reg w-100" id="identifier" [value]="appConfig.identifier"
                        [disabled]="true" type="text">
 
                 <label for="title" class="app-page-label mt-3">Web title</label>
-                <input class="form-control p-4" id="title" formControlName="title"
+                <input class="input-reg w-100" id="title" formControlName="title"
                        placeholder="Instance" type="text">
 
                 <label for="logo" class="app-page-label mt-3">Logo</label>
-                <input class="form-control p-4" id="logo" formControlName="logo"
-                       placeholder="https://path/to/logo.png" type="text">
+                <app-upload-area areaID='logo-image' id="logo"
+                                 [restrictions]="{
+                                    allowedFileTypes: ['image/*'],
+                                    maxFileSize: 10 * 1024 * 1024,
+                                    maxNumberOfFiles: 1
+                                 }"
+                                 [firstFileControl]="updateForm.get('logo')">
+                </app-upload-area>
 
                 <label for="icon" class="app-page-label mt-3">Icon</label>
-                <input class="form-control p-4" id="icon" formControlName="icon"
+                <input class="input-reg w-100" id="icon" formControlName="icon"
                        placeholder="https://path/to/icon.png" type="text">
+
+                <!-- Hidden because of security reasons. -->
+                <div [hidden]="true">
+                    <label for="arkane-id" class="app-page-label mt-3">Arkane ID</label>
+                    <input class="form-control p-4" id="arkane-id" formControlName="arkaneID"
+                           placeholder="arkaneID" type="text">
+
+                    <label for="arkane-env" class="app-page-label mt-3">Arkane ID</label>
+                    <input class="form-control p-4" id="arkane-env" formControlName="arkaneEnv"
+                           placeholder="arkaneEnv" type="text">
+
+                    <label for="need-user-verification" class="app-page-label mt-3">
+                        Need user verification
+                    </label>
+                    <input class="form-control p-4 ml-1 w-auto" id="need-user-verification"
+                           formControlName="needUserVerification" type="checkbox">
+
+                    <label for="recaptcha-site-key" class="app-page-label mt-3">ReCaptcha Site Key</label>
+                    <input class="form-control p-4" id="recaptcha-site-key" formControlName="reCaptchaSiteKey"
+                           placeholder="reCaptchaSiteKey" type="text">
+
+                    <label for="google-client-id" class="app-page-label mt-3">Google Client ID</label>
+                    <input class="form-control p-4" id="google-client-id" formControlName="googleClientID"
+                           placeholder="googleClientID" type="text">
+
+                    <label for="facebook-app-id" class="app-page-label mt-3">Facebook App ID</label>
+                    <input class="form-control p-4" id="facebook-app-id" formControlName="facebookAppID"
+                           placeholder="facebookAppID" type="text">
+                </div>
 
                 <button app-action-button
                         text="Update configuration"

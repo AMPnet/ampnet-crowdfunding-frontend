@@ -19,3 +19,11 @@ $font-size-mobile-title-small: 12px;
 $font-size-mobile-body: 14px;
 $font-size-mobile-title-small: 12px;
 $font-size-mobile-body-small: 10px;
+
+body {
+  font-size: $font-size-mobile-body;
+
+  @include media-breakpoint-up(lg) {
+    font-size: $font-size-desktop-body;
+  }
+}

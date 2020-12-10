@@ -1,37 +1,56 @@
 @import "colors";
 @import "bootstrap/scss/mixins/buttons";
 
+.btn,
+.btn span {
+  font-weight: 300;
+  font-size: $font-size-desktop-body;
+  color: $secondary-color;
+  line-height: 0;
+}
+
 .btn {
   @include button-variant($primary-color, darken($primary-color, 7.5%), darken($primary-color, 10%), lighten($primary-color,5%), lighten($primary-color, 10%), darken($primary-color,30%));
   border-radius: 2px;
   background: $primary-color;
   border: none;
-  font-weight: 400;
   height: 48px;
-  font-size: 14px;
   padding: 16px 24px;
-  line-height: 0;
-  color: $secondary-color;
-  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  svg {
+    font-size: $font-size-desktop-body;
+  }
 
   &-primary {
     height: 64px;
-    font-size: 14px;
   }
 
   &-responsive-size {
     @include media-breakpoint-up(lg) {
       height: 64px;
-      font-size: 14px;
     }
   }
 
   &-danger {
     @include button-variant($error-color, darken($error-color, 7.5%), darken($error-color, 10%), lighten($error-color,5%), lighten($error-color, 10%), darken($error-color,30%));
+    font-weight: bold;
+    span {
+      font-weight: bold;
+    }
   }
 
   &-success {
     @include button-variant($success-color, darken($success-color, 7.5%), darken($success-color, 10%), lighten($success-color,5%), lighten($success-color, 10%), darken($success-color,30%));
+  }
+
+  &-socials-facebook {
+    @include button-variant($socials-facebook, darken($socials-facebook, 7.5%), darken($socials-facebook, 10%), lighten($socials-facebook,5%), lighten($socials-facebook, 10%), darken($socials-facebook,30%));
+  }
+
+  &-socials-google {
+    @include button-variant($socials-google, darken($socials-google, 7.5%), darken($socials-google, 10%), lighten($socials-google,5%), lighten($socials-google, 10%), darken($socials-google,30%));
   }
   
   &-grey {
@@ -58,5 +77,8 @@
     background-color: darken($background-color, 7.5%);
     color: darken($border-color, 7.5%);
     border: none;
+    span {
+      color: darken($border-color, 7.5%);
+    }
   }
 }

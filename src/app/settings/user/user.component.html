@@ -2,44 +2,45 @@
     <div class="container">
         <h1 class="app-page-title">{{ 'settings.user.title' | translate }}</h1>
 
-
-        <div class="row mt-3">
-            <div class="col-md-4">
-                <label for="first_name" class="app-page-label">
-                    {{ 'settings.user.first_name' | translate }}
-                </label>
-                <input class="form-control p-4" id="first_name" disabled type="text"
-                       [value]="user.first_name">
+        <div>
+            <div class="row mt-3">
+                <div class="col-md-4">
+                    <label for="first_name" class="app-page-label">
+                        {{ 'settings.user.first_name' | translate }}
+                    </label>
+                    <input class="form-control p-4" id="first_name" disabled type="text"
+                           [value]="user.first_name">
+                </div>
+                <div class="col-md-4">
+                    <label for="last_name" class="app-page-label">
+                        {{ 'settings.user.last_name' | translate }}
+                    </label>
+                    <input class="form-control p-4" id="last_name" disabled type="text"
+                           [value]="user.last_name">
+                </div>
+                <div class="col-md-4">
+                    <label for="email" class="app-page-label">
+                        {{ 'settings.user.email' | translate }}
+                    </label>
+                    <input class="form-control p-4" id="email" disabled type="text"
+                           [value]="user.email">
+                </div>
             </div>
-            <div class="col-md-4">
-                <label for="last_name" class="app-page-label">
-                    {{ 'settings.user.last_name' | translate }}
-                </label>
-                <input class="form-control p-4" id="last_name" disabled type="text"
-                       [value]="user.last_name">
-            </div>
-            <div class="col-md-4">
-                <label for="email" class="app-page-label">
-                    {{ 'settings.user.email' | translate }}
-                </label>
-                <input class="form-control p-4" id="email" disabled type="text"
-                       [value]="user.email">
-            </div>
-        </div>
 
-        <div class="row mt-3">
-            <div class="col">
-                <label for="languages" class="app-page-label">
-                    {{ 'settings.user.languages' | translate }}
-                </label>
+            <div class="row mt-3">
+                <div class="col">
+                    <label for="languages" class="app-page-label">
+                        {{ 'settings.user.languages' | translate }}
+                    </label>
 
-                <div id="languages" class="d-flex flex-wrap">
-                    <div *ngFor="let lang of languageService.supportedLanguages"
-                         class="mx-3">
-                        <a [routerLink]="" (click)="languageService.setLanguage(lang)"
-                           [class.font-weight-bold]="lang === languageService.getCurrentLanguage()">
-                            {{ ('languages.' + lang) | translate }}
-                        </a>
+                    <div id="languages" class="d-flex flex-wrap">
+                        <div *ngFor="let lang of languageService.supportedLanguages"
+                             class="mx-3">
+                            <a [routerLink]="" (click)="languageService.setLanguage(lang)"
+                               [class.font-weight-bold]="lang === languageService.getCurrentLanguage()">
+                                {{ ('languages.' + lang) | translate }}
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>

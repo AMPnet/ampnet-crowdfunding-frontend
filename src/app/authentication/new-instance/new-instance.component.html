@@ -4,11 +4,11 @@
 
 <form [formGroup]="createCoopForm" id="newCoopForm">
     <label for="name" class="app-page-label">Instance name</label>
-    <input class="form-control p-4" id="name" formControlName="name"
+    <input class="input-lg w-100" id="name" formControlName="name"
            placeholder="Instance Name" type="text">
 
     <label for="identifier" class="app-page-label mt-3">Identifier</label>
-    <input class="form-control p-4" id="identifier" formControlName="identifier"
+    <input class="input-lg w-100" id="identifier" formControlName="identifier"
            placeholder="instance-name" type="text">
     <small class="form-text text-muted mt-2">
         Your instance will be served on:
@@ -16,8 +16,18 @@
     </small>
 
     <label for="webTitle" class="app-page-label mt-3">Web title</label>
-    <input class="form-control p-4" id="webTitle" formControlName="webTitle"
+    <input class="input-lg w-100" id="webTitle" formControlName="webTitle"
            placeholder="Instance" type="text">
+
+    <label for="logo-image" class="app-page-label mt-3">Logo image</label>
+    <app-upload-area areaID='logo-image' id="logo-image"
+                     [restrictions]="{
+                        allowedFileTypes: ['image/*'],
+                        maxFileSize: 10 * 1024 * 1024,
+                        maxNumberOfFiles: 1
+                     }"
+                     [firstFileControl]="createCoopForm.get('logo')">
+    </app-upload-area>
 
     <button app-action-button
             text="Create"
@@ -31,7 +41,7 @@
 
     <small class="form-text text-muted mt-2">
         This site is protected by reCAPTCHA and the Google
-        <a href="https://policies.google.com/privacy"><small>Privacy Policy</small></a> and
-        <a href="https://policies.google.com/terms"><small>Terms of Service</small></a> apply.
+        <a href="https://policies.google.com/privacy">Privacy Policy</a> and
+        <a href="https://policies.google.com/terms">Terms of Service</a> apply.
     </small>
 </form>

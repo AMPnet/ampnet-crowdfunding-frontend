@@ -9,7 +9,7 @@ import { AppConfig, AppConfigService } from '../../shared/services/app-config.se
 @Component({
     selector: 'app-platform-config',
     templateUrl: './platform-config.component.html',
-    styleUrls: ['./platform-config.component.css']
+    styleUrls: ['./platform-config.component.scss']
 })
 export class PlatformConfigComponent {
     private refreshAppConfig = new BehaviorSubject<AppConfig>(null);
@@ -28,14 +28,15 @@ export class PlatformConfigComponent {
                 return fb.group({
                     name: [appConfig.name, Validators.required],
                     title: [appConfig.config?.title],
-                    logo: [appConfig.config?.logo_url],
+                    logo: [null],
                     icon: [appConfig.config?.icon_url],
                     hostname: [appConfig.hostname],
                     arkaneID: [appConfig.config?.arkane?.id],
                     arkaneEnv: [appConfig.config?.arkane?.env],
+                    needUserVerification: [appConfig.need_user_verification],
+                    reCaptchaSiteKey: [appConfig.config?.reCaptchaSiteKey],
                     googleClientID: [appConfig.config?.googleClientId],
                     facebookAppID: [appConfig.config?.facebookAppId],
-                    reCaptchaSiteKey: [appConfig.config?.reCaptchaSiteKey],
                 });
             })
         );
@@ -47,9 +48,9 @@ export class PlatformConfigComponent {
             return this.coopService.updateCoop({
                 name: appConfig.name,
                 hostname: appConfig.hostname,
+                need_user_verification: appConfig.needUserVerification,
                 config: {
                     title: appConfig.title,
-                    logo_url: appConfig.logo,
                     icon_url: appConfig.icon,
                     arkane: {
                         id: appConfig.arkaneID,
@@ -59,9 +60,10 @@ export class PlatformConfigComponent {
                     facebookAppId: appConfig.facebookAppID,
                     reCaptchaSiteKey: appConfig.reCaptchaSiteKey
                 }
-            }).pipe(
+            }, appConfig.logo).pipe(
                 displayBackendErrorRx(),
                 tap(newAppConfig => {
+                    form.get('logo').reset();
                     this.appConfigService.config = newAppConfig;
                     this.refreshAppConfig.next(newAppConfig);
                 })

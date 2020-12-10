@@ -3,12 +3,14 @@
     wallet: wallet$ | async
 } as states">
     <div *ngIf="!isUserVerified(states.user)" class="container">
-        <div class="wallet-init-reminder">
-            <p>
-                Profile not verified.
-                Please go <span class="reminder-link" [routerLink]="'/dash/settings/user' | coopPath">here</span> to verify
-                your profile and finish onboarding procedure.
-            </p>
+        <div class="app__full-width">
+            <div class="wallet-init-reminder">
+                <p>
+                    Profile not verified.
+                    Please go <span class="reminder-link" [routerLink]="'/dash/settings/user' | coopPath">here</span> to verify
+                    your profile and finish onboarding procedure.
+                </p>
+            </div>
         </div>
     </div>
 

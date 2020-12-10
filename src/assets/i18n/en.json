@@ -1,6 +1,12 @@
 {
   "offers": {
-    "title": "Offers"
+    "title": "Offers",
+    "single_offer_item": {
+      "raised": "{{ raised }} | raised of {{ goal }} goal",
+      "ends_on": "Ends on {{ end_date }}",
+      "return": "Expected yearly return: | {{ from }} - {{ to }}",
+      "see_more": "See more"
+    }
   },
   "settings": {
     "user": {
@@ -44,6 +50,13 @@
       "wallet_not_initialized": "In order to manage funds, you need to have your wallet initialized.",
       "verification_pending": "Please wait for the administrator to verified your wallet."
     }
+  },
+  "user_state_reminder": {
+    "not_verified": "Profile not verified. Please go | here | to verify your profile and finish onboarding procedure.",
+    "initialize_wallet": "Thank you for verifying your profile. | In order to manage funds, you need to have your wallet initialized. Please initialize your wallet | here | .",
+    "activation_pending": "Thank you for initializing your wallet.",
+    "activation_pending.user_notice": "Please wait for the administrator to get it verified.",
+    "activation_pending.admin_notice": "Please wait for a few moments to get everything set up."
   },
   "languages": {
     "en": "English",

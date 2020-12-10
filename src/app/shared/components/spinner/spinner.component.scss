@@ -1,13 +1,10 @@
 :host {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   width: inherit;
 }
 
 .inline-spinner {
-  display: inline-flex;
-  justify-content: flex-start;
-
   .spinner-border-sm {
     border-width: 2px;
   }

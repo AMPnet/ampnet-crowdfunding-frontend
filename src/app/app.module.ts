@@ -101,6 +101,8 @@ import { NewInstanceComponent } from './authentication/new-instance/new-instance
 import { PlatformConfigComponent } from './admin/platform-config/platform-config.component';
 import { QuillModule } from 'ngx-quill';
 import { TranslationsModule } from './translations.module';
+import { InterpolatePipe } from './shared/pipes/interpolate.pipe';
+import { SplitPartPipe } from './shared/pipes/split-part.pipe';
 
 @NgModule({
     declarations: [
@@ -188,6 +190,8 @@ import { TranslationsModule } from './translations.module';
         SignInComponent,
         NewInstanceComponent,
         PlatformConfigComponent,
+        InterpolatePipe,
+        SplitPartPipe
     ],
     imports: [
         BrowserModule,
@@ -233,7 +237,9 @@ import { TranslationsModule } from './translations.module';
         DatePipe,
         SafePipe,
         CurrencyPipe,
-        CoopPathPipe
+        CoopPathPipe,
+        InterpolatePipe,
+        SplitPartPipe
     ],
     bootstrap: [AppComponent]
 })

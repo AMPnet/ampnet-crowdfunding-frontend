@@ -7,15 +7,15 @@
                 <label for="name" class="app-page-label">Instance name</label>
                 <input class="input-reg w-100" id="name" formControlName="name"
                        placeholder="Instance Name" type="text">
-    
+
                 <label for="identifier" class="app-page-label mt-3">Identifier</label>
                 <input class="input-reg w-100" id="identifier" [value]="appConfig.identifier"
                        [disabled]="true" type="text">
-    
+
                 <label for="title" class="app-page-label mt-3">Web title</label>
                 <input class="input-reg w-100" id="title" formControlName="title"
                        placeholder="Instance" type="text">
-    
+
                 <label for="logo" class="app-page-label mt-3">Logo</label>
                 <app-upload-area areaID='logo-image' id="logo"
                                  [restrictions]="{
@@ -69,7 +69,7 @@
             </form>
         </ng-container>
     </ng-container>
-    
+
     <ng-template #spinner>
         <app-spinner type="overlay"></app-spinner>
     </ng-template>

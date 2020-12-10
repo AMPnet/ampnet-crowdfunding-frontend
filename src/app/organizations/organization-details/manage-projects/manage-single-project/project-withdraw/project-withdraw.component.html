@@ -1,55 +1,58 @@
-<div class="container">
-    <ng-container *ngIf="(withdrawal$ | async) as withdrawal">
-        <div *ngIf="withdrawal === withdrawalState.EMPTY" class="row">
-            <div class="col-md-12">
-                <form [formGroup]="requestWithdrawForm">
-                    <h2 class="app-page-subtitle">Withdrawal</h2>
-                    <app-money-input-field
-                            placeholder="Enter withdrawal amount"
-                            [control]="requestWithdrawForm.get('amount')">
-                    </app-money-input-field>
-
-                    <h2 class="app-page-subtitle">Enter bank account details</h2>
-                    <input class="form-control w-100 p-4 mb-3" id="iban-holder"
-                           formControlName="iban" placeholder="IBAN"
-                           type="text">
-
-                    <button app-action-button
-                            text="Withdraw money"
-                            [disabled]="!requestWithdrawForm.valid"
-                            [onClick]="requestWithdrawal.bind(this)">
-                    </button>
-                </form>
-            </div>
+<ng-container *ngIf="withdrawal$ | async as withdrawal">
+    <div *ngIf="withdrawal === withdrawalState.EMPTY" class="container">
+        <div class="app-page-title-back" (click)="navigateBack()">
+            <i class="fas fa-long-arrow-alt-left mr-3"></i>
+            Withdraw
         </div>
+        <div class="withdraw__form">
+            <form [formGroup]="requestWithdrawForm">
+                <h2 class="app-page-subtitle">Withdrawal amount</h2>
+                <app-money-input-field
+                    placeholder="Enter withdrawal amount"
+                    [control]="requestWithdrawForm.get('amount')">
+                </app-money-input-field>
 
-        <div *ngIf="withdrawal !== withdrawalState.EMPTY" class="row">
-            <div class="col-md-12 text-center mt-5 explainer-mini">
+                <h2 class="app-page-subtitle">Enter bank account details</h2>
+                <input
+                    class="input-lg w-100" id="iban-holder"
+                    formControlName="iban" placeholder="IBAN"
+                    type="text"/>
+
+                <button
+                    app-action-button text="Withdraw money"
+                    [disabled]="!requestWithdrawForm.valid"
+                    [onClick]="requestWithdrawal.bind(this)">
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div *ngIf="withdrawal !== withdrawalState.EMPTY" class="container">
+        <div class="withdrawal__details">
+            <div class="details__content">
                 <p>You have a pending withdrawal request.</p>
                 <p>To have the money deposited into your bank account, you need to sign the transaction.</p>
                 <p>After successful signing, it can take up to 24 hours to process the transaction.</p>
             </div>
-            <div class="col-md-12 mt-3">
-                <div class="card">
-                    <div class="card-body">
-                    <span class="card-text mt-2">
-                        <h2 class="app-page-subtitle">Withdrawal amount</h2>
-                        {{ withdrawal.amount | currencyDefault }}
-                    </span>
-                        <span (click)="deleteWithdrawal(withdrawal).subscribe()"
-                              class="float-right cursor-pointer">
-                        <i class="fas fa-trash"></i>
-                    </span>
-                    </div>
+
+            <div class="details__review flex__center--space">
+                <div class="review__left">
+                    <h2 class="app-page-subtitle">Withdrawal amount</h2>
+                    {{ withdrawal.amount | currencyDefault }}
+                </div>
+                <div class="review__right" (click)="deleteWithdrawal(withdrawal).subscribe()">
+                    <i class="fas fa-trash"></i>
                 </div>
             </div>
-            <div class="col-md-12">
-                <button app-action-button
-                        text="Sign transaction"
-                        loadingText="Signing transaction..."
-                        [onClick]="burnWithdraw(withdrawal).bind(this)">
+
+            <div class="details__cta">
+                <button
+                    app-action-button
+                    text="Sign transaction"
+                    loadingText="Signing transaction..."
+                    [onClick]="burnWithdraw(withdrawal).bind(this)">
                 </button>
             </div>
         </div>
-    </ng-container>
-</div>
+    </div>
+</ng-container>

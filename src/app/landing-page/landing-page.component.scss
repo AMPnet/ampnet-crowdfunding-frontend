@@ -1,3 +1,5 @@
+@import "app";
+
 h1, h2 {
   font-weight: 400;
 }
@@ -6,15 +8,22 @@ h1, h2 {
     background: linear-gradient(#B25050, rgba(0, 0, 0, 0)), url(../../assets/human.jpg);
     background-size: cover !important;
     transition: 0.5s all ease;
+}
 
+.feature-holder {
+  height: 380px;
 }
 
 .featured-image:hover {
     backdrop-filter: blur(0.8)
 }
 
-@media (max-width: 800px) {
-    .feature-holder {
-        height: 380px;
-    }
+.btn-responsive-size {
+  font-size: $font-size-mobile-body;
+}
+
+@include media-breakpoint-up(lg) {
+  .btn-responsive-size {
+    font-size: $font-size-desktop-body;
+  }
 }

@@ -7,7 +7,7 @@
                 faStyle="fab"
                 faIcon="fa-facebook-square"
                 [onClick]="signInFacebook.bind(this)"
-                class="btn w-100 btn-action-a my-2 socials-facebook">
+                class="btn btn-primary btn-socials-facebook w-100 my-2">
         </button>
     </div>
     <div class="col-xl-6 align-self-center">
@@ -16,7 +16,7 @@
                 faStyle="fab"
                 faIcon="fa-google"
                 [onClick]="signInGoogle.bind(this)"
-                class="btn w-100 btn-action-a my-2 socials-google">
+                class="btn btn-primary btn-socials-google w-100 my-2">
         </button>
     </div>
 </div>
@@ -25,14 +25,14 @@
 
 <form [formGroup]="signInForm" id="emailForm">
     <label for="email" class="app-page-label">Email</label>
-    <input class="form-control p-4"
+    <input class="input-lg w-100"
            formControlName="email" id="email"
            placeholder="john.smith@email.com"
            type="text">
 
     <label for="password" class="app-page-label mt-3">Password</label>
-    <input class="form-control p-4" id="password" formControlName="password"
-           type="password">
+    <input class="input-lg w-100" id="password" 
+           formControlName="password" type="password">
 
     <button app-action-button
             text="Sign In"

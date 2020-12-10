@@ -13,7 +13,7 @@ import { RouterService } from '../../../../../../../shared/services/router.servi
 @Component({
     selector: 'app-revenue-share-confirm-modal',
     templateUrl: './revenue-share-confirm-modal.component.html',
-    styleUrls: ['./revenue-share-confirm-modal.component.css']
+    styleUrls: ['./revenue-share-confirm-modal.component.scss']
 })
 
 export class RevenueShareConfirmModalComponent implements OnInit {

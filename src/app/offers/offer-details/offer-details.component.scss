@@ -175,15 +175,10 @@ span {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        a, span {
+        a {
           font-size: $font-size-mobile-title-small;
           color: $body-color;
-        }
-        a {
           text-decoration: underline;
-        }
-        span {
-          font-weight: 500;
         }
       }
     }

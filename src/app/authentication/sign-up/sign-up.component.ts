@@ -16,7 +16,7 @@ import { from } from 'rxjs';
     templateUrl: './sign-up.component.html',
     styleUrls: [
         '../auth-layout/auth-layout.component.scss',
-        './sign-up.component.css'
+        './sign-up.component.scss'
     ],
     providers: [
         socialAuthServiceProvider

@@ -12,7 +12,7 @@ import { displayBackendErrorRx } from '../../utilities/error-handler';
     templateUrl: './sign-in.component.html',
     styleUrls: [
         '../auth-layout/auth-layout.component.scss',
-        './sign-in.component.css'
+        './sign-in.component.scss'
     ],
     providers: [
         socialAuthServiceProvider

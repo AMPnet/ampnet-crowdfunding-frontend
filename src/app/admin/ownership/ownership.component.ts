@@ -12,7 +12,7 @@ import { PopupService } from '../../shared/services/popup.service';
 @Component({
     selector: 'app-ownership',
     templateUrl: './ownership.component.html',
-    styleUrls: ['./ownership.component.css']
+    styleUrls: ['./ownership.component.scss']
 })
 export class OwnershipComponent implements OnInit, OnDestroy {
     user: User;

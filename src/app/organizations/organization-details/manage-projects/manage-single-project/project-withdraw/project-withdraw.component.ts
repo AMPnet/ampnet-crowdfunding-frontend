@@ -14,7 +14,7 @@ import { RouterService } from '../../../../../shared/services/router.service';
 @Component({
     selector: 'app-project-withdraw',
     templateUrl: './project-withdraw.component.html',
-    styleUrls: ['./project-withdraw.component.css']
+    styleUrls: ['./project-withdraw.component.scss']
 })
 export class ProjectWithdrawComponent {
     withdrawalState = WithdrawalState;
@@ -39,7 +39,7 @@ export class ProjectWithdrawComponent {
                 this.withdrawService.getProjectPendingWithdraw(this.projectID).pipe(
                     displayBackendErrorRx(),
                     catchError(err => err.status === 404 ?
-                        of(WithdrawalState.EMPTY) : this.recoverBack())
+                        of(WithdrawalState.EMPTY) : this.navigateBack())
                 )
             )
         );
@@ -74,7 +74,7 @@ export class ProjectWithdrawComponent {
                     title: 'Transaction signed',
                     text: 'Transaction is being processed...'
                 })),
-                switchMap(() => this.recoverBack()),
+                switchMap(() => this.navigateBack()),
                 finalize(() => SpinnerUtil.hideSpinner())
             );
         };
@@ -90,8 +90,8 @@ export class ProjectWithdrawComponent {
         );
     }
 
-    private recoverBack(): Observable<never> {
-        this.router.navigate(['../'], {relativeTo: this.route});
+    navigateBack(): Observable<never> {
+        this.router.navigate(['../../'], {relativeTo: this.route});
         return EMPTY;
     }
 }

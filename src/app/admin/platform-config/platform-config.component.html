@@ -5,15 +5,15 @@
         <ng-container *ngIf="(updateForm$ | async) as updateForm; else spinner">
             <form [formGroup]="updateForm" id="updateCoopForm">
                 <label for="name" class="app-page-label">Instance name</label>
-                <input class="form-control p-4" id="name" formControlName="name"
+                <input class="input-reg w-100" id="name" formControlName="name"
                        placeholder="Instance Name" type="text">
 
                 <label for="identifier" class="app-page-label mt-3">Identifier</label>
-                <input class="form-control p-4" id="identifier" [value]="appConfig.identifier"
+                <input class="input-reg w-100" id="identifier" [value]="appConfig.identifier"
                        [disabled]="true" type="text">
 
                 <label for="title" class="app-page-label mt-3">Web title</label>
-                <input class="form-control p-4" id="title" formControlName="title"
+                <input class="input-reg w-100" id="title" formControlName="title"
                        placeholder="Instance" type="text">
 
                 <label for="logo" class="app-page-label mt-3">Logo</label>
@@ -27,7 +27,7 @@
                 </app-upload-area>
 
                 <label for="icon" class="app-page-label mt-3">Icon</label>
-                <input class="form-control p-4" id="icon" formControlName="icon"
+                <input class="input-reg w-100" id="icon" formControlName="icon"
                        placeholder="https://path/to/icon.png" type="text">
 
                 <!-- Hidden because of security reasons. -->

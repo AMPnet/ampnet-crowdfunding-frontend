@@ -23,22 +23,8 @@ h1 {
   color: #111111;
 }
 
-.socials-facebook, .socials-google {
-  border: none;
-  color: #FFFFFF;
-}
-
-.socials-facebook {
-  background-color: #39579A;
-}
-
-.socials-google {
-  background-color: #3B4BE0;
-}
-
-.socials-facebook:hover, .socials-google:hover {
-  background-color: rgb(30, 75, 58);
-  box-shadow: 0 10px 20px rgba(105, 190, 148, 0.4);
+.app-page-header {
+  margin: 20px 0 40px 0;
 }
 
 .dropdown-divider {

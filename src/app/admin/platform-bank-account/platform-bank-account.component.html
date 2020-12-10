@@ -1,11 +1,7 @@
-<h1 class="app-page-title">Platform Bank Accounts</h1>
 <div class="container">
+    <h1 class="app-page-title">Platform Bank Accounts</h1>
     <div class="row">
         <ng-container *ngIf="(banks$ | async) as banks; else spinner">
-            <div class="col-md-8 mb-5">
-                <h5 class="gray-text">Platform Bank Accounts</h5>
-            </div>
-
             <div *ngFor="let paymentOption of banks" class="col-md-12 mb-3">
                 <div class="card">
                     <div class="card-body d-flex flex-column gray-text">

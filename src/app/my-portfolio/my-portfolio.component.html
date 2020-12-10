@@ -1,52 +1,56 @@
 <ng-container *ngIf="(walletActivated$ | async) as walletActivated else overlaySpinner">
     <div *ngIf="walletActivated" class="container">
         <h1 class="app-page-title">My portfolio</h1>
-        <ng-container *ngIf="{
-            stats: portfolioStats$ | async,
-            portfolio: portfolio$ | async
-        } as states">
-
-        <div class="investment-total">
-            <div class="investment-total__left">
-                <p>Total investment</p>
-                <ng-container *ngIf="!!states.stats else smallSpinner">
-                    <h2>{{ states.stats.investments | currencyDefault }}</h2>
-                </ng-container>
-            </div>
-            <div class="investment-total__right">
-                <p>Total earnings</p>
-                <ng-container *ngIf="!!states.stats else smallSpinner">
-                    <h2>{{ states.stats.earnings | currencyDefault }}</h2>
-                </ng-container>
-            </div>
-        </div>
-
-        <div class="investment-history">
-            <p class="history__title">Investments</p>
-            <div *ngIf="states.portfolio?.length === 0" class="row justify-content-center">
-                <div class="history__empty">
-                    You don't have any active investments
+        <div class="app__full-width">
+            <ng-container *ngIf="{
+                stats: portfolioStats$ | async,
+                portfolio: portfolio$ | async
+            } as states">
+    
+            <div class="investment-total">
+                <div class="investment-total__left">
+                    <p>Total investment</p>
+                    <ng-container *ngIf="!!states.stats else smallSpinner">
+                        <h2>{{ states.stats.investments | currencyDefault }}</h2>
+                    </ng-container>
+                </div>
+                <div class="investment-total__right">
+                    <p>Total earnings</p>
+                    <ng-container *ngIf="!!states.stats else smallSpinner">
+                        <h2>{{ states.stats.earnings | currencyDefault }}</h2>
+                    </ng-container>
                 </div>
             </div>
-
-            <ng-container *ngIf="states.portfolio else overlaySpinner">
-                <div *ngFor="let item of states.portfolio"
-                     class="history__item wow fadeIn" style="visibility:hidden">
-                    <app-single-invest-item [investment]=item></app-single-invest-item>
+    
+            <div class="investment-history">
+                <p class="history__title">Investments</p>
+                <div *ngIf="states.portfolio?.length === 0" class="row justify-content-center">
+                    <div class="history__empty">
+                        You don't have any active investments
+                    </div>
                 </div>
+    
+                <ng-container *ngIf="states.portfolio else overlaySpinner">
+                    <div *ngFor="let item of states.portfolio"
+                         class="history__item wow fadeIn" style="visibility:hidden">
+                        <app-single-invest-item [investment]=item></app-single-invest-item>
+                    </div>
+                </ng-container>
+    
+            </div>
             </ng-container>
-
         </div>
+
+        <ng-container *ngIf="!walletActivated">
+            <div class="wow fadeIn mt-5">
+                <h6 class="text-center w-100">
+                    Your portfolio will be available after you've invested into a project.
+                </h6>
+            </div>
         </ng-container>
     </div>
 
-    <ng-container *ngIf="!walletActivated">
-        <div class="container wow fadeIn mt-5">
-            <h6 class="text-center w-100">
-                Your portfolio will be available after you've invested into a project.
-            </h6>
-        </div>
-    </ng-container>
+    
 </ng-container>
 
 <ng-template #overlaySpinner>

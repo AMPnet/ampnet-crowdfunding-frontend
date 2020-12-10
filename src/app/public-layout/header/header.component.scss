@@ -1,3 +1,5 @@
+@import "app";
+
 .public-header {
     z-index: 2;
 }
@@ -12,9 +14,9 @@
     max-height: 35px;
 }
 
-@media (min-width: 800px) {
-    .signup-button {
-        width: 150px;
-        height: 48px;
-    }
+@include media-breakpoint-up(lg) {
+  .signup-button {
+    width: 150px;
+    height: 48px;
+  }
 }

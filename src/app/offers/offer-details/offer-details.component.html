@@ -190,7 +190,6 @@
                     </div>
                     <div *ngFor="let news of states.news" class="news__item">
                         <div class="news__wrapper">
-                            <span *ngIf="news.url === ''">Invalid news link!</span>
                             <a href="{{ news.url }}" target="_blank">{{ news.url }}</a>
                         </div>
                     </div>

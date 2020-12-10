@@ -58,6 +58,11 @@
     "activation_pending.user_notice": "Please wait for the administrator to get it verified.",
     "activation_pending.admin_notice": "Please wait for a few moments to get everything set up."
   },
+  "errors": {
+    "auth": {
+      "invalid_credentials": "Invalid username or password"
+    }
+  },
   "languages": {
     "en": "English",
     "hr": "Hrvatski"

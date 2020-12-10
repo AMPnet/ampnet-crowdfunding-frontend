@@ -258,9 +258,11 @@
                                                    style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis">
                                                     {{ item }}
                                                 </a>
-                                                <div (click)="deleteNewsClicked(states.project, item).subscribe()">
-                                                    <i class="fas fa-trash-alt"></i>
-                                                </div>
+                                                <a [routerLink]="" (click)="deleteNewsClicked(states.project, item).subscribe()">
+                                                    <div>
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </div>
+                                                </a>
                                             </li>
                                         </ul>
                                     </div>

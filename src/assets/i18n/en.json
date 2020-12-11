@@ -60,11 +60,71 @@
   },
   "errors": {
     "registration": {
-      "sign_up_incomplete": "Entered data is incomplete",
-      "sign_up_invalid": "Entered data is invalid"
+      "sign_up_invalid": "Invalid sign up data.",
+      "user_exists": "The given email is already in use.",
+      "confirmation_token_invalid": "Invalid email confirmation data.",
+      "confirmation_token_expired": "Confirmation link has expired.",
+      "social_failed": "There is a problem with social login method. Try again later.",
+      "captcha_failed": "You have failed captcha validation. Please, try again."
     },
     "auth": {
-      "invalid_credentials": "Invalid username or password"
+      "invalid_forgot_password_link": "Invalid forgot password link. Request a new one.",
+      "invalid_credentials": "Invalid username or password."
+    },
+    "user": {
+      "no_user": "The requested user does not exist.",
+      "invalid_bank_account_data": "Bank account data is invalid.",
+      "different_password": "Old password is invalid.",
+      "invalid_privilege": "You have no sufficient privilege to do this action."
+    },
+    "wallet": {
+      "missing_wallet": "Your wallet is missing.",
+      "cannot_create_new_wallet": "A new wallet cannot be created.",
+      "not_enough_funds": "You have not enough funds on your wallet.",
+      "wallet_already_registered": "This wallet has already been registered.",
+      "missing_deposit": "Requested deposit does not exist.",
+      "deposit_already_minted": "Requested deposit has already been finalized.",
+      "deposit_not_approved": "Invalid action. The transaction cannot be processed if not approved.",
+      "unapproved_deposit_exists": "You already have an unprocessed deposit. A new one cannot be created.",
+      "missing_withdrawal": "Requested withdrawal has not been found.",
+      "unapproved_withdraw_exists": "You already have an unprocessed withdrawal. A new one cannot be created.",
+      "withdraw_already_approved": "Forbidden action because the withdrawal has already been approved.",
+      "withdraw_not_approved": "Forbidden action because the withdrawal has not already been approved.",
+      "withdraw_already_burned": "Forbidden action because the withdrawal has already been processed.",
+      "wallet_not_activated_by_admin": "Forbidden action! Wallet must be activated by administrator.",
+      "missing_revenue_payout": "Invalid action. Requested revenue payout transaction is missing."
+    },
+    "organization": {
+      "org_missing": "Requested organization does not exist.",
+      "user_already_member": "The user is already member of this organization.",
+      "user_already_invited": "The user has already been invited to this organization.",
+      "org_name_already_exists": "Organization name already exists.",
+      "org_missing_privilege": "Invalid action. Incorrect organization privilege.",
+      "invalid_org_invitation": "Some emails are in the wrong format.",
+      "org_membership_missing": "The user is not a member of this organization."
+    },
+    "project": {
+      "project_missing": "Requested project does not exist.",
+      "invalid_date": "Provided date is invalid.",
+      "project_expired": "The project investing period has expired.",
+      "user_exceeded_max_funds": "You have exceeded the maximum investment amount.",
+      "project_reached_expected_funding": "The project is fully funded.",
+      "project_not_active": "The project is not active anymore.",
+      "min_investment_greater_than_max": "The minimum investment cannot be greater than maximum investment.",
+      "expected_funding_too_high": "The expected funding is too high.",
+      "max_investment_too_high": "The maximum investment per user is too high.",
+      "invalid_roi": "Invalid return on investment value."
+    },
+    "internal": {
+      "something_went_wrong": "Something went wrong."
+    },
+    "transaction": {
+      "transaction_missing": "Requested transaction does not exist.",
+      "missing_companion_data": "Invalid transaction. Please, try again."
+    },
+    "cooperative": {
+      "coop_missing": "Requested instance does not exist.",
+      "coop_already_exists": "Instance already exists."
     }
   },
   "languages": {

@@ -39,14 +39,8 @@ export class ErrorService {
                 const error = errorRes.error as BackendError;
 
                 switch (error.err_code) {
-                    // RegistrationError
-                    //
                     case RegistrationError.SIGN_UP_INCOMPLETE:
                         display$ = this.displayMessage('errors.registration.sign_up_incomplete');
-                        break;
-
-                    case RegistrationError.SIGN_UP_INVALID:
-                        display$ = this.displayMessage('errors.registration.sign_up_invalid');
                         break;
 
                     case RegistrationError.USER_EXISTS:
@@ -55,37 +49,32 @@ export class ErrorService {
 
                     case RegistrationError.CONFIRMATION_TOKEN_INVALID:
                         display$ = this.displayMessage('errors.registration.confirmation_token_invalid');
+                        action$ = this.takeAction(() => this.router.navigate['/']);
                         break;
 
                     case RegistrationError.CONFIRMATION_TOKEN_EXPIRED:
                         display$ = this.displayMessage('errors.registration.confirmation_token_expired');
+                        // TODO: Implement redirect to resend email confirmation when it gets implemented.
                         break;
 
                     case RegistrationError.SOCIAL_FAILED:
                         display$ = this.displayMessage('errors.registration.social_failed');
                         break;
 
-                    case RegistrationError.USER_INFO_ALREADY_EXISTS:
-                        display$ = this.displayMessage('errors.registration.user_info_already_exists');
-                        break;
-
                     case RegistrationError.CAPTCHA_FAILED:
                         display$ = this.displayMessage('errors.registration.captcha_failed');
                         break;
 
-                    // AuthError
-                    //
                     case AuthError.NO_FORGOT_PASS_TOKEN:
-                        display$ = this.displayMessage('errors.auth.no_forgot_pass_token');
-                        break;
-
                     case AuthError.FORGOT_PASS_EXPIRED:
-                        display$ = this.displayMessage('errors.auth.forgot_pass_expired');
+                        display$ = this.displayMessage('errors.auth.invalid_forgot_password_link');
+                        action$ = this.takeAction(() => this.router.navigate['/forgot_password']);
                         break;
 
                     case AuthError.INVALID_JWT:
                     case AuthError.MISSING_JWT:
                     case AuthError.CANNOT_REGISTER_JWT:
+                    case UserError.USER_JWT_MISSING:
                         action$ = this.takeAction(() => of(this.userAuthService.logout())
                             .pipe(this.router.navigate['/']));
                         break;
@@ -94,8 +83,6 @@ export class ErrorService {
                         display$ = this.displayMessage('errors.auth.invalid_credentials');
                         break;
 
-                    // UserError
-                    //
                     case UserError.NO_USER:
                         display$ = this.displayMessage('errors.user.no_user');
                         break;
@@ -108,16 +95,10 @@ export class ErrorService {
                         display$ = this.displayMessage('errors.user.different_password');
                         break;
 
-                    case UserError.INVALID_USER_ROLE:
-                        display$ = this.displayMessage('errors.user.invalid_user_role');
-                        break;
-
                     case UserError.INVALID_PRIVILEGE:
                         display$ = this.displayMessage('errors.user.invalid_privilege');
                         break;
 
-                    // WalletError
-                    //
                     case WalletError.MISSING_WALLET:
                         display$ = this.displayMessage('errors.wallet.missing_wallet');
                         break;
@@ -178,18 +159,8 @@ export class ErrorService {
                         display$ = this.displayMessage('errors.wallet.missing_revenue_payout');
                         break;
 
-                    // OrganizationError
-                    //
                     case OrganizationError.ORG_MISSING:
                         display$ = this.displayMessage('errors.organization.org_missing');
-                        break;
-
-                    case OrganizationError.UNPRIVILEGED_ORG_APPROVEMENT:
-                        display$ = this.displayMessage('errors.organization.unprivileged_org_approvement');
-                        break;
-
-                    case OrganizationError.NO_INVITE_FOR_UNPRIVILEGED_USER:
-                        display$ = this.displayMessage('errors.organization.no_invite_for_unprivileged_user');
                         break;
 
                     case OrganizationError.USER_ALREADY_MEMBER:
@@ -204,6 +175,10 @@ export class ErrorService {
                         display$ = this.displayMessage('errors.organization.org_name_already_exists');
                         break;
 
+                    case OrganizationError.ORG_MISSING_PRIVILEGE:
+                        display$ = this.displayMessage('errors.organization.org_missing_privilege');
+                        break;
+
                     case OrganizationError.INVALID_ORG_INVITATION:
                         display$ = this.displayMessage('errors.organization.invalid_org_invitation');
                         break;
@@ -212,8 +187,6 @@ export class ErrorService {
                         display$ = this.displayMessage('errors.organization.org_membership_missing');
                         break;
 
-                    // ProjectError
-                    //
                     case ProjectError.PROJECT_MISSING:
                         display$ = this.displayMessage('errors.project.project_missing');
                         break;
@@ -254,8 +227,6 @@ export class ErrorService {
                         display$ = this.displayMessage('errors.project.invalid_roi');
                         break;
 
-                    // InternalError
-                    //
                     case InternalError.UPLOAD_DOCUMENT_FAILED:
                     case InternalError.INVALID_VALUE_IN_REQUEST:
                     case InternalError.GRPC_FAILED_BLOCKCHAIN_SERVICE:
@@ -269,8 +240,6 @@ export class ErrorService {
                         display$ = this.displayMessage('errors.internal.something_went_wrong');
                         break;
 
-                    // TransactionError
-                    //
                     case TransactionError.TRANSACTION_MISSING:
                         display$ = this.displayMessage('errors.transaction.transaction_missing');
                         break;
@@ -278,8 +247,6 @@ export class ErrorService {
                         display$ = this.displayMessage('errors.transaction.missing_companion_data');
                         break;
 
-                    // CooperativeError
-                    //
                     case CooperativeError.COOP_MISSING:
                         display$ = this.displayMessage('errors.cooperative.coop_missing');
                         break;
@@ -321,12 +288,10 @@ interface BackendError {
 
 enum RegistrationError {
     SIGN_UP_INCOMPLETE = '0101',
-    SIGN_UP_INVALID = '0102',
     USER_EXISTS = '0103',
     CONFIRMATION_TOKEN_INVALID = '0104',
     CONFIRMATION_TOKEN_EXPIRED = '0105',
     SOCIAL_FAILED = '0106',
-    USER_INFO_ALREADY_EXISTS = '0109',
     CAPTCHA_FAILED = '0110',
 }
 
@@ -340,11 +305,11 @@ enum AuthError {
 }
 
 enum UserError {
-    NO_USER = '0301',
+    USER_JWT_MISSING = '0301',
     INVALID_BANK_ACCOUNT_DATA = '0302',
     DIFFERENT_PASSWORD = '0303',
-    INVALID_USER_ROLE = '0304',
     INVALID_PRIVILEGE = '0305',
+    NO_USER = '0306'
 }
 
 enum WalletError {
@@ -367,13 +332,12 @@ enum WalletError {
 
 enum OrganizationError {
     ORG_MISSING = '0601',
-    UNPRIVILEGED_ORG_APPROVEMENT = '0602',
-    NO_INVITE_FOR_UNPRIVILEGED_USER = '0603',
     USER_ALREADY_MEMBER = '0604',
     USER_ALREADY_INVITED = '0605',
     ORG_NAME_ALREADY_EXISTS = '0606',
-    INVALID_ORG_INVITATION = '0607',
+    ORG_MISSING_PRIVILEGE = '0607',
     ORG_MEMBERSHIP_MISSING = '0608',
+    INVALID_ORG_INVITATION = '0609',
 }
 
 enum ProjectError {

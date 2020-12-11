@@ -125,6 +125,14 @@
     "cooperative": {
       "coop_missing": "Requested instance does not exist.",
       "coop_already_exists": "Instance already exists."
+    },
+    "middleware": {
+      "transaction_not_signed": "Blockchain transaction has not been signed.",
+      "transaction_not_mined": "Blockchain transaction has not been mined.",
+      "transaction_not_found": "Blockchain transaction has not been found.",
+      "wallet_not_found": "Blockchain wallet has not been found.",
+      "wallet_already_exists": "Blockchain wallet already exists.",
+      "general_error": "There was an error on blockchain. Please, try again later."
     }
   },
   "languages": {

@@ -253,6 +253,38 @@ export class ErrorService {
                     case CooperativeError.COOP_ALREADY_EXISTS:
                         display$ = this.displayMessage('errors.cooperative.coop_already_exists');
                         break;
+
+                    case MiddlewareError.TRANSACTION_NOT_SIGNED:
+                        display$ = this.displayMessage('errors.middleware.transaction_not_signed');
+                        break;
+                    case MiddlewareError.TRANSACTION_NOT_MINED:
+                        display$ = this.displayMessage('errors.middleware.transaction_not_mined');
+                        break;
+                    case MiddlewareError.TRANSACTION_NOT_FOUND:
+                        display$ = this.displayMessage('errors.middleware.transaction_not_found');
+                        break;
+                    case MiddlewareError.WALLET_NOT_FOUND:
+                        display$ = this.displayMessage('errors.middleware.wallet_not_found');
+                        break;
+                    case MiddlewareError.WALLET_ALREADY_EXISTS:
+                        display$ = this.displayMessage('errors.middleware.wallet_already_exists');
+                        break;
+
+                    case MiddlewareError.INVALID_CONTRACT_CALLED:
+                    case MiddlewareError.TRANSACTION_VERIFICATION_FAILED:
+                    case MiddlewareError.CREATE_WALLET_TRANSACTION_FAILED:
+                    case MiddlewareError.CREATE_WALLET_TRANSACTION_PENDING:
+                    case MiddlewareError.CREATE_GROUP_CONTRACT_FAILED:
+                    case MiddlewareError.CREATE_PROJECT_CONTRACT_FAILED:
+                    case MiddlewareError.CREATE_SELL_OFFER_CONTRACT_FAILED:
+                    case MiddlewareError.AE_SDK_ERROR:
+                    case MiddlewareError.TRANSACTION_DRY_RUN_FAILED:
+                    case MiddlewareError.PRECONDITION_FAILED:
+                    case MiddlewareError.COOPERATIVE_MISSING:
+                    case MiddlewareError.CONTRACT_DEPLOYMENT_FAILED:
+                    case MiddlewareError.UNKNOWN_ERROR:
+                        display$ = this.displayMessage('errors.middleware.general_error');
+                        break;
                 }
             }
 
@@ -282,7 +314,7 @@ interface BackendError {
     description: string;
     message: string;
     err_code: RegistrationError | AuthError | UserError | WalletError | OrganizationError |
-        ProjectError | InternalError | TransactionError | CooperativeError;
+        ProjectError | InternalError | TransactionError | CooperativeError | MiddlewareError;
     errors: { [key: string]: string };
 }
 
@@ -374,4 +406,25 @@ enum TransactionError {
 enum CooperativeError {
     COOP_MISSING = '1001',
     COOP_ALREADY_EXISTS = '1002',
+}
+
+enum MiddlewareError {
+    TRANSACTION_NOT_SIGNED = '1101',
+    TRANSACTION_NOT_MINED = '1102',
+    INVALID_CONTRACT_CALLED = '1103',
+    TRANSACTION_VERIFICATION_FAILED = '1104',
+    TRANSACTION_NOT_FOUND = '1105',
+    WALLET_NOT_FOUND = '1110',
+    CREATE_WALLET_TRANSACTION_FAILED = '1111',
+    CREATE_WALLET_TRANSACTION_PENDING = '1112',
+    WALLET_ALREADY_EXISTS = '1113',
+    CREATE_GROUP_CONTRACT_FAILED = '1120',
+    CREATE_PROJECT_CONTRACT_FAILED = '1130',
+    CREATE_SELL_OFFER_CONTRACT_FAILED = '1131',
+    AE_SDK_ERROR = '1140',
+    TRANSACTION_DRY_RUN_FAILED = '1150',
+    PRECONDITION_FAILED = '1160',
+    COOPERATIVE_MISSING = '1170',
+    CONTRACT_DEPLOYMENT_FAILED = '1190',
+    UNKNOWN_ERROR = '1199'
 }

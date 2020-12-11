@@ -59,6 +59,10 @@
     "activation_pending.admin_notice": "Please wait for a few moments to get everything set up."
   },
   "errors": {
+    "registration": {
+      "sign_up_incomplete": "Entered data is incomplete",
+      "sign_up_invalid": "Entered data is invalid"
+    },
     "auth": {
       "invalid_credentials": "Invalid username or password"
     }

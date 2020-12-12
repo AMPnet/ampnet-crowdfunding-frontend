@@ -4,9 +4,9 @@ import { catchError, map, switchMap } from 'rxjs/operators';
 import { EMPTY, Observable } from 'rxjs';
 import { Deposit, DepositServiceService } from '../../../../../shared/services/wallet/deposit-service.service';
 import { PlatformBankAccountService } from '../../../../../shared/services/wallet/platform-bank-account.service';
-import { displayBackendErrorRx } from '../../../../../utilities/error-handler';
 import { PopupService } from '../../../../../shared/services/popup.service';
 import { RouterService } from '../../../../../shared/services/router.service';
+import { ErrorService, WalletError } from '../../../../../shared/services/error.service';
 
 @Component({
     selector: 'app-project-deposit',
@@ -21,27 +21,28 @@ export class ProjectDepositComponent {
                 private route: ActivatedRoute,
                 private router: RouterService,
                 private popupService: PopupService,
+                private errorService: ErrorService,
                 private bankAccountService: PlatformBankAccountService) {
         const projectUUID = this.route.snapshot.params.projectID;
 
         this.deposit$ = this.depositService.getProjectPendingDeposit(projectUUID).pipe(
-            displayBackendErrorRx(),
+            this.errorService.handleError,
             catchError(err => err.status === 404 ? this.generateDepositInfo(projectUUID) : this.navigateBack())
         );
 
         this.masterIBAN$ = this.bankAccountService.bankAccounts$.pipe(
-            displayBackendErrorRx(),
+            this.errorService.handleError,
             map(res => res.bank_accounts[0]?.iban || 'unknown')
         );
     }
 
     generateDepositInfo(projectUUID: string) {
         return this.depositService.createProjectDeposit(projectUUID).pipe(
-            displayBackendErrorRx(),
             catchError(err =>
-                err.error.err_code === '0509' ? this.popupService.info(
+                err.error.err_code === WalletError.MISSING_WITHDRAWAL ? this.popupService.info(
                     'You already have an existing deposit. Please wait until it\'s approved'
-                ).pipe(switchMap(() => this.navigateBack())) : this.navigateBack())
+                ).pipe(switchMap(() => this.navigateBack())) : this.navigateBack()),
+            this.errorService.handleError,
         );
     }
 

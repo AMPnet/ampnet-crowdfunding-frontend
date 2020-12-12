@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PaymentService, UserBankAccount } from '../shared/services/payment.service';
-import { displayBackendErrorRx, hideSpinnerAndDisplayError } from '../utilities/error-handler';
+import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { Withdraw, WithdrawService } from '../shared/services/wallet/withdraw.service';
 import { WalletService } from '../shared/services/wallet/wallet.service';
@@ -8,6 +8,7 @@ import { finalize, switchMap, tap } from 'rxjs/operators';
 import { ArkaneService } from '../shared/services/arkane.service';
 import { PopupService } from '../shared/services/popup.service';
 import { RouterService } from '../shared/services/router.service';
+import { ErrorService } from '../shared/services/error.service';
 
 @Component({
     selector: 'app-withdraw',
@@ -25,6 +26,7 @@ export class WithdrawComponent implements OnInit {
                 private walletService: WalletService,
                 private arkaneService: ArkaneService,
                 private popupService: PopupService,
+                private errorService: ErrorService,
                 private router: RouterService) {
     }
 
@@ -55,7 +57,7 @@ export class WithdrawComponent implements OnInit {
     requestWithdrawal() {
         const iban = this.banks[this.activeBankAccount].iban;
         return this.withdrawService.createWithdrawRequest(this.withdrawAmount, iban).pipe(
-            displayBackendErrorRx(),
+            this.errorService.handleError,
             tap(res => this.pendingWithdrawal = res)
         );
     }
@@ -63,7 +65,7 @@ export class WithdrawComponent implements OnInit {
     burnWithdraw() {
         SpinnerUtil.showSpinner();
         return this.withdrawService.generateApproveWithdrawTx(this.pendingWithdrawal.id).pipe(
-            displayBackendErrorRx(),
+            this.errorService.handleError,
             switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo)),
             switchMap(() => this.popupService.new({
                 type: 'success',
@@ -79,7 +81,7 @@ export class WithdrawComponent implements OnInit {
         SpinnerUtil.showSpinner();
 
         return this.withdrawService.deleteWithdrawal(this.pendingWithdrawal.id).pipe(
-            displayBackendErrorRx(),
+            this.errorService.handleError,
             switchMap(() => this.popupService.success('Withdrawal deleted')),
             tap(() => this.pendingWithdrawal = undefined),
             finalize(() => SpinnerUtil.hideSpinner()),

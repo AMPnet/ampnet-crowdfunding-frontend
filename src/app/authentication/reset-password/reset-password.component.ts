@@ -4,9 +4,9 @@ import { SignupService } from '../../shared/services/user/signup.service';
 import { ActivatedRoute } from '@angular/router';
 import { PopupService } from '../../shared/services/popup.service';
 import { MustMatch } from '../sign-up/confirm-password-validator';
-import { displayBackendErrorRx } from '../../utilities/error-handler';
 import { switchMap, tap } from 'rxjs/operators';
 import { RouterService } from '../../shared/services/router.service';
+import { ErrorService } from '../../shared/services/error.service';
 
 @Component({
     selector: 'app-reset-password',
@@ -23,6 +23,7 @@ export class ResetPasswordComponent implements OnInit {
     constructor(private formBuilder: FormBuilder,
                 private signUpService: SignupService,
                 private router: RouterService,
+                private errorService: ErrorService,
                 private popupService: PopupService,
                 private route: ActivatedRoute) {
 
@@ -42,7 +43,7 @@ export class ResetPasswordComponent implements OnInit {
         const newPassword = this.resetPasswordForm.get('password').value;
 
         return this.signUpService.resetPassword(newPassword, this.token).pipe(
-            displayBackendErrorRx(),
+            this.errorService.handleError,
             switchMap(() => this.popupService.success('Your password has been changed successfully.')),
             tap(() => this.router.navigate(['/sign_in']))
         );

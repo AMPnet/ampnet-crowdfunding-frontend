@@ -1,5 +1,4 @@
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
-import { PlatformLocation } from '@angular/common';
+import { Component, Input } from '@angular/core';
 import { AppConfigService } from '../../shared/services/app-config.service';
 
 declare var $: any;

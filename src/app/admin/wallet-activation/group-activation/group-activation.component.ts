@@ -3,11 +3,12 @@ import {
     OrganizationWallet,
     WalletCooperativeWalletService
 } from '../../../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
-import { displayBackendError, displayBackendErrorRx } from 'src/app/utilities/error-handler';
+import { displayBackendError } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { finalize, switchMap, tap } from 'rxjs/operators';
 import { ArkaneService } from '../../../shared/services/arkane.service';
 import { PopupService } from '../../../shared/services/popup.service';
+import { ErrorService } from '../../../shared/services/error.service';
 
 @Component({
     selector: 'app-group-activation',
@@ -19,6 +20,7 @@ export class GroupActivationComponent implements OnInit {
 
     constructor(private activationService: WalletCooperativeWalletService,
                 private arkaneService: ArkaneService,
+                private errorService: ErrorService,
                 private popupService: PopupService) {
     }
 
@@ -37,7 +39,7 @@ export class GroupActivationComponent implements OnInit {
     activateGroup(groupUUID: string) {
         SpinnerUtil.showSpinner();
         return this.activationService.activateWallet(groupUUID).pipe(
-            displayBackendErrorRx(),
+            this.errorService.handleError,
             switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo)),
             switchMap(() => this.popupService.new({
                 type: 'success',

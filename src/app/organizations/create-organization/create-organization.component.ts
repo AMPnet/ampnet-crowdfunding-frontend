@@ -3,9 +3,9 @@ import { OrganizationService } from '../../shared/services/project/organization.
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FileValidator } from '../../shared/validators/file.validator';
 import { switchMap, tap } from 'rxjs/operators';
-import { displayBackendErrorRx } from '../../utilities/error-handler';
 import { PopupService } from '../../shared/services/popup.service';
 import { RouterService } from '../../shared/services/router.service';
+import { ErrorService } from '../../shared/services/error.service';
 
 @Component({
     selector: 'app-create-organization',
@@ -18,6 +18,7 @@ export class CreateOrganizationComponent {
     constructor(private organizationService: OrganizationService,
                 private fb: FormBuilder,
                 private popupService: PopupService,
+                private errorService: ErrorService,
                 private router: RouterService) {
 
         this.newOrganizationForm = fb.group({
@@ -33,7 +34,7 @@ export class CreateOrganizationComponent {
             this.newOrganizationForm.get('description').value,
             this.newOrganizationForm.get('photo').value
         ).pipe(
-            displayBackendErrorRx(),
+            this.errorService.handleError,
             switchMap(organization => {
                 return this.popupService.success('Investment group created!').pipe(
                     tap(() => this.router.navigate([`/dash/manage_groups/${organization.uuid}`]))

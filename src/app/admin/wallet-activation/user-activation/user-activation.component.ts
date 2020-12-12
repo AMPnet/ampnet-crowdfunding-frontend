@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { displayBackendErrorRx, hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
+import { hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import {
     CooperativeUser,
@@ -8,6 +8,7 @@ import {
 import { finalize, switchMap, tap } from 'rxjs/operators';
 import { ArkaneService } from '../../../shared/services/arkane.service';
 import { PopupService } from '../../../shared/services/popup.service';
+import { ErrorService } from '../../../shared/services/error.service';
 
 
 @Component({
@@ -20,6 +21,7 @@ export class UserActivationComponent implements OnInit {
 
     constructor(private activationService: WalletCooperativeWalletService,
                 private arkaneService: ArkaneService,
+                private errorService: ErrorService,
                 private popupService: PopupService) {
     }
 
@@ -39,7 +41,7 @@ export class UserActivationComponent implements OnInit {
     activateUserClicked(userUUID: string) {
         SpinnerUtil.showSpinner();
         return this.activationService.activateWallet(userUUID).pipe(
-            displayBackendErrorRx(),
+            this.errorService.handleError,
             switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo)),
             switchMap(() => this.popupService.new({
                 type: 'success',

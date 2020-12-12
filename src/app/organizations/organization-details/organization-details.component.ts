@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
-import { displayBackendErrorRx } from 'src/app/utilities/error-handler';
 import { Wallet, WalletService } from '../../shared/services/wallet/wallet.service';
 import { Organization, OrganizationMember, OrganizationService } from '../../shared/services/project/organization.service';
 import { BehaviorSubject, EMPTY, Observable, of } from 'rxjs';
@@ -10,6 +9,7 @@ import { ArkaneService } from '../../shared/services/arkane.service';
 import { PopupService } from '../../shared/services/popup.service';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { RouterService } from '../../shared/services/router.service';
+import { ErrorService } from '../../shared/services/error.service';
 
 @Component({
     selector: 'app-organization-details',
@@ -31,6 +31,7 @@ export class OrganizationDetailsComponent implements OnInit {
                 private router: RouterService,
                 private organizationService: OrganizationService,
                 private walletService: WalletService,
+                private errorService: ErrorService,
                 private arkaneService: ArkaneService,
                 private fb: FormBuilder,
                 private popupService: PopupService) {
@@ -63,11 +64,11 @@ export class OrganizationDetailsComponent implements OnInit {
         const orgID = this.activatedRoute.snapshot.params.id;
         this.organization$ = this.refreshOrganizationSubject.asObservable().pipe(
             switchMap(() => this.organizationService.getSingleOrganization(orgID)
-                .pipe(displayBackendErrorRx()))
+                .pipe(this.errorService.handleError))
         );
         this.orgWallet$ = this.refreshOrgWalletSubject.asObservable().pipe(
             switchMap(() => this.walletService.getOrganizationWallet(orgID).pipe(
-                displayBackendErrorRx(),
+                this.errorService.handleError,
                 catchError(err => {
                     if (err.status === 404) {
                         return this.popupService.info(
@@ -78,7 +79,7 @@ export class OrganizationDetailsComponent implements OnInit {
                         );
                     } else {
                         return of(err).pipe(
-                            displayBackendErrorRx(),
+                            this.errorService.handleError,
                             switchMap(() => this.recoverBack())
                         );
                     }
@@ -87,7 +88,7 @@ export class OrganizationDetailsComponent implements OnInit {
 
         this.orgMembers$ = this.refreshOrgMembersSubject.pipe(
             switchMap(_ => this.organizationService.getMembersForOrganization(orgID)
-                .pipe(displayBackendErrorRx())),
+                .pipe(this.errorService.handleError)),
             map(res => res.members));
 
         this.inviteForm = this.fb.group({
@@ -100,7 +101,7 @@ export class OrganizationDetailsComponent implements OnInit {
             const emails = OrganizationDetailsComponent.extractEmails(this.inviteForm.get('emails').value);
 
             return this.organizationService.inviteUser(orgUUID, emails).pipe(
-                displayBackendErrorRx(),
+                this.errorService.handleError,
                 switchMap(() => this.popupService.success('Successfully invited user to organization')),
                 tap(() => this.inviteForm.reset())
             );
@@ -109,7 +110,7 @@ export class OrganizationDetailsComponent implements OnInit {
 
     createOrgWallet(orgUUID: string) {
         return this.walletService.createOrganizationWalletTransaction(orgUUID).pipe(
-            displayBackendErrorRx(),
+            this.errorService.handleError,
             switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo)),
             catchError(() => this.recoverBack()),
             switchMap(() => this.popupService.new({
@@ -129,7 +130,7 @@ export class OrganizationDetailsComponent implements OnInit {
     deleteMember(orgID: string, memberID: string) {
         SpinnerUtil.showSpinner();
         this.organizationService.removeMemberFromOrganization(orgID, memberID).pipe(
-            displayBackendErrorRx(),
+            this.errorService.handleError,
             switchMap(() => this.popupService.success('Successfully deleted user from the organization')),
             tap(() => this.refreshOrgMembersSubject.next()),
             finalize(() => SpinnerUtil.hideSpinner())

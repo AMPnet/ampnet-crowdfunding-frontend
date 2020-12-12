@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Project, ProjectService } from 'src/app/shared/services/project/project.service';
-import { displayBackendError, displayBackendErrorRx } from 'src/app/utilities/error-handler';
+import { displayBackendError } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { BroadcastService } from 'src/app/shared/services/broadcast.service';
 import { WalletService } from '../../../shared/services/wallet/wallet.service';
@@ -9,6 +9,7 @@ import { ArkaneService } from '../../../shared/services/arkane.service';
 import { switchMap } from 'rxjs/operators';
 import { PopupService } from '../../../shared/services/popup.service';
 import { RouterService } from '../../../shared/services/router.service';
+import { ErrorService } from '../../../shared/services/error.service';
 
 @Component({
     selector: 'app-verify-sign-offer',
@@ -25,8 +26,8 @@ export class VerifySignOfferComponent implements OnInit {
                 private projectService: ProjectService,
                 private walletService: WalletService,
                 private arkaneService: ArkaneService,
-                private popupService: PopupService,
-                private broadcastService: BroadcastService) {
+                private errorService: ErrorService,
+                private popupService: PopupService) {
     }
 
     ngOnInit() {
@@ -48,7 +49,7 @@ export class VerifySignOfferComponent implements OnInit {
 
     verifyAndSign() {
         return this.walletService.investToProject(this.project.uuid, this.investAmount).pipe(
-            displayBackendErrorRx(),
+            this.errorService.handleError,
             switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo)),
             switchMap(() => this.popupService.new({
                 type: 'success',

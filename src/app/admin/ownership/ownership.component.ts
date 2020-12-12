@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UserService } from '../../shared/services/user/user.service';
-import { displayBackendError, displayBackendErrorRx } from '../../utilities/error-handler';
+import { displayBackendError } from '../../utilities/error-handler';
 import { WalletCooperativeOwnershipService } from '../../shared/services/wallet/wallet-cooperative/wallet-cooperative-ownership.service';
 import { SpinnerUtil } from '../../utilities/spinner-utilities';
 import { User } from '../../shared/services/user/signup.service';
@@ -8,6 +8,7 @@ import { Subscription } from 'rxjs';
 import { finalize, switchMap } from 'rxjs/operators';
 import { ArkaneService } from '../../shared/services/arkane.service';
 import { PopupService } from '../../shared/services/popup.service';
+import { ErrorService } from '../../shared/services/error.service';
 
 @Component({
     selector: 'app-ownership',
@@ -21,6 +22,7 @@ export class OwnershipComponent implements OnInit, OnDestroy {
     constructor(private userService: UserService,
                 private ownershipService: WalletCooperativeOwnershipService,
                 private arkaneService: ArkaneService,
+                private errorService: ErrorService,
                 private popupService: PopupService) {
     }
 
@@ -38,7 +40,7 @@ export class OwnershipComponent implements OnInit, OnDestroy {
         const platformManagerAddress = String($('#platform-manager-address').val());
 
         return this.ownershipService.executePlatformManagerTransaction(platformManagerAddress).pipe(
-            displayBackendErrorRx(),
+            this.errorService.handleError,
             switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo)),
             switchMap(() => this.popupService.new({
                 type: 'success',
@@ -53,7 +55,7 @@ export class OwnershipComponent implements OnInit, OnDestroy {
         const tokenIssuerAddress = String($('#token-issuer-address').val());
 
         return this.ownershipService.executeTokenIssuerTransaction(tokenIssuerAddress).pipe(
-            displayBackendErrorRx(),
+            this.errorService.handleError,
             switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo)),
             switchMap(() => this.popupService.new({
                 type: 'success',

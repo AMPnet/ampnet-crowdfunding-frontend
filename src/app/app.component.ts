@@ -2,7 +2,6 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { AppConfigService } from './shared/services/app-config.service';
 import { Title } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/common';
-import { TranslateService } from '@ngx-translate/core';
 import { LanguageService } from './shared/services/language.service';
 
 declare var WOW: any;

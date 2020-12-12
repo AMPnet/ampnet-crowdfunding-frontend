@@ -8,7 +8,7 @@ import { AppConfigService } from '../../../../shared/services/app-config.service
 import { RouterService } from '../../../../shared/services/router.service';
 import { UserService } from '../../../../shared/services/user/user.service';
 import { createVeriffFrame, MESSAGES } from '@veriff/incontext-sdk';
-import { displayBackendErrorRx } from '../../../../utilities/error-handler';
+import { ErrorService } from '../../../../shared/services/error.service';
 
 
 @Component({
@@ -30,6 +30,7 @@ export class OnboardingComponent {
                 private router: RouterService,
                 private popupService: PopupService,
                 private userService: UserService,
+                private errorService: ErrorService,
                 private onboardingService: OnboardingService,
                 private loginService: UserAuthService) {
         this.session$ = this.sessionSubject.asObservable().pipe(
@@ -49,7 +50,7 @@ export class OnboardingComponent {
         this.approved$ = this.approvedSubject.asObservable().pipe(
             switchMap(() => this.popupService.success('User data has been successfully verified.')),
             switchMap(() => this.loginService.refreshUserToken()
-                .pipe(displayBackendErrorRx())),
+                .pipe(this.errorService.handleError)),
             catchError(() => {
                 this.router.navigate(['/dash/settings/user']);
                 return EMPTY;

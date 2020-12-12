@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { displayBackendErrorRx } from 'src/app/utilities/error-handler';
 import { ActivatedRoute } from '@angular/router';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import {
@@ -16,6 +15,7 @@ import { CurrencyDefaultPipe } from '../../../shared/pipes/currency-default.pipe
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { FileValidator } from '../../../shared/validators/file.validator';
 import { RouterService } from '../../../shared/services/router.service';
+import { ErrorService } from '../../../shared/services/error.service';
 
 @Component({
     selector: 'app-manage-single-deposit',
@@ -34,6 +34,7 @@ export class ManageSingleDepositComponent implements OnInit {
                 private arkaneService: ArkaneService,
                 private popupService: PopupService,
                 private fb: FormBuilder,
+                private errorService: ErrorService,
                 private currencyPipe: CurrencyDefaultPipe,
                 private router: RouterService) {
         const id = this.route.snapshot.params.ID;
@@ -49,7 +50,6 @@ export class ManageSingleDepositComponent implements OnInit {
 
     getDepositProcedure(reference: string): Observable<DepositSearchResponse> {
         return this.depositCooperativeService.getDeposit(reference).pipe(
-            displayBackendErrorRx(),
             catchError(err => {
                 if (err.status === 404) {
                     return this.popupService.new({
@@ -60,6 +60,7 @@ export class ManageSingleDepositComponent implements OnInit {
                 }
                 return this.recoverBack();
             }),
+            this.errorService.handleError,
             switchMap(res => {
                 if (!res.deposit.approved_at) {
                     return of(res);
@@ -84,7 +85,7 @@ export class ManageSingleDepositComponent implements OnInit {
 
     generateSignerAndSign(depositID: number) {
         return this.depositCooperativeService.generateDepositMintTx(depositID).pipe(
-            displayBackendErrorRx(),
+            this.errorService.handleError,
             switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo)),
             catchError(() => this.recoverBack()),
             switchMap(() => this.popupService.new({
@@ -109,7 +110,7 @@ export class ManageSingleDepositComponent implements OnInit {
         const confirmationSub = this.confirmationModal.content.successfulConfirmation.subscribe(() => {
             SpinnerUtil.showSpinner();
             this.depositCooperativeService.approveDeposit(depositID, amount, document).pipe(
-                displayBackendErrorRx(),
+                this.errorService.handleError,
                 catchError(() => this.recoverBack()),
                 switchMap(() => this.generateSignerAndSign(depositID)),
                 finalize(() => SpinnerUtil.hideSpinner())

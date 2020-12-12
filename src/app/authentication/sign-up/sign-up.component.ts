@@ -4,12 +4,12 @@ import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthService } from 'angularx-social-login';
 import { socialAuthServiceProvider, UserAuthService } from '../../shared/services/user/user-auth.service';
-import { displayBackendErrorRx } from 'src/app/utilities/error-handler';
 import { MustMatch } from './confirm-password-validator';
 import { switchMap, tap } from 'rxjs/operators';
 import { RouterService } from '../../shared/services/router.service';
 import { PopupService } from '../../shared/services/popup.service';
 import { from } from 'rxjs';
+import { ErrorService } from '../../shared/services/error.service';
 
 @Component({
     selector: 'app-sign-up',
@@ -29,6 +29,7 @@ export class SignUpComponent {
                 private router: RouterService,
                 private socialAuthService: SocialAuthService,
                 private route: ActivatedRoute,
+                private errorService: ErrorService,
                 private loginService: UserAuthService,
                 private popupService: PopupService,
                 private formBuilder: FormBuilder
@@ -58,7 +59,7 @@ export class SignUpComponent {
                 this.signUpService.signupSocial(socialRes.provider, socialRes.authToken).pipe(
                     switchMap(() => this.loginService.socialLogin(provider, socialRes.authToken))
                 )),
-            displayBackendErrorRx(),
+            this.errorService.handleError,
             switchMap(() => this.popupService.success('Sign up successful!')),
             tap(() => this.router.navigate(['/dash'])),
         );
@@ -70,7 +71,7 @@ export class SignUpComponent {
         return this.signUpService.signupEmail(user.email, user.firstName, user.lastName, user.password)
             .pipe(
                 switchMap(_ => this.loginService.emailLogin(user.email, user.password)),
-                displayBackendErrorRx(),
+                this.errorService.handleError,
                 switchMap(() => this.popupService.success('Sign up successful!')),
                 tap(() => this.router.navigate(['/dash'])),
             );

@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Deposit, DepositServiceService } from '../shared/services/wallet/deposit-service.service';
-import { displayBackendError, hideSpinnerAndDisplayError } from '../utilities/error-handler';
+import { displayBackendError } from '../utilities/error-handler';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
-import { PopupService } from '../shared/services/popup.service';
 import { PlatformBankAccountService } from '../shared/services/wallet/platform-bank-account.service';
+import { ErrorService } from '../shared/services/error.service';
+import { finalize } from 'rxjs/operators';
 
 declare var $: any;
 
@@ -20,7 +21,7 @@ export class DepositComponent implements OnInit {
 
     constructor(private depositService: DepositServiceService,
                 private bankAccountService: PlatformBankAccountService,
-                private popupService: PopupService) {
+                private errorService: ErrorService) {
     }
 
     ngOnInit() {
@@ -41,25 +42,21 @@ export class DepositComponent implements OnInit {
 
     generateDepositInfo() {
         SpinnerUtil.showSpinner();
-        this.depositService.createDeposit().subscribe(res => {
-            SpinnerUtil.hideSpinner();
+        this.depositService.createDeposit().pipe(
+            this.errorService.handleError,
+            finalize(() => SpinnerUtil.hideSpinner())
+        ).subscribe(res => {
             this.depositModel = res;
-        }, err => {
-            SpinnerUtil.hideSpinner();
-
-            if (err.error.err_code === '0509') {
-                this.popupService.info('You already have an existing deposit. Please wait until it\'s approved');
-            } else {
-                displayBackendError(err);
-            }
         });
     }
 
     getMasterIban() {
-        this.bankAccountService.bankAccounts$.subscribe(res => {
+        SpinnerUtil.showSpinner();
+        this.bankAccountService.bankAccounts$.pipe(
+            this.errorService.handleError,
+            finalize(() => SpinnerUtil.hideSpinner())
+        ).subscribe(res => {
             this.masterIban = res.bank_accounts[0].iban;
-        }, err => {
-            hideSpinnerAndDisplayError(err);
         });
     }
 }

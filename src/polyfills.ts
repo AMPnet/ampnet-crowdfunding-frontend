@@ -69,10 +69,9 @@ import 'core-js/es7/reflect';
  */
 import 'zone.js/dist/zone'; // Included with Angular CLI.
 import * as process from 'process';
+import '@angular/localize/init';
 
 window['process'] = process;
-
-import '@angular/localize/init';
 
 /***************************************************************************************************
  * APPLICATION IMPORTS

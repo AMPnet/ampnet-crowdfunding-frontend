@@ -68,6 +68,7 @@
       "captcha_failed": "You have failed captcha validation. Please, try again."
     },
     "auth": {
+      "invalid_login_method": "Invalid login method",
       "invalid_forgot_password_link": "Invalid forgot password link. Request a new one.",
       "invalid_credentials": "Invalid username or password."
     },

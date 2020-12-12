@@ -5,11 +5,11 @@ import { catchError, finalize, switchMap, tap } from 'rxjs/operators';
 import { ArkaneService } from '../../../../../shared/services/arkane.service';
 import { ActivatedRoute } from '@angular/router';
 import { Withdraw, WithdrawService } from '../../../../../shared/services/wallet/withdraw.service';
-import { displayBackendErrorRx } from '../../../../../utilities/error-handler';
 import { SpinnerUtil } from '../../../../../utilities/spinner-utilities';
 import { PopupService } from '../../../../../shared/services/popup.service';
 import { BehaviorSubject, EMPTY, Observable, of } from 'rxjs';
 import { RouterService } from '../../../../../shared/services/router.service';
+import { ErrorService } from '../../../../../shared/services/error.service';
 
 @Component({
     selector: 'app-project-withdraw',
@@ -29,6 +29,7 @@ export class ProjectWithdrawComponent {
                 private router: RouterService,
                 private popupService: PopupService,
                 private arkaneService: ArkaneService,
+                private errorService: ErrorService,
                 private route: ActivatedRoute,
                 private fb: FormBuilder) {
         this.projectID = this.route.snapshot.params.projectID;
@@ -37,7 +38,7 @@ export class ProjectWithdrawComponent {
             switchMap(data => data !== null ?
                 of(data) :
                 this.withdrawService.getProjectPendingWithdraw(this.projectID).pipe(
-                    displayBackendErrorRx(),
+                    this.errorService.handleError,
                     catchError(err => err.status === 404 ?
                         of(WithdrawalState.EMPTY) : this.navigateBack())
                 )
@@ -58,7 +59,7 @@ export class ProjectWithdrawComponent {
         const iban: string = this.requestWithdrawForm.get('iban').value.replace(/\s/g, '');
 
         return this.withdrawService.createProjectWithdrawRequest(amount, iban, this.projectID).pipe(
-            displayBackendErrorRx(),
+            this.errorService.handleError,
             tap(withdraw => this.refreshWithdrawalSubject.next(withdraw))
         );
     }
@@ -67,7 +68,7 @@ export class ProjectWithdrawComponent {
         return () => {
             SpinnerUtil.showSpinner();
             return this.withdrawService.generateApproveWithdrawTx(withdrawal.id).pipe(
-                displayBackendErrorRx(),
+                this.errorService.handleError,
                 switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo)),
                 switchMap(() => this.popupService.new({
                     type: 'success',
@@ -83,7 +84,7 @@ export class ProjectWithdrawComponent {
     deleteWithdrawal(withdrawal: Withdraw) {
         SpinnerUtil.showSpinner();
         return this.withdrawService.deleteWithdrawal(withdrawal.id).pipe(
-            displayBackendErrorRx(),
+            this.errorService.handleError,
             switchMap(() => this.popupService.success('Withdrawal deleted')),
             tap(() => this.refreshWithdrawalSubject.next(WithdrawalState.EMPTY)),
             finalize(() => SpinnerUtil.hideSpinner())

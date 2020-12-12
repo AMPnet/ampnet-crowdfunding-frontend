@@ -18,24 +18,24 @@ export class ErrorService {
     }
 
     get handleError() {
-        return (source: Observable<unknown>) =>
-            source.pipe(this.processError());
+        return <T>(source: Observable<T>): Observable<T> => {
+            return source.pipe(catchError(this.processError()));
+        };
     }
 
     get displayError() {
-        return (source: Observable<unknown>) =>
-            source.pipe(this.processError(true, false));
+        return this.processError(true, false);
     }
 
-    private processError(shouldDisplay = true, shouldTakeAction = true) {
-        return catchError(err => {
+    private processError<T>(shouldDisplay = true, shouldTakeAction = true) {
+        return (err: any, _caught: Observable<T>) => {
             const errorRes = err as HttpErrorResponse;
-            let display$: Observable<unknown>;
-            let action$: Observable<unknown>;
+            let display$: Observable<any>;
+            let action$: Observable<any>;
 
             if (errorRes.error instanceof ErrorEvent) { // client-side error
                 return throwError(err);
-            } else {  // server-side error
+            } else if (errorRes.status === 400) {  // server-side error
                 const error = errorRes.error as BackendError;
 
                 switch (error.err_code) {
@@ -63,6 +63,10 @@ export class ErrorService {
 
                     case RegistrationError.CAPTCHA_FAILED:
                         display$ = this.displayMessage('errors.registration.captcha_failed');
+                        break;
+
+                    case AuthError.INVALID_LOGIN_METHOD:
+                        display$ = this.displayMessage('errors.auth.invalid_login_method');
                         break;
 
                     case AuthError.NO_FORGOT_PASS_TOKEN:
@@ -290,15 +294,9 @@ export class ErrorService {
 
             return of('').pipe(
                 switchMap(() => shouldDisplay && display$ ? display$ : of('')),
-                switchMap(() => {
-                    if (shouldTakeAction) {
-                        return action$ ? action$ : EMPTY;
-                    } else {
-                        return throwError(err);
-                    }
-                })
+                switchMap(() => shouldTakeAction && action$ ? action$ : throwError(err)),
             );
-        });
+        };
     }
 
     private takeAction<T>(source: () => Observable<T> | Promise<T>): Observable<T> {
@@ -318,7 +316,7 @@ interface BackendError {
     errors: { [key: string]: string };
 }
 
-enum RegistrationError {
+export enum RegistrationError {
     SIGN_UP_INCOMPLETE = '0101',
     USER_EXISTS = '0103',
     CONFIRMATION_TOKEN_INVALID = '0104',
@@ -327,7 +325,8 @@ enum RegistrationError {
     CAPTCHA_FAILED = '0110',
 }
 
-enum AuthError {
+export enum AuthError {
+    INVALID_LOGIN_METHOD = '0201',
     NO_FORGOT_PASS_TOKEN = '0202',
     FORGOT_PASS_EXPIRED = '0203',
     INVALID_JWT = '0204',
@@ -336,7 +335,7 @@ enum AuthError {
     INVALID_CREDENTIALS = '0207',
 }
 
-enum UserError {
+export enum UserError {
     USER_JWT_MISSING = '0301',
     INVALID_BANK_ACCOUNT_DATA = '0302',
     DIFFERENT_PASSWORD = '0303',
@@ -344,7 +343,7 @@ enum UserError {
     NO_USER = '0306'
 }
 
-enum WalletError {
+export enum WalletError {
     MISSING_WALLET = '0501',
     CANNOT_CREATE_NEW_WALLET = '0502',
     NOT_ENOUGH_FUNDS = '0503',
@@ -362,7 +361,7 @@ enum WalletError {
     MISSING_REVENUE_PAYOUT = '0515',
 }
 
-enum OrganizationError {
+export enum OrganizationError {
     ORG_MISSING = '0601',
     USER_ALREADY_MEMBER = '0604',
     USER_ALREADY_INVITED = '0605',
@@ -372,7 +371,7 @@ enum OrganizationError {
     INVALID_ORG_INVITATION = '0609',
 }
 
-enum ProjectError {
+export enum ProjectError {
     PROJECT_MISSING = '0701',
     INVALID_DATE = '0702',
     PROJECT_EXPIRED = '0703',
@@ -385,7 +384,7 @@ enum ProjectError {
     INVALID_ROI = '0711',
 }
 
-enum InternalError {
+export enum InternalError {
     UPLOAD_DOCUMENT_FAILED = '0801',
     INVALID_VALUE_IN_REQUEST = '0802',
     GRPC_FAILED_BLOCKCHAIN_SERVICE = '0803',
@@ -398,17 +397,17 @@ enum InternalError {
     PDF_GENERATION_FAILED = '0810',
 }
 
-enum TransactionError {
+export enum TransactionError {
     TRANSACTION_MISSING = '0901',
     MISSING_COMPANION_DATA = '0902',
 }
 
-enum CooperativeError {
+export enum CooperativeError {
     COOP_MISSING = '1001',
     COOP_ALREADY_EXISTS = '1002',
 }
 
-enum MiddlewareError {
+export enum MiddlewareError {
     TRANSACTION_NOT_SIGNED = '1101',
     TRANSACTION_NOT_MINED = '1102',
     INVALID_CONTRACT_CALLED = '1103',

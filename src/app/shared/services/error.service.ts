@@ -24,7 +24,9 @@ export class ErrorService {
     }
 
     get displayError() {
-        return this.processError(true, false);
+        return <T>(source: Observable<T>): Observable<T> => {
+            return source.pipe(catchError(this.processError(true, false)));
+        };
     }
 
     private processError<T>(shouldDisplay = true, shouldTakeAction = true) {
@@ -292,9 +294,13 @@ export class ErrorService {
                 }
             }
 
+            const errorProcessed = display$ || action$;
+
             return of('').pipe(
-                switchMap(() => shouldDisplay && display$ ? display$ : of('')),
-                switchMap(() => shouldTakeAction && action$ ? action$ : throwError(err)),
+                switchMap(it => shouldDisplay && display$ ? display$ : of(it)),
+                switchMap(it => shouldTakeAction && errorProcessed ?
+                    (action$ ? action$ : of(it)).pipe(switchMap(() => EMPTY))
+                    : throwError(err))
             );
         };
     }

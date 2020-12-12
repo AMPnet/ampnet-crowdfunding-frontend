@@ -3,6 +3,7 @@ import { BackendHttpClient } from '../backend-http-client.service';
 import { catchError, retry, switchMap, tap } from 'rxjs/operators';
 import { BehaviorSubject, EMPTY, merge, Observable, of, ReplaySubject, throwError } from 'rxjs';
 import { CacheService } from '../cache.service';
+import { ErrorService } from '../error.service';
 
 @Injectable({
     providedIn: 'root'
@@ -22,6 +23,7 @@ export class WalletService {
     );
 
     constructor(private http: BackendHttpClient,
+                private errorService: ErrorService,
                 private cacheService: CacheService) {
     }
 
@@ -47,6 +49,7 @@ export class WalletService {
                         return throwError(err);
                 }
             }),
+            this.errorService.handleError,
             tap(wallet => this.changeWalletSubject.next(wallet)),
             retry(3),
         );

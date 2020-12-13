@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import {
     CooperativeUser,
@@ -33,11 +32,12 @@ export class UserActivationComponent implements OnInit {
 
     fetchUnactivatedUserWallets() {
         SpinnerUtil.showSpinner();
-        this.activationService.getUnactivatedUserWallets()
-            .subscribe((res) => {
-                this.users = res.users;
-                SpinnerUtil.hideSpinner();
-            }, hideSpinnerAndDisplayError);
+        this.activationService.getUnactivatedUserWallets().pipe(
+            this.errorService.handleError,
+            finalize(() => SpinnerUtil.hideSpinner())
+        ).subscribe((res) => {
+            this.users = res.users;
+        });
     }
 
     activateUserClicked(userUUID: string) {

@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Deposit, DepositServiceService } from '../shared/services/wallet/deposit-service.service';
-import { displayBackendError } from '../utilities/error-handler';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { PlatformBankAccountService } from '../shared/services/wallet/platform-bank-account.service';
 import { ErrorService } from '../shared/services/error.service';
-import { finalize } from 'rxjs/operators';
+import { catchError, finalize, tap } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 
 declare var $: any;
 
@@ -27,27 +27,20 @@ export class DepositComponent implements OnInit {
     ngOnInit() {
         SpinnerUtil.showSpinner();
         this.getMasterIban();
-        this.depositService.getMyPendingDeposit().subscribe(res => {
-            SpinnerUtil.hideSpinner();
-            this.depositModel = res;
-        }, err => {
-            SpinnerUtil.hideSpinner();
-            if (err.status === 404) {
-                this.generateDepositInfo();
-            } else {
-                displayBackendError(err);
-            }
-        });
+        this.depositService.getMyPendingDeposit().pipe(
+            catchError(err => err.status === 404 ? this.generateDepositInfo() : throwError(err)),
+            this.errorService.handleError,
+            tap(res => this.depositModel = res),
+            finalize(() => SpinnerUtil.hideSpinner())
+        ).subscribe();
     }
 
     generateDepositInfo() {
-        SpinnerUtil.showSpinner();
-        this.depositService.createDeposit().pipe(
+        return this.depositService.createDeposit().pipe(
             this.errorService.handleError,
+            tap(res => this.depositModel = res),
             finalize(() => SpinnerUtil.hideSpinner())
-        ).subscribe(res => {
-            this.depositModel = res;
-        });
+        );
     }
 
     getMasterIban() {

@@ -10,7 +10,6 @@ import { WalletComponent } from './wallet/wallet.component';
 import { OffersComponent } from './offers/offers.component';
 import { SingleOfferItemComponent } from './offers/single-offer-item/single-offer-item.component';
 import { OfferDetailsComponent } from './offers/offer-details/offer-details.component';
-import { DepositModalComponent } from './wallet/deposit-modal/deposit-modal.component';
 import { InvestComponent } from './invest/invest.component';
 import { MyPortfolioComponent } from './my-portfolio/my-portfolio.component';
 import { SingleInvestItemComponent } from './my-portfolio/single-invest-item/single-invest-item.component';
@@ -25,9 +24,7 @@ import { PublicLayoutComponent } from './public-layout/public-layout.component';
 import { SecureLayoutComponent } from './secure-layout/secure-layout.component';
 import { HeaderComponent } from './public-layout/header/header.component';
 import { SignUpComponent } from './authentication/sign-up/sign-up.component';
-import { TxOverviewComponent } from './wallet/tx-overview/tx-overview.component';
 import { NewPaymentOptionComponent } from './payment-options/new-payment-option/new-payment-option.component';
-import { WithdrawModalComponent } from './wallet/withdraw-modal/withdraw-modal.component';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -113,7 +110,6 @@ import { DynamicLocaleProvider } from './shared/providers/locale.provider';
         OffersComponent,
         SingleOfferItemComponent,
         OfferDetailsComponent,
-        DepositModalComponent,
         InvestComponent,
         MyPortfolioComponent,
         SingleInvestItemComponent,
@@ -128,9 +124,7 @@ import { DynamicLocaleProvider } from './shared/providers/locale.provider';
         SecureLayoutComponent,
         HeaderComponent,
         SignUpComponent,
-        TxOverviewComponent,
         NewPaymentOptionComponent,
-        WithdrawModalComponent,
         CreateOrganizationComponent,
         ManageOrganizationsComponent,
         OrganizationDetailsComponent,

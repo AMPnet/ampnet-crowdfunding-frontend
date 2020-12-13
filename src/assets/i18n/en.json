@@ -114,6 +114,35 @@
       "pdf_report.downloading": "Downloading..."
     }
   },
+  "deposit": {
+    "title": "Deposit",
+    "notice": "After you have deposited the money onto our bank account it can take up to 24h for it to become visible on the platform. You will be notified by email when your money has been received.",
+    "payment_details": "Deposit payment details",
+    "iban": "IBAN",
+    "reference": "Description"
+  },
+  "withdraw": {
+    "title": "Withdraw",
+    "amount_input": {
+      "title": "Withdrawal amount",
+      "placeholder": "Enter withdrawal amount"
+    },
+    "bank_picker": {
+      "title": "Choose bank account"
+    },
+    "withdraw_button": "Withdraw money",
+    "pending": {
+      "notice": "You have a pending withdrawal request. | Please approve it to have money deposited into your account. | It can take up to 24 hours to process the transaction.",
+      "info_title": "Withdrawal amount",
+      "confirm_withdrawal": "Confirm withdrawal",
+      "confirm_withdrawal.loading": "Processing..."
+    },
+    "no_bank": {
+      "notice": "You cannot withdraw money without an active bank account.",
+      "add_bank_account": "Add bank account"
+    },
+    "withdrawal_deleted": "Withdrawal deleted"
+  },
   "settings": {
     "user": {
       "title": "User profile",

@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Project, ProjectService } from 'src/app/shared/services/project/project.service';
-import { displayBackendError } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
-import { BroadcastService } from 'src/app/shared/services/broadcast.service';
 import { WalletService } from '../../../shared/services/wallet/wallet.service';
 import { ArkaneService } from '../../../shared/services/arkane.service';
-import { switchMap } from 'rxjs/operators';
+import { finalize, switchMap } from 'rxjs/operators';
 import { PopupService } from '../../../shared/services/popup.service';
 import { RouterService } from '../../../shared/services/router.service';
 import { ErrorService } from '../../../shared/services/error.service';
@@ -40,12 +38,11 @@ export class VerifySignOfferComponent implements OnInit {
 
     getProject() {
         SpinnerUtil.showSpinner();
-        this.projectService.getProject(this.projectID).subscribe(res => {
-            SpinnerUtil.hideSpinner();
+        this.projectService.getProject(this.projectID).pipe(
+            this.errorService.handleError,
+            finalize(() => SpinnerUtil.hideSpinner())
+        ).subscribe(res => {
             this.project = res;
-        }, err => {
-            SpinnerUtil.hideSpinner();
-            displayBackendError(err);
         });
     }
 

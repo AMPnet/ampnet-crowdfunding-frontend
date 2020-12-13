@@ -3,7 +3,6 @@ import {
     OrganizationWallet,
     WalletCooperativeWalletService
 } from '../../../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
-import { displayBackendError } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { finalize, switchMap, tap } from 'rxjs/operators';
 import { ArkaneService } from '../../../shared/services/arkane.service';
@@ -32,10 +31,12 @@ export class GroupActivationComponent implements OnInit {
 
     fetchUnactivatedGroupWallets() {
         SpinnerUtil.showSpinner();
-        this.activationService.getUnactivatedOrganizationWallets().subscribe((res) => {
+        this.activationService.getUnactivatedOrganizationWallets().pipe(
+            this.errorService.handleError,
+            finalize(() => SpinnerUtil.hideSpinner())
+        ).subscribe((res) => {
             this.groups = res.organizations;
-            SpinnerUtil.hideSpinner();
-        }, displayBackendError);
+        });
     }
 
     activateGroup(groupUUID: string) {

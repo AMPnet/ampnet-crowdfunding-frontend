@@ -4,7 +4,6 @@ import {
     CooperativeProject,
     WalletCooperativeWalletService
 } from '../../../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
-import { displayBackendError } from 'src/app/utilities/error-handler';
 import { finalize, switchMap, tap } from 'rxjs/operators';
 import { ArkaneService } from '../../../shared/services/arkane.service';
 import { PopupService } from '../../../shared/services/popup.service';
@@ -32,10 +31,12 @@ export class ProjectActivationComponent implements OnInit {
 
     fetchUnactivatedProjectWallets() {
         SpinnerUtil.showSpinner();
-        this.activationService.getUnactivatedProjectWallets().subscribe((res) => {
+        this.activationService.getUnactivatedProjectWallets().pipe(
+            this.errorService.handleError,
+            finalize(() => SpinnerUtil.hideSpinner())
+        ).subscribe((res) => {
             this.projects = res.projects;
-            SpinnerUtil.hideSpinner();
-        }, displayBackendError);
+        });
     }
 
     activateProject(projectUUID: string) {

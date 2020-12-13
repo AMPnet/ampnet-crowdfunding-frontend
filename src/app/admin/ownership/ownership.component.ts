@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UserService } from '../../shared/services/user/user.service';
-import { displayBackendError } from '../../utilities/error-handler';
 import { WalletCooperativeOwnershipService } from '../../shared/services/wallet/wallet-cooperative/wallet-cooperative-ownership.service';
 import { SpinnerUtil } from '../../utilities/spinner-utilities';
 import { User } from '../../shared/services/user/signup.service';
@@ -29,9 +28,11 @@ export class OwnershipComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.userSub = this.userService.user$.subscribe(res => {
+        this.userSub = this.userService.user$.pipe(
+            this.errorService.handleError
+        ).subscribe(res => {
             this.user = res;
-        }, displayBackendError);
+        });
     }
 
     ngOnDestroy() {

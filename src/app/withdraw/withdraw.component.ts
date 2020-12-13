@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { PaymentService, UserBankAccount } from '../shared/services/payment.service';
-import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { Withdraw, WithdrawService } from '../shared/services/wallet/withdraw.service';
 import { WalletService } from '../shared/services/wallet/wallet.service';
@@ -39,17 +38,22 @@ export class WithdrawComponent implements OnInit {
 
     getBankAccounts() {
         SpinnerUtil.showSpinner();
-        this.paymentService.getMyBankAccounts().subscribe(res => {
-            SpinnerUtil.hideSpinner();
+        this.paymentService.getMyBankAccounts().pipe(
+            this.errorService.handleError,
+            finalize(() => SpinnerUtil.hideSpinner())
+        ).subscribe(res => {
             this.banks = res.bank_accounts;
-        }, hideSpinnerAndDisplayError);
+        });
     }
 
     getMyPendingWithdraw() {
         SpinnerUtil.showSpinner();
-        this.withdrawService.getMyPendingWithdraw().subscribe(res => {
+        this.withdrawService.getMyPendingWithdraw().pipe(
+            this.errorService.handleError,
+            finalize(() => SpinnerUtil.hideSpinner())
+        ).subscribe(res => {
             this.pendingWithdrawal = res;
-        }, hideSpinnerAndDisplayError);
+        });
     }
 
     changeActiveAccount(index: number) {
@@ -84,7 +88,7 @@ export class WithdrawComponent implements OnInit {
 
         return this.withdrawService.deleteWithdrawal(this.pendingWithdrawal.id).pipe(
             this.errorService.handleError,
-            switchMap(() => this.popupService.success('Withdrawal deleted')),
+            switchMap(() => this.popupService.success(this.translate.instant('withdraw.withdrawal_deleted'))),
             tap(() => this.pendingWithdrawal = undefined),
             finalize(() => SpinnerUtil.hideSpinner()),
         );

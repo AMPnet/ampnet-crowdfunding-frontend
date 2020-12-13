@@ -1,18 +1,19 @@
 <div class="container">
-    <div class="app-page-title">Deposit</div>
+    <div class="app-page-title">
+        {{ 'deposit.title' | translate }}
+    </div>
     <div class="mt-3">
         <div class="alert alert-info px-3">
             <i class="fas fa-clock mr-2"></i>
-            After you have deposited the money onto our bank account it can take up to 24h for it to become visible
-            on the
-            platform.
-            You will be notified by email when your money has been received.
+            {{ 'deposit.notice' | translate }}
         </div>
     </div>
 
     <div *ngIf="depositModel !== undefined" class="mt-5 card">
         <div class="card-body">
-            <div class="card-title explainer-mini">Deposit payment details.</div>
+            <div class="card-title explainer-mini">
+                {{ 'deposit.payment_details' | translate }}
+            </div>
         </div>
         <div class="card-text">
             <div class="row justify-content-between pb-3 px-3">
@@ -20,7 +21,7 @@
                 <div class="col-lg-6">
                     <div class="explainer-mini text-uppercase mb-2 ">
                         <i class="fas fa-piggy-bank mr-2 "></i>
-                        IBAN
+                        {{ 'deposit.iban' | translate }}
                     </div>
                     <div>{{ masterIban }}</div>
                 </div>
@@ -29,7 +30,7 @@
                 <div class="col-lg-6">
                     <div class="explainer-mini mb-2">
                         <i class="fas fa-address-book mr-2"></i>
-                        Description
+                        {{ 'deposit.reference' | translate }}
                     </div>
                     <div>{{ depositModel.reference }}</div>
                 </div>

@@ -9,7 +9,7 @@ export class InterpolatePipe implements PipeTransform {
 
         args.forEach(pair => {
             const [key, replaceValue] = pair;
-            const replaceRegex = new RegExp(`(\{\{\ *${key}\ *\}\})`);
+            const replaceRegex = new RegExp(`({{\ *${key}\ *}})`);
 
             const keyMatches = newValue.match(replaceRegex);
 

@@ -32,7 +32,6 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { SocialLoginModule } from 'angularx-social-login';
-import { NgxSpinnerModule } from 'ngx-spinner';
 import { CreateOrganizationComponent } from './organizations/create-organization/create-organization.component';
 import { ManageOrganizationsComponent } from './organizations/manage-organizations/manage-organizations.component';
 import { OrganizationDetailsComponent } from './organizations/organization-details/organization-details.component';
@@ -206,7 +205,6 @@ import { SplitPartPipe } from './shared/pipes/split-part.pipe';
         ReactiveFormsModule,
         HttpClientModule,
         SocialLoginModule,
-        NgxSpinnerModule,
         NgbModule,
         ModalModule.forRoot(),
         QuillModule.forRoot(),

@@ -6,6 +6,7 @@ import { switchMap, tap } from 'rxjs/operators';
 import { PopupService } from '../../shared/services/popup.service';
 import { RouterService } from '../../shared/services/router.service';
 import { ErrorService } from '../../shared/services/error.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-create-organization',
@@ -19,6 +20,7 @@ export class CreateOrganizationComponent {
                 private fb: FormBuilder,
                 private popupService: PopupService,
                 private errorService: ErrorService,
+                private translate: TranslateService,
                 private router: RouterService) {
 
         this.newOrganizationForm = fb.group({
@@ -36,7 +38,9 @@ export class CreateOrganizationComponent {
         ).pipe(
             this.errorService.handleError,
             switchMap(organization => {
-                return this.popupService.success('Investment group created!').pipe(
+                return this.popupService.success(
+                    this.translate.instant('organizations.new.created')
+                ).pipe(
                     tap(() => this.router.navigate([`/dash/manage_groups/${organization.uuid}`]))
                 );
             })

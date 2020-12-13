@@ -4,7 +4,7 @@ import { Pipe, PipeTransform } from '@angular/core';
     name: 'interpolate'
 })
 export class InterpolatePipe implements PipeTransform {
-    transform(value: string, ...args: [key: string, replaceValue: string][]): string {
+    transform(value: string, ...args: [key: string, replaceValue: any][]): string {
         let newValue = value;
 
         args.forEach(pair => {
@@ -15,7 +15,7 @@ export class InterpolatePipe implements PipeTransform {
 
             if (keyMatches !== null) {
                 keyMatches.forEach(() => {
-                    newValue = newValue.replace(replaceRegex, replaceValue);
+                    newValue = newValue.replace(replaceRegex, String(replaceValue));
                 });
             }
         });

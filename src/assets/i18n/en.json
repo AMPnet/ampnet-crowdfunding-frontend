@@ -143,6 +143,44 @@
     },
     "withdrawal_deleted": "Withdrawal deleted"
   },
+  "organizations": {
+    "title": "Investment groups",
+    "create_org": "Create group",
+    "pending_invite_notice": "You have invites pending",
+    "my": "My groups",
+    "empty": "You currently don't have access to any groups.",
+    "org_item": {
+      "project_count": "| {{ count }} | Projects"
+    },
+    "invites": {
+      "title": "Group invites",
+      "join": "Join group",
+      "empty": "Not invited to any groups"
+    },
+    "new": {
+      "title": "Create a new investment group",
+      "title.back": "New group",
+      "logo_input": {
+        "title": "Add logo"
+      },
+      "group_name_input": {
+        "title": "Group name",
+        "placeholder": "Enter group name"
+      },
+      "description_input": {
+        "title": "Description",
+        "placeholder": "Enter description"
+      },
+      "submit_button": "Create new group",
+      "submit_button.loading": "Creating group...",
+      "created": "Investment group created!"
+    },
+    "details": {
+      "title": "Create a new investment group",
+      "title.back": "Investment group details",
+      "project_count": "| {{ count }} | Projects"
+    }
+  },
   "settings": {
     "user": {
       "title": "User profile",

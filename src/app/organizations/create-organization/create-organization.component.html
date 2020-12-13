@@ -1,24 +1,26 @@
 <div class="container">
     <div class="app-page-title-back" (click)="backToGroupsScreen()">
         <i class="fas fa-long-arrow-alt-left mr-3"></i>
-        Back
+        {{ 'organizations.new.title.back' | translate }}
     </div>
 
     <form [formGroup]="newOrganizationForm">
         <div class="form-container row">
             <div class="form-left col-lg-6">
-                <h4 class="left__title">Create a new investment group</h4>
+                <h4 class="left__title">
+                    {{ 'organizations.new.title' | translate }}
+                </h4>
                 <div class="left__upload">
-                    <h2 class="left__upload__subtitle">Add logo</h2>
+                    <h2 class="left__upload__subtitle">
+                        {{ 'organizations.new.logo_input.title' | translate }}
+                    </h2>
                     <app-upload-area areaID='group-image' class="left__upload__area"
                                      [restrictions]="{
                                         allowedFileTypes: ['image/*'],
                                         maxFileSize: 10 * 1024 * 1024,
                                         maxNumberOfFiles: 1
                                      }"
-                                     [firstFileControl]="newOrganizationForm.get('photo')"
-                                     noteText="For an optimal user experience, use landscape or even format images.
-                                     Other formats (e.g. portrait) might result in unwanted results">
+                                     [firstFileControl]="newOrganizationForm.get('photo')">
                     </app-upload-area>
                 </div>
                 <!-- TODO: This is styled and ready to go, uncomment when we have 2nd wallet integrated -->
@@ -35,24 +37,28 @@
             </div>
 
             <div class="form-right col-lg-6">
-                <label class="right__label" for="group-name">Group name</label>
+                <label class="right__label" for="group-name">
+                    {{ 'organizations.new.group_name_input.title' | translate }}
+                </label>
                 <input class="input-lg w-100"
                        formControlName="name"
-                       placeholder="Enter group name"
+                       placeholder="{{ 'organizations.new.group_name_input.placeholder' | translate }}"
                        type="text"
                        id="group-name">
-                <label class="right__label" for="group-description">Description</label>
+                <label class="right__label" for="group-description">
+                    {{ 'organizations.new.description_input.title' | translate }}
+                </label>
                 <textarea class="w-100"
                           formControlName="description"
                           type="text"
                           rows="7"
-                          placeholder="Enter description"
+                          placeholder="{{ 'organizations.new.description_input.placeholder' | translate }}"
                           id="group-description">
                 </textarea>
                 <div>
                     <button app-action-button
-                            text="Create new group"
-                            loadingText="Creating organization..." faIcon="fa-plus"
+                            text="{{ 'organizations.new.submit_button' | translate }}"
+                            loadingText="{{ 'organizations.new.submit_button.loading' | translate }}" faIcon="fa-plus"
                             [disabled]="!newOrganizationForm.valid"
                             class="btn btn-responsive-size btn-success w-100"
                             [onClick]="createOrganization.bind(this)">

@@ -10,6 +10,7 @@ import { ArkaneService } from '../../../shared/services/arkane.service';
 import { Observable } from 'rxjs';
 import { RouterService } from '../../../shared/services/router.service';
 import { ErrorService } from '../../../shared/services/error.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-single-withdrawal',
@@ -25,6 +26,7 @@ export class SingleWithdrawalComponent implements OnInit {
                 private arkaneService: ArkaneService,
                 private popupService: PopupService,
                 private errorService: ErrorService,
+                private translate: TranslateService,
                 private router: RouterService) {
     }
 
@@ -39,8 +41,8 @@ export class SingleWithdrawalComponent implements OnInit {
             switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo)),
             switchMap(() => this.popupService.new({
                 type: 'success',
-                title: 'Transaction signed',
-                text: 'Transaction is being processed...'
+                title: this.translate.instant('general.transaction_signed.title'),
+                text: this.translate.instant('general.transaction_signed.description')
             })),
             switchMap(() => this.router.navigate(['/dash/manage_withdrawals']))
         );

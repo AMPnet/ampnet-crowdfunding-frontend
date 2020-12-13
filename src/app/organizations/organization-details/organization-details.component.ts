@@ -10,6 +10,7 @@ import { PopupService } from '../../shared/services/popup.service';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { RouterService } from '../../shared/services/router.service';
 import { ErrorService } from '../../shared/services/error.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-organization-details',
@@ -33,6 +34,7 @@ export class OrganizationDetailsComponent implements OnInit {
                 private walletService: WalletService,
                 private errorService: ErrorService,
                 private arkaneService: ArkaneService,
+                private translate: TranslateService,
                 private fb: FormBuilder,
                 private popupService: PopupService) {
     }
@@ -115,8 +117,8 @@ export class OrganizationDetailsComponent implements OnInit {
             catchError(() => this.recoverBack()),
             switchMap(() => this.popupService.new({
                 type: 'success',
-                title: 'Transaction signed',
-                text: 'Transaction is being processed...'
+                title: this.translate.instant('general.transaction_signed.title'),
+                text: this.translate.instant('general.transaction_signed.description')
             })),
             switchMap(() => of(undefined)),
             tap(() => {

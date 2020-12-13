@@ -16,6 +16,7 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { FileValidator } from '../../../shared/validators/file.validator';
 import { RouterService } from '../../../shared/services/router.service';
 import { ErrorService } from '../../../shared/services/error.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-manage-single-deposit',
@@ -35,6 +36,7 @@ export class ManageSingleDepositComponent implements OnInit {
                 private popupService: PopupService,
                 private fb: FormBuilder,
                 private errorService: ErrorService,
+                private translate: TranslateService,
                 private currencyPipe: CurrencyDefaultPipe,
                 private router: RouterService) {
         const id = this.route.snapshot.params.ID;
@@ -90,8 +92,8 @@ export class ManageSingleDepositComponent implements OnInit {
             catchError(() => this.recoverBack()),
             switchMap(() => this.popupService.new({
                 type: 'success',
-                title: 'Transaction signed',
-                text: 'Transaction is being processed...'
+                title: this.translate.instant('general.transaction_signed.title'),
+                text: this.translate.instant('general.transaction_signed.description')
             })),
             switchMap(() => this.router.navigate(['/dash/manage_deposits']))
         );

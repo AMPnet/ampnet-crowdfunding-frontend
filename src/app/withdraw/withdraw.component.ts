@@ -9,6 +9,7 @@ import { ArkaneService } from '../shared/services/arkane.service';
 import { PopupService } from '../shared/services/popup.service';
 import { RouterService } from '../shared/services/router.service';
 import { ErrorService } from '../shared/services/error.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-withdraw',
@@ -27,6 +28,7 @@ export class WithdrawComponent implements OnInit {
                 private arkaneService: ArkaneService,
                 private popupService: PopupService,
                 private errorService: ErrorService,
+                private translate: TranslateService,
                 private router: RouterService) {
     }
 
@@ -69,8 +71,8 @@ export class WithdrawComponent implements OnInit {
             switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo)),
             switchMap(() => this.popupService.new({
                 type: 'success',
-                title: 'Transaction signed',
-                text: 'Transaction is being processed...'
+                title: this.translate.instant('general.transaction_signed.title'),
+                text: this.translate.instant('general.transaction_signed.description')
             })),
             switchMap(() => this.router.navigate(['/dash/wallet'])),
             finalize(() => SpinnerUtil.hideSpinner()),

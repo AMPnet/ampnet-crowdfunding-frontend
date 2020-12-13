@@ -9,6 +9,7 @@ import { finalize, switchMap, tap } from 'rxjs/operators';
 import { ArkaneService } from '../../../shared/services/arkane.service';
 import { PopupService } from '../../../shared/services/popup.service';
 import { ErrorService } from '../../../shared/services/error.service';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -22,6 +23,7 @@ export class UserActivationComponent implements OnInit {
     constructor(private activationService: WalletCooperativeWalletService,
                 private arkaneService: ArkaneService,
                 private errorService: ErrorService,
+                private translate: TranslateService,
                 private popupService: PopupService) {
     }
 
@@ -45,8 +47,8 @@ export class UserActivationComponent implements OnInit {
             switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo)),
             switchMap(() => this.popupService.new({
                 type: 'success',
-                title: 'Transaction signed',
-                text: 'Transaction is being processed...'
+                title: this.translate.instant('general.transaction_signed.title'),
+                text: this.translate.instant('general.transaction_signed.description')
             })),
             tap(() => this.fetchUnactivatedUserWallets()),
             finalize(() => SpinnerUtil.hideSpinner())

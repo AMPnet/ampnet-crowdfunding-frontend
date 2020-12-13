@@ -6,7 +6,7 @@
         <div [routerLink]="['/dash', 'offers', states.project.uuid] | coopPath"
              class="app-page-title-back">
             <i class="fas fa-long-arrow-alt-left mr-3"></i>
-            Invest in
+            {{ 'invest.back_button' | translate }}
         </div>
         <div class="row">
             <div class="invest col-12">
@@ -16,18 +16,18 @@
                 <div class="invest__content">
                     <div class="invest__text-left col-lg-6">
                         <div class="invest__input-label">
-                            <p>I want to invest</p>
+                            <p>{{ 'invest.invest_input.title' | translate }}</p>
                             <app-money-input-field
                                     [disabled]="states.investmentData.investDisabled"
-                                    placeholder="Enter invest amount"
+                                    placeholder="{{ 'invest.invest_input.placeholder' | translate }}"
                                     [control]="investForm.get('amount')"
                                     inputClass="input-lg w-100 invest">
                             </app-money-input-field>
                         </div>
 
                         <div class="invest__range-labels" *ngIf="!states.investmentData.investDisabled">
-                            <p>{{ states.investmentData.userMinInvest | currencyDefault }} Min investment</p>
-                            <p>{{ states.investmentData.userMaxInvest | currencyDefault }} Max investment</p>
+                            <p>{{ 'invest.min_invest' | translate | interpolate:['amount', states.investmentData.userMinInvest | currencyDefault] }}</p>
+                            <p>{{ 'invest.max_invest' | translate | interpolate:['amount', states.investmentData.userMaxInvest | currencyDefault] }}</p>
                         </div>
                     </div>
 
@@ -36,18 +36,22 @@
                                 [disabled]="!investForm.valid"
                                 type="submit"
                                 class="btn btn-primary w-100"
-                                [class.disabled-margin] = "states.investmentData.investDisabled">
+                                [class.disabled-margin]="states.investmentData.investDisabled">
                             <i class="fas fa-chart-pie mr-2"></i>
-                            Invest
+                            {{ 'invest.button' | translate }}
                         </button>
                     </div>
 
                     <div class="col-lg-2 invest__text-right flex__center--space">
                         <div>
-                            <p class="right__available">Available funds</p>
+                            <p class="right__available">
+                                {{ 'invest.available_funds' | translate }}
+                            </p>
                             <!-- Amount data for desktop screens! -->
                             <p class="right__amount d-none d-lg-block">{{ states.investmentData.userBalance | currencyDefault }}</p>
-                            <a class="right__link" [routerLink]="'/dash/wallet' | coopPath">Open wallet</a>
+                            <a class="right__link" [routerLink]="'/dash/wallet' | coopPath">
+                                {{ 'invest.open_wallet' | translate }}
+                            </a>
                         </div>
                         <p class="right__amount d-lg-none">{{ states.investmentData.userBalance | currencyDefault }}</p>
                     </div>
@@ -57,25 +61,29 @@
             <div class="error-messages col-12 col-xl-8" *ngIf="investForm.dirty && investForm.invalid">
                 <div *ngIf="investForm.get('amount').errors?.amountBelowMin" class="alert alert-danger">
                     <i class="fas fa-dizzy"></i>
-                    <b>Investment amount too low.&nbsp;</b>
+                    <b>
+                        {{ 'invest.errors.amount_below_min' | translate | splitPart:0 }}&nbsp;
+                    </b>
                     <span>
-                        The minimum investment is {{ states.investmentData.userMinInvest | currencyDefault }}
+                        {{ 'invest.errors.amount_below_min' | translate | splitPart:1 | interpolate:['amount', states.investmentData.userMinInvest | currencyDefault] }}
                     </span>
                 </div>
 
                 <div *ngIf="investForm.get('amount').errors?.amountAboveMax" class="alert alert-danger">
                     <i class="fas fa-dizzy"></i>
-                    <b>Investment amount too high.&nbsp;</b>
+                    <b>
+                        {{ 'invest.errors.amount_above_max' | translate | splitPart:0 }}&nbsp;
+                    </b>
                     <span>
-                        The maximum investment is {{ states.investmentData.userMaxInvest | currencyDefault }}
+                        {{ 'invest.errors.amount_above_max' | translate | splitPart:1 | interpolate:['amount', states.investmentData.userMaxInvest | currencyDefault] }}
                     </span>
                 </div>
-                
+
                 <div *ngIf="investForm.get('amount').errors?.amountAboveBalance"
                      class="alert alert-danger flex__center--space">
                     <div class="flex__center">
                         <i class="fas fa-dizzy"></i>
-                        <b>You don't have enough funds on your wallet</b>
+                        <b>{{ 'invest.errors.amount_above_balance' | translate }}</b>
                     </div>
                     <ng-container *ngTemplateOutlet="buttonToWalletScreen"></ng-container>
                 </div>
@@ -85,15 +93,15 @@
                 <div *ngIf="states.investmentData.maximumReached"
                      class="alert alert-danger flex__center">
                     <i class="fas fa-dizzy"></i>
-                    <b class="mr-2">You have already invested a maximum allowed amount for this project.</b>
+                    <b class="mr-2">{{ 'invest.errors.max_reached' | translate }}</b>
                 </div>
-    
+
                 <div *ngIf="states.investmentData.notEnoughFunds"
                      class="alert alert-danger flex__center--space">
-                     <div class="flex__center">
+                    <div class="flex__center">
                         <i class="fas fa-dizzy"></i>
-                        <b class="mr-2">You don't have enough funds for minimal investment. </b>
-                     </div>
+                        <b class="mr-2">{{ 'invest.errors.not_enough_funds' | translate }}</b>
+                    </div>
                     <ng-container *ngTemplateOutlet="buttonToWalletScreen"></ng-container>
                 </div>
             </div>
@@ -103,21 +111,27 @@
     <ng-container *ngIf="(projection$ | async) as projection">
         <div class="estimated-calculator" *ngIf="states.project?.roi?.to > 0">
             <div class="estimated__return-label">
-                <p>ESTIMATED RETURN</p>
+                <p>{{'invest.projections.title' | translate }}</p>
             </div>
 
             <div class="estimated__content">
                 <div class="estimated__total-label">
-                    <h2>Total investment = {{ projection.totalInvestment | currencyDefault }}</h2>
+                    <h2>
+                        {{ 'invest.projections.total_investment' | translate | interpolate:['amount', projection.totalInvestment | currencyDefault] }}
+                    </h2>
                 </div>
                 <div class="estimated__invested-label">
-                    <p>{{ states.investmentData.userInvested | currencyDefault }} invested so far </p>
+                    <p>
+                        {{ 'invest.projections.user_invested' | translate | interpolate:['amount', states.investmentData.userInvested | currencyDefault] }}
+                    </p>
                 </div>
 
                 <div class="row">
                     <div class="col-lg-4">
                         <div class="estimated__return-header">
-                            <div class="estimated__header-label"><p>Return over 1 year</p></div>
+                            <div class="estimated__header-label">
+                                <p>{{ 'invest.projections.return.1year.title' | translate }}</p>
+                            </div>
                         </div>
                         <div class="return__amounts">
                             <div class="estimated__amount-label">
@@ -130,7 +144,9 @@
                     </div>
                     <div class="col-lg-4">
                         <div class="estimated__return-header">
-                            <div class="estimated__header-label"><p>5 Years</p></div>
+                            <div class="estimated__header-label">
+                                <p>{{ 'invest.projections.return.5years.title' | translate }}</p>
+                            </div>
                         </div>
                         <div class="return__amounts">
                             <div class="estimated__amount-label">
@@ -143,7 +159,9 @@
                     </div>
                     <div class="col-lg-4">
                         <div class="estimated__return-header">
-                            <div class="estimated__header-label"><p>10 Years</p></div>
+                            <div class="estimated__header-label">
+                                <p>{{ 'invest.projections.return.10years.title' | translate }}</p>
+                            </div>
                         </div>
                         <div class="return__amounts">
                             <div class="estimated__amount-label">
@@ -165,6 +183,10 @@
 </ng-template>
 
 <ng-template #buttonToWalletScreen>
-    <button class="btn btn-danger" [routerLink]="'/dash/wallet' | coopPath">Please deposit funds</button>
-    <button class="btn btn-danger btn-mobile" [routerLink]="'/dash/wallet' | coopPath">Deposit</button>
+    <button class="btn btn-danger" [routerLink]="'/dash/wallet' | coopPath">
+        {{ 'invest.deposit_button' | translate }}
+    </button>
+    <button class="btn btn-danger btn-mobile" [routerLink]="'/dash/wallet' | coopPath">
+        {{ 'invest.deposit_button.short' | translate }}
+    </button>
 </ng-template>

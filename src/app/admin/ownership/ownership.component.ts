@@ -9,6 +9,7 @@ import { finalize, switchMap } from 'rxjs/operators';
 import { ArkaneService } from '../../shared/services/arkane.service';
 import { PopupService } from '../../shared/services/popup.service';
 import { ErrorService } from '../../shared/services/error.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-ownership',
@@ -23,6 +24,7 @@ export class OwnershipComponent implements OnInit, OnDestroy {
                 private ownershipService: WalletCooperativeOwnershipService,
                 private arkaneService: ArkaneService,
                 private errorService: ErrorService,
+                private translate: TranslateService,
                 private popupService: PopupService) {
     }
 
@@ -44,8 +46,8 @@ export class OwnershipComponent implements OnInit, OnDestroy {
             switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo)),
             switchMap(() => this.popupService.new({
                 type: 'success',
-                title: 'Transaction signed',
-                text: 'Transaction is being processed...'
+                title: this.translate.instant('general.transaction_signed.title'),
+                text: this.translate.instant('general.transaction_signed.description')
             })),
             finalize(() => SpinnerUtil.hideSpinner())
         );
@@ -59,8 +61,8 @@ export class OwnershipComponent implements OnInit, OnDestroy {
             switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo)),
             switchMap(() => this.popupService.new({
                 type: 'success',
-                title: 'Transaction signed',
-                text: 'Transaction is being processed...'
+                title: this.translate.instant('general.transaction_signed.title'),
+                text: this.translate.instant('general.transaction_signed.description')
             })),
             finalize(() => SpinnerUtil.hideSpinner())
         );

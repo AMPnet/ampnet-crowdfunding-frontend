@@ -10,6 +10,7 @@ import { PopupService } from '../../../../../shared/services/popup.service';
 import { BehaviorSubject, EMPTY, Observable, of } from 'rxjs';
 import { RouterService } from '../../../../../shared/services/router.service';
 import { ErrorService } from '../../../../../shared/services/error.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-project-withdraw',
@@ -30,6 +31,7 @@ export class ProjectWithdrawComponent {
                 private popupService: PopupService,
                 private arkaneService: ArkaneService,
                 private errorService: ErrorService,
+                private translate: TranslateService,
                 private route: ActivatedRoute,
                 private fb: FormBuilder) {
         this.projectID = this.route.snapshot.params.projectID;
@@ -72,8 +74,8 @@ export class ProjectWithdrawComponent {
                 switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo)),
                 switchMap(() => this.popupService.new({
                     type: 'success',
-                    title: 'Transaction signed',
-                    text: 'Transaction is being processed...'
+                    title: this.translate.instant('general.transaction_signed.title'),
+                    text: this.translate.instant('general.transaction_signed.description')
                 })),
                 switchMap(() => this.navigateBack()),
                 finalize(() => SpinnerUtil.hideSpinner())

@@ -9,6 +9,7 @@ import { ArkaneService } from '../../../../../../../shared/services/arkane.servi
 import { PopupService } from '../../../../../../../shared/services/popup.service';
 import { RouterService } from '../../../../../../../shared/services/router.service';
 import { ErrorService } from '../../../../../../../shared/services/error.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-revenue-share-confirm-modal',
@@ -29,6 +30,7 @@ export class RevenueShareConfirmModalComponent implements OnInit {
                 private revenueShareService: RevenueShareService,
                 private arkaneService: ArkaneService,
                 private errorService: ErrorService,
+                private translate: TranslateService,
                 private route: ActivatedRoute,
                 private popupService: PopupService) {
     }
@@ -46,8 +48,8 @@ export class RevenueShareConfirmModalComponent implements OnInit {
             switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo)),
             switchMap(() => this.popupService.new({
                 type: 'success',
-                title: 'Transaction signed',
-                text: 'Transaction is being processed...'
+                title: this.translate.instant('general.transaction_signed.title'),
+                text: this.translate.instant('general.transaction_signed.description')
             })),
             tap(() => this.router.navigate([`/dash/manage_groups/${this.orgID}/manage_project/${this.projectID}/manage_payments`])),
             finalize(() => SpinnerUtil.hideSpinner())

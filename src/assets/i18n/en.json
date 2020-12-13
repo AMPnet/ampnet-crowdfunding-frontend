@@ -36,6 +36,39 @@
       }
     }
   },
+  "invest": {
+    "back_button": "Invest in",
+    "invest_input.title": "I want to invest",
+    "invest_input.placeholder": "Enter invest amount",
+    "button": "Invest",
+    "min_invest": "{{ amount }} Min investment",
+    "max_invest": "{{ amount }} Max investment",
+    "errors": {
+      "amount_below_min": "Investment amount too low. | The minimum investment is {{ amount }}",
+      "amount_above_max": "Investment amount too high. | The maximum investment is {{ amount }}",
+      "amount_above_balance": "You don't have enough funds on your wallet.",
+      "max_reached": "You have already invested a maximum allowed amount for this project.",
+      "not_enough_funds": "You don't have enough funds for minimal investment."
+    },
+    "projections": {
+      "title": "ESTIMATED RETURN",
+      "total_investment": "Total investment = {{ amount }}",
+      "user_invested": "{{ amount }} invested so far",
+      "return.1year.title": "Return over 1 year",
+      "return.5years.title": "Return over 5 years",
+      "return.10years.title": "Return over 10 years"
+    },
+    "deposit_button": "Please deposit funds",
+    "deposit_button.short": "Deposit",
+    "available_funds": "Available funds",
+    "open_wallet": "Open wallet",
+    "verify_sign": {
+      "title": "Verify investment",
+      "amount": "Amount",
+      "project": "Project",
+      "verify_invest": "Verify & Invest"
+    }
+  },
   "settings": {
     "user": {
       "title": "User profile",
@@ -162,6 +195,12 @@
       "wallet_not_found": "Blockchain wallet has not been found.",
       "wallet_already_exists": "Blockchain wallet already exists.",
       "general_error": "There was an error on blockchain. Please, try again later."
+    }
+  },
+  "general": {
+    "transaction_signed": {
+      "title": "Transaction signed",
+      "description": "Transaction is being processed..."
     }
   },
   "languages": {

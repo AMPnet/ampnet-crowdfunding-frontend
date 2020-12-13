@@ -12,6 +12,7 @@ import { FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms'
 import { URLValidator } from '../../../../shared/validators/url.validator';
 import { RouterService } from '../../../../shared/services/router.service';
 import { ErrorService } from '../../../../shared/services/error.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-manage-single-project',
@@ -37,6 +38,7 @@ export class ManageSingleProjectComponent {
                 private arkaneService: ArkaneService,
                 private popupService: PopupService,
                 private errorService: ErrorService,
+                private translate: TranslateService,
                 private router: RouterService,
                 private fb: FormBuilder,
                 private route: ActivatedRoute) {
@@ -105,8 +107,8 @@ export class ManageSingleProjectComponent {
             )),
             switchMap(() => this.popupService.new({
                 type: 'success',
-                title: 'Transaction signed',
-                text: 'Transaction is being processed...'
+                title: this.translate.instant('general.transaction_signed.title'),
+                text: this.translate.instant('general.transaction_signed.description')
             })),
             tap(() => {
                 this.refreshProjectSubject.next(null);

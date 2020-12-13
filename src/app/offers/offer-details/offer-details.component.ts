@@ -17,6 +17,7 @@ import { PopupService } from '../../shared/services/popup.service';
 import { ArkaneService } from '../../shared/services/arkane.service';
 import { RouterService } from '../../shared/services/router.service';
 import { ErrorService } from '../../shared/services/error.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-offer-details',
@@ -46,6 +47,7 @@ export class OfferDetailsComponent implements OnInit {
                 private userService: UserService,
                 private meta: Meta,
                 private router: RouterService,
+                private translate: TranslateService,
                 private modalService: BsModalService,
                 private portfolioService: PortfolioService,
                 private popupService: PopupService,
@@ -179,8 +181,8 @@ export class OfferDetailsComponent implements OnInit {
                 switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo)),
                 switchMap(() => this.popupService.new({
                     type: 'success',
-                    title: 'Transaction signed',
-                    text: 'Transaction is being processed...'
+                    title: this.translate.instant('general.transaction_signed.title'),
+                    text: this.translate.instant('general.transaction_signed.description')
                 })),
                 switchMap(() => this.router.navigate(['/dash/wallet']))
             );

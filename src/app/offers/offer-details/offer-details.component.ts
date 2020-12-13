@@ -119,13 +119,13 @@ export class OfferDetailsComponent implements OnInit {
         this.meta.addTag({name: 'twitter:card', content: 'summary_large_image'});
     }
 
-    copyProjectDetailsUrl(el: TooltipDirective, projectUUID: string) {
+    copyProjectDetailsUrl(el: TooltipDirective, project: Project) {
         const selBox = document.createElement('textarea');
         selBox.style.position = 'fixed';
         selBox.style.left = '0';
         selBox.style.top = '0';
         selBox.style.opacity = '0';
-        selBox.value = this.getProjectURL(projectUUID, false);
+        selBox.value = this.getProjectURL(project, false);
         document.body.appendChild(selBox);
         selBox.focus();
         selBox.select();
@@ -162,8 +162,8 @@ export class OfferDetailsComponent implements OnInit {
         return !project.active || (!walletMW || walletMW.investmentCap === walletMW.totalFundsRaised);
     }
 
-    getProjectURL(projectUUID: string, uriComponent = true) {
-        const url = `${window.location.host}/overview/${projectUUID}/discover`;
+    getProjectURL(project: Project, uriComponent = true) {
+        const url = `${window.location.host}/${project.coop}/overview/${project.uuid}/discover`;
 
         return uriComponent ? encodeURIComponent(url) : encodeURI(url);
     }

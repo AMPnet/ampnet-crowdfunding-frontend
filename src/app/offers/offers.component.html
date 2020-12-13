@@ -17,7 +17,7 @@
 
         <div class="row justify-content-center mt-3"
              *ngIf="projectsWallets.length === 0">
-            <p>No projects currently available for crowdfunding.</p>
+            <p>{{ 'offers.no_projects_available' | translate }}</p>
         </div>
     </ng-container>
     <ng-template #loadingProjects>

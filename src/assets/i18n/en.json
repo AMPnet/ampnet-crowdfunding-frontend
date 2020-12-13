@@ -1,11 +1,39 @@
 {
   "offers": {
     "title": "Offers",
+    "no_projects_available": "No projects currently available for crowdfunding.",
     "single_offer_item": {
       "raised": "{{ raised }} | raised of {{ goal }} goal",
       "ends_on": "Ends on {{ end_date }}",
       "return": "Expected yearly return: | {{ from }} - {{ to }}",
       "see_more": "See more"
+    },
+    "offer_details": {
+      "title": "OFFER DETAILS",
+      "title.portfolio": "PORTFOLIO DETAILS",
+      "project_hidden": "The project is not open for funding. If you wish to invest, please come back later.",
+      "show_location": "Show location",
+      "raised": "{{ raised }} | raised of {{ goal }} goal",
+      "return": "{{ from }} - {{ to }} | Expected yearly return",
+      "min_invest": "{{ amount }} | Min Investment",
+      "max_invest": "{{ amount }} | Max Investment",
+      "funding_period": "Funding period | {{ from }} - {{ to }}",
+      "cancel_investment": "Cancel investment",
+      "invest": "Invest",
+      "invest.overview": "Sign Up & Invest",
+      "invest.portfolio": "Increase investment",
+      "invest.portfolio.short": "Reinvest",
+      "verify_profile": "Verify Profile & Invest",
+      "verify_profile.short": "Verify Profile",
+      "share": "Share",
+      "link_copied": "Link copied to clipboard",
+      "transactions": {
+        "title": "Transactions",
+        "total_invested": "Total Invested"
+      },
+      "details": {
+        "title": "Details"
+      }
     }
   },
   "settings": {

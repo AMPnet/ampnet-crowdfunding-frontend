@@ -80,6 +80,40 @@
       "verify_invest": "Verify & Invest"
     }
   },
+  "wallet": {
+    "title": "Wallet",
+    "description": {
+      "notice": "You must initialize your wallet to invest.",
+      "title": "Your private, secure wallet",
+      "details": "We're commited to making sure your funds are as safe as they can possibly be when using our platform. To do this, we prevent the management of your money by anyone other than you. | This is why we use a third-party secure wallet to store your money and approve investments into projects. To start the process of initializing your wallet - click on the button below."
+    },
+    "initialize_wallet": "Initialize secure wallet",
+    "balance": "Balance",
+    "deposit": "Deposit",
+    "withdraw": "Withdraw",
+    "wallet_not_active_notice": "Your wallet is pending approval from admin. You can deposit funds while pending approval.",
+    "deposit_funds": "Deposit funds",
+    "wallet_empty_notice": "Your wallet is empty. Deposit funds to get started.",
+    "transactions": {
+      "title": "Transaction History",
+      "empty_notice": "Your transaction history is empty.",
+      "type": {
+        "investment": "Investment | to",
+        "deposit": "Deposit",
+        "withdraw": "Withdraw",
+        "share_payout": "Dividend | from",
+        "cancel_investment": "Cancel investment | from",
+        "approve_investment": "Approve investment | to"
+      },
+      "state": {
+        "mined.invest": " {{ percent }} Invested",
+        "pending": "Pending",
+        "failed": "Failed"
+      },
+      "pdf_report": "Generate PDF Report",
+      "pdf_report.downloading": "Downloading..."
+    }
+  },
   "settings": {
     "user": {
       "title": "User profile",

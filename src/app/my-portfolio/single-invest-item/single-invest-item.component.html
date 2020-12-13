@@ -1,6 +1,12 @@
 <div class="portfolio-item" (click)="onClickedItem()">
     <h1 class="app-basic-title">{{ investment.project.name }}</h1>
     <p class="item__invested">
-        <span>{{ investment.investment | currencyDefault }}</span> Invested
+        <span class="bold">
+            {{ 'my_portfolio.investments.item.invested' | translate | splitPart:0
+                | interpolate:['amount', investment.investment | currencyDefault]}}
+        </span>
+        <span>
+            {{ 'my_portfolio.investments.item.invested' | translate | splitPart:1 }}
+        </span>
     </p>
 </div>

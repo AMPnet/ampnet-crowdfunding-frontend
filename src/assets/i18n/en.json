@@ -36,6 +36,17 @@
       }
     }
   },
+  "my_portfolio": {
+    "title": "My portfolio",
+    "total_investment": "Total investment",
+    "total_earnings": "Total earnings",
+    "investments": {
+      "title": "Investments",
+      "empty": "You don't have any active investments.",
+      "item.invested": "{{ amount }} | Invested"
+    },
+    "wallet_not_activated_notice": "Your portfolio will be available after you've invested into a project."
+  },
   "invest": {
     "back_button": "Invest in",
     "invest_input.title": "I want to invest",

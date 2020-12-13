@@ -204,6 +204,41 @@
       }
     }
   },
+  "projects": {
+    "new": {
+      "title.back": "Back",
+      "title": "Create a new project",
+      "name_input": {
+        "title": "Project name",
+        "placeholder": "Enter project name"
+      },
+      "period_input": {
+        "title": "Date period (Start - End)",
+        "placeholder.start": "Enter start date",
+        "placeholder.end": "Enter end date"
+      },
+      "investment_range_input": {
+        "title": "Investment per member (Min - Max)",
+        "placeholder.start": "Enter minimal amount",
+        "placeholder.end": "Enter maximal amount"
+      },
+      "expected_funding_input": {
+        "title": "Expected funding",
+        "placeholder": "Enter expected funding amount"
+      },
+      "lock_notice": "Date, Investment per member and Expected funding cannot be changed once project is created.",
+      "errors": {
+        "invalid_start_end_date": "Start date has to be lower than the end date.",
+        "invalid_max_expected_funding": "Maximum investment per user cannot be greater than project expected funding.",
+        "invalid_min_max": "Minimum investment per user cannot be greater than maximum investment per user."
+      },
+      "create_button": "Create new project",
+      "create_button.loading": "Creating project..."
+    },
+    "edit": {
+
+    }
+  },
   "settings": {
     "user": {
       "title": "User profile",

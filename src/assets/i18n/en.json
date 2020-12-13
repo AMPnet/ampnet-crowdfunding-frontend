@@ -155,7 +155,8 @@
     "invites": {
       "title": "Group invites",
       "join": "Join group",
-      "empty": "Not invited to any groups"
+      "empty": "Not invited to any groups",
+      "accepted": "Accepted invitation to organization."
     },
     "new": {
       "title": "Create a new investment group",
@@ -176,9 +177,31 @@
       "created": "Investment group created!"
     },
     "details": {
-      "title": "Create a new investment group",
       "title.back": "Investment group details",
-      "project_count": "| {{ count }} | Projects"
+      "create_project": "Create project",
+      "project_count": "| {{ count }} | Projects",
+      "wallet_not_verified": "This group is pending approval from admin. During this time, you can't create new projects.",
+      "wallet_missing": "The organization wallet needs to be created. You will be prompted now.",
+      "projects": {
+        "title": "Projects",
+        "empty": "There are no projects associated with this organization.",
+        "item": {
+          "period": "Funding | {{ from }} - {{ to }}",
+          "raised": "{{ raised }} | raised of {{ goal }} goal",
+          "publish": "Publish",
+          "unpublish": "Unpublish"
+        }
+      },
+      "members": {
+        "title": "Members",
+        "add_input.placeholder": "joe@mail.com, jane@mail.com",
+        "add_button": "Add members",
+        "add_button.loading": "Sending invites...",
+        "join_date": "Joined {{ date }}",
+        "empty": "You are the only member of {{ org }}",
+        "invited": "Successfully invited user to organization.",
+        "deleted": "Successfully deleted user from the organization."
+      }
     }
   },
   "settings": {

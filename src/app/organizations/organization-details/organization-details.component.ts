@@ -74,7 +74,7 @@ export class OrganizationDetailsComponent implements OnInit {
                 catchError(err => {
                     if (err.status === 404) {
                         return this.popupService.info(
-                            'The organization wallet needs to be created. You will be prompted now.'
+                            this.translate.instant('organizations.details.wallet_missing')
                         ).pipe(
                             switchMap(popupRes => popupRes.dismiss === undefined ?
                                 this.createOrgWallet(orgID) : this.recoverBack())
@@ -104,7 +104,9 @@ export class OrganizationDetailsComponent implements OnInit {
 
             return this.organizationService.inviteUser(orgUUID, emails).pipe(
                 this.errorService.handleError,
-                switchMap(() => this.popupService.success('Successfully invited user to organization')),
+                switchMap(() => this.popupService.success(
+                    this.translate.instant('organizations.details.members.invited')
+                )),
                 tap(() => this.inviteForm.reset())
             );
         };
@@ -133,7 +135,9 @@ export class OrganizationDetailsComponent implements OnInit {
         SpinnerUtil.showSpinner();
         this.organizationService.removeMemberFromOrganization(orgID, memberID).pipe(
             this.errorService.handleError,
-            switchMap(() => this.popupService.success('Successfully deleted user from the organization')),
+            switchMap(() => this.popupService.success(
+                this.translate.instant('organizations.details.members.deleted')
+            )),
             tap(() => this.refreshOrgMembersSubject.next()),
             finalize(() => SpinnerUtil.hideSpinner())
         ).subscribe();

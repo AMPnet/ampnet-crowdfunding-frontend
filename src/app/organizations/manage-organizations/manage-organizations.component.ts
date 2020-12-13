@@ -5,6 +5,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { finalize, map, switchMap, tap } from 'rxjs/operators';
 import { PopupService } from '../../shared/services/popup.service';
 import { ErrorService } from '../../shared/services/error.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-manage-organizations',
@@ -20,6 +21,7 @@ export class ManageOrganizationsComponent {
 
     constructor(private organizationService: OrganizationService,
                 private errorService: ErrorService,
+                private translate: TranslateService,
                 private popupService: PopupService) {
         this.organizations$ = this.refreshOrganizationsSubject.pipe(
             switchMap(_ => this.organizationService.getPersonalOrganizations()
@@ -42,7 +44,9 @@ export class ManageOrganizationsComponent {
         return this.organizationService.acceptInvite(orgID).pipe(
             this.errorService.handleError,
             switchMap(() =>
-                this.popupService.success('Accepted invitation to organization')),
+                this.popupService.success(
+                    this.translate.instant('organizations.invites.accepted')
+                )),
             tap(() => this.refreshState()),
             finalize(() => SpinnerUtil.hideSpinner())
         ).subscribe();

@@ -55,8 +55,8 @@
       &__project-count {
         color: $body-color;
         letter-spacing: 0.1px;
-        b {
-          color: $title-color;
+        span.bold {
+          font-weight: bold;
         }
       }
       &__info {
@@ -194,9 +194,6 @@
         }
         &__project-count {
           font-size: $font-size-desktop-body2;
-          b {
-            font-size: $font-size-desktop-body2;
-          }
         }
         &__info {
           font-size: $font-size-desktop-body2;

@@ -1,7 +1,7 @@
 <ng-container *ngIf="(projectsWallets$ | async) as projectsWallets else spinner">
     <div *ngIf="projectsWallets.length === 0" class="col-md-12">
         <div class="w-100 text-center mt-5 mb-5">
-            <p>There are no projects associated with this organization.</p>
+            <p>{{ 'organizations.details.projects.empty' | translate }}</p>
         </div>
     </div>
 

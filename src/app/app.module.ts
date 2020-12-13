@@ -102,6 +102,7 @@ import { QuillModule } from 'ngx-quill';
 import { TranslationsModule } from './translations.module';
 import { InterpolatePipe } from './shared/pipes/interpolate.pipe';
 import { SplitPartPipe } from './shared/pipes/split-part.pipe';
+import { DynamicLocaleProvider } from './shared/providers/locale.provider';
 
 @NgModule({
     declarations: [
@@ -232,6 +233,7 @@ import { SplitPartPipe } from './shared/pipes/split-part.pipe';
             provide: DEFAULT_CURRENCY_CODE,
             useValue: 'EUR', // TODO: Set this from app config service.
         },
+        DynamicLocaleProvider,
         DatePipe,
         SafePipe,
         CurrencyPipe,

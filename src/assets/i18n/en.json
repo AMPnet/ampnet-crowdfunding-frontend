@@ -1,7 +1,7 @@
 {
   "offers": {
     "title": "Offers",
-    "no_projects_available": "No projects currently available for crowdfunding.",
+    "no_projects_available": "No projects are currently available for crowdfunding.",
     "single_offer_item": {
       "raised": "{{ raised }} | raised of {{ goal }} goal",
       "ends_on": "Ends on {{ end_date }}",
@@ -45,7 +45,7 @@
       "empty": "You don't have any active investments.",
       "item.invested": "{{ amount }} | Invested"
     },
-    "wallet_not_activated_notice": "Your portfolio will be available after you've invested into a project."
+    "wallet_not_activated_notice": "Your portfolio will be available after you've invested in a project."
   },
   "invest": {
     "back_button": "Invest in",
@@ -57,7 +57,7 @@
     "errors": {
       "amount_below_min": "Investment amount too low. | The minimum investment is {{ amount }}",
       "amount_above_max": "Investment amount too high. | The maximum investment is {{ amount }}",
-      "amount_above_balance": "You don't have enough funds on your wallet.",
+      "amount_above_balance": "You don't have enough funds in your wallet.",
       "max_reached": "You have already invested a maximum allowed amount for this project.",
       "not_enough_funds": "You don't have enough funds for minimal investment."
     },
@@ -85,13 +85,13 @@
     "description": {
       "notice": "You must initialize your wallet to invest.",
       "title": "Your private, secure wallet",
-      "details": "We're commited to making sure your funds are as safe as they can possibly be when using our platform. To do this, we prevent the management of your money by anyone other than you. | This is why we use a third-party secure wallet to store your money and approve investments into projects. To start the process of initializing your wallet - click on the button below."
+      "details": "We're committed to making sure your funds are as safe as they can possibly be when using our platform. To do this, we prevent the management of your money by anyone other than you. | This is why we use a third-party secure wallet to store your money and approve investments into projects. To start the process of initializing your wallet - click on the button below."
     },
     "initialize_wallet": "Initialize secure wallet",
     "balance": "Balance",
     "deposit": "Deposit",
     "withdraw": "Withdraw",
-    "wallet_not_active_notice": "Your wallet is pending approval from admin. You can deposit funds while pending approval.",
+    "wallet_not_active_notice": "Your wallet is pending approval from an administrator. You can deposit funds while pending approval.",
     "deposit_funds": "Deposit funds",
     "wallet_empty_notice": "Your wallet is empty. Deposit funds to get started.",
     "transactions": {
@@ -156,7 +156,7 @@
       "title": "Group invites",
       "join": "Join group",
       "empty": "Not invited to any groups",
-      "accepted": "Accepted invitation to organization."
+      "accepted": "Accepted invitation to the organization."
     },
     "new": {
       "title": "Create a new investment group",
@@ -180,7 +180,7 @@
       "title.back": "Investment group details",
       "create_project": "Create project",
       "project_count": "| {{ count }} | Projects",
-      "wallet_not_verified": "This group is pending approval from admin. During this time, you can't create new projects.",
+      "wallet_not_verified": "This group is pending approval from an administrator. During this time, you can't create new projects.",
       "wallet_missing": "The organization wallet needs to be created. You will be prompted now.",
       "projects": {
         "title": "Projects",
@@ -200,7 +200,7 @@
         "join_date": "Joined {{ date }}",
         "empty": "You are the only member of {{ org }}",
         "invited": "Successfully invited user to organization.",
-        "deleted": "Successfully deleted user from the organization."
+        "deleted": "Successfully deleted the user from the organization."
       }
     }
   },
@@ -226,18 +226,18 @@
         "title": "Expected funding",
         "placeholder": "Enter expected funding amount"
       },
-      "lock_notice": "Date, Investment per member and Expected funding cannot be changed once project is created.",
+      "lock_notice": "Date, Investment per member and Expected funding cannot be changed once the project is created.",
       "errors": {
-        "invalid_start_end_date": "Start date has to be lower than the end date.",
-        "invalid_max_expected_funding": "Maximum investment per user cannot be greater than project expected funding.",
-        "invalid_min_max": "Minimum investment per user cannot be greater than maximum investment per user."
+        "invalid_start_end_date": "The start date has to be lower than the end date.",
+        "invalid_max_expected_funding": "The maximum investment per user cannot be greater than the project expected funding.",
+        "invalid_min_max": "The minimum investment per user cannot be greater than the maximum investment per user."
       },
       "create_button": "Create new project",
       "create_button.loading": "Creating project..."
     },
     "edit": {
       "preview": "Preview",
-      "wallet_not_verified_notice": "This project is pending approval from admin. During this time, the project cannot be publicly shown.",
+      "wallet_not_verified_notice": "This project is pending approval from an administrator. During this time, the project cannot be publicly shown.",
       "active.public": "Public",
       "active.hidden": "Hidden",
       "show": "Show project",
@@ -308,7 +308,7 @@
         },
         "revenue_share": {
           "title": "Revenue share",
-          "description": "Enter amount of money to be paid out to investors.",
+          "description": "Enter the amount of money to be paid out to investors.",
           "placeholder": "Enter maximum investment per user",
           "errors.invalid_amount": "Payout must be lower or equal to balance.",
           "submit_button": "Start payout",
@@ -385,7 +385,7 @@
       "logout": "Log out"
     },
     "tooltip": {
-      "not_verified": "Profile not verified. Go to User Profile screen to finish onboarding process.",
+      "not_verified": "Profile not verified. Go to the User Profile screen to finish the onboarding process.",
       "wallet_not_initialized": "In order to manage funds, you need to have your wallet initialized.",
       "verification_pending": "Please wait for the administrator to verify your wallet."
     }
@@ -422,7 +422,7 @@
     }
   },
   "user_state_reminder": {
-    "not_verified": "Profile not verified. Please go | here | to verify your profile and finish onboarding procedure.",
+    "not_verified": "Profile not verified. Please go | here | to verify your profile and finish the onboarding procedure.",
     "initialize_wallet": "Thank you for verifying your profile. | In order to manage funds, you need to have your wallet initialized. Please initialize your wallet | here | .",
     "activation_pending": "Thank you for initializing your wallet.",
     "activation_pending.user_notice": "Please wait for the administrator to get it verified.",
@@ -573,7 +573,7 @@
       "user_exists": "The given email is already in use.",
       "confirmation_token_invalid": "Invalid email confirmation data.",
       "confirmation_token_expired": "Confirmation link has expired.",
-      "social_failed": "There is a problem with social login method. Try again later.",
+      "social_failed": "There is a problem with the social login method. Try again later.",
       "captcha_failed": "You have failed captcha validation. Please, try again."
     },
     "auth": {
@@ -590,7 +590,7 @@
     "wallet": {
       "missing_wallet": "Your wallet is missing.",
       "cannot_create_new_wallet": "A new wallet cannot be created.",
-      "not_enough_funds": "You have not enough funds on your wallet.",
+      "not_enough_funds": "Not enough funds on your wallet.",
       "wallet_already_registered": "This wallet has already been registered.",
       "missing_deposit": "Requested deposit does not exist.",
       "deposit_already_minted": "Requested deposit has already been finalized.",
@@ -648,7 +648,7 @@
   "general": {
     "transaction_signed": {
       "title": "Transaction signed",
-      "description": "Transaction is being processed..."
+      "description": "The transaction is being processed..."
     }
   },
   "languages": {

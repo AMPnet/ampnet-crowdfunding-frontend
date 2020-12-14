@@ -3,13 +3,13 @@ import { SignupService } from '../../shared/services/user/signup.service';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthService } from 'angularx-social-login';
-import { socialAuthServiceProvider, UserAuthService } from '../../shared/services/user/user-auth.service';
 import { MustMatch } from './confirm-password-validator';
 import { switchMap, tap } from 'rxjs/operators';
 import { RouterService } from '../../shared/services/router.service';
 import { PopupService } from '../../shared/services/popup.service';
 import { from } from 'rxjs';
 import { ErrorService } from '../../shared/services/error.service';
+import { socialAuthServiceProvider, UserService } from '../../shared/services/user/user.service';
 
 @Component({
     selector: 'app-sign-up',
@@ -30,7 +30,7 @@ export class SignUpComponent {
                 private socialAuthService: SocialAuthService,
                 private route: ActivatedRoute,
                 private errorService: ErrorService,
-                private loginService: UserAuthService,
+                private userService: UserService,
                 private popupService: PopupService,
                 private formBuilder: FormBuilder
     ) {
@@ -57,7 +57,7 @@ export class SignUpComponent {
         return from(this.socialAuthService.signIn(provider)).pipe(
             switchMap(socialRes =>
                 this.signUpService.signupSocial(socialRes.provider, socialRes.authToken).pipe(
-                    switchMap(() => this.loginService.socialLogin(provider, socialRes.authToken))
+                    switchMap(() => this.userService.socialLogin(provider, socialRes.authToken))
                 )),
             this.errorService.handleError,
             switchMap(() => this.popupService.success('Sign up successful!')),
@@ -70,7 +70,7 @@ export class SignUpComponent {
 
         return this.signUpService.signupEmail(user.email, user.firstName, user.lastName, user.password)
             .pipe(
-                switchMap(_ => this.loginService.emailLogin(user.email, user.password)),
+                switchMap(_ => this.userService.emailLogin(user.email, user.password)),
                 this.errorService.handleError,
                 switchMap(() => this.popupService.success('Sign up successful!')),
                 tap(() => this.router.navigate(['/dash'])),

@@ -1,44 +1,76 @@
-<div *ngIf="user !== undefined" class="container root-content-container">
-    <div class="explainer-mini">Your role on the platform is</div>
-    <div *ngIf="user.role === 'ADMIN'">ADMIN</div>
-    <div *ngIf="user.role === 'TOKEN_ISSUER'">TOKEN ISSUER</div>
-    <div *ngIf="user.role === 'PLATFORM_MANAGER'">PLATFORM MANAGER</div>
+<ng-container *ngIf="(user$ | async) as user; else spinner">
+    <div class="container">
+        <h1 class="app-page-title">
+            {{ 'admin.platform_roles.title' | translate }}
+        </h1>
 
-    <div *ngIf="user.role === 'ADMIN' || user.role === 'PLATFORM_MANAGER'">
-        <div class="explainer-mini mt-5">Platform manager</div>
-        <div class="alert alert-info mt-3">
-            The platform manager has the authority to approve users, groups and projects
-        </div>
-        <div class="row">
-            <div class="col-md-8">
-                <input class="input-reg w-100" id="platform-manager-address"
-                       placeholder="Enter address of new platform manager"
-                       type="text">
+        <p class="my-4">
+            {{ 'admin.platform_roles.role_notice' | translate
+                | interpolate:['role', 'admin.platform_roles.roles.' + (user.role | lowercase)
+                | translate | uppercase] }}
+        </p>
+
+        <div *ngIf="user.role === userRole.ADMIN || user.role === userRole.PLATFORM_MANAGER">
+            <div class="app-page-subtitle mt-2">
+                {{ 'admin.platform_roles.platform_manager_change.title' | translate }}
             </div>
-            <div class="col-md-4">
-                <button (click)="changePlatformManagerClicked()" class="btn btn-primary h-100 w-100 p-0">
-                    Change platform manager
-                </button>
+            <div class="alert alert-info mt-3">
+                {{ 'admin.platform_roles.platform_manager_change.notice' | translate }}
+            </div>
+            <div class="row">
+                <form [formGroup]="platformManagerForm" style="display: contents">
+                    <div class="col-md-8">
+                        <label for="platform-manager" class="app-page-label mt-3">
+                            {{ 'admin.platform_roles.platform_manager_change.input.title' | translate }}
+                        </label>
+                        <input class="input-reg w-100" id="platform-manager"
+                               formControlName="email"
+                               placeholder="{{ 'admin.platform_roles.platform_manager_change.input.placeholder' | translate }}"
+                               type="text">
+                    </div>
+                    <div class="col-md-4 align-self-end">
+                        <button app-action-button
+                                text="{{ 'admin.platform_roles.platform_manager_change.submit' | translate }}"
+                                class="btn w-100 p-0 mt-2"
+                                [disabled]="!platformManagerForm.dirty || !platformManagerForm.valid"
+                                [onClick]="transferOwnership(platformManagerForm, userRole.PLATFORM_MANAGER).bind(this)">
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div *ngIf="user.role === userRole.ADMIN || user.role === userRole.TOKEN_ISSUER">
+            <div class="app-page-subtitle mt-2">
+                {{ 'admin.platform_roles.token_issuer_change.title' | translate }}
+            </div>
+            <div class="alert alert-info mt-3">
+                {{ 'admin.platform_roles.token_issuer_change.notice' | translate }}
+            </div>
+            <div class="row">
+                <form [formGroup]="tokenIssuerForm" style="display: contents">
+                    <div class="col-md-8">
+                        <label for="token-issuer" class="app-page-label mt-3">
+                            {{ 'admin.platform_roles.token_issuer_change.input.title' | translate }}
+                        </label>
+                        <input class="input-reg w-100" id="token-issuer"
+                               formControlName="email"
+                               placeholder="{{ 'admin.platform_roles.token_issuer_change.input.placeholder' | translate }}"
+                               type="text">
+                    </div>
+                    <div class="col-md-4 align-self-end">
+                        <button app-action-button
+                                text="{{ 'admin.platform_roles.token_issuer_change.submit' | translate }}"
+                                class="btn w-100 p-0 mt-2"
+                                [disabled]="!tokenIssuerForm.dirty || !tokenIssuerForm.valid"
+                                [onClick]="transferOwnership(tokenIssuerForm, userRole.TOKEN_ISSUER).bind(this)">
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-
-    <div *ngIf="user.role === 'ADMIN' || user.role === 'TOKEN_ISSUER'">
-        <div class="explainer-mini mt-5">Token issuer</div>
-        <div class="alert alert-info mt-3">
-            The token issuer has the authority to mint and burn money on the platform
-        </div>
-        <div class="row">
-            <div class="col-md-8">
-                <input class="input-reg w-100" id="token-issuer-address"
-                       placeholder="Enter address of new token issuer"
-                       type="text">
-            </div>
-            <div class="col-md-4">
-                <button (click)="changeTokenIssuerClicked()" class="btn btn-primary h-100 w-100 p-0">
-                    Change token issuer
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
+</ng-container>
+<ng-template #spinner>
+    <app-spinner class="w-100" type="overlay"></app-spinner>
+</ng-template>

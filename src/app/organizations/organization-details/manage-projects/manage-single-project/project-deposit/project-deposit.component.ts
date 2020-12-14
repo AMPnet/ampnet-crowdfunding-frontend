@@ -41,7 +41,7 @@ export class ProjectDepositComponent {
     generateDepositInfo(projectUUID: string) {
         return this.depositService.createProjectDeposit(projectUUID).pipe(
             catchError(err =>
-                err.error.err_code === WalletError.MISSING_WITHDRAWAL ? this.popupService.info(
+                err.error.err_code === WalletError.UNAPPROVED_DEPOSIT_EXISTS ? this.popupService.info(
                     this.translate.instant('projects.edit.manage_payments.deposit.existing_deposit')
                 ).pipe(switchMap(() => this.navigateBack())) : this.navigateBack()),
             this.errorService.handleError,

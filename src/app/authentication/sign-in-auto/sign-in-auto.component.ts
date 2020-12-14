@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { UserAuthService } from '../../shared/services/user/user-auth.service';
 import { catchError, tap } from 'rxjs/operators';
 import { EMPTY } from 'rxjs';
 import { RouterService } from '../../shared/services/router.service';
 import { ErrorService } from '../../shared/services/error.service';
+import { UserService } from '../../shared/services/user/user.service';
 
 @Component({
     selector: 'app-sign-in-auto',
@@ -15,7 +15,7 @@ export class SignInAutoComponent implements OnInit {
     constructor(private route: ActivatedRoute,
                 private router: RouterService,
                 private errorService: ErrorService,
-                private loginService: UserAuthService) {
+                private userService: UserService) {
     }
 
     ngOnInit() {
@@ -26,7 +26,7 @@ export class SignInAutoComponent implements OnInit {
             this.navigateHome();
         }
 
-        this.loginService.emailLogin(email, password).pipe(
+        this.userService.emailLogin(email, password).pipe(
             this.errorService.handleError,
             catchError(() => {
                 this.navigateHome();

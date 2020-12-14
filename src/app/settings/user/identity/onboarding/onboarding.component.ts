@@ -1,6 +1,5 @@
 import { Component, Renderer2 } from '@angular/core';
 import { DecisionStatus, OnboardingService, State, VeriffSession } from '../../../../shared/services/user/onboarding.service';
-import { UserAuthService } from '../../../../shared/services/user/user-auth.service';
 import { BehaviorSubject, EMPTY, Observable, Subject, timer } from 'rxjs';
 import { catchError, switchMap, tap } from 'rxjs/operators';
 import { PopupService } from '../../../../shared/services/popup.service';
@@ -33,8 +32,7 @@ export class OnboardingComponent {
                 private userService: UserService,
                 private errorService: ErrorService,
                 private translate: TranslateService,
-                private onboardingService: OnboardingService,
-                private loginService: UserAuthService) {
+                private onboardingService: OnboardingService) {
         this.session$ = this.sessionSubject.asObservable().pipe(
             switchMap(_ => this.onboardingService.getVeriffSession()),
             tap(session => {
@@ -53,7 +51,7 @@ export class OnboardingComponent {
             switchMap(() => this.popupService.success(
                 this.translate.instant('user.identity.onboarding.approved')
             )),
-            switchMap(() => this.loginService.refreshUserToken()
+            switchMap(() => this.userService.refreshUserToken()
                 .pipe(this.errorService.handleError)),
             catchError(() => {
                 this.router.navigate(['/dash/settings/user']);

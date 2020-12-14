@@ -5,7 +5,8 @@ import { PopupService } from './popup.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';
 import { RouterService } from './router.service';
-import { UserAuthService } from './user/user-auth.service';
+import { UserService } from './user/user.service';
+
 
 @Injectable({
     providedIn: 'root'
@@ -13,7 +14,7 @@ import { UserAuthService } from './user/user-auth.service';
 export class ErrorService {
     constructor(private popupService: PopupService,
                 private router: RouterService,
-                private userAuthService: UserAuthService,
+                private userService: UserService,
                 private translate: TranslateService) {
     }
 
@@ -81,7 +82,7 @@ export class ErrorService {
                     case AuthError.MISSING_JWT:
                     case AuthError.CANNOT_REGISTER_JWT:
                     case UserError.USER_JWT_MISSING:
-                        action$ = this.takeAction(() => of(this.userAuthService.logout())
+                        action$ = this.takeAction(() => of(this.userService.logout())
                             .pipe(this.router.navigate['/']));
                         break;
 

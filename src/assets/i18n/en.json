@@ -412,7 +412,7 @@
       "swift_input": {
         "title": "SWIFT/BIC",
         "placeholder": "REVOGB21",
-        "helper_notice": "Find it out | here | ."
+        "helper_notice": "Find it out | here |"
       },
       "alias_input": {
         "title": "Short name",
@@ -515,8 +515,54 @@
       }
     },
     "bank_account": {
+      "title": "Platform Bank Account",
+      "item": {
+        "iban": "IBAN",
+        "alias": "Name",
+        "swift": "SWIFT/BIC",
+        "actions": "Actions"
+      },
+      "empty": "No payment options available. Please add a new payment option.",
+      "add_new": "Add new",
+      "new": {
+        "title": "New Platform Bank Account"
+      }
     },
     "platform_roles": {
+      "title": "Platform roles",
+      "role_notice": "Your role on the platform is: {{ role }}",
+      "roles": {
+        "admin": "Administrator",
+        "token_issuer": "Token Issuer",
+        "platform_manager": "Platform manager"
+      },
+      "platform_manager_change": {
+        "title": "Platform manager",
+        "notice": "The platform manager has the authority to approve users, groups and projects.",
+        "input": {
+          "title": "Email",
+          "placeholder": "new.platform.manager@email.com"
+        },
+        "submit": "Transfer ownership"
+      },
+      "token_issuer_change": {
+        "title": "Token issuer",
+        "notice": "The token issuer has the authority to mint and burn money on the platform.",
+        "input": {
+          "title": "Email",
+          "placeholder": "new.token.issuer@email.com"
+        },
+        "submit": "Transfer ownership"
+      },
+      "change_confirmation": {
+        "question": "Transferring \"{{ role }}\" ownership to another user. Check the data before you proceed.",
+        "user_data": "Name: {{ first_name }} {{ last_name }}, Email: {{ email }}",
+        "yes": "Transfer",
+        "no": "Abort",
+        "success": "Transfer ownership completed.",
+        "success.notice": "Please wait for a minute and refresh your browser."
+      },
+      "user_not_found": "User with this email was not found."
     },
     "platform_config": {
     }

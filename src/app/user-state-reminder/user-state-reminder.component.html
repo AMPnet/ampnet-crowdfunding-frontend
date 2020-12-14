@@ -2,7 +2,7 @@
     user: user$ | async,
     wallet: wallet$ | async
 } as states">
-    <div *ngIf="!isUserVerified(states.user)" class="container">
+    <div *ngIf="!isUserVerified(states.user)">
         <div class="app__full-width">
             <div class="wallet-init-reminder">
                 <p>
@@ -20,7 +20,7 @@
         </div>
     </div>
 
-    <div *ngIf="isUserVerified(states.user) && !isWalletInitialized(states.wallet)" class="container">
+    <div *ngIf="isUserVerified(states.user) && !isWalletInitialized(states.wallet)">
         <div class="wallet-init-reminder">
             <p>
                 <span *ngIf="states.user?.role !== userRole.ADMIN">
@@ -39,8 +39,7 @@
         </div>
     </div>
 
-    <div *ngIf="isWaitingWalletReady(states.user, states.wallet)"
-         class="container">
+    <div *ngIf="isWaitingWalletReady(states.user, states.wallet)">
         <div class="wallet-init-reminder">
             <p>
                 {{ 'user_state_reminder.activation_pending' | translate }}

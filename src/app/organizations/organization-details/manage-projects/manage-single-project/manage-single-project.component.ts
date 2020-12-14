@@ -93,7 +93,7 @@ export class ManageSingleProjectComponent {
 
     createProjectWallet(projectUUID: string) {
         return this.popupService.info(
-            'Verify the project creation with your blockchain wallet. You will be prompted now!'
+            this.translate.instant('projects.edit.create_wallet_notice')
         ).pipe(
             tap(() => SpinnerUtil.showSpinner()),
             switchMap(() =>
@@ -174,10 +174,10 @@ export class ManageSingleProjectComponent {
 
     deleteFile(project: Project, documentID: number) {
         return this.popupService.new({
-            text: 'Are you sure you want to delete this file? This action cannot be reversed',
-            confirmButtonText: 'Yes',
+            text: this.translate.instant('projects.edit.delete_file_confirmation.question'),
+            confirmButtonText: this.translate.instant('projects.edit.delete_file_confirmation.yes'),
             showCancelButton: true,
-            cancelButtonText: 'No'
+            cancelButtonText: this.translate.instant('projects.edit.delete_file_confirmation.no')
         }).pipe(
             switchMap(res => res.value === true ?
                 this.manageProjectsService.deleteDocument(project.uuid, documentID).pipe(this.errorService.handleError) : EMPTY),
@@ -199,5 +199,5 @@ export class ManageSingleProjectComponent {
         const from = roiFromGroup.get('from').value;
         const to = roiFromGroup.get('to').value;
         return from !== null && to !== null && from <= to ? null : {invalidROI: true};
-    }
+    };
 }

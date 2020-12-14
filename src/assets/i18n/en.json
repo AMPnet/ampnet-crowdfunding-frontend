@@ -236,7 +236,99 @@
       "create_button.loading": "Creating project..."
     },
     "edit": {
-
+      "preview": "Preview",
+      "wallet_not_verified_notice": "This project is pending approval from admin. During this time, the project cannot be publicly shown.",
+      "active.public": "Public",
+      "active.hidden": "Hidden",
+      "details": {
+        "title": "Details",
+        "name_input.title": "Project name",
+        "short_description_input.title": "Short description",
+        "description_input.title": "Description",
+        "roi_input.title": "Expected ROI % (From - To)",
+        "date_range_input.title": "Dates (From - To)",
+        "investment_range_input.title": "Investment per member (From - To)",
+        "expected_funding_input.title": "Expected funding",
+        "project_image_input": {
+          "title": "Project image",
+          "no_image_notice": "Project has no image set"
+        },
+        "location_input.title": "Location",
+        "project_files_input": {
+          "title": "Project files",
+          "no_files_notice": "No files added"
+        }
+      },
+      "news": {
+        "title": "News",
+        "news_input": {
+          "title": "Project news",
+          "placeholder": "Enter link (e.g. https://portal.com/news)"
+        }
+      },
+      "manage_payments": {
+        "title": "Manage Payments",
+        "wallet": {
+          "title": "Project wallet",
+          "deposit_button": "Deposit",
+          "withdraw_button": "Withdraw",
+          "balance": "Balance"
+        },
+        "deposit": {
+          "title": "Deposit",
+          "notice": "After you have deposited the money onto our bank account it can take up to 24h for it to become visible on the platform. You will be notified by email when your money has been received.",
+          "details": "Deposit payment details",
+          "iban": "IBAN",
+          "reference": "Description",
+          "existing_deposit": "You already have an existing deposit. Please wait until it is approved"
+        },
+        "withdraw": {
+          "title": "Withdraw",
+          "amount_input": {
+            "title": "Withdrawal amount",
+            "placeholder": "Enter withdrawal amount"
+          },
+          "bank_input": {
+            "title": "Bank account details",
+            "placeholder": "IBAN"
+          },
+          "submit": "Withdraw money",
+          "review": {
+            "notice": "You have a pending withdrawal request. | To have the money deposited into your bank account, you need to sign the transaction. | After successful signing, it can take up to 24 hours to process the transaction.",
+            "amount": "Withdrawal amount",
+            "submit": "Verify & Withdraw",
+            "deleted": "Withdrawal deleted."
+          }
+        },
+        "revenue_share": {
+          "title": "Revenue share",
+          "description": "Enter amount of money to be paid out to investors.",
+          "placeholder": "Enter maximum investment per user",
+          "errors.invalid_amount": "Payout must be lower or equal to balance.",
+          "submit_button": "Start payout",
+          "review": {
+            "title": "Revenue share information",
+            "project_name": "Project name",
+            "amount": "Amount to distribute",
+            "submit": "Verify and start revenue share"
+          },
+          "confirm_modal": {
+            "title": "Confirm revenue share amount",
+            "input": {
+              "title": "Amount",
+              "placeholder": "Enter revenue share amount"
+            },
+            "submit": "Confirm",
+            "cancel": "Cancel"
+          }
+        }
+      },
+      "create_wallet_notice": "Verify the project creation with your blockchain wallet. You will be prompted now.",
+      "delete_file_confirmation": {
+        "question": "Are you sure you want to delete this file? This action cannot be reversed.",
+        "yes": "Yes",
+        "no": "No"
+      }
     }
   },
   "settings": {

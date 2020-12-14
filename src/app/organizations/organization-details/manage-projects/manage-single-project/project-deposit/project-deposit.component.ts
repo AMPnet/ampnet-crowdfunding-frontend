@@ -7,6 +7,7 @@ import { PlatformBankAccountService } from '../../../../../shared/services/walle
 import { PopupService } from '../../../../../shared/services/popup.service';
 import { RouterService } from '../../../../../shared/services/router.service';
 import { ErrorService, WalletError } from '../../../../../shared/services/error.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-project-deposit',
@@ -22,6 +23,7 @@ export class ProjectDepositComponent {
                 private router: RouterService,
                 private popupService: PopupService,
                 private errorService: ErrorService,
+                private translate: TranslateService,
                 private bankAccountService: PlatformBankAccountService) {
         const projectUUID = this.route.snapshot.params.projectID;
 
@@ -40,7 +42,7 @@ export class ProjectDepositComponent {
         return this.depositService.createProjectDeposit(projectUUID).pipe(
             catchError(err =>
                 err.error.err_code === WalletError.MISSING_WITHDRAWAL ? this.popupService.info(
-                    'You already have an existing deposit. Please wait until it\'s approved'
+                    this.translate.instant('projects.edit.manage_payments.deposit.existing_deposit')
                 ).pipe(switchMap(() => this.navigateBack())) : this.navigateBack()),
             this.errorService.handleError,
         );

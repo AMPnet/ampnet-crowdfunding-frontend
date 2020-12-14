@@ -87,7 +87,9 @@ export class ProjectWithdrawComponent {
         SpinnerUtil.showSpinner();
         return this.withdrawService.deleteWithdrawal(withdrawal.id).pipe(
             this.errorService.handleError,
-            switchMap(() => this.popupService.success('Withdrawal deleted')),
+            switchMap(() => this.popupService.success(
+                this.translate.instant('projects.edit.manage_payments.withdraw.review.deleted')
+            )),
             tap(() => this.refreshWithdrawalSubject.next(WithdrawalState.EMPTY)),
             finalize(() => SpinnerUtil.hideSpinner())
         );

@@ -400,7 +400,6 @@
     },
     "bank_accounts_empty": "No payment options available. Please add a new payment option.",
     "add_new": "Add new",
-
     "new_option": {
       "title": "New Bank Account"
     },
@@ -496,16 +495,30 @@
       }
     },
     "activations": {
-
+      "users_tab": "Users",
+      "groups_tab": "Groups",
+      "projects_tab": "Projects",
+      "users": {
+        "title": "Unactivated users",
+        "activate": "Activate",
+        "empty": "No unactivated users"
+      },
+      "projects": {
+        "title": "Unactivated projects",
+        "activate": "Activate",
+        "empty": "No unactivated projects"
+      },
+      "groups": {
+        "title": "Unactivated groups",
+        "activate": "Activate",
+        "empty": "No unactivated groups"
+      }
     },
     "bank_account": {
-
     },
     "platform_roles": {
-
     },
     "platform_config": {
-
     }
   },
   "errors": {

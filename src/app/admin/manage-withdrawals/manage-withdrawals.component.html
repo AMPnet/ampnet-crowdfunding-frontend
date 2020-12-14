@@ -27,7 +27,7 @@
     </ng-container>
 
     <h2 class="app-page-subtitle">
-        {{ 'admin.withdrawals.users.title' | translate }}
+        {{ 'admin.withdrawals.projects.title' | translate }}
     </h2>
     <ng-container *ngIf="(projectWithdrawals$ | async) as projectWithdrawals else spinner">
         <ul *ngIf="projectWithdrawals.length > 0" class="list-group">
@@ -45,7 +45,7 @@
 
         <div *ngIf="projectWithdrawals.length === 0" class="col-md-12 mt-3">
             <div class="text-center explainer-mini text-uppercase">
-                {{ 'admin.withdrawals.users.empty' | translate }}
+                {{ 'admin.withdrawals.projects.empty' | translate }}
             </div>
         </div>
     </ng-container>

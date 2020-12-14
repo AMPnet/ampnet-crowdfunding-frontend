@@ -11,7 +11,6 @@ import { catchError, finalize, switchMap } from 'rxjs/operators';
 import { ArkaneService } from '../../../shared/services/arkane.service';
 import { PopupService } from '../../../shared/services/popup.service';
 import { EMPTY, Observable, of } from 'rxjs';
-import { CurrencyDefaultPipe } from '../../../shared/pipes/currency-default.pipe';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { FileValidator } from '../../../shared/validators/file.validator';
 import { RouterService } from '../../../shared/services/router.service';
@@ -37,7 +36,6 @@ export class ManageSingleDepositComponent implements OnInit {
                 private fb: FormBuilder,
                 private errorService: ErrorService,
                 private translate: TranslateService,
-                private currencyPipe: CurrencyDefaultPipe,
                 private router: RouterService) {
         const id = this.route.snapshot.params.ID;
         this.deposit$ = this.getDepositProcedure(id);
@@ -54,11 +52,9 @@ export class ManageSingleDepositComponent implements OnInit {
         return this.depositCooperativeService.getDeposit(reference).pipe(
             catchError(err => {
                 if (err.status === 404) {
-                    return this.popupService.new({
-                        type: 'error',
-                        title: 'Not found',
-                        text: 'Deposit transaction with this reference code was not found.'
-                    }).pipe(switchMap(() => this.recoverBack()));
+                    return this.popupService.error(
+                        this.translate.instant('admin.deposits.single_deposit.not_found')
+                    ).pipe(switchMap(() => this.recoverBack()));
                 }
                 return this.recoverBack();
             }),
@@ -67,11 +63,10 @@ export class ManageSingleDepositComponent implements OnInit {
                 if (!res.deposit.approved_at) {
                     return of(res);
                 } else if (!!res.deposit.approved_at && !res.deposit.tx_hash) {
-                    const amount = this.currencyPipe.transform(res.deposit.amount);
                     return this.popupService.new({
                         type: 'info',
-                        title: 'Transaction already approved',
-                        text: `You will be prompted to sign deposit transaction of ${amount}`
+                        title: this.translate.instant('admin.deposits.single_deposit.already_approved.title'),
+                        text: this.translate.instant('admin.deposits.single_deposit.already_approved.description'),
                     }).pipe(
                         switchMap(popup => !popup.dismiss ?
                             this.generateSignerAndSign(res.deposit.id) : this.recoverBack()),

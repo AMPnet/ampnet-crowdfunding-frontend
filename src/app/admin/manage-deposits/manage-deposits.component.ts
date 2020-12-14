@@ -51,12 +51,4 @@ export class ManageDepositsComponent {
             finalize(() => SpinnerUtil.hideSpinner())
         );
     }
-
-    contactPhoneClicked() {
-        return this.popupService.new({
-            type: 'info',
-            title: 'Contact phone',
-            text: '+385 95 354 6106'
-        });
-    }
 }

@@ -35,7 +35,7 @@
                     <li *ngFor="let org of states.organizations" class="list__item"
                         routerLink="{{ org.uuid }}">
                         <div class="item__desc">
-                            <div class="item__title">{{ org.name | titlecase }}</div>
+                            <div class="item__title">{{ org.name | uppercase }}</div>
                             <div class="item__projects-count">
                                 <span>
                                     {{ 'organizations.org_item.project_count' | translate | splitPart:0 }}

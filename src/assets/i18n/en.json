@@ -429,6 +429,85 @@
     "activation_pending.user_notice": "Please wait for the administrator to get it verified.",
     "activation_pending.admin_notice": "Please wait for a few moments to get everything set up."
   },
+  "admin": {
+    "withdrawals": {
+      "title": "Manage withdrawals",
+      "users": {
+        "title": "User withdrawals",
+        "empty": "No pending user withdrawals"
+      },
+      "projects": {
+        "title": "Project withdrawals",
+        "empty": "No pending project withdrawals"
+      },
+      "single_withdrawal": {
+        "title": "Examine withdrawal",
+        "info": {
+          "project_name": "Project name",
+          "user_name": "User name",
+          "iban": "IBAN",
+          "amount": "Amount"
+        },
+        "payout_notice": "Please perform the payout | after | finalizing the withdrawal!",
+        "submit": "Finalize withdrawal",
+        "submit.loading": "Finalize withdrawal"
+      }
+    },
+    "deposits": {
+      "title": "Manage deposits",
+      "code_input": {
+        "placeholder": "Enter code in the deposit description field"
+      },
+      "submit": "Get deposit info",
+      "unapproved": {
+        "title": "Unapproved deposits",
+        "empty": "No unapproved deposits"
+      },
+      "single_deposit": {
+        "title": "Deposit info",
+        "info": {
+          "project_name": "Project name",
+          "user_name": "User name",
+          "created_at": "Date created",
+          "reference": "Reference"
+        },
+        "amount_input": {
+          "title": "Deposit amount",
+          "placeholder": "Enter user investment amount"
+        },
+        "document_input": {
+          "title": "Document"
+        },
+        "submit": "Confirm deposit",
+        "modal": {
+          "title": "Confirm deposit amount",
+          "amount_input": {
+            "title": "Amount",
+            "placeholder": "Deposit amount"
+          },
+          "cancel": "Cancel",
+          "submit": "Create deposit"
+        },
+        "not_found": "Deposit transaction with this reference code was not found.",
+        "already_approved": {
+          "title": "Transaction already approved",
+          "description": "You will be prompted to sign deposit transaction."
+        }
+      }
+    },
+    "activations": {
+
+    },
+    "bank_account": {
+
+    },
+    "platform_roles": {
+
+    },
+    "platform_config": {
+
+    }
+  },
   "errors": {
     "registration": {
       "sign_up_invalid": "Invalid sign up data.",

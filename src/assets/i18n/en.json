@@ -343,7 +343,17 @@
       "first_name": "First name",
       "last_name": "Last name",
       "email": "Email",
-      "languages": "Languages"
+      "languages": "Languages",
+      "identity": {
+        "title": "Verify Identity",
+        "onboarding": {
+          "resubmission_requested": "Resubmission requested",
+          "declined": "Declined",
+          "decision_pending": "Your account is in process of verification. Please wait...",
+          "approved": "User data has been successfully verified.",
+          "start_verification": "Start verification"
+        }
+      }
     }
   },
   "navigation": {
@@ -377,7 +387,39 @@
     "tooltip": {
       "not_verified": "Profile not verified. Go to User Profile screen to finish onboarding process.",
       "wallet_not_initialized": "In order to manage funds, you need to have your wallet initialized.",
-      "verification_pending": "Please wait for the administrator to verified your wallet."
+      "verification_pending": "Please wait for the administrator to verify your wallet."
+    }
+  },
+  "payment_options": {
+    "title": "Bank accounts",
+    "bank_account": {
+      "iban": "IBAN",
+      "alias": "Name",
+      "swift": "SWIFT/BIC",
+      "actions": "Actions"
+    },
+    "bank_accounts_empty": "No payment options available. Please add a new payment option.",
+    "add_new": "Add new",
+
+    "new_option": {
+      "title": "New Bank Account"
+    },
+    "new_bank_account": {
+      "title": "Enter bank account details",
+      "iban_input": {
+        "title": "IBAN",
+        "placeholder": "AD1200012030200359100100"
+      },
+      "swift_input": {
+        "title": "SWIFT/BIC",
+        "placeholder": "REVOGB21",
+        "helper_notice": "Find it out | here | ."
+      },
+      "alias_input": {
+        "title": "Short name",
+        "placeholder": "Primary bank account"
+      },
+      "submit": "Add bank account"
     }
   },
   "user_state_reminder": {
@@ -416,17 +458,17 @@
       "deposit_already_minted": "Requested deposit has already been finalized.",
       "deposit_not_approved": "Invalid action. The transaction cannot be processed if not approved.",
       "unapproved_deposit_exists": "You already have an unprocessed deposit. A new one cannot be created.",
-      "missing_withdrawal": "Requested withdrawal has not been found.",
+      "missing_withdrawal": "The requested withdrawal has not been found.",
       "unapproved_withdraw_exists": "You already have an unprocessed withdrawal. A new one cannot be created.",
       "withdraw_already_approved": "Forbidden action because the withdrawal has already been approved.",
       "withdraw_not_approved": "Forbidden action because the withdrawal has not already been approved.",
       "withdraw_already_burned": "Forbidden action because the withdrawal has already been processed.",
-      "wallet_not_activated_by_admin": "Forbidden action! Wallet must be activated by administrator.",
+      "wallet_not_activated_by_admin": "Forbidden action! Wallet must be activated by an administrator.",
       "missing_revenue_payout": "Invalid action. Requested revenue payout transaction is missing."
     },
     "organization": {
       "org_missing": "Requested organization does not exist.",
-      "user_already_member": "The user is already member of this organization.",
+      "user_already_member": "The user is already a member of this organization.",
       "user_already_invited": "The user has already been invited to this organization.",
       "org_name_already_exists": "Organization name already exists.",
       "org_missing_privilege": "Invalid action. Incorrect organization privilege.",
@@ -462,7 +504,7 @@
       "transaction_not_found": "Blockchain transaction has not been found.",
       "wallet_not_found": "Blockchain wallet has not been found.",
       "wallet_already_exists": "Blockchain wallet already exists.",
-      "general_error": "There was an error on blockchain. Please, try again later."
+      "general_error": "There was an error on the blockchain. Please, try again later."
     }
   },
   "general": {

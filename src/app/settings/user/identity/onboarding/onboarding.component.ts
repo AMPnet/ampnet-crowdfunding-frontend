@@ -9,6 +9,7 @@ import { RouterService } from '../../../../shared/services/router.service';
 import { UserService } from '../../../../shared/services/user/user.service';
 import { createVeriffFrame, MESSAGES } from '@veriff/incontext-sdk';
 import { ErrorService } from '../../../../shared/services/error.service';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -31,6 +32,7 @@ export class OnboardingComponent {
                 private popupService: PopupService,
                 private userService: UserService,
                 private errorService: ErrorService,
+                private translate: TranslateService,
                 private onboardingService: OnboardingService,
                 private loginService: UserAuthService) {
         this.session$ = this.sessionSubject.asObservable().pipe(
@@ -48,7 +50,9 @@ export class OnboardingComponent {
         );
 
         this.approved$ = this.approvedSubject.asObservable().pipe(
-            switchMap(() => this.popupService.success('User data has been successfully verified.')),
+            switchMap(() => this.popupService.success(
+                this.translate.instant('user.identity.onboarding.approved')
+            )),
             switchMap(() => this.loginService.refreshUserToken()
                 .pipe(this.errorService.handleError)),
             catchError(() => {

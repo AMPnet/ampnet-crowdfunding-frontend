@@ -101,13 +101,6 @@
         background-color: $background-color;
       }
     }
-    &__desc {
-      font-size: $font-size-desktop-xsmall;
-      color: $body-color;
-      b {
-        font-size: $font-size-desktop-xsmall;
-      }
-    }
   }
 
   .users__list {
@@ -219,10 +212,6 @@
         .form__input {
           margin: 0;
         }
-      }
-      &__desc {
-        padding-left: 20px !important;
-        margin: 0 auto;
       }
     }
 

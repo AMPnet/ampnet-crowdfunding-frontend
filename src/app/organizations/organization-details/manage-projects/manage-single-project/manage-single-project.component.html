@@ -243,7 +243,8 @@
                                 </ng-container>
                             </tab>
 
-                            <tab heading="{{ 'projects.edit.news.title' | translate }}" (selectTab)="detailsShown=false">
+                            <tab heading="{{ 'projects.edit.news.title' | translate }}"
+                                 (selectTab)="detailsShown=false">
                                 <div class="edit-news">
                                     <p class="news__title">
                                         {{ 'projects.edit.news.news_input.title' | translate }}
@@ -296,7 +297,6 @@
                             </tab>
                         </tabset>
                     </div>
-
                 </div>
             </div>
         </ng-container>
@@ -308,10 +308,9 @@
                 <div class="cta__inner row col-lg-5">
                     <div class="col-5 col-lg-6">
                         <button app-action-button
-                                text="{{ states.project.active ? 'Hide project' : 'Show project' }}"
-                                textShort="{{ states.project.active ? 'Hide' : 'Show' }}"
+                                text="{{ (states.project.active ? 'projects.edit.hide' : 'projects.edit.show') | translate }}"
+                                textShort="{{ (states.project.active ? 'projects.edit.hide.short' : 'projects.edit.show.short') | translate }}"
                                 faIcon="{{ states.project.active ? 'fa-eye-slash' : 'fa-eye' }}"
-                                loadingText="Updating..."
                                 [disabled]="!isWalletVerified(states.wallet)"
                                 [onClick]="toggleProjectStatusClicked(states.project).bind(this)"
                                 class="btn btn-info">
@@ -319,8 +318,8 @@
                     </div>
                     <div class="col-7 col-lg-6">
                         <button app-action-button
-                                text="Update all"
-                                loadingText="Updating..."
+                                text="{{ 'projects.edit.update' | translate }}"
+                                loadingText="{{ 'projects.edit.update.loading' | translate }}"
                                 [disabled]="!(updateForm.dirty && updateForm.valid)"
                                 [onClick]="updateProject(states.project, updateForm).bind(this)"
                                 class="btn w-100 p-0"

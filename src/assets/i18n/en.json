@@ -240,6 +240,12 @@
       "wallet_not_verified_notice": "This project is pending approval from admin. During this time, the project cannot be publicly shown.",
       "active.public": "Public",
       "active.hidden": "Hidden",
+      "show": "Show project",
+      "show.short": "Show",
+      "hide": "Hide project",
+      "hide.short": "Hide",
+      "update": "Update all",
+      "update.loading": "Updating...",
       "details": {
         "title": "Details",
         "name_input.title": "Project name",

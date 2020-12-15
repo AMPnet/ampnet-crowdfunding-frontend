@@ -1,26 +1,29 @@
 <ng-container
-    *ngIf="{
-        project: project$ | async,
-        walletInfo: projectWalletInfo$ | async
-    } as states">
+    *ngIf="{ walletInfo: projectWalletInfo$ | async } as states">
     <div class="container">
-        <ng-container *ngIf="showProjectTitle">
-            <div class="col-lg-12 mb-3">
-                <h4>{{ states.project?.name }}</h4>
+        <div class="payments-wallet app__full-width--padding">
+            <div class="wallet__inner">
+                <h4 class="wallet__title app-page-subtitle">Project balance</h4>
+                <div class="wallet__balance">
+                    <ng-container *ngIf="!!states.walletInfo; else smallSpinner">
+                        <p>{{ states.walletInfo.balance | currencyDefault }}</p>
+                    </ng-container>
+                    <ng-template #smallSpinner>
+                        <app-spinner type="inline"></app-spinner>
+                    </ng-template>
+                </div>
             </div>
-        </ng-container>
-        <div class="payments-wallet">
-            <div class="wallet__cta">
-                <h4>Project wallet</h4>
+
+            <div class="col-lg-6 col-xl-4 p-0">
                 <div class="row">
-                    <div class="col-12 col-lg-6">
-                        <button class="btn btn-primary w-100" routerLink="manage_payments/project_deposit">
+                    <div class="col-6">
+                        <button class="btn w-100" routerLink="project_deposit">
                             <i class="fas fa-arrow-circle-down mr-2"></i>
                             Deposit
                         </button>
                     </div>
-                    <div class="col-12 col-lg-6">
-                        <button class="btn btn-primary w-100" routerLink="manage_payments/project_withdraw"
+                    <div class="col-6">
+                        <button class="btn w-100" routerLink="project_withdraw"
                                 [disabled]="!states.walletInfo || !isProjectFullyFunded(states.walletInfo)">
                             <i class="fas fa-arrow-circle-up mr-2"></i>
                             Withdraw
@@ -28,44 +31,40 @@
                     </div>
                 </div>
             </div>
-
-            <div class="wallet__balance">
-                <h3>Balance</h3>
-                <ng-container *ngIf="!!states.walletInfo; else smallSpinner">
-                    <h5>{{ states.walletInfo.balance | currencyDefault }}</h5>
-                </ng-container>
-                <ng-template #smallSpinner>
-                    <app-spinner type="inline"></app-spinner>
-                </ng-template>
-            </div>
         </div>
 
-        <div class="payments-payout">
-            <h3 class="payout__title">Revenue share</h3>
-            <p class="payout__desc">Enter amount of money to be paid out to investors</p>
-            <div class="payout__cta row">
-                <div class="col-12 col-lg-6">
-                    <app-money-input-field
-                        placeholder="Enter maximum investment per user"
-                        [control]="revenueShareForm.get('amount')">
-                    </app-money-input-field>
-                    <div *ngIf="revenueShareForm.dirty && revenueShareForm.invalid">
-                        <div *ngIf="revenueShareForm.get('amount').errors?.inputAmountInvalid"
-                             class="alert alert-danger">
-                            Payout must be lower or equal to balance.
+        <div class="payments-payout app__full-width--padding">
+            <div class="payout__inner col-lg-8 p-0">
+                <h4 class="payout__title app-page-subtitle">Revenue share</h4>
+                <div class="row">
+                    <div class="col-12 col-lg-8">
+                        <app-money-input-field
+                            placeholder="Enter maximum investment per user"
+                            [control]="revenueShareForm.get('amount')">
+                        </app-money-input-field>
+                        <p class="payout__desc">Enter amount of money to be paid out to investors</p>
+
+                        <div *ngIf="revenueShareForm.dirty && revenueShareForm.invalid">
+                            <div *ngIf="revenueShareForm.get('amount').errors?.inputAmountInvalid"
+                                class="alert alert-danger">
+                                Payout must be lower or equal to balance.
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-12 col-lg-4">
-                    <button [disabled]="!revenueShareForm.dirty || revenueShareForm.invalid"
-                            id="buttonStartPayout"
-                            routerLink="manage_payments/revenue_share/{{ revenueShareForm.get('amount').value }}"
-                            class="btn btn-danger btn-action w-100">
-                        <i class="fas fa-chart-pie mr-2"></i>
-                        Start payout
-                    </button>
+                    <div class="col-12 col-lg-4">
+                        <button [disabled]="!revenueShareForm.dirty || revenueShareForm.invalid"
+                                id="buttonStartPayout"
+                                routerLink="revenue_share/{{ revenueShareForm.get('amount').value }}"
+                                class="btn btn-primary btn-warning btn-action w-100">
+                            <i class="fas fa-chart-pie mr-2"></i>
+                            <!-- Laptop size text handling -->
+                            <span class="d-none d-lg-block d-xl-none">Payout</span>
+                            <span class="d-block d-lg-none d-xl-block">Start payout</span>
+                        </button>
+                    </div>
                 </div>
             </div>
+
         </div>
     </div>
 </ng-container>

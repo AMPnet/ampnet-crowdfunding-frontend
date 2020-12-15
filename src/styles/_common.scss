@@ -92,6 +92,7 @@
   padding-top: 23px;
   padding-bottom: 18px;
   text-transform: uppercase;
+  color: $title-color;
 }
 
 .app-page-header {
@@ -169,7 +170,7 @@
   padding-right: 15px;
 }
 
-@include media-breakpoint-up(lg) {  
+@include media-breakpoint-up(lg) {
   .app__full-width--padding {
     padding-left: 0;
     padding-right: 0;

@@ -48,7 +48,7 @@ export class RevenueShareConfirmModalComponent implements OnInit {
                 title: 'Transaction signed',
                 text: 'Transaction is being processed...'
             })),
-            tap(() => this.router.navigate([`/dash/manage_groups/${this.orgID}/manage_project/${this.projectID}/manage_payments`])),
+            tap(() => this.router.navigate([`/dash/manage_groups/${this.orgID}/manage_project/${this.projectID}`])),
             finalize(() => SpinnerUtil.hideSpinner())
         );
     }

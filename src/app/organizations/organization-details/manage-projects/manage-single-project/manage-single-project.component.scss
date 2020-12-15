@@ -31,6 +31,8 @@
   }
   .edit {
     &-header {
+      background-color: $background-color;
+      padding-bottom: 32px;
       .edit {
         &__title {
           letter-spacing: 1px;
@@ -46,7 +48,6 @@
         &__state {
           font-size: $font-size-mobile-body;
           font-weight: 500;
-          margin-bottom: 32px;
         }
       }
     }
@@ -218,6 +219,8 @@
     }
     .edit {
       &-header {
+        background-color: unset;
+        padding-bottom: 30px;
         border-bottom: 1px solid $border-light-color;
         .edit {
           &__title {
@@ -229,7 +232,6 @@
           }
           &__state {
             font-size: $font-size-desktop-body2;
-            margin-bottom: 30px;
           }
         }
       }

@@ -13,24 +13,22 @@
             </div>
         </div>
 
-        <div class="space">
-            <div *ngIf="states.invites?.length > 0" 
-                class="alert alert-success w-100 flex__center-space col-12 col-lg-4">
-               <div>
-                   <i class="fas fa-bolt"></i>
-                   <b>You have invites pending</b>
-               </div>
-           </div>
+        <div *ngIf="states.invites?.length > 0" 
+             class="alert alert-success w-100 flex__center--space col-12 col-lg-6 col-xl-4">
+            <div>
+                <i class="fas fa-bolt"></i>
+                <b>You have invites pending</b>
+            </div>
         </div>
         
 
         <ng-container *ngIf="states.organizations !== null else spinner">
-            <div *ngIf="states.organizations?.length > 0" class="groups space">
+            <div *ngIf="states.organizations?.length > 0" class="groups">
                 <ul class="list-group">
                     <li *ngFor="let org of states.organizations" class="list__item"
                         routerLink="{{ org.uuid }}">
                         <div class="item__desc">
-                            <div class="item__title">{{ org.name }}</div>
+                            <div class="item__title">{{ org.name | titlecase }}</div>
                             <div class="item__projects-count"><b>{{org.project_count}} </b>
                                 {{ org.project_count === 1 ? "Project" : "Projects" }}
                             </div>
@@ -42,7 +40,7 @@
                 </ul>
             </div>
             <div *ngIf="states.organizations.length === 0"
-                 class="empty-group space">
+                 class="empty-group">
                 <div class="app-page-subtitle">My groups</div>
                 <div class="empty__label" class="row justify-content-center">
                     You currently don't have access to any groups.
@@ -51,13 +49,21 @@
         </ng-container>
 
         <div class="invites">
-            <div class="app-page-subtitle space">Group invites</div>
-            <ng-container *ngIf="states.invites !== null else spinner" class="space">
-                <div class="space">
+            <div class="app-page-subtitle">Group invites</div>
+            <ng-container *ngIf="states.invites !== null else spinner">
+                <div>
                     <ul *ngIf="states.invites?.length > 0" class="list-group">
                         <li *ngFor="let invite of states.invites" class="list__item">
                             <div class="item__content">
-                                <div class="item__title">{{ invite.organization_name }}</div>
+                                <div class="item__desc">
+                                    <div class="item__title">{{ invite.organization_name | titlecase }}</div>
+
+                                    <!-- TODO: implement when data is available from API -->
+                                    <!-- <div class="item__projects-count d-lg-none"><b>3 </b>
+                                        Projects
+                                    </div> -->
+                                </div>
+
                                 <div class="item__img">
                                     <img src="{{invite.organization_header_image}}" alt="Organization image">
                                 </div>

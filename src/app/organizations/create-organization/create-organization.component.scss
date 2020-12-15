@@ -1,17 +1,12 @@
 @import "app";
 
 .container {
-  padding: 0;
   overflow: hidden;
-}
-
-.row {
-  padding: 0 15px;
 }
 
 .form {
   &-right {
-    margin-top: 30px;
+    margin-top: 40px;
     textarea {
       padding: 16px 16px 0 16px;
       margin-bottom: 40px;
@@ -90,6 +85,9 @@
    border-radius: 1px; 
   }
   .form {
+    &-container {
+      padding: 0 15px;
+    }
     &-left {
       padding: 64px 80px 80px 64px;
     }

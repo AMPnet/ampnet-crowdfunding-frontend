@@ -1,13 +1,15 @@
-import { Component, ElementRef, Inject, Renderer2, ViewChild } from '@angular/core';
-import { OnboardingService } from '../../../../shared/services/user/onboarding.service';
-import { displayBackendErrorRx } from 'src/app/utilities/error-handler';
+import { Component, Renderer2 } from '@angular/core';
+import { DecisionStatus, OnboardingService, State, VeriffSession } from '../../../../shared/services/user/onboarding.service';
 import { UserAuthService } from '../../../../shared/services/user/user-auth.service';
-import { DOCUMENT } from '@angular/common';
-import { combineLatest, EMPTY, Observable, Subject } from 'rxjs';
-import { catchError, switchMap, take } from 'rxjs/operators';
+import { BehaviorSubject, EMPTY, Observable, Subject, timer } from 'rxjs';
+import { catchError, switchMap, tap } from 'rxjs/operators';
 import { PopupService } from '../../../../shared/services/popup.service';
 import { AppConfigService } from '../../../../shared/services/app-config.service';
 import { RouterService } from '../../../../shared/services/router.service';
+import { UserService } from '../../../../shared/services/user/user.service';
+import { createVeriffFrame, MESSAGES } from '@veriff/incontext-sdk';
+import { displayBackendErrorRx } from '../../../../utilities/error-handler';
+
 
 @Component({
     selector: 'app-onboarding',
@@ -15,30 +17,37 @@ import { RouterService } from '../../../../shared/services/router.service';
     styleUrls: ['./onboarding.component.css']
 })
 export class OnboardingComponent {
-    @ViewChild('identyumContainer') identyumContainer: ElementRef;
+    decisionStatus = DecisionStatus;
 
-    loaded$: Observable<void>;
-    finished$: Observable<void>;
-    finishedSubject: Subject<IdentyumClientToken>;
+    session$: Observable<VeriffSession>;
+    private sessionSubject = new BehaviorSubject<void>(null);
+
+    approved$: Observable<void>;
+    private approvedSubject = new Subject<void>();
 
     constructor(private renderer2: Renderer2,
-                @Inject(DOCUMENT) private document: Document,
                 private appConfig: AppConfigService,
                 private router: RouterService,
                 private popupService: PopupService,
+                private userService: UserService,
                 private onboardingService: OnboardingService,
                 private loginService: UserAuthService) {
-        this.loaded$ = combineLatest([this.onboardingService.getSessionID(), this.loadIdentyumScript()]).pipe(
-            take(1),
-            switchMap(([clientToken, _]) => this.setFlowManager(clientToken, this.appConfig.config.config.identyum.startLanguage))
+        this.session$ = this.sessionSubject.asObservable().pipe(
+            switchMap(_ => this.onboardingService.getVeriffSession()),
+            tap(session => {
+                if (this.decisionPending(session)) {
+                    timer(5000).pipe(tap(() => this.sessionSubject.next())).subscribe();
+                }
+            }),
+            tap(session => {
+                if (session.decision?.status === DecisionStatus.APPROVED) {
+                    this.approvedSubject.next();
+                }
+            })
         );
 
-        this.finishedSubject = new Subject();
-
-        this.finished$ = this.finishedSubject.asObservable().pipe(
-            switchMap(clientToken => onboardingService.verifyUser(clientToken.session_state)
-                .pipe(displayBackendErrorRx())),
-            switchMap(() => this.popupService.success('Successfully verified user data.')),
+        this.approved$ = this.approvedSubject.asObservable().pipe(
+            switchMap(() => this.popupService.success('User data has been successfully verified.')),
             switchMap(() => this.loginService.refreshUserToken()
                 .pipe(displayBackendErrorRx())),
             catchError(() => {
@@ -52,47 +61,37 @@ export class OnboardingComponent {
         );
     }
 
-    private loadIdentyumScript(): Observable<void> {
-        return new Observable(subscriber => {
-            const script: HTMLScriptElement = this.renderer2.createElement('script');
-            script.type = 'text/javascript';
-            script.src = 'https://web-components.stage.identyum.com/flow-manager/component';
-            script.onload = () => {
-                subscriber.next();
-                subscriber.complete();
-            };
-            script.onerror = () => {
-                subscriber.error();
-                subscriber.complete();
-            };
+    createVeriffFrame(verification_url: string): () => Observable<MESSAGES> {
+        return () => {
+            return new Observable(subscriber => {
+                const veriffFrame = createVeriffFrame({
+                    url: verification_url,
+                    onEvent: (msg) => {
+                        subscriber.next(msg);
 
-            this.renderer2.appendChild(this.document.head, script);
-        });
+                        switch (msg) {
+                            case MESSAGES.STARTED:
+                                break;
+                            case MESSAGES.FINISHED:
+                                this.sessionSubject.next();
+                                subscriber.complete();
+                                break;
+                            case MESSAGES.CANCELED:
+                                veriffFrame.close();
+                                subscriber.complete();
+                                break;
+                        }
+                    }
+                });
+            });
+        };
     }
 
-    private setFlowManager(clientToken: IdentyumClientToken, startLanguage: string): Observable<void> {
-        return new Observable(subscriber => {
-            const flowManager: any = document.createElement('idy-flow-manager');
-            flowManager.clientToken = clientToken;
-            flowManager.startLanguage = startLanguage;
-
-            flowManager.addEventListener('ready', _event => {
-                subscriber.next();
-                subscriber.complete();
-            });
-            flowManager.addEventListener('finished', _event => {
-                this.finishedSubject.next(clientToken);
-            });
-
-            this.identyumContainer.nativeElement.appendChild(flowManager);
-        });
+    decisionPending(session: VeriffSession) {
+        return session.state === State.SUBMITTED && session.decision === null;
     }
-}
 
-interface IdentyumClientToken {
-    access_token: string;
-    expires_in: number;
-    refresh_expires_in: number;
-    refresh_token: string;
-    session_state: string;
+    showDecision(session: VeriffSession) {
+        return !!session.decision?.status;
+    }
 }

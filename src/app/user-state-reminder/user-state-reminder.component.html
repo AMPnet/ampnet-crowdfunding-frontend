@@ -3,31 +3,38 @@
     wallet: wallet$ | async
 } as states">
     <div *ngIf="!isUserVerified(states.user)" class="container">
-        <div class="wallet-init-reminder">
-            <p>
-                Profile not verified.
-                Please go <span class="reminder-link" [routerLink]="'/dash/settings/user' | coopPath">here</span> to verify
-                your profile and finish onboarding procedure.
-            </p>
+        <div class="app__full-width">
+            <div class="wallet-init-reminder">
+                <p>
+                    Profile not verified.
+                    Please go <span class="reminder-link" [routerLink]="'/dash/settings/user' | coopPath">here</span> to verify
+                    your profile and finish onboarding procedure.
+                </p>
+            </div>
         </div>
     </div>
 
     <div *ngIf="isUserVerified(states.user) && !isWalletInitialized(states.wallet)" class="container">
         <div class="wallet-init-reminder">
             <p>
-                Thank you for verifying your profile.
+                <span *ngIf="states.user?.role !== userRole.ADMIN">Thank you for verifying your profile.</span>
                 In order to manage funds, you need to have your wallet initialized.
                 Please initialize your wallet <span class="reminder-link" [routerLink]="'/dash/wallet' | coopPath">here</span>.
             </p>
         </div>
     </div>
 
-    <div *ngIf="isUserVerified(states.user) && isWalletInitialized(states.wallet) && !isWalletReady(states.wallet)"
+    <div *ngIf="isWaitingWalletReady(states.user, states.wallet)"
          class="container">
         <div class="wallet-init-reminder">
             <p>
                 Thank you for initializing your wallet.
-                Please wait for the administrator to get it verified.
+                <span *ngIf="states.user?.role === userRole.ADMIN; else notAdmin">
+                    Please wait for a few moments to get everything set up.
+                </span>
+                <ng-template #notAdmin>
+                    Please wait for the administrator to get it verified.
+                </ng-template>
             </p>
         </div>
     </div>

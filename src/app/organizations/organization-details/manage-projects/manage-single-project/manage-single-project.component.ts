@@ -12,7 +12,6 @@ import { PopupService } from '../../../../shared/services/popup.service';
 import { FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { URLValidator } from '../../../../shared/validators/url.validator';
 import { RouterService } from '../../../../shared/services/router.service';
-import { CurrencyPipe, DatePipe } from '@angular/common';
 
 @Component({
     selector: 'app-manage-single-project',
@@ -66,11 +65,12 @@ export class ManageSingleProjectComponent {
         this.updateForm$ = this.project$.pipe(map(project => {
                 return fb.group({
                     name: [project.name, Validators.required],
+                    short_description: [project.short_description, Validators.minLength(3)],
                     description: [project.description, Validators.minLength(3)],
                     roi: fb.group({
                         from: [project.roi.from, Validators.pattern(/^\d*\.?\d+$/)],
                         to: [project.roi.to, Validators.pattern(/^\d*\.?\d+$/)],
-                    }, { validators: this.roiValidator}),
+                    }, {validators: this.roiValidator}),
                     location: fb.group({
                         lat: [project.location.lat],
                         long: [project.location.long],
@@ -89,10 +89,9 @@ export class ManageSingleProjectComponent {
     }
 
     createProjectWallet(projectUUID: string) {
-        return this.popupService.new({
-            type: 'info',
-            text: 'Verify the project creation with your blockchain wallet. You will be prompted now!'
-        }).pipe(
+        return this.popupService.info(
+            'Verify the project creation with your blockchain wallet. You will be prompted now!'
+        ).pipe(
             tap(() => SpinnerUtil.showSpinner()),
             switchMap(() =>
                 this.walletService.createProjectWalletTransaction(projectUUID)
@@ -152,6 +151,7 @@ export class ManageSingleProjectComponent {
         return () => {
             return this.projectService.updateProject(project.uuid, {
                 name: form.get('name').value,
+                short_description: form.get('short_description').value,
                 description: form.get('description').value,
                 location: form.get('location').value,
                 roi: {
@@ -195,6 +195,6 @@ export class ManageSingleProjectComponent {
     private roiValidator: ValidatorFn = (roiFromGroup: FormGroup) => {
         const from = roiFromGroup.get('from').value;
         const to = roiFromGroup.get('to').value;
-        return from !== null && to !== null && from <= to ? null : { invalidROI: true };
+        return from !== null && to !== null && from <= to ? null : {invalidROI: true};
     }
 }

@@ -10,10 +10,9 @@
     left: -240px!important;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 992px) {
     .navbar {
         width: 100%;
-        margin-left: 0;
     }
 
     .navbar-logo img {
@@ -32,7 +31,7 @@
     }
 }
 
-@media (min-width: 800px) {
+@media (min-width: 992px) {
 
     .navbar {
         display: none;
@@ -59,11 +58,6 @@
     font-size: 15px;
 }
 
-@media (min-width: 950px) {
-    .navbar-hamburger {
-        display: none;
-    }
-}
 
 .navbar-hamburger:hover {
     cursor: pointer;

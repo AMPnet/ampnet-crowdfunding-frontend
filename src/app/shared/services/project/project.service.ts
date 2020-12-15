@@ -59,7 +59,8 @@ export class ProjectService {
 interface CreateProjectData {
     organization_uuid: string;
     name: string;
-    description: string;
+    short_description?: string;
+    description?: string;
     location: { lat: number; long: number; };
     roi: { from: number; to: number; };
     start_date: Date;
@@ -74,6 +75,7 @@ interface CreateProjectData {
 
 interface UpdateProjectData {
     name?: string;
+    short_description?: string;
     description?: string;
     location?: { lat: number; long: number; };
     roi?: { from: number; to: number; };
@@ -85,6 +87,7 @@ interface UpdateProjectData {
 export interface Project {
     uuid: string;
     name: string;
+    short_description: string;
     description: string;
     location: { lat: number, long: number };
     location_text: string;

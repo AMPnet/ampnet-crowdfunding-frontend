@@ -6,7 +6,7 @@
     <div class="container" id="core-root-manager">
         <ng-container *ngIf="!!states.project && !!states.wallet else spinner">
             <div *ngIf="states.wallet !== walletState.EMPTY">
-                <div class="app-page-header flex__center">
+                <div class="app-page-header">
                     <div class="app-page-title-back" (click)="backToOrganizationDetailsScreen()">
                         <i class="fas fa-long-arrow-alt-left mr-3"></i>
                         {{ states.project.organization?.name }}
@@ -19,7 +19,7 @@
                 </div>
                 <div class="edit-project">
                     <ng-container *ngIf="states.project.main_image">
-                        <div class="project__img">
+                        <div class="project__img app__full-width">
                             <img src="{{states.project.main_image}}" alt="Project image">
                         </div>
                     </ng-container>
@@ -57,13 +57,22 @@
                                                                type="text">
                                                     </div>
                                                     <div class="left__desc">
-                                                        <label for="project-description">Description</label>
+                                                        <label for="project-short-description">Short description</label>
                                                         <div class="input-group">
                                                             <textarea class="input-reg w-100" cols="30"
-                                                                      id="project-description"
-                                                                      formControlName="description"
+                                                                      id="project-short-description"
+                                                                      formControlName="short_description"
                                                                       rows="10">
                                                             </textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="left__desc">
+                                                        <label for="project-description">Description</label>
+                                                        <div class="input-group">
+                                                            <quill-editor id="project-description"
+                                                                          formControlName="description"
+                                                                          [styles]="{ height: '50vh' }">
+                                                            </quill-editor>
                                                         </div>
                                                     </div>
                                                     <div class="left__roi">
@@ -78,7 +87,7 @@
                                                         </form>
                                                     </div>
                                                     <div class="left__dates">
-                                                        <div class="dates__label flex__center-space">
+                                                        <div class="dates__label flex__center--space">
                                                             Dates (From - To)
                                                             <i class="fas fa-lock"></i>
                                                         </div>
@@ -92,7 +101,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="left__investments">
-                                                        <div class="investments__label flex__center-space">
+                                                        <div class="investments__label flex__center--space">
                                                             Investment per member € (From - To)
                                                             <i class="fas fa-lock"></i>
                                                         </div>
@@ -108,7 +117,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="left__expected-funding">
-                                                        <div class="funding__label flex__center-space">
+                                                        <div class="funding__label flex__center--space">
                                                             Expected funding €
                                                             <i class="fas fa-lock"></i>
                                                         </div>
@@ -131,7 +140,9 @@
                                                                                         maxFileSize: 10 * 1024 * 1024,
                                                                                         maxNumberOfFiles: 1
                                                                                      }"
-                                                                                     [firstFileControl]="updateForm.get('newImage')">
+                                                                                     [firstFileControl]="updateForm.get('newImage')"
+                                                                                     noteText="For an optimal user experience, use landscape format images.
+                                                                                     Other formats (e.g. portrait) might result in unwanted results">
                                                                     </app-upload-area>
                                                                 </div>
                                                                 <div class="col-12 uppy-img__content">
@@ -152,7 +163,7 @@
 
                                                     <div class="right__location">
                                                         <div class="location__label">Location</div>
-                                                        <div class="map-holder">
+                                                        <div class="map-holder app__full-width">
                                                             <app-location-map [editable]="true"
                                                                               [latControl]="updateForm.get('location.lat')"
                                                                               [lngControl]="updateForm.get('location.long')">
@@ -180,7 +191,7 @@
                                                                             *ngIf="states.project.documents?.length > 0 else noDocuments">
                                                                         <div *ngFor="let file of states.project.documents; let i = index">
                                                                             <div class="uppy-docs__content">
-                                                                                <div class="flex__center-space">
+                                                                                <div class="flex__center--space">
                                                                                     <div class="docs__name"
                                                                                          style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis">
                                                                                         {{ file.name }}
@@ -218,22 +229,22 @@
                             <tab heading="News" (selectTab)="detailsShown=false">
                                 <div class="edit-news">
                                     <p class="news__title">Project news</p>
-                                    <div class="news__form">
+                                    <div class="news__form col-lg-8">
                                         <form [formGroup]="newsForm">
-                                            <div class="col-lg-8 row">
-                                                <div class="col-11 form__input">
+                                            <div class="row">
+                                                <div class="col-lg-11 form__input">
                                                     <input class="input-reg w-100" id="newsLink"
                                                            placeholder="Enter link (e.g. https://portal.com/news)"
                                                            formControlName="newsLink"
                                                            type="text">
                                                 </div>
-                                                <div class="col-1 form__btn">
-                                                    <app-action-button
-                                                            faIcon="fa-plus ml-n2 ml-lg-0"
+                                                <div class="col-lg-1 form__btn">
+                                                    <button app-action-button
+                                                            faIcon="fa-plus ml-lg-0"
                                                             [disabled]="!newsForm.dirty || !newsForm.valid"
                                                             [onClick]="addNewsLink(states.project, newsForm).bind(this)"
-                                                            buttonClass="w-100 btn">
-                                                    </app-action-button>
+                                                            class="w-100 btn">
+                                                    </button>
                                                 </div>
                                             </div>
                                         </form>
@@ -241,7 +252,7 @@
                                     <div class="news__list col-lg-8">
                                         <ul class="list-group">
                                             <li *ngFor="let item of states.project.news"
-                                                class="list__item flex__center-space">
+                                                class="list__item flex__center--space">
                                                 <a href="{{ item }}"
                                                    target="_blank" rel="noopener noreferrer"
                                                    style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis">
@@ -274,25 +285,27 @@
     <div class="cta" *ngIf="detailsShown">
         <ng-container *ngIf="states.updateForm as updateForm">
             <div class="container">
-                <div class="cta__inner row col-lg-4">
+                <div class="cta__inner row col-lg-5">
                     <div class="col-5 col-lg-6">
-                        <app-action-button text="{{ states.project.active ? 'Hide project' : 'Show project' }}"
-                                           textShort="{{ states.project.active ? 'Hide' : 'Show' }}"
-                                           faIcon="{{ states.project.active ? 'fa-eye-slash' : 'fa-eye' }}"
-                                           loadingText="Updating..."
-                                           [disabled]="!isWalletVerified(states.wallet)"
-                                           [onClick]="toggleProjectStatusClicked(states.project).bind(this)"
-                                           buttonClass="btn btn-info">
-                        </app-action-button>
+                        <button app-action-button
+                                text="{{ states.project.active ? 'Hide project' : 'Show project' }}"
+                                textShort="{{ states.project.active ? 'Hide' : 'Show' }}"
+                                faIcon="{{ states.project.active ? 'fa-eye-slash' : 'fa-eye' }}"
+                                loadingText="Updating..."
+                                [disabled]="!isWalletVerified(states.wallet)"
+                                [onClick]="toggleProjectStatusClicked(states.project).bind(this)"
+                                class="btn btn-info">
+                        </button>
                     </div>
                     <div class="col-7 col-lg-6">
-                        <app-action-button text="Update all"
-                                           loadingText="Updating..."
-                                           [disabled]="!(updateForm.dirty && updateForm.valid)"
-                                           [onClick]="updateProject(states.project, updateForm).bind(this)"
-                                           buttonClass="btn"
-                                           faIcon="far fa-check mr-3">
-                        </app-action-button>
+                        <button app-action-button
+                                text="Update all"
+                                loadingText="Updating..."
+                                [disabled]="!(updateForm.dirty && updateForm.valid)"
+                                [onClick]="updateProject(states.project, updateForm).bind(this)"
+                                class="btn w-100 p-0"
+                                faIcon="far fa-check mr-3">
+                        </button>
                     </div>
                 </div>
             </div>

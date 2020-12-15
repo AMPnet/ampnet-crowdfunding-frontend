@@ -5,16 +5,8 @@
 }
 
 .container {
-  padding: 0;
   margin: 0 auto;
   overflow: hidden;
-}
-
-.right__container,
-.left__desc,
-.left__docs,
-.offer-right-socials {
-  padding: 0 20px;
 }
 
 span {
@@ -24,7 +16,7 @@ span {
 .btn-primary {
   height: 48px;
   font-size: 16px;
-  margin-bottom: 32px;
+  justify-content: center;
 }
 
 .dropdown-divider {
@@ -81,6 +73,10 @@ span {
     }
   }
 
+  &__invest {
+    padding-bottom: 32px;
+  }
+
   &__info div {
     font-size: $font-size-desktop-small;
 
@@ -91,7 +87,7 @@ span {
   }
 
   &__fund-period {
-    margin-bottom: 32px;
+    padding-bottom: 32px;
   }
 }
 
@@ -100,11 +96,14 @@ span {
 
   .socials__content {
     display: flex;
+    align-items: center;
+    margin-bottom: 36px;
 
     p {
       text-transform: uppercase;
       letter-spacing: 2px;
       font-size: $font-size-desktop-body2;
+      margin-bottom: 0;
     }
 
     p, .socials__link {
@@ -205,9 +204,13 @@ span {
       order: 2;
     }
 
+    &__location {
+      margin-bottom: 5px;
+    }
+
     &__location,
     &__fund-period {
-      margin-bottom: 10px;
+      padding-bottom: 10px;
     }
 
     &__info div {
@@ -227,6 +230,7 @@ span {
 
     &__desc {
       margin-top: 32px;
+      padding: 0 12px 0 0;
     }
   }
 }
@@ -288,16 +292,10 @@ span {
   .btn-primary {
     margin-bottom: 16px !important;
     font-size: $font-size-desktop-body2 !important;
-    display: flex;
-    align-items: center;
-    justify-content: center;
   }
 }
 
 @include media-breakpoint-up(lg) {
-  .investments__container {
-    margin-left: -20px;
-  }
   .investment__total {
     margin: 0 0 8px 0;
     border-radius: 1px;

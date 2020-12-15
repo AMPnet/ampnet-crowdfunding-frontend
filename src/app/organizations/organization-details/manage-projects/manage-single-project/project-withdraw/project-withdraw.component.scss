@@ -1,0 +1,46 @@
+@import "app";
+
+.withdraw__form {
+  button {
+    margin-top: 20px;
+  }
+}
+
+.withdrawal__details {
+  margin-top: 40px;
+  .details {
+    &__content {
+      text-align: center;
+      color: $body-color;
+    }
+    &__review {
+      border: 1px solid $border-color;
+      padding: 30px 20px;
+      border-radius: 2px;
+      align-items: flex-end;
+      color: $body-color;
+      margin-top: 30px;
+      .review {
+        &__left {
+          .app-page-subtitle {
+            padding-top: 0;
+          }
+        }
+        &__right {
+          cursor: pointer;
+          svg {
+            color: $body-color;
+          }
+        }
+      }
+    }
+    &__cta {
+      margin-top: 20px;
+    }
+  }
+}
+
+
+@include media-breakpoint-up(lg) {
+
+}

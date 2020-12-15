@@ -1,0 +1,53 @@
+<h1 class="app-page-header">SIGN IN</h1>
+
+<div class="row">
+    <div class="col-xl-6 align-self-center">
+        <button app-action-button
+                text="Sign In with Facebook"
+                faStyle="fab"
+                faIcon="fa-facebook-square"
+                [onClick]="signInFacebook.bind(this)"
+                class="btn btn-primary btn-socials-facebook w-100 my-2">
+        </button>
+    </div>
+    <div class="col-xl-6 align-self-center">
+        <button app-action-button
+                text="Sign In with Google"
+                faStyle="fab"
+                faIcon="fa-google"
+                [onClick]="signInGoogle.bind(this)"
+                class="btn btn-primary btn-socials-google w-100 my-2">
+        </button>
+    </div>
+</div>
+
+<div class="dropdown-divider"></div>
+
+<form [formGroup]="signInForm" id="emailForm">
+    <label for="email" class="app-page-label">Email</label>
+    <input class="input-lg w-100"
+           formControlName="email" id="email"
+           placeholder="john.smith@email.com"
+           type="text">
+
+    <label for="password" class="app-page-label mt-3">Password</label>
+    <input class="input-lg w-100" id="password" 
+           formControlName="password" type="password">
+
+    <button app-action-button
+            text="Sign In"
+            loadingText="Signing in..."
+            faIcon="fa-paper-plane"
+            [onClick]="onFormSubmit.bind(this)"
+            [disabled]="!signInForm.dirty || !signInForm.valid"
+            class="btn btn-primary w-100 mt-3">
+    </button>
+
+    <small class="form-text text-muted mt-2">
+        Don't have an account? Sign up <a [routerLink]="'/sign_up' | coopPath"><small>here</small></a>.
+    </small>
+
+    <small class="form-text text-muted mt-2">
+        Forgot password? Reset it <a [routerLink]="'/forgot_password' | coopPath"><small>here</small></a>.
+    </small>
+</form>

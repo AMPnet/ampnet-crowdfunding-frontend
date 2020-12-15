@@ -3,13 +3,12 @@
     investmentData: investmentData$ | async
 } as states" class="container">
     <ng-container *ngIf="states.project && states.investmentData else spinner">
+        <div [routerLink]="['/dash', 'offers', states.project.uuid] | coopPath"
+             class="app-page-title-back">
+            <i class="fas fa-long-arrow-alt-left mr-3"></i>
+            Invest in
+        </div>
         <div class="row">
-            <div [routerLink]="['/dash', 'offers', states.project.uuid] | coopPath"
-                 class="app-page-title-back">
-                <i class="fas fa-long-arrow-alt-left mr-3"></i>
-                Invest in
-            </div>
-
             <div class="invest col-12">
                 <h1 class="app-basic-title">{{ states.project.name }}</h1>
                 <div class="dropdown-divider d-none d-lg-block"></div>
@@ -36,13 +35,14 @@
                         <button [routerLink]="[investForm.get('amount').value, 'verify_sign']"
                                 [disabled]="!investForm.valid"
                                 type="submit"
-                                class="btn btn-primary w-100">
+                                class="btn btn-primary w-100"
+                                [class.disabled-margin] = "states.investmentData.investDisabled">
                             <i class="fas fa-chart-pie mr-2"></i>
                             Invest
                         </button>
                     </div>
 
-                    <div class="col-lg-2 invest__text-right flex__center-space">
+                    <div class="col-lg-2 invest__text-right flex__center--space">
                         <div>
                             <p class="right__available">Available funds</p>
                             <!-- Amount data for desktop screens! -->
@@ -54,8 +54,8 @@
                 </div>
             </div>
 
-            <div class="error-messages col-12 col-lg-8" *ngIf="investForm.dirty && investForm.invalid">
-                <div *ngIf="investForm.get('amount').errors?.amountBelowMin" class="alert alert-danger flex__center">
+            <div class="error-messages col-12 col-xl-8" *ngIf="investForm.dirty && investForm.invalid">
+                <div *ngIf="investForm.get('amount').errors?.amountBelowMin" class="alert alert-danger">
                     <i class="fas fa-dizzy"></i>
                     <b>Investment amount too low.&nbsp;</b>
                     <span>
@@ -63,17 +63,16 @@
                     </span>
                 </div>
 
-                <div *ngIf="investForm.get('amount').errors?.amountAboveMax" class="alert alert-danger flex__center">
+                <div *ngIf="investForm.get('amount').errors?.amountAboveMax" class="alert alert-danger">
                     <i class="fas fa-dizzy"></i>
                     <b>Investment amount too high.&nbsp;</b>
                     <span>
                         The maximum investment is {{ states.investmentData.userMaxInvest | currencyDefault }}
                     </span>
                 </div>
-
-
+                
                 <div *ngIf="investForm.get('amount').errors?.amountAboveBalance"
-                     class="alert alert-danger flex__center-space">
+                     class="alert alert-danger flex__center--space">
                     <div class="flex__center">
                         <i class="fas fa-dizzy"></i>
                         <b>You don't have enough funds on your wallet</b>
@@ -81,19 +80,23 @@
                     <ng-container *ngTemplateOutlet="buttonToWalletScreen"></ng-container>
                 </div>
             </div>
-        </div>
 
-        <div *ngIf="states.investmentData.maximumReached"
-             class="alert alert-danger flex__center">
-            <i class="fas fa-dizzy"></i>
-            <b class="mr-2">You have already invested a maximum allowed amount for this project.</b>
-        </div>
-
-        <div *ngIf="states.investmentData.notEnoughFunds"
-             class="alert alert-danger flex__center">
-            <i class="fas fa-dizzy"></i>
-            <b class="mr-2">You don't have enough funds for minimal investment. </b>
-            <ng-container *ngTemplateOutlet="buttonToWalletScreen"></ng-container>
+            <div class="error-messages col-12 col-xl-8">
+                <div *ngIf="states.investmentData.maximumReached"
+                     class="alert alert-danger flex__center">
+                    <i class="fas fa-dizzy"></i>
+                    <b class="mr-2">You have already invested a maximum allowed amount for this project.</b>
+                </div>
+    
+                <div *ngIf="states.investmentData.notEnoughFunds"
+                     class="alert alert-danger flex__center--space">
+                     <div class="flex__center">
+                        <i class="fas fa-dizzy"></i>
+                        <b class="mr-2">You don't have enough funds for minimal investment. </b>
+                     </div>
+                    <ng-container *ngTemplateOutlet="buttonToWalletScreen"></ng-container>
+                </div>
+            </div>
         </div>
     </ng-container>
 

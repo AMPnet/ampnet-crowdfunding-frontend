@@ -35,10 +35,7 @@ export class CreateOrganizationComponent {
         ).pipe(
             displayBackendErrorRx(),
             switchMap(organization => {
-                return this.popupService.new({
-                    type: 'success',
-                    title: 'Investment group created!'
-                }).pipe(
+                return this.popupService.success('Investment group created!').pipe(
                     tap(() => this.router.navigate([`/dash/manage_groups/${organization.uuid}`]))
                 );
             })

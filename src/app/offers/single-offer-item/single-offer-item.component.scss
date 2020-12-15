@@ -5,7 +5,7 @@
 }
 
 .card-holder {
-  background: #F7F7F7;
+  background: $background-color;
   padding-bottom: 10px;
   transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
 }
@@ -105,13 +105,18 @@
 }
 
 @include media-breakpoint-up(lg) {
+  .app-basic-title, .left__progress, .card-right {
+    padding: 0;
+  }
+
+  .container {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
   .card-holder {
     display: flex;
     border-radius: 1px;
-  }
-
-  .left__progress, .card-right {
-    padding: 0;
   }
 
   .card-left {
@@ -142,12 +147,11 @@
   }
 
   .card-right {
-    max-width: 348px;
+    width: 33.5%;
     margin-right: 64px;
 
     .app-basic-title {
       display: block;
-      padding: 0;
       margin-top: 40px;
     }
   }

@@ -27,6 +27,7 @@ export class UploadAreaComponent implements OnInit, AfterViewInit, OnDestroy, On
     @Input() restrictions: UploadAreaComponentRestrictions;
     @Input() firstFileControl: AbstractControl;
     @Input() filesControl: AbstractControl;
+    @Input() noteText = '';
 
     @Output() filesQuantityChange = new EventEmitter<{ files: object[] }>();
 
@@ -58,6 +59,8 @@ export class UploadAreaComponent implements OnInit, AfterViewInit, OnDestroy, On
             height: 300,
             width: '100%',
             hideUploadButton: true,
+            note: this.noteText,
+            proudlyDisplayPoweredByUppy: false,
         });
     }
 

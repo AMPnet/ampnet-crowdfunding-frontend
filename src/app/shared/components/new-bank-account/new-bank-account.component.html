@@ -1,44 +1,45 @@
-<div class="row">
-    <div class="col">
-        <h2 class="app-page-subtitle">Enter bank account details</h2>
-    </div>
+<div>
+    <h2 class="app-page-subtitle">Enter bank account details</h2>
+
+    <form [formGroup]="newBankAccountForm">
+        <div class="row">
+            <div class="col-12 col-lg-8 mt-3">
+                <label for="iban" class="app-page-label">IBAN</label>
+                <input class="input-reg w-100" id="iban"
+                       formControlName="iban"
+                       name="IBAN" placeholder="AD1200012030200359100100" type="text">
+            </div>
+            <div class="col-12 col-lg-4 mt-3">
+                <label for="bic" class="app-page-label">SWIFT/BIC</label>
+                <input class="input-reg w-100" id="bic"
+                       formControlName="swift"
+                       name="SWIFT/BIC" placeholder="REVOGB21" type="text">
+                <small>Find it out <a href="https://www.iban.com/search-bic" target="_blank"
+                                      rel="noopener noreferrer"><small>here</small></a>.
+                </small>
+            </div>
+        </div>
+    
+        <div class="row">
+            <div class="col mt-3">
+                <label for="alias" class="app-page-label">Bank account alias</label>
+                <input class="input-reg w-100" id="alias"
+                       formControlName="alias"
+                       name="Bank account alias" placeholder="Bank account alias"
+                       type="text">
+            </div>
+        </div>
+    
+        <div class="row">
+            <div class="col-md-6 mt-3">
+                <button app-action-button
+                        text="Add new bank account"
+                        faIcon="fa-plus-circle"
+                        [disabled]="!newBankAccountForm.dirty || !newBankAccountForm.valid"
+                        [onClick]="onSubmit.bind(this)">
+                </button>
+            </div>
+        </div>
+    </form>
 </div>
-<form [formGroup]="newBankAccountForm">
-    <div class="row">
-        <div class="col-12 col-lg-8 mt-3">
-            <label for="iban" class="app-page-label">IBAN</label>
-            <input class="form-control w-100 p-4" id="iban"
-                   formControlName="iban"
-                   name="IBAN" placeholder="AD1200012030200359100100" type="text">
-        </div>
-        <div class="col-12 col-lg-4 mt-3">
-            <label for="bic" class="app-page-label">SWIFT/BIC</label>
-            <input class="form-control w-100 p-4" id="bic"
-                   formControlName="swift"
-                   name="SWIFT/BIC" placeholder="REVOGB21" type="text">
-            <small>Find it out <a href="https://www.iban.com/search-bic" target="_blank"
-                                  rel="noopener noreferrer"><small>here</small></a>.
-            </small>
-        </div>
-    </div>
 
-    <div class="row">
-        <div class="col mt-3">
-            <label for="alias" class="app-page-label">Bank account alias</label>
-            <input class="form-control w-100 p-4" id="alias"
-                   formControlName="alias"
-                   name="Bank account alias" placeholder="Bank account alias"
-                   type="text">
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-6 mt-3">
-            <app-action-button text="Add new bank account"
-                               faIcon="fa-plus-circle"
-                               [disabled]="!newBankAccountForm.dirty || !newBankAccountForm.valid"
-                               [onClick]="onSubmit.bind(this)">
-            </app-action-button>
-        </div>
-    </div>
-</form>

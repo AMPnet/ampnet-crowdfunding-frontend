@@ -4,6 +4,7 @@
             <img (click)="onClickedItem()" class="img__base w-100"
                  src="{{ projectWallet.project.main_image }}">
         </div>
+        <!-- title for mobile view -->
         <h1 class="app-basic-title">
             {{ projectWallet.project.name }}
         </h1>
@@ -46,7 +47,7 @@
         </div>
 
         <div class="right__text">
-            <ng-container *ngIf="projectWallet.project.roi.from != 0">
+            <ng-container *ngIf="projectWallet.project.roi.to != 0">
                 <p class="right__roi">
                     Expected yearly return:
                     <span>
@@ -54,7 +55,7 @@
                     </span>
                 </p>
             </ng-container>
-            <div [innerHTML]="projectWallet.project.description" class="right__desc"></div>
+            <div [innerHTML]="projectWallet.project.short_description" class="right__desc"></div>
         </div>
         <div class="right__cta">
             <button (click)="onClickedItem()" class="btn w-100 invest-button">

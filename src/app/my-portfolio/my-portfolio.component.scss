@@ -1,7 +1,6 @@
 @import "app";
 
 .container {
-  padding: 0;
   color: $title-color;
 }
 
@@ -49,10 +48,6 @@
   
 
 @include media-breakpoint-up(lg) {
-  .container {
-    padding: 0 15px;
-  }
-
   .investment {
     &-total {
       padding: 24px 34px;

@@ -16,7 +16,9 @@
                                         maxFileSize: 10 * 1024 * 1024,
                                         maxNumberOfFiles: 1
                                      }"
-                                     [firstFileControl]="newOrganizationForm.get('photo')">
+                                     [firstFileControl]="newOrganizationForm.get('photo')"
+                                     noteText="For an optimal user experience, use landscape or even format images.
+                                     Other formats (e.g. portrait) might result in unwanted results">
                     </app-upload-area>
                 </div>
                 <!-- TODO: This is styled and ready to go, uncomment when we have 2nd wallet integrated -->
@@ -31,7 +33,7 @@
                     </div>
                 </div> -->
             </div>
-            
+
             <div class="form-right col-lg-6">
                 <label class="right__label" for="group-name">Group name</label>
                 <input class="input-lg w-100"
@@ -47,13 +49,15 @@
                           placeholder="Enter description"
                           id="group-description">
                 </textarea>
-                
-                <app-action-button text="Create new group"
-                                   loadingText="Creating organization..." faIcon="fa-plus"
-                                   [disabled]="!newOrganizationForm.valid"
-                                   buttonClass="btn btn-primary btn-success"
-                                   [onClick]="createOrganization.bind(this)">
-                </app-action-button>
+                <div>
+                    <button app-action-button
+                            text="Create new group"
+                            loadingText="Creating organization..." faIcon="fa-plus"
+                            [disabled]="!newOrganizationForm.valid"
+                            class="btn btn-responsive-size btn-success w-100"
+                            [onClick]="createOrganization.bind(this)">
+                    </button>
+                </div>
             </div>
         </div>
     </form>

@@ -57,7 +57,7 @@
             <div [innerHTML]="projectWallet.project.description" class="right__desc"></div>
         </div>
         <div class="right__cta">
-            <button class="btn w-100 invest-button">
+            <button (click)="onClickedItem()" class="btn w-100 invest-button">
                 See more
             </button>
         </div>

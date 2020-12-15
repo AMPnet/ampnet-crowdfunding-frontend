@@ -1,7 +1,7 @@
 <div *ngIf="{
     organization: organization$ | async,
-    orgMembers: orgMembers$ | async,
-    orgWallet: orgWallet$ | async
+    orgMembers: orgMembers$ | async
+
 } as states" class="container">
     <ng-container *ngIf="!!states.organization else spinner">
         <div class="app-page-header">
@@ -11,7 +11,6 @@
             </div>
         </div>
 
-        <ng-container *ngIf="!!states.orgWallet else spinner">
             <div class="content">
                 <div class="organization-info">
                     <div class="organization__img">
@@ -19,17 +18,10 @@
                     </div>
                     <div class="organization__desc">
                         <div class="desc__title"> {{ states.organization.name }} </div>
-                        <div class="desc__project-count"> <b>{{ states.organization.project_count }} </b>
+                        <div class="desc__project-count"><b>{{ states.organization.project_count }} </b>
                             {{ states.organization.project_count === 1 ? "Project" : "Projects" }}
                         </div>
                         <div class="desc__info"> {{ states.organization.description }} </div>
-                    </div>
-                </div>
-                
-                <div *ngIf="!isWalletVerified(states.orgWallet)">
-                    <div class="alert alert-warning flex__center col-lg-10">
-                        <i class="fas fa-exclamation-triangle mr-2"></i>
-                        This group is pending approval from admin. During this time, you can't create new projects.
                     </div>
                 </div>
 
@@ -37,7 +29,8 @@
                     <tabset>
                         <tab heading="Projects">
                             <div class="manage__projects">
-                                <app-manage-projects [groupID]="states.organization.uuid"></app-manage-projects>
+                                <app-manage-projects [groupID]="states.organization.uuid"
+                                                     [hidePublishBtn]=true></app-manage-projects>
                             </div>
                         </tab>
                         <tab heading="Members">
@@ -45,7 +38,8 @@
                                 <div class="users__list">
                                     <ng-container *ngIf="!!states.orgMembers else spinner">
                                         <ul class="list-group">
-                                            <li *ngFor="let member of states.orgMembers" class="list__item flex__center-space">
+                                            <li *ngFor="let member of states.orgMembers"
+                                                class="list__item flex__center-space">
                                                 <div class="item__left">
                                                     <div class="item__name">{{ member.first_name | titlecase }} {{ member.last_name | titlecase }}</div>
                                                     <div class="item__email">{{ member.email }}</div>
@@ -62,7 +56,8 @@
                                                 </div>
                                             </li>
                                         </ul>
-                                        <div *ngIf="states.orgMembers.length === 0" class="w-100 pt-3 pb-3 text-center explainer-mini">
+                                        <div *ngIf="states.orgMembers.length === 0"
+                                             class="w-100 pt-3 pb-3 text-center explainer-mini">
                                             You are the only member of {{ states.organization.name }}
                                         </div>
                                     </ng-container>
@@ -73,7 +68,7 @@
                 </div>
             </div>
         </ng-container>
-    </ng-container>
+
     <ng-template #spinner>
         <app-spinner type="overlay"></app-spinner>
     </ng-template>

@@ -100,7 +100,7 @@ import { NgxCaptchaModule } from 'ngx-captcha';
 import { NewInstanceComponent } from './authentication/new-instance/new-instance.component';
 import { PlatformConfigComponent } from './admin/platform-config/platform-config.component';
 import { QuillModule } from 'ngx-quill';
-import { InvestmentGroupDetailsComponent } from './organizations/investment-group-details/investment-group-details.component';
+import { OrganizationDetailsLimitedComponent } from './organizations/organization-details-limited/organization-details-limited.component';
 
 @NgModule({
     declarations: [
@@ -185,7 +185,7 @@ import { InvestmentGroupDetailsComponent } from './organizations/investment-grou
         IdentityComponent,
         NewBankAccountComponent,
         InvestmentDetailsComponent,
-        InvestmentGroupDetailsComponent,
+        OrganizationDetailsLimitedComponent,
         AuthLayoutComponent,
         SignInComponent,
         NewInstanceComponent,

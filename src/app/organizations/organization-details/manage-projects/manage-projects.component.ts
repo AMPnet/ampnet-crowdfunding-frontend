@@ -1,4 +1,4 @@
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { OrganizationService } from '../../../shared/services/project/organization.service';
 import { displayBackendErrorRx } from '../../../utilities/error-handler';
 import { ProjectWallet } from '../../../shared/services/project/project.service';
@@ -13,6 +13,7 @@ import { RouterService } from '../../../shared/services/router.service';
 })
 export class ManageProjectsComponent {
     @Input() groupID: string;
+    @Input() hidePublishBtn = false;
 
     refreshProjectsSubject = new BehaviorSubject<void>(null);
     projectsWallets$: Observable<ProjectWallet[]>;

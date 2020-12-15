@@ -40,7 +40,7 @@
         </ng-container>
     </div>
     <div class="item__toggle">
-        <button app-action-button
+        <button app-action-button *ngIf="!hidePublishBtn"
                 text="{{ projectWallet.project.active ? 'Unpublish' : 'Publish' }}"
                 faIcon="{{ projectWallet.project.active ? 'fa-eye-slash' : 'fa-eye' }}"
                 [onClick]="toggleProject(projectWallet.project).bind(this)"

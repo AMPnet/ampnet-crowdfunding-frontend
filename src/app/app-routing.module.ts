@@ -53,7 +53,7 @@ import { AuthLayoutComponent } from './authentication/auth-layout/auth-layout.co
 import { SignInComponent } from './authentication/sign-in/sign-in.component';
 import { NewInstanceComponent } from './authentication/new-instance/new-instance.component';
 import { PlatformConfigComponent } from './admin/platform-config/platform-config.component';
-import { InvestmentGroupDetailsComponent } from './organizations/investment-group-details/investment-group-details.component';
+import { OrganizationDetailsLimitedComponent } from './organizations/organization-details-limited/organization-details-limited.component';
 
 const appRoutes: Routes = [
     {
@@ -70,7 +70,7 @@ const appRoutes: Routes = [
                 ]
             },
             {path: 'overview/:isOverview', component: OffersComponent},
-            {path: 'overview/orgs/:id/:isOverview', component: InvestmentGroupDetailsComponent},
+            {path: 'overview/orgs/:id/:isOverview', component: OrganizationDetailsLimitedComponent},
             {path: 'overview/:id/:isOverview', component: OfferDetailsComponent, canActivate: [OfferDetailsGuard]},
             {path: 'sign_in_auto/:email/:password', component: SignInAutoComponent},
         ]
@@ -82,7 +82,7 @@ const appRoutes: Routes = [
             {path: '', pathMatch: 'full', redirectTo: 'offers'},
             {path: 'offers', component: OffersComponent},
             {path: 'wallet', component: WalletComponent},
-            {path: 'orgs/:id', component: InvestmentGroupDetailsComponent},
+            {path: 'orgs/:id', component: OrganizationDetailsLimitedComponent},
             {path: 'offers/:id', component: OfferDetailsComponent},
             {path: 'offers/:id/invest', component: InvestComponent},
             {path: 'my_portfolio', component: MyPortfolioComponent},

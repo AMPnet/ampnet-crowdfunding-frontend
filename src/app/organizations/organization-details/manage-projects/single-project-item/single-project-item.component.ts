@@ -15,6 +15,7 @@ import { tap } from 'rxjs/operators';
 })
 export class SingleProjectItemComponent implements OnInit {
     @Input() projectWallet: ProjectWallet;
+    @Input() hidePublishBtn = false;
     walletInfo$: Observable<ProjectWalletInfo>;
 
     constructor(private middlewareService: MiddlewareService,

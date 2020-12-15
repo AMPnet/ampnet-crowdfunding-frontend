@@ -186,7 +186,7 @@ export class OfferDetailsComponent implements OnInit {
         };
     }
 
-    onPublishedClicked(organizationUUID: string) {
+    onPublishedByClicked(organizationUUID: string) {
         if (this.route.snapshot.params.isOverview) {
             this.router.navigate([`/overview/orgs/${organizationUUID}/discover`]);
         } else {

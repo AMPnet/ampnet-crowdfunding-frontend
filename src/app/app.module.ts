@@ -100,6 +100,7 @@ import { TranslationsModule } from './translations.module';
 import { InterpolatePipe } from './shared/pipes/interpolate.pipe';
 import { SplitPartPipe } from './shared/pipes/split-part.pipe';
 import { DynamicLocaleProvider } from './shared/providers/locale.provider';
+import { CaptchaNoticeComponent } from './shared/components/captcha-notice/captcha-notice.component';
 
 @NgModule({
     declarations: [
@@ -184,6 +185,7 @@ import { DynamicLocaleProvider } from './shared/providers/locale.provider';
         SignInComponent,
         NewInstanceComponent,
         PlatformConfigComponent,
+        CaptchaNoticeComponent,
         InterpolatePipe,
         SplitPartPipe
     ],

@@ -7,6 +7,7 @@ import { MustMatch } from '../sign-up/confirm-password-validator';
 import { switchMap, tap } from 'rxjs/operators';
 import { RouterService } from '../../shared/services/router.service';
 import { ErrorService } from '../../shared/services/error.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-reset-password',
@@ -24,6 +25,7 @@ export class ResetPasswordComponent implements OnInit {
                 private signUpService: SignupService,
                 private router: RouterService,
                 private errorService: ErrorService,
+                private translate: TranslateService,
                 private popupService: PopupService,
                 private route: ActivatedRoute) {
 
@@ -44,7 +46,9 @@ export class ResetPasswordComponent implements OnInit {
 
         return this.signUpService.resetPassword(newPassword, this.token).pipe(
             this.errorService.handleError,
-            switchMap(() => this.popupService.success('Your password has been changed successfully.')),
+            switchMap(() => this.popupService.success(
+                this.translate.instant('auth.reset_password.success')
+            )),
             tap(() => this.router.navigate(['/sign_in']))
         );
     }

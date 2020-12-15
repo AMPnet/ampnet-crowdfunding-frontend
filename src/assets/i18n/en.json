@@ -1,4 +1,8 @@
 {
+  "landing": {
+    "welcome": "Welcome to | {{ coopName }} | investing platform.",
+    "explore": "Explore projects"
+  },
   "offers": {
     "title": "Offers",
     "no_projects_available": "No projects are currently available for crowdfunding.",
@@ -567,6 +571,99 @@
     "platform_config": {
     }
   },
+  "auth": {
+    "forgot_password": {
+      "title": "Forgot password",
+      "instructions_notice": "Enter your email address and we'll send you instructions to reset your password.",
+      "email_input": {
+        "title": "Email",
+        "placeholder": "john.smith@email.com"
+      },
+      "submit": "Send instructions",
+      "missing_user": "User doesn't exist on the platform.",
+      "email_sent": "We have sent you an e-mail containing your password reset link."
+    },
+    "new_instance": {
+      "title": "New Instance",
+      "name_input": {
+        "title": "Instance name",
+        "placeholder": "Instance name"
+      },
+      "identifier_input": {
+        "title": "Identifier",
+        "placeholder": "instance-name",
+        "example": "Your instance will be served on: {{ url }}"
+      },
+      "web_title_input": {
+        "title": "Web title",
+        "placeholder": "Instance"
+      },
+      "logo_input": {
+        "title": "Logo"
+      },
+      "submit": "Create"
+    },
+    "sign_up": {
+      "title": "Sign up",
+      "with_facebook": "Signup with Facebook",
+      "with_google": "Signup with Google",
+      "email_input": {
+        "title": "Email",
+        "placeholder": "john.smith@email.com"
+      },
+      "first_name_input": {
+        "title": "First name",
+        "placeholder": "John"
+      },
+      "last_name_input": {
+        "title": "Last name",
+        "placeholder": "Smith"
+      },
+      "password_input": {
+        "title": "Password",
+        "placeholder": "********",
+        "notice": "Password must be at least 8 characters long."
+      },
+      "confirm_password_input": {
+        "title": "Confirm password",
+        "placeholder": "********"
+      },
+      "submit": "Create account",
+      "sign_in_notice": "Already have an account? Click | here | to sign in.",
+      "success": "Sign up successful!"
+    },
+    "sign_in": {
+      "title": "Sign in",
+      "with_facebook": "Sign In with Facebook",
+      "with_google": "Sign In with Google",
+      "email_input": {
+        "title": "Email",
+        "placeholder": "john.smith@email.com"
+      },
+      "password_input": {
+        "title": "Password",
+        "placeholder": "********"
+      },
+      "submit": "Sign In",
+      "submit.loading": "Signing in...",
+      "sign_up_notice": "Don't have an account? Click | here | to sign up.",
+      "forgot_password_notice": "Forgot password? Click | here | to reset it."
+    },
+    "reset_password": {
+      "title": "Reset password",
+      "success": "Your password has been changed successfully.",
+      "password_input": {
+        "title": "Password",
+        "placeholder": "********",
+        "notice": "Password must be at least 8 characters long."
+      },
+      "confirm_password_input": {
+        "title": "Confirm password",
+        "placeholder": "********"
+      },
+      "submit": "Submit"
+    }
+  },
   "errors": {
     "registration": {
       "sign_up_invalid": "Invalid sign up data.",
@@ -649,7 +746,8 @@
     "transaction_signed": {
       "title": "Transaction signed",
       "description": "The transaction is being processed..."
-    }
+    },
+    "captcha_notice": "This site is protected by reCAPTCHA and the Google | Privacy Policy | and | Terms of Service | apply."
   },
   "languages": {
     "en": "English",

@@ -6,6 +6,7 @@ import { RouterService } from '../../shared/services/router.service';
 import { PopupService } from '../../shared/services/popup.service';
 import { FileValidator } from '../../shared/validators/file.validator';
 import { ErrorService } from '../../shared/services/error.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-new-instance',
@@ -25,6 +26,7 @@ export class NewInstanceComponent implements OnInit {
                 private router: RouterService,
                 private popupService: PopupService,
                 private errorService: ErrorService,
+                private translate: TranslateService,
                 private fb: FormBuilder,
                 @Inject('WINDOW') public window: Window) {
         this.createCoopForm = this.fb.group({
@@ -53,5 +55,12 @@ export class NewInstanceComponent implements OnInit {
             switchMap(() => this.popupService.success('Cooperative has been created!')),
             tap(() => this.router.router.navigate([`/${coop.identifier}`])),
         );
+    }
+
+    generateURL() {
+        const name = this.createCoopForm.get('identifier').valid ?
+            this.createCoopForm.get('identifier').value
+            : this.translate.instant('auth.new_instance.identifier_input.placeholder');
+        return `${window.location.protocol}//${window.location.host}/${name}`;
     }
 }

@@ -1,9 +1,11 @@
-<h1 class="app-page-header">SIGN IN</h1>
+<h1 class="app-page-header">
+    {{ 'auth.sign_in.title' | translate }}
+</h1>
 
 <div class="row">
     <div class="col-xl-6 align-self-center">
         <button app-action-button
-                text="Sign In with Facebook"
+                text="{{ 'auth.sign_in.with_facebook' | translate }}"
                 faStyle="fab"
                 faIcon="fa-facebook-square"
                 [onClick]="signInFacebook.bind(this)"
@@ -12,7 +14,7 @@
     </div>
     <div class="col-xl-6 align-self-center">
         <button app-action-button
-                text="Sign In with Google"
+                text="{{ 'auth.sign_in.with_google' | translate }}"
                 faStyle="fab"
                 faIcon="fa-google"
                 [onClick]="signInGoogle.bind(this)"
@@ -24,19 +26,24 @@
 <div class="dropdown-divider"></div>
 
 <form [formGroup]="signInForm" id="emailForm">
-    <label for="email" class="app-page-label">Email</label>
+    <label for="email" class="app-page-label">
+        {{ 'auth.sign_in.email_input.title' | translate }}
+    </label>
     <input class="input-lg w-100"
            formControlName="email" id="email"
-           placeholder="john.smith@email.com"
+           placeholder="{{ 'auth.sign_in.email_input.placeholder' | translate }}"
            type="text">
 
-    <label for="password" class="app-page-label mt-3">Password</label>
-    <input class="input-lg w-100" id="password" 
+    <label for="password" class="app-page-label mt-3">
+        {{ 'auth.sign_in.password_input.title' | translate }}
+    </label>
+    <input class="input-lg w-100" id="password"
+           placeholder="{{ 'auth.sign_in.password_input.placeholder' | translate }}"
            formControlName="password" type="password">
 
     <button app-action-button
-            text="Sign In"
-            loadingText="Signing in..."
+            text="{{ 'auth.sign_in.submit' | translate }}"
+            loadingText="{{ 'auth.sign_in.submit.loading' | translate }}"
             faIcon="fa-paper-plane"
             [onClick]="onFormSubmit.bind(this)"
             [disabled]="!signInForm.dirty || !signInForm.valid"
@@ -44,10 +51,30 @@
     </button>
 
     <small class="form-text text-muted mt-2">
-        Don't have an account? Sign up <a [routerLink]="'/sign_up' | coopPath">here</a>.
+        <span>
+            {{ 'auth.sign_in.sign_up_notice' | translate | splitPart:0 }}
+        </span>
+        <span>
+            <a [routerLink]="'/sign_up' | coopPath">
+                {{ 'auth.sign_in.sign_up_notice' | translate | splitPart:1 }}
+            </a>
+        </span>
+        <span>
+            {{ 'auth.sign_in.sign_up_notice' | translate | splitPart:2 }}
+        </span>
     </small>
 
     <small class="form-text text-muted mt-2">
-        Forgot password? Reset it <a [routerLink]="'/forgot_password' | coopPath">here</a>.
+        <span>
+            {{ 'auth.sign_in.forgot_password_notice' | translate | splitPart:0 }}
+        </span>
+        <span>
+            <a [routerLink]="'/forgot_password' | coopPath">
+                {{ 'auth.sign_in.forgot_password_notice' | translate | splitPart:1 }}
+            </a>
+        </span>
+        <span>
+            {{ 'auth.sign_in.forgot_password_notice' | translate | splitPart:2 }}
+        </span>
     </small>
 </form>

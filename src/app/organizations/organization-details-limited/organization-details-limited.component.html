@@ -1,7 +1,6 @@
 <div *ngIf="{
     organization: organization$ | async,
     orgMembers: orgMembers$ | async
-
 } as states" class="container">
     <ng-container *ngIf="!!states.organization else spinner">
         <div class="app-page-header">

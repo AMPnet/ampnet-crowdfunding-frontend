@@ -12,24 +12,34 @@
                     </ng-template>
                 </div>
             </div>
+<<<<<<< HEAD
 
             <div class="col-lg-6 col-xl-4 p-0">
+=======
+        </ng-container>
+        <div class="payments-wallet">
+            <div class="wallet__cta">
+                <h4>
+                    {{ 'projects.edit.manage_payments.wallet.title' | translate }}
+                </h4>
+>>>>>>> master
                 <div class="row">
                     <div class="col-6">
                         <button class="btn w-100" routerLink="project_deposit">
                             <i class="fas fa-arrow-circle-down mr-2"></i>
-                            Deposit
+                            {{ 'projects.edit.manage_payments.wallet.deposit_button' | translate }}
                         </button>
                     </div>
                     <div class="col-6">
                         <button class="btn w-100" routerLink="project_withdraw"
                                 [disabled]="!states.walletInfo || !isProjectFullyFunded(states.walletInfo)">
                             <i class="fas fa-arrow-circle-up mr-2"></i>
-                            Withdraw
+                            {{ 'projects.edit.manage_payments.wallet.withdraw_button' | translate }}
                         </button>
                     </div>
                 </div>
             </div>
+<<<<<<< HEAD
         </div>
 
         <div class="payments-payout app__full-width--padding">
@@ -61,6 +71,50 @@
                             <span class="d-block d-lg-none d-xl-block">Start payout</span>
                         </button>
                     </div>
+=======
+
+            <div class="wallet__balance">
+                <h3>
+                    {{ 'projects.edit.manage_payments.wallet.balance' | translate }}
+                </h3>
+                <ng-container *ngIf="!!states.walletInfo; else smallSpinner">
+                    <h5>{{ states.walletInfo.balance | currencyDefault }}</h5>
+                </ng-container>
+                <ng-template #smallSpinner>
+                    <app-spinner type="inline"></app-spinner>
+                </ng-template>
+            </div>
+        </div>
+
+        <div class="payments-payout">
+            <h3 class="payout__title">
+                {{ 'projects.edit.manage_payments.revenue_share.title' | translate }}
+            </h3>
+            <p class="payout__desc">
+                {{ 'projects.edit.manage_payments.revenue_share.description' | translate }}
+            </p>
+            <div class="payout__cta row">
+                <div class="col-12 col-lg-6">
+                    <app-money-input-field
+                        placeholder="{{ 'projects.edit.manage_payments.revenue_share.placeholder' | translate }}"
+                        [control]="revenueShareForm.get('amount')">
+                    </app-money-input-field>
+                    <div *ngIf="revenueShareForm.dirty && revenueShareForm.invalid">
+                        <div *ngIf="revenueShareForm.get('amount').errors?.inputAmountInvalid"
+                             class="alert alert-danger">
+                            {{ 'projects.edit.manage_payments.revenue_share.errors.invalid_amount' | translate }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-4">
+                    <button [disabled]="!revenueShareForm.dirty || revenueShareForm.invalid"
+                            id="buttonStartPayout"
+                            routerLink="manage_payments/revenue_share/{{ revenueShareForm.get('amount').value }}"
+                            class="btn btn-danger btn-action w-100">
+                        <i class="fas fa-chart-pie mr-2"></i>
+                        {{ 'projects.edit.manage_payments.revenue_share.submit_button' | translate }}
+                    </button>
+>>>>>>> master
                 </div>
             </div>
         </div>

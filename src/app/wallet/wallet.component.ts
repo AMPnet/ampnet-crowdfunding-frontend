@@ -6,7 +6,7 @@ import { map, switchMap, take, tap } from 'rxjs/operators';
 import { WebsocketService } from '../shared/services/websocket.service';
 import { ArkaneService } from '../shared/services/arkane.service';
 import { ReportService } from '../shared/services/report/report.service';
-import { displayBackendErrorRx } from '../utilities/error-handler';
+import { ErrorService } from '../shared/services/error.service';
 
 @Component({
     selector: 'app-wallet',
@@ -70,6 +70,7 @@ export class WalletComponent implements OnDestroy {
 
     constructor(private walletService: WalletService,
                 public arkaneService: ArkaneService,
+                private errorService: ErrorService,
                 private reportService: ReportService,
                 private websocketService: WebsocketService) {
     }
@@ -95,13 +96,13 @@ export class WalletComponent implements OnDestroy {
 
     downloadReport() {
         return this.reportService.userTransactions()
-            .pipe(displayBackendErrorRx());
+            .pipe(this.errorService.handleError);
     }
 
     downloadSingleReport(transaction: UserTransaction) {
         return () => {
             return this.reportService.singleUserTransaction(transaction)
-                .pipe(displayBackendErrorRx());
+                .pipe(this.errorService.handleError);
         };
     }
 

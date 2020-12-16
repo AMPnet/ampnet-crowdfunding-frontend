@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { SpinnerUtil } from '../../../../../../../utilities/spinner-utilities';
-import { displayBackendErrorRx } from '../../../../../../../utilities/error-handler';
 import { RevenueShareService } from '../../../../../../../shared/services/wallet/revenue-share.service';
 import { ActivatedRoute } from '@angular/router';
 import { finalize, switchMap, tap } from 'rxjs/operators';
 import { ArkaneService } from '../../../../../../../shared/services/arkane.service';
 import { PopupService } from '../../../../../../../shared/services/popup.service';
 import { RouterService } from '../../../../../../../shared/services/router.service';
+import { ErrorService } from '../../../../../../../shared/services/error.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-revenue-share-confirm-modal',
@@ -28,6 +29,8 @@ export class RevenueShareConfirmModalComponent implements OnInit {
                 private formBuilder: FormBuilder,
                 private revenueShareService: RevenueShareService,
                 private arkaneService: ArkaneService,
+                private errorService: ErrorService,
+                private translate: TranslateService,
                 private route: ActivatedRoute,
                 private popupService: PopupService) {
     }
@@ -41,12 +44,12 @@ export class RevenueShareConfirmModalComponent implements OnInit {
     generateTransaction(amountInvested: number) {
         SpinnerUtil.showSpinner();
         return this.revenueShareService.generateRevenueShareTx(this.projectID, amountInvested).pipe(
-            displayBackendErrorRx(),
+            this.errorService.handleError,
             switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo)),
             switchMap(() => this.popupService.new({
                 type: 'success',
-                title: 'Transaction signed',
-                text: 'Transaction is being processed...'
+                title: this.translate.instant('general.transaction_signed.title'),
+                text: this.translate.instant('general.transaction_signed.description')
             })),
             tap(() => this.router.navigate([`/dash/manage_groups/${this.orgID}/manage_project/${this.projectID}`])),
             finalize(() => SpinnerUtil.hideSpinner())

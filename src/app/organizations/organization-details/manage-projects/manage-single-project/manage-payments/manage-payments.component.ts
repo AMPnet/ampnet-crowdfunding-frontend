@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { displayBackendErrorRx } from 'src/app/utilities/error-handler';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { catchError, map, shareReplay, switchMap } from 'rxjs/operators';
 import { MiddlewareService, ProjectWalletInfo } from '../../../../../shared/services/middleware/middleware.service';
 import { WalletService } from '../../../../../shared/services/wallet/wallet.service';
 import { Observable, of } from 'rxjs';
 import { RouterService } from '../../../../../shared/services/router.service';
+import { ErrorService } from '../../../../../shared/services/error.service';
 
 @Component({
     selector: 'app-manage-payments',
@@ -21,13 +21,15 @@ export class ManagePaymentsComponent {
     constructor(private walletService: WalletService,
                 private route: ActivatedRoute,
                 private router: RouterService,
+                private errorService: ErrorService,
                 private fb: FormBuilder,
                 private middlewareService: MiddlewareService) {
         const projectID = this.route.snapshot.params.projectID;
 
 
         this.projectWalletInfo$ = this.walletService.getProjectWallet(projectID).pipe(
-            switchMap(wallet => this.middlewareService.getProjectWalletInfoCached(wallet.hash).pipe(displayBackendErrorRx())),
+            switchMap(wallet => this.middlewareService.getProjectWalletInfoCached(wallet.hash)
+                .pipe(this.errorService.handleError)),
             shareReplay({refCount: true, bufferSize: 1})
         );
 

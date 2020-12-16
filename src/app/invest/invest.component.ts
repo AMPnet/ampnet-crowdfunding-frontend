@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { WalletDetailsWithState, WalletService } from '../shared/services/wallet/wallet.service';
-import { displayBackendErrorRx } from '../utilities/error-handler';
 import { Project, ProjectService } from '../shared/services/project/project.service';
 import { ActivatedRoute } from '@angular/router';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { map, shareReplay, switchMap, take } from 'rxjs/operators';
 import { DetailsResult, PortfolioService } from '../shared/services/wallet/portfolio.service';
+import { ErrorService } from '../shared/services/error.service';
 
 @Component({
     selector: 'app-invest',
@@ -26,18 +26,19 @@ export class InvestComponent implements OnInit {
                 private projectService: ProjectService,
                 private portfolioService: PortfolioService,
                 private route: ActivatedRoute,
+                private errorService: ErrorService,
                 private fb: FormBuilder) {
         const projectID = this.route.snapshot.params.id;
 
         this.project$ = this.projectService.getProject(projectID).pipe(
-            displayBackendErrorRx(),
+            this.errorService.handleError,
             shareReplay(1)
         );
 
         this.investmentData$ = combineLatest([this.project$, this.walletService.wallet$]).pipe(take(1),
             switchMap(([project, wallet]) =>
                 this.portfolioService.investmentDetails(project.wallet.hash, wallet.wallet.hash).pipe(
-                    displayBackendErrorRx(),
+                    this.errorService.handleError,
                     map(invDetails => this.computeInvestmentData(project, wallet, invDetails))
                 )
             ),

@@ -17,9 +17,8 @@
   margin-bottom: 0;
   color: #444444;
   font-size: $font-size-mobile-title-small;
-  span {
+  span.bold {
     font-weight: bold;
-    font-size: $font-size-mobile-title-small;
   }
 }
 
@@ -31,8 +30,5 @@
 
   .item__invested {
     font-size: $font-size-desktop-body2;
-    span {
-      font-size: $font-size-desktop-body2;
-    }
   }
 }

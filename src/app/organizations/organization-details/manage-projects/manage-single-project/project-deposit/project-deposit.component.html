@@ -8,30 +8,31 @@
             <div [routerLink]="['/dash', 'manage_groups', orgID, 'manage_project', states.deposit.owner] | coopPath"
                  class="app-page-title-back" >
                 <i class="fas fa-long-arrow-alt-left mr-3"></i>
-                Deposit
+                {{ 'projects.edit.manage_payments.deposit.title' | translate }}
             </div>
             <div class="alerts">
                 <div class="alert alert-info">
                     <i class="fas fa-clock mr-2"></i>
-                    After you have deposited the money onto our bank account it can take up to 24h for it to become visible
-                    on the platform. You will be notified by email when your money has been received.
+                    {{ 'projects.edit.manage_payments.deposit.notice' | translate }}
                 </div>
             </div>
 
             <div class="deposit-details">
-                <h4>Deposit payment details</h4>
+                <h4>
+                    {{ 'projects.edit.manage_payments.deposit.details' | translate }}
+                </h4>
                 <div class="row">
                     <div class="deposit__iban col-lg-6">
                         <div class="iban__title flex__center">
                             <i class="fas fa-piggy-bank mr-2"></i>
-                            IBAN
+                            {{ 'projects.edit.manage_payments.deposit.iban' | translate }}
                         </div>
                         <div class="iban__content">{{ states.masterIBAN }}</div>
                     </div>
                     <div class="deposit__desc col-lg-6">
                         <div class="desc__title flex__center">
                             <i class="fas fa-address-book mr-2"></i>
-                            Description
+                            {{ 'projects.edit.manage_payments.deposit.reference' | translate }}
                         </div>
                         <div class="desc__content">{{ states.deposit.reference }}</div>
                     </div>

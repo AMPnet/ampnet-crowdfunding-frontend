@@ -380,6 +380,10 @@
 
       &__transaction-type {
         padding-right: 5px;
+
+        span.bold {
+          font-weight: bold;
+        }
       }
 
       &__info {

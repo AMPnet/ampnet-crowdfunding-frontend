@@ -56,8 +56,9 @@
       padding-bottom: 4px;
     }
     &__projects-count {
-      b {
+      span.bold {
         color: $title-color;
+        font-weight: bold;
       }
       color: $body-color;
       letter-spacing: 0.1px;
@@ -67,6 +68,7 @@
 }
 
 .invites {
+  width: 100%;
   margin-top: 64px;
   .list {
     &__item {
@@ -131,9 +133,6 @@
       }
       &__projects-count {
         font-size: $font-size-desktop-body2;
-        b {
-          font-size: $font-size-desktop-body2;
-        }
         padding-bottom: 0;
       }
     }

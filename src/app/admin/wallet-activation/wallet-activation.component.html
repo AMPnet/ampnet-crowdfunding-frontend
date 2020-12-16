@@ -4,14 +4,14 @@
             <div [class.active]="activationType === 'users'" class="btn btn-primary w-100 py-3 cursor-pointer"
                  [routerLink]="'/dash/activation/users' | coopPath">
                 <i class="fas fa-user mr-2"></i>
-                Users
+                {{ 'admin.activations.users_tab' | translate }}
             </div>
         </div>
         <div class="col-4">
             <div [class.active]="activationType === 'groups'" class="btn btn-primary w-100 py-3 cursor-pointer"
                  [routerLink]="'/dash/activation/groups' | coopPath">
                 <i class="fas fa-users mr-2"></i>
-                Groups
+                {{ 'admin.activations.groups_tab' | translate }}
             </div>
         </div>
         <div class="col-4">
@@ -19,7 +19,7 @@
                  class="btn btn-primary py-3 w-100 cursor-pointer"
                  [routerLink]="'/dash/activation/projects' | coopPath">
                 <i class="fas fa-solar-panel mr-2"></i>
-                Projects
+                {{ 'admin.activations.projects_tab' | translate }}
             </div>
         </div>
     </div>

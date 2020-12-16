@@ -1,6 +1,10 @@
 <div class="container">
-    <h1 class="app-page-title">MANAGE WITHDRAWALS</h1>
-    <h2 class="app-page-subtitle">User withdrawals</h2>
+    <h1 class="app-page-title">
+        {{ 'admin.withdrawals.title' | translate }}
+    </h1>
+    <h2 class="app-page-subtitle">
+        {{ 'admin.withdrawals.users.title' | translate }}
+    </h2>
     <ng-container *ngIf="(userWithdrawals$ | async) as userWithdrawals else spinner">
         <ul *ngIf="userWithdrawals.length > 0" class="list-group">
             <li *ngFor="let userWithdrawal of userWithdrawals"
@@ -16,11 +20,15 @@
         </ul>
 
         <div *ngIf="userWithdrawals.length === 0" class="col-md-12 mt-3">
-            <div class="text-center explainer-mini text-uppercase">No pending user withdrawals</div>
+            <div class="text-center explainer-mini text-uppercase">
+                {{ 'admin.withdrawals.users.empty' | translate }}
+            </div>
         </div>
     </ng-container>
 
-    <h2 class="app-page-subtitle">Project withdrawals</h2>
+    <h2 class="app-page-subtitle">
+        {{ 'admin.withdrawals.projects.title' | translate }}
+    </h2>
     <ng-container *ngIf="(projectWithdrawals$ | async) as projectWithdrawals else spinner">
         <ul *ngIf="projectWithdrawals.length > 0" class="list-group">
             <li *ngFor="let projectWithdrawal of projectWithdrawals"
@@ -36,7 +44,9 @@
         </ul>
 
         <div *ngIf="projectWithdrawals.length === 0" class="col-md-12 mt-3">
-            <div class="text-center explainer-mini text-uppercase">No pending project withdrawals</div>
+            <div class="text-center explainer-mini text-uppercase">
+                {{ 'admin.withdrawals.projects.empty' | translate }}
+            </div>
         </div>
     </ng-container>
 

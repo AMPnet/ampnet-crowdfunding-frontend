@@ -277,20 +277,54 @@ export class ErrorService {
                         display$ = this.displayMessage('errors.middleware.wallet_already_exists');
                         break;
 
-                    case MiddlewareError.INVALID_CONTRACT_CALLED:
-                    case MiddlewareError.TRANSACTION_VERIFICATION_FAILED:
-                    case MiddlewareError.CREATE_WALLET_TRANSACTION_FAILED:
-                    case MiddlewareError.CREATE_WALLET_TRANSACTION_PENDING:
-                    case MiddlewareError.CREATE_GROUP_CONTRACT_FAILED:
-                    case MiddlewareError.CREATE_PROJECT_CONTRACT_FAILED:
-                    case MiddlewareError.CREATE_SELL_OFFER_CONTRACT_FAILED:
-                    case MiddlewareError.AE_SDK_ERROR:
-                    case MiddlewareError.TRANSACTION_DRY_RUN_FAILED:
+                    // Synchronous errors that are reasonable to show
+                    case MiddlewareError.TOKEN_NOT_INITIALIZED:
+                        display$ = this.displayMessage('errors.middleware.token_not_initialized');
+                        break;
+                    case MiddlewareError.INVEST_FAILED_PROJECT_FUNDED:
+                        display$ = this.displayMessage('errors.middleware.project_funded');
+                        break;
+                    case MiddlewareError.INVEST_FAILED_ZERO_TOKENS:
+                        display$ = this.displayMessage('errors.middleware.invest_zero_tokens');
+                        break;
+                    case MiddlewareError.INVEST_FAILED_INSUFFICIENT_FUNDS:
+                        display$ = this.displayMessage('errors.middleware.insufficient_funds');
+                        break;
+                    case MiddlewareError.INVEST_MAX_PER_USER_EXCEEDED:
+                        display$ = this.displayMessage('errors.middleware.max_per_user_exceeded');
+                        break;
+                    case MiddlewareError.INVEST_MIN_PER_USER_REQUIRED:
+                        display$ = this.displayMessage('errors.middleware.min_per_user_required');
+                        break;
+                    case MiddlewareError.INVEST_INVESTMENT_CAP_EXCEEDED:
+                        display$ = this.displayMessage('errors.middleware.investment_cap_exceeded');
+                        break;
+                    case MiddlewareError.INVEST_FRACTION_NON_FUNDED:
+                        display$ = this.displayMessage('errors.middleware.fraction_non_funded');
+                        break;
+                    case MiddlewareError.INVEST_FUNDING_ENDED:
+                        display$ = this.displayMessage('errors.middleware.funding_ended');
+                        break;
+                    case MiddlewareError.REVENUE_SHARE_ORG_OWNER_PERMISSION:
+                        display$ = this.displayMessage('errors.middleware.revenue_share_org_owner_permission');
+                        break;
+                    case MiddlewareError.REVENUE_SHARE_PROJECT_STILL_FUNDING:
+                        display$ = this.displayMessage('errors.middleware.revenue_share_project_still_funding');
+                        break;
+                    case MiddlewareError.REVENUE_SHARE_ZERO:
+                        display$ = this.displayMessage('errors.middleware.revenue_share_zero');
+                        break;
+                    case MiddlewareError.REVENUE_SHARE_PROJECT_BALANCE_LOW:
+                        display$ = this.displayMessage('errors.middleware.revenue_share_project_balance_low');
+                        break;
+                    case MiddlewareError.REVENUE_SHARE_ALREADY_STARTED:
+                        display$ = this.displayMessage('errors.middleware.revenue_share_already_started');
+                        break;
 
-
+                    // Error that are unlikely to happen on frontend.
+                    // For now, there is no reason to show the exact messages.
                     case MiddlewareError.CLAIM_OWNERSHIP_DISABLED:
                     case MiddlewareError.MULTIPLE_OWNERSHIP_CLAIM:
-                    case MiddlewareError.TOKEN_NOT_INITIALIZED:
                     case MiddlewareError.PLATFORM_MANAGER_PERMISSION_REQUIRED:
                     case MiddlewareError.SENDER_WALLET_NOT_ACTIVATED:
                     case MiddlewareError.RECEIVER_WALLET_NOT_ACTIVATED:
@@ -324,19 +358,6 @@ export class ErrorService {
                     case MiddlewareError.ORG_OWNER_WITHDRAW_PERMISSION:
                     case MiddlewareError.WITHDRAW_FAILED_PAYOUT_IN_PROCESS:
                     case MiddlewareError.EXECUTE_PAYOUT_FAILED_NOT_STARTED:
-                    case MiddlewareError.INVEST_FAILED_PROJECT_FUNDED:
-                    case MiddlewareError.INVEST_FAILED_ZERO_TOKENS:
-                    case MiddlewareError.INVEST_FAILED_INSUFFICIENT_FUNDS:
-                    case MiddlewareError.INVEST_MAX_PER_USER_EXCEEDED:
-                    case MiddlewareError.INVEST_MIN_PER_USER_REQUIRED:
-                    case MiddlewareError.INVEST_INVESTMENT_CAP_EXCEEDED:
-                    case MiddlewareError.INVEST_FRACTION_NON_FUNDED:
-                    case MiddlewareError.INVEST_FUNDING_ENDED:
-                    case MiddlewareError.REVENUE_SHARE_ORG_OWNER_PERMISSION:
-                    case MiddlewareError.REVENUE_SHARE_PROJECT_STILL_FUNDING:
-                    case MiddlewareError.REVENUE_SHARE_ZERO:
-                    case MiddlewareError.REVENUE_SHARE_PROJECT_BALANCE_LOW:
-                    case MiddlewareError.REVENUE_SHARE_ALREADY_STARTED:
                     case MiddlewareError.REVENUE_SHARE_ACTIVE_WALLET_PERMISSION:
                     case MiddlewareError.REVENUE_SHARE_AMOUNT_GT_ZERO_REQUIRED:
                     case MiddlewareError.REVENUE_SHARE_BALANCE_LOW:
@@ -354,6 +375,15 @@ export class ErrorService {
                     case MiddlewareError.COUNTER_OFFER_NOT_FOUND:
                     case MiddlewareError.COUNTER_OFFER_SELLER_CANCEL_PERMISSION:
 
+                    case MiddlewareError.INVALID_CONTRACT_CALLED:
+                    case MiddlewareError.TRANSACTION_VERIFICATION_FAILED:
+                    case MiddlewareError.CREATE_WALLET_TRANSACTION_FAILED:
+                    case MiddlewareError.CREATE_WALLET_TRANSACTION_PENDING:
+                    case MiddlewareError.CREATE_GROUP_CONTRACT_FAILED:
+                    case MiddlewareError.CREATE_PROJECT_CONTRACT_FAILED:
+                    case MiddlewareError.CREATE_SELL_OFFER_CONTRACT_FAILED:
+                    case MiddlewareError.AE_SDK_ERROR:
+                    case MiddlewareError.TRANSACTION_DRY_RUN_FAILED:
                     case MiddlewareError.COOPERATIVE_MISSING:
                     case MiddlewareError.CONTRACT_DEPLOYMENT_FAILED:
                     case MiddlewareError.UNKNOWN_ERROR:

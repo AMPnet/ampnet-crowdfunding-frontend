@@ -1,8 +1,7 @@
-<ng-container
-    *ngIf="{ walletInfo: projectWalletInfo$ | async } as states">
+<ng-container *ngIf="{ walletInfo: projectWalletInfo$ | async } as states">
     <div class="container">
         <div class="payments-wallet app__full-width--padding">
-            <div class="wallet__inner">
+            <div>
                 <h4 class="wallet__title app-page-subtitle">Project balance</h4>
                 <div class="wallet__balance">
                     <ng-container *ngIf="!!states.walletInfo; else smallSpinner">
@@ -64,7 +63,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </ng-container>

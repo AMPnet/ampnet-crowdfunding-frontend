@@ -315,7 +315,7 @@
           "placeholder": "Enter maximum investment per user",
           "errors.invalid_amount": "Payout must be lower or equal to balance.",
           "submit_button": "Start payout",
-          "submit_button_small": "Payout",
+          "submit_button.short": "Payout",
           "review": {
             "title": "Revenue share information",
             "project_name": "Project name",

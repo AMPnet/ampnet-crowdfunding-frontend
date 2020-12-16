@@ -6,21 +6,27 @@
             {{ project.name }}
         </div>
         <div class="revenue-info">
-            <div class="info__title">Revenue share information</div>
+            <div class="info__title">
+                {{ 'projects.edit.manage_payments.revenue_share.review.title' | translate }}
+            </div>
             <div class="info__content flex__center--space">
                 <div class="info__project">
-                    <p>Project name</p>
+                    <p>
+                        {{ 'projects.edit.manage_payments.revenue_share.review.project_name' | translate }}
+                    </p>
                     <p>{{ project.name }}</p>
                 </div>
                 <div class="info__amount">
-                    <p>Amount to distribute</p>
+                    <p>
+                        {{ 'projects.edit.manage_payments.revenue_share.review.amount' | translate }}
+                    </p>
                     <p>{{ amount | currencyDefault }}</p>
                 </div>
             </div>
         </div>
         <div class="revenue-cta">
             <button class="btn btn-danger w-100" (click)="showConfirmModal()">
-                Verify and start revenue share
+                {{ 'projects.edit.manage_payments.revenue_share.review.submit' | translate }}
             </button>
         </div>
     </div>

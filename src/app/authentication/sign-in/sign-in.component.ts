@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthService } from 'angularx-social-login';
 import { RouterService } from '../../shared/services/router.service';
-import { socialAuthServiceProvider, UserAuthService } from '../../shared/services/user/user-auth.service';
 import { from } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
-import { displayBackendErrorRx } from '../../utilities/error-handler';
+import { ErrorService } from '../../shared/services/error.service';
+import { socialAuthServiceProvider, UserService } from '../../shared/services/user/user.service';
 
 @Component({
     selector: 'app-sign-in',
@@ -22,8 +22,9 @@ export class SignInComponent {
     signInForm: FormGroup;
 
     constructor(private router: RouterService,
-                private loginService: UserAuthService,
+                private userService: UserService,
                 private auth: SocialAuthService,
+                private errorService: ErrorService,
                 private fb: FormBuilder) {
         this.signInForm = this.fb.group({
             email: fb.control('', Validators.required),
@@ -41,8 +42,8 @@ export class SignInComponent {
 
     performSocialSignIn(provider: string) {
         return from(this.auth.signIn(provider)).pipe(
-            switchMap(res => this.loginService.socialLogin(res.provider, res.authToken)),
-            displayBackendErrorRx(),
+            switchMap(res => this.userService.socialLogin(res.provider, res.authToken)),
+            this.errorService.handleError,
             tap(() => this.router.navigate(['/dash'])),
         );
     }
@@ -50,8 +51,8 @@ export class SignInComponent {
     onFormSubmit() {
         const user = this.signInForm.value;
 
-        return this.loginService.emailLogin(user.email, user.password).pipe(
-            displayBackendErrorRx(),
+        return this.userService.emailLogin(user.email, user.password).pipe(
+            this.errorService.handleError,
             tap(() => this.router.navigate(['/dash'])),
         );
     }

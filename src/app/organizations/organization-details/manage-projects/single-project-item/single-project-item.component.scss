@@ -18,9 +18,9 @@
   &__funding {
     font-size: $font-size-mobile-title-small;
     color: $body-color;
-    b {
+    span.bold {
       color: $title-color;
-      font-size: $font-size-mobile-title-small;
+      font-weight: bold;
     }
   }
 
@@ -49,10 +49,9 @@
         div {
           font-size: $font-size-desktop-small;
         }
-        span {
-          color: #111111;
+        span.bold {
+          color: $title-color;
           font-weight: bold;
-          font-size: $font-size-desktop-small;
         }
       }
       &__bar {

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import 'bootstrap-select';
 import { Portfolio, PortfolioService } from '../shared/services/wallet/portfolio.service';
-import { hideSpinnerAndDisplayError } from '../utilities/error-handler';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 
 @Component({
@@ -34,7 +33,7 @@ export class ExchangeComponent implements OnInit {
                 (<any>$('select')).selectpicker();
             }, 200);
 
-        }, hideSpinnerAndDisplayError);
+        });
     }
 
     onChangeSelect(item: any) {

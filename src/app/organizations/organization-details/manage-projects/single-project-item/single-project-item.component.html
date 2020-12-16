@@ -11,8 +11,13 @@
             {{ projectWallet.project.name }}
         </div>
         <div class="item__funding">
-            <b>Funding </b>{{ projectWallet.project.start_date | date:'longDate' }}
-            - {{ projectWallet.project.end_date | date:'longDate' }}
+            <span class="bold">
+                {{ 'organizations.details.projects.item.period' | translate | splitPart:0 }}
+            </span>
+            <span>
+                {{ 'organizations.details.projects.item.period' | translate | splitPart:1
+                    | interpolate:['from', projectWallet.project.start_date | date:'longDate']:['to', projectWallet.project.end_date | date:'longDate'] }}
+            </span>
         </div>
     </div>
 </div>
@@ -31,8 +36,14 @@
                 <div>
                     <div class="progress__raised">
                         <div>
-                            <span>{{ wallet.totalFundsRaised | currencyDefault }}</span> raised of
-                            {{ wallet.investmentCap | currencyDefault }} goal
+                            <span class="bold">
+                                {{ 'organizations.details.projects.item.raised' | translate | splitPart:0
+                                    | interpolate:['raised', wallet.totalFundsRaised | currencyDefault] }}
+                            </span>
+                            <span>
+                                {{ 'organizations.details.projects.item.raised' | translate | splitPart:1
+                                    | interpolate:['goal', wallet.investmentCap | currencyDefault] }}
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -41,7 +52,8 @@
     </div>
     <div class="item__toggle">
         <button app-action-button *ngIf="!hidePublishBtn"
-                text="{{ projectWallet.project.active ? 'Unpublish' : 'Publish' }}"
+                text="{{ (projectWallet.project.active ? 'organizations.details.projects.item.publish' : 'organizations.details.projects.item.unpublish') | translate }}"
+                textShort="{{ (projectWallet.project.active ? 'organizations.details.projects.item.publish' : 'organizations.details.projects.item.unpublish') | translate }}"
                 faIcon="{{ projectWallet.project.active ? 'fa-eye-slash' : 'fa-eye' }}"
                 [onClick]="toggleProject(projectWallet.project).bind(this)"
                 class="d-contents item__icon flex__center mr-2">

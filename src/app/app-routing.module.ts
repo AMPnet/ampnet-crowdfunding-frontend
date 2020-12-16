@@ -15,7 +15,6 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
 import { PublicLayoutComponent } from './public-layout/public-layout.component';
 import { SecureLayoutComponent } from './secure-layout/secure-layout.component';
 import { SignUpComponent } from './authentication/sign-up/sign-up.component';
-import { TxOverviewComponent } from './wallet/tx-overview/tx-overview.component';
 import { NewPaymentOptionComponent } from './payment-options/new-payment-option/new-payment-option.component';
 import { AuthGuard } from './authentication/auth.guard';
 import { CreateOrganizationComponent } from './organizations/create-organization/create-organization.component';
@@ -91,7 +90,6 @@ const appRoutes: Routes = [
             {path: 'my_portfolio/investment_details/new_proposal', component: NewProposalComponent},
             {path: 'finish_new_proposal', component: FinishNewProposalComponent},
             {path: 'my_portfolio/investment_details/proposal_details', component: ProposalDetailsComponent},
-            {path: 'wallet/tx_overview', component: TxOverviewComponent},
             {path: 'payment_options/new', component: NewPaymentOptionComponent},
             {path: 'manage_groups/new', component: CreateOrganizationComponent},
             {

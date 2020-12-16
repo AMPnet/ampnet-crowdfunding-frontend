@@ -10,7 +10,6 @@ import { WalletComponent } from './wallet/wallet.component';
 import { OffersComponent } from './offers/offers.component';
 import { SingleOfferItemComponent } from './offers/single-offer-item/single-offer-item.component';
 import { OfferDetailsComponent } from './offers/offer-details/offer-details.component';
-import { DepositModalComponent } from './wallet/deposit-modal/deposit-modal.component';
 import { InvestComponent } from './invest/invest.component';
 import { MyPortfolioComponent } from './my-portfolio/my-portfolio.component';
 import { SingleInvestItemComponent } from './my-portfolio/single-invest-item/single-invest-item.component';
@@ -25,14 +24,11 @@ import { PublicLayoutComponent } from './public-layout/public-layout.component';
 import { SecureLayoutComponent } from './secure-layout/secure-layout.component';
 import { HeaderComponent } from './public-layout/header/header.component';
 import { SignUpComponent } from './authentication/sign-up/sign-up.component';
-import { TxOverviewComponent } from './wallet/tx-overview/tx-overview.component';
 import { NewPaymentOptionComponent } from './payment-options/new-payment-option/new-payment-option.component';
-import { WithdrawModalComponent } from './wallet/withdraw-modal/withdraw-modal.component';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { SocialLoginModule } from 'angularx-social-login';
-import { NgxSpinnerModule } from 'ngx-spinner';
 import { CreateOrganizationComponent } from './organizations/create-organization/create-organization.component';
 import { ManageOrganizationsComponent } from './organizations/manage-organizations/manage-organizations.component';
 import { OrganizationDetailsComponent } from './organizations/organization-details/organization-details.component';
@@ -101,6 +97,11 @@ import { NewInstanceComponent } from './authentication/new-instance/new-instance
 import { PlatformConfigComponent } from './admin/platform-config/platform-config.component';
 import { QuillModule } from 'ngx-quill';
 import { OrganizationDetailsLimitedComponent } from './organizations/organization-details-limited/organization-details-limited.component';
+import { TranslationsModule } from './translations.module';
+import { InterpolatePipe } from './shared/pipes/interpolate.pipe';
+import { SplitPartPipe } from './shared/pipes/split-part.pipe';
+import { DynamicLocaleProvider } from './shared/providers/locale.provider';
+import { CaptchaNoticeComponent } from './shared/components/captcha-notice/captcha-notice.component';
 
 @NgModule({
     declarations: [
@@ -111,7 +112,6 @@ import { OrganizationDetailsLimitedComponent } from './organizations/organizatio
         OffersComponent,
         SingleOfferItemComponent,
         OfferDetailsComponent,
-        DepositModalComponent,
         InvestComponent,
         MyPortfolioComponent,
         SingleInvestItemComponent,
@@ -126,9 +126,7 @@ import { OrganizationDetailsLimitedComponent } from './organizations/organizatio
         SecureLayoutComponent,
         HeaderComponent,
         SignUpComponent,
-        TxOverviewComponent,
         NewPaymentOptionComponent,
-        WithdrawModalComponent,
         CreateOrganizationComponent,
         ManageOrganizationsComponent,
         OrganizationDetailsComponent,
@@ -190,11 +188,15 @@ import { OrganizationDetailsLimitedComponent } from './organizations/organizatio
         SignInComponent,
         NewInstanceComponent,
         PlatformConfigComponent,
+        CaptchaNoticeComponent,
+        InterpolatePipe,
+        SplitPartPipe
     ],
     imports: [
         BrowserModule,
         RouterModule,
         AppRoutingModule,
+        TranslationsModule,
         DisqusModule.forRoot('ampnet.disqus.com/embed.js'),
         TooltipModule.forRoot(),
         ModalModule.forRoot(),
@@ -203,7 +205,6 @@ import { OrganizationDetailsLimitedComponent } from './organizations/organizatio
         ReactiveFormsModule,
         HttpClientModule,
         SocialLoginModule,
-        NgxSpinnerModule,
         NgbModule,
         ModalModule.forRoot(),
         QuillModule.forRoot(),
@@ -231,10 +232,13 @@ import { OrganizationDetailsLimitedComponent } from './organizations/organizatio
             provide: DEFAULT_CURRENCY_CODE,
             useValue: 'EUR', // TODO: Set this from app config service.
         },
+        DynamicLocaleProvider,
         DatePipe,
         SafePipe,
         CurrencyPipe,
-        CoopPathPipe
+        CoopPathPipe,
+        InterpolatePipe,
+        SplitPartPipe
     ],
     bootstrap: [AppComponent]
 })

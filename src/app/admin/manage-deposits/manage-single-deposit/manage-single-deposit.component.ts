@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { displayBackendErrorRx } from 'src/app/utilities/error-handler';
 import { ActivatedRoute } from '@angular/router';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import {
@@ -12,10 +11,11 @@ import { catchError, finalize, switchMap } from 'rxjs/operators';
 import { ArkaneService } from '../../../shared/services/arkane.service';
 import { PopupService } from '../../../shared/services/popup.service';
 import { EMPTY, Observable, of } from 'rxjs';
-import { CurrencyDefaultPipe } from '../../../shared/pipes/currency-default.pipe';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { FileValidator } from '../../../shared/validators/file.validator';
 import { RouterService } from '../../../shared/services/router.service';
+import { ErrorService } from '../../../shared/services/error.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-manage-single-deposit',
@@ -34,7 +34,8 @@ export class ManageSingleDepositComponent implements OnInit {
                 private arkaneService: ArkaneService,
                 private popupService: PopupService,
                 private fb: FormBuilder,
-                private currencyPipe: CurrencyDefaultPipe,
+                private errorService: ErrorService,
+                private translate: TranslateService,
                 private router: RouterService) {
         const id = this.route.snapshot.params.ID;
         this.deposit$ = this.getDepositProcedure(id);
@@ -49,26 +50,23 @@ export class ManageSingleDepositComponent implements OnInit {
 
     getDepositProcedure(reference: string): Observable<DepositSearchResponse> {
         return this.depositCooperativeService.getDeposit(reference).pipe(
-            displayBackendErrorRx(),
             catchError(err => {
                 if (err.status === 404) {
-                    return this.popupService.new({
-                        type: 'error',
-                        title: 'Not found',
-                        text: 'Deposit transaction with this reference code was not found.'
-                    }).pipe(switchMap(() => this.recoverBack()));
+                    return this.popupService.error(
+                        this.translate.instant('admin.deposits.single_deposit.not_found')
+                    ).pipe(switchMap(() => this.recoverBack()));
                 }
                 return this.recoverBack();
             }),
+            this.errorService.handleError,
             switchMap(res => {
                 if (!res.deposit.approved_at) {
                     return of(res);
                 } else if (!!res.deposit.approved_at && !res.deposit.tx_hash) {
-                    const amount = this.currencyPipe.transform(res.deposit.amount);
                     return this.popupService.new({
                         type: 'info',
-                        title: 'Transaction already approved',
-                        text: `You will be prompted to sign deposit transaction of ${amount}`
+                        title: this.translate.instant('admin.deposits.single_deposit.already_approved.title'),
+                        text: this.translate.instant('admin.deposits.single_deposit.already_approved.description'),
                     }).pipe(
                         switchMap(popup => !popup.dismiss ?
                             this.generateSignerAndSign(res.deposit.id) : this.recoverBack()),
@@ -84,13 +82,13 @@ export class ManageSingleDepositComponent implements OnInit {
 
     generateSignerAndSign(depositID: number) {
         return this.depositCooperativeService.generateDepositMintTx(depositID).pipe(
-            displayBackendErrorRx(),
+            this.errorService.handleError,
             switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo)),
             catchError(() => this.recoverBack()),
             switchMap(() => this.popupService.new({
                 type: 'success',
-                title: 'Transaction signed',
-                text: 'Transaction is being processed...'
+                title: this.translate.instant('general.transaction_signed.title'),
+                text: this.translate.instant('general.transaction_signed.description')
             })),
             switchMap(() => this.router.navigate(['/dash/manage_deposits']))
         );
@@ -109,7 +107,7 @@ export class ManageSingleDepositComponent implements OnInit {
         const confirmationSub = this.confirmationModal.content.successfulConfirmation.subscribe(() => {
             SpinnerUtil.showSpinner();
             this.depositCooperativeService.approveDeposit(depositID, amount, document).pipe(
-                displayBackendErrorRx(),
+                this.errorService.handleError,
                 catchError(() => this.recoverBack()),
                 switchMap(() => this.generateSignerAndSign(depositID)),
                 finalize(() => SpinnerUtil.hideSpinner())

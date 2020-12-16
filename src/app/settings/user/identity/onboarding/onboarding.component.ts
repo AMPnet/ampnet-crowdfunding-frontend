@@ -1,6 +1,5 @@
 import { Component, Renderer2 } from '@angular/core';
 import { DecisionStatus, OnboardingService, State, VeriffSession } from '../../../../shared/services/user/onboarding.service';
-import { UserAuthService } from '../../../../shared/services/user/user-auth.service';
 import { BehaviorSubject, EMPTY, Observable, Subject, timer } from 'rxjs';
 import { catchError, switchMap, tap } from 'rxjs/operators';
 import { PopupService } from '../../../../shared/services/popup.service';
@@ -8,7 +7,8 @@ import { AppConfigService } from '../../../../shared/services/app-config.service
 import { RouterService } from '../../../../shared/services/router.service';
 import { UserService } from '../../../../shared/services/user/user.service';
 import { createVeriffFrame, MESSAGES } from '@veriff/incontext-sdk';
-import { displayBackendErrorRx } from '../../../../utilities/error-handler';
+import { ErrorService } from '../../../../shared/services/error.service';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -30,8 +30,9 @@ export class OnboardingComponent {
                 private router: RouterService,
                 private popupService: PopupService,
                 private userService: UserService,
-                private onboardingService: OnboardingService,
-                private loginService: UserAuthService) {
+                private errorService: ErrorService,
+                private translate: TranslateService,
+                private onboardingService: OnboardingService) {
         this.session$ = this.sessionSubject.asObservable().pipe(
             switchMap(_ => this.onboardingService.getVeriffSession()),
             tap(session => {
@@ -47,9 +48,11 @@ export class OnboardingComponent {
         );
 
         this.approved$ = this.approvedSubject.asObservable().pipe(
-            switchMap(() => this.popupService.success('User data has been successfully verified.')),
-            switchMap(() => this.loginService.refreshUserToken()
-                .pipe(displayBackendErrorRx())),
+            switchMap(() => this.popupService.success(
+                this.translate.instant('user.identity.onboarding.approved')
+            )),
+            switchMap(() => this.userService.refreshUserToken()
+                .pipe(this.errorService.handleError)),
             catchError(() => {
                 this.router.navigate(['/dash/settings/user']);
                 return EMPTY;

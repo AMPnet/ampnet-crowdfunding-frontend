@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { displayBackendErrorRx } from 'src/app/utilities/error-handler';
 import { Organization, OrganizationMember, OrganizationService } from '../../shared/services/project/organization.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { RouterService } from '../../shared/services/router.service';
+import { ErrorService } from '../../shared/services/error.service';
 
 @Component({
     selector: 'app-organization-details',
@@ -22,6 +22,7 @@ export class OrganizationDetailsLimitedComponent implements OnInit {
 
     constructor(private activatedRoute: ActivatedRoute,
                 private router: RouterService,
+                private errorService: ErrorService,
                 private organizationService: OrganizationService) {
     }
 
@@ -32,12 +33,12 @@ export class OrganizationDetailsLimitedComponent implements OnInit {
         }
         this.organization$ = this.refreshOrganizationSubject.asObservable().pipe(
             switchMap(() => this.organizationService.getSingleOrganization(orgID)
-                .pipe(displayBackendErrorRx()))
+                .pipe(this.errorService.handleError))
         );
 
         this.orgMembers$ = this.refreshOrgMembersSubject.pipe(
             switchMap(_ => this.organizationService.getMembersForOrganization(orgID)
-                .pipe(displayBackendErrorRx())),
+                .pipe(this.errorService.handleError)),
             map(res => res.members));
     }
 

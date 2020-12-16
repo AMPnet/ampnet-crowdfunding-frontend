@@ -8,34 +8,37 @@
         wallet: wallet$ | async
     } as states">
         <ul class="list-unstyled components" id="main-menu">
-            <p class="menu-header ml-4 mb-3 mt-3 ">MENU</p>
+            <p class="menu-header ml-4 mb-3 mt-3 ">
+                {{ 'navigation.menu.title' | translate }}
+            </p>
             <li routerLink="offers" routerLinkActive="side-active">
                 <i class="menu-icon fas fa-align-left"></i>
-                <span>Offers</span>
+                <span>{{ 'navigation.menu.offers' | translate }}</span>
             </li>
             <div [tooltip]="!isUserVerified(states.user) || !isWalletLazyReady(states.wallet) ? ToolTipNotVerified : null">
                 <li routerLink="my_portfolio" routerLinkActive="side-active"
                     [class.unverified-user-disabled]="!isUserVerified(states.user) || !isWalletEagerReady(states.wallet)">
                     <i class="menu-icon fas fa-user"></i>
-                    <span>My Portfolio</span>
+                    <span>{{ 'navigation.menu.my_portfolio' | translate }}</span>
                 </li>
             </div>
             <div [tooltip]="!isUserVerified(states.user) ? ToolTipNotVerified : null">
                 <li routerLink="wallet" routerLinkActive="side-active"
                     [class.unverified-user-disabled]="!isUserVerified(states.user)">
                     <i class="menu-icon fas fa-wallet"></i>
-                    <span>Wallet</span>
+                    <span>{{ 'navigation.menu.wallet' | translate }}</span>
                 </li>
             </div>
             <div [tooltip]="!isUserVerified(states.user) || !isWalletLazyReady(states.wallet) ? ToolTipNotVerified : null">
                 <li routerLink="manage_groups" routerLinkActive="side-active"
                     [class.unverified-user-disabled]="!isUserVerified(states.user) || !isWalletEagerReady(states.wallet)">
                     <i class="menu-icon fas fa-layer-group"></i>
-                    <span>Investment groups</span>
+                    <span>{{ 'navigation.menu.investment_groups' | translate }}</span>
                 </li>
             </div>
             <!-- TODO: Remove hidden when project market is implemented -->
-            <div hidden [tooltip]="!isUserVerified(states.user) || !isWalletLazyReady(states.wallet) ? ToolTipNotVerified : null">
+            <div hidden
+                 [tooltip]="!isUserVerified(states.user) || !isWalletLazyReady(states.wallet) ? ToolTipNotVerified : null">
                 <li routerLink="exchange" routerLinkActive="side-active"
                     [class.unverified-user-disabled]="!isUserVerified(states.user) || !isWalletEagerReady(states.wallet)">
                     <i class="menu-icon fas fa-store"></i>
@@ -45,87 +48,91 @@
         </ul>
 
         <ul class="list-unstyled components text-white" id="main-menu">
-            <p class="menu-header ml-4 mb-3 mt-3 ">SETTINGS</p>
+            <p class="menu-header ml-4 mb-3 mt-3 ">
+                {{ 'navigation.settings.title' | translate }}
+            </p>
             <li routerLink="settings/user" routerLinkActive="side-active">
                 <i class="menu-icon fas fa-user-cog"></i>
-                <span>User Profile</span>
+                <span>{{ 'navigation.settings.user_profile' | translate }}</span>
             </li>
             <li routerLink="payment_options" routerLinkActive="side-active">
                 <i class="menu-icon fas fa-credit-card"></i>
-                <span>Payments</span>
+                <span>{{ 'navigation.settings.payments' | translate }}</span>
             </li>
         </ul>
 
         <div [hidden]="!(states.user?.role === userRole.ADMIN)">
-            <p class="menu-header ml-4 mb-3 mt-3 ">ADMIN</p>
+            <p class="menu-header ml-4 mb-3 mt-3 ">
+                {{ 'navigation.admin.title' | translate }}
+            </p>
             <ul class="list-unstyled components" id="main-menu">
                 <li routerLink="manage_withdrawals" routerLinkActive="side-active">
                     <i class="menu-icon fas fa-arrow-circle-up "></i>
-                    <span>Withdrawals</span>
+                    <span>{{ 'navigation.admin.withdrawals' | translate }}</span>
                 </li>
                 <li routerLink="manage_deposits" routerLinkActive="side-active">
                     <i class="menu-icon fas fa-arrow-circle-down "></i>
-                    <span>Deposits</span>
+                    <span>{{ 'navigation.admin.deposits' | translate }}</span>
                 </li>
                 <li routerLink="activation/users" routerLinkActive="side-active">
                     <i class="menu-icon fas fa-flag-checkered"></i>
-                    <span>Activations</span>
+                    <span>{{ 'navigation.admin.activations' | translate }}</span>
                 </li>
                 <li routerLink="admin/platform_bank_account" routerLinkActive="side-active">
                     <i class="menu-icon fas fa-university"></i>
-                    <span>Bank account</span>
+                    <span>{{ 'navigation.admin.bank_account' | translate }}</span>
                 </li>
                 <li routerLink="ownership" routerLinkActive="side-active">
                     <i class="menu-icon fas fa-handshake"></i>
-                    <span>Platform roles</span>
+                    <span>{{ 'navigation.admin.platform_roles' | translate }}</span>
                 </li>
                 <li routerLink="platform_config" routerLinkActive="side-active">
                     <i class="menu-icon fas fa-cogs"></i>
-                    <span>Platform config</span>
+                    <span>{{ 'navigation.admin.platform_config' | translate }}</span>
                 </li>
             </ul>
         </div>
 
         <div [hidden]="!(states.user?.role === userRole.TOKEN_ISSUER)">
             <p class="menu-header ml-4 mb-3 mt-3 ">
-                TOKEN ISSUER
+                {{ 'navigation.admin.token_issuer.title' | translate }}
             </p>
             <ul class="list-unstyled components" id="main-menu">
                 <li routerLink="manage_withdrawals" routerLinkActive="side-active">
                     <i class="menu-icon fas fa-arrow-circle-up "></i>
-                    <span>Withdrawals</span>
+                    <span>{{ 'navigation.admin.withdrawals' | translate }}</span>
                 </li>
                 <li routerLink="manage_deposits" routerLinkActive="side-active">
                     <i class="menu-icon fas fa-arrow-circle-down "></i>
-                    <span>Deposits</span>
+                    <span>{{ 'navigation.admin.deposits' | translate }}</span>
                 </li>
                 <li routerLink="admin/platform_bank_account" routerLinkActive="side-active">
                     <i class="menu-icon fas fa-university"></i>
-                    <span>Bank account</span>
+                    <span>{{ 'navigation.admin.bank_account' | translate }}</span>
                 </li>
                 <li routerLink="ownership" routerLinkActive="side-active">
                     <i class="menu-icon fas fa-handshake"></i>
-                    <span>Platform roles</span>
+                    <span>{{ 'navigation.admin.platform_roles' | translate }}</span>
                 </li>
             </ul>
         </div>
 
         <div [hidden]="!(states.user?.role === userRole.PLATFORM_MANAGER)">
             <p class="menu-header ml-4 mb-3 mt-3 ">
-                PLATFORM MANAGER
+                {{ 'navigation.admin.platform_manager.title' | translate }}
             </p>
             <ul class="list-unstyled components" id="main-menu">
                 <li routerLink="activation/users" routerLinkActive="side-active">
                     <i class="menu-icon fas fa-flag-checkered"></i>
-                    <span>Activations</span>
+                    <span>{{ 'navigation.admin.activations' | translate }}</span>
                 </li>
                 <li routerLink="ownership" routerLinkActive="side-active">
                     <i class="menu-icon fas fa-handshake"></i>
-                    <span>Platform roles</span>
+                    <span>{{ 'navigation.admin.platform_roles' | translate }}</span>
                 </li>
                 <li routerLink="platform_config" routerLinkActive="side-active">
                     <i class="menu-icon fas fa-cogs"></i>
-                    <span>Platform config</span>
+                    <span>{{ 'navigation.admin.platform_config' | translate }}</span>
                 </li>
             </ul>
         </div>
@@ -137,12 +144,12 @@
             <li routerLinkActive="side-active" class="mt-2">
                 <a href="mailto://info@ampnet.io" style="all: unset">
                     <i class="menu-icon fas fa-envelope-open"></i>
-                    <span>Contact Us</span>
+                    <span>{{ 'navigation.info.contact_us' | translate }}</span>
                 </a>
             </li>
             <li (click)="onLogout()" routerLinkActive="side-active">
                 <i class="menu-icon fas fa-sign-out-alt"></i>
-                <span>Log Out</span>
+                <span>{{ 'navigation.info.logout' | translate }}</span>
             </li>
         </ul>
 
@@ -152,13 +159,13 @@
 
         <ng-template #ToolTipNotVerified>
             <div *ngIf="!isUserVerified(states.user)">
-                <p>Profile not verified. Go to User Profile screen to finish onboarding process.</p>
+                <p>{{ 'navigation.tooltip.not_verified' | translate }}</p>
             </div>
             <div *ngIf="isUserVerified(states.user) && !isWalletInitialized(states.wallet)">
-                <p>In order to manage funds, you need to have your wallet initialized.</p>
+                <p>{{ 'navigation.tooltip.wallet_not_initialized' | translate }}</p>
             </div>
             <div *ngIf="isUserVerified(states.user) && isWalletInitialized(states.wallet) && !isWalletLazyReady(states.wallet)">
-                <p>Please wait for the administrator to verified your wallet.</p>
+                <p>{{ 'navigation.tooltip.verification_pending' | translate }}</p>
             </div>
         </ng-template>
     </ng-container>

@@ -98,6 +98,7 @@
   @extend %app-page-full-width;
   display: flex;
   justify-content: space-between;
+  text-transform: uppercase;
   .app-page-title,
   .app-page-title-back {
     width: 100%;

@@ -1,10 +1,10 @@
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { OrganizationService } from '../../../shared/services/project/organization.service';
-import { displayBackendErrorRx } from '../../../utilities/error-handler';
 import { ProjectWallet } from '../../../shared/services/project/project.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { RouterService } from '../../../shared/services/router.service';
+import { ErrorService } from '../../../shared/services/error.service';
 
 @Component({
     selector: 'app-manage-projects',
@@ -18,10 +18,11 @@ export class ManageProjectsComponent {
     projectsWallets$: Observable<ProjectWallet[]>;
 
     constructor(private router: RouterService,
+                private errorService: ErrorService,
                 private orgService: OrganizationService) {
         this.projectsWallets$ = this.refreshProjectsSubject.pipe(
             switchMap(() => this.orgService.getAllProjectsForOrganization(this.groupID)
-                .pipe(displayBackendErrorRx())),
+                .pipe(this.errorService.handleError)),
             map(res => res.projects_wallets)
         );
     }

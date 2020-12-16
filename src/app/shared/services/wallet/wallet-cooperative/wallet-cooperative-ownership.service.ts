@@ -11,26 +11,26 @@ export class WalletCooperativeOwnershipService {
     constructor(private http: BackendHttpClient) {
     }
 
-    executePlatformManagerTransaction(walletAddress: string) {
-        return this.executeOwnershipChangeTransaction(walletAddress, OwnershipType.PLATFORM_MANAGER);
+    executePlatformManagerTX(userUUID: string) {
+        return this.executeOwnershipChangeTransaction(userUUID, OwnershipType.PLATFORM_MANAGER);
     }
 
-    executeTokenIssuerTransaction(walletAddress: string) {
-        return this.executeOwnershipChangeTransaction(walletAddress, OwnershipType.TOKEN_ISSUER);
+    executeTokenIssuerTX(userUUID: string) {
+        return this.executeOwnershipChangeTransaction(userUUID, OwnershipType.TOKEN_ISSUER);
     }
 
-    private executeOwnershipChangeTransaction(walletAddress: string, type: string) {
+    private executeOwnershipChangeTransaction(userUUID: string, type: OwnershipType) {
         return this.http.post<TransactionInfo>(this.ownershipEndpoint,
             <OwnershipChangeTransactionData>{
-                wallet_address: walletAddress,
+                user_uuid: userUUID,
                 type: type
             });
     }
 }
 
 interface OwnershipChangeTransactionData {
-    wallet_address: string;
-    type: string;
+    user_uuid: string;
+    type: OwnershipType;
 }
 
 enum OwnershipType {

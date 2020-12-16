@@ -7,7 +7,6 @@ import { ActivatedRoute } from '@angular/router';
     styleUrls: ['./wallet-activation.component.css']
 })
 export class WalletActivationComponent implements OnInit {
-
     activationType = 'users';
 
     constructor(private route: ActivatedRoute) {

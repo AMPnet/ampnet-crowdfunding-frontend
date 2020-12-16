@@ -1,19 +1,25 @@
 <div class="container">
     <div class="app-page-title-back" [routerLink]="['/dash', 'wallet'] | coopPath">
         <i class="fas fa-long-arrow-alt-left mr-3"></i>
-        Withdrawal
+        {{ 'withdraw.title' | translate }}
     </div>
     <div *ngIf="banks !== undefined && banks.length > 0 && pendingWithdrawal === undefined">
         <div class="withdraw__amount">
-            <div class="withdraw__title">Withdraw amount</div>
+            <div class="withdraw__title">
+                {{ 'withdraw.amount_input.title' | translate }}
+            </div>
             <div class="withdraw__input">
-                <app-money-input-field placeholder="Enter withdrawal amount" [(realValue)]="withdrawAmount">
+                <app-money-input-field
+                        placeholder="{{ 'withdraw.amount_input.placeholder' | translate }}"
+                        [(realValue)]="withdrawAmount">
                 </app-money-input-field>
             </div>
         </div>
 
         <div class="withdraw__bank">
-            <div class="bank__title">Choose bank account</div>
+            <div class="bank__title">
+                {{ 'withdraw.amount_input.title' | translate }}
+            </div>
             <ul class="list-group">
                 <li (click)="changeActiveAccount(i)"
                     *ngFor="let bank of banks; let i = index"
@@ -29,7 +35,7 @@
 
         <div class="withdraw__cta">
             <button app-action-button
-                    text="Withdraw money"
+                    text="{{ 'withdraw.withdraw_button' | translate }}"
                     [onClick]="requestWithdrawal.bind(this)">
             </button>
         </div>
@@ -38,16 +44,18 @@
     <div *ngIf="pendingWithdrawal !== undefined" class="wrapper">
         <div class="pending">
             <div class="pending__desc">
-                <p>You have a pending withdrawal request.</p>
-                <p>Please approve it to have money deposited into your account.</p>
-                <p>It can take up to 24 hours to process the transaction.</p>
+                <p>{{ 'withdraw.pending.notice' | translate | splitPart:0 }}</p>
+                <p>{{ 'withdraw.pending.notice' | translate | splitPart:1 }}</p>
+                <p>{{ 'withdraw.pending.notice' | translate | splitPart:2 }}</p>
             </div>
         </div>
         <div class="pending__info">
             <div class="card">
                 <div class="card-body">
                     <span class="card-text mt-2">
-                        <div class="explainer-mini">Withdrawal amount</div>
+                        <div class="explainer-mini">
+                            {{ 'withdraw.pending.info_title' | translate | splitPart:2 }}
+                        </div>
                         {{ pendingWithdrawal.amount | currencyDefault }}
                     </span>
                     <span (click)="deleteWithdrawal().subscribe()" class="float-right cursor-pointer">
@@ -58,8 +66,8 @@
         </div>
         <div class="pending__cta">
             <button app-action-button
-                    text="Confirm withdrawal"
-                    loadingText="Processing transaction..."
+                    text="{{ 'withdraw.pending.confirm_withdrawal' | translate }}"
+                    loadingText="{{ 'withdraw.pending.confirm_withdrawal.loading' | translate }}"
                     [onClick]="burnWithdraw.bind(this)">
             </button>
         </div>
@@ -69,12 +77,12 @@
     <div *ngIf="banks !== undefined && banks.length === 0" class="wrapper">
         <div class="empty">
             <div class="empty__title">
-                You cannot withdraw money without an active bank account
+                {{ 'withdraw.no_bank.notice' | translate }}
             </div>
             <div class="empty__cta">
                 <button class="btn btn-primary w-100" [routerLink]="'/dash/payment_options/new' | coopPath">
                     <i class="fas fa-piggy-bank mr-2"></i>
-                    Add bank account
+                    {{ 'withdraw.no_bank.add_bank_account' | translate }}
                 </button>
             </div>
         </div>

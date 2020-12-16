@@ -1,26 +1,36 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <div class="explainer-mini mb-3">Deposit info</div>
+            <div class="explainer-mini mb-3">
+                {{ 'admin.deposits.single_deposit.title' | translate }}
+            </div>
         </div>
         <div *ngIf="(deposit$ | async) as deposit else spinner" class="col-md-12">
             <div class="card px-3">
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
                         <div *ngIf="!!deposit.project">
-                            <div class="explainer-mini">Project Name</div>
+                            <div class="explainer-mini">
+                                {{ 'admin.deposits.single_deposit.info.project_name' | translate }}
+                            </div>
                             <div>{{ deposit.project.name }}</div>
                         </div>
                         <div>
-                            <div class="explainer-mini">Name</div>
+                            <div class="explainer-mini">
+                                {{ 'admin.deposits.single_deposit.info.user_name' | translate }}
+                            </div>
                             <div>{{ deposit.user.first_name }} {{ deposit.user.last_name }}</div>
                         </div>
                         <div>
-                            <div class="explainer-mini">Date created</div>
+                            <div class="explainer-mini">
+                                {{ 'admin.deposits.single_deposit.info.created_at' | translate }}
+                            </div>
                             <div>{{ deposit.deposit.created_at | date:'mediumDate' }}</div>
                         </div>
                         <div>
-                            <div class="explainer-mini">Reference</div>
+                            <div class="explainer-mini">
+                                {{ 'admin.deposits.single_deposit.info.reference' | translate }}
+                            </div>
                             <div>{{ deposit.deposit.reference }}</div>
                         </div>
                     </div>
@@ -29,15 +39,15 @@
 
             <form [formGroup]="confirmDepositForm" style="display: contents">
                 <div class="explainer-mini mt-3 mb-2">
-                    Deposit amount
+                    {{ 'admin.deposits.single_deposit.amount_input.title' | translate }}
                 </div>
                 <app-money-input-field
-                        placeholder="Enter user investment amount"
+                        placeholder="{{ 'admin.deposits.single_deposit.amount_input.placeholder' | translate }}"
                         [control]="confirmDepositForm.get('amount')">
                 </app-money-input-field>
 
                 <div class="explainer-mini mt-3 mb-2">
-                    Document
+                    {{ 'admin.deposits.single_deposit.document_input.title' | translate }}
                 </div>
                 <app-upload-area areaID='project-image' style="width: max-content"
                                  [restrictions]="{
@@ -53,7 +63,7 @@
                         (click)="showConfirmModal(confirmDepositForm, deposit.deposit.id)"
                         data-toggle="modal">
                     <i class="fas fa-check-circle mr-2"></i>
-                    Confirm deposit
+                    {{ 'admin.deposits.single_deposit.submit' | translate }}
                 </button>
             </form>
         </div>

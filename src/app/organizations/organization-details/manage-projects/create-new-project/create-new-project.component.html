@@ -1,13 +1,15 @@
 <div class="container">
     <div class="app-page-title-back" (click)="backToOrganizationDetailsScreen()">
         <i class="fas fa-long-arrow-alt-left mr-3"></i>
-        Back
+        {{ 'projects.new.title.back' | translate }}
     </div>
     <form [formGroup]="createForm" class="mb-5">
         <div class="row project-container">
             <div class="project-left col-lg-6">
                 <!-- Mobile title! -->
-                <h4 class="left__title d-lg-none">Create a new project</h4>
+                <h4 class="left__title d-lg-none">
+                    {{ 'projects.new.title' | translate }}
+                </h4>
                 <div class="map-holder app__full-width">
                     <app-location-map [editable]="true" [(lat)]="mapLat" [(lng)]="mapLong"></app-location-map>
                 </div>
@@ -15,53 +17,70 @@
 
             <div class="project-right col-lg-6">
                 <div class="right__wrapper">
-                    <h4 class="right__title d-none d-lg-block">Create a new project</h4>
+                    <h4 class="right__title d-none d-lg-block">
+                        {{ 'projects.new.title.back' | translate }}
+                    </h4>
                     <div class="right__input-name">
-                        <div class="input__label">Project name</div>
+                        <div class="input__label">
+                            {{ 'projects.new.name_input.title' | translate }}
+                        </div>
                         <input class="input-reg w-100" formControlName="name"
-                            type="text" placeholder="Enter project name"/>
+                               placeholder="{{ 'projects.new.name_input.placeholder' | translate }}"
+                               type="text"/>
                     </div>
                     <div class="right__input-dates">
                         <div class="input__desc flex__center--space">
-                            <div class="input__label">Dates (DD/MM/YY)</div>
+                            <div class="input__label">
+                                {{ 'projects.new.period_input.title' | translate }}
+                            </div>
                             <i class="fas fa-lock"></i>
                         </div>
                         <div class="row">
                             <div class="col-12 col-lg-6">
                                 <input class="input-reg w-100" formControlName="startDate" autocomplete="off"
-                                    id="start-date" placeholder="Enter start date" bsDatepicker
-                                    [bsConfig]="bsConfig" (click)="setDatepickerOptions()"/>
+                                       id="start-date"
+                                       placeholder="{{ 'projects.new.period_input.placeholder.start' | translate }}"
+                                       bsDatepicker
+                                       [bsConfig]="bsConfig" (click)="setDatepickerOptions()"/>
                             </div>
 
                             <div class="col-12 col-lg-6">
                                 <input class="input-reg w-100" formControlName="endDate" autocomplete="off"
-                                    id="end-date" placeholder="Enter end date" bsDatepicker
-                                    [bsConfig]="bsConfig" (click)="setDatepickerOptions()"/>
+                                       id="end-date"
+                                       placeholder="{{ 'projects.new.period_input.placeholder.end' | translate }}"
+                                       bsDatepicker
+                                       [bsConfig]="bsConfig" (click)="setDatepickerOptions()"/>
                             </div>
                         </div>
 
                     </div>
                     <div class="right__input-investments">
                         <div class="input__desc flex__center--space">
-                            <div class="input__label">Investment per member €</div>
+                            <div class="input__label">
+                                {{ 'projects.new.investment_range_input.title' | translate }}
+                            </div>
                             <i class="fas fa-lock"></i>
                         </div>
                         <app-money-input-field
-                                placeholder="Enter minimal amount" inputClass="input-reg w-50"
+                                placeholder="{{ 'projects.new.investment_range_input.placeholder.start' | translate }}"
+                                inputClass="input-reg w-50"
                                 [control]="createForm.get('minPerUser')">
                         </app-money-input-field>
                         <app-money-input-field
-                                placeholder="Enter maximal amount" inputClass="input-reg w-50 border-left-none"
+                                placeholder="{{ 'projects.new.investment_range_input.placeholder.end' | translate }}"
+                                inputClass="input-reg w-50 border-left-none"
                                 [control]="createForm.get('maxPerUser')">
                         </app-money-input-field>
                     </div>
                     <div class="right__input-funding">
                         <div class="input__desc flex__center--space">
-                            <div class="input__label">Expected funding €</div>
+                            <div class="input__label">
+                                {{ 'projects.new.expected_funding_input.title' | translate }}
+                            </div>
                             <i class="fas fa-lock"></i>
                         </div>
                         <app-money-input-field
-                                placeholder="Enter expected funding amount"
+                                placeholder="{{ 'projects.new.expected_funding_input.placeholder' | translate }}"
                                 inputClass="input-reg w-100"
                                 [control]="createForm.get('expectedFunding')">
                         </app-money-input-field>
@@ -69,33 +88,42 @@
                     <div class="right__warning">
                         <i class="fas fa-lock"></i>
                         <div>
-                            <span>Date, Investment per member</span> and <span>Expected funding</span> can't be changed once
-                            project is created.
+                            <span>
+                                {{ 'projects.new.lock_notice' | translate }}
+                            </span>
                         </div>
                     </div>
                     <div *ngIf="createForm.dirty && createForm.invalid">
                         <ng-container *ngIf="createForm.get('startDate').dirty && createForm.get('endDate').dirty">
                             <div class="alert alert-warning my-3" *ngIf="createForm.hasError('invalidStartEndDate')">
                                 <i class="fas fa-exclamation-triangle mr-2"></i>
-                                <div>Start date has to be lower than the end date.</div>
+                                <div>
+                                    {{ 'projects.new.errors.invalid_start_end_date' | translate }}
+                                </div>
                             </div>
                         </ng-container>
 
                         <ng-container
                                 *ngIf="createForm.get('expectedFunding').dirty && createForm.get('minPerUser').dirty &&
                                 createForm.get('maxPerUser').dirty">
-                            <div class="alert alert-warning my-3" *ngIf="createForm.hasError('invalidMaxExpectedFunding')">
+                            <div class="alert alert-warning my-3"
+                                 *ngIf="createForm.hasError('invalidMaxExpectedFunding')">
                                 <i class="fas fa-exclamation-triangle mr-2"></i>
-                                <div>Maximum investment per user cannot be greater than project expected funding.</div>
+                                <div>
+                                    {{ 'projects.new.errors.invalid_max_expected_funding' | translate }}
+                                </div>
                             </div>
                             <div class="alert alert-warning my-3" *ngIf="createForm.hasError('invalidMinMax')">
                                 <i class="fas fa-exclamation-triangle mr-2"></i>
-                                <div>Minimum investment per user cannot be greater than maximum investment per user.</div>
+                                <div>
+                                    {{ 'projects.new.errors.invalid_min_max' | translate }}
+                                </div>
                             </div>
                         </ng-container>
                     </div>
                     <button app-action-button
-                            text="Create new project" loadingText="Creating project..."
+                            text="{{ 'projects.new.create_button' | translate }}"
+                            loadingText="{{ 'projects.new.create_button.loading' | translate }}"
                             [onClick]="submitForm.bind(this)" [disabled]="!createForm.valid"
                             class="btn btn-primary btn-success d-none d-lg-block w-100"
                             faIcon="fa-plus">
@@ -105,7 +133,8 @@
 
             <div class="col-12">
                 <button app-action-button
-                        text="Create new project" loadingText="Creating project..."
+                        text="{{ 'projects.new.create_button' | translate }}"
+                        loadingText="{{ 'projects.new.create_button.loading' | translate }}"
                         [onClick]="submitForm.bind(this)" [disabled]="!createForm.valid"
                         class="btn btn-success d-block d-lg-none w-100"
                         faIcon="fa-plus">

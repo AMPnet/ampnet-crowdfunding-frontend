@@ -29,7 +29,7 @@
   &__raised {
     margin-top: 20px;
     color: #444444;
-    span {
+    span.bold {
       color: #111111;
       font-weight: bold;
     }
@@ -71,8 +71,9 @@
     color: $title-color;
     font-size: $font-size-desktop-small;
     letter-spacing: 2px;
-    span {
+    span.bold {
       font-size: $font-size-desktop-small;
+      font-weight: bold;
       letter-spacing: 2px;
       color: $title-color;
     }

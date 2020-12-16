@@ -1,35 +1,51 @@
 <ng-container *ngIf="(user$ | async) as user">
     <div class="container">
-        <h1 class="app-page-title">USER PROFILE</h1>
+        <h1 class="app-page-title">{{ 'settings.user.title' | translate }}</h1>
 
         <div>
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="mt-4">
-                        <div class="explainer-mini">First name</div>
-                        {{ user.first_name }}
+            <div class="row mt-3">
+                <div class="col-md-4">
+                    <label for="first_name" class="app-page-label">
+                        {{ 'settings.user.first_name' | translate }}
+                    </label>
+                    <input class="form-control input-reg" id="first_name" disabled type="text"
+                           [value]="user.first_name">
+                </div>
+                <div class="col-md-4">
+                    <label for="last_name" class="app-page-label">
+                        {{ 'settings.user.last_name' | translate }}
+                    </label>
+                    <input class="form-control input-reg" id="last_name" disabled type="text"
+                           [value]="user.last_name">
+                </div>
+                <div class="col-md-4">
+                    <label for="email" class="app-page-label">
+                        {{ 'settings.user.email' | translate }}
+                    </label>
+                    <input class="form-control input-reg" id="email" disabled type="text"
+                           [value]="user.email">
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col">
+                    <label for="languages" class="app-page-label">
+                        {{ 'settings.user.languages' | translate }}
+                    </label>
+
+                    <div id="languages" class="d-flex flex-wrap">
+                        <div *ngFor="let lang of languageService.supportedLanguages"
+                             class="mx-3">
+                            <a [routerLink]="" (click)="languageService.setLanguage(lang)"
+                               [class.font-weight-bold]="lang === languageService.getCurrentLanguage()">
+                                {{ ('languages.' + lang) | translate }}
+                            </a>
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <div class="mt-4">
-                        <div class="explainer-mini">Last name</div>
-                        {{ user.last_name }}
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="mt-4">
-                        <div class="explainer-mini">Email</div>
-                        {{ user.email }}
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="mt-4" style="width: fit-content; text-align: center;">
-                        <div class="explainer-mini">Approved</div>
-                        <i [class]="user.enabled ? 'fa-check' : 'fa-close'" class="fa"></i>
-                    </div>
-                </div>
-            </div>   
+            </div>
         </div>
+
         <!--        TODO: Updating user info is disabled when using Veriff -->
         <!--        <button [routerLink]="'/dash/settings/user/identity' | coopPath"-->
         <!--                class="btn btn-primary p-3 mt-5 w-100">-->

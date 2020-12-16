@@ -1,0 +1,770 @@
+{
+  "landing": {
+    "welcome": "Welcome to | {{ coopName }} | investing platform.",
+    "explore": "Explore projects"
+  },
+  "offers": {
+    "title": "Offers",
+    "no_projects_available": "No projects are currently available for crowdfunding.",
+    "single_offer_item": {
+      "raised": "{{ raised }} | raised of {{ goal }} goal",
+      "ends_on": "Ends on {{ end_date }}",
+      "return": "Expected yearly return: | {{ from }} - {{ to }}",
+      "see_more": "See more"
+    },
+    "offer_details": {
+      "title": "OFFER DETAILS",
+      "title.portfolio": "PORTFOLIO DETAILS",
+      "project_hidden": "The project is not open for funding. If you wish to invest, please come back later.",
+      "show_location": "Show location",
+      "raised": "{{ raised }} | raised of {{ goal }} goal",
+      "return": "{{ from }} - {{ to }} | Expected yearly return",
+      "min_invest": "{{ amount }} | Min Investment",
+      "max_invest": "{{ amount }} | Max Investment",
+      "funding_period": "Funding period | {{ from }} - {{ to }}",
+      "cancel_investment": "Cancel investment",
+      "invest": "Invest",
+      "invest.overview": "Sign Up & Invest",
+      "invest.portfolio": "Increase investment",
+      "invest.portfolio.short": "Reinvest",
+      "verify_profile": "Verify Profile & Invest",
+      "verify_profile.short": "Verify Profile",
+      "share": "Share",
+      "link_copied": "Link copied to clipboard",
+      "transactions": {
+        "title": "Transactions",
+        "total_invested": "Total Invested"
+      },
+      "details": {
+        "title": "Details"
+      }
+    }
+  },
+  "my_portfolio": {
+    "title": "My portfolio",
+    "total_investment": "Total investment",
+    "total_earnings": "Total earnings",
+    "investments": {
+      "title": "Investments",
+      "empty": "You don't have any active investments.",
+      "item.invested": "{{ amount }} | Invested"
+    },
+    "wallet_not_activated_notice": "Your portfolio will be available after you've invested in a project."
+  },
+  "invest": {
+    "back_button": "Invest in",
+    "invest_input.title": "I want to invest",
+    "invest_input.placeholder": "Enter invest amount",
+    "button": "Invest",
+    "min_invest": "{{ amount }} Min investment",
+    "max_invest": "{{ amount }} Max investment",
+    "errors": {
+      "amount_below_min": "Investment amount too low. | The minimum investment is {{ amount }}",
+      "amount_above_max": "Investment amount too high. | The maximum investment is {{ amount }}",
+      "amount_above_balance": "You don't have enough funds in your wallet.",
+      "max_reached": "You have already invested a maximum allowed amount for this project.",
+      "not_enough_funds": "You don't have enough funds for minimal investment."
+    },
+    "projections": {
+      "title": "ESTIMATED RETURN",
+      "total_investment": "Total investment = {{ amount }}",
+      "user_invested": "{{ amount }} invested so far",
+      "return.1year.title": "Return over 1 year",
+      "return.5years.title": "Return over 5 years",
+      "return.10years.title": "Return over 10 years"
+    },
+    "deposit_button": "Please deposit funds",
+    "deposit_button.short": "Deposit",
+    "available_funds": "Available funds",
+    "open_wallet": "Open wallet",
+    "verify_sign": {
+      "title": "Verify investment",
+      "amount": "Amount",
+      "project": "Project",
+      "verify_invest": "Verify & Invest"
+    }
+  },
+  "wallet": {
+    "title": "Wallet",
+    "description": {
+      "notice": "You must initialize your wallet to invest.",
+      "title": "Your private, secure wallet",
+      "details": "We're committed to making sure your funds are as safe as they can possibly be when using our platform. To do this, we prevent the management of your money by anyone other than you. | This is why we use a third-party secure wallet to store your money and approve investments into projects. To start the process of initializing your wallet - click on the button below."
+    },
+    "initialize_wallet": "Initialize secure wallet",
+    "balance": "Balance",
+    "deposit": "Deposit",
+    "withdraw": "Withdraw",
+    "wallet_not_active_notice": "Your wallet is pending approval from an administrator. You can deposit funds while pending approval.",
+    "deposit_funds": "Deposit funds",
+    "wallet_empty_notice": "Your wallet is empty. Deposit funds to get started.",
+    "transactions": {
+      "title": "Transaction History",
+      "empty_notice": "Your transaction history is empty.",
+      "type": {
+        "investment": "Investment | to",
+        "deposit": "Deposit",
+        "withdraw": "Withdraw",
+        "share_payout": "Dividend | from",
+        "cancel_investment": "Cancel investment | from",
+        "approve_investment": "Approve investment | to"
+      },
+      "state": {
+        "mined.invest": " {{ percent }} Invested",
+        "pending": "Pending",
+        "failed": "Failed"
+      },
+      "pdf_report": "Generate PDF Report",
+      "pdf_report.downloading": "Downloading..."
+    }
+  },
+  "deposit": {
+    "title": "Deposit",
+    "notice": "After you have deposited the money onto our bank account it can take up to 24h for it to become visible on the platform. You will be notified by email when your money has been received.",
+    "payment_details": "Deposit payment details",
+    "iban": "IBAN",
+    "reference": "Description"
+  },
+  "withdraw": {
+    "title": "Withdraw",
+    "amount_input": {
+      "title": "Withdrawal amount",
+      "placeholder": "Enter withdrawal amount"
+    },
+    "bank_picker": {
+      "title": "Choose bank account"
+    },
+    "withdraw_button": "Withdraw money",
+    "pending": {
+      "notice": "You have a pending withdrawal request. | Please approve it to have money deposited into your account. | It can take up to 24 hours to process the transaction.",
+      "info_title": "Withdrawal amount",
+      "confirm_withdrawal": "Confirm withdrawal",
+      "confirm_withdrawal.loading": "Processing..."
+    },
+    "no_bank": {
+      "notice": "You cannot withdraw money without an active bank account.",
+      "add_bank_account": "Add bank account"
+    },
+    "withdrawal_deleted": "Withdrawal deleted"
+  },
+  "organizations": {
+    "title": "Investment groups",
+    "create_org": "Create group",
+    "pending_invite_notice": "You have invites pending",
+    "my": "My groups",
+    "empty": "You currently don't have access to any groups.",
+    "org_item": {
+      "project_count": "| {{ count }} | Projects"
+    },
+    "invites": {
+      "title": "Group invites",
+      "join": "Join group",
+      "empty": "Not invited to any groups",
+      "accepted": "Accepted invitation to the organization."
+    },
+    "new": {
+      "title": "Create a new investment group",
+      "title.back": "New group",
+      "logo_input": {
+        "title": "Add logo"
+      },
+      "group_name_input": {
+        "title": "Group name",
+        "placeholder": "Enter group name"
+      },
+      "description_input": {
+        "title": "Description",
+        "placeholder": "Enter description"
+      },
+      "submit_button": "Create new group",
+      "submit_button.loading": "Creating group...",
+      "created": "Investment group created!"
+    },
+    "details": {
+      "title.back": "Investment group details",
+      "create_project": "Create project",
+      "project_count": "| {{ count }} | Projects",
+      "wallet_not_verified": "This group is pending approval from an administrator. During this time, you can't create new projects.",
+      "wallet_missing": "The organization wallet needs to be created. You will be prompted now.",
+      "projects": {
+        "title": "Projects",
+        "empty": "There are no projects associated with this organization.",
+        "item": {
+          "period": "Funding | {{ from }} - {{ to }}",
+          "raised": "{{ raised }} | raised of {{ goal }} goal",
+          "publish": "Publish",
+          "unpublish": "Unpublish"
+        }
+      },
+      "members": {
+        "title": "Members",
+        "add_input.placeholder": "joe@mail.com, jane@mail.com",
+        "add_button": "Add members",
+        "add_button.loading": "Sending invites...",
+        "join_date": "Joined {{ date }}",
+        "empty": "You are the only member of {{ org }}",
+        "invited": "Successfully invited user to organization.",
+        "deleted": "Successfully deleted the user from the organization."
+      }
+    }
+  },
+  "projects": {
+    "new": {
+      "title.back": "Back",
+      "title": "Create a new project",
+      "name_input": {
+        "title": "Project name",
+        "placeholder": "Enter project name"
+      },
+      "period_input": {
+        "title": "Date period (Start - End)",
+        "placeholder.start": "Enter start date",
+        "placeholder.end": "Enter end date"
+      },
+      "investment_range_input": {
+        "title": "Investment per member (Min - Max)",
+        "placeholder.start": "Enter minimal amount",
+        "placeholder.end": "Enter maximal amount"
+      },
+      "expected_funding_input": {
+        "title": "Expected funding",
+        "placeholder": "Enter expected funding amount"
+      },
+      "lock_notice": "Date, Investment per member and Expected funding cannot be changed once the project is created.",
+      "errors": {
+        "invalid_start_end_date": "The start date has to be lower than the end date.",
+        "invalid_max_expected_funding": "The maximum investment per user cannot be greater than the project expected funding.",
+        "invalid_min_max": "The minimum investment per user cannot be greater than the maximum investment per user."
+      },
+      "create_button": "Create new project",
+      "create_button.loading": "Creating project..."
+    },
+    "edit": {
+      "preview": "Preview",
+      "wallet_not_verified_notice": "This project is pending approval from an administrator. During this time, the project cannot be publicly shown.",
+      "active.public": "Public",
+      "active.hidden": "Hidden",
+      "show": "Show project",
+      "show.short": "Show",
+      "hide": "Hide project",
+      "hide.short": "Hide",
+      "update": "Update all",
+      "update.loading": "Updating...",
+      "details": {
+        "title": "Details",
+        "name_input.title": "Project name",
+        "short_description_input.title": "Short description",
+        "description_input.title": "Description",
+        "roi_input.title": "Expected ROI % (From - To)",
+        "date_range_input.title": "Dates (From - To)",
+        "investment_range_input.title": "Investment per member (From - To)",
+        "expected_funding_input.title": "Expected funding",
+        "project_image_input": {
+          "title": "Project image",
+          "no_image_notice": "Project has no image set"
+        },
+        "location_input.title": "Location",
+        "project_files_input": {
+          "title": "Project files",
+          "no_files_notice": "No files added"
+        }
+      },
+      "news": {
+        "title": "News",
+        "news_input": {
+          "title": "Project news",
+          "placeholder": "Enter link (e.g. https://portal.com/news)"
+        }
+      },
+      "manage_payments": {
+        "title": "Manage Payments",
+        "wallet": {
+          "title": "Project wallet",
+          "deposit_button": "Deposit",
+          "withdraw_button": "Withdraw",
+          "balance": "Balance"
+        },
+        "deposit": {
+          "title": "Deposit",
+          "notice": "After you have deposited the money onto our bank account it can take up to 24h for it to become visible on the platform. You will be notified by email when your money has been received.",
+          "details": "Deposit payment details",
+          "iban": "IBAN",
+          "reference": "Description",
+          "existing_deposit": "You already have an existing deposit. Please wait until it is approved"
+        },
+        "withdraw": {
+          "title": "Withdraw",
+          "amount_input": {
+            "title": "Withdrawal amount",
+            "placeholder": "Enter withdrawal amount"
+          },
+          "bank_input": {
+            "title": "Bank account details",
+            "placeholder": "IBAN"
+          },
+          "submit": "Withdraw money",
+          "review": {
+            "notice": "You have a pending withdrawal request. | To have the money deposited into your bank account, you need to sign the transaction. | After successful signing, it can take up to 24 hours to process the transaction.",
+            "amount": "Withdrawal amount",
+            "submit": "Verify & Withdraw",
+            "deleted": "Withdrawal deleted."
+          }
+        },
+        "revenue_share": {
+          "title": "Revenue share",
+          "description": "Enter the amount of money to be paid out to investors.",
+          "placeholder": "Enter maximum investment per user",
+          "errors.invalid_amount": "Payout must be lower or equal to balance.",
+          "submit_button": "Start payout",
+          "review": {
+            "title": "Revenue share information",
+            "project_name": "Project name",
+            "amount": "Amount to distribute",
+            "submit": "Verify and start revenue share"
+          },
+          "confirm_modal": {
+            "title": "Confirm revenue share amount",
+            "input": {
+              "title": "Amount",
+              "placeholder": "Enter revenue share amount"
+            },
+            "submit": "Confirm",
+            "cancel": "Cancel"
+          }
+        }
+      },
+      "create_wallet_notice": "Verify the project creation with your blockchain wallet. You will be prompted now.",
+      "delete_file_confirmation": {
+        "question": "Are you sure you want to delete this file? This action cannot be reversed.",
+        "yes": "Yes",
+        "no": "No"
+      }
+    }
+  },
+  "settings": {
+    "user": {
+      "title": "User profile",
+      "first_name": "First name",
+      "last_name": "Last name",
+      "email": "Email",
+      "languages": "Languages",
+      "identity": {
+        "title": "Verify Identity",
+        "onboarding": {
+          "resubmission_requested": "Resubmission requested",
+          "declined": "Declined",
+          "decision_pending": "Your account is in process of verification. Please wait...",
+          "approved": "User data has been successfully verified.",
+          "start_verification": "Start verification"
+        }
+      }
+    }
+  },
+  "navigation": {
+    "menu": {
+      "title": "MENU",
+      "offers": "Offers",
+      "my_portfolio": "My portfolio",
+      "wallet": "Wallet",
+      "investment_groups": "Investment groups"
+    },
+    "settings": {
+      "title": "SETTINGS",
+      "user_profile": "User profile",
+      "payments": "Payments"
+    },
+    "admin": {
+      "title": "ADMIN",
+      "token_issuer.title": "TOKEN ISSUER",
+      "platform_manager.title": "PLATFORM MANAGER",
+      "withdrawals": "Withdrawals",
+      "deposits": "Deposits",
+      "activations": "Activations",
+      "bank_account": "Bank account",
+      "platform_roles": "Platform roles",
+      "platform_config": "Platform config"
+    },
+    "info": {
+      "contact_us": "Contact us",
+      "logout": "Log out"
+    },
+    "tooltip": {
+      "not_verified": "Profile not verified. Go to the User Profile screen to finish the onboarding process.",
+      "wallet_not_initialized": "In order to manage funds, you need to have your wallet initialized.",
+      "verification_pending": "Please wait for the administrator to verify your wallet."
+    }
+  },
+  "payment_options": {
+    "title": "Bank accounts",
+    "bank_account": {
+      "iban": "IBAN",
+      "alias": "Name",
+      "swift": "SWIFT/BIC",
+      "actions": "Actions"
+    },
+    "bank_accounts_empty": "No payment options available. Please add a new payment option.",
+    "add_new": "Add new",
+    "new_option": {
+      "title": "New Bank Account"
+    },
+    "new_bank_account": {
+      "title": "Enter bank account details",
+      "iban_input": {
+        "title": "IBAN",
+        "placeholder": "AD1200012030200359100100"
+      },
+      "swift_input": {
+        "title": "SWIFT/BIC",
+        "placeholder": "REVOGB21",
+        "helper_notice": "Find it out | here |"
+      },
+      "alias_input": {
+        "title": "Short name",
+        "placeholder": "Primary bank account"
+      },
+      "submit": "Add bank account"
+    }
+  },
+  "user_state_reminder": {
+    "not_verified": "Profile not verified. Please go | here | to verify your profile and finish the onboarding procedure.",
+    "initialize_wallet": "Thank you for verifying your profile. | In order to manage funds, you need to have your wallet initialized. Please initialize your wallet | here | .",
+    "activation_pending": "Thank you for initializing your wallet.",
+    "activation_pending.user_notice": "Please wait for the administrator to get it verified.",
+    "activation_pending.admin_notice": "Please wait for a few moments to get everything set up."
+  },
+  "admin": {
+    "withdrawals": {
+      "title": "Manage withdrawals",
+      "users": {
+        "title": "User withdrawals",
+        "empty": "No pending user withdrawals"
+      },
+      "projects": {
+        "title": "Project withdrawals",
+        "empty": "No pending project withdrawals"
+      },
+      "single_withdrawal": {
+        "title": "Examine withdrawal",
+        "info": {
+          "project_name": "Project name",
+          "user_name": "User name",
+          "iban": "IBAN",
+          "amount": "Amount"
+        },
+        "payout_notice": "Please perform the payout | after | finalizing the withdrawal!",
+        "submit": "Finalize withdrawal",
+        "submit.loading": "Finalize withdrawal"
+      }
+    },
+    "deposits": {
+      "title": "Manage deposits",
+      "code_input": {
+        "placeholder": "Enter code in the deposit description field"
+      },
+      "submit": "Get deposit info",
+      "unapproved": {
+        "title": "Unapproved deposits",
+        "empty": "No unapproved deposits"
+      },
+      "single_deposit": {
+        "title": "Deposit info",
+        "info": {
+          "project_name": "Project name",
+          "user_name": "User name",
+          "created_at": "Date created",
+          "reference": "Reference"
+        },
+        "amount_input": {
+          "title": "Deposit amount",
+          "placeholder": "Enter user investment amount"
+        },
+        "document_input": {
+          "title": "Document"
+        },
+        "submit": "Confirm deposit",
+        "modal": {
+          "title": "Confirm deposit amount",
+          "amount_input": {
+            "title": "Amount",
+            "placeholder": "Deposit amount"
+          },
+          "cancel": "Cancel",
+          "submit": "Create deposit"
+        },
+        "not_found": "Deposit transaction with this reference code was not found.",
+        "already_approved": {
+          "title": "Transaction already approved",
+          "description": "You will be prompted to sign deposit transaction."
+        }
+      }
+    },
+    "activations": {
+      "users_tab": "Users",
+      "groups_tab": "Groups",
+      "projects_tab": "Projects",
+      "users": {
+        "title": "Unactivated users",
+        "activate": "Activate",
+        "empty": "No unactivated users"
+      },
+      "projects": {
+        "title": "Unactivated projects",
+        "activate": "Activate",
+        "empty": "No unactivated projects"
+      },
+      "groups": {
+        "title": "Unactivated groups",
+        "activate": "Activate",
+        "empty": "No unactivated groups"
+      }
+    },
+    "bank_account": {
+      "title": "Platform Bank Account",
+      "item": {
+        "iban": "IBAN",
+        "alias": "Name",
+        "swift": "SWIFT/BIC",
+        "actions": "Actions"
+      },
+      "empty": "No payment options available. Please add a new payment option.",
+      "add_new": "Add new",
+      "new": {
+        "title": "New Platform Bank Account"
+      }
+    },
+    "platform_roles": {
+      "title": "Platform roles",
+      "role_notice": "Your role on the platform is: {{ role }}",
+      "roles": {
+        "admin": "Administrator",
+        "token_issuer": "Token Issuer",
+        "platform_manager": "Platform manager"
+      },
+      "platform_manager_change": {
+        "title": "Platform manager",
+        "notice": "The platform manager has the authority to approve users, groups and projects.",
+        "input": {
+          "title": "Email",
+          "placeholder": "new.platform.manager@email.com"
+        },
+        "submit": "Transfer ownership"
+      },
+      "token_issuer_change": {
+        "title": "Token issuer",
+        "notice": "The token issuer has the authority to mint and burn money on the platform.",
+        "input": {
+          "title": "Email",
+          "placeholder": "new.token.issuer@email.com"
+        },
+        "submit": "Transfer ownership"
+      },
+      "change_confirmation": {
+        "question": "Transferring \"{{ role }}\" ownership to another user. Check the data before you proceed.",
+        "user_data": "Name: {{ first_name }} {{ last_name }}, Email: {{ email }}",
+        "yes": "Transfer",
+        "no": "Abort",
+        "success": "Transfer ownership completed.",
+        "success.notice": "Please wait for a minute and refresh your browser."
+      },
+      "user_not_found": "User with this email was not found."
+    },
+    "platform_config": {
+    }
+  },
+  "auth": {
+    "forgot_password": {
+      "title": "Forgot password",
+      "instructions_notice": "Enter your email address and we'll send you instructions to reset your password.",
+      "email_input": {
+        "title": "Email",
+        "placeholder": "john.smith@email.com"
+      },
+      "submit": "Send instructions",
+      "missing_user": "User doesn't exist on the platform.",
+      "email_sent": "We have sent you an e-mail containing your password reset link."
+    },
+    "new_instance": {
+      "title": "New Instance",
+      "name_input": {
+        "title": "Instance name",
+        "placeholder": "Instance name"
+      },
+      "identifier_input": {
+        "title": "Identifier",
+        "placeholder": "instance-name",
+        "example": "Your instance will be served on: {{ url }}"
+      },
+      "web_title_input": {
+        "title": "Web title",
+        "placeholder": "Instance"
+      },
+      "logo_input": {
+        "title": "Logo"
+      },
+      "submit": "Create"
+    },
+    "sign_up": {
+      "title": "Sign up",
+      "with_facebook": "Signup with Facebook",
+      "with_google": "Signup with Google",
+      "email_input": {
+        "title": "Email",
+        "placeholder": "john.smith@email.com"
+      },
+      "first_name_input": {
+        "title": "First name",
+        "placeholder": "John"
+      },
+      "last_name_input": {
+        "title": "Last name",
+        "placeholder": "Smith"
+      },
+      "password_input": {
+        "title": "Password",
+        "placeholder": "********",
+        "notice": "Password must be at least 8 characters long."
+      },
+      "confirm_password_input": {
+        "title": "Confirm password",
+        "placeholder": "********"
+      },
+      "submit": "Create account",
+      "sign_in_notice": "Already have an account? Click | here | to sign in.",
+      "success": "Sign up successful!"
+    },
+    "sign_in": {
+      "title": "Sign in",
+      "with_facebook": "Sign In with Facebook",
+      "with_google": "Sign In with Google",
+      "email_input": {
+        "title": "Email",
+        "placeholder": "john.smith@email.com"
+      },
+      "password_input": {
+        "title": "Password",
+        "placeholder": "********"
+      },
+      "submit": "Sign In",
+      "submit.loading": "Signing in...",
+      "sign_up_notice": "Don't have an account? Click | here | to sign up.",
+      "forgot_password_notice": "Forgot password? Click | here | to reset it."
+    },
+    "reset_password": {
+      "title": "Reset password",
+      "success": "Your password has been changed successfully.",
+      "password_input": {
+        "title": "Password",
+        "placeholder": "********",
+        "notice": "Password must be at least 8 characters long."
+      },
+      "confirm_password_input": {
+        "title": "Confirm password",
+        "placeholder": "********"
+      },
+      "submit": "Submit"
+    }
+  },
+  "errors": {
+    "registration": {
+      "sign_up_invalid": "Invalid sign up data.",
+      "user_exists": "The given email is already in use.",
+      "confirmation_token_invalid": "Invalid email confirmation data.",
+      "confirmation_token_expired": "Confirmation link has expired.",
+      "social_failed": "There is a problem with the social login method. Try again later.",
+      "captcha_failed": "You have failed captcha validation. Please, try again."
+    },
+    "auth": {
+      "invalid_login_method": "Invalid login method",
+      "invalid_forgot_password_link": "Invalid forgot password link. Request a new one.",
+      "invalid_credentials": "Invalid username or password."
+    },
+    "user": {
+      "no_user": "The requested user does not exist.",
+      "invalid_bank_account_data": "Bank account data is invalid.",
+      "different_password": "Old password is invalid.",
+      "invalid_privilege": "You have no sufficient privilege to do this action."
+    },
+    "wallet": {
+      "missing_wallet": "Your wallet is missing.",
+      "cannot_create_new_wallet": "A new wallet cannot be created.",
+      "not_enough_funds": "Not enough funds on your wallet.",
+      "wallet_already_registered": "This wallet has already been registered.",
+      "missing_deposit": "Requested deposit does not exist.",
+      "deposit_already_minted": "Requested deposit has already been finalized.",
+      "deposit_not_approved": "Invalid action. The transaction cannot be processed if not approved.",
+      "unapproved_deposit_exists": "You already have an unprocessed deposit. A new one cannot be created.",
+      "missing_withdrawal": "The requested withdrawal has not been found.",
+      "unapproved_withdraw_exists": "You already have an unprocessed withdrawal. A new one cannot be created.",
+      "withdraw_already_approved": "Forbidden action because the withdrawal has already been approved.",
+      "withdraw_not_approved": "Forbidden action because the withdrawal has not already been approved.",
+      "withdraw_already_burned": "Forbidden action because the withdrawal has already been processed.",
+      "wallet_not_activated_by_admin": "Forbidden action! Wallet must be activated by an administrator.",
+      "missing_revenue_payout": "Invalid action. Requested revenue payout transaction is missing."
+    },
+    "organization": {
+      "org_missing": "Requested organization does not exist.",
+      "user_already_member": "The user is already a member of this organization.",
+      "user_already_invited": "The user has already been invited to this organization.",
+      "org_name_already_exists": "Organization name already exists.",
+      "org_missing_privilege": "Invalid action. Incorrect organization privilege.",
+      "invalid_org_invitation": "Some emails are in the wrong format.",
+      "org_membership_missing": "The user is not a member of this organization."
+    },
+    "project": {
+      "project_missing": "Requested project does not exist.",
+      "invalid_date": "Provided date is invalid.",
+      "project_expired": "The project investing period has expired.",
+      "user_exceeded_max_funds": "You have exceeded the maximum investment amount.",
+      "project_reached_expected_funding": "The project is fully funded.",
+      "project_not_active": "The project is not active anymore.",
+      "min_investment_greater_than_max": "The minimum investment cannot be greater than maximum investment.",
+      "expected_funding_too_high": "The expected funding is too high.",
+      "max_investment_too_high": "The maximum investment per user is too high.",
+      "invalid_roi": "Invalid return on investment value."
+    },
+    "internal": {
+      "something_went_wrong": "Something went wrong."
+    },
+    "transaction": {
+      "transaction_missing": "Requested transaction does not exist.",
+      "missing_companion_data": "Invalid transaction. Please, try again."
+    },
+    "cooperative": {
+      "coop_missing": "Requested instance does not exist.",
+      "coop_already_exists": "Instance already exists."
+    },
+    "middleware": {
+      "transaction_not_signed": "Blockchain transaction has not been signed.",
+      "transaction_not_mined": "Blockchain transaction has not been mined.",
+      "transaction_not_found": "Blockchain transaction has not been found.",
+      "wallet_not_found": "Blockchain wallet has not been found.",
+      "wallet_already_exists": "Blockchain wallet already exists.",
+      "token_not_initialized": "Token not initialized.",
+      "project_funded": "The project is already completely funded.",
+      "invest_zero_tokens": "Unable to invest with zero tokens.",
+      "insufficient_funds": "Not enough funds to invest.",
+      "max_per_user_exceeded": "The investment would surpass the maximum investment per user for this project.",
+      "min_per_user_required": "The investment does not meet the required minimum investment per user for this project.",
+      "investment_cap_exceeded": "The investment would make total funds raised greater than the project's investment cap.",
+      "fraction_non_funded": "The investment would leave tiny fraction of project non-funded.",
+      "funding_ended": "Project funding period is over.",
+      "revenue_share_org_owner_permission": "Only organization owner can initiate revenue share payout.",
+      "revenue_share_project_still_funding": "Cannot start revenue share payout on a project which is still in the funding phase.",
+      "revenue_share_zero": "The revenue amount is zero.",
+      "revenue_share_project_balance_low": "The project balance is too low. Deposit the requested money to the project and try again.",
+      "revenue_share_already_started": "The revenue share has already been started. Please wait until it's finished and try again.",
+      "general_error": "There was an error on the blockchain. Please, try again later."
+    }
+  },
+  "general": {
+    "transaction_signed": {
+      "title": "Transaction signed",
+      "description": "The transaction is being processed..."
+    },
+    "captcha_notice": "This site is protected by reCAPTCHA and the Google | Privacy Policy | and | Terms of Service | apply."
+  },
+  "languages": {
+    "en": "English",
+    "hr": "Hrvatski"
+  }
+}

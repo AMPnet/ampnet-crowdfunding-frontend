@@ -2,7 +2,9 @@
     <div class="container">
         <div class="payments-wallet app__full-width--padding">
             <div>
-                <h4 class="wallet__title app-page-subtitle">Project balance</h4>
+                <h4 class="wallet__title app-page-subtitle">
+                    {{ 'projects.edit.manage_payments.wallet.balance' | translate }}
+                </h4>
                 <div class="wallet__balance">
                     <ng-container *ngIf="!!states.walletInfo; else smallSpinner">
                         <p>{{ states.walletInfo.balance | currencyDefault }}</p>
@@ -12,17 +14,8 @@
                     </ng-template>
                 </div>
             </div>
-<<<<<<< HEAD
 
             <div class="col-lg-6 col-xl-4 p-0">
-=======
-        </ng-container>
-        <div class="payments-wallet">
-            <div class="wallet__cta">
-                <h4>
-                    {{ 'projects.edit.manage_payments.wallet.title' | translate }}
-                </h4>
->>>>>>> master
                 <div class="row">
                     <div class="col-6">
                         <button class="btn w-100" routerLink="project_deposit">
@@ -39,24 +32,27 @@
                     </div>
                 </div>
             </div>
-<<<<<<< HEAD
         </div>
 
         <div class="payments-payout app__full-width--padding">
             <div class="payout__inner col-lg-8 p-0">
-                <h4 class="payout__title app-page-subtitle">Revenue share</h4>
+                <h4 class="payout__title app-page-subtitle">
+                    {{ 'projects.edit.manage_payments.revenue_share.title' | translate }}
+                </h4>
                 <div class="row">
                     <div class="col-12 col-lg-8">
                         <app-money-input-field
-                            placeholder="Enter maximum investment per user"
+                            placeholder="{{ 'projects.edit.manage_payments.revenue_share.placeholder' | translate }}"
                             [control]="revenueShareForm.get('amount')">
                         </app-money-input-field>
-                        <p class="payout__desc">Enter amount of money to be paid out to investors</p>
+                        <p class="payout__desc">
+                            {{ 'projects.edit.manage_payments.revenue_share.description' | translate }}
+                        </p>
 
                         <div *ngIf="revenueShareForm.dirty && revenueShareForm.invalid">
                             <div *ngIf="revenueShareForm.get('amount').errors?.inputAmountInvalid"
                                 class="alert alert-danger">
-                                Payout must be lower or equal to balance.
+                                {{ 'projects.edit.manage_payments.revenue_share.errors.invalid_amount' | translate }}
                             </div>
                         </div>
                     </div>
@@ -67,54 +63,14 @@
                                 class="btn btn-primary btn-warning btn-action w-100">
                             <i class="fas fa-chart-pie mr-2"></i>
                             <!-- Laptop size text handling -->
-                            <span class="d-none d-lg-block d-xl-none">Payout</span>
-                            <span class="d-block d-lg-none d-xl-block">Start payout</span>
+                            <span class="d-none d-lg-block d-xl-none">
+                                {{ 'projects.edit.manage_payments.revenue_share.submit_button_small' | translate }}
+                            </span>
+                            <span class="d-block d-lg-none d-xl-block">
+                                {{ 'projects.edit.manage_payments.revenue_share.submit_button' | translate }}
+                            </span>
                         </button>
                     </div>
-=======
-
-            <div class="wallet__balance">
-                <h3>
-                    {{ 'projects.edit.manage_payments.wallet.balance' | translate }}
-                </h3>
-                <ng-container *ngIf="!!states.walletInfo; else smallSpinner">
-                    <h5>{{ states.walletInfo.balance | currencyDefault }}</h5>
-                </ng-container>
-                <ng-template #smallSpinner>
-                    <app-spinner type="inline"></app-spinner>
-                </ng-template>
-            </div>
-        </div>
-
-        <div class="payments-payout">
-            <h3 class="payout__title">
-                {{ 'projects.edit.manage_payments.revenue_share.title' | translate }}
-            </h3>
-            <p class="payout__desc">
-                {{ 'projects.edit.manage_payments.revenue_share.description' | translate }}
-            </p>
-            <div class="payout__cta row">
-                <div class="col-12 col-lg-6">
-                    <app-money-input-field
-                        placeholder="{{ 'projects.edit.manage_payments.revenue_share.placeholder' | translate }}"
-                        [control]="revenueShareForm.get('amount')">
-                    </app-money-input-field>
-                    <div *ngIf="revenueShareForm.dirty && revenueShareForm.invalid">
-                        <div *ngIf="revenueShareForm.get('amount').errors?.inputAmountInvalid"
-                             class="alert alert-danger">
-                            {{ 'projects.edit.manage_payments.revenue_share.errors.invalid_amount' | translate }}
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-lg-4">
-                    <button [disabled]="!revenueShareForm.dirty || revenueShareForm.invalid"
-                            id="buttonStartPayout"
-                            routerLink="manage_payments/revenue_share/{{ revenueShareForm.get('amount').value }}"
-                            class="btn btn-danger btn-action w-100">
-                        <i class="fas fa-chart-pie mr-2"></i>
-                        {{ 'projects.edit.manage_payments.revenue_share.submit_button' | translate }}
-                    </button>
->>>>>>> master
                 </div>
             </div>
         </div>

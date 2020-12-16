@@ -279,10 +279,9 @@
       "manage_payments": {
         "title": "Manage Payments",
         "wallet": {
-          "title": "Project wallet",
           "deposit_button": "Deposit",
           "withdraw_button": "Withdraw",
-          "balance": "Balance"
+          "balance": "Project balance"
         },
         "deposit": {
           "title": "Deposit",
@@ -316,6 +315,7 @@
           "placeholder": "Enter maximum investment per user",
           "errors.invalid_amount": "Payout must be lower or equal to balance.",
           "submit_button": "Start payout",
+          "submit_button_small": "Payout",
           "review": {
             "title": "Revenue share information",
             "project_name": "Project name",

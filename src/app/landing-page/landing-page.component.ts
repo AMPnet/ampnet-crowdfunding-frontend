@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AppConfigService } from '../shared/services/app-config.service';
 import { SummaryService } from '../shared/services/summary.service';
-import { displayBackendErrorRx } from '../utilities/error-handler';
+import { ErrorService } from '../shared/services/error.service';
 
 @Component({
     selector: 'app-landing-page',
@@ -10,10 +10,11 @@ import { displayBackendErrorRx } from '../utilities/error-handler';
 })
 export class LandingPageComponent {
     summary$ = this.summaryService.getBlockchainMiddlewareData().pipe(
-        displayBackendErrorRx()
+        this.errorService.handleError
     );
 
     constructor(public appConfig: AppConfigService,
+                private errorService: ErrorService,
                 private summaryService: SummaryService) {
     }
 }

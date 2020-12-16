@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, DefaultUrlSerializer, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { combineLatest, Observable, of } from 'rxjs';
-import { UserService } from '../../shared/services/user/user.service';
-import { map, switchMap, take, tap } from 'rxjs/operators';
+import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { Observable, of } from 'rxjs';
+import { switchMap, tap } from 'rxjs/operators';
 import { RouterService } from '../../shared/services/router.service';
 import { AppConfigService } from '../services/app-config.service';
 

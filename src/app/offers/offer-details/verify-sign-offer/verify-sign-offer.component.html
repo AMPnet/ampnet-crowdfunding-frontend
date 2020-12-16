@@ -5,7 +5,7 @@
                 <div class="card-body">
                     <div class="card-title">
                         <div class="explainer-mini">
-                            Verify investment
+                            {{ 'invest.verify_sign.title' | translate }}
                         </div>
                     </div>
                     <div class="card-text">
@@ -13,7 +13,9 @@
                             <div class="col-md-6 mt-3">
                                 <div>
                                     <i class="fas fa-chart-line mr-3"></i>
-                                    <span class="explainer-mini">Amount</span>
+                                    <span class="explainer-mini">
+                                        {{ 'invest.verify_sign.amount' | translate }}
+                                    </span>
                                 </div>
                                 <div class="mt-2 h3">
                                     {{ investAmount | currencyDefault }}
@@ -22,7 +24,9 @@
                             <div class="col-md-6 mt-3">
                                 <div>
                                     <i class="fas fa-solar-panel mr-3"></i>
-                                    <span class="explainer-mini">Project</span>
+                                    <span class="explainer-mini">
+                                        {{ 'invest.verify_sign.project' | translate }}
+                                    </span>
                                 </div>
                                 <div class="mt-2 h3">
                                     {{ project.name }}
@@ -34,7 +38,7 @@
             </div>
 
             <button app-action-button
-                    text="Verify & Invest" loadingText="Loading..."
+                    text="{{ 'invest.verify_sign.verify_invest' | translate }}"
                     class="btn btn-primary w-100"
                     [onClick]="verifyAndSign.bind(this)">
             </button>

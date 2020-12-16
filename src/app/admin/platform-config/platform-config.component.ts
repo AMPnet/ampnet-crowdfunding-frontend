@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { map, shareReplay, switchMap, tap } from 'rxjs/operators';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { displayBackendErrorRx } from '../../utilities/error-handler';
 import { CoopService } from '../../shared/services/user/coop.service';
 import { AppConfig, AppConfigService } from '../../shared/services/app-config.service';
+import { ErrorService } from '../../shared/services/error.service';
 
 @Component({
     selector: 'app-platform-config',
@@ -18,6 +18,7 @@ export class PlatformConfigComponent {
 
     constructor(private coopService: CoopService,
                 private appConfigService: AppConfigService,
+                private errorService: ErrorService,
                 private fb: FormBuilder) {
         this.appConfig$ = this.refreshAppConfig.pipe(
             switchMap(appConfig => appConfig !== null ? of(appConfig) : this.coopService.getCoop()),
@@ -61,7 +62,7 @@ export class PlatformConfigComponent {
                     reCaptchaSiteKey: appConfig.reCaptchaSiteKey
                 }
             }, appConfig.logo).pipe(
-                displayBackendErrorRx(),
+                this.errorService.handleError,
                 tap(newAppConfig => {
                     form.get('logo').reset();
                     this.appConfigService.config = newAppConfig;

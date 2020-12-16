@@ -58,7 +58,7 @@ export class PopupService {
         }));
     }
 
-    setDefaultOptions(options: SweetAlertOptions): SweetAlertOptions {
+    private setDefaultOptions(options: SweetAlertOptions): SweetAlertOptions {
         const defaults: SweetAlertOptions = {
             position: 'top',
             customClass: '',

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { displayBackendErrorRx, hideSpinnerAndDisplayError } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import {
     CooperativeUser,
@@ -8,6 +7,8 @@ import {
 import { finalize, switchMap, tap } from 'rxjs/operators';
 import { ArkaneService } from '../../../shared/services/arkane.service';
 import { PopupService } from '../../../shared/services/popup.service';
+import { ErrorService } from '../../../shared/services/error.service';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -20,6 +21,8 @@ export class UserActivationComponent implements OnInit {
 
     constructor(private activationService: WalletCooperativeWalletService,
                 private arkaneService: ArkaneService,
+                private errorService: ErrorService,
+                private translate: TranslateService,
                 private popupService: PopupService) {
     }
 
@@ -29,22 +32,23 @@ export class UserActivationComponent implements OnInit {
 
     fetchUnactivatedUserWallets() {
         SpinnerUtil.showSpinner();
-        this.activationService.getUnactivatedUserWallets()
-            .subscribe((res) => {
-                this.users = res.users;
-                SpinnerUtil.hideSpinner();
-            }, hideSpinnerAndDisplayError);
+        this.activationService.getUnactivatedUserWallets().pipe(
+            this.errorService.handleError,
+            finalize(() => SpinnerUtil.hideSpinner())
+        ).subscribe((res) => {
+            this.users = res.users;
+        });
     }
 
     activateUserClicked(userUUID: string) {
         SpinnerUtil.showSpinner();
         return this.activationService.activateWallet(userUUID).pipe(
-            displayBackendErrorRx(),
+            this.errorService.handleError,
             switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo)),
             switchMap(() => this.popupService.new({
                 type: 'success',
-                title: 'Transaction signed',
-                text: 'Transaction is being processed...'
+                title: this.translate.instant('general.transaction_signed.title'),
+                text: this.translate.instant('general.transaction_signed.description')
             })),
             tap(() => this.fetchUnactivatedUserWallets()),
             finalize(() => SpinnerUtil.hideSpinner())

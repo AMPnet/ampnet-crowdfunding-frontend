@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { displayBackendErrorRx } from 'src/app/utilities/error-handler';
 import {
     CoopWithdraw,
     WalletCooperativeWithdrawService
@@ -10,6 +9,8 @@ import { switchMap } from 'rxjs/operators';
 import { ArkaneService } from '../../../shared/services/arkane.service';
 import { Observable } from 'rxjs';
 import { RouterService } from '../../../shared/services/router.service';
+import { ErrorService } from '../../../shared/services/error.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-single-withdrawal',
@@ -24,6 +25,8 @@ export class SingleWithdrawalComponent implements OnInit {
                 private withdrawCoopService: WalletCooperativeWithdrawService,
                 private arkaneService: ArkaneService,
                 private popupService: PopupService,
+                private errorService: ErrorService,
+                private translate: TranslateService,
                 private router: RouterService) {
     }
 
@@ -34,12 +37,12 @@ export class SingleWithdrawalComponent implements OnInit {
 
     approveAndGenerateCodeClicked() {
         return this.withdrawCoopService.generateBurnWithdrawTx(this.withdrawalID).pipe(
-            displayBackendErrorRx(),
+            this.errorService.handleError,
             switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo)),
             switchMap(() => this.popupService.new({
                 type: 'success',
-                title: 'Transaction signed',
-                text: 'Transaction is being processed...'
+                title: this.translate.instant('general.transaction_signed.title'),
+                text: this.translate.instant('general.transaction_signed.description')
             })),
             switchMap(() => this.router.navigate(['/dash/manage_withdrawals']))
         );

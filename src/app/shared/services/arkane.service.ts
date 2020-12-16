@@ -14,9 +14,9 @@ import { Account } from '@arkane-network/arkane-connect/dist/src/models/Account'
 import { catchError, concatMap, find, map, switchMap, take, takeWhile, tap, timeout } from 'rxjs/operators';
 import { TransactionInfo, WalletService, WalletState } from './wallet/wallet.service';
 import { PopupService } from './popup.service';
-import { displayBackendErrorRx } from '../../utilities/error-handler';
 import { BroadcastService } from './broadcast.service';
 import { AppConfigService } from './app-config.service';
+import { ErrorService, WalletError } from './error.service';
 
 @Injectable({
     providedIn: 'root'
@@ -28,6 +28,7 @@ export class ArkaneService {
     constructor(private walletService: WalletService,
                 private appConfigService: AppConfigService,
                 private broadcastService: BroadcastService,
+                private errorService: ErrorService,
                 private popupService: PopupService) {
         this.appConfigService.config$.subscribe(config => {
             const arkaneConfig = config.config.arkane;
@@ -86,8 +87,8 @@ export class ArkaneService {
         return of(...wallets).pipe(
             concatMap(wallet => this.walletService.initWallet(wallet.address).pipe(
                 map(res => res.activation_data),
-                catchError(err => err.error?.err_code === '0504' ? of(null) : throwError(err)),
-                displayBackendErrorRx()
+                catchError(err => err.error?.err_code === WalletError.WALLET_ALREADY_REGISTERED ? of(null) : throwError(err)),
+                this.errorService.handleError
             )),
             takeWhile(x => x === null, true),
             find(value => value !== null),
@@ -140,7 +141,7 @@ export class ArkaneService {
         return this.signTransaction(txInfo.tx).pipe(
             switchMap((arkaneRes) =>
                 this.broadcastService.broadcastSignedTx(arkaneRes.result.signedTransaction, txInfo.tx_id)
-                    .pipe(displayBackendErrorRx())),
+                    .pipe(this.errorService.handleError)),
         );
     }
 

@@ -11,26 +11,30 @@
         </ng-container>
         <div class="payments-wallet">
             <div class="wallet__cta">
-                <h4>Project wallet</h4>
+                <h4>
+                    {{ 'projects.edit.manage_payments.wallet.title' | translate }}
+                </h4>
                 <div class="row">
                     <div class="col-12 col-lg-6">
                         <button class="btn btn-primary w-100" routerLink="manage_payments/project_deposit">
                             <i class="fas fa-arrow-circle-down mr-2"></i>
-                            Deposit
+                            {{ 'projects.edit.manage_payments.wallet.deposit_button' | translate }}
                         </button>
                     </div>
                     <div class="col-12 col-lg-6">
                         <button class="btn btn-primary w-100" routerLink="manage_payments/project_withdraw"
                                 [disabled]="!states.walletInfo || !isProjectFullyFunded(states.walletInfo)">
                             <i class="fas fa-arrow-circle-up mr-2"></i>
-                            Withdraw
+                            {{ 'projects.edit.manage_payments.wallet.withdraw_button' | translate }}
                         </button>
                     </div>
                 </div>
             </div>
 
             <div class="wallet__balance">
-                <h3>Balance</h3>
+                <h3>
+                    {{ 'projects.edit.manage_payments.wallet.balance' | translate }}
+                </h3>
                 <ng-container *ngIf="!!states.walletInfo; else smallSpinner">
                     <h5>{{ states.walletInfo.balance | currencyDefault }}</h5>
                 </ng-container>
@@ -41,18 +45,22 @@
         </div>
 
         <div class="payments-payout">
-            <h3 class="payout__title">Revenue share</h3>
-            <p class="payout__desc">Enter amount of money to be paid out to investors</p>
+            <h3 class="payout__title">
+                {{ 'projects.edit.manage_payments.revenue_share.title' | translate }}
+            </h3>
+            <p class="payout__desc">
+                {{ 'projects.edit.manage_payments.revenue_share.description' | translate }}
+            </p>
             <div class="payout__cta row">
                 <div class="col-12 col-lg-6">
                     <app-money-input-field
-                        placeholder="Enter maximum investment per user"
+                        placeholder="{{ 'projects.edit.manage_payments.revenue_share.placeholder' | translate }}"
                         [control]="revenueShareForm.get('amount')">
                     </app-money-input-field>
                     <div *ngIf="revenueShareForm.dirty && revenueShareForm.invalid">
                         <div *ngIf="revenueShareForm.get('amount').errors?.inputAmountInvalid"
                              class="alert alert-danger">
-                            Payout must be lower or equal to balance.
+                            {{ 'projects.edit.manage_payments.revenue_share.errors.invalid_amount' | translate }}
                         </div>
                     </div>
                 </div>
@@ -62,7 +70,7 @@
                             routerLink="manage_payments/revenue_share/{{ revenueShareForm.get('amount').value }}"
                             class="btn btn-danger btn-action w-100">
                         <i class="fas fa-chart-pie mr-2"></i>
-                        Start payout
+                        {{ 'projects.edit.manage_payments.revenue_share.submit_button' | translate }}
                     </button>
                 </div>
             </div>

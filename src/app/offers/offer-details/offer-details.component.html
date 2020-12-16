@@ -10,15 +10,20 @@
 } as states" class="wow fadeIn container" style="background: #fdfdfd">
     <div class="app-page-title-back" (click)="backToPreviousScreen()">
         <i class="fas fa-long-arrow-alt-left mr-3"></i>
-        {{ !isPortfolioView ? "OFFER DETAILS" : "PORTFOLIO DETAILS" }}
+
+        <ng-container *ngIf="!isPortfolioView">
+            {{ 'offers.offer_details.title' | translate }}
+        </ng-container>
+        <ng-container *ngIf="isPortfolioView">
+            {{ 'offers.offer_details.title.portfolio' | translate }}
+        </ng-container>
     </div>
 
     <div *ngIf="states.project !== null else overlaySpinner">
         <!-- Closed project popup -->
         <div *ngIf="!states.project.active" class="mb-3">
             <div class="alert alert-danger">
-                The project is not open for funding. If you wish to invest, please check project at a
-                later date.
+                {{ 'offers.offer_details.project_hidden' | translate }}
             </div>
         </div>
 
@@ -41,15 +46,20 @@
                     <div class="right__location">
                         <p (click)="openModal(states.project)">
                             <i class="location__icon fas fa-map-marker-alt"></i>
-                            Show location
+                            {{ 'offers.offer_details.show_location' | translate }}
                         </p>
                         {{ states.project.location_text }}
                     </div>
 
                     <div class="right__progress">
                         <ng-container *ngIf="!!states.walletMW else smallSpinner">
-                            <span>{{ states.walletMW.totalFundsRaised | currencyDefault }} </span>raised of
-                            {{ states.walletMW.investmentCap | currencyDefault }} goal
+                            <span class="bold">
+                                {{ 'offers.offer_details.raised' | translate | splitPart:0 | interpolate:['raised', states.walletMW.totalFundsRaised | currencyDefault] }}
+                            </span>
+                            <span>
+                                {{ 'offers.offer_details.raised' | translate | splitPart:1 | interpolate:['goal', states.walletMW.investmentCap | currencyDefault] }}
+                            </span>
+
                             <div class="progress__element">
                                 <div [style.width.%]="(states.walletMW?.totalFundsRaised / states.walletMW?.investmentCap) * 100"
                                      class="progress__bar"
@@ -62,27 +72,44 @@
                     <div class="right__info">
                         <ng-container *ngIf="states.project.roi.to != 0">
                             <div class="right__return-rate">
-                                <span>{{ states.project.roi.from }}% - {{ states.project.roi.to }}%</span>
-                                Expected yearly return
+                                <span class="bold">
+                                    {{ 'offers.offer_details.return' | translate | splitPart:0 | interpolate:['from', states.project.roi.from / 100 | percent]:['to', states.project.roi.to / 100 | percent] }}
+                                </span>
+                                <span>
+                                    {{ 'offers.offer_details.return' | translate | splitPart:1 }}
+                                </span>
                             </div>
 
                             <div class="dropdown-divider"></div>
                         </ng-container>
 
                         <div class="right__min-invest">
-                            <span>{{ states.project.min_per_user | currencyDefault }}</span>Min Investment
+                            <span class="bold">
+                                {{ 'offers.offer_details.min_invest' | translate | splitPart:0 | interpolate:['amount', states.project.min_per_user | currencyDefault] }}
+                            </span>
+                            <span>
+                                {{ 'offers.offer_details.min_invest' | translate | splitPart:1 }}
+                            </span>
                         </div>
                         <div class="dropdown-divider"></div>
 
                         <div class="right__max-invest">
-                            <span>{{ states.project.max_per_user | currencyDefault }}</span>Max Investment
+                            <span class="bold">
+                                {{ 'offers.offer_details.max_invest' | translate | splitPart:0 | interpolate:['amount', states.project.max_per_user | currencyDefault] }}
+                            </span>
+                            <span>
+                                {{ 'offers.offer_details.max_invest' | translate | splitPart:1 }}
+                            </span>
                         </div>
                         <div class="dropdown-divider"></div>
 
                         <div class="right__fund-period">
-                            <span>Funding period</span>
-                            {{ states.project.start_date | date:'mediumDate' }}
-                            - {{ states.project.end_date | date:'mediumDate' }}
+                            <span class="bold">
+                                {{ 'offers.offer_details.funding_period' | translate | splitPart:0 }}
+                            </span>
+                            <span>
+                                {{ 'offers.offer_details.funding_period' | translate | splitPart:1 | interpolate:['from', states.project.start_date | date:'mediumDate']:['to', states.project.end_date | date:'mediumDate'] }}
+                            </span>
                         </div>
                     </div>
 
@@ -96,8 +123,7 @@
 
                             <ng-container *ngIf="(isProjectCancelable$ | async) as isCancelable">
                                 <button app-action-button
-                                        text="Cancel my investment"
-                                        loadingText="Cancelling investments..."
+                                        text="{{ 'offers.offer_details.cancel_investment' | translate }}"
                                         faIcon="fa-times-circle"
                                         class="btn btn-danger w-100 d-lg-none d-xl-block"
                                         [disabled]="!isCancelable"
@@ -105,8 +131,7 @@
                                 </button>
                                 <!-- Laptop size screen button -->
                                 <button app-action-button
-                                        text="Cancel"
-                                        loadingText="Cancelling investments..."
+                                        text="{{ 'offers.offer_details.cancel_investment' | translate }}"
                                         faIcon="fa-times-circle"
                                         class="btn btn-danger w-100 d-none d-lg-block d-xl-none"
                                         [disabled]="!isCancelable"
@@ -130,10 +155,10 @@
                                     <i class="mr-2 fas fa-chart-pie"></i>
                                     <!-- Button content for laptop sizes -->
                                     <span class="d-none d-lg-block d-xl-none">
-                                        {{ isPortfolioView ? 'Reinvest' : 'Invest' }}
+                                        {{ (isPortfolioView ? 'offers.offer_details.invest.portfolio.short' : 'offers.offer_details.invest') | translate }}
                                     </span>
                                     <span class="d-lg-none d-xl-block">
-                                        {{ isPortfolioView ? 'Increase investment' : 'Invest' }}
+                                        {{ (isPortfolioView ? 'offers.offer_details.invest.portfolio' : 'offers.offer_details.invest') | translate }}
                                     </span>
                                 </button>
                                 <button *ngIf="!states.user.verified" [disabled]="!states.project.active"
@@ -142,10 +167,10 @@
                                     <i class="mr-2 fas fa-chart-pie"></i>
                                     <!-- Button content for laptop sizes -->
                                     <span class="d-none d-lg-inline-block d-xl-none">
-                                        Verify Profile
+                                        {{ 'offers.offer_details.verify_profile.short' | translate }}
                                     </span>
                                     <span class="d-lg-none d-xl-inline-block">
-                                        Verify Profile & Invest
+                                        {{ 'offers.offer_details.verify_profile' | translate }}
                                     </span>
                                 </button>
                             </div>
@@ -156,22 +181,22 @@
 
             <div class="offer-right-socials col-lg-5">
                 <div class="socials__content">
-                    <p>Share</p>
+                    <p>{{ 'offers.offer_details.share' | translate }}</p>
                     <div class="socials__link">
-                        <a href="https://twitter.com/intent/tweet?url={{ getProjectURL(states.project.uuid) }}"
+                        <a href="https://twitter.com/intent/tweet?url={{ getProjectURL(states.project) }}"
                            target="_blank" rel="noopener noreferrer">
                             <i class="socials__icon fab fa-twitter"></i>
                         </a>
                     </div>
                     <div class="socials__link">
-                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ getProjectURL(states.project.uuid) }}"
+                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ getProjectURL(states.project) }}"
                            target="_blank" rel="noopener noreferrer">
                             <i class="socials__icon fab fa-facebook-f"></i>
                         </a>
                     </div>
                     <div class="socials__link" #copyToClipboard="bs-tooltip"
                          (click)="copyProjectDetailsUrl(copyToClipboard, states.project)"
-                         tooltip="Copied to clipboard."
+                         tooltip="{{ 'offers.offer_details.link_copied' | translate }}"
                          triggers="">
                         <i class="fas fa-link"></i>
                     </div>
@@ -209,10 +234,12 @@
 
     <ng-template #tabbedView>
         <tabset>
-            <tab heading="Transactions">
+            <tab heading="{{ 'offers.offer_details.transactions.title' | translate }}">
                 <div class="investments__container">
                     <div class="investment__total">
-                        <div class="total__title">Total Invested</div>
+                        <div class="total__title">
+                            {{ 'offers.offer_details.transactions.total_invested' | translate }}
+                        </div>
                         <div class="total__amount">
                             <ng-container *ngIf="(investmentTotal$ | async) as investmentTotal else smallSpinner">
                                 {{ investmentTotal | currencyDefault }}
@@ -242,7 +269,7 @@
                 </div>
 
             </tab>
-            <tab heading="Details">
+            <tab heading="{{ 'offers.offer_details.details.title' | translate }}">
                 <ng-container *ngTemplateOutlet="projectDetails"></ng-container>
             </tab>
         </tabset>

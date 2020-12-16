@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterService } from '../shared/services/router.service';
-import { UserAuthService } from '../shared/services/user/user-auth.service';
+import { UserService } from '../shared/services/user/user.service';
 
 @Component({
     selector: 'app-public-layout',
@@ -9,8 +9,8 @@ import { UserAuthService } from '../shared/services/user/user-auth.service';
 })
 export class PublicLayoutComponent {
     constructor(private router: RouterService,
-                private userAuthService: UserAuthService) {
-        if (this.userAuthService.isLoggedIn()) {
+                private userService: UserService) {
+        if (this.userService.isLoggedIn()) {
             router.navigate(['/dash']);
         }
     }

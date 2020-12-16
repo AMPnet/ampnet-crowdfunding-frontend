@@ -1,5 +1,7 @@
 <div class="container">
-    <h1 class="app-page-title">EXAMINE WITHDRAWAL</h1>
+    <h1 class="app-page-title">
+        {{ 'admin.withdrawals.single_withdrawal.title' | translate }}
+    </h1>
 
     <div class="row">
         <ng-container *ngIf="(withdrawal$ | async) as withdrawal else spinner">
@@ -8,19 +10,27 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between withdrawal-examine-holder">
                             <div *ngIf="!!withdrawal.project">
-                                <div class="explainer-mini text-uppercase">Name</div>
+                                <div class="explainer-mini text-uppercase">
+                                    {{ 'admin.withdrawals.single_withdrawal.info.project_name' | translate }}
+                                </div>
                                 <div>{{ withdrawal.project.name }}</div>
                             </div>
                             <div>
-                                <div class="explainer-mini text-uppercase">Name</div>
+                                <div class="explainer-mini text-uppercase">
+                                    {{ 'admin.withdrawals.single_withdrawal.info.user_name' | translate }}
+                                </div>
                                 <div>{{ withdrawal.user.first_name }} {{ withdrawal.user.last_name }}</div>
                             </div>
                             <div>
-                                <div class="explainer-mini text-uppercase">IBAN</div>
+                                <div class="explainer-mini text-uppercase">
+                                    {{ 'admin.withdrawals.single_withdrawal.info.iban' | translate }}
+                                </div>
                                 <div>{{ withdrawal.withdraw.bank_account }}</div>
                             </div>
                             <div>
-                                <div class="explainer-mini text-uppercase">Amount</div>
+                                <div class="explainer-mini text-uppercase">
+                                    {{ 'admin.withdrawals.single_withdrawal.info.amount' | translate }}
+                                </div>
                                 <div>{{ withdrawal.withdraw.amount | currencyDefault }}</div>
                             </div>
                         </div>
@@ -30,13 +40,22 @@
 
             <div class="col-md-12">
                 <div class="alert alert-danger">
-                    Please perform the payout <b>after</b> finalizing the withdrawal!
+                    <span>
+                        {{ 'admin.withdrawals.single_withdrawal.payout_notice' | translate | splitPart:0 }}
+                    </span>
+                    <span>
+                        <b>{{ 'admin.withdrawals.single_withdrawal.payout_notice' | translate | splitPart:1 }}</b>
+                    </span>
+                    <span>
+                        {{ 'admin.withdrawals.single_withdrawal.payout_notice' | translate | splitPart:2 }}
+                    </span>
                 </div>
             </div>
 
             <div class="col-md-12 mt-1">
                 <button app-action-button
-                        text="Finalize withdrawal" loadingText="Generating transaction..."
+                        text="{{ 'admin.withdrawals.single_withdrawal.submit' | translate }}"
+                        loadingText="{{ 'admin.withdrawals.single_withdrawal.submit.loading' | translate }}"
                         [onClick]="approveAndGenerateCodeClicked.bind(this)">
                 </button>
             </div>

@@ -13,7 +13,6 @@ import {
 import { baseCurrencyUnitToCents, centsToBaseCurrencyUnit } from '../../../utilities/currency-util';
 import * as Autonumeric from 'autonumeric';
 import { AbstractControl } from '@angular/forms';
-import { disable } from 'tns-core-modules/trace';
 
 @Component({
     selector: 'app-money-input-field',

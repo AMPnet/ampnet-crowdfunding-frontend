@@ -3,11 +3,12 @@ import {
     OrganizationWallet,
     WalletCooperativeWalletService
 } from '../../../shared/services/wallet/wallet-cooperative/wallet-cooperative-wallet.service';
-import { displayBackendError, displayBackendErrorRx } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { finalize, switchMap, tap } from 'rxjs/operators';
 import { ArkaneService } from '../../../shared/services/arkane.service';
 import { PopupService } from '../../../shared/services/popup.service';
+import { ErrorService } from '../../../shared/services/error.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-group-activation',
@@ -19,6 +20,8 @@ export class GroupActivationComponent implements OnInit {
 
     constructor(private activationService: WalletCooperativeWalletService,
                 private arkaneService: ArkaneService,
+                private errorService: ErrorService,
+                private translate: TranslateService,
                 private popupService: PopupService) {
     }
 
@@ -28,21 +31,23 @@ export class GroupActivationComponent implements OnInit {
 
     fetchUnactivatedGroupWallets() {
         SpinnerUtil.showSpinner();
-        this.activationService.getUnactivatedOrganizationWallets().subscribe((res) => {
+        this.activationService.getUnactivatedOrganizationWallets().pipe(
+            this.errorService.handleError,
+            finalize(() => SpinnerUtil.hideSpinner())
+        ).subscribe((res) => {
             this.groups = res.organizations;
-            SpinnerUtil.hideSpinner();
-        }, displayBackendError);
+        });
     }
 
     activateGroup(groupUUID: string) {
         SpinnerUtil.showSpinner();
         return this.activationService.activateWallet(groupUUID).pipe(
-            displayBackendErrorRx(),
+            this.errorService.handleError,
             switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo)),
             switchMap(() => this.popupService.new({
                 type: 'success',
-                title: 'Transaction signed',
-                text: 'Transaction is being processed...'
+                title: this.translate.instant('general.transaction_signed.title'),
+                text: this.translate.instant('general.transaction_signed.description')
             })),
             tap(() => this.fetchUnactivatedGroupWallets()),
             finalize(() => SpinnerUtil.hideSpinner())

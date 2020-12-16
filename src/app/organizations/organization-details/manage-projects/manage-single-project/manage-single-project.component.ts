@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { displayBackendErrorRx } from 'src/app/utilities/error-handler';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { Project, ProjectService } from '../../../../shared/services/project/project.service';
 import { Wallet, WalletService, WalletState } from '../../../../shared/services/wallet/wallet.service';
@@ -12,6 +11,8 @@ import { PopupService } from '../../../../shared/services/popup.service';
 import { FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { URLValidator } from '../../../../shared/validators/url.validator';
 import { RouterService } from '../../../../shared/services/router.service';
+import { ErrorService } from '../../../../shared/services/error.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-manage-single-project',
@@ -36,6 +37,8 @@ export class ManageSingleProjectComponent {
                 private manageProjectsService: ManageProjectsService,
                 private arkaneService: ArkaneService,
                 private popupService: PopupService,
+                private errorService: ErrorService,
+                private translate: TranslateService,
                 private router: RouterService,
                 private fb: FormBuilder,
                 private route: ActivatedRoute) {
@@ -56,7 +59,7 @@ export class ManageSingleProjectComponent {
                             return throwError(err);
                         }
                     }),
-                    displayBackendErrorRx(),
+                    this.errorService.handleError,
                     catchError(() => EMPTY)
                 )
             )
@@ -90,12 +93,12 @@ export class ManageSingleProjectComponent {
 
     createProjectWallet(projectUUID: string) {
         return this.popupService.info(
-            'Verify the project creation with your blockchain wallet. You will be prompted now!'
+            this.translate.instant('projects.edit.create_wallet_notice')
         ).pipe(
             tap(() => SpinnerUtil.showSpinner()),
             switchMap(() =>
                 this.walletService.createProjectWalletTransaction(projectUUID)
-                    .pipe(displayBackendErrorRx())),
+                    .pipe(this.errorService.handleError)),
             switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo).pipe(
                 catchError(_ => {
                     this.router.navigate([`/dash/manage_groups/${this.route.snapshot.params.groupID}`]);
@@ -104,8 +107,8 @@ export class ManageSingleProjectComponent {
             )),
             switchMap(() => this.popupService.new({
                 type: 'success',
-                title: 'Transaction signed',
-                text: 'Transaction is being processed...'
+                title: this.translate.instant('general.transaction_signed.title'),
+                text: this.translate.instant('general.transaction_signed.description')
             })),
             tap(() => {
                 this.refreshProjectSubject.next(null);
@@ -119,7 +122,7 @@ export class ManageSingleProjectComponent {
         return () => {
             const newsLink = form.controls['newsLink'].value;
             return this.manageProjectsService.addNewsToProject(project, newsLink).pipe(
-                displayBackendErrorRx(),
+                this.errorService.handleError,
                 tap(updatedProject => {
                     form.get('newsLink').reset();
                     this.refreshProjectSubject.next(updatedProject);
@@ -131,7 +134,7 @@ export class ManageSingleProjectComponent {
     deleteNewsClicked(project: Project, link: string) {
         SpinnerUtil.showSpinner();
         return this.manageProjectsService.deleteNewsFromProject(project, link).pipe(
-            displayBackendErrorRx(),
+            this.errorService.handleError,
             tap(() => this.refreshProjectSubject.next(null)),
             finalize(() => SpinnerUtil.hideSpinner())
         );
@@ -140,9 +143,8 @@ export class ManageSingleProjectComponent {
     toggleProjectStatusClicked(project: Project) {
         return () => {
             return this.projectService.updateProject(project.uuid, {active: !project.active}).pipe(
-                displayBackendErrorRx(),
+                this.errorService.handleError,
                 tap(updatedProject => this.refreshProjectSubject.next(updatedProject)),
-                switchMap(() => this.project$)
             );
         };
     }
@@ -159,7 +161,7 @@ export class ManageSingleProjectComponent {
                     to: Number(form.get('roi.to').value)
                 }
             }, form.get('newImage').value, form.get('newDocuments').value).pipe(
-                displayBackendErrorRx(),
+                this.errorService.handleError,
                 tap(() => {
                     form.get('newImage').reset();
                     form.get('newDocuments').reset();
@@ -171,13 +173,13 @@ export class ManageSingleProjectComponent {
 
     deleteFile(project: Project, documentID: number) {
         return this.popupService.new({
-            text: 'Are you sure you want to delete this file? This action cannot be reversed',
-            confirmButtonText: 'Yes',
+            text: this.translate.instant('projects.edit.delete_file_confirmation.question'),
+            confirmButtonText: this.translate.instant('projects.edit.delete_file_confirmation.yes'),
             showCancelButton: true,
-            cancelButtonText: 'No'
+            cancelButtonText: this.translate.instant('projects.edit.delete_file_confirmation.no')
         }).pipe(
             switchMap(res => res.value === true ?
-                this.manageProjectsService.deleteDocument(project.uuid, documentID).pipe(displayBackendErrorRx()) : EMPTY),
+                this.manageProjectsService.deleteDocument(project.uuid, documentID).pipe(this.errorService.handleError) : EMPTY),
             tap(() => SpinnerUtil.showSpinner()),
             tap(() => this.refreshProjectSubject.next(null)),
             finalize(() => SpinnerUtil.hideSpinner())

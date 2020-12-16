@@ -54,7 +54,6 @@
     &-info {
       .edit {
         &-left {
-          margin-top: 20px;
           label,
           .roi__label,
           .dates__label,
@@ -116,7 +115,7 @@
       }
     }
     &-news {
-      margin-top: 40px;
+      margin-top: 20px;
       .col-lg-1,
       .col-lg-11 {
         padding: 0;
@@ -165,7 +164,7 @@
       }
     }
     &-payments {
-      margin: 40px -15px 0 -15px;
+      margin-top: 20px;
     }
   }
 }
@@ -238,7 +237,7 @@
       &-info {
         .edit {
           &-left {
-            margin-top: 30px;
+            margin-top: 2px;
             padding-right: 15px;
             .left {
               &__desc textarea {
@@ -247,7 +246,7 @@
             }
           }
           &-right {
-            margin-top: 30px;
+            margin-top: 2px;
             padding-left: 49px;
             .uppy-img {
               margin-bottom: 16px;
@@ -268,7 +267,7 @@
         }
       }
       &-news {
-        margin-top: 58px;
+        margin-top: 30px;
         .news {
           &__list {
             .list {
@@ -280,7 +279,7 @@
         }
       }
       &-payments {
-        margin: 50px -15px 0 -15px;
+        margin-top: 30px;
       }
     }
   }

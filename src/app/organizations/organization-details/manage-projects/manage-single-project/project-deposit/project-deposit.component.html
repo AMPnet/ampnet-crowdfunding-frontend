@@ -4,18 +4,20 @@
         masterIBAN: masterIBAN$ | async
     } as states">
     <div class="container">
-        <div class="app-page-title-back" (click)="navigateBack()">
-            <i class="fas fa-long-arrow-alt-left mr-3"></i>
-            Deposit
-        </div>
-        <div class="alerts">
-            <div class="alert alert-info">
-                <i class="fas fa-clock mr-2"></i>
-                After you have deposited the money onto our bank account it can take up to 24h for it to become visible
-                on the platform. You will be notified by email when your money has been received.
-            </div>
-        </div>
         <ng-container *ngIf="!!states.deposit && !!states.masterIBAN; else spinner">
+            <div [routerLink]="['/dash', 'manage_groups', orgID, 'manage_project', states.deposit.owner] | coopPath"
+                 class="app-page-title-back" >
+                <i class="fas fa-long-arrow-alt-left mr-3"></i>
+                Deposit
+            </div>
+            <div class="alerts">
+                <div class="alert alert-info">
+                    <i class="fas fa-clock mr-2"></i>
+                    After you have deposited the money onto our bank account it can take up to 24h for it to become visible
+                    on the platform. You will be notified by email when your money has been received.
+                </div>
+            </div>
+
             <div class="deposit-details">
                 <h4>Deposit payment details</h4>
                 <div class="row">

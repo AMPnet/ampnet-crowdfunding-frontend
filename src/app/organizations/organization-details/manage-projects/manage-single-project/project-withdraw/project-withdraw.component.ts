@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { catchError, finalize, switchMap, tap } from 'rxjs/operators';
@@ -19,6 +19,7 @@ import { RouterService } from '../../../../../shared/services/router.service';
 export class ProjectWithdrawComponent {
     withdrawalState = WithdrawalState;
     projectID: string;
+    orgID: string;
 
     refreshWithdrawalSubject = new BehaviorSubject<Withdraw | WithdrawalState>(null);
     withdrawal$: Observable<Withdraw | WithdrawalState>;
@@ -32,6 +33,7 @@ export class ProjectWithdrawComponent {
                 private route: ActivatedRoute,
                 private fb: FormBuilder) {
         this.projectID = this.route.snapshot.params.projectID;
+        this.orgID = this.route.snapshot.params.groupID;
 
         this.withdrawal$ = this.refreshWithdrawalSubject.pipe(
             switchMap(data => data !== null ?
@@ -39,7 +41,7 @@ export class ProjectWithdrawComponent {
                 this.withdrawService.getProjectPendingWithdraw(this.projectID).pipe(
                     displayBackendErrorRx(),
                     catchError(err => err.status === 404 ?
-                        of(WithdrawalState.EMPTY) : this.navigateBack())
+                        of(WithdrawalState.EMPTY) : this.recoverBack())
                 )
             )
         );
@@ -74,7 +76,7 @@ export class ProjectWithdrawComponent {
                     title: 'Transaction signed',
                     text: 'Transaction is being processed...'
                 })),
-                switchMap(() => this.navigateBack()),
+                switchMap(() => this.recoverBack()),
                 finalize(() => SpinnerUtil.hideSpinner())
             );
         };
@@ -90,8 +92,8 @@ export class ProjectWithdrawComponent {
         );
     }
 
-    navigateBack(): Observable<never> {
-        this.router.navigate(['../../'], {relativeTo: this.route});
+    private recoverBack(): Observable<never> {
+        this.router.navigate(['../'], {relativeTo: this.route});
         return EMPTY;
     }
 }

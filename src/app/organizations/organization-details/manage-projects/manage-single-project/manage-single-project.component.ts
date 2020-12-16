@@ -141,8 +141,7 @@ export class ManageSingleProjectComponent {
         return () => {
             return this.projectService.updateProject(project.uuid, {active: !project.active}).pipe(
                 displayBackendErrorRx(),
-                tap(updatedProject => this.refreshProjectSubject.next(updatedProject)),
-                switchMap(() => this.project$)
+                tap(updatedProject => this.refreshProjectSubject.next(updatedProject))
             );
         };
     }

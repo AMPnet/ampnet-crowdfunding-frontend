@@ -16,6 +16,7 @@ import { RouterService } from '../../../../../shared/services/router.service';
 export class ProjectDepositComponent {
     masterIBAN$: Observable<string>;
     deposit$: Observable<Deposit>;
+    orgID: string;
 
     constructor(private depositService: DepositServiceService,
                 private route: ActivatedRoute,
@@ -23,10 +24,11 @@ export class ProjectDepositComponent {
                 private popupService: PopupService,
                 private bankAccountService: PlatformBankAccountService) {
         const projectUUID = this.route.snapshot.params.projectID;
+        this.orgID = this.route.snapshot.params.groupID;
 
         this.deposit$ = this.depositService.getProjectPendingDeposit(projectUUID).pipe(
             displayBackendErrorRx(),
-            catchError(err => err.status === 404 ? this.generateDepositInfo(projectUUID) : this.navigateBack())
+            catchError(err => err.status === 404 ? this.generateDepositInfo(projectUUID) : this.recoverBack())
         );
 
         this.masterIBAN$ = this.bankAccountService.bankAccounts$.pipe(
@@ -41,12 +43,12 @@ export class ProjectDepositComponent {
             catchError(err =>
                 err.error.err_code === '0509' ? this.popupService.info(
                     'You already have an existing deposit. Please wait until it\'s approved'
-                ).pipe(switchMap(() => this.navigateBack())) : this.navigateBack())
+                ).pipe(switchMap(() => this.recoverBack())) : this.recoverBack())
         );
     }
 
-    navigateBack(): Observable<never> {
-        this.router.navigate(['../../'], {relativeTo: this.route});
+    private recoverBack(): Observable<never> {
+        this.router.navigate(['../'], {relativeTo: this.route});
         return EMPTY;
     }
 }

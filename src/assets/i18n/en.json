@@ -731,7 +731,7 @@
     },
     "cooperative": {
       "coop_missing": "Requested instance does not exist.",
-      "coop_already_exists": "Instance already exists."
+      "coop_already_exists": "Instance with this identifier already exists."
     },
     "middleware": {
       "transaction_not_signed": "Blockchain transaction has not been signed.",

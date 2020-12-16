@@ -286,7 +286,74 @@ export class ErrorService {
                     case MiddlewareError.CREATE_SELL_OFFER_CONTRACT_FAILED:
                     case MiddlewareError.AE_SDK_ERROR:
                     case MiddlewareError.TRANSACTION_DRY_RUN_FAILED:
-                    case MiddlewareError.PRECONDITION_FAILED:
+
+
+                    case MiddlewareError.CLAIM_OWNERSHIP_DISABLED:
+                    case MiddlewareError.MULTIPLE_OWNERSHIP_CLAIM:
+                    case MiddlewareError.TOKEN_NOT_INITIALIZED:
+                    case MiddlewareError.PLATFORM_MANAGER_PERMISSION_REQUIRED:
+                    case MiddlewareError.SENDER_WALLET_NOT_ACTIVATED:
+                    case MiddlewareError.RECEIVER_WALLET_NOT_ACTIVATED:
+                    case MiddlewareError.WALLET_NOT_ACTIVATED:
+                    case MiddlewareError.WITHDRAW_AMOUNT_MUST_BE_POSITIVE:
+                    case MiddlewareError.TRANSFER_FUNDS_MUST_BE_POSITIVE:
+                    case MiddlewareError.USER_INSUFFICIENT_FUNDS:
+                    case MiddlewareError.APPROVE_SENDER_WALLET_NOT_ACTIVATED:
+                    case MiddlewareError.APPROVE_RECEIVER_WALLET_NOT_ACTIVATED:
+                    case MiddlewareError.DEPOSIT_APPROVE_FAILED:
+                    case MiddlewareError.WITHDRAW_FAILED:
+                    case MiddlewareError.WITHDRAW_AMOUNT_TOO_HIGH:
+                    case MiddlewareError.WITHDRAW_AMOUNT_TOO_LOW:
+                    case MiddlewareError.TOKEN_ISSUER_PERMISSION_REQUIRED:
+                    case MiddlewareError.ACTIVATED_WALLET_REQUIRED:
+                    case MiddlewareError.CREATE_ORG_UNAUTHORIZED:
+                    case MiddlewareError.ADD_TO_ORG_UNAUTHORIZED:
+                    case MiddlewareError.ACCEPT_INVITE_NO_ORG:
+                    case MiddlewareError.ACCEPT_INVITE_ACCEPTED:
+                    case MiddlewareError.ORG_OWNER_PERMISSION:
+                    case MiddlewareError.ACTIVE_WALLET_PERMISSION:
+                    case MiddlewareError.ORG_ACTIVE_WALLET_PERMISSION:
+                    case MiddlewareError.ORG_OWNER_TO_CREATE_PROJECT:
+                    case MiddlewareError.ORG_ACTIVE_WALLET_TO_CREATE_PROJECT:
+                    case MiddlewareError.ORG_OWNER_TO_CANCEL:
+                    case MiddlewareError.PLAT_MANAGER_ADD_INVESTMENT:
+                    case MiddlewareError.NEW_INVESTMENT_PROJECT_FUNDED:
+                    case MiddlewareError.NEW_INVESTMENT_PROJECT_EXPIRED:
+                    case MiddlewareError.INVESTMENT_CANCEL_FAILED:
+                    case MiddlewareError.WITHDRAW_FAILED_CAP_NOT_REACHED:
+                    case MiddlewareError.ORG_OWNER_WITHDRAW_PERMISSION:
+                    case MiddlewareError.WITHDRAW_FAILED_PAYOUT_IN_PROCESS:
+                    case MiddlewareError.EXECUTE_PAYOUT_FAILED_NOT_STARTED:
+                    case MiddlewareError.INVEST_FAILED_PROJECT_FUNDED:
+                    case MiddlewareError.INVEST_FAILED_ZERO_TOKENS:
+                    case MiddlewareError.INVEST_FAILED_INSUFFICIENT_FUNDS:
+                    case MiddlewareError.INVEST_MAX_PER_USER_EXCEEDED:
+                    case MiddlewareError.INVEST_MIN_PER_USER_REQUIRED:
+                    case MiddlewareError.INVEST_INVESTMENT_CAP_EXCEEDED:
+                    case MiddlewareError.INVEST_FRACTION_NON_FUNDED:
+                    case MiddlewareError.INVEST_FUNDING_ENDED:
+                    case MiddlewareError.REVENUE_SHARE_ORG_OWNER_PERMISSION:
+                    case MiddlewareError.REVENUE_SHARE_PROJECT_STILL_FUNDING:
+                    case MiddlewareError.REVENUE_SHARE_ZERO:
+                    case MiddlewareError.REVENUE_SHARE_PROJECT_BALANCE_LOW:
+                    case MiddlewareError.REVENUE_SHARE_ALREADY_STARTED:
+                    case MiddlewareError.REVENUE_SHARE_ACTIVE_WALLET_PERMISSION:
+                    case MiddlewareError.REVENUE_SHARE_AMOUNT_GT_ZERO_REQUIRED:
+                    case MiddlewareError.REVENUE_SHARE_BALANCE_LOW:
+                    case MiddlewareError.TRANSFER_SHARES_PROJECT_STILL_FUNDING:
+                    case MiddlewareError.TRANSFER_SHARES_REVENUE_SHARE_IN_PROCESS:
+                    case MiddlewareError.TRANSFER_SHARES_INSUFFICIENT_FUNDS:
+                    case MiddlewareError.TRANSFER_SHARES_NEED_APPROVAL:
+                    case MiddlewareError.TRANSFER_SHARES_SENDER_NOT_MEMBER:
+                    case MiddlewareError.TRANSFER_SHARES_RECEIVER_NOT_MEMBER:
+                    case MiddlewareError.SELL_OFFER_PROJECT_NOT_FUNDED:
+                    case MiddlewareError.SELL_OFFER_SHARE_AMOUNT_TOO_LOW:
+                    case MiddlewareError.SELL_OFFER_SETTLED:
+                    case MiddlewareError.SELL_OFFER_INSUFFICIENT_FUNDS:
+                    case MiddlewareError.COUNTER_OFFER_SELLER_ACCEPT_PERMISSION:
+                    case MiddlewareError.COUNTER_OFFER_NOT_FOUND:
+                    case MiddlewareError.COUNTER_OFFER_SELLER_CANCEL_PERMISSION:
+
                     case MiddlewareError.COOPERATIVE_MISSING:
                     case MiddlewareError.CONTRACT_DEPLOYMENT_FAILED:
                     case MiddlewareError.UNKNOWN_ERROR:
@@ -430,8 +497,6 @@ export enum MiddlewareError {
     AE_SDK_ERROR = '1140',
     TRANSACTION_DRY_RUN_FAILED = '1150',
 
-    // TODO: finish adding codes for middleware
-    // https://github.com/AMPnet/docs/pull/3/files#diff-e6a31cc331d8a1d5c8df246152431acb1259468ae6ec0a5109b2188a1675c638
     CLAIM_OWNERSHIP_DISABLED = '11600',
     MULTIPLE_OWNERSHIP_CLAIM = '11601',
     TOKEN_NOT_INITIALIZED = '11602',
@@ -450,6 +515,53 @@ export enum MiddlewareError {
     WITHDRAW_AMOUNT_TOO_LOW = '11615',
     TOKEN_ISSUER_PERMISSION_REQUIRED = '11616',
     ACTIVATED_WALLET_REQUIRED = '11617',
+    CREATE_ORG_UNAUTHORIZED = '11618',
+    ADD_TO_ORG_UNAUTHORIZED = '11619',
+    ACCEPT_INVITE_NO_ORG = '11620',
+    ACCEPT_INVITE_ACCEPTED = '11621',
+    ORG_OWNER_PERMISSION = '11622',
+    ACTIVE_WALLET_PERMISSION = '11623',
+    ORG_ACTIVE_WALLET_PERMISSION = '11624',
+    ORG_OWNER_TO_CREATE_PROJECT = '11625',
+    ORG_ACTIVE_WALLET_TO_CREATE_PROJECT = '11626',
+    ORG_OWNER_TO_CANCEL = '11627',
+    PLAT_MANAGER_ADD_INVESTMENT = '11628',
+    NEW_INVESTMENT_PROJECT_FUNDED = '11629',
+    NEW_INVESTMENT_PROJECT_EXPIRED = '11630',
+    INVESTMENT_CANCEL_FAILED = '11631',
+    WITHDRAW_FAILED_CAP_NOT_REACHED = '11632',
+    ORG_OWNER_WITHDRAW_PERMISSION = '11633',
+    WITHDRAW_FAILED_PAYOUT_IN_PROCESS = '11634',
+    EXECUTE_PAYOUT_FAILED_NOT_STARTED = '11635',
+    INVEST_FAILED_PROJECT_FUNDED = '11636',
+    INVEST_FAILED_ZERO_TOKENS = '11637',
+    INVEST_FAILED_INSUFFICIENT_FUNDS = '11638',
+    INVEST_MAX_PER_USER_EXCEEDED = '11639',
+    INVEST_MIN_PER_USER_REQUIRED = '11640',
+    INVEST_INVESTMENT_CAP_EXCEEDED = '11641',
+    INVEST_FRACTION_NON_FUNDED = '11642',
+    INVEST_FUNDING_ENDED = '11643',
+    REVENUE_SHARE_ORG_OWNER_PERMISSION = '11644',
+    REVENUE_SHARE_PROJECT_STILL_FUNDING = '11645',
+    REVENUE_SHARE_ZERO = '11646',
+    REVENUE_SHARE_PROJECT_BALANCE_LOW = '11647',
+    REVENUE_SHARE_ALREADY_STARTED = '11648',
+    REVENUE_SHARE_ACTIVE_WALLET_PERMISSION = '11649',
+    REVENUE_SHARE_AMOUNT_GT_ZERO_REQUIRED = '11650',
+    REVENUE_SHARE_BALANCE_LOW = '11651',
+    TRANSFER_SHARES_PROJECT_STILL_FUNDING = '11652',
+    TRANSFER_SHARES_REVENUE_SHARE_IN_PROCESS = '11653',
+    TRANSFER_SHARES_INSUFFICIENT_FUNDS = '11654',
+    TRANSFER_SHARES_NEED_APPROVAL = '11655',
+    TRANSFER_SHARES_SENDER_NOT_MEMBER = '11656',
+    TRANSFER_SHARES_RECEIVER_NOT_MEMBER = '11657',
+    SELL_OFFER_PROJECT_NOT_FUNDED = '11658',
+    SELL_OFFER_SHARE_AMOUNT_TOO_LOW = '11659',
+    SELL_OFFER_SETTLED = '11660',
+    SELL_OFFER_INSUFFICIENT_FUNDS = '11661',
+    COUNTER_OFFER_SELLER_ACCEPT_PERMISSION = '11662',
+    COUNTER_OFFER_NOT_FOUND = '11663',
+    COUNTER_OFFER_SELLER_CANCEL_PERMISSION = '11664',
 
     COOPERATIVE_MISSING = '1170',
     CONTRACT_DEPLOYMENT_FAILED = '1190',

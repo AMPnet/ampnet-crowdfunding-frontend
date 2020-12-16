@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { AppConfigService } from './shared/services/app-config.service';
 import { Title } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/common';
+import { LanguageService } from './shared/services/language.service';
 
 declare var WOW: any;
 
@@ -13,6 +14,7 @@ declare var WOW: any;
 export class AppComponent implements OnInit {
     constructor(private appConfigService: AppConfigService,
                 @Inject(DOCUMENT) private document: HTMLDocument,
+                private languageService: LanguageService,
                 private title: Title) {
     }
 
@@ -24,5 +26,7 @@ export class AppComponent implements OnInit {
             this.document.getElementById('appFavicon')
                 .setAttribute('href', configRes.config.icon_url);
         });
+
+        this.languageService.setupLanguages();
     }
 }

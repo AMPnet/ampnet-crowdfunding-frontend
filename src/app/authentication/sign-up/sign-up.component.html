@@ -1,9 +1,11 @@
-<h1 class="app-page-header">SIGN UP</h1>
+<h1 class="app-page-header">
+    {{ 'auth.sign_up.title' | translate }}
+</h1>
 
 <div class="row">
     <div class="col-xl-6 align-self-center">
         <button app-action-button
-                text="Signup with Facebook"
+                text="{{ 'auth.sign_up.with_facebook' | translate }}"
                 faStyle="fab"
                 faIcon="fa-facebook-square"
                 [onClick]="performFacebookSignup.bind(this)"
@@ -12,7 +14,7 @@
     </div>
     <div class="col-xl-6 align-self-center">
         <button app-action-button
-                text="Signup with Google"
+                text="{{ 'auth.sign_up.with_google' | translate }}"
                 faStyle="fab"
                 faIcon="fa-google"
                 [onClick]="performGoogleSignup.bind(this)"
@@ -24,33 +26,46 @@
 <div class="dropdown-divider"></div>
 
 <form [formGroup]="signupForm" id="emailForm">
-    <label for="email" class="app-page-label">Email</label>
+    <label for="email" class="app-page-label">
+        {{ 'auth.sign_up.email_input.title' | translate }}
+    </label>
     <input class="input-reg w-100"
            formControlName="email" id="email"
-           placeholder="john.smith@email.com"
+           placeholder="{{ 'auth.sign_up.email_input.placeholder' | translate }}"
            type="text">
 
-    <label for="firstName" class="app-page-label mt-3">First name</label>
+    <label for="firstName" class="app-page-label mt-3">
+        {{ 'auth.sign_up.first_name_input.title' | translate }}
+    </label>
     <input class="input-reg w-100" id="firstName" formControlName="firstName"
-           placeholder="John" type="text">
+           placeholder="{{ 'auth.sign_up.first_name_input.placeholder' | translate }}"
+           type="text">
 
-    <label for="lastName" class="app-page-label mt-3">Last name</label>
+    <label for="lastName" class="app-page-label mt-3">
+        {{ 'auth.sign_up.last_name_input.title' | translate }}
+    </label>
     <input class="input-reg w-100" id="lastName" formControlName="lastName"
-           placeholder="Smith" type="text">
+           placeholder="{{ 'auth.sign_up.last_name_input.placeholder' | translate }}" type="text">
 
-    <label for="password" class="app-page-label mt-3">Password</label>
+    <label for="password" class="app-page-label mt-3">
+        {{ 'auth.sign_up.password_input.title' | translate }}
+    </label>
     <input class="input-reg w-100" id="password" formControlName="password"
+           placeholder="{{ 'auth.sign_up.password_input.placeholder' | translate }}"
            type="password">
     <small class="form-text text-muted mt-2">
-        Password must be at least 8 characters long.
+        {{ 'auth.sign_up.password_input.notice' | translate }}
     </small>
 
-    <label for="confirmPassword" class="app-page-label mt-3">Confirm Password</label>
+    <label for="confirmPassword" class="app-page-label mt-3">
+        {{ 'auth.sign_up.confirm_password_input.title' | translate }}
+    </label>
     <input class="input-reg w-100" id="confirmPassword" formControlName="confirmPassword"
+           placeholder="{{ 'auth.sign_up.confirm_password_input.placeholder' | translate }}"
            type="password">
 
     <button app-action-button
-            text="Submit"
+            text="{{ 'auth.sign_up.submit' | translate }}"
             faIcon="fa-paper-plane"
             [onClick]="onFormSubmit.bind(this)"
             [disabled]="!signupForm.dirty || !signupForm.valid"
@@ -58,14 +73,22 @@
     </button>
 
     <small class="form-text text-muted mt-2">
-        Already have an account? Sign In <a [routerLink]="'/sign_in' | coopPath"><small>here</small></a>.
+        <span>
+            {{ 'auth.sign_up.sign_in_notice' | translate | splitPart:0 }}
+        </span>
+        <span>
+            <a [routerLink]="'/sign_in' | coopPath">
+                {{ 'auth.sign_up.sign_in_notice' | translate | splitPart:1 }}
+            </a>
+        </span>
+        <span>
+            {{ 'auth.sign_up.sign_in_notice' | translate | splitPart:2 }}
+        </span>
     </small>
 
     <div class="dropdown-divider"></div>
 
     <small class="form-text text-muted mt-2">
-        This site is protected by reCAPTCHA and the Google
-        <a href="https://policies.google.com/privacy"><small>Privacy Policy</small></a> and
-        <a href="https://policies.google.com/terms"><small>Terms of Service</small></a> apply.
+        <app-captcha-notice></app-captcha-notice>
     </small>
 </form>

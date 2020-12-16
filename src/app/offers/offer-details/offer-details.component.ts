@@ -3,7 +3,6 @@ import { Meta } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { LinkPreview, NewsPreviewService } from 'src/app/shared/services/news-preview.service';
 import { UserService } from 'src/app/shared/services/user/user.service';
-import { displayBackendErrorRx } from 'src/app/utilities/error-handler';
 import { Project, ProjectService } from '../../shared/services/project/project.service';
 import { WalletService } from '../../shared/services/wallet/wallet.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
@@ -17,6 +16,8 @@ import { PortfolioService, ProjectTransactions } from '../../shared/services/wal
 import { PopupService } from '../../shared/services/popup.service';
 import { ArkaneService } from '../../shared/services/arkane.service';
 import { RouterService } from '../../shared/services/router.service';
+import { ErrorService } from '../../shared/services/error.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-offer-details',
@@ -46,13 +47,15 @@ export class OfferDetailsComponent implements OnInit {
                 private userService: UserService,
                 private meta: Meta,
                 private router: RouterService,
+                private translate: TranslateService,
                 private modalService: BsModalService,
                 private portfolioService: PortfolioService,
                 private popupService: PopupService,
+                private errorService: ErrorService,
                 private arkaneService: ArkaneService) {
         const projectID = this.route.snapshot.params.id;
         this.project$ = this.projectService.getProject(projectID).pipe(
-            displayBackendErrorRx(),
+            this.errorService.handleError,
             tap(project => this.setMetaTags(project)),
             shareReplay(1)
         );
@@ -61,18 +64,18 @@ export class OfferDetailsComponent implements OnInit {
             switchMap(project => forkJoin(
                 project.news.map(singleNews => {
                     return this.newsPreviewService.getLinkPreview(singleNews).pipe(
-                        displayBackendErrorRx(),
+                        this.errorService.handleError,
                     );
                 }))
             ),
         );
 
         this.projectWalletMW$ = this.walletService.getProjectWallet(projectID).pipe(
-            displayBackendErrorRx(),
+            this.errorService.handleError,
             shareReplay(),
             switchMap(projectWallet => {
                 return this.middlewareService.getProjectWalletInfoCached(projectWallet.hash).pipe(
-                    displayBackendErrorRx(),
+                    this.errorService.handleError,
                 );
             }),
         );
@@ -89,7 +92,7 @@ export class OfferDetailsComponent implements OnInit {
         );
 
         this.transactions$ = this.portfolioService.getInvestmentsInProject(projectID).pipe(
-            displayBackendErrorRx(),
+            this.errorService.handleError,
             shareReplay(1)
         );
 
@@ -97,7 +100,7 @@ export class OfferDetailsComponent implements OnInit {
             take(1),
             switchMap(([projectWallet, wallet]) => {
                 return this.portfolioService.investmentDetails(projectWallet.projectHash, wallet.wallet.hash).pipe(
-                    displayBackendErrorRx(),
+                    this.errorService.handleError,
                     map(res => res.investmentCancelable)
                 );
             })
@@ -174,12 +177,12 @@ export class OfferDetailsComponent implements OnInit {
     cancelInvestment(projectUUID: string) {
         return () => {
             return this.portfolioService.generateCancelInvestmentTransaction(projectUUID).pipe(
-                displayBackendErrorRx(),
+                this.errorService.handleError,
                 switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo)),
                 switchMap(() => this.popupService.new({
                     type: 'success',
-                    title: 'Transaction signed',
-                    text: 'Transaction is being processed...'
+                    title: this.translate.instant('general.transaction_signed.title'),
+                    text: this.translate.instant('general.transaction_signed.description')
                 })),
                 switchMap(() => this.router.navigate(['/dash/wallet']))
             );

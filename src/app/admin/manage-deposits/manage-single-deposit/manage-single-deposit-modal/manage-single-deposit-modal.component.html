@@ -1,17 +1,19 @@
 <div class="alert-box">
     <div class="modal-header">
-        <h4 class="modal-title">Confirm deposit amount</h4>
+        <h4 class="modal-title">
+            {{ 'admin.deposits.single_deposit.modal.title' | translate }}
+        </h4>
     </div>
     <div class="modal-body">
         <form [formGroup]="confirmForm">
             <div class="row">
                 <h5 class="explainer-mini text-uppercase gray-text col-md-12">
-                    <b>Amount</b>
+                    <b>{{ 'admin.deposits.single_deposit.modal.amount_input.title' | translate }}</b>
                 </h5>
 
                 <div class="col-md-12">
                     <app-money-input-field
-                            placeholder="Deposit amount"
+                            placeholder="{{ 'admin.deposits.single_deposit.modal.amount_input.placeholder' | translate }}"
                             [control]="confirmForm.get('amountToConfirm')">
                     </app-money-input-field>
                 </div>
@@ -20,7 +22,7 @@
                     <button (click)="onCancel()"
                             class="btn btn-primary w-100 float-left mt-4 py-3 px-3"
                             type="button">
-                        Cancel
+                        {{ 'admin.deposits.single_deposit.modal.cancel' | translate }}
                     </button>
                 </div>
 
@@ -29,7 +31,7 @@
                             [disabled]="!confirmForm.valid"
                             class="btn btn-primary w-100 float-right mt-4 py-3 px-3"
                             type="submit"><i class="fas fa-check-circle mr-2"></i>
-                        Create & Mint
+                        {{ 'admin.deposits.single_deposit.modal.submit' | translate }}
                     </button>
                 </div>
             </div>

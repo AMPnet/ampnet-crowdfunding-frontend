@@ -2,8 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Project, ProjectService, ProjectWallet } from '../../../../shared/services/project/project.service';
 import { MiddlewareService, ProjectWalletInfo } from '../../../../shared/services/middleware/middleware.service';
 import { Observable } from 'rxjs';
-import { displayBackendErrorRx } from '../../../../utilities/error-handler';
 import { tap } from 'rxjs/operators';
+import { ErrorService } from '../../../../shared/services/error.service';
 
 @Component({
     selector: 'app-single-project-item, [app-single-project-item]',
@@ -18,6 +18,7 @@ export class SingleProjectItemComponent implements OnInit {
     walletInfo$: Observable<ProjectWalletInfo>;
 
     constructor(private middlewareService: MiddlewareService,
+                private errorService: ErrorService,
                 private projectService: ProjectService) {
     }
 
@@ -30,7 +31,7 @@ export class SingleProjectItemComponent implements OnInit {
             return this.projectService.updateProject(project.uuid, {
                 active: !project.active
             }).pipe(
-                displayBackendErrorRx(),
+                this.errorService.handleError,
                 tap(updatedProject => this.projectWallet.project = updatedProject)
             );
         };

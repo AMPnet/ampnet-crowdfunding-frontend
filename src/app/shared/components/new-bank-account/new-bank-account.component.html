@@ -1,39 +1,63 @@
 <div>
-    <h2 class="app-page-subtitle">Enter bank account details</h2>
+    <h2 class="app-page-subtitle">
+        {{ 'payment_options.new_bank_account.title' | translate }}
+    </h2>
 
     <form [formGroup]="newBankAccountForm">
         <div class="row">
             <div class="col-12 col-lg-8 mt-3">
-                <label for="iban" class="app-page-label">IBAN</label>
+                <label for="iban" class="app-page-label">
+                    {{ 'payment_options.new_bank_account.iban_input.title' | translate }}
+                </label>
                 <input class="input-reg w-100" id="iban"
                        formControlName="iban"
-                       name="IBAN" placeholder="AD1200012030200359100100" type="text">
+                       name="IBAN"
+                       placeholder="{{ 'payment_options.new_bank_account.iban_input.placeholder' | translate }}"
+                       type="text">
             </div>
             <div class="col-12 col-lg-4 mt-3">
-                <label for="bic" class="app-page-label">SWIFT/BIC</label>
+                <label for="bic" class="app-page-label">
+                    {{ 'payment_options.new_bank_account.swift_input.title' | translate }}
+                </label>
                 <input class="input-reg w-100" id="bic"
                        formControlName="swift"
-                       name="SWIFT/BIC" placeholder="REVOGB21" type="text">
-                <small>Find it out <a href="https://www.iban.com/search-bic" target="_blank"
-                                      rel="noopener noreferrer"><small>here</small></a>.
+                       name="SWIFT/BIC"
+                       placeholder="{{ 'payment_options.new_bank_account.swift_input.placeholder' | translate }}"
+                       type="text">
+                <small>
+                    <span>
+                        {{ 'payment_options.new_bank_account.swift_input.helper_notice' | translate | splitPart:0 }}
+                    </span>
+                    <span>
+                        <a href="https://www.iban.com/search-bic" target="_blank"
+                           rel="noopener noreferrer">
+                            {{ 'payment_options.new_bank_account.swift_input.helper_notice' | translate | splitPart:1 }}
+                        </a>
+                    </span>
+                    <span>
+                        {{ 'payment_options.new_bank_account.swift_input.helper_notice' | translate | splitPart:2 }}
+                    </span>
                 </small>
             </div>
         </div>
-    
+
         <div class="row">
             <div class="col mt-3">
-                <label for="alias" class="app-page-label">Bank account alias</label>
+                <label for="alias" class="app-page-label">
+                    {{ 'payment_options.new_bank_account.alias_input.title' | translate }}
+                </label>
                 <input class="input-reg w-100" id="alias"
                        formControlName="alias"
-                       name="Bank account alias" placeholder="Bank account alias"
+                       name="Bank account alias"
+                       placeholder="{{ 'payment_options.new_bank_account.alias_input.placeholder' | translate }}"
                        type="text">
             </div>
         </div>
-    
+
         <div class="row">
             <div class="col-md-6 mt-3">
                 <button app-action-button
-                        text="Add new bank account"
+                        text="{{ 'payment_options.new_bank_account.submit' | translate }}"
                         faIcon="fa-plus-circle"
                         [disabled]="!newBankAccountForm.dirty || !newBankAccountForm.valid"
                         [onClick]="onSubmit.bind(this)">

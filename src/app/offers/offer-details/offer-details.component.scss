@@ -146,7 +146,7 @@ span.bold {
   }
 
   &__docs {
-    margin: 25px 0 50px 0;
+    margin: 25px 0;
 
     .docs__links {
       white-space: nowrap;
@@ -166,6 +166,34 @@ span.bold {
           color: $primary-color;
           font-size: 24px;
           margin-right: 10px;
+        }
+      }
+    }
+  }
+  &__news {
+    .news {
+      &__title {
+        text-transform: uppercase;
+        font-size: $font-size-mobile-title-small;
+        letter-spacing: 2px;
+        color: $title-color;
+        margin-bottom: 16px;
+      }
+      &__item {
+        background-color: $background-color;
+        margin-bottom: 6px;
+        padding: 16px;
+        border-radius: 2px;
+      }
+      &__wrapper {
+        width: 50%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        a {
+          font-size: $font-size-mobile-title-small;
+          color: $body-color;
+          text-decoration: underline;
         }
       }
     }
@@ -245,7 +273,11 @@ span.bold {
 
     &__desc {
       margin-top: 32px;
-      padding: 0 12px 0 0;
+      padding: 0 12px;
+    }
+  
+    &__docs {
+      margin: 25px 0 44px 0;
     }
   }
 }

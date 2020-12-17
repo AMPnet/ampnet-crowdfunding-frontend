@@ -236,6 +236,17 @@
                     </div>
                 </div>
             </div>
+
+            <div class="left__news" *ngIf="states.news != null">
+                <div class="news__title">
+                    Project news
+                </div>
+                <div *ngFor="let news of states.news" class="news__item">
+                    <div class="news__wrapper">
+                        <a href="{{ news.url }}" target="_blank" rel="noopener">{{ news.url }}</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </ng-template>
 

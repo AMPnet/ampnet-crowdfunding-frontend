@@ -10,6 +10,7 @@
       "raised": "{{ raised }} | raised of {{ goal }} goal",
       "ends_on": "Ends on {{ end_date }}",
       "return": "Expected yearly return: | {{ from }} - {{ to }}",
+      "published_by": "Published by:",
       "see_more": "See more"
     },
     "offer_details": {
@@ -17,6 +18,7 @@
       "title.portfolio": "PORTFOLIO DETAILS",
       "project_hidden": "The project is not open for funding. If you wish to invest, please come back later.",
       "show_location": "Show location",
+      "published_by": "Published by:",
       "raised": "{{ raised }} | raised of {{ goal }} goal",
       "return": "{{ from }} - {{ to }} | Expected yearly return",
       "min_invest": "{{ amount }} | Min Investment",

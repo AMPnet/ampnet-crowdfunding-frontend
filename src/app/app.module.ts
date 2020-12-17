@@ -96,7 +96,6 @@ import { NgxCaptchaModule } from 'ngx-captcha';
 import { NewInstanceComponent } from './authentication/new-instance/new-instance.component';
 import { PlatformConfigComponent } from './admin/platform-config/platform-config.component';
 import { QuillModule } from 'ngx-quill';
-import { OrganizationDetailsLimitedComponent } from './organizations/organization-details-limited/organization-details-limited.component';
 import { TranslationsModule } from './translations.module';
 import { InterpolatePipe } from './shared/pipes/interpolate.pipe';
 import { SplitPartPipe } from './shared/pipes/split-part.pipe';
@@ -183,7 +182,6 @@ import { CaptchaNoticeComponent } from './shared/components/captcha-notice/captc
         IdentityComponent,
         NewBankAccountComponent,
         InvestmentDetailsComponent,
-        OrganizationDetailsLimitedComponent,
         AuthLayoutComponent,
         SignInComponent,
         NewInstanceComponent,

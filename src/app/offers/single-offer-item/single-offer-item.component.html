@@ -47,7 +47,9 @@
         </h1>
         <div class="right__text">
             <div class="right__published">
-                Published by:
+                <span>
+                    {{ 'offers.single_offer_item.published_by' | translate }}
+                </span>
                 <a routerLink="" (click)="onPublishedByClicked()">
                     {{ projectWallet.organization.name }} </a>
             </div>

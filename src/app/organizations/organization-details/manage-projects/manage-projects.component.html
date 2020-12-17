@@ -7,7 +7,7 @@
 
     <ul class="list-group">
         <li *ngFor="let x of projectsWallets" class="list__item"
-            app-single-project-item [hidePublishBtn]="hidePublishBtn" [projectWallet]="x">
+            app-single-project-item [isPublic]="isPublic" [projectWallet]="x">
         </li>
     </ul>
 </ng-container>

@@ -44,7 +44,7 @@
                     </div>
 
                     <p class="right__published">
-                        Published by:
+                        {{ 'offers.offer_details.published_by' | translate }}
                         <a routerLink="" (click)="onPublishedByClicked(states.project.organization.uuid)">
                             {{ states.project.organization.name }} </a>
                     </p>

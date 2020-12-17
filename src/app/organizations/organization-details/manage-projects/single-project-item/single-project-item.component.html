@@ -1,13 +1,13 @@
 <div class="item__top">
     <div class="top__left">
         <img src="{{ projectWallet.project.main_image }}"
-             routerLink="manage_project/{{ projectWallet.project.uuid }}"
+             (click)="onClickedItem()"
              onerror="this.onerror=null; this.src='../../../../assets/noimage.png'"
              alt="Project image">
     </div>
     <div class="top__right">
         <div class="item__title"
-             routerLink="manage_project/{{ projectWallet.project.uuid }}">
+             (click)="onClickedItem()">
             {{ projectWallet.project.name }}
         </div>
         <div class="item__funding">
@@ -51,7 +51,7 @@
         </ng-container>
     </div>
     <div class="item__toggle">
-        <button app-action-button *ngIf="!hidePublishBtn"
+        <button app-action-button *ngIf="!isPublic"
                 text="{{ (projectWallet.project.active ? 'organizations.details.projects.item.publish' : 'organizations.details.projects.item.unpublish') | translate }}"
                 textShort="{{ (projectWallet.project.active ? 'organizations.details.projects.item.publish' : 'organizations.details.projects.item.unpublish') | translate }}"
                 faIcon="{{ projectWallet.project.active ? 'fa-eye-slash' : 'fa-eye' }}"

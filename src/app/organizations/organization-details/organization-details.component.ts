@@ -18,6 +18,8 @@ import { TranslateService } from '@ngx-translate/core';
     styleUrls: ['./organization-details.component.scss']
 })
 export class OrganizationDetailsComponent implements OnInit {
+    isPublic: boolean;
+
     refreshOrganizationSubject = new BehaviorSubject<void>(null);
     refreshOrgWalletSubject = new BehaviorSubject<void>(null);
     refreshOrgMembersSubject = new BehaviorSubject<void>(null);
@@ -63,6 +65,7 @@ export class OrganizationDetailsComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.isPublic = this.activatedRoute.snapshot.data.isPublic;
         const orgID = this.activatedRoute.snapshot.params.id;
         this.organization$ = this.refreshOrganizationSubject.asObservable().pipe(
             switchMap(() => this.organizationService.getSingleOrganization(orgID)

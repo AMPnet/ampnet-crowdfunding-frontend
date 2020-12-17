@@ -37,7 +37,7 @@
     margin-top: 20px;
     color: #444444;
 
-    span {
+    span.bold {
       color: #111111;
       font-weight: bold;
     }
@@ -95,10 +95,11 @@
     font-size: $font-size-desktop-small;
     letter-spacing: 2px;
 
-    span {
+    span.bold {
       font-size: $font-size-desktop-small;
       letter-spacing: 2px;
       color: $title-color;
+      font-weight: bold;
     }
   }
 

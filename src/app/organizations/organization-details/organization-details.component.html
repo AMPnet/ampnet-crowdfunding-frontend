@@ -9,15 +9,17 @@
                 {{ 'organizations.details.title.back' | translate }}
             </div>
 
-            <ng-container *ngIf="!isPublic && (orgWallet$ | async) as wallet">
-                <button [disabled]="!isWalletVerified(wallet)"
-                        class="btn"
-                        routerLink="create_project">
-                    <i class="fas fa-plus mr-lg-3"></i>
-                    <span class="btn__text">
+            <ng-container *ngIf="!isPublic">
+                <ng-container *ngIf="(orgWallet$ | async) as wallet">
+                    <button [disabled]="!isWalletVerified(wallet)"
+                            class="btn"
+                            routerLink="create_project">
+                        <i class="fas fa-plus mr-lg-3"></i>
+                        <span class="btn__text">
                     {{ 'organizations.details.create_project' | translate }}
                 </span>
-                </button>
+                    </button>
+                </ng-container>
             </ng-container>
         </div>
 
@@ -46,13 +48,15 @@
                     </div>
                 </div>
 
-                <ng-container *ngIf="!isPublic && (orgWallet$ | async) as wallet">
-                    <div *ngIf="!isWalletVerified(wallet)">
-                        <div class="alert alert-warning flex__center col-lg-10">
-                            <i class="fas fa-exclamation-triangle mr-2"></i>
-                            {{ 'organizations.details.wallet_not_verified' | translate }}
+                <ng-container *ngIf="!isPublic">
+                    <ng-container *ngIf="(orgWallet$ | async) as wallet">
+                        <div *ngIf="!isWalletVerified(wallet)">
+                            <div class="alert alert-warning flex__center col-lg-10">
+                                <i class="fas fa-exclamation-triangle mr-2"></i>
+                                {{ 'organizations.details.wallet_not_verified' | translate }}
+                            </div>
                         </div>
-                    </div>
+                    </ng-container>
                 </ng-container>
 
                 <div class="tabs">

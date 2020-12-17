@@ -1,6 +1,4 @@
 @import './overrides/swal-overrides';
 @import './overrides/bootstrap-overrides';
-
-.uppy-Dashboard-AddFiles-info {
-  display: inline-block;
-}
+@import './overrides/quill-overrides';
+@import './overrides/uppy-overrides';

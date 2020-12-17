@@ -45,13 +45,13 @@ import { ForgotPasswordComponent } from './authentication/forgot-password/forgot
 import { ResetPasswordComponent } from './authentication/reset-password/reset-password.component';
 import { SignInAutoComponent } from './authentication/sign-in-auto/sign-in-auto.component';
 import { IdentityComponent } from './settings/user/identity/identity.component';
-import { UserGuard } from './settings/user/user.guard';
 import { UserComponent } from './settings/user/user.component';
 import { CoopGuard } from './shared/guards/coop.guard';
 import { AuthLayoutComponent } from './authentication/auth-layout/auth-layout.component';
 import { SignInComponent } from './authentication/sign-in/sign-in.component';
 import { NewInstanceComponent } from './authentication/new-instance/new-instance.component';
 import { PlatformConfigComponent } from './admin/platform-config/platform-config.component';
+import { IdentityGuard } from './settings/user/identity/identity.guard';
 
 const appRoutes: Routes = [
     {
@@ -91,8 +91,8 @@ const appRoutes: Routes = [
             {path: 'manage_groups/new', component: CreateOrganizationComponent},
             {
                 path: 'settings', children: [
-                    {path: 'user', component: UserComponent, canActivate: [UserGuard]},
-                    {path: 'user/identity', component: IdentityComponent}
+                    {path: 'user', component: UserComponent},
+                    {path: 'user/identity', component: IdentityComponent, canActivate: [IdentityGuard]}
                 ]
             },
             {path: 'manage_groups', component: ManageOrganizationsComponent},

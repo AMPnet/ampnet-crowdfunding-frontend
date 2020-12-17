@@ -20,11 +20,38 @@
         </div>
 
         <div *ngIf="!decisionPending(session)" class="d-flex justify-content-center mt-3">
-            <button app-action-button
-                    class="btn btn-primary w-auto"
-                    [onClick]="createVeriffFrame(session.verification_url)"
-                    text="{{ 'settings.user.identity.onboarding.start_verification' | translate }}">
-            </button>
+
+            <form [formGroup]="startVerificationForm">
+
+                <div [hidden]="!appConfig.config.config?.coop_statute_url">
+                    <label for="google-client-id" class="app-page-label mt-3">
+                        {{ 'settings.user.identity.onboarding.statute_confirmation_input.title' | translate }}
+                    </label>
+                    <input class="form-control p-4" id="google-client-id" formControlName="statute_confirmation"
+                           type="checkbox">
+                    <small>
+                       <span>
+                            {{ 'settings.user.identity.onboarding.statute_confirmation_input.notice' | translate | splitPart:0 }}
+                       </span>
+                        <span class="d-inline-flex">
+                            <a href="{{ appConfig.config.config?.coop_statute_url }}" target="_blank" rel="noopener noreferrer">
+                                {{ 'settings.user.identity.onboarding.statute_confirmation_input.notice'
+                                    | translate | splitPart:1 | interpolate:['coopName', appConfig.config.name] }}
+                            </a>
+                       </span>
+                        <span>
+                            {{ 'settings.user.identity.onboarding.statute_confirmation_input.notice' | translate | splitPart:2 }}
+                       </span>
+                    </small>
+                </div>
+
+                <button app-action-button
+                        class="btn btn-primary w-auto mx-auto my-3"
+                        [disabled]="!startVerificationForm.valid"
+                        [onClick]="createVeriffFrame(session.verification_url)"
+                        text="{{ 'settings.user.identity.onboarding.start_verification' | translate }}">
+                </button>
+            </form>
         </div>
     </ng-container>
 

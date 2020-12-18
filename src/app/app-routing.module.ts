@@ -45,13 +45,13 @@ import { ForgotPasswordComponent } from './authentication/forgot-password/forgot
 import { ResetPasswordComponent } from './authentication/reset-password/reset-password.component';
 import { SignInAutoComponent } from './authentication/sign-in-auto/sign-in-auto.component';
 import { IdentityComponent } from './settings/user/identity/identity.component';
-import { UserGuard } from './settings/user/user.guard';
 import { UserComponent } from './settings/user/user.component';
 import { CoopGuard } from './shared/guards/coop.guard';
 import { AuthLayoutComponent } from './authentication/auth-layout/auth-layout.component';
 import { SignInComponent } from './authentication/sign-in/sign-in.component';
 import { NewInstanceComponent } from './authentication/new-instance/new-instance.component';
 import { PlatformConfigComponent } from './admin/platform-config/platform-config.component';
+import { IdentityGuard } from './settings/user/identity/identity.guard';
 
 const appRoutes: Routes = [
     {
@@ -93,8 +93,8 @@ const appRoutes: Routes = [
             {path: 'manage_groups/new', component: CreateOrganizationComponent},
             {
                 path: 'settings', children: [
-                    {path: 'user', component: UserComponent, canActivate: [UserGuard]},
-                    {path: 'user/identity', component: IdentityComponent}
+                    {path: 'user', component: UserComponent},
+                    {path: 'user/identity', component: IdentityComponent, canActivate: [IdentityGuard]}
                 ]
             },
             {path: 'manage_groups', component: ManageOrganizationsComponent},
@@ -103,17 +103,16 @@ const appRoutes: Routes = [
             {path: 'manage_groups/:id/projects', component: ManageProjectsComponent},
             {path: 'manage_groups/:groupID/manage_project/:projectID', component: ManageSingleProjectComponent},
             {path: 'offers/:offerID/invest/:investAmount/verify_sign', component: VerifySignOfferComponent},
-            {path: 'manage_groups/:groupID/manage_project/:projectID/manage_payments', component: ManagePaymentsComponent},
             {
-                path: 'manage_groups/:groupID/manage_project/:projectID/manage_payments/project_deposit',
+                path: 'manage_groups/:groupID/manage_project/:projectID/project_deposit',
                 component: ProjectDepositComponent
             },
             {
-                path: 'manage_groups/:groupID/manage_project/:projectID/manage_payments/project_withdraw',
+                path: 'manage_groups/:groupID/manage_project/:projectID/project_withdraw',
                 component: ProjectWithdrawComponent
             },
             {
-                path: 'manage_groups/:groupID/manage_project/:projectID/manage_payments/revenue_share/:amount',
+                path: 'manage_groups/:groupID/manage_project/:projectID/revenue_share/:amount',
                 component: RevenueShareComponent
             },
             {path: 'manage_withdrawals', component: ManageWithdrawalsComponent},

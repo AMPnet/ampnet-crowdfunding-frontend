@@ -35,7 +35,7 @@
                         </div>
                     </div>
 
-                    <div class="edit-header">
+                    <div class="edit-header app__full-width--padding">
                         <div class="edit__title">
                             <h4>{{ states.project.name }}</h4>
                         </div>
@@ -290,8 +290,8 @@
 
                             <tab heading="{{ 'projects.edit.manage_payments.title' | translate }}"
                                  (selectTab)="detailsShown=false">
-                                <div class="edit-payments">
-                                    <app-manage-payments [showProjectTitle]="false"></app-manage-payments>
+                                <div class="edit-payments app__full-width">
+                                    <app-manage-payments></app-manage-payments>
                                 </div>
                             </tab>
                         </tabset>

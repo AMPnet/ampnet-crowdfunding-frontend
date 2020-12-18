@@ -63,7 +63,7 @@
                     </span>
                     <span class="bold">
                         {{ 'offers.single_offer_item.return' | translate | splitPart:1
-                            | interpolate:['from', projectWallet.project.roi.from / 100 | percent]:['to', projectWallet.project.roi.to / 100 | percent] }}
+                            | interpolate:['from', projectWallet.project.roi.from / 100 | percent:'1.0-2']:['to', projectWallet.project.roi.to / 100 | percent:'1.0-2'] }}
                     </span>
                 </p>
             </ng-container>

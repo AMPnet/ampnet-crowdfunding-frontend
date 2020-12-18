@@ -17,6 +17,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class ProjectDepositComponent {
     masterIBAN$: Observable<string>;
     deposit$: Observable<Deposit>;
+    orgID: string;
 
     constructor(private depositService: DepositServiceService,
                 private route: ActivatedRoute,
@@ -26,10 +27,11 @@ export class ProjectDepositComponent {
                 private translate: TranslateService,
                 private bankAccountService: PlatformBankAccountService) {
         const projectUUID = this.route.snapshot.params.projectID;
+        this.orgID = this.route.snapshot.params.groupID;
 
         this.deposit$ = this.depositService.getProjectPendingDeposit(projectUUID).pipe(
             this.errorService.handleError,
-            catchError(err => err.status === 404 ? this.generateDepositInfo(projectUUID) : this.navigateBack())
+            catchError(err => err.status === 404 ? this.generateDepositInfo(projectUUID) : this.recoverBack())
         );
 
         this.masterIBAN$ = this.bankAccountService.bankAccounts$.pipe(
@@ -43,13 +45,13 @@ export class ProjectDepositComponent {
             catchError(err =>
                 err.error.err_code === WalletError.UNAPPROVED_DEPOSIT_EXISTS ? this.popupService.info(
                     this.translate.instant('projects.edit.manage_payments.deposit.existing_deposit')
-                ).pipe(switchMap(() => this.navigateBack())) : this.navigateBack()),
+                ).pipe(switchMap(() => this.recoverBack())) : this.recoverBack()),
             this.errorService.handleError,
         );
     }
 
-    navigateBack(): Observable<never> {
-        this.router.navigate(['../../'], {relativeTo: this.route});
+    private recoverBack(): Observable<never> {
+        this.router.navigate(['../'], {relativeTo: this.route});
         return EMPTY;
     }
 }

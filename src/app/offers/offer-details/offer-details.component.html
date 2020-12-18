@@ -232,12 +232,47 @@
 
             <div class="left__news" *ngIf="states.news != null">
                 <div class="news__title">
+                    <!-- TODO: Translate this -->
                     Project news
                 </div>
-                <div *ngFor="let news of states.news" class="news__item">
-                    <div class="news__wrapper">
-                        <a href="{{ news.url }}" target="_blank" rel="noopener">{{ news.url }}</a>
+
+                <div *ngFor="let news of states.news">
+                    <div class="news__item-preview">
+                        <ng-container *ngIf="news.open_graph !== null else newsPreviewFallback">
+                            <div class="news-item__img">
+                                <img class="w-100" src="{{ news.open_graph.image.url }}"
+                                     onerror="this.onerror=null; this.src='../../../../assets/noimage.png'">
+                            </div>
+                            <div class="news-item__wrapper">
+                                <div class="news-item__content">
+                                    <div class="news-item__title">
+                                        <!-- TODO: Replace this text in translation file -->
+                                        {{ news.open_graph.title === null ?
+                                        'text to be replaced' : news.open_graph.title | titlecase }}
+                                    </div>
+                                    <div class="news-item__desc">
+                                        <!-- TODO: Replace this text in translation file -->
+                                        {{ news.open_graph.description === null ?
+                                        'desc to be replaced' : news.open_graph.description }}
+                                    </div>
+                                </div>
+                                <div class="news-item__cta">
+                                    <a href="{{ news.url }}">
+                                        <!-- TODO: Translate this -->
+                                        <button class="btn w-100">Read more</button>
+                                    </a>
+                                </div>
+                            </div>
+                        </ng-container>
                     </div>
+
+                    <ng-template #newsPreviewFallback>
+                        <div class="news__item">
+                            <div class="news__wrapper">
+                                <a href="{{ news.url }}" target="_blank" rel="noopener">{{ news.url }}</a>
+                            </div>
+                        </div>
+                    </ng-template>
                 </div>
             </div>
         </div>

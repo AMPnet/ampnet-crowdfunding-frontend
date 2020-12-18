@@ -101,17 +101,16 @@ const appRoutes: Routes = [
             {path: 'manage_groups/:id/projects', component: ManageProjectsComponent},
             {path: 'manage_groups/:groupID/manage_project/:projectID', component: ManageSingleProjectComponent},
             {path: 'offers/:offerID/invest/:investAmount/verify_sign', component: VerifySignOfferComponent},
-            {path: 'manage_groups/:groupID/manage_project/:projectID/manage_payments', component: ManagePaymentsComponent},
             {
-                path: 'manage_groups/:groupID/manage_project/:projectID/manage_payments/project_deposit',
+                path: 'manage_groups/:groupID/manage_project/:projectID/project_deposit',
                 component: ProjectDepositComponent
             },
             {
-                path: 'manage_groups/:groupID/manage_project/:projectID/manage_payments/project_withdraw',
+                path: 'manage_groups/:groupID/manage_project/:projectID/project_withdraw',
                 component: ProjectWithdrawComponent
             },
             {
-                path: 'manage_groups/:groupID/manage_project/:projectID/manage_payments/revenue_share/:amount',
+                path: 'manage_groups/:groupID/manage_project/:projectID/revenue_share/:amount',
                 component: RevenueShareComponent
             },
             {path: 'manage_withdrawals', component: ManageWithdrawalsComponent},

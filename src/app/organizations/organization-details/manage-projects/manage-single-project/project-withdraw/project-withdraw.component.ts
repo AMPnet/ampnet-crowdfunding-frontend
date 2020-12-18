@@ -20,6 +20,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class ProjectWithdrawComponent {
     withdrawalState = WithdrawalState;
     projectID: string;
+    orgID: string;
 
     refreshWithdrawalSubject = new BehaviorSubject<Withdraw | WithdrawalState>(null);
     withdrawal$: Observable<Withdraw | WithdrawalState>;
@@ -35,6 +36,7 @@ export class ProjectWithdrawComponent {
                 private route: ActivatedRoute,
                 private fb: FormBuilder) {
         this.projectID = this.route.snapshot.params.projectID;
+        this.orgID = this.route.snapshot.params.groupID;
 
         this.withdrawal$ = this.refreshWithdrawalSubject.pipe(
             switchMap(data => data !== null ?
@@ -42,7 +44,7 @@ export class ProjectWithdrawComponent {
                 this.withdrawService.getProjectPendingWithdraw(this.projectID).pipe(
                     this.errorService.handleError,
                     catchError(err => err.status === 404 ?
-                        of(WithdrawalState.EMPTY) : this.navigateBack())
+                        of(WithdrawalState.EMPTY) : this.recoverBack())
                 )
             )
         );
@@ -77,7 +79,7 @@ export class ProjectWithdrawComponent {
                     title: this.translate.instant('general.transaction_signed.title'),
                     text: this.translate.instant('general.transaction_signed.description')
                 })),
-                switchMap(() => this.navigateBack()),
+                switchMap(() => this.recoverBack()),
                 finalize(() => SpinnerUtil.hideSpinner())
             );
         };
@@ -95,8 +97,8 @@ export class ProjectWithdrawComponent {
         );
     }
 
-    navigateBack(): Observable<never> {
-        this.router.navigate(['../../'], {relativeTo: this.route});
+    private recoverBack(): Observable<never> {
+        this.router.navigate(['../'], {relativeTo: this.route});
         return EMPTY;
     }
 }

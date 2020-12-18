@@ -45,6 +45,11 @@
     @include button-variant($success-color, darken($success-color, 7.5%), darken($success-color, 10%), lighten($success-color,5%), lighten($success-color, 10%), darken($success-color,30%));
   }
 
+  &-warning {
+    @include button-variant($warning-color, darken($warning-color, 7.5%), darken($warning-color, 10%), lighten($warning-color,5%), lighten($warning-color, 10%), darken($warning-color,30%));
+    color: $secondary-color;
+  }
+
   &-socials-facebook {
     @include button-variant($socials-facebook, darken($socials-facebook, 7.5%), darken($socials-facebook, 10%), lighten($socials-facebook,5%), lighten($socials-facebook, 10%), darken($socials-facebook,30%));
   }
@@ -52,7 +57,7 @@
   &-socials-google {
     @include button-variant($socials-google, darken($socials-google, 7.5%), darken($socials-google, 10%), lighten($socials-google,5%), lighten($socials-google, 10%), darken($socials-google,30%));
   }
-  
+
   &-grey {
     @include button-variant(darken($background-color, 7.5%), darken($background-color, 30%), darken($background-color, 12%), darken($background-color, 30%), darken($background-color, 10%), darken($background-color, 40%));
   }
@@ -68,7 +73,7 @@
       box-shadow: none;
     }
   }
-  
+
   &:not(:disabled):not(.disabled):active:focus {
     box-shadow: none;
   }

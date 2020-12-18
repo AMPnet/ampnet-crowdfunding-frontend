@@ -1,9 +1,10 @@
 <div class="item__top">
     <div class="top__left">
-        <img src="{{ projectWallet.project.main_image }}"
-             (click)="onClickedItem()"
-             onerror="this.onerror=null; this.src='../../../../assets/noimage.png'"
-             alt="Project image">
+        <a [routerLink]="" (click)="onClickedItem()">
+            <img src="{{ projectWallet.project.main_image }}"
+                 onerror="this.onerror=null; this.src='../../../../assets/noimage.png'"
+                 alt="Project image">
+        </a>
     </div>
     <div class="top__right">
         <div class="item__title"

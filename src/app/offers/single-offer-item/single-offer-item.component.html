@@ -1,8 +1,10 @@
 <div class="card-holder app__full-width--padding">
     <div class="card-left">
         <div class="left__img app__full-width">
-            <img (click)="onClickedItem()" class="img__base w-100"
-                 src="{{ projectWallet.project.main_image }}">
+            <a [routerLink]="" (click)="onClickedItem()">
+                <img class="img__base w-100"
+                     src="{{ projectWallet.project.main_image }}">
+            </a>
         </div>
         <!-- title for mobile view -->
         <h1 class="app-basic-title">
@@ -41,13 +43,15 @@
         </div>
     </div>
 
-    <div class="card-right">
-        <h1 class="app-basic-title" (click)="onClickedItem()">
-            {{ projectWallet.project.name }}
-        </h1>
+    <div class="card-right link-remove-style">
+        <a [routerLink]="" (click)="onClickedItem()">
+            <h1 class="app-basic-title">
+                {{ projectWallet.project.name }}
+            </h1>
+        </a>
 
         <div class="right__text">
-            <div class="right__published">
+            <div class="right__published link-remove-style">
                 <span>
                     {{ 'offers.single_offer_item.published_by' | translate }}
                 </span>

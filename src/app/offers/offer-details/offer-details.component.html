@@ -43,7 +43,7 @@
                         <h1 class="app-basic-title">{{ states.project.name }}</h1>
                     </div>
 
-                    <p class="right__published">
+                    <p class="right__published link-remove-style">
                         {{ 'offers.offer_details.published_by' | translate }}
                         <a routerLink="" (click)="onPublishedByClicked(states.project.organization.uuid)">
                             {{ states.project.organization.name }}

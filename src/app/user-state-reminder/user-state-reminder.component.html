@@ -3,20 +3,18 @@
     wallet: wallet$ | async
 } as states">
     <div *ngIf="!isUserVerified(states.user)">
-        <div class="app__full-width">
-            <div class="wallet-init-reminder">
-                <p>
-                    <span>
-                        {{ 'user_state_reminder.not_verified' | translate | splitPart:0 }}
-                    </span>
-                    <span class="reminder-link d-inline-block" [routerLink]="'/dash/settings/user/identity' | coopPath">
-                        {{ 'user_state_reminder.not_verified' | translate | splitPart:1 }}
-                    </span>
-                    <span>
-                        {{ 'user_state_reminder.not_verified' | translate | splitPart:2 }}
-                    </span>
-                </p>
-            </div>
+        <div class="wallet-init-reminder">
+            <p>
+                <span>
+                    {{ 'user_state_reminder.not_verified' | translate | splitPart:0 }}
+                </span>
+                <span class="reminder-link d-inline-block" [routerLink]="'/dash/settings/user/identity' | coopPath">
+                    {{ 'user_state_reminder.not_verified' | translate | splitPart:1 }}
+                </span>
+                <span>
+                    {{ 'user_state_reminder.not_verified' | translate | splitPart:2 }}
+                </span>
+            </p>
         </div>
     </div>
 

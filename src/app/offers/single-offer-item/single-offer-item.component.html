@@ -1,4 +1,4 @@
-<div class="card-holder">
+<div class="card-holder app__full-width--padding">
     <div class="card-left">
         <div class="left__img app__full-width">
             <img (click)="onClickedItem()" class="img__base w-100"
@@ -45,6 +45,7 @@
         <h1 class="app-basic-title" (click)="onClickedItem()">
             {{ projectWallet.project.name }}
         </h1>
+
         <div class="right__text">
             <div class="right__published">
                 <span>
@@ -54,9 +55,7 @@
                     {{ projectWallet.organization.name }}
                 </a>
             </div>
-        </div>
 
-        <div class="right__text">
             <ng-container *ngIf="projectWallet.project.roi.to != 0">
                 <p class="right__roi">
                     <span>

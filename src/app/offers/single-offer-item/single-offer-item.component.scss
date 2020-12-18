@@ -14,10 +14,6 @@
   display: none;
 }
 
-.app-basic-title, .left__progress, .card-right {
-  padding: 0 20px;
-}
-
 .app-basic-title {
   cursor: pointer;
 }
@@ -121,15 +117,6 @@
 }
 
 @include media-breakpoint-up(lg) {
-  .app-basic-title, .left__progress, .card-right {
-    padding: 0;
-  }
-
-  .container {
-    padding-left: 0;
-    padding-right: 0;
-  }
-
   .card-holder {
     display: flex;
     border-radius: 1px;

@@ -62,6 +62,7 @@
   cursor: pointer;
   color: $title-color;
   margin-bottom: 0;
+
   svg {
     font-size: $font-size-mobile-body;
   }
@@ -99,6 +100,7 @@
   display: flex;
   justify-content: space-between;
   text-transform: uppercase;
+
   .app-page-title,
   .app-page-title-back {
     width: 100%;
@@ -170,7 +172,17 @@
   padding-right: 15px;
 }
 
-@include media-breakpoint-up(lg) {  
+.link-remove-style {
+  a {
+    color: $title-color;
+  }
+
+  a:hover {
+    color: $title-color;
+  }
+}
+
+@include media-breakpoint-up(lg) {
   .app__full-width--padding {
     padding-left: 0;
     padding-right: 0;

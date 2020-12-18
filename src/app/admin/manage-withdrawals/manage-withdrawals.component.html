@@ -8,11 +8,15 @@
     <ng-container *ngIf="(userWithdrawals$ | async) as userWithdrawals else spinner">
         <ul *ngIf="userWithdrawals.length > 0" class="list-group">
             <li *ngFor="let userWithdrawal of userWithdrawals"
-                class="list-group-item cursor-pointer gray-text explainer-mini"
+                class="list-group-item link-remove-style gray-text explainer-mini"
                 [routerLink]="['/dash', 'manage_withdrawals', userWithdrawal.withdraw.id] | coopPath">
+                <a [routerLink]="">
                 <span class="float-left">
-                    {{ userWithdrawal.user.first_name }} {{ userWithdrawal.user.last_name }} ({{ userWithdrawal.user.email }})
+                     {{ userWithdrawal.user.first_name }} {{ userWithdrawal.user.last_name }}
+                    ({{ userWithdrawal.user.email }})
                 </span>
+                </a>
+
                 <span class="float-right">
                     {{ userWithdrawal.withdraw.amount | currencyDefault }}
                 </span>
@@ -32,11 +36,15 @@
     <ng-container *ngIf="(projectWithdrawals$ | async) as projectWithdrawals else spinner">
         <ul *ngIf="projectWithdrawals.length > 0" class="list-group">
             <li *ngFor="let projectWithdrawal of projectWithdrawals"
-                class="list-group-item cursor-pointer gray-text explainer-mini"
+                class="list-group-item link-remove-style gray-text explainer-mini"
                 [routerLink]="['/dash', 'manage_withdrawals', projectWithdrawal.withdraw.id] | coopPath">
+                <a [routerLink]="">
                 <span class="float-left">
-                    {{ projectWithdrawal.project.name }}, {{ projectWithdrawal.user.first_name }} {{ projectWithdrawal.user.last_name }} ({{ projectWithdrawal.user.email }})
+                    {{ projectWithdrawal.project.name }}
+                    , {{ projectWithdrawal.user.first_name }} {{ projectWithdrawal.user.last_name }}
+                    ({{ projectWithdrawal.user.email }})
                 </span>
+                </a>
                 <span class="float-right">
                     {{ projectWithdrawal.withdraw.amount | currencyDefault }}
                 </span>

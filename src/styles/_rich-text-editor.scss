@@ -6,3 +6,13 @@
   width: 100%;
   min-height: 400px;
 }
+
+quill-view {
+  .ql-editor {
+    padding: 0;
+  }
+
+  .ql-container.ql-snow {
+    border: unset !important;
+  }
+}

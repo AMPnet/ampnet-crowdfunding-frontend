@@ -172,6 +172,7 @@ export interface AppConfig {
 export interface CustomConfig {
     title?: string;
     icon_url?: string;
+    coop_statute_url?: string;
     arkane?: {
         id: string;
         env: string;

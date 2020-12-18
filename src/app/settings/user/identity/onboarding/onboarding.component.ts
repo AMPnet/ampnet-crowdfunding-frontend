@@ -9,6 +9,7 @@ import { UserService } from '../../../../shared/services/user/user.service';
 import { createVeriffFrame, MESSAGES } from '@veriff/incontext-sdk';
 import { ErrorService } from '../../../../shared/services/error.service';
 import { TranslateService } from '@ngx-translate/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 
 @Component({
@@ -25,13 +26,16 @@ export class OnboardingComponent {
     approved$: Observable<void>;
     private approvedSubject = new Subject<void>();
 
+    startVerificationForm: FormGroup;
+
     constructor(private renderer2: Renderer2,
-                private appConfig: AppConfigService,
+                public appConfig: AppConfigService,
                 private router: RouterService,
                 private popupService: PopupService,
                 private userService: UserService,
                 private errorService: ErrorService,
                 private translate: TranslateService,
+                private fb: FormBuilder,
                 private onboardingService: OnboardingService) {
         this.session$ = this.sessionSubject.asObservable().pipe(
             switchMap(_ => this.onboardingService.getVeriffSession()),
@@ -62,6 +66,10 @@ export class OnboardingComponent {
                 return EMPTY;
             })
         );
+
+        this.startVerificationForm = this.fb.group({
+            statute_confirmation: [!this.appConfig.config.config?.coop_statute_url, Validators.requiredTrue]
+        });
     }
 
     createVeriffFrame(verification_url: string): () => Observable<MESSAGES> {

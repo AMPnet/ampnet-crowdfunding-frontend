@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CoopService } from '../../shared/services/user/coop.service';
 import { AppConfig, AppConfigService } from '../../shared/services/app-config.service';
 import { ErrorService } from '../../shared/services/error.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'app-platform-config',
@@ -12,14 +13,17 @@ import { ErrorService } from '../../shared/services/error.service';
     styleUrls: ['./platform-config.component.scss']
 })
 export class PlatformConfigComponent {
+    showSecureConfig: boolean;
     private refreshAppConfig = new BehaviorSubject<AppConfig>(null);
     appConfig$: Observable<AppConfig>;
     updateForm$: Observable<FormGroup>;
 
-    constructor(private coopService: CoopService,
+    constructor(private route: ActivatedRoute,
+                private coopService: CoopService,
                 private appConfigService: AppConfigService,
                 private errorService: ErrorService,
                 private fb: FormBuilder) {
+        this.showSecureConfig = !!this.route.snapshot.queryParams.secure;
         this.appConfig$ = this.refreshAppConfig.pipe(
             switchMap(appConfig => appConfig !== null ? of(appConfig) : this.coopService.getCoop()),
             shareReplay(1)
@@ -31,6 +35,7 @@ export class PlatformConfigComponent {
                     title: [appConfig.config?.title],
                     logo: [null],
                     icon: [appConfig.config?.icon_url],
+                    coop_statute: [appConfig.config?.coop_statute_url],
                     hostname: [appConfig.hostname],
                     arkaneID: [appConfig.config?.arkane?.id],
                     arkaneEnv: [appConfig.config?.arkane?.env],
@@ -53,6 +58,7 @@ export class PlatformConfigComponent {
                 config: {
                     title: appConfig.title,
                     icon_url: appConfig.icon,
+                    coop_statute_url: appConfig.coop_statute,
                     arkane: {
                         id: appConfig.arkaneID,
                         env: appConfig.arkaneEnv,

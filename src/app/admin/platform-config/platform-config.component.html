@@ -55,42 +55,44 @@
                     <label for="arkane-id" class="app-page-label mt-3">
                         {{ 'admin.platform_config.arkane_id_input.title' | translate }}
                     </label>
-                    <input class="form-control p-4" id="arkane-id" formControlName="arkaneID"
+                    <input class="input-reg w-100" id="arkane-id" formControlName="arkaneID"
                            placeholder="{{ 'admin.platform_config.arkane_id_input.placeholder' | translate }}"
                            type="text">
 
                     <label for="arkane-env" class="app-page-label mt-3">
                         {{ 'admin.platform_config.arkane_env_input.title' | translate }}
                     </label>
-                    <input class="form-control p-4" id="arkane-env" formControlName="arkaneEnv"
+                    <input class="input-reg w-100" id="arkane-env" formControlName="arkaneEnv"
                            placeholder="{{ 'admin.platform_config.arkane_env_input.placeholder' | translate }}"
                            type="text">
 
                     <label for="need-user-verification" class="app-page-label mt-3">
                         {{ 'admin.platform_config.verification_required_input.title' | translate }}
                     </label>
-                    <input class="form-control p-4 ml-1 w-auto" id="need-user-verification"
-                           formControlName="needUserVerification"
-                           type="checkbox">
+                    <div class="w-100">
+                        <input class="input-reg p-4 ml-1 w-auto" id="need-user-verification"
+                               formControlName="needUserVerification"
+                               type="checkbox">
+                    </div>
 
                     <label for="recaptcha-site-key" class="app-page-label mt-3">
                         {{ 'admin.platform_config.captcha_key_input.title' | translate }}
                     </label>
-                    <input class="form-control p-4" id="recaptcha-site-key" formControlName="reCaptchaSiteKey"
+                    <input class="input-reg w-100" id="recaptcha-site-key" formControlName="reCaptchaSiteKey"
                            placeholder="{{ 'admin.platform_config.captcha_key_input.placeholder' | translate }}"
                            type="text">
 
                     <label for="google-client-id" class="app-page-label mt-3">
                         {{ 'admin.platform_config.google_client_id_input.title' | translate }}
                     </label>
-                    <input class="form-control p-4" id="google-client-id" formControlName="googleClientID"
+                    <input class="input-reg w-100" id="google-client-id" formControlName="googleClientID"
                            placeholder="{{ 'admin.platform_config.google_client_id_input.placeholder' | translate }}"
                            type="text">
 
                     <label for="facebook-app-id" class="app-page-label mt-3">
                         {{ 'admin.platform_config.facebook_app_id_input.title' | translate }}
                     </label>
-                    <input class="form-control p-4" id="facebook-app-id" formControlName="facebookAppID"
+                    <input class="input-reg w-100" id="facebook-app-id" formControlName="facebookAppID"
                            placeholder="{{ 'admin.platform_config.facebook_app_id_input.placeholder' | translate }}"
                            type="text">
                 </div>

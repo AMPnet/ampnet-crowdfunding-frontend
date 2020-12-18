@@ -204,22 +204,20 @@
             </div>
         </div>
 
-        <div class="offer-left col-lg-7">
+        <div class="offer-left col-lg-7 add-height">
             <div class="left__desc">
                 <div *ngIf="!isPortfolioView else tabbedView">
                     <ng-container *ngTemplateOutlet="projectDetails"></ng-container>
                 </div>
             </div>
         </div>
-    </div>
 
-    <ng-template #projectDetails>
-        <div class="left__inner">
-            <quill-view [content]="states.project.description"
-                        format="html" theme="snow">
-            </quill-view>
+        <ng-container *ngIf="states.project.documents.length">
 
-            <div class="left__docs">
+        </ng-container>
+
+        <div class="offer-right col-lg-5">
+            <div class="right__docs">
                 <div *ngFor="let doc of states.project.documents">
                     <div class="docs__links">
                         <a href="{{ doc.link }}">
@@ -230,7 +228,7 @@
                 </div>
             </div>
 
-            <div class="left__news" *ngIf="states.news != null">
+            <div class="right__news" *ngIf="states.news != null">
                 <div class="news__title">
                     <!-- TODO: Translate this -->
                     Project news
@@ -275,6 +273,14 @@
                     </ng-template>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <ng-template #projectDetails>
+        <div class="left__inner">
+            <quill-view [content]="states.project.description"
+                        format="html" theme="snow">
+            </quill-view>
         </div>
     </ng-template>
 

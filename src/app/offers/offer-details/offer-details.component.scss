@@ -89,6 +89,102 @@ span.bold {
   &__fund-period {
     padding-bottom: 32px;
   }
+
+  &__docs {
+    margin: 25px 0;
+
+    .docs__links {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      padding-bottom: 20px;
+
+      a {
+        text-decoration: none;
+
+        span {
+          color: $body-color;
+          font-weight: normal;
+        }
+
+        svg {
+          color: $primary-color;
+          font-size: 24px;
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+
+  &__news {
+    .news {
+      &__title {
+        text-transform: uppercase;
+        font-size: $font-size-mobile-title-small;
+        letter-spacing: 2px;
+        color: $title-color;
+        margin-bottom: 16px;
+      }
+      &__item {
+        background-color: $background-color;
+        margin-bottom: 6px;
+        padding: 16px;
+        border-radius: 2px;
+      }
+      &__wrapper {
+        width: 50%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        a {
+          font-size: $font-size-mobile-title-small;
+          color: $body-color;
+          text-decoration: underline;
+        }
+      }
+      &__item-preview {
+        .news-item {
+          &wrapper,
+          &__img {
+            border-radius: 1px;
+          }
+          &__wrapper {
+            margin: -15px 0 20px 0;
+            background-color: $background-color;
+            padding: 0 10px;
+          }
+          &__title {
+            padding-top: 25px;
+            font-size: $font-size-mobile-title2;
+            color: $title-color;
+            letter-spacing: 1.5px;
+            font-weight: normal;
+            width: 300px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-bottom: 10px;
+          }
+          &__desc {
+            font-size: $font-size-mobile-title-small;
+            color: $body-color;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+          }
+          &__cta {
+            padding-bottom: 20px;
+            a {
+              text-decoration: none;
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 .offer-right-socials {
@@ -129,99 +225,12 @@ span.bold {
   &__desc {
     color: $body-color;
   }
-
-  &__docs {
-    margin: 25px 0;
-
-    .docs__links {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      padding-bottom: 20px;
-
-      a {
-        text-decoration: none;
-
-        span {
-          color: $body-color;
-          font-weight: normal;
-        }
-
-        svg {
-          color: $primary-color;
-          font-size: 24px;
-          margin-right: 10px;
-        }
-      }
-    }
-  }
-  &__news {
-    .news {
-      &__title {
-        text-transform: uppercase;
-        font-size: $font-size-mobile-title-small;
-        letter-spacing: 2px;
-        color: $title-color;
-        margin-bottom: 16px;
-      }
-      &__item {
-        background-color: $background-color;
-        margin-bottom: 6px;
-        padding: 16px;
-        border-radius: 2px;
-      }
-      &__wrapper {
-        width: 50%;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        a {
-          font-size: $font-size-mobile-title-small;
-          color: $body-color;
-          text-decoration: underline;
-        }
-      }
-      &__item-preview {
-        .news-item {
-          &wrapper,
-          &__img {
-            border-radius: 1px;
-          }
-          &__wrapper {
-            margin: -15px 0 20px 0;
-            background-color: $background-color;
-            padding: 0 10px;
-          }
-          /* &__title,
-          &__desc {
-            width: 300px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-          } */
-          &__title {
-            padding-top: 25px;
-            font-size: $font-size-mobile-title;
-            color: $title-color;
-            letter-spacing: 1.5px;
-            font-weight: normal;
-            width: 300px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-          }
-          &__desc {
-            font-size: $font-size-mobile-title-small;
-            color: $body-color;
-            letter-spacing: 1px;
-          }
-        }
-      }
-    }
-  }
 }
 
 @include media-breakpoint-up(lg) {
+  .add-height {
+    height: 70vh;
+  }
   .container {
     display: flex;
     flex-direction: column;
@@ -229,6 +238,10 @@ span.bold {
 
   .offer-right {
     float: right;
+    margin-top: 16px;
+    border-radius: 1px;
+    padding: 40px 64px 64px 64px;
+    background-color: $background-color;
   }
 
   .offer-left {
@@ -246,9 +259,7 @@ span.bold {
 
   .right {
     &__container {
-      margin-top: 16px;
-      border-radius: 1px;
-      padding: 40px 64px 64px 64px;
+      background-color: unset;
     }
 
     &__progress {
@@ -284,6 +295,10 @@ span.bold {
         font-size: $font-size-desktop-body2;
       }
     }
+
+    &__docs {
+      margin: 25px 0 44px 0;
+    }
   }
 
   .left {
@@ -295,10 +310,6 @@ span.bold {
     &__desc {
       margin-top: 32px;
       padding: 0 12px;
-    }
-
-    &__docs {
-      margin: 25px 0 44px 0;
     }
   }
 }

@@ -49,7 +49,7 @@ export class DepositComponent implements OnInit {
             this.errorService.handleError,
             finalize(() => SpinnerUtil.hideSpinner())
         ).subscribe(res => {
-            this.masterIban = res.bank_accounts[0].iban;
+            this.masterIban = res.bank_accounts[0]?.iban;
         });
     }
 }

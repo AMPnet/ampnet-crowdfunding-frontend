@@ -28,12 +28,12 @@ export class UserStateReminderComponent implements OnDestroy {
         this.userWalletSubs = combineLatest([this.user$, this.wallet$]).pipe(
             tap(([user, wallet]) => {
                 if (this.isWalletReady(wallet)) {
-                    this.userWalletSubs.unsubscribe();
-                    this.walletWSSubs.unsubscribe();
+                    this.userWalletSubs?.unsubscribe();
+                    this.walletWSSubs?.unsubscribe();
                 }
 
                 if (this.isWaitingWalletReady(user, wallet)) {
-                    this.userWalletSubs.unsubscribe();
+                    this.userWalletSubs?.unsubscribe();
                     this.walletWSSub.next(wallet);
                 }
             })

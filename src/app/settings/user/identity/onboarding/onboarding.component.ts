@@ -53,7 +53,7 @@ export class OnboardingComponent {
 
         this.approved$ = this.approvedSubject.asObservable().pipe(
             switchMap(() => this.popupService.success(
-                this.translate.instant('user.identity.onboarding.approved')
+                this.translate.instant('settings.user.identity.onboarding.approved')
             )),
             switchMap(() => this.userService.refreshUserToken()
                 .pipe(this.errorService.handleError)),

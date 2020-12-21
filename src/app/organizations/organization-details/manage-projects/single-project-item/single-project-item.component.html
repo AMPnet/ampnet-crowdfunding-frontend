@@ -23,7 +23,7 @@
     </div>
 </div>
 <div class="item__bottom">
-    <div class="item__progress-bar">
+    <div class="item__progress-bar" *ngIf="projectWallet.wallet.hash">
         <ng-container
                 *ngIf="(walletInfo$ | async) as wallet else walletLoading">
             <div style="visibility:hidden" class="fadeIn wow">
@@ -51,7 +51,7 @@
             </div>
         </ng-container>
     </div>
-    <div class="item__toggle">
+    <div class="item__toggle" *ngIf="projectWallet.wallet.hash">
         <button app-action-button *ngIf="!isPublic"
                 text="{{ (projectWallet.project.active ? 'organizations.details.projects.item.publish' : 'organizations.details.projects.item.unpublish') | translate }}"
                 textShort="{{ (projectWallet.project.active ? 'organizations.details.projects.item.publish' : 'organizations.details.projects.item.unpublish') | translate }}"

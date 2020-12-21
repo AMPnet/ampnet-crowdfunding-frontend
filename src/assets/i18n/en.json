@@ -202,7 +202,6 @@
         "title": "Members",
         "add_input.placeholder": "joe@mail.com, jane@mail.com",
         "add_button": "Add members",
-        "add_button.loading": "Sending invites...",
         "join_date": "Joined {{ date }}",
         "empty": "You are the only member of {{ org }}",
         "invited": "Successfully invited user to organization.",
@@ -487,7 +486,7 @@
         "document_input": {
           "title": "Document"
         },
-        "submit": "Confirm deposit",
+        "submit": "Confirm",
         "modal": {
           "title": "Confirm deposit amount",
           "amount_input": {
@@ -810,7 +809,17 @@
       "title": "Transaction signed",
       "description": "The transaction is being processed..."
     },
-    "captcha_notice": "This site is protected by reCAPTCHA and the Google | Privacy Policy | and | Terms of Service | apply."
+    "captcha_notice": "This site is protected by reCAPTCHA and the Google | Privacy Policy | and | Terms of Service | apply.",
+    "popup": {
+      "info.title": "Info",
+      "success": {
+        "title": "Success",
+        "confirm": "Continue"
+      },
+      "warning.title": "Warning",
+      "error.title": "Error",
+      "confirm": "Ok"
+    }
   },
   "languages": {
     "en": "English",

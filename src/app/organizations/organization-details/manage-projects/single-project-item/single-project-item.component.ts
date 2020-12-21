@@ -44,14 +44,14 @@ export class SingleProjectItemComponent implements OnInit {
 
     onClickedItem() {
         if (this.isPublic) {
-            if (this.route.snapshot.params.isOverview) {
-                this.router.navigate(['/overview', this.projectWallet.project.uuid, 'discover']);
+            if (this.route.snapshot.data.isOverview) {
+                this.router.navigate(['/overview', this.projectWallet.project.uuid]);
             } else {
                 this.router.navigate(['/dash', 'offers', this.projectWallet.project.uuid], {relativeTo: this.route.root});
             }
         } else {
-            if (this.route.snapshot.params.isOverview) {
-                this.router.navigate(['/overview', this.projectWallet.project.uuid, 'discover']);
+            if (this.route.snapshot.data.isOverview) {
+                this.router.navigate(['/overview', this.projectWallet.project.uuid]);
             } else {
                 this.router.navigate(['manage_project/', this.projectWallet.project.uuid], {relativeTo: this.route});
             }

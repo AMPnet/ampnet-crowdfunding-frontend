@@ -1,22 +1,32 @@
 <div class="container">
-    <h1 class="app-page-title">PLATFORM CONFIGURATION</h1>
+    <h1 class="app-page-title">{{ 'admin.platform_config.title' | translate }}</h1>
 
     <ng-container *ngIf="(appConfig$ | async) as appConfig; else spinner">
         <ng-container *ngIf="(updateForm$ | async) as updateForm; else spinner">
             <form [formGroup]="updateForm" id="updateCoopForm">
-                <label for="name" class="app-page-label">Instance name</label>
+                <label for="name" class="app-page-label">
+                    {{ 'admin.platform_config.instance_name_input.title' | translate }}
+                </label>
                 <input class="input-reg w-100" id="name" formControlName="name"
-                       placeholder="Instance Name" type="text">
+                       placeholder="{{ 'admin.platform_config.instance_name_input.placeholder' | translate }}"
+                       type="text">
 
-                <label for="identifier" class="app-page-label mt-3">Identifier</label>
+                <label for="identifier" class="app-page-label mt-3">
+                    {{ 'admin.platform_config.identifier_input.title' | translate }}
+                </label>
                 <input class="input-reg w-100" id="identifier" [value]="appConfig.identifier"
                        [disabled]="true" type="text">
 
-                <label for="title" class="app-page-label mt-3">Web title</label>
+                <label for="title" class="app-page-label mt-3">
+                    {{ 'admin.platform_config.web_title_input.title' | translate }}
+                </label>
                 <input class="input-reg w-100" id="title" formControlName="title"
-                       placeholder="Instance" type="text">
+                       placeholder="{{ 'admin.platform_config.web_title_input.placeholder' | translate }}"
+                       type="text">
 
-                <label for="logo" class="app-page-label mt-3">Logo</label>
+                <label for="logo" class="app-page-label mt-3">
+                    {{ 'admin.platform_config.logo_input.title' | translate }}
+                </label>
                 <app-upload-area areaID='logo-image' id="logo"
                                  [restrictions]="{
                                     allowedFileTypes: ['image/*'],
@@ -26,41 +36,69 @@
                                  [firstFileControl]="updateForm.get('logo')">
                 </app-upload-area>
 
-                <label for="icon" class="app-page-label mt-3">Icon</label>
+                <label for="icon" class="app-page-label mt-3">
+                    {{ 'admin.platform_config.icon_url_input.title' | translate }}
+                </label>
                 <input class="input-reg w-100" id="icon" formControlName="icon"
-                       placeholder="https://path/to/icon.png" type="text">
+                       placeholder="{{ 'admin.platform_config.icon_url_input.placeholder' | translate }}"
+                       type="text">
+
+                <label for="coop-statute" class="app-page-label mt-3">
+                    {{ 'admin.platform_config.coop_statute_input.title' | translate }}
+                </label>
+                <input class="input-reg w-100" id="coop-statute" formControlName="coop_statute"
+                       placeholder="{{ 'admin.platform_config.coop_statute_input.placeholder' | translate }}"
+                       type="text">
 
                 <!-- Hidden because of security reasons. -->
-                <div [hidden]="true">
-                    <label for="arkane-id" class="app-page-label mt-3">Arkane ID</label>
-                    <input class="form-control p-4" id="arkane-id" formControlName="arkaneID"
-                           placeholder="arkaneID" type="text">
+                <div [hidden]="!showSecureConfig">
+                    <label for="arkane-id" class="app-page-label mt-3">
+                        {{ 'admin.platform_config.arkane_id_input.title' | translate }}
+                    </label>
+                    <input class="input-reg w-100" id="arkane-id" formControlName="arkaneID"
+                           placeholder="{{ 'admin.platform_config.arkane_id_input.placeholder' | translate }}"
+                           type="text">
 
-                    <label for="arkane-env" class="app-page-label mt-3">Arkane ID</label>
-                    <input class="form-control p-4" id="arkane-env" formControlName="arkaneEnv"
-                           placeholder="arkaneEnv" type="text">
+                    <label for="arkane-env" class="app-page-label mt-3">
+                        {{ 'admin.platform_config.arkane_env_input.title' | translate }}
+                    </label>
+                    <input class="input-reg w-100" id="arkane-env" formControlName="arkaneEnv"
+                           placeholder="{{ 'admin.platform_config.arkane_env_input.placeholder' | translate }}"
+                           type="text">
 
                     <label for="need-user-verification" class="app-page-label mt-3">
-                        Need user verification
+                        {{ 'admin.platform_config.verification_required_input.title' | translate }}
                     </label>
-                    <input class="form-control p-4 ml-1 w-auto" id="need-user-verification"
-                           formControlName="needUserVerification" type="checkbox">
+                    <div class="w-100">
+                        <input class="input-reg p-4 ml-1 w-auto" id="need-user-verification"
+                               formControlName="needUserVerification"
+                               type="checkbox">
+                    </div>
 
-                    <label for="recaptcha-site-key" class="app-page-label mt-3">ReCaptcha Site Key</label>
-                    <input class="form-control p-4" id="recaptcha-site-key" formControlName="reCaptchaSiteKey"
-                           placeholder="reCaptchaSiteKey" type="text">
+                    <label for="recaptcha-site-key" class="app-page-label mt-3">
+                        {{ 'admin.platform_config.captcha_key_input.title' | translate }}
+                    </label>
+                    <input class="input-reg w-100" id="recaptcha-site-key" formControlName="reCaptchaSiteKey"
+                           placeholder="{{ 'admin.platform_config.captcha_key_input.placeholder' | translate }}"
+                           type="text">
 
-                    <label for="google-client-id" class="app-page-label mt-3">Google Client ID</label>
-                    <input class="form-control p-4" id="google-client-id" formControlName="googleClientID"
-                           placeholder="googleClientID" type="text">
+                    <label for="google-client-id" class="app-page-label mt-3">
+                        {{ 'admin.platform_config.google_client_id_input.title' | translate }}
+                    </label>
+                    <input class="input-reg w-100" id="google-client-id" formControlName="googleClientID"
+                           placeholder="{{ 'admin.platform_config.google_client_id_input.placeholder' | translate }}"
+                           type="text">
 
-                    <label for="facebook-app-id" class="app-page-label mt-3">Facebook App ID</label>
-                    <input class="form-control p-4" id="facebook-app-id" formControlName="facebookAppID"
-                           placeholder="facebookAppID" type="text">
+                    <label for="facebook-app-id" class="app-page-label mt-3">
+                        {{ 'admin.platform_config.facebook_app_id_input.title' | translate }}
+                    </label>
+                    <input class="input-reg w-100" id="facebook-app-id" formControlName="facebookAppID"
+                           placeholder="{{ 'admin.platform_config.facebook_app_id_input.placeholder' | translate }}"
+                           type="text">
                 </div>
 
                 <button app-action-button
-                        text="Update configuration"
+                        text="{{ 'admin.platform_config.submit' | translate }}"
                         faIcon="fa-paper-plane"
                         [onClick]="updateAppConfig(updateForm).bind(this)"
                         [disabled]="!updateForm.dirty || !updateForm.valid"

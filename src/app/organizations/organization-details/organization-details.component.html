@@ -73,7 +73,6 @@
                                                 <button app-action-button
                                                         text="{{ 'organizations.details.members.add_button' | translate }}"
                                                         textShort=""
-                                                        loadingText="{{ 'organizations.details.members.add_button.loading' | translate }}"
                                                         faIcon="fas fa-plus"
                                                         [onClick]="inviteClicked(states.organization.uuid).bind(this)"
                                                         [disabled]="!inviteForm.valid" class="btn btn-success w-100">

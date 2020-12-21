@@ -1,109 +1,89 @@
 @import "app";
 
-.row {
-  margin: 0;
-  padding: 0;
+.app-page-subtitle {
+  padding-top: 0;
+  margin-bottom: 0;
+  letter-spacing: 2px;
 }
 
-.col-lg-12, .col-lg-6, .col-lg-4 {
-  padding: 0;
-}
-
-.btn-danger {
-  height: 64px;
-}
-
-.payments-wallet {
-  border: 1px solid $border-light-color;
-  border-radius: 2px;
-  padding: 20px;
-}
-
-.payments-payout {
-  .alert {
-    margin-top: 15px;
+.payments {
+  &-wallet {
+    border: 1px solid $border-light-color;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    box-shadow: 0 6px 6px 0 lighten($title-color, 85%);
+    border-radius: 2px;
+    position: relative;
+    .col-6:first-of-type {
+      padding-right: 0;
+    }
+    .col-6:last-of-type {
+      padding-left: 3px;
+    }
+  }
+  &-payout {
+    background-color: $background-color;
+    padding-top: 20px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid $border-light-color;
   }
 }
 
 .wallet {
-  &__cta {
-    border-bottom: 1px solid $border-light-color;
-    h4 {
-      font-size: $font-size-mobile-body;
-      color: $body-color;
-      font-weight: normal;
-      padding-bottom: 6px;
-    }
-    .btn {
-      margin-bottom: 15px;
-    }
+  &__title {
+    padding-bottom: 10px;
   }
   &__balance {
-    h3 {
-      font-size: $font-size-desktop-body;
-      color: $title-color;
-      font-weight: normal;
-      margin-top: 10px;
+    font-size: $font-size-desktop-title;
+    color: $title-color;
+    letter-spacing: 1.5px;
+    margin-bottom: 24px;
+    p {
+      margin-bottom: 0;
     }
   }
 }
 
 .payout {
   &__title {
-    margin-top: 20px;
-    font-size: $font-size-desktop-body;
-    color: $title-color;
+    padding-bottom: 18px;
   }
   &__desc {
-    font-size: $font-size-desktop-body2;
+    font-size: $font-size-mobile-title-small;
+    margin: 8px 0 16px 0;
     color: $body-color;
-    padding-top: 6px;
-  }
-  &__cta {
-    .btn {
-      margin-top: 15px;
-    }
+    letter-spacing: 0.3px;
   }
 }
 
 @include media-breakpoint-up(lg) {
-  .col-lg-4 {
-    padding: 0 15px
-  }
-  
-  .wallet {
-    &__cta {
-      h4 {
-        font-size: $font-size-desktop-body;
+  .payments {
+    &-wallet {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 23px 34px;
+      .col-6:first-of-type {
+        padding-right: 15px;
       }
-      .btn {
-        margin-bottom: 30px;
-      }
-      .col-lg-6:nth-of-type(2) {
+      .col-6:last-of-type {
         padding-left: 15px;
       }
     }
+    &-payout {
+      border: 1px solid $border-light-color;
+    }
+  }
+
+  .wallet {
     &__balance {
-      h3 {
-        font-size: 20px;
-        margin-top: 15px;
-      }
+      margin-bottom: 0;
     }
   }
 
   .payout {
-    &__title {
-      margin-top: 24px;
-      font-size: 20px;
-    }
-    &__desc {
-      font-size: $font-size-desktop-body;
-    }
-    &__cta {
-      .btn {
-        margin-top: 0;
-      }
+    &__inner {
+      margin: 0 auto;
     }
   }
-
 }

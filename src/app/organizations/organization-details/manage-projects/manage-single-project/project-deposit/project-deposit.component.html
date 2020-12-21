@@ -4,17 +4,19 @@
         masterIBAN: masterIBAN$ | async
     } as states">
     <div class="container">
-        <div class="app-page-title-back" (click)="navigateBack()">
-            <i class="fas fa-long-arrow-alt-left mr-3"></i>
-            {{ 'projects.edit.manage_payments.deposit.title' | translate }}
-        </div>
-        <div class="alerts">
-            <div class="alert alert-info">
-                <i class="fas fa-clock mr-2"></i>
-                {{ 'projects.edit.manage_payments.deposit.notice' | translate }}
-            </div>
-        </div>
         <ng-container *ngIf="!!states.deposit && !!states.masterIBAN; else spinner">
+            <div [routerLink]="['/dash', 'manage_groups', orgID, 'manage_project', states.deposit.owner] | coopPath"
+                 class="app-page-title-back" >
+                <i class="fas fa-long-arrow-alt-left mr-3"></i>
+                {{ 'projects.edit.manage_payments.deposit.title' | translate }}
+            </div>
+            <div class="alerts">
+                <div class="alert alert-info">
+                    <i class="fas fa-clock mr-2"></i>
+                    {{ 'projects.edit.manage_payments.deposit.notice' | translate }}
+                </div>
+            </div>
+
             <div class="deposit-details">
                 <h4>
                     {{ 'projects.edit.manage_payments.deposit.details' | translate }}

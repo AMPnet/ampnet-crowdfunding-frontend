@@ -73,7 +73,7 @@
                         <ng-container *ngIf="states.project.roi.to != 0">
                             <div class="right__return-rate">
                                 <span class="bold">
-                                    {{ 'offers.offer_details.return' | translate | splitPart:0 | interpolate:['from', states.project.roi.from / 100 | percent]:['to', states.project.roi.to / 100 | percent] }}
+                                    {{ 'offers.offer_details.return' | translate | splitPart:0 | interpolate:['from', states.project.roi.from / 100 | percent:'1.0-2']:['to', states.project.roi.to / 100 | percent:'1.0-2'] }}
                                 </span>
                                 <span>
                                     {{ 'offers.offer_details.return' | translate | splitPart:1 }}

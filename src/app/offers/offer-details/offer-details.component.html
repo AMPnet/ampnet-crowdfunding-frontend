@@ -45,7 +45,7 @@
 
                     <p class="right__published link-remove-style">
                         {{ 'offers.offer_details.published_by' | translate }}
-                        <a routerLink="" (click)="onPublishedByClicked(states.project.organization.uuid)">
+                        <a [routerLink]="" (click)="onPublishedByClicked(states.project.organization.uuid)">
                             {{ states.project.organization.name }}
                         </a>
                     </p>

@@ -200,7 +200,6 @@
         "title": "Members",
         "add_input.placeholder": "joe@mail.com, jane@mail.com",
         "add_button": "Add members",
-        "add_button.loading": "Sending invites...",
         "join_date": "Joined {{ date }}",
         "empty": "You are the only member of {{ org }}",
         "invited": "Successfully invited user to organization.",
@@ -279,10 +278,9 @@
       "manage_payments": {
         "title": "Manage Payments",
         "wallet": {
-          "title": "Project wallet",
           "deposit_button": "Deposit",
           "withdraw_button": "Withdraw",
-          "balance": "Balance"
+          "balance": "Project balance"
         },
         "deposit": {
           "title": "Deposit",
@@ -316,6 +314,7 @@
           "placeholder": "Enter maximum investment per user",
           "errors.invalid_amount": "Payout must be lower or equal to balance.",
           "submit_button": "Start payout",
+          "submit_button.short": "Payout",
           "review": {
             "title": "Revenue share information",
             "project_name": "Project name",
@@ -355,6 +354,10 @@
           "declined": "Declined",
           "decision_pending": "Your account is in process of verification. Please wait...",
           "approved": "User data has been successfully verified.",
+          "statute_confirmation_input": {
+            "title": "Statute confirmation",
+            "notice": "Check here to indicate that you have read and agree to the terms of the | {{ coopName }} Statute |"
+          },
           "start_verification": "Start verification"
         }
       }
@@ -481,7 +484,7 @@
         "document_input": {
           "title": "Document"
         },
-        "submit": "Confirm deposit",
+        "submit": "Confirm",
         "modal": {
           "title": "Confirm deposit amount",
           "amount_input": {
@@ -569,6 +572,49 @@
       "user_not_found": "User with this email was not found."
     },
     "platform_config": {
+      "title": "Platform configuration",
+      "instance_name_input": {
+        "title": "Instance name",
+        "placeholder": "Instance name"
+      },
+      "identifier_input": {
+        "title": "Identifier"
+      },
+      "web_title_input": {
+        "title": "Web title",
+        "placeholder": "Instance"
+      },
+      "logo_input.title": "Logo",
+      "icon_url_input": {
+        "title": "Icon URL",
+        "placeholder": "https://path/to/icon.png"
+      },
+      "coop_statute_input": {
+        "title": "Cooperative Statute URL",
+        "placeholder": "https://path/to/statute.html | https://path/to/statute-file.pdf"
+      },
+      "arkane_id_input": {
+        "title": "Arkane ID",
+        "placeholder": "arkaneID"
+      },
+      "arkane_env_input": {
+        "title": "Arkane environment",
+        "placeholder": "arkaneEnv"
+      },
+      "verification_required_input.title": "User verification required",
+      "captcha_key_input": {
+        "title": "ReCaptcha Site Key",
+        "placeholder": "reCaptchaSiteKey"
+      },
+      "google_client_id_input": {
+        "title": "Google Client ID",
+        "placeholder": "googleClientID"
+      },
+      "facebook_app_id_input": {
+        "title": "Facebook App ID",
+        "placeholder": "facebookAppID"
+      },
+      "submit": "Update configuration"
     }
   },
   "auth": {
@@ -761,7 +807,17 @@
       "title": "Transaction signed",
       "description": "The transaction is being processed..."
     },
-    "captcha_notice": "This site is protected by reCAPTCHA and the Google | Privacy Policy | and | Terms of Service | apply."
+    "captcha_notice": "This site is protected by reCAPTCHA and the Google | Privacy Policy | and | Terms of Service | apply.",
+    "popup": {
+      "info.title": "Info",
+      "success": {
+        "title": "Success",
+        "confirm": "Continue"
+      },
+      "warning.title": "Warning",
+      "error.title": "Error",
+      "confirm": "Ok"
+    }
   },
   "languages": {
     "en": "English",

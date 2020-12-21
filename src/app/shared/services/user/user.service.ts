@@ -45,7 +45,7 @@ export class UserService {
 
     getUserByEmail(email: string): Observable<User | null> {
         return this.http.get<PageableUsersResponse>('/api/user/admin/user/find', {
-            email: email
+            email: encodeURIComponent(email)
         }).pipe(
             map(res => res.users[0] || null),
             catchError(err => err.status === 404 ? of(null) : throwError(err))

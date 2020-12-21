@@ -38,11 +38,11 @@
                         {{ deposit.deposit.reference }} ({{ deposit.user.email }})
                     </span>
                     <a [routerLink]="">
-                    <span (click)="declineDeposit(deposit.deposit.id).subscribe()" class="float-right cursor-pointer">
+                    <span (click)="declineDeposit(deposit.deposit.id).subscribe()" class="float-right">
                         <i class="fas fa-trash-alt"></i>
                     </span>
                     </a>
-                    <a class="float-right mr-4 cursor-pointer" href="mailto:{{ deposit.user.email }}">
+                    <a class="float-right mr-4" href="mailto:{{ deposit.user.email }}">
                         <i class="fas fa-envelope"></i>
                     </a>
                 </li>

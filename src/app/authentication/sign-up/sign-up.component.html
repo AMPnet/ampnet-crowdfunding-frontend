@@ -31,20 +31,26 @@
     </label>
     <input class="input-reg w-100"
            formControlName="email" id="email"
+           name="email"
+           autocomplete="email"
            placeholder="{{ 'auth.sign_up.email_input.placeholder' | translate }}"
            type="text">
 
-    <label for="firstName" class="app-page-label mt-3">
+    <label for="fname" class="app-page-label mt-3">
         {{ 'auth.sign_up.first_name_input.title' | translate }}
     </label>
-    <input class="input-reg w-100" id="firstName" formControlName="firstName"
+    <input class="input-reg w-100" id="fname" formControlName="firstName"
            placeholder="{{ 'auth.sign_up.first_name_input.placeholder' | translate }}"
+           name="fname"
+           autocomplete="given-name"
            type="text">
 
-    <label for="lastName" class="app-page-label mt-3">
+    <label for="lname" class="app-page-label mt-3">
         {{ 'auth.sign_up.last_name_input.title' | translate }}
     </label>
-    <input class="input-reg w-100" id="lastName" formControlName="lastName"
+    <input class="input-reg w-100" id="lname" formControlName="lastName"
+           name="lname"
+           autocomplete="family-name"
            placeholder="{{ 'auth.sign_up.last_name_input.placeholder' | translate }}" type="text">
 
     <label for="password" class="app-page-label mt-3">
@@ -52,6 +58,8 @@
     </label>
     <input class="input-reg w-100" id="password" formControlName="password"
            placeholder="{{ 'auth.sign_up.password_input.placeholder' | translate }}"
+           name="password"
+           autocomplete="new-password"
            type="password">
     <small class="form-text text-muted mt-2">
         {{ 'auth.sign_up.password_input.notice' | translate }}
@@ -62,6 +70,8 @@
     </label>
     <input class="input-reg w-100" id="confirmPassword" formControlName="confirmPassword"
            placeholder="{{ 'auth.sign_up.confirm_password_input.placeholder' | translate }}"
+           name="password"
+           autocomplete="new-password"
            type="password">
 
     <button app-action-button

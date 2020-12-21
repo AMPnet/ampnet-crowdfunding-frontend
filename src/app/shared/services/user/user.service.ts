@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BackendHttpClient } from '../backend-http-client.service';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
-import { User } from './signup.service';
+import { User, UserRole } from './signup.service';
 import { BehaviorSubject, EMPTY, Observable, of, throwError } from 'rxjs';
 import { CacheService } from '../cache.service';
 import { AppConfigService } from '../app-config.service';
@@ -24,7 +24,18 @@ export class UserService {
     }
 
     private getFreshUser() {
-        return this.http.get<User>('/api/user/me');
+        return this.http.get<User>('/api/user/me').pipe(
+            switchMap(user => user.role === this.getRoleFromAuthorities() ?
+                of(user) : this.refreshUserToken().pipe(switchMap(() => of(user)))
+            )
+        );
+    }
+
+    private getRoleFromAuthorities(): UserRole {
+        return this.http.getJWTUser().authorities
+            .filter(authority => authority.startsWith('ROLE'))
+            .map(authority => authority.replace('ROLE_', ''))
+            .shift() as UserRole;
     }
 
     refreshUser() {

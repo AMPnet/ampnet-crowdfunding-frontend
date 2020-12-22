@@ -185,16 +185,6 @@
   }
 }
 
-.list-remove-style {
-  ul {
-    list-style-type: none;
-  }
-
-  li {
-    cursor: pointer;
-  }
-}
-
 @include media-breakpoint-up(lg) {
   .app__full-width--padding {
     padding-left: 0;

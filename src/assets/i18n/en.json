@@ -573,8 +573,7 @@
         "user_data": "Name: {{ first_name }} {{ last_name }}, Email: {{ email }}",
         "yes": "Transfer",
         "no": "Abort",
-        "success": "Transfer ownership completed.",
-        "success.notice": "Please wait for a minute and refresh your browser."
+        "success": "Successfully transferred ownership."
       },
       "user_not_found": "User with this email was not found."
     },
@@ -738,7 +737,7 @@
       "invalid_privilege": "You have no sufficient privilege to do this action."
     },
     "wallet": {
-      "missing_wallet": "Your wallet is missing.",
+      "missing_wallet": "The wallet for this user doesn't exist.",
       "cannot_create_new_wallet": "A new wallet cannot be created.",
       "not_enough_funds": "Not enough funds on your wallet.",
       "wallet_already_registered": "This wallet has already been registered.",

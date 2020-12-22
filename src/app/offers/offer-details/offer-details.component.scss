@@ -87,7 +87,11 @@ span.bold {
   }
 
   &__docs {
-    margin: 25px 0;
+    margin: 30px 0 10px 0;
+
+    .app-page-subtitle {
+      padding-top: 0;
+    }
 
     .docs__links {
       white-space: nowrap;

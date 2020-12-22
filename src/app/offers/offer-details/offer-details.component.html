@@ -215,7 +215,7 @@
         <div class="offer-right second">
             <div class="right__docs" *ngIf="states.project.documents.length !== 0"
                  [class.add-padding]="states.project.news.length === 0">
-                <div class="docs__title app-page-subtitle d-none d-lg-block">
+                <div class="docs__title app-page-subtitle">
                     {{ 'offers.offer_details.subtitle_docs' | translate }}
                 </div>
                 <div *ngFor="let doc of states.project.documents">

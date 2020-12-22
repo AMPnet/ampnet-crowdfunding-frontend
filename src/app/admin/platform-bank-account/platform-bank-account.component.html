@@ -33,9 +33,8 @@
                                 <div class="explainer-mini text-uppercase mb-2">
                                     {{ 'admin.bank_account.item.actions' | translate }}
                                 </div>
-                                <a [routerLink]="">
-                                <span (click)="deleteBankAccountClicked(paymentOption.id)"
-                                      class="float-right align-middle cursor-pointer">
+                                <a [routerLink]="" (click)="deleteBankAccountClicked(paymentOption.id)">
+                                <span class="float-right align-middle">
 								<i class="fas fa-trash-alt"></i>
 							</span>
                                 </a>

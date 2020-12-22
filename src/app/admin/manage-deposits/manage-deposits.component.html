@@ -37,8 +37,8 @@
                     <span class="float-left explainer-mini">
                         {{ deposit.deposit.reference }} ({{ deposit.user.email }})
                     </span>
-                    <a [routerLink]="">
-                    <span (click)="declineDeposit(deposit.deposit.id).subscribe()" class="float-right">
+                    <a [routerLink]="" (click)="declineDeposit(deposit.deposit.id).subscribe()">
+                    <span class="float-right">
                         <i class="fas fa-trash-alt"></i>
                     </span>
                     </a>

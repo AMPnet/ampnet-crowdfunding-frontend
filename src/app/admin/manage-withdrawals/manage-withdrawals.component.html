@@ -12,12 +12,12 @@
                     [routerLink]="['/dash', 'manage_withdrawals', userWithdrawal.withdraw.id] | coopPath"
                     class="list-group-item link-remove-style gray-text explainer-mini">
                     <span class="float-left">
-                     {{ userWithdrawal.user.first_name }} {{ userWithdrawal.user.last_name }}
+                        {{ userWithdrawal.user.first_name }} {{ userWithdrawal.user.last_name }}
                         ({{ userWithdrawal.user.email }})
-                </span>
+                    </span>
                     <span class="float-right">
-                    {{ userWithdrawal.withdraw.amount | currencyDefault }}
-                </span>
+                        {{ userWithdrawal.withdraw.amount | currencyDefault }}
+                    </span>
                 </li>
             </ul>
 
@@ -37,15 +37,15 @@
             <ul *ngIf="projectWithdrawals.length > 0" class="list-group">
                 <li *ngFor="let projectWithdrawal of projectWithdrawals"
                     [routerLink]="['/dash', 'manage_withdrawals', projectWithdrawal.withdraw.id] | coopPath"
-                    class="list-group-item link-remove-style gray-text explainer-mini">
-                <span class="float-left">
-                    {{ projectWithdrawal.project.name }}
-                    , {{ projectWithdrawal.user.first_name }} {{ projectWithdrawal.user.last_name }}
-                    ({{ projectWithdrawal.user.email }})
-                </span>
+                    class="list-group-item gray-text explainer-mini">
+                    <span class="float-left">
+                        {{ projectWithdrawal.project.name }}
+                        , {{ projectWithdrawal.user.first_name }} {{ projectWithdrawal.user.last_name }}
+                        ({{ projectWithdrawal.user.email }})
+                    </span>
                     <span class="float-right">
-                    {{ projectWithdrawal.withdraw.amount | currencyDefault }}
-                </span>
+                        {{ projectWithdrawal.withdraw.amount | currencyDefault }}
+                    </span>
                 </li>
             </ul>
 

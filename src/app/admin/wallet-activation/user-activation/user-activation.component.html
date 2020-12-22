@@ -6,9 +6,8 @@
         <ul class="list-group">
             <li *ngFor="let user of users" class="list-group-item explainer-mini link-remove-style">
                 {{ user.user.first_name }} {{ user.user.last_name }} (<i>{{ user.user.email }}</i>)
-                <a [routerLink]="">
-                <span (click)="activateUserClicked(user.wallet.uuid).subscribe()"
-                      class="float-right hover-fg">
+                <a [routerLink]="" (click)="activateUserClicked(user.wallet.uuid).subscribe()">
+                <span class="float-right hover-fg">
                     <i class="fas fa-check-circle mr-2"></i>
                     {{ 'admin.activations.users.activate' | translate }}
                 </span>

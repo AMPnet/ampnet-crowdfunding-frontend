@@ -214,9 +214,9 @@
                                                                                         {{ file.name }}
                                                                                     </div>
                                                                                     <div class="docs__icons">
-                                                                                        <a [routerLink]="">
-                                                                                        <span (click)="deleteFile(states.project, file.id).subscribe()"
-                                                                                              class="mr-3 cursor-pointer gray-text">
+                                                                                        <a [routerLink]=""
+                                                                                           (click)="deleteFile(states.project, file.id).subscribe()">
+                                                                                        <span class="mr-3 gray-text">
                                                                                         <i class="fas fa-trash"></i>
                                                                                         </span>
                                                                                         </a>

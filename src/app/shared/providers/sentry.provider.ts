@@ -7,5 +7,3 @@ export const SentryProvider: Provider = {
         showDialog: false,
     }),
 };
-
-

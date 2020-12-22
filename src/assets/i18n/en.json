@@ -566,8 +566,7 @@
         "user_data": "Name: {{ first_name }} {{ last_name }}, Email: {{ email }}",
         "yes": "Transfer",
         "no": "Abort",
-        "success": "Transfer ownership completed.",
-        "success.notice": "Please wait for a minute and refresh your browser."
+        "success": "Successfully transferred ownership."
       },
       "user_not_found": "User with this email was not found."
     },

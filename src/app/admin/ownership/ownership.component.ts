@@ -51,8 +51,7 @@ export class OwnershipComponent {
                 switchMap(() => this.waitForRoleChange(role)),
                 this.errorService.handleError,
                 switchMap(() => this.popupService.success(
-                    this.translate.instant('admin.platform_roles.change_confirmation.success'),
-                    this.translate.instant('admin.platform_roles.change_confirmation.success.notice')
+                    this.translate.instant('admin.platform_roles.change_confirmation.success')
                 ))
             );
         };

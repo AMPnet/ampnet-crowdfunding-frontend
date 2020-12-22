@@ -214,10 +214,12 @@
                                                                                         {{ file.name }}
                                                                                     </div>
                                                                                     <div class="docs__icons">
+                                                                                        <a [routerLink]="">
                                                                                         <span (click)="deleteFile(states.project, file.id).subscribe()"
                                                                                               class="mr-3 cursor-pointer gray-text">
                                                                                         <i class="fas fa-trash"></i>
                                                                                         </span>
+                                                                                        </a>
                                                                                         <a class="cursor-pointer gray-text"
                                                                                            href="{{ file.link }}">
                                                                                             <i class="fas fa-file-download"></i>
@@ -278,7 +280,8 @@
                                                    style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis">
                                                     {{ item }}
                                                 </a>
-                                                <a [routerLink]="" (click)="deleteNewsClicked(states.project, item).subscribe()">
+                                                <a [routerLink]=""
+                                                   (click)="deleteNewsClicked(states.project, item).subscribe()">
                                                     <i class="fas fa-trash-alt"></i>
                                                 </a>
                                             </li>

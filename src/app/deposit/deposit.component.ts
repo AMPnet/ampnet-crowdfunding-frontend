@@ -28,8 +28,8 @@ export class DepositComponent implements OnInit {
         SpinnerUtil.showSpinner();
         this.getMasterIban();
         this.depositService.getMyPendingDeposit().pipe(
-            catchError(err => err.status === 404 ? this.generateDepositInfo() : throwError(err)),
             this.errorService.handleError,
+            catchError(err => err.status === 404 ? this.generateDepositInfo() : throwError(err)),
             tap(res => this.depositModel = res),
             finalize(() => SpinnerUtil.hideSpinner())
         ).subscribe();

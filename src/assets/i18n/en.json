@@ -31,6 +31,13 @@
       "verify_profile.short": "Verify Profile",
       "share": "Share",
       "link_copied": "Link copied to clipboard",
+      "subtitle_docs": "Project documents",
+      "news": {
+        "subtitle": "Project news",
+        "title_unknown": "Unknown article title",
+        "desc_unknown": "Unknown article description",
+        "read_more": "Read more"
+      },
       "transactions": {
         "title": "Transactions",
         "total_invested": "Total Invested"
@@ -52,7 +59,7 @@
     "wallet_not_activated_notice": "Your portfolio will be available after you've invested in a project."
   },
   "invest": {
-    "back_button": "Invest in",
+    "back_button": "Back to project",
     "invest_input.title": "I want to invest",
     "invest_input.placeholder": "Enter invest amount",
     "button": "Invest",
@@ -181,7 +188,7 @@
       "created": "Investment group created!"
     },
     "details": {
-      "title.back": "Investment group details",
+      "title.back": "Investment groups",
       "create_project": "Create project",
       "project_count": "| {{ count }} | Projects",
       "wallet_not_verified": "This group is pending approval from an administrator. During this time, you can't create new projects.",
@@ -566,8 +573,7 @@
         "user_data": "Name: {{ first_name }} {{ last_name }}, Email: {{ email }}",
         "yes": "Transfer",
         "no": "Abort",
-        "success": "Transfer ownership completed.",
-        "success.notice": "Please wait for a minute and refresh your browser."
+        "success": "Successfully transferred ownership."
       },
       "user_not_found": "User with this email was not found."
     },
@@ -731,7 +737,7 @@
       "invalid_privilege": "You have no sufficient privilege to do this action."
     },
     "wallet": {
-      "missing_wallet": "Your wallet is missing.",
+      "missing_wallet": "The wallet for this user doesn't exist.",
       "cannot_create_new_wallet": "A new wallet cannot be created.",
       "not_enough_funds": "Not enough funds on your wallet.",
       "wallet_already_registered": "This wallet has already been registered.",

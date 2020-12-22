@@ -10,25 +10,25 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between withdrawal-examine-holder">
                             <div *ngIf="!!withdrawal.project">
-                                <div class="explainer-mini text-uppercase">
+                                <div class="text-uppercase">
                                     {{ 'admin.withdrawals.single_withdrawal.info.project_name' | translate }}
                                 </div>
                                 <div>{{ withdrawal.project.name }}</div>
                             </div>
                             <div>
-                                <div class="explainer-mini text-uppercase">
+                                <div class="text-uppercase">
                                     {{ 'admin.withdrawals.single_withdrawal.info.user_name' | translate }}
                                 </div>
                                 <div>{{ withdrawal.user.first_name }} {{ withdrawal.user.last_name }}</div>
                             </div>
                             <div>
-                                <div class="explainer-mini text-uppercase">
+                                <div class="text-uppercase">
                                     {{ 'admin.withdrawals.single_withdrawal.info.iban' | translate }}
                                 </div>
                                 <div>{{ withdrawal.withdraw.bank_account }}</div>
                             </div>
                             <div>
-                                <div class="explainer-mini text-uppercase">
+                                <div class="text-uppercase">
                                     {{ 'admin.withdrawals.single_withdrawal.info.amount' | translate }}
                                 </div>
                                 <div>{{ withdrawal.withdraw.amount | currencyDefault }}</div>

@@ -9,28 +9,28 @@
                 <div class="card-body d-flex flex-column gray-text">
                     <div class="d-flex flex-row justify-content-between text-left flex-wrap">
                         <div class="mt-1">
-                            <div class="explainer-mini text-uppercase mb-2">
+                            <div class="text-uppercase mb-2">
                                 {{ 'payment_options.bank_account.iban' | translate }}
                             </div>
                             <span><b>{{ bankAccount.iban }}</b></span>
                         </div>
 
                         <div class="mt-1" *ngIf="bankAccount.alias">
-                            <div class="explainer-mini text-uppercase mb-2">
+                            <div class="text-uppercase mb-2">
                                 {{ 'payment_options.bank_account.alias' | translate }}
                             </div>
                             <b>{{ bankAccount.alias }}</b>
                         </div>
 
                         <div class="mt-1">
-                            <div class="explainer-mini text-uppercase mb-2">
+                            <div class="text-uppercase mb-2">
                                 {{ 'payment_options.bank_account.swift' | translate }}
                             </div>
                             <b>{{ bankAccount.bank_code }}</b>
                         </div>
 
                         <div class="mt-1">
-                            <div class="explainer-mini text-uppercase mb-2">
+                            <div class="text-uppercase mb-2">
                                 {{ 'payment_options.bank_account.actions' | translate }}
                             </div>
                             <span (click)="deleteBankAccountClicked(bankAccount.id)"

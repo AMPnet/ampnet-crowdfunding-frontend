@@ -1,10 +1,10 @@
 <div *ngIf="projects !== undefined">
-    <h5 class="explainer-mini">
+    <h5>
         {{ 'admin.activations.projects.title' | translate }}
     </h5>
     <div *ngIf="projects.length > 0" class="mt-3">
         <ul class="list-group">
-            <li *ngFor="let project of projects" class="list-group-item explainer-mini link-remove-style">
+            <li *ngFor="let project of projects" class="list-group-item">
                 {{ project.project.name }}
                 <a [routerLink]="" (click)="activateProject(project.wallet.uuid).subscribe()">
                     <span class="float-right hover-fg">
@@ -16,7 +16,7 @@
         </ul>
     </div>
     <div *ngIf="projects.length === 0" class="mt-3">
-        <div class="text-center explainer-mini mt-5">
+        <div class="text-center mt-5">
             {{ 'admin.activations.projects.empty' | translate }}
         </div>
     </div>

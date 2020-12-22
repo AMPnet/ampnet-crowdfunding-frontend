@@ -101,6 +101,7 @@ import { InterpolatePipe } from './shared/pipes/interpolate.pipe';
 import { SplitPartPipe } from './shared/pipes/split-part.pipe';
 import { DynamicLocaleProvider } from './shared/providers/locale.provider';
 import { CaptchaNoticeComponent } from './shared/components/captcha-notice/captcha-notice.component';
+import { SentryProvider } from './shared/providers/sentry.provider';
 
 @NgModule({
     declarations: [
@@ -231,6 +232,7 @@ import { CaptchaNoticeComponent } from './shared/components/captcha-notice/captc
             useValue: 'EUR', // TODO: Set this from app config service.
         },
         DynamicLocaleProvider,
+        SentryProvider,
         DatePipe,
         SafePipe,
         CurrencyPipe,

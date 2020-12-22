@@ -7,7 +7,7 @@
     walletMW: projectWalletMW$ | async,
     news: news$ | async,
     user: user$ | async
-} as states" class="wow fadeIn container" style="background: #fdfdfd">
+} as states" class="wow fadeIn container">
     <div class="app-page-title-back" (click)="backToPreviousScreen()">
         <i class="fas fa-long-arrow-alt-left mr-3"></i>
 
@@ -19,7 +19,7 @@
         </ng-container>
     </div>
 
-    <div *ngIf="states.project !== null else overlaySpinner">
+    <div *ngIf="states.project !== null else overlaySpinner" class="wrapper">
         <!-- Closed project popup -->
         <div *ngIf="!states.project.active" class="mb-3">
             <div class="alert alert-danger">
@@ -27,16 +27,16 @@
             </div>
         </div>
 
-        <div class="app__full-width">
-            <div class="offer-left col-lg-7">
-                <div class="wow fadeIn">
-                    <img class="left__img w-100" src="{{states.project.main_image}}"
-                         onerror="this.onerror=null; this.src='../../../../assets/noimage.png'">
-                </div>
+        <div class="offer-left first app__full-width">
+            <div class="wow fadeIn">
+                <img class="left__img w-100" src="{{states.project.main_image}}"
+                     onerror="this.onerror=null; this.src='../../../../assets/noimage.png'">
             </div>
         </div>
 
-        <div class="offer-right col-lg-5">
+        <div class="offer-right first"
+             [class.add-padding]="states.project.documents.length === 0 &&
+             states.project.news.length === 0">
             <div class="right__container app__full-width--padding">
                 <div class="right__text">
                     <div>
@@ -188,7 +188,7 @@
 
             <div class="offer-right-socials col-lg-5">
                 <div class="socials__content">
-                    <p>{{ 'offers.offer_details.share' | translate }}</p>
+                    <p class="app-page-subtitle">{{ 'offers.offer_details.share' | translate }}</p>
                     <div class="socials__link">
                         <a href="https://twitter.com/intent/tweet?url={{ getProjectURL(states.project) }}"
                            target="_blank" rel="noopener noreferrer">
@@ -211,22 +211,20 @@
             </div>
         </div>
 
-        <div class="offer-left col-lg-7">
+        <div class="offer-left second">
             <div class="left__desc">
                 <div *ngIf="!isPortfolioView else tabbedView">
                     <ng-container *ngTemplateOutlet="projectDetails"></ng-container>
                 </div>
             </div>
         </div>
-    </div>
 
-    <ng-template #projectDetails>
-        <div class="left__inner">
-            <quill-view [content]="states.project.description"
-                        format="html" theme="snow">
-            </quill-view>
-
-            <div class="left__docs">
+        <div class="offer-right second">
+            <div class="right__docs" *ngIf="states.project.documents.length !== 0"
+                 [class.add-padding]="states.project.news.length === 0">
+                <div class="docs__title app-page-subtitle">
+                    {{ 'offers.offer_details.subtitle_docs' | translate }}
+                </div>
                 <div *ngFor="let doc of states.project.documents">
                     <div class="docs__links">
                         <a href="{{ doc.link }}">
@@ -237,16 +235,62 @@
                 </div>
             </div>
 
-            <div class="left__news" *ngIf="states.news != null">
-                <div class="news__title">
-                    Project news
+            <div class="right__news" *ngIf="states.project.news.length !== 0">
+                <div class="news__title app-page-subtitle">
+                    {{ 'offers.offer_details.news.subtitle' | translate }}
                 </div>
-                <div *ngFor="let news of states.news" class="news__item">
-                    <div class="news__wrapper">
-                        <a href="{{ news.url }}" target="_blank" rel="noopener">{{ news.url }}</a>
-                    </div>
+
+                <div *ngFor="let news of states.news">
+                    <ng-container *ngIf="news.open_graph !== null else newsPreviewFallback">
+                        <div class="news__item-preview">
+                            <div class="preview__inner">
+                                <div class="preview__img">
+                                    <img class="w-100" src="{{ news.open_graph.image.url }}"
+                                         onerror="this.onerror=null; this.src='../../../../assets/noimage.png'">
+                                </div>
+                                <div class="preview__content">
+                                    <div class="preview__title">
+                                        {{ !news.open_graph.title ?
+                                        ('offers.offer_details.news.title_unknown' | translate) :
+                                        news.open_graph.title | titlecase }}
+                                    </div>
+                                    <div class="preview__desc">
+                                        {{ !news.open_graph.description ?
+                                        ('offers.offer_details.news.desc_unknown' | translate) :
+                                        news.open_graph.description }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="preview__cta">
+                                <a href="{{ news.url }}" target="_blank" rel="noopener noreferrer">
+                                    <button class="btn w-100">
+                                        {{ 'offers.offer_details.news.read_more' | translate }}
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+
+                    </ng-container>
+
+                    <ng-template #newsPreviewFallback>
+                        <div class="news__item">
+                            <div class="news__wrapper">
+                                <a href="{{ news.url }}" target="_blank" rel="noopener noreferrer">
+                                    {{ news.url }}
+                                </a>
+                            </div>
+                        </div>
+                    </ng-template>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <ng-template #projectDetails>
+        <div class="left__inner">
+            <quill-view [content]="states.project.description"
+                        format="html" theme="snow">
+            </quill-view>
         </div>
     </ng-template>
 
@@ -255,7 +299,7 @@
             <tab heading="{{ 'offers.offer_details.transactions.title' | translate }}">
                 <div class="investments__container">
                     <div class="investment__total">
-                        <div class="total__title">
+                        <div class="total__title app-page-subtitle">
                             {{ 'offers.offer_details.transactions.total_invested' | translate }}
                         </div>
                         <div class="total__amount">

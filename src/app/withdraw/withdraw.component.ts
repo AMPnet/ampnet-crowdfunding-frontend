@@ -3,12 +3,13 @@ import { PaymentService, UserBankAccount } from '../shared/services/payment.serv
 import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { Withdraw, WithdrawService } from '../shared/services/wallet/withdraw.service';
 import { WalletService } from '../shared/services/wallet/wallet.service';
-import { finalize, switchMap, tap } from 'rxjs/operators';
+import { catchError, finalize, switchMap, tap } from 'rxjs/operators';
 import { ArkaneService } from '../shared/services/arkane.service';
 import { PopupService } from '../shared/services/popup.service';
 import { RouterService } from '../shared/services/router.service';
 import { ErrorService } from '../shared/services/error.service';
 import { TranslateService } from '@ngx-translate/core';
+import { EMPTY, throwError } from 'rxjs';
 
 @Component({
     selector: 'app-withdraw',
@@ -50,6 +51,7 @@ export class WithdrawComponent implements OnInit {
         SpinnerUtil.showSpinner();
         this.withdrawService.getMyPendingWithdraw().pipe(
             this.errorService.handleError,
+            catchError(err => err.status === 404 ? EMPTY : throwError(err)),
             finalize(() => SpinnerUtil.hideSpinner())
         ).subscribe(res => {
             this.pendingWithdrawal = res;

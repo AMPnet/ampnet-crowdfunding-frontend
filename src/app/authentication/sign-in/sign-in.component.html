@@ -32,6 +32,8 @@
     <input class="input-lg w-100"
            formControlName="email" id="email"
            placeholder="{{ 'auth.sign_in.email_input.placeholder' | translate }}"
+           name="email"
+           autocomplete="email"
            type="text">
 
     <label for="password" class="app-page-label mt-3">
@@ -39,6 +41,8 @@
     </label>
     <input class="input-lg w-100" id="password"
            placeholder="{{ 'auth.sign_in.password_input.placeholder' | translate }}"
+           name="password"
+           autocomplete="current-password"
            formControlName="password" type="password">
 
     <button app-action-button

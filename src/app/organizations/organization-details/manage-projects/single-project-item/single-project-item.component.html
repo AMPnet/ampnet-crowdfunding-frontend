@@ -53,8 +53,8 @@
     </div>
     <div class="item__toggle" *ngIf="projectWallet.wallet.hash">
         <button app-action-button *ngIf="!isPublic"
-                text="{{ (projectWallet.project.active ? 'organizations.details.projects.item.publish' : 'organizations.details.projects.item.unpublish') | translate }}"
-                textShort="{{ (projectWallet.project.active ? 'organizations.details.projects.item.publish' : 'organizations.details.projects.item.unpublish') | translate }}"
+                text="{{ (projectWallet.project.active ? 'organizations.details.projects.item.unpublish' : 'organizations.details.projects.item.publish') | translate }}"
+                textShort="{{ (projectWallet.project.active ? 'organizations.details.projects.item.unpublish' : 'organizations.details.projects.item.publish') | translate }}"
                 faIcon="{{ projectWallet.project.active ? 'fa-eye-slash' : 'fa-eye' }}"
                 [onClick]="toggleProject(projectWallet.project).bind(this)"
                 class="d-contents item__icon flex__center mr-2">

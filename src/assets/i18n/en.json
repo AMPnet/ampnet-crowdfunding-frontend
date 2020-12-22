@@ -59,7 +59,7 @@
     "wallet_not_activated_notice": "Your portfolio will be available after you've invested in a project."
   },
   "invest": {
-    "back_button": "Invest in",
+    "back_button": "Back to project",
     "invest_input.title": "I want to invest",
     "invest_input.placeholder": "Enter invest amount",
     "button": "Invest",
@@ -188,7 +188,7 @@
       "created": "Investment group created!"
     },
     "details": {
-      "title.back": "Investment group details",
+      "title.back": "Investment groups",
       "create_project": "Create project",
       "project_count": "| {{ count }} | Projects",
       "wallet_not_verified": "This group is pending approval from an administrator. During this time, you can't create new projects.",

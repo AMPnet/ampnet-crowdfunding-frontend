@@ -3,6 +3,10 @@ import { CustomConfig } from '../app/shared/services/app-config.service';
 export const environment = {
     production: false,
     baseHref: '/',
+    sentry: {
+        dsn: '', // keep empty for local development
+        env: 'dev'
+    },
     customConfig: { // NOTICE: when adding a new config property, add it to AppConfig interface first.
         title: 'AMPnet',
         icon_url: '/assets/favicon.ico',

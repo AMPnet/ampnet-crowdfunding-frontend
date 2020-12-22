@@ -34,7 +34,9 @@
             </div>
         </div>
 
-        <div class="offer-right first">
+        <div class="offer-right first"
+             [class.add-padding]="states.project.documents.length === 0 &&
+             states.project.news.length === 0">
             <div class="right__container app__full-width--padding">
                 <div class="right__text">
                     <div>
@@ -179,7 +181,7 @@
 
             <div class="offer-right-socials col-lg-5">
                 <div class="socials__content">
-                    <p>{{ 'offers.offer_details.share' | translate }}</p>
+                    <p class="app-page-subtitle">{{ 'offers.offer_details.share' | translate }}</p>
                     <div class="socials__link">
                         <a href="https://twitter.com/intent/tweet?url={{ getProjectURL(states.project) }}"
                            target="_blank" rel="noopener noreferrer">
@@ -210,9 +212,9 @@
             </div>
         </div>
 
-        <!-- TODO: Conditionaly add class to element that adds padding if news or docs are not defined -->
         <div class="offer-right second">
-            <div class="right__docs" *ngIf="states.project.documents.length">
+            <div class="right__docs" *ngIf="states.project.documents.length !== 0"
+                 [class.add-padding]="states.project.news.length === 0">
                 <div class="docs__title app-page-subtitle d-none d-lg-block">
                     {{ 'offers.offer_details.subtitle_docs' | translate }}
                 </div>

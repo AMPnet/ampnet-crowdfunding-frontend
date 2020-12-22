@@ -188,20 +188,21 @@ span.bold {
 
 .offer-right-socials {
   margin-top: 24px;
+  padding-left: 0;
 
   .socials__content {
     display: flex;
     align-items: center;
     margin-bottom: 36px;
 
-    p {
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      font-size: $font-size-desktop-body2;
+    .app-page-subtitle {
+      padding: 0;
       margin-bottom: 0;
+      margin-top: 4px;
     }
 
-    p, .socials__link {
+    .app-page-subtitle,
+    .socials__link {
       margin-right: 28px;
     }
 
@@ -227,16 +228,13 @@ span.bold {
 }
 
 @include media-breakpoint-up(lg) {
+  .add-padding {
+    padding-bottom: 64px;
+  }
+
   .wrapper {
     display: grid;
     grid-template-columns: 58.3% 41.7%;
-  }
-
-  .offer-right.first {
-    margin-top: 16px;
-    border-radius: 1px;
-    padding: 40px 64px 0 64px;
-    background-color: $background-color;
   }
 
   .offer-left.first{
@@ -250,9 +248,16 @@ span.bold {
   }
 
   .offer-right.first {
+    margin-top: 16px;
+    border-radius: 1px;
+    padding-top: 40px;
+    padding-left: 64px;
+    padding-right: 64px;
+    background-color: $background-color;
     grid-column: 2;
     grid-row: 1 / span 2;
   }
+
   .offer-right.second {
     grid-column: 2;
     grid-row: 3 / span 1;
@@ -311,11 +316,11 @@ span.bold {
       background-color: $background-color;
       margin-top: 0;
       margin-bottom: 0;
-      padding: 0 64px;
+      padding-left: 64px;
+      padding-right: 64px;
     }
 
     &__docs {
-      padding-bottom: 14px;
       .docs {
         &__title {
           padding-top: 0;
@@ -328,6 +333,7 @@ span.bold {
       padding-bottom: 64px;
       .news {
         &__title {
+          padding-top: 14px;
           padding-bottom: 30px;
         }
         &__item {
@@ -350,6 +356,10 @@ span.bold {
                 height: 100%;
               }
             }
+            &__content {
+              width: 60%;
+              margin: 0;
+            }
             &__title,
             &__desc {
               width: 100%;
@@ -357,10 +367,6 @@ span.bold {
             &__title {
               font-size: $font-size-desktop-body;
               padding-top: 0;
-            }
-            &__content {
-              width: 60%;
-              margin: 0;
             }
             &__desc {
               line-height: 14px;

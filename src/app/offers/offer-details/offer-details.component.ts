@@ -111,7 +111,6 @@ export class OfferDetailsComponent implements OnInit {
         if (this.route.snapshot.params.isOverview) {
             this.isOverview = true;
         }
-        this.project$.subscribe(e => console.log(e));
     }
 
     setMetaTags(project: Project) {

@@ -9,7 +9,7 @@ import { map } from 'rxjs/operators';
 @Component({
     selector: 'app-manage-withdrawals',
     templateUrl: './manage-withdrawals.component.html',
-    styleUrls: ['./manage-withdrawals.component.css']
+    styleUrls: ['./manage-withdrawals.component.scss']
 })
 export class ManageWithdrawalsComponent {
     userWithdrawals$: Observable<CoopWithdraw[]>;

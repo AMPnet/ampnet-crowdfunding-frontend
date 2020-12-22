@@ -14,7 +14,7 @@ import { ErrorService } from '../../shared/services/error.service';
 @Component({
     selector: 'app-manage-deposits',
     templateUrl: './manage-deposits.component.html',
-    styleUrls: ['./manage-deposits.component.css']
+    styleUrls: ['./manage-deposits.component.scss']
 })
 export class ManageDepositsComponent {
     unapprovedDeposits$: Observable<DepositSearchResponse[]>;

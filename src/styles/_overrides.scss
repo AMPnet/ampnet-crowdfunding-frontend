@@ -1,3 +1,25 @@
+@import "colors";
+@import "bootstrap/scss/mixins/buttons";
+
 @import './overrides/swal-overrides';
 @import './overrides/bootstrap-overrides';
 @import './overrides/uppy-overrides';
+
+a {
+  color: $primary-color;
+
+  &:hover {
+    color: darken($primary-color, 7.5%);
+  }
+
+  &.nostyle {
+    text-decoration: inherit !important;
+    color: inherit !important;
+    cursor: auto !important;
+  }
+}
+
+// Google reCaptcha badge removed (there is a notice instead)
+.grecaptcha-badge {
+  visibility: hidden;
+}

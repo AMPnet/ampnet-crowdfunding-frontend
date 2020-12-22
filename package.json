@@ -3,7 +3,8 @@
   "version": "0.5.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --hmr --proxy-config proxy.conf.json --disable-host-check",
+    "start": "ng serve --proxy-config proxy.conf.json",
+    "hmr": "ng serve --hmr --proxy-config proxy.conf.json --disable-host-check",
     "test": "ng test",
     "lint-fix": "tslint --fix \"src/**/*.ts\" --project tsconfig.json",
     "deploy-docker-image": "sh prod-build/deploy-docker-image.sh",

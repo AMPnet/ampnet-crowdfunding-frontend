@@ -216,9 +216,9 @@
                                                                                     <div class="docs__icons">
                                                                                         <a [routerLink]=""
                                                                                            (click)="deleteFile(states.project, file.id).subscribe()">
-                                                                                        <span class="mr-3 gray-text">
-                                                                                        <i class="fas fa-trash"></i>
-                                                                                        </span>
+                                                                                            <span class="mr-3 gray-text">
+                                                                                                <i class="fas fa-trash"></i>
+                                                                                            </span>
                                                                                         </a>
                                                                                         <a class="cursor-pointer gray-text"
                                                                                            href="{{ file.link }}">
@@ -288,7 +288,6 @@
                                         </ul>
                                     </div>
                                 </div>
-
                             </tab>
 
                             <tab heading="{{ 'projects.edit.manage_payments.title' | translate }}"

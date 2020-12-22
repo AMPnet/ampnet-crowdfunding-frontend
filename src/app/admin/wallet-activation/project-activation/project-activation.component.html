@@ -7,10 +7,10 @@
             <li *ngFor="let project of projects" class="list-group-item explainer-mini link-remove-style">
                 {{ project.project.name }}
                 <a [routerLink]="" (click)="activateProject(project.wallet.uuid).subscribe()">
-                <span class="float-right hover-fg">
-                    <i class="fas fa-check-circle mr-2"></i>
-                    {{ 'admin.activations.projects.activate' | translate }}
-                </span>
+                    <span class="float-right hover-fg">
+                        <i class="fas fa-check-circle mr-2"></i>
+                        {{ 'admin.activations.projects.activate' | translate }}
+                    </span>
                 </a>
             </li>
         </ul>

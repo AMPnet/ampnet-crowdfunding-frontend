@@ -7,10 +7,10 @@
             <li *ngFor="let group of groups" class="list-group-item explainer-mini link-remove-style">
                 {{ group.organization.name }}
                 <a [routerLink]="" (click)="activateGroup(group.wallet.uuid).subscribe()">
-                <span class="float-right hover-fg">
-                    <i class="fas fa-check-circle mr-2"></i>
-                    {{ 'admin.activations.groups.activate' | translate }}
-                </span>
+                    <span class="float-right hover-fg">
+                        <i class="fas fa-check-circle mr-2"></i>
+                        {{ 'admin.activations.groups.activate' | translate }}
+                    </span>
                 </a>
             </li>
         </ul>

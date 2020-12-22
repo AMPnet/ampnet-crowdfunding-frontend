@@ -31,6 +31,13 @@
       "verify_profile.short": "Verify Profile",
       "share": "Share",
       "link_copied": "Link copied to clipboard",
+      "subtitle_docs": "Project documents",
+      "news": {
+        "subtitle": "Project news",
+        "title_unknown": "Unknown article title",
+        "desc_unknown": "Unknown article description",
+        "read_more": "Read more"
+      },
       "transactions": {
         "title": "Transactions",
         "total_invested": "Total Invested"

@@ -243,12 +243,12 @@
                                 </div>
                                 <div class="preview__content">
                                     <div class="preview__title">
-                                        {{ news.open_graph.title === null ?
+                                        {{ !news.open_graph.title ?
                                         ('offers.offer_details.news.title_unknown' | translate) :
                                         news.open_graph.title | titlecase }}
                                     </div>
                                     <div class="preview__desc">
-                                        {{ news.open_graph.description === null ?
+                                        {{ !news.open_graph.description ?
                                         ('offers.offer_details.news.desc_unknown' | translate) :
                                         news.open_graph.description }}
                                     </div>

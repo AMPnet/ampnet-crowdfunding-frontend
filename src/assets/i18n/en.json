@@ -364,8 +364,8 @@
           "decision_pending": "Your account is in process of verification. Please wait...",
           "approved": "User data has been successfully verified.",
           "statute_confirmation_input": {
-            "title": "Statute confirmation",
-            "notice": "Check here to indicate that you have read and agree to the terms of the | {{ coopName }} Statute |"
+            "title": "Accept Platform Terms & Conditions",
+            "notice": "Check here to indicate that you have read and agree to the | {{ coopName }} Terms & Conditions |"
           },
           "start_verification": "Start verification"
         }
@@ -599,8 +599,8 @@
         "placeholder": "https://path/to/icon.png"
       },
       "coop_statute_input": {
-        "title": "Cooperative Statute URL",
-        "placeholder": "https://path/to/statute.html | https://path/to/statute-file.pdf"
+        "title": "Platform Terms & Conditions",
+        "placeholder": "https://path/to/terms.html | https://path/to/terms-file.pdf"
       },
       "arkane_id_input": {
         "title": "Arkane ID",

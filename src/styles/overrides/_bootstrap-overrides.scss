@@ -1,13 +1,10 @@
-#main-container {
+.container {
   padding-bottom: 60px;
 }
 
 @include media-breakpoint-up(lg) {
   .container {
     max-width: 1192px;
-  }
-
-  #main-container {
     padding-bottom: 100px;
   }
 }

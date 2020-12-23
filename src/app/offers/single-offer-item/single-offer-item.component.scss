@@ -34,7 +34,7 @@
       font-weight: bold;
     }
   }
-  
+
   &__bar {
     height: 4px;
     border-radius: 2px;
@@ -97,11 +97,6 @@
 }
 
 @include media-breakpoint-up(lg) {
-  .container {
-    padding-left: 0;
-    padding-right: 0;
-  }
-
   .card-holder {
     display: flex;
     border-radius: 1px;

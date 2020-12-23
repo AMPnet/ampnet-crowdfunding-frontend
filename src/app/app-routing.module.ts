@@ -37,7 +37,6 @@ import { NewPlatformBankAccountComponent } from './admin/platform-bank-account/n
 import { ExchangeComponent } from './exchange/exchange.component';
 import { OwnershipComponent } from './admin/ownership/ownership.component';
 import { RevenueShareComponent } from './organizations/organization-details/manage-projects/manage-single-project/manage-payments/revenue-share/revenue-share.component';
-import { ManagePaymentsComponent } from './organizations/organization-details/manage-projects/manage-single-project/manage-payments/manage-payments.component';
 import { OfferDetailsGuard } from './offers/offer-details/offer-details.guard';
 import { ProjectWithdrawComponent } from './organizations/organization-details/manage-projects/manage-single-project/project-withdraw/project-withdraw.component';
 import { ProjectDepositComponent } from './organizations/organization-details/manage-projects/manage-single-project/project-deposit/project-deposit.component';

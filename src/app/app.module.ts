@@ -102,6 +102,7 @@ import { SplitPartPipe } from './shared/pipes/split-part.pipe';
 import { DynamicLocaleProvider } from './shared/providers/locale.provider';
 import { CaptchaNoticeComponent } from './shared/components/captcha-notice/captcha-notice.component';
 import { SentryProvider } from './shared/providers/sentry.provider';
+import { BackNavigationDirective } from './shared/directives/back-navigation.directive';
 
 @NgModule({
     declarations: [
@@ -182,13 +183,15 @@ import { SentryProvider } from './shared/providers/sentry.provider';
         UserComponent,
         IdentityComponent,
         NewBankAccountComponent,
+        InvestmentDetailsComponent,
         AuthLayoutComponent,
         SignInComponent,
         NewInstanceComponent,
         PlatformConfigComponent,
         CaptchaNoticeComponent,
         InterpolatePipe,
-        SplitPartPipe
+        SplitPartPipe,
+        BackNavigationDirective
     ],
     imports: [
         BrowserModule,

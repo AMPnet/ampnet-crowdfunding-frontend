@@ -4,6 +4,8 @@ import { MiddlewareService, ProjectWalletInfo } from '../../../../shared/service
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { ErrorService } from '../../../../shared/services/error.service';
+import { ActivatedRoute } from '@angular/router';
+import { RouterService } from '../../../../shared/services/router.service';
 
 @Component({
     selector: 'app-single-project-item, [app-single-project-item]',
@@ -15,11 +17,14 @@ import { ErrorService } from '../../../../shared/services/error.service';
 })
 export class SingleProjectItemComponent implements OnInit {
     @Input() projectWallet: ProjectWallet;
+    @Input() isPublic;
     walletInfo$: Observable<ProjectWalletInfo>;
 
     constructor(private middlewareService: MiddlewareService,
                 private errorService: ErrorService,
-                private projectService: ProjectService) {
+                private projectService: ProjectService,
+                private route: ActivatedRoute,
+                private router: RouterService) {
     }
 
     ngOnInit() {
@@ -35,5 +40,21 @@ export class SingleProjectItemComponent implements OnInit {
                 tap(updatedProject => this.projectWallet.project = updatedProject)
             );
         };
+    }
+
+    onClickedItem() {
+        if (this.isPublic) {
+            if (this.route.snapshot.data.isOverview) {
+                this.router.navigate(['/overview', this.projectWallet.project.uuid]);
+            } else {
+                this.router.navigate(['/dash', 'offers', this.projectWallet.project.uuid], {relativeTo: this.route.root});
+            }
+        } else {
+            if (this.route.snapshot.data.isOverview) {
+                this.router.navigate(['/overview', this.projectWallet.project.uuid]);
+            } else {
+                this.router.navigate(['manage_project/', this.projectWallet.project.uuid], {relativeTo: this.route});
+            }
+        }
     }
 }

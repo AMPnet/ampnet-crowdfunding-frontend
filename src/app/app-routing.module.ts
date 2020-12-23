@@ -66,8 +66,9 @@ const appRoutes: Routes = [
                     {path: 'new_instance', component: NewInstanceComponent},
                 ]
             },
-            {path: 'overview/:isOverview', component: OffersComponent},
-            {path: 'overview/:id/:isOverview', component: OfferDetailsComponent, canActivate: [OfferDetailsGuard]},
+            {path: 'overview', component: OffersComponent, data: {isOverview: true}},
+            {path: 'overview/orgs/:id', component: OrganizationDetailsComponent, data: {isPublic: true, isOverview: true}},
+            {path: 'overview/:id', component: OfferDetailsComponent, canActivate: [OfferDetailsGuard], data: {isOverview: true}},
             {path: 'sign_in_auto/:email/:password', component: SignInAutoComponent},
         ]
     },
@@ -78,6 +79,7 @@ const appRoutes: Routes = [
             {path: '', pathMatch: 'full', redirectTo: 'offers'},
             {path: 'offers', component: OffersComponent},
             {path: 'wallet', component: WalletComponent},
+            {path: 'orgs/:id', component: OrganizationDetailsComponent, data: {isPublic: true}},
             {path: 'offers/:id', component: OfferDetailsComponent},
             {path: 'offers/:id/invest', component: InvestComponent},
             {path: 'my_portfolio', component: MyPortfolioComponent},

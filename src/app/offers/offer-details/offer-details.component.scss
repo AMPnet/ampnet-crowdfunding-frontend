@@ -29,6 +29,15 @@ span.bold {
     background-color: #F7F7F7;
   }
 
+  &__published {
+    text-transform: uppercase;
+    margin-bottom: 25px;
+    color: $title-color;
+    font-size: $font-size-desktop-small;
+    font-style: italic;
+    letter-spacing: 2px;
+  }
+
   &__text {
     padding-top: 24px;
   }

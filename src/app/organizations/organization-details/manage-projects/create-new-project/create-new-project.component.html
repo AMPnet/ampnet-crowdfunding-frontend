@@ -1,8 +1,11 @@
 <div class="container">
-    <div class="app-page-title-back" (click)="backToOrganizationDetailsScreen()">
-        <i class="fas fa-long-arrow-alt-left mr-3"></i>
-        {{ 'projects.new.title.back' | translate }}
-    </div>
+    <a [routerLink]="" appBackNavigation class="nostyle">
+        <div class="app-page-title-back">
+            <i class="fas fa-long-arrow-alt-left mr-3"></i>
+            {{ 'general.back.title' | translate }}
+        </div>
+    </a>
+
     <form [formGroup]="createForm" class="mb-5">
         <div class="row project-container">
             <div class="project-left col-lg-6">

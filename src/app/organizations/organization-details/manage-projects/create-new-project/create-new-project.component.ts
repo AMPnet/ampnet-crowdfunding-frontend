@@ -1,5 +1,14 @@
 import { Component } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import {
+    AbstractControl,
+    AbstractControlOptions,
+    FormBuilder,
+    FormControl,
+    FormGroup,
+    ValidationErrors,
+    ValidatorFn,
+    Validators
+} from '@angular/forms';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import * as moment from 'moment';
 import { tap } from 'rxjs/operators';
@@ -33,7 +42,7 @@ export class CreateNewProjectComponent {
             expectedFunding: ['', [ProjectValidators.greaterThan(0)]],
             minPerUser: ['', [ProjectValidators.greaterThan(0)]],
             maxPerUser: ['', [ProjectValidators.greaterThan(0)]]
-        }, {
+        }, <AbstractControlOptions>{
             validator: Validators.compose([
                 ProjectValidators.fundingLimits,
                 ProjectValidators.fundingPeriodLimits

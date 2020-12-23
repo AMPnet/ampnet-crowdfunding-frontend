@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { SignupService } from '../../shared/services/user/signup.service';
 import { ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControlOptions, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthService } from 'angularx-social-login';
 import { MustMatch } from './confirm-password-validator';
 import { switchMap, tap } from 'rxjs/operators';
@@ -42,7 +42,7 @@ export class SignUpComponent {
             password: ['', [Validators.required, Validators.minLength(8)]],
             confirmPassword: ['', [Validators.required, Validators.minLength(8)]],
             email: ['', [Validators.required, Validators.email]]
-        }, {
+        }, <AbstractControlOptions>{
             validator: MustMatch('password', 'confirmPassword')
         });
     }

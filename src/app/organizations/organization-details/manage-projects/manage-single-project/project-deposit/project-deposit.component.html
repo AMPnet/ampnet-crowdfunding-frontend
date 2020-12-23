@@ -1,15 +1,17 @@
 <ng-container
-    *ngIf="{
+        *ngIf="{
         deposit: deposit$ | async,
         masterIBAN: masterIBAN$ | async
     } as states">
     <div class="container">
         <ng-container *ngIf="!!states.deposit && !!states.masterIBAN; else spinner">
-            <div [routerLink]="['/dash', 'manage_groups', orgID, 'manage_project', states.deposit.owner] | coopPath"
-                 class="app-page-title-back" >
-                <i class="fas fa-long-arrow-alt-left mr-3"></i>
-                {{ 'projects.edit.manage_payments.deposit.title' | translate }}
-            </div>
+            <a [routerLink]="" appBackNavigation class="nostyle">
+                <div class="app-page-title-back">
+                    <i class="fas fa-long-arrow-alt-left mr-3"></i>
+                    {{ 'general.back.title' | translate }}
+                </div>
+            </a>
+
             <div class="alerts">
                 <div class="alert alert-info">
                     <i class="fas fa-clock mr-2"></i>

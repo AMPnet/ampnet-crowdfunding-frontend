@@ -37,7 +37,6 @@ import { NewPlatformBankAccountComponent } from './admin/platform-bank-account/n
 import { ExchangeComponent } from './exchange/exchange.component';
 import { OwnershipComponent } from './admin/ownership/ownership.component';
 import { RevenueShareComponent } from './organizations/organization-details/manage-projects/manage-single-project/manage-payments/revenue-share/revenue-share.component';
-import { ManagePaymentsComponent } from './organizations/organization-details/manage-projects/manage-single-project/manage-payments/manage-payments.component';
 import { OfferDetailsGuard } from './offers/offer-details/offer-details.guard';
 import { ProjectWithdrawComponent } from './organizations/organization-details/manage-projects/manage-single-project/project-withdraw/project-withdraw.component';
 import { ProjectDepositComponent } from './organizations/organization-details/manage-projects/manage-single-project/project-deposit/project-deposit.component';
@@ -67,8 +66,9 @@ const appRoutes: Routes = [
                     {path: 'new_instance', component: NewInstanceComponent},
                 ]
             },
-            {path: 'overview/:isOverview', component: OffersComponent},
-            {path: 'overview/:id/:isOverview', component: OfferDetailsComponent, canActivate: [OfferDetailsGuard]},
+            {path: 'overview', component: OffersComponent, data: {isOverview: true}},
+            {path: 'overview/orgs/:id', component: OrganizationDetailsComponent, data: {isPublic: true, isOverview: true}},
+            {path: 'overview/:id', component: OfferDetailsComponent, canActivate: [OfferDetailsGuard], data: {isOverview: true}},
             {path: 'sign_in_auto/:email/:password', component: SignInAutoComponent},
         ]
     },
@@ -79,6 +79,7 @@ const appRoutes: Routes = [
             {path: '', pathMatch: 'full', redirectTo: 'offers'},
             {path: 'offers', component: OffersComponent},
             {path: 'wallet', component: WalletComponent},
+            {path: 'orgs/:id', component: OrganizationDetailsComponent, data: {isPublic: true}},
             {path: 'offers/:id', component: OfferDetailsComponent},
             {path: 'offers/:id/invest', component: InvestComponent},
             {path: 'my_portfolio', component: MyPortfolioComponent},

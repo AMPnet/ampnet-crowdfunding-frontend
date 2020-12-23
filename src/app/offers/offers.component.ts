@@ -13,7 +13,7 @@ import { map } from 'rxjs/operators';
 export class OffersComponent implements OnInit {
     projectsWallets$: Observable<ProjectWallet[]>;
 
-    isOverview = false;
+    isOverview: boolean;
 
     constructor(private projectService: ProjectService,
                 private walletService: WalletService,
@@ -22,10 +22,7 @@ export class OffersComponent implements OnInit {
     }
 
     ngOnInit() {
-        if (this.route.snapshot.params.isOverview) {
-            this.isOverview = true;
-        }
-
+        this.isOverview = this.route.snapshot.data.isOverview;
         this.projectsWallets$ = this.projectService.getAllActiveProjectsCached().pipe(
             map(res => res.projects_wallets)
         );

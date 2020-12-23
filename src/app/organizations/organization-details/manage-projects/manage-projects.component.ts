@@ -13,6 +13,7 @@ import { ErrorService } from '../../../shared/services/error.service';
 })
 export class ManageProjectsComponent {
     @Input() groupID: string;
+    @Input() isPublic = false;
 
     refreshProjectsSubject = new BehaviorSubject<void>(null);
     projectsWallets$: Observable<ProjectWallet[]>;

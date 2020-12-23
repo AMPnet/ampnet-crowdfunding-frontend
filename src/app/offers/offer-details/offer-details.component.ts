@@ -25,7 +25,7 @@ import { TranslateService } from '@ngx-translate/core';
     styleUrls: ['./offer-details.component.scss'],
 })
 export class OfferDetailsComponent implements OnInit {
-    isOverview = false;
+    isOverview: boolean;
 
     @Input() isPortfolioView = false;
 
@@ -108,9 +108,7 @@ export class OfferDetailsComponent implements OnInit {
     }
 
     ngOnInit() {
-        if (this.route.snapshot.params.isOverview) {
-            this.isOverview = true;
-        }
+        this.isOverview = this.route.snapshot.data.isOverview;
     }
 
     setMetaTags(project: Project) {
@@ -138,18 +136,6 @@ export class OfferDetailsComponent implements OnInit {
         timer(2000).subscribe(() => el.hide());
     }
 
-    backToPreviousScreen() {
-        if (!this.isPortfolioView) {
-            if (this.isOverview) {
-                this.router.navigate(['/overview/discover']);
-            } else {
-                this.router.navigate(['/dash/offers']);
-            }
-        } else {
-            this.router.navigate(['/dash/my_portfolio']);
-        }
-    }
-
     openModal(project: Project) {
         this.bsModalRef = this.modalService.show(MapModalComponent, {
             initialState: {
@@ -165,7 +151,7 @@ export class OfferDetailsComponent implements OnInit {
     }
 
     getProjectURL(project: Project, uriComponent = true) {
-        const url = `${window.location.host}/${project.coop}/overview/${project.uuid}/discover`;
+        const url = `${window.location.host}/${project.coop}/overview/${project.uuid}`;
 
         return uriComponent ? encodeURIComponent(url) : encodeURI(url);
     }
@@ -187,5 +173,13 @@ export class OfferDetailsComponent implements OnInit {
                 switchMap(() => this.router.navigate(['/dash/wallet']))
             );
         };
+    }
+
+    onPublishedByClicked(organizationUUID: string) {
+        if (this.route.snapshot.data.isOverview) {
+            this.router.navigate([`/overview/orgs/${organizationUUID}`]);
+        } else {
+            this.router.navigate([`/dash/orgs/${organizationUUID}`]);
+        }
     }
 }

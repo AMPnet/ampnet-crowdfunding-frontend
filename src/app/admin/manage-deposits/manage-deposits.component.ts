@@ -5,7 +5,7 @@ import {
     WalletCooperativeDepositService
 } from '../../shared/services/wallet/wallet-cooperative/wallet-cooperative-deposit.service';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { catchError, finalize, map, switchMap, tap } from 'rxjs/operators';
+import { finalize, map, switchMap, tap } from 'rxjs/operators';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PopupService } from '../../shared/services/popup.service';
 import { RouterService } from '../../shared/services/router.service';

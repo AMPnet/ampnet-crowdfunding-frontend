@@ -1,15 +1,17 @@
 <div class="item__top">
     <div class="top__left">
-        <img src="{{ projectWallet.project.main_image }}"
-             routerLink="manage_project/{{ projectWallet.project.uuid }}"
-             onerror="this.onerror=null; this.src='../../../../assets/noimage.png'"
-             alt="Project image">
+        <a [routerLink]="" (click)="onClickedItem()">
+            <img src="{{ projectWallet.project.main_image }}"
+                 onerror="this.onerror=null; this.src='../../../../assets/noimage.png'"
+                 alt="Project image">
+        </a>
     </div>
     <div class="top__right">
-        <div class="item__title"
-             routerLink="manage_project/{{ projectWallet.project.uuid }}">
-            {{ projectWallet.project.name }}
-        </div>
+        <a [routerLink]="" (click)="onClickedItem()" class="nostyle">
+            <h1 class="app-basic-title">
+                {{ projectWallet.project.name }}
+            </h1>
+        </a>
         <div class="item__funding">
             <span class="bold">
                 {{ 'organizations.details.projects.item.period' | translate | splitPart:0 }}
@@ -51,12 +53,12 @@
         </ng-container>
     </div>
     <div class="item__toggle" *ngIf="projectWallet.wallet.hash">
-        <button app-action-button
+        <button app-action-button *ngIf="!isPublic"
                 text="{{ (projectWallet.project.active ? 'organizations.details.projects.item.unpublish' : 'organizations.details.projects.item.publish') | translate }}"
                 textShort="{{ (projectWallet.project.active ? 'organizations.details.projects.item.unpublish' : 'organizations.details.projects.item.publish') | translate }}"
                 faIcon="{{ projectWallet.project.active ? 'fa-eye-slash' : 'fa-eye' }}"
                 [onClick]="toggleProject(projectWallet.project).bind(this)"
-                class="d-contents item__icon flex__center mr-2">
+                class="d-contents item__icon flex__center float-right mr-2">
         </button>
     </div>
 </div>

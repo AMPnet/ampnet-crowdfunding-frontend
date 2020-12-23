@@ -3,11 +3,13 @@
     investmentData: investmentData$ | async
 } as states" class="container">
     <ng-container *ngIf="states.project && states.investmentData else spinner">
-        <div [routerLink]="['/dash', 'offers', states.project.uuid] | coopPath"
-             class="app-page-title-back">
-            <i class="fas fa-long-arrow-alt-left mr-3"></i>
-            {{ 'invest.back_button' | translate }}
-        </div>
+        <a [routerLink]="" appBackNavigation class="nostyle">
+            <div class="app-page-title-back">
+                <i class="fas fa-long-arrow-alt-left mr-3"></i>
+                {{ 'general.back.title' | translate }}
+            </div>
+        </a>
+
         <div class="row">
             <div class="invest col-12">
                 <h1 class="app-basic-title">{{ states.project.name }}</h1>

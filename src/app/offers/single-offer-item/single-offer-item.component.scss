@@ -8,7 +8,6 @@
   background: $background-color;
   padding-bottom: 10px;
   transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
-  cursor: pointer;
 }
 
 .card-right .app-basic-title {
@@ -29,12 +28,13 @@
   &__raised {
     margin-top: 20px;
     color: #444444;
+
     span.bold {
       color: #111111;
       font-weight: bold;
     }
   }
-  
+
   &__bar {
     height: 4px;
     border-radius: 2px;
@@ -61,8 +61,17 @@
 }
 
 .right {
-  &__text{
+  &__text {
     margin-top: 20px;
+  }
+
+  &__published {
+    text-transform: uppercase;
+    margin-bottom: 25px;
+    color: $title-color;
+    font-size: $font-size-desktop-small;
+    font-style: italic;
+    letter-spacing: 2px;
   }
 
   &__roi {
@@ -71,11 +80,12 @@
     color: $title-color;
     font-size: $font-size-desktop-small;
     letter-spacing: 2px;
+
     span.bold {
       font-size: $font-size-desktop-small;
-      font-weight: bold;
       letter-spacing: 2px;
       color: $title-color;
+      font-weight: bold;
     }
   }
 
@@ -97,11 +107,6 @@
 }
 
 @include media-breakpoint-up(lg) {
-  .container {
-    padding-left: 0;
-    padding-right: 0;
-  }
-
   .card-holder {
     display: flex;
     border-radius: 1px;

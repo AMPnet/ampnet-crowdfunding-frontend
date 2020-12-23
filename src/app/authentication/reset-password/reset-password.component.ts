@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControlOptions, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { SignupService } from '../../shared/services/user/signup.service';
 import { ActivatedRoute } from '@angular/router';
 import { PopupService } from '../../shared/services/popup.service';
@@ -32,7 +32,7 @@ export class ResetPasswordComponent implements OnInit {
         this.resetPasswordForm = this.formBuilder.group({
             password: new FormControl('', [Validators.required, Validators.minLength(8)]),
             confirmPassword: new FormControl('', [Validators.required, Validators.minLength(8)]),
-        }, {
+        }, <AbstractControlOptions>{
             validator: MustMatch('password', 'confirmPassword')
         });
     }

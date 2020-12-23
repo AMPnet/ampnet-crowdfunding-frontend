@@ -1,8 +1,10 @@
 <div class="container">
-    <div class="app-page-title-back" (click)="backToGroupsScreen()">
-        <i class="fas fa-long-arrow-alt-left mr-3"></i>
-        {{ 'organizations.new.title.back' | translate }}
-    </div>
+    <a [routerLink]="" appBackNavigation class="nostyle">
+        <div class="app-page-title-back">
+            <i class="fas fa-long-arrow-alt-left mr-3"></i>
+            {{ 'general.back.title' | translate }}
+        </div>
+    </a>
 
     <form [formGroup]="newOrganizationForm">
         <div class="form-container row">

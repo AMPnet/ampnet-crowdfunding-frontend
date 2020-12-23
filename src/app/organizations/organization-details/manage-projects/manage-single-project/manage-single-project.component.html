@@ -7,10 +7,13 @@
         <ng-container *ngIf="!!states.project && !!states.wallet else spinner">
             <div *ngIf="states.wallet !== walletState.EMPTY">
                 <div class="app-page-header">
-                    <div class="app-page-title-back" appBackNavigation>
-                        <i class="fas fa-long-arrow-alt-left mr-3"></i>
-                        {{ 'general.back.title' | translate }}
-                    </div>
+                    <a [routerLink]="" appBackNavigation class="nostyle">
+                        <div class="app-page-title-back">
+                            <i class="fas fa-long-arrow-alt-left mr-3"></i>
+                            {{ 'general.back.title' | translate }}
+                        </div>
+                    </a>
+
                     <button class="btn btn-center"
                             [routerLink]="['/dash', 'offers', states.project.uuid] | coopPath">
                         <i class="fas fa-caret-right mr-lg-3"></i>

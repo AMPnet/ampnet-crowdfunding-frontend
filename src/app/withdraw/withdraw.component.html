@@ -1,8 +1,11 @@
 <div class="container">
-    <div class="app-page-title-back" appBackNavigation>
-        <i class="fas fa-long-arrow-alt-left mr-3"></i>
-        {{ 'general.back.title' | translate }}
-    </div>
+    <a [routerLink]="" appBackNavigation class="nostyle">
+        <div class="app-page-title-back">
+            <i class="fas fa-long-arrow-alt-left mr-3"></i>
+            {{ 'general.back.title' | translate }}
+        </div>
+    </a>
+
     <div *ngIf="banks !== undefined && banks.length > 0 && pendingWithdrawal === undefined">
         <div class="withdraw__amount">
             <div class="withdraw__title">

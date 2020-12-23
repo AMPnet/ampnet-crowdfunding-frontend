@@ -1,9 +1,12 @@
 <ng-container *ngIf="withdrawal$ | async as withdrawal">
     <div *ngIf="withdrawal === withdrawalState.EMPTY" class="container">
-        <div appBackNavigation class="app-page-title-back">
-            <i class="fas fa-long-arrow-alt-left mr-3"></i>
-            {{ 'general.back.title' | translate }}
-        </div>
+        <a [routerLink]="" appBackNavigation class="nostyle">
+            <div class="app-page-title-back">
+                <i class="fas fa-long-arrow-alt-left mr-3"></i>
+                {{ 'general.back.title' | translate }}
+            </div>
+        </a>
+
         <div class="withdraw__form">
             <form [formGroup]="requestWithdrawForm">
                 <h2 class="app-page-subtitle">

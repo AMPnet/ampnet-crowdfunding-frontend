@@ -8,10 +8,12 @@
 } as states" class="container">
     <ng-container *ngIf="!!states.organization else spinner">
         <div class="app-page-header">
-            <div class="app-page-title-back" appBackNavigation>
-                <i class="fas fa-long-arrow-alt-left mr-3"></i>
-                {{ 'general.back.title' | translate }}
-            </div>
+            <a [routerLink]="" appBackNavigation class="nostyle">
+                <div class="app-page-title-back">
+                    <i class="fas fa-long-arrow-alt-left mr-3"></i>
+                    {{ 'general.back.title' | translate }}
+                </div>
+            </a>
 
             <ng-container *ngIf="!isPublic">
                 <ng-container *ngIf="(orgWallet$ | async) as wallet">

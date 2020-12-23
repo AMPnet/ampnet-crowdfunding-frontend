@@ -7,10 +7,12 @@
     walletMW: projectWalletMW$ | async,
     news: news$ | async
 } as states" class="wow fadeIn container">
-    <div class="app-page-title-back" appBackNavigation>
-        <i class="fas fa-long-arrow-alt-left mr-3"></i>
-        {{ 'general.back.title' | translate }}
-    </div>
+    <a [routerLink]="" appBackNavigation class="nostyle">
+        <div class="app-page-title-back">
+            <i class="fas fa-long-arrow-alt-left mr-3"></i>
+            {{ 'general.back.title' | translate }}
+        </div>
+    </a>
 
     <div *ngIf="states.project !== null else overlaySpinner" class="wrapper">
         <!-- Closed project popup -->

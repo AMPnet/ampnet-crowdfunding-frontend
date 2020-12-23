@@ -102,7 +102,7 @@ import { SplitPartPipe } from './shared/pipes/split-part.pipe';
 import { DynamicLocaleProvider } from './shared/providers/locale.provider';
 import { CaptchaNoticeComponent } from './shared/components/captcha-notice/captcha-notice.component';
 import { SentryProvider } from './shared/providers/sentry.provider';
-import { BackButtonDirective } from './shared/directives/back-button.directive';
+import { BackNavigationDirective } from './shared/directives/back-navigation.directive';
 
 @NgModule({
     declarations: [
@@ -191,7 +191,7 @@ import { BackButtonDirective } from './shared/directives/back-button.directive';
         CaptchaNoticeComponent,
         InterpolatePipe,
         SplitPartPipe,
-        BackButtonDirective,
+        BackNavigationDirective
     ],
     imports: [
         BrowserModule,

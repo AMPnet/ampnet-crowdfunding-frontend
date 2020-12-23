@@ -5,10 +5,9 @@
 <div *ngIf="{
     project: project$ | async,
     walletMW: projectWalletMW$ | async,
-    news: news$ | async,
-    user: user$ | async
+    news: news$ | async
 } as states" class="wow fadeIn container">
-    <div class="app-page-title-back" appBackButton>
+    <div class="app-page-title-back" appBackNavigation>
         <i class="fas fa-long-arrow-alt-left mr-3"></i>
         {{ 'general.back.title' | translate }}
     </div>
@@ -148,32 +147,34 @@
                                 <span>Sign Up & Invest</span>
                             </button>
 
-                            <div *ngIf="!isOverview && !!states.user">
-                                <button *ngIf="states.user.verified"
-                                        [disabled]="disableInvestButton(states.project, states.walletMW)"
-                                        class="btn btn-primary w-100 flex__center"
-                                        (click)="goToInvest(states.project.uuid)">
-                                    <i class="mr-2 fas fa-chart-pie"></i>
-                                    <!-- Button content for laptop sizes -->
-                                    <span class="d-none d-lg-block d-xl-none">
-                                        {{ (isPortfolioView ? 'offers.offer_details.invest.portfolio.short' : 'offers.offer_details.invest') | translate }}
-                                    </span>
-                                    <span class="d-lg-none d-xl-block">
-                                        {{ (isPortfolioView ? 'offers.offer_details.invest.portfolio' : 'offers.offer_details.invest') | translate }}
-                                    </span>
-                                </button>
-                                <button *ngIf="!states.user.verified" [disabled]="!states.project.active"
-                                        class="btn btn-primary w-100 flex__center"
-                                        [routerLink]="'/dash/settings/user' | coopPath">
-                                    <i class="mr-2 fas fa-chart-pie"></i>
-                                    <!-- Button content for laptop sizes -->
-                                    <span class="d-none d-lg-inline-block d-xl-none">
-                                        {{ 'offers.offer_details.verify_profile.short' | translate }}
-                                    </span>
-                                    <span class="d-lg-none d-xl-inline-block">
-                                        {{ 'offers.offer_details.verify_profile' | translate }}
-                                    </span>
-                                </button>
+                            <div *ngIf="!isOverview">
+                                <ng-container *ngIf="(user$ | async) as user">
+                                    <button *ngIf="user.verified"
+                                            [disabled]="disableInvestButton(states.project, states.walletMW)"
+                                            class="btn btn-primary w-100 flex__center"
+                                            (click)="goToInvest(states.project.uuid)">
+                                        <i class="mr-2 fas fa-chart-pie"></i>
+                                        <!-- Button content for laptop sizes -->
+                                        <span class="d-none d-lg-block d-xl-none">
+                                            {{ (isPortfolioView ? 'offers.offer_details.invest.portfolio.short' : 'offers.offer_details.invest') | translate }}
+                                        </span>
+                                        <span class="d-lg-none d-xl-block">
+                                            {{ (isPortfolioView ? 'offers.offer_details.invest.portfolio' : 'offers.offer_details.invest') | translate }}
+                                        </span>
+                                    </button>
+                                    <button *ngIf="!user.verified" [disabled]="!states.project.active"
+                                            class="btn btn-primary w-100 flex__center"
+                                            [routerLink]="'/dash/settings/user' | coopPath">
+                                        <i class="mr-2 fas fa-chart-pie"></i>
+                                        <!-- Button content for laptop sizes -->
+                                        <span class="d-none d-lg-inline-block d-xl-none">
+                                            {{ 'offers.offer_details.verify_profile.short' | translate }}
+                                        </span>
+                                        <span class="d-lg-none d-xl-inline-block">
+                                            {{ 'offers.offer_details.verify_profile' | translate }}
+                                        </span>
+                                    </button>
+                                </ng-container>
                             </div>
                         </ng-template>
                     </div>

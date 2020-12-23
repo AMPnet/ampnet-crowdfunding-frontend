@@ -1,10 +1,14 @@
+<div *ngIf="isOverview">
+    <app-header></app-header>
+</div>
+
 <div *ngIf="{
     organization: organization$ | async,
     orgMembers: orgMembers$ | async
 } as states" class="container">
     <ng-container *ngIf="!!states.organization else spinner">
         <div class="app-page-header">
-            <div class="app-page-title-back" appBackButton>
+            <div class="app-page-title-back" appBackNavigation>
                 <i class="fas fa-long-arrow-alt-left mr-3"></i>
                 {{ 'general.back.title' | translate }}
             </div>

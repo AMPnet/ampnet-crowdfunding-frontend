@@ -4,9 +4,9 @@
 } as states" class="container">
     <ng-container *ngIf="!!states.organization else spinner">
         <div class="app-page-header">
-            <div class="app-page-title-back" (click)="backToGroupsScreen()">
+            <div class="app-page-title-back" appBackButton>
                 <i class="fas fa-long-arrow-alt-left mr-3"></i>
-                {{ 'organizations.details.title.back' | translate }}
+                {{ 'general.back.title' | translate }}
             </div>
 
             <ng-container *ngIf="!isPublic">

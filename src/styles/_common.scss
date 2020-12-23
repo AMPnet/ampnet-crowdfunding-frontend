@@ -174,17 +174,6 @@
   padding-right: 15px;
 }
 
-.link-remove-style {
-  a {
-    color: $title-color;
-    text-decoration: none;
-  }
-
-  a:hover {
-    color: $title-color;
-  }
-}
-
 @include media-breakpoint-up(lg) {
   .app__full-width--padding {
     padding-left: 0;

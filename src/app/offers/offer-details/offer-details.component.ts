@@ -136,18 +136,6 @@ export class OfferDetailsComponent implements OnInit {
         timer(2000).subscribe(() => el.hide());
     }
 
-    backToPreviousScreen() {
-        if (!this.isPortfolioView) {
-            if (this.isOverview) {
-                this.router.navigate(['/overview']);
-            } else {
-                this.router.navigate(['/dash/offers']);
-            }
-        } else {
-            this.router.navigate(['/dash/my_portfolio']);
-        }
-    }
-
     openModal(project: Project) {
         this.bsModalRef = this.modalService.show(MapModalComponent, {
             initialState: {

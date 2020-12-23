@@ -154,8 +154,4 @@ export class OrganizationDetailsComponent implements OnInit {
         this.router.navigate(['/dash/manage_groups']);
         return EMPTY;
     }
-
-    backToGroupsScreen() {
-        this.router.navigate(['/dash/manage_groups']);
-    }
 }

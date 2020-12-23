@@ -46,8 +46,4 @@ export class CreateOrganizationComponent {
             })
         );
     }
-
-    backToGroupsScreen() {
-        this.router.navigate([`/dash/manage_groups`]);
-    }
 }

@@ -77,10 +77,6 @@ export class CreateNewProjectComponent {
             dateInputFormat: 'DD-MM-YYYY'
         });
     }
-
-    backToOrganizationDetailsScreen() {
-        this.router.navigate(['../'], {relativeTo: this.activatedRoute});
-    }
 }
 
 class ProjectValidators {

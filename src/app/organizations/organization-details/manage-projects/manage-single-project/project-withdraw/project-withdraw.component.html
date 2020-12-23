@@ -1,9 +1,8 @@
 <ng-container *ngIf="withdrawal$ | async as withdrawal">
     <div *ngIf="withdrawal === withdrawalState.EMPTY" class="container">
-        <div [routerLink]="['/dash', 'manage_groups', orgID, 'manage_project', projectID] | coopPath"
-             class="app-page-title-back">
+        <div appBackButton class="app-page-title-back">
             <i class="fas fa-long-arrow-alt-left mr-3"></i>
-            {{ 'projects.edit.manage_payments.withdraw.title' | translate }}
+            {{ 'general.back.title' | translate }}
         </div>
         <div class="withdraw__form">
             <form [formGroup]="requestWithdrawForm">

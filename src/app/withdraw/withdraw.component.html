@@ -1,7 +1,7 @@
 <div class="container">
-    <div class="app-page-title-back" [routerLink]="['/dash', 'wallet'] | coopPath">
+    <div class="app-page-title-back" appBackButton>
         <i class="fas fa-long-arrow-alt-left mr-3"></i>
-        {{ 'withdraw.title' | translate }}
+        {{ 'general.back.title' | translate }}
     </div>
     <div *ngIf="banks !== undefined && banks.length > 0 && pendingWithdrawal === undefined">
         <div class="withdraw__amount">

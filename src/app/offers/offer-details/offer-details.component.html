@@ -8,15 +8,9 @@
     news: news$ | async,
     user: user$ | async
 } as states" class="wow fadeIn container">
-    <div class="app-page-title-back" (click)="backToPreviousScreen()">
+    <div class="app-page-title-back" appBackButton>
         <i class="fas fa-long-arrow-alt-left mr-3"></i>
-
-        <ng-container *ngIf="!isPortfolioView">
-            {{ 'offers.offer_details.title' | translate }}
-        </ng-container>
-        <ng-container *ngIf="isPortfolioView">
-            {{ 'offers.offer_details.title.portfolio' | translate }}
-        </ng-container>
+        {{ 'general.back.title' | translate }}
     </div>
 
     <div *ngIf="states.project !== null else overlaySpinner" class="wrapper">
@@ -43,7 +37,7 @@
                         <h1 class="app-basic-title">{{ states.project.name }}</h1>
                     </div>
 
-                    <p class="right__published link-remove-style">
+                    <p class="right__published">
                         {{ 'offers.offer_details.published_by' | translate }}
                         <a [routerLink]="" (click)="onPublishedByClicked(states.project.organization.uuid)">
                             {{ states.project.organization.name }}
@@ -251,13 +245,13 @@
                                 <div class="preview__content">
                                     <div class="preview__title">
                                         {{ !news.open_graph.title ?
-                                        ('offers.offer_details.news.title_unknown' | translate) :
-                                        news.open_graph.title | titlecase }}
+                                            ('offers.offer_details.news.title_unknown' | translate) :
+                                            news.open_graph.title | titlecase }}
                                     </div>
                                     <div class="preview__desc">
                                         {{ !news.open_graph.description ?
-                                        ('offers.offer_details.news.desc_unknown' | translate) :
-                                        news.open_graph.description }}
+                                            ('offers.offer_details.news.desc_unknown' | translate) :
+                                            news.open_graph.description }}
                                     </div>
                                 </div>
                             </div>

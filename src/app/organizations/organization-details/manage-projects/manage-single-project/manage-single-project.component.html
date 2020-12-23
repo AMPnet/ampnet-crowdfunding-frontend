@@ -7,9 +7,9 @@
         <ng-container *ngIf="!!states.project && !!states.wallet else spinner">
             <div *ngIf="states.wallet !== walletState.EMPTY">
                 <div class="app-page-header">
-                    <div class="app-page-title-back" (click)="backToOrganizationDetailsScreen()">
+                    <div class="app-page-title-back" appBackButton>
                         <i class="fas fa-long-arrow-alt-left mr-3"></i>
-                        {{ states.project.organization?.name }}
+                        {{ 'general.back.title' | translate }}
                     </div>
                     <button class="btn btn-center"
                             [routerLink]="['/dash', 'offers', states.project.uuid] | coopPath">

@@ -817,6 +817,7 @@
       "description": "The transaction is being processed..."
     },
     "captcha_notice": "This site is protected by reCAPTCHA and the Google | Privacy Policy | and | Terms of Service | apply.",
+    "back.title": "Back",
     "popup": {
       "info.title": "Info",
       "success": {

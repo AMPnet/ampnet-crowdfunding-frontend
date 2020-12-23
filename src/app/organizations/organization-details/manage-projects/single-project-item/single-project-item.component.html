@@ -7,10 +7,11 @@
         </a>
     </div>
     <div class="top__right">
-        <div class="item__title"
-             (click)="onClickedItem()">
-            {{ projectWallet.project.name }}
-        </div>
+        <a [routerLink]="" (click)="onClickedItem()">
+            <h1 class="app-basic-title">
+                {{ projectWallet.project.name }}
+            </h1>
+        </a>
         <div class="item__funding">
             <span class="bold">
                 {{ 'organizations.details.projects.item.period' | translate | splitPart:0 }}

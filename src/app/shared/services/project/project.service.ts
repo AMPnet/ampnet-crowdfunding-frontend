@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BackendHttpClient } from '../backend-http-client.service';
-import { DocumentModel, Organization } from './organization.service';
+import { OrgDocument, Organization, OrganizationBasic } from './organization.service';
 import { CacheService } from '../cache.service';
 import { Wallet } from '../wallet/wallet.service';
 import { AppConfigService } from '../app-config.service';
@@ -100,11 +100,11 @@ export interface Project {
     max_per_user: number;
     main_image: string;
     news: string[];
-    documents: DocumentModel[];
+    documents: OrgDocument[];
     gallery: string[];
     active: boolean;
     coop: string;
-    organization: Organization;
+    organization?: Organization | OrganizationBasic;
     wallet: Wallet;
 }
 
@@ -117,5 +117,4 @@ export interface PageableProjectsResponse {
 export interface ProjectWallet {
     project: Project;
     wallet: Wallet;
-    organization: Organization;
 }

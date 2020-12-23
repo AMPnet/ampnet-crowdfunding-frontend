@@ -76,12 +76,17 @@ export interface Organization {
     description: string;
     header_image: string;
     legal_info: string;
-    documents?: DocumentModel[];
+    documents?: OrgDocument[];
     wallet_hash?: string;
     project_count: number;
 }
 
-export interface DocumentModel {
+export interface OrganizationBasic {
+    uuid: string;
+    name: string;
+}
+
+export interface OrgDocument {
     id: number;
     link: string;
     name: string;

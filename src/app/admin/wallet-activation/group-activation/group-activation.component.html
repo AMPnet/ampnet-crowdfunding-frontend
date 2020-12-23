@@ -1,21 +1,22 @@
 <div *ngIf="groups !== undefined">
-    <h5 class="explainer-mini">
+    <h5>
         {{ 'admin.activations.groups.title' | translate }}
     </h5>
     <div *ngIf="groups.length > 0" class="mt-3">
         <ul class="list-group">
-            <li *ngFor="let group of groups" class="list-group-item explainer-mini">
+            <li *ngFor="let group of groups" class="list-group-item">
                 {{ group.organization.name }}
-                <span (click)="activateGroup(group.wallet.uuid).subscribe()"
-                      class="float-right cursor-pointer hover-fg">
-                    <i class="fas fa-check-circle mr-2"></i>
-                    {{ 'admin.activations.groups.activate' | translate }}
-                </span>
+                <a [routerLink]="" (click)="activateGroup(group.wallet.uuid).subscribe()">
+                    <span class="float-right hover-fg">
+                        <i class="fas fa-check-circle mr-2"></i>
+                        {{ 'admin.activations.groups.activate' | translate }}
+                    </span>
+                </a>
             </li>
         </ul>
     </div>
     <div *ngIf="groups.length === 0" class="mt-3">
-        <div class="text-center explainer-mini mt-5">
+        <div class="text-center mt-5">
             {{ 'admin.activations.groups.empty' | translate }}
         </div>
     </div>

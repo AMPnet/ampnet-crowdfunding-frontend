@@ -8,7 +8,7 @@
         wallet: wallet$ | async
     } as states">
         <ul class="list-unstyled components" id="main-menu">
-            <p class="menu-header ml-4 mb-3 mt-3 ">
+            <p class="menu-header ml-4 mb-3 mt-3">
                 {{ 'navigation.menu.title' | translate }}
             </p>
             <li routerLink="offers" routerLinkActive="side-active">
@@ -48,7 +48,7 @@
         </ul>
 
         <ul class="list-unstyled components text-white" id="main-menu">
-            <p class="menu-header ml-4 mb-3 mt-3 ">
+            <p class="menu-header ml-4 mb-3 mt-3">
                 {{ 'navigation.settings.title' | translate }}
             </p>
             <li routerLink="settings/user" routerLinkActive="side-active">
@@ -62,16 +62,16 @@
         </ul>
 
         <div [hidden]="!(states.user?.role === userRole.ADMIN)">
-            <p class="menu-header ml-4 mb-3 mt-3 ">
+            <p class="menu-header ml-4 mb-3 mt-3">
                 {{ 'navigation.admin.title' | translate }}
             </p>
             <ul class="list-unstyled components" id="main-menu">
                 <li routerLink="manage_withdrawals" routerLinkActive="side-active">
-                    <i class="menu-icon fas fa-arrow-circle-up "></i>
+                    <i class="menu-icon fas fa-arrow-circle-up"></i>
                     <span>{{ 'navigation.admin.withdrawals' | translate }}</span>
                 </li>
                 <li routerLink="manage_deposits" routerLinkActive="side-active">
-                    <i class="menu-icon fas fa-arrow-circle-down "></i>
+                    <i class="menu-icon fas fa-arrow-circle-down"></i>
                     <span>{{ 'navigation.admin.deposits' | translate }}</span>
                 </li>
                 <li routerLink="activation/users" routerLinkActive="side-active">
@@ -94,16 +94,16 @@
         </div>
 
         <div [hidden]="!(states.user?.role === userRole.TOKEN_ISSUER)">
-            <p class="menu-header ml-4 mb-3 mt-3 ">
+            <p class="menu-header ml-4 mb-3 mt-3">
                 {{ 'navigation.admin.token_issuer.title' | translate }}
             </p>
             <ul class="list-unstyled components" id="main-menu">
                 <li routerLink="manage_withdrawals" routerLinkActive="side-active">
-                    <i class="menu-icon fas fa-arrow-circle-up "></i>
+                    <i class="menu-icon fas fa-arrow-circle-up"></i>
                     <span>{{ 'navigation.admin.withdrawals' | translate }}</span>
                 </li>
                 <li routerLink="manage_deposits" routerLinkActive="side-active">
-                    <i class="menu-icon fas fa-arrow-circle-down "></i>
+                    <i class="menu-icon fas fa-arrow-circle-down"></i>
                     <span>{{ 'navigation.admin.deposits' | translate }}</span>
                 </li>
                 <li routerLink="admin/platform_bank_account" routerLinkActive="side-active">
@@ -118,7 +118,7 @@
         </div>
 
         <div [hidden]="!(states.user?.role === userRole.PLATFORM_MANAGER)">
-            <p class="menu-header ml-4 mb-3 mt-3 ">
+            <p class="menu-header ml-4 mb-3 mt-3">
                 {{ 'navigation.admin.platform_manager.title' | translate }}
             </p>
             <ul class="list-unstyled components" id="main-menu">

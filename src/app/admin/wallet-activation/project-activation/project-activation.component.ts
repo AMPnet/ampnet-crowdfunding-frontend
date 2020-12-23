@@ -13,7 +13,7 @@ import { TranslateService } from '@ngx-translate/core';
 @Component({
     selector: 'app-project-activation',
     templateUrl: './project-activation.component.html',
-    styleUrls: ['./project-activation.component.css']
+    styleUrls: ['./project-activation.component.scss']
 })
 export class ProjectActivationComponent implements OnInit {
     projects: CooperativeProject[];

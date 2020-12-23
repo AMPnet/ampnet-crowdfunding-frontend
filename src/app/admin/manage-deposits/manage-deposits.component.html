@@ -1,7 +1,7 @@
 <div class="root container root-content-container">
     <div class="row">
         <div class="col-md-12">
-            <div class="explainer-mini text-uppercase">
+            <div class="text-uppercase">
                 {{ 'admin.deposits.title' | translate }}
             </div>
         </div>
@@ -26,26 +26,28 @@
             <hr>
         </div>
         <div class="col-md-12 mt-3">
-            <div class="explainer-mini text-uppercase">
+            <div class="text-uppercase">
                 {{ 'admin.deposits.unapproved.title' | translate }}
             </div>
         </div>
         <div *ngIf="(unapprovedDeposits$ | async) as unapprovedDeposits else spinner" class="col-md-12">
             <ul class="list-group mt-3">
                 <li *ngFor="let deposit of unapprovedDeposits; let i = index"
-                    class="list-group-item gray-text">
-                    <span class="float-left explainer-mini">
+                    class="list-group-item">
+                    <span class="float-left">
                         {{ deposit.deposit.reference }} ({{ deposit.user.email }})
                     </span>
-                    <span (click)="declineDeposit(deposit.deposit.id).subscribe()" class="float-right cursor-pointer">
-                        <i class="fas fa-trash-alt"></i>
-                    </span>
-                    <a class="float-right mr-4 cursor-pointer" href="mailto:{{ deposit.user.email }}">
+                    <a [routerLink]="" (click)="declineDeposit(deposit.deposit.id).subscribe()">
+                        <span class="float-right">
+                            <i class="fas fa-trash-alt"></i>
+                        </span>
+                    </a>
+                    <a class="float-right mr-4" href="mailto:{{ deposit.user.email }}">
                         <i class="fas fa-envelope"></i>
                     </a>
                 </li>
             </ul>
-            <div *ngIf="unapprovedDeposits.length ===  0" class="text-center mt-5 explainer-mini">
+            <div *ngIf="unapprovedDeposits.length ===  0" class="text-center mt-5">
                 {{ 'admin.deposits.unapproved.empty' | translate }}
             </div>
         </div>

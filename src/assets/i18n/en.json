@@ -550,7 +550,8 @@
       "roles": {
         "admin": "Administrator",
         "token_issuer": "Token Issuer",
-        "platform_manager": "Platform manager"
+        "platform_manager": "Platform manager",
+        "user": "User"
       },
       "platform_manager_change": {
         "title": "Platform manager",

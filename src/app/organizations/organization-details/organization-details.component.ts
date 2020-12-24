@@ -50,7 +50,7 @@ export class OrganizationDetailsComponent implements OnInit {
     }
 
     private static emailsValidator(control: AbstractControl): ValidationErrors | null {
-        const emails = OrganizationDetailsComponent.extractEmails(control.value);
+        const emails = OrganizationDetailsComponent.extractEmails(control.value || '');
 
         if (emails.length === 0) {
             return {noEmails: true};
@@ -95,7 +95,7 @@ export class OrganizationDetailsComponent implements OnInit {
         );
 
         this.orgMembers$ = this.refreshOrgMembersSubject.pipe(
-            switchMap(_ => this.organizationService.getMembersForOrganization(orgID)
+            switchMap(_ => this.organizationService.getMembersForOrganization(orgID, {isPublic: this.isPublic})
                 .pipe(this.errorService.handleError)),
             map(res => res.members));
 

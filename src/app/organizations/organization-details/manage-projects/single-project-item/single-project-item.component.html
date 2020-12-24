@@ -52,8 +52,8 @@
             </div>
         </ng-container>
     </div>
-    <div class="item__toggle" *ngIf="projectWallet.wallet.hash">
-        <button app-action-button *ngIf="!isPublic"
+    <div class="item__toggle" *ngIf="projectWallet.wallet.hash && !isPublic">
+        <button app-action-button
                 text="{{ (projectWallet.project.active ? 'organizations.details.projects.item.unpublish' : 'organizations.details.projects.item.publish') | translate }}"
                 textShort="{{ (projectWallet.project.active ? 'organizations.details.projects.item.unpublish' : 'organizations.details.projects.item.publish') | translate }}"
                 faIcon="{{ projectWallet.project.active ? 'fa-eye-slash' : 'fa-eye' }}"

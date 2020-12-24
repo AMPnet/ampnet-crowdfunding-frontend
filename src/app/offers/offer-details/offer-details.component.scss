@@ -24,6 +24,10 @@ span.bold {
   margin-bottom: 16px;
 }
 
+.alert {
+  margin-top: 1rem;
+}
+
 .right {
   &__container {
     background-color: #F7F7F7;
@@ -243,6 +247,10 @@ span.bold {
 @include media-breakpoint-up(lg) {
   .add-padding {
     padding-bottom: 64px;
+  }
+
+  .alert {
+    margin-top: 0;
   }
 
   .wrapper {

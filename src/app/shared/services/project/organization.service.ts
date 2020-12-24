@@ -59,8 +59,9 @@ export class OrganizationService {
         });
     }
 
-    getMembersForOrganization(orgID: string) {
-        return this.http.get<OrganizationMembersResponse>(`/api/project/public/organization/${orgID}/members`);
+    getMembersForOrganization(orgID: string, options = { isPublic: true }) {
+        return options.isPublic ? this.http.get<OrganizationMembersResponse>(`/api/project/public/organization/${orgID}/members`) :
+            this.http.get<OrganizationMembersResponse>(`/api/project/organization/${orgID}/members`);
     }
 
     removeMemberFromOrganization(orgID: string, memberID: string) {
@@ -117,10 +118,10 @@ interface OrganizationMembersResponse {
 }
 
 export interface OrganizationMember {
-    uuid: string;
+    uuid?: string;
     first_name: string;
     last_name: string;
-    email: string;
+    email?: string;
     role: string;
     member_since: Date;
 }

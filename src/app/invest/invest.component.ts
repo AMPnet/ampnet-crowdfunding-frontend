@@ -65,8 +65,8 @@ export class InvestComponent implements OnInit {
         const projectInvestGap = expected - funded;
         const userInvestGap = max - userInvested;
 
-        const userMinInvest = min > userInvested ? min : 1_00;
         const userMaxInvest = Math.min(projectInvestGap, userInvestGap);
+        const userMinInvest = min > userInvested ? Math.min(min, userMaxInvest) : 1_00;
 
         const maximumReached = max === userInvested;
 

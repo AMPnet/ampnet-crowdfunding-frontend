@@ -10,7 +10,7 @@ Angular WebApp focused on crowdfunding for cooperatives.
 # install dependencies
 npm install
 
-# start WebApp connected to demo backend
+# start WebApp connected to remote backend
 npm start
 ```
 

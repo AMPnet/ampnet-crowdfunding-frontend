@@ -115,12 +115,13 @@
                                                         <span class="d-none d-lg-inline-block">
                                                             {{ 'organizations.details.members.join_date' | translate | interpolate:['date', member.member_since | date:'longDate'] }}
                                                         </span>
-                                                    </div>
 
-                                                    <span class="item__icon" *ngIf="!isPublic"
-                                                          (click)="deleteMember(states.organization.uuid, member.uuid)">
-                                                        <i class="fas fa-trash-alt cursor-pointer"></i>
-                                                    </span>
+                                                        <a [routerLink]="" (click)="deleteMember(states.organization.uuid, member.uuid)">
+                                                            <span class="item__icon" *ngIf="!isPublic">
+                                                                <i class="fas fa-trash-alt cursor-pointer"></i>
+                                                            </span>
+                                                        </a>
+                                                    </div>
                                                 </div>
                                             </li>
                                         </ul>

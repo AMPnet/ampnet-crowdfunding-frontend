@@ -33,10 +33,12 @@
                             <div class="text-uppercase mb-2">
                                 {{ 'payment_options.bank_account.actions' | translate }}
                             </div>
-                            <span (click)="deleteBankAccountClicked(bankAccount.id)"
-                                  class="float-right align-middle cursor-pointer">
-								<i class="fas fa-trash-alt"></i>
-							</span>
+                            <a [routerLink]="" (click)="deleteBankAccountClicked(bankAccount.id)">
+                                <span (click)="deleteBankAccountClicked(bankAccount.id)"
+                                      class="float-right align-middle">
+                                    <i class="fas fa-trash-alt"></i>
+                                </span>
+                            </a>
                         </div>
                     </div>
                 </div>

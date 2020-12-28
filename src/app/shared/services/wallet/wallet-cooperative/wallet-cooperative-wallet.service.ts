@@ -79,6 +79,7 @@ export interface CooperativeProject {
         max_per_user: number;
         active: boolean;
         image_url: string;
+        organization_uuid: string;
     };
     wallet: Wallet;
     payout_in_process?: any;

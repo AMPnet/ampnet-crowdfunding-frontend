@@ -3,7 +3,7 @@
 
     <ng-container *ngIf="(appConfig$ | async) as appConfig; else spinner">
         <ng-container *ngIf="(updateForm$ | async) as updateForm; else spinner">
-            <form [formGroup]="updateForm" id="updateCoopForm">
+            <form [formGroup]="updateForm" id="updateCoopForm" class="my-3">
                 <label for="name" class="app-page-label">
                     {{ 'admin.platform_config.instance_name_input.title' | translate }}
                 </label>

@@ -173,9 +173,13 @@ export interface CustomConfig {
     title?: string;
     icon_url?: string;
     coop_statute_url?: string;
+    languages?: {
+        config?: string;
+        fallback?: boolean;
+    };
     arkane?: {
-        id: string;
-        env: string;
+        id?: string;
+        env?: string;
     };
     googleClientId?: string;
     facebookAppId?: string;

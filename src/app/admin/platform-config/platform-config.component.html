@@ -50,6 +50,23 @@
                        placeholder="{{ 'admin.platform_config.coop_statute_input.placeholder' | translate }}"
                        type="text">
 
+                <label for="languages" class="app-page-label mt-3">
+                    {{ 'admin.platform_config.languages_input.title' | translate }}
+                </label>
+                <input class="input-reg w-100" id="languages" formControlName="languages"
+                       placeholder="{{ 'admin.platform_config.languages_input.placeholder' | translate }}"
+                       type="text">
+
+
+                <div class="d-flex align-items-center w-100 py-4">
+                    <input class="w-auto" id="languages-fallback"
+                           formControlName="languagesFallback"
+                           type="checkbox">
+                    <label for="languages-fallback" class="app-page-label ml-2 mb-0">
+                        {{ 'admin.platform_config.languages_fallback_input.title' | translate }}
+                    </label>
+                </div>
+
                 <!-- Hidden because of security reasons. -->
                 <div [hidden]="!showSecureConfig">
                     <label for="arkane-id" class="app-page-label mt-3">
@@ -66,13 +83,13 @@
                            placeholder="{{ 'admin.platform_config.arkane_env_input.placeholder' | translate }}"
                            type="text">
 
-                    <label for="need-user-verification" class="app-page-label mt-3">
-                        {{ 'admin.platform_config.verification_required_input.title' | translate }}
-                    </label>
-                    <div class="w-100">
-                        <input class="input-reg p-4 ml-1 w-auto" id="need-user-verification"
+                    <div class="d-flex align-items-center w-100 py-4">
+                        <input class="w-auto" id="need-user-verification"
                                formControlName="needUserVerification"
                                type="checkbox">
+                        <label for="need-user-verification" class="app-page-label ml-2 mb-0">
+                            {{ 'admin.platform_config.verification_required_input.title' | translate }}
+                        </label>
                     </div>
 
                     <label for="recaptcha-site-key" class="app-page-label mt-3">

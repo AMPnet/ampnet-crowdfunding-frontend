@@ -10,6 +10,10 @@ export const environment = {
     customConfig: { // NOTICE: when adding a new config property, add it to AppConfig interface first.
         title: 'AMPnet',
         icon_url: '/assets/favicon.ico',
+        languages: {
+            config: '',
+            fallback: true,
+        },
         arkane: {
             id: 'AMPnet',
             env: 'staging',

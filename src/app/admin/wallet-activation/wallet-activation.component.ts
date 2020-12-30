@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
     selector: 'app-wallet-activation',
     templateUrl: './wallet-activation.component.html',
-    styleUrls: ['./wallet-activation.component.css']
+    styleUrls: ['./wallet-activation.component.scss']
 })
 export class WalletActivationComponent implements OnInit {
     activationType = 'users';

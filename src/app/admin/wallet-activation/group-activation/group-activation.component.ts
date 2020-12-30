@@ -13,7 +13,7 @@ import { TranslateService } from '@ngx-translate/core';
 @Component({
     selector: 'app-group-activation',
     templateUrl: './group-activation.component.html',
-    styleUrls: ['./group-activation.component.scss']
+    styleUrls: ['./group-activation.component.scss', '../wallet-activation.component.scss']
 })
 export class GroupActivationComponent implements OnInit {
     groups: OrganizationWallet[];

@@ -3,53 +3,67 @@
 
     <ng-container *ngIf="(appConfig$ | async) as appConfig; else spinner">
         <ng-container *ngIf="(updateForm$ | async) as updateForm; else spinner">
-            <form [formGroup]="updateForm" id="updateCoopForm" class="my-3">
-                <label for="name" class="app-page-label">
-                    {{ 'admin.platform_config.instance_name_input.title' | translate }}
-                </label>
-                <input class="input-reg w-100" id="name" formControlName="name"
-                       placeholder="{{ 'admin.platform_config.instance_name_input.placeholder' | translate }}"
-                       type="text">
+            <form [formGroup]="updateForm" id="updateCoopForm" class="my-3 row">
 
-                <label for="identifier" class="app-page-label mt-3">
-                    {{ 'admin.platform_config.identifier_input.title' | translate }}
-                </label>
-                <input class="input-reg w-100" id="identifier" [value]="appConfig.identifier"
-                       [disabled]="true" type="text">
+                <div class="col-md-4">
+                    <label for="name" class="app-page-label mt-3">
+                        {{ 'admin.platform_config.instance_name_input.title' | translate }}
+                    </label>
+                    <input class="input-reg w-100" id="name" formControlName="name"
+                           placeholder="{{ 'admin.platform_config.instance_name_input.placeholder' | translate }}"
+                           type="text">
+                </div>
+                
+                <div class="col-md-4">
+                    <label for="identifier" class="app-page-label mt-3">
+                        {{ 'admin.platform_config.identifier_input.title' | translate }}
+                    </label>
+                    <input class="input-reg w-100" id="identifier" [value]="appConfig.identifier"
+                        [disabled]="true" type="text">
+                </div>
 
-                <label for="title" class="app-page-label mt-3">
-                    {{ 'admin.platform_config.web_title_input.title' | translate }}
-                </label>
-                <input class="input-reg w-100" id="title" formControlName="title"
-                       placeholder="{{ 'admin.platform_config.web_title_input.placeholder' | translate }}"
-                       type="text">
+                <div class="col-md-4">
+                    <label for="title" class="app-page-label mt-3">
+                        {{ 'admin.platform_config.web_title_input.title' | translate }}
+                    </label>
+                    <input class="input-reg w-100" id="title" formControlName="title"
+                        placeholder="{{ 'admin.platform_config.web_title_input.placeholder' | translate }}"
+                        type="text">
+                </div>
 
-                <label for="logo" class="app-page-label mt-3">
-                    {{ 'admin.platform_config.logo_input.title' | translate }}
-                </label>
-                <app-upload-area areaID='logo-image' id="logo"
-                                 [restrictions]="{
-                                    allowedFileTypes: ['image/*'],
-                                    maxFileSize: 10 * 1024 * 1024,
-                                    maxNumberOfFiles: 1
-                                 }"
-                                 [firstFileControl]="updateForm.get('logo')">
-                </app-upload-area>
+                <div class="col-md-6">
+                    <label for="icon" class="app-page-label mt-3">
+                        {{ 'admin.platform_config.icon_url_input.title' | translate }}
+                    </label>
+                    <input class="input-reg w-100" id="icon" formControlName="icon"
+                           placeholder="{{ 'admin.platform_config.icon_url_input.placeholder' | translate }}"
+                           type="text">
+                </div>
+                
+                <div class="col-md-6">
+                    <label for="coop-statute" class="app-page-label mt-3">
+                        {{ 'admin.platform_config.coop_statute_input.title' | translate }}
+                    </label>
+                    <input class="input-reg w-100" id="coop-statute" formControlName="coop_statute"
+                           placeholder="{{ 'admin.platform_config.coop_statute_input.placeholder' | translate }}"
+                           type="text">
+                </div>
+                
 
-                <label for="icon" class="app-page-label mt-3">
-                    {{ 'admin.platform_config.icon_url_input.title' | translate }}
-                </label>
-                <input class="input-reg w-100" id="icon" formControlName="icon"
-                       placeholder="{{ 'admin.platform_config.icon_url_input.placeholder' | translate }}"
-                       type="text">
-
-                <label for="coop-statute" class="app-page-label mt-3">
-                    {{ 'admin.platform_config.coop_statute_input.title' | translate }}
-                </label>
-                <input class="input-reg w-100" id="coop-statute" formControlName="coop_statute"
-                       placeholder="{{ 'admin.platform_config.coop_statute_input.placeholder' | translate }}"
-                       type="text">
-
+                <div class="col-md-12">
+                    <label for="logo" class="app-page-label mt-3">
+                        {{ 'admin.platform_config.logo_input.title' | translate }}
+                    </label>
+                    <app-upload-area areaID='logo-image' id="logo"
+                                     [restrictions]="{
+                                        allowedFileTypes: ['image/*'],
+                                        maxFileSize: 10 * 1024 * 1024,
+                                        maxNumberOfFiles: 1
+                                     }"
+                                     [firstFileControl]="updateForm.get('logo')">
+                    </app-upload-area>
+                </div>
+                
                 <!-- Hidden because of security reasons. -->
                 <div [hidden]="!showSecureConfig">
                     <label for="arkane-id" class="app-page-label mt-3">
@@ -97,13 +111,18 @@
                            type="text">
                 </div>
 
-                <button app-action-button
+                <div class="col-md-12">
+                    <button app-action-button
                         text="{{ 'admin.platform_config.submit' | translate }}"
                         faIcon="fa-paper-plane"
                         [onClick]="updateAppConfig(updateForm).bind(this)"
                         [disabled]="!updateForm.dirty || !updateForm.valid"
                         class="btn btn-primary w-100 mt-3">
-                </button>
+                    </button>
+                </div>
+                
+
+                
             </form>
         </ng-container>
     </ng-container>

@@ -1,9 +1,9 @@
 <div *ngIf="groups !== undefined">
-    <h5>
+    <div class="activate-page-subtitle">
         {{ 'admin.activations.groups.title' | translate }}
-    </h5>
+    </div>
     <div *ngIf="groups.length > 0" class="mt-3">
-        <ul class="list-group">
+        <ul class="activation-list-group list-group list-group-flush">
             <li *ngFor="let group of groups" class="list-group-item">
                 <a [routerLink]="['/dash/orgs', group.organization.uuid] | coopPath">
                     {{ group.organization.name }}

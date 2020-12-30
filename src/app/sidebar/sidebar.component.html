@@ -9,7 +9,7 @@
     } as states">
         <ul class="list-unstyled components" id="main-menu">
             <p class="menu-header ml-4 mb-3 mt-3">
-                {{ 'navigation.menu.title' | translate }}
+                INVEST
             </p>
             <li routerLink="offers" routerLinkActive="side-active">
                 <i class="menu-icon fas fa-align-left"></i>
@@ -29,6 +29,10 @@
                     <span>{{ 'navigation.menu.wallet' | translate }}</span>
                 </li>
             </div>
+
+            <p class="menu-header ml-4 mb-3 mt-3">
+                GET FUNDED
+            </p>
             <div [tooltip]="!isUserVerified(states.user) || !isWalletLazyReady(states.wallet) ? ToolTipNotVerified : null">
                 <li routerLink="manage_groups" routerLinkActive="side-active"
                     [class.unverified-user-disabled]="!isUserVerified(states.user) || !isWalletEagerReady(states.wallet)">

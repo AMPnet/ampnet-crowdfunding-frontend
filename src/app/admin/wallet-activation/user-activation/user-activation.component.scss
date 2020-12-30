@@ -1,0 +1,36 @@
+@import "app";
+
+.activation-list-group li {
+    background-color: $background-color;
+    margin-bottom: 10px;
+    border-bottom: none;
+}
+
+.activation-list-group-holder {
+    float: left;
+    width: 50%;
+}
+
+.activation-item-title {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.activation-item-subtitle {
+    font-size: 12px;
+}
+
+.activate-action {
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.activate-page-subtitle {
+    font-size: 12px;
+    font-weight: 400 !important;
+    padding-bottom: 18px;
+    text-transform: uppercase;
+    color: #111;
+    letter-spacing: 2px;
+}

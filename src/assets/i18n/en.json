@@ -155,8 +155,8 @@
     "withdrawal_deleted": "Withdrawal deleted"
   },
   "organizations": {
-    "title": "Investment groups",
-    "create_org": "Create group",
+    "title": "Project groups",
+    "create_org": "Create project group",
     "pending_invite_notice": "You have invites pending",
     "my": "My groups",
     "empty": "You currently don't have access to any groups.",
@@ -170,7 +170,7 @@
       "accepted": "Accepted invitation to the organization."
     },
     "new": {
-      "title": "Create a new investment group",
+      "title": "Create a new project group",
       "title.back": "New group",
       "logo_input": {
         "title": "Add logo"
@@ -188,7 +188,7 @@
       "created": "Investment group created!"
     },
     "details": {
-      "title.back": "Investment groups",
+      "title.back": "Project groups",
       "create_project": "Create project",
       "project_count": "| {{ count }} | Projects",
       "wallet_not_verified": "This group is pending approval from an administrator. During this time, you can't create new projects.",
@@ -376,7 +376,7 @@
       "offers": "Offers",
       "my_portfolio": "My portfolio",
       "wallet": "Wallet",
-      "investment_groups": "Investment groups"
+      "investment_groups": "My Projects"
     },
     "settings": {
       "title": "SETTINGS",
@@ -389,7 +389,7 @@
       "platform_manager.title": "PLATFORM MANAGER",
       "withdrawals": "Withdrawals",
       "deposits": "Deposits",
-      "activations": "Activations",
+      "activations": "Approval Requests",
       "bank_account": "Bank account",
       "platform_roles": "Platform roles",
       "platform_config": "Platform config"
@@ -509,6 +509,7 @@
       }
     },
     "activations": {
+      "title": "Approval Requests",
       "users_tab": "Users",
       "groups_tab": "Groups",
       "projects_tab": "Projects",

@@ -1,17 +1,27 @@
 <div *ngIf="users !== undefined">
-    <h5>
+
+
+    <div class="activate-page-subtitle">
         {{ 'admin.activations.users.title' | translate }}
-    </h5>
+    </div>
     <div *ngIf="users.length > 0" class="mt-3">
-        <ul class="list-group">
+        <ul class="activation-list-group list-group list-group-flush">
             <li *ngFor="let user of users" class="list-group-item">
-                {{ user.user.first_name }} {{ user.user.last_name }} (<i>{{ user.user.email }}</i>)
-                <a [routerLink]="" (click)="activateUserClicked(user.wallet.uuid).subscribe()">
-                    <span class="float-right hover-fg text-decoration-none">
+                <div class="activation-list-group-holder">
+                    <div class="activation-item-title">
+                        {{ user.user.first_name }} {{ user.user.last_name }} 
+                    </div>
+                    <div class="activation-item-subtitle">
+                        <i>{{ user.user.email }}</i>
+                    </div>
+                </div>
+                
+                <span class="float-right hover-fg text-decoration-none">
+                    <a href="" (click)="activateUserClicked(user.wallet.uuid).subscribe()">
                         <i class="fas fa-check-circle mr-2"></i>
-                        {{ 'admin.activations.users.activate' | translate }}
-                    </span>
-                </a>
+                        <span class="activate-action">{{ 'admin.activations.users.activate' | translate }}</span> 
+                    </a>
+                </span>
             </li>
         </ul>
     </div>

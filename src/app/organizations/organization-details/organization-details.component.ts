@@ -18,6 +18,9 @@ import { TranslateService } from '@ngx-translate/core';
     styleUrls: ['./organization-details.component.scss']
 })
 export class OrganizationDetailsComponent implements OnInit {
+    isPublic: boolean;
+    isOverview: boolean;
+
     refreshOrganizationSubject = new BehaviorSubject<void>(null);
     refreshOrgWalletSubject = new BehaviorSubject<void>(null);
     refreshOrgMembersSubject = new BehaviorSubject<void>(null);
@@ -47,7 +50,7 @@ export class OrganizationDetailsComponent implements OnInit {
     }
 
     private static emailsValidator(control: AbstractControl): ValidationErrors | null {
-        const emails = OrganizationDetailsComponent.extractEmails(control.value);
+        const emails = OrganizationDetailsComponent.extractEmails(control.value || '');
 
         if (emails.length === 0) {
             return {noEmails: true};
@@ -63,7 +66,10 @@ export class OrganizationDetailsComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.isPublic = this.activatedRoute.snapshot.data.isPublic;
+        this.isOverview = this.activatedRoute.snapshot.data.isOverview;
         const orgID = this.activatedRoute.snapshot.params.id;
+
         this.organization$ = this.refreshOrganizationSubject.asObservable().pipe(
             switchMap(() => this.organizationService.getSingleOrganization(orgID)
                 .pipe(this.errorService.handleError))
@@ -89,7 +95,7 @@ export class OrganizationDetailsComponent implements OnInit {
         );
 
         this.orgMembers$ = this.refreshOrgMembersSubject.pipe(
-            switchMap(_ => this.organizationService.getMembersForOrganization(orgID)
+            switchMap(_ => this.organizationService.getMembersForOrganization(orgID, {isPublic: this.isPublic})
                 .pipe(this.errorService.handleError)),
             map(res => res.members));
 
@@ -150,9 +156,5 @@ export class OrganizationDetailsComponent implements OnInit {
     private recoverBack(): Observable<never> {
         this.router.navigate(['/dash/manage_groups']);
         return EMPTY;
-    }
-
-    backToGroupsScreen() {
-        this.router.navigate(['/dash/manage_groups']);
     }
 }

@@ -10,6 +10,7 @@
       "raised": "{{ raised }} | raised of {{ goal }} goal",
       "ends_on": "Ends on {{ end_date }}",
       "return": "Expected yearly return: | {{ from }} - {{ to }}",
+      "published_by": "Published by",
       "see_more": "See more"
     },
     "offer_details": {
@@ -17,6 +18,7 @@
       "title.portfolio": "PORTFOLIO DETAILS",
       "project_hidden": "The project is not open for funding. If you wish to invest, please come back later.",
       "show_location": "Show location",
+      "published_by": "Published by",
       "raised": "{{ raised }} | raised of {{ goal }} goal",
       "return": "{{ from }} - {{ to }} | Expected yearly return",
       "min_invest": "{{ amount }} | Min Investment",
@@ -362,8 +364,8 @@
           "decision_pending": "Your account is in process of verification. Please wait...",
           "approved": "User data has been successfully verified.",
           "statute_confirmation_input": {
-            "title": "Statute confirmation",
-            "notice": "Check here to indicate that you have read and agree to the terms of the | {{ coopName }} Statute |"
+            "title": "Accept Platform Terms & Conditions",
+            "notice": "Check here to indicate that you have read and agree to the | {{ coopName }} Terms & Conditions |"
           },
           "start_verification": "Start verification"
         }
@@ -598,8 +600,8 @@
         "placeholder": "https://path/to/icon.png"
       },
       "coop_statute_input": {
-        "title": "Cooperative Statute URL",
-        "placeholder": "https://path/to/statute.html | https://path/to/statute-file.pdf"
+        "title": "Platform Terms & Conditions",
+        "placeholder": "https://path/to/terms.html | https://path/to/terms-file.pdf"
       },
       "arkane_id_input": {
         "title": "Arkane ID",
@@ -816,6 +818,7 @@
       "description": "The transaction is being processed..."
     },
     "captcha_notice": "This site is protected by reCAPTCHA and the Google | Privacy Policy | and | Terms of Service | apply.",
+    "back.title": "Back",
     "popup": {
       "info.title": "Info",
       "success": {

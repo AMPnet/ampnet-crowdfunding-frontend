@@ -27,10 +27,18 @@ export class SingleOfferItemComponent implements OnInit {
     }
 
     onClickedItem() {
-        if (this.route.snapshot.params.isOverview) {
-            this.router.navigate(['/overview', this.projectWallet.project.uuid, 'discover']);
+        if (this.route.snapshot.data.isOverview) {
+            this.router.navigate(['/overview', this.projectWallet.project.uuid]);
         } else {
             this.router.navigate(['/dash', 'offers', this.projectWallet.project.uuid]);
+        }
+    }
+
+    onPublishedByClicked() {
+        if (this.route.snapshot.data.isOverview) {
+            this.router.navigate([`/overview/orgs/${this.projectWallet.project.organization.uuid}`]);
+        } else {
+            this.router.navigate([`/dash/orgs/${this.projectWallet.project.organization.uuid}`]);
         }
     }
 }

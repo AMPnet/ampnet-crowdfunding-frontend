@@ -190,10 +190,6 @@ export class ManageSingleProjectComponent {
         return !!wallet && !!wallet?.hash;
     }
 
-    backToOrganizationDetailsScreen() {
-        this.router.navigate(['../../'], {relativeTo: this.route});
-    }
-
     private roiValidator: ValidatorFn = (roiFromGroup: FormGroup) => {
         const from = roiFromGroup.get('from').value;
         const to = roiFromGroup.get('to').value;

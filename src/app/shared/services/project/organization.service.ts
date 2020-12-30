@@ -32,7 +32,7 @@ export class OrganizationService {
     }
 
     getSingleOrganization(orgID: string) {
-        return this.http.get<Organization>(`/api/project/organization/${orgID}`);
+        return this.http.get<Organization>(`/api/project/public/organization/${orgID}`);
     }
 
     getAllOrganizations() {
@@ -59,8 +59,9 @@ export class OrganizationService {
         });
     }
 
-    getMembersForOrganization(orgID: string) {
-        return this.http.get<OrganizationMembersResponse>(`/api/project/organization/${orgID}/members`);
+    getMembersForOrganization(orgID: string, options = { isPublic: true }) {
+        return options.isPublic ? this.http.get<OrganizationMembersResponse>(`/api/project/public/organization/${orgID}/members`) :
+            this.http.get<OrganizationMembersResponse>(`/api/project/organization/${orgID}/members`);
     }
 
     removeMemberFromOrganization(orgID: string, memberID: string) {
@@ -76,12 +77,17 @@ export interface Organization {
     description: string;
     header_image: string;
     legal_info: string;
-    documents?: DocumentModel[];
+    documents?: OrgDocument[];
     wallet_hash?: string;
     project_count: number;
 }
 
-export interface DocumentModel {
+export interface OrganizationBasic {
+    uuid: string;
+    name: string;
+}
+
+export interface OrgDocument {
     id: number;
     link: string;
     name: string;
@@ -112,10 +118,10 @@ interface OrganizationMembersResponse {
 }
 
 export interface OrganizationMember {
-    uuid: string;
+    uuid?: string;
     first_name: string;
     last_name: string;
-    email: string;
+    email?: string;
     role: string;
     member_since: Date;
 }

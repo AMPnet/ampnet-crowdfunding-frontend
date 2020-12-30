@@ -4,7 +4,7 @@
     </h1>
 
     <ng-container *ngIf="(bankAccounts$ | async) as bankAccounts else loading">
-        <div *ngFor="let bankAccount of bankAccounts" class="mb-3">
+        <div *ngFor="let bankAccount of bankAccounts" class="my-3">
             <div class="card">
                 <div class="card-body d-flex flex-column gray-text">
                     <div class="d-flex flex-row justify-content-between text-left flex-wrap">
@@ -33,10 +33,12 @@
                             <div class="text-uppercase mb-2">
                                 {{ 'payment_options.bank_account.actions' | translate }}
                             </div>
-                            <span (click)="deleteBankAccountClicked(bankAccount.id)"
-                                  class="float-right align-middle cursor-pointer">
-								<i class="fas fa-trash-alt"></i>
-							</span>
+                            <a [routerLink]="" (click)="deleteBankAccountClicked(bankAccount.id)">
+                                <span (click)="deleteBankAccountClicked(bankAccount.id)"
+                                      class="float-right align-middle">
+                                    <i class="fas fa-trash-alt"></i>
+                                </span>
+                            </a>
                         </div>
                     </div>
                 </div>

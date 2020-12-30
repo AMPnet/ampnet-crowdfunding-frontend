@@ -177,6 +177,10 @@
   background-color: $secondary-color;
   border-top: 1px solid $background-color;
   width: 100%;
+  .container {
+    padding-bottom: 0;
+    padding-top: 0;
+  }
   &__inner {
     padding: 0;
     margin: 0;

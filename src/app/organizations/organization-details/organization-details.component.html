@@ -1,25 +1,35 @@
+<div *ngIf="isOverview">
+    <app-header></app-header>
+</div>
+
 <div *ngIf="{
     organization: organization$ | async,
-    orgWallet: orgWallet$ | async,
     orgMembers: orgMembers$ | async
 } as states" class="container">
     <ng-container *ngIf="!!states.organization else spinner">
         <div class="app-page-header">
-            <div class="app-page-title-back" (click)="backToGroupsScreen()">
-                <i class="fas fa-long-arrow-alt-left mr-3"></i>
-                {{ 'organizations.details.title.back' | translate }}
-            </div>
-            <button [disabled]="!isWalletVerified(states.orgWallet)"
-                    class="btn"
-                    routerLink="create_project">
-                <i class="fas fa-plus mr-lg-3"></i>
-                <span class="btn__text">
+            <a [routerLink]="" appBackNavigation class="nostyle">
+                <div class="app-page-title-back">
+                    <i class="fas fa-long-arrow-alt-left mr-3"></i>
+                    {{ 'general.back.title' | translate }}
+                </div>
+            </a>
+
+            <ng-container *ngIf="!isPublic">
+                <ng-container *ngIf="(orgWallet$ | async) as wallet">
+                    <button [disabled]="!isWalletVerified(wallet)"
+                            class="btn"
+                            routerLink="create_project">
+                        <i class="fas fa-plus mr-lg-3"></i>
+                        <span class="btn__text">
                     {{ 'organizations.details.create_project' | translate }}
                 </span>
-            </button>
+                    </button>
+                </ng-container>
+            </ng-container>
         </div>
 
-        <ng-container *ngIf="!!states.orgWallet else spinner">
+        <ng-container>
             <div class="content">
                 <div class="organization-info">
                     <div class="organization__img">
@@ -44,23 +54,28 @@
                     </div>
                 </div>
 
-                <div *ngIf="!isWalletVerified(states.orgWallet)">
-                    <div class="alert alert-warning flex__center col-lg-10">
-                        <i class="fas fa-exclamation-triangle mr-2"></i>
-                        {{ 'organizations.details.wallet_not_verified' | translate }}
-                    </div>
-                </div>
+                <ng-container *ngIf="!isPublic">
+                    <ng-container *ngIf="(orgWallet$ | async) as wallet">
+                        <div *ngIf="!isWalletVerified(wallet)">
+                            <div class="alert alert-warning flex__center col-lg-10">
+                                <i class="fas fa-exclamation-triangle mr-2"></i>
+                                {{ 'organizations.details.wallet_not_verified' | translate }}
+                            </div>
+                        </div>
+                    </ng-container>
+                </ng-container>
 
                 <div class="tabs">
                     <tabset>
                         <tab heading="{{ 'organizations.details.projects.title' | translate }}">
                             <div class="manage__projects">
-                                <app-manage-projects [groupID]="states.organization.uuid"></app-manage-projects>
+                                <app-manage-projects [groupID]="states.organization.uuid"
+                                                     [isPublic]=isPublic></app-manage-projects>
                             </div>
                         </tab>
                         <tab heading="{{ 'organizations.details.members.title' | translate }}">
                             <div class="manage__members">
-                                <div class="invite-members app__full-width">
+                                <div class="invite-members app__full-width" *ngIf="!isPublic">
                                     <div class="invite__form">
                                         <form [formGroup]="inviteForm" style="display: contents">
                                             <div class="form__input col-lg-6 col-xl-5 p-0">
@@ -75,7 +90,8 @@
                                                         textShort=""
                                                         faIcon="fas fa-plus"
                                                         [onClick]="inviteClicked(states.organization.uuid).bind(this)"
-                                                        [disabled]="!inviteForm.valid" class="btn btn-success w-100">
+                                                        [disabled]="!inviteForm.valid"
+                                                        class="btn btn-success w-100">
                                                 </button>
                                             </div>
                                         </form>
@@ -99,12 +115,13 @@
                                                         <span class="d-none d-lg-inline-block">
                                                             {{ 'organizations.details.members.join_date' | translate | interpolate:['date', member.member_since | date:'longDate'] }}
                                                         </span>
-                                                    </div>
 
-                                                    <span class="item__icon"
-                                                          (click)="deleteMember(states.organization.uuid, member.uuid)">
-                                                        <i class="fas fa-trash-alt cursor-pointer"></i>
-                                                    </span>
+                                                        <a [routerLink]="" (click)="deleteMember(states.organization.uuid, member.uuid)">
+                                                            <span class="item__icon" *ngIf="!isPublic">
+                                                                <i class="fas fa-trash-alt cursor-pointer"></i>
+                                                            </span>
+                                                        </a>
+                                                    </div>
                                                 </div>
                                             </li>
                                         </ul>

@@ -21,9 +21,4 @@
 }
 
 @include media-breakpoint-up(lg) {
-  .wallet-init-reminder {
-    position: absolute;
-    top: -60px;
-    left: 0;
-  }
 }

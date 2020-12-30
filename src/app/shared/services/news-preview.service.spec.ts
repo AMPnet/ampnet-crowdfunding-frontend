@@ -22,12 +22,14 @@ describe('NewsPreviewService', () => {
     describe('getLinkPreview', () => {
         it('should return preview data for given URL', () => {
             const mockLinkPreviewData = <LinkPreview>{
-                title: 'Link Title',
-                description: 'Link description',
-                image: {
-                    url: 'https://google.com',
-                    height: '120',
-                    width: '120'
+                open_graph: {
+                    title: 'Link Title',
+                    description: 'Link description',
+                    image: {
+                        url: 'https://google.com',
+                        height: '120',
+                        width: '120'
+                    }
                 },
                 url: 'https://test-url.google.com'
             };

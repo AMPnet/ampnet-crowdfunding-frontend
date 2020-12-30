@@ -2,7 +2,7 @@
     <h1 class="app-page-title">
         {{ 'admin.bank_account.title' | translate }}
     </h1>
-    <div class="row">
+    <div class="row my-3">
         <ng-container *ngIf="(banks$ | async) as banks; else spinner">
             <div *ngFor="let paymentOption of banks" class="col-md-12 mb-3">
                 <div class="card">

@@ -34,11 +34,11 @@
                     </label>
 
                     <div id="languages" class="d-flex flex-wrap">
-                        <div *ngFor="let lang of languageService.supportedLanguages"
+                        <div *ngFor="let language of languageService.supportedLanguages"
                              class="mx-3">
-                            <a [routerLink]="" (click)="languageService.setLanguage(lang)"
-                               [class.font-weight-bold]="lang === languageService.getCurrentLanguage()">
-                                {{ ('languages.' + lang) | translate }}
+                            <a [routerLink]="" (click)="languageService.setLanguage(language.lang)"
+                               [class.font-weight-bold]="language.lang === languageService.getCurrentLanguage()">
+                                {{ language.displayName }}
                             </a>
                         </div>
                     </div>

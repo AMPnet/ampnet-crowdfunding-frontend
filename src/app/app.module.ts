@@ -96,13 +96,13 @@ import { NgxCaptchaModule } from 'ngx-captcha';
 import { NewInstanceComponent } from './authentication/new-instance/new-instance.component';
 import { PlatformConfigComponent } from './admin/platform-config/platform-config.component';
 import { QuillModule } from 'ngx-quill';
-import { TranslationsModule } from './translations.module';
 import { InterpolatePipe } from './shared/pipes/interpolate.pipe';
 import { SplitPartPipe } from './shared/pipes/split-part.pipe';
 import { DynamicLocaleProvider } from './shared/providers/locale.provider';
 import { CaptchaNoticeComponent } from './shared/components/captcha-notice/captcha-notice.component';
 import { SentryProvider } from './shared/providers/sentry.provider';
 import { BackNavigationDirective } from './shared/directives/back-navigation.directive';
+import { TranslationsModule } from './translations.module';
 
 @NgModule({
     declarations: [

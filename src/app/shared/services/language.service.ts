@@ -1,54 +1,75 @@
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { Subject } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { BehaviorSubject, EMPTY, from, Observable, of, Subject } from 'rxjs';
+import { distinct, map, switchMap, tap } from 'rxjs/operators';
 import { registerLocaleData } from '@angular/common';
-import localeHr from '@angular/common/locales/hr';
+import { AppConfigService } from './app-config.service';
+import { extractLangFromConfigRE, langConfigRE } from '../regex';
 
 @Injectable({
     providedIn: 'root'
 })
 export class LanguageService {
-    supportedLanguages: string[] = ['en', 'hr'];
+    private stockLang: LanguageConfig = {lang: 'en', displayName: 'English'};
+
+    private supportedLanguagesSubject = new BehaviorSubject<LanguageConfig[]>(null);
 
     languageChange$ = new Subject<string>();
 
-    constructor(private translate: TranslateService) {
+    constructor(private translate: TranslateService,
+                private appConfig: AppConfigService) {
+        this.appConfig.config$.pipe(
+            map(cfg => cfg.config.languages),
+            distinct(),
+            tap(languages => {
+                this.supportedLanguagesSubject.next(this.updatedLangConfigs(languages.config));
+            })
+        ).subscribe();
+
+
+        this.supportedLanguagesSubject.asObservable().pipe(
+            switchMap(val => val === null ? EMPTY : of(val)),
+            tap(() => {
+                const supportedLangs = this.supportedLanguages.map(l => l.lang);
+                this.translate.addLangs(supportedLangs);
+                this.setLanguage();
+            })
+        ).subscribe();
     }
 
-    setupLanguages() {
-        registerLocaleData(localeHr, 'hr');
-
-        this.translate.addLangs(this.supportedLanguages);
-
-        // TODO: used to set fallback language. Set it optionally through
-        // the configuration.
-        // this.translate.setDefaultLang(null);
-
-        this.setLanguage(this.getCurrentLanguage());
+    get supportedLanguages(): LanguageConfig[] {
+        return this.supportedLanguagesSubject.getValue();
     }
 
-    setLanguage(lang: string) {
-        this.setPreferredLang(lang);
+    setLanguage(preferredLang?: string) {
+        if (preferredLang) {
+            this.setPreferredLang(preferredLang);
+        }
 
-        // TODO: override current language to always see missing translation.
-        this.translate.setDefaultLang(this.getCurrentLanguage());
+        const current = this.getCurrentLanguage();
+        const currentLangRemoteURL = this.supportedLanguages.find(l => l.lang === current)?.configURL || '';
 
-        this.translate.use(this.getCurrentLanguage()).pipe(
+        this.setRemoteConfigURL(currentLangRemoteURL);
+
+        this.translate.setDefaultLang(
+            this.appConfig.config.config.languages.fallback ? this.stockLang.lang : current
+        );
+
+        this.translate.use(current).pipe(
+            switchMap(newLang => this.registerLocale(current).pipe(switchMap(() => of(newLang)))),
             tap(newLang => this.languageChange$.next(newLang))
         ).subscribe();
     }
 
     getCurrentLanguage(): string {
         const preferredLang = this.getPreferredLang() ||
-            this.translate.getBrowserLang() ||
-            this.supportedLanguages[0];
+            this.translate.getBrowserLang();
 
-        const currentLang = this.supportedLanguages.includes(preferredLang) ?
-            preferredLang : this.supportedLanguages[0];
+        const currentLang = this.supportedLanguages.map(l => l.lang).includes(preferredLang) ?
+            preferredLang : this.supportedLanguages[0].lang;
 
-        if (this.getPreferredLang() !== currentLang) {
-            this.setPreferredLang(currentLang);
+        if (this.getPreferredLang() !== preferredLang) {
+            this.setPreferredLang(preferredLang);
         }
 
         return currentLang;
@@ -61,4 +82,36 @@ export class LanguageService {
     getPreferredLang(): string {
         return localStorage.getItem('Language');
     }
+
+    private registerLocale(lang: string): Observable<string> {
+        // TODO: remove eager mode to shrink the bundle size (this will generate a file for each separate locale)
+        return from(import(/* webpackMode: "eager" */`@angular/common/locales/${lang}.js`)).pipe(
+            tap(locale => registerLocaleData(locale.default)),
+            map(() => lang)
+        );
+    }
+
+    private updatedLangConfigs(langConfigs: string): LanguageConfig[] {
+        const languages: LanguageConfig[] = langConfigs.match(langConfigRE)
+            ?.map((langVal) => {
+                const [_full, lang, name, _optionalGroup, url] = langVal.match(extractLangFromConfigRE);
+                return {
+                    lang: lang,
+                    displayName: name,
+                    configURL: url
+                };
+            });
+
+        return languages ? [this.stockLang, ...languages] : [this.stockLang];
+    }
+
+    private setRemoteConfigURL(url: string): void {
+        localStorage.setItem('custom_translations_url', url);
+    }
+}
+
+interface LanguageConfig {
+    lang: string;
+    displayName: string;
+    configURL?: string;
 }

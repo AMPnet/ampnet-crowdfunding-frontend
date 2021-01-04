@@ -6,6 +6,7 @@ import { CoopService } from '../../shared/services/user/coop.service';
 import { AppConfig, AppConfigService } from '../../shared/services/app-config.service';
 import { ErrorService } from '../../shared/services/error.service';
 import { ActivatedRoute } from '@angular/router';
+import { langConfigRE } from '../../shared/regex';
 
 @Component({
     selector: 'app-platform-config',
@@ -36,6 +37,8 @@ export class PlatformConfigComponent {
                     logo: [null],
                     icon: [appConfig.config?.icon_url],
                     coop_statute: [appConfig.config?.coop_statute_url],
+                    languages: [appConfig.config?.languages?.config, Validators.pattern(langConfigRE)],
+                    languagesFallback: [appConfig.config?.languages?.fallback],
                     hostname: [appConfig.hostname],
                     arkaneID: [appConfig.config?.arkane?.id],
                     arkaneEnv: [appConfig.config?.arkane?.env],
@@ -59,6 +62,10 @@ export class PlatformConfigComponent {
                     title: appConfig.title,
                     icon_url: appConfig.icon,
                     coop_statute_url: appConfig.coop_statute,
+                    languages: {
+                        config: appConfig.languages,
+                        fallback: appConfig.languagesFallback,
+                    },
                     arkane: {
                         id: appConfig.arkaneID,
                         env: appConfig.arkaneEnv,

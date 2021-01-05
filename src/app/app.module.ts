@@ -47,7 +47,6 @@ import { WalletActivationComponent } from './admin/wallet-activation/wallet-acti
 import { UserActivationComponent } from './admin/wallet-activation/user-activation/user-activation.component';
 import { GroupActivationComponent } from './admin/wallet-activation/group-activation/group-activation.component';
 import { ProjectActivationComponent } from './admin/wallet-activation/project-activation/project-activation.component';
-import { CompleteOnboardingComponent } from './complete-onboarding/complete-onboarding.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { PlatformBankAccountComponent } from './admin/platform-bank-account/platform-bank-account.component';
 import { NewPlatformBankAccountComponent } from './admin/platform-bank-account/new-platform-bank-account/new-platform-bank-account.component';
@@ -153,7 +152,6 @@ import { IdentyumComponent } from './settings/user/identity/identyum/identyum.co
         UserActivationComponent,
         GroupActivationComponent,
         ProjectActivationComponent,
-        CompleteOnboardingComponent,
         PlatformBankAccountComponent,
         NewPlatformBankAccountComponent,
         ExchangeComponent,

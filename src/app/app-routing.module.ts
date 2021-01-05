@@ -31,7 +31,6 @@ import { DepositComponent } from './deposit/deposit.component';
 import { ManageSingleDepositComponent } from './admin/manage-deposits/manage-single-deposit/manage-single-deposit.component';
 import { WithdrawComponent } from './withdraw/withdraw.component';
 import { WalletActivationComponent } from './admin/wallet-activation/wallet-activation.component';
-import { CompleteOnboardingComponent } from './complete-onboarding/complete-onboarding.component';
 import { PlatformBankAccountComponent } from './admin/platform-bank-account/platform-bank-account.component';
 import { NewPlatformBankAccountComponent } from './admin/platform-bank-account/new-platform-bank-account/new-platform-bank-account.component';
 import { ExchangeComponent } from './exchange/exchange.component';
@@ -131,7 +130,6 @@ const appRoutes: Routes = [
             {path: 'wallet/deposit', component: DepositComponent},
             {path: 'wallet/withdraw', component: WithdrawComponent},
             {path: 'activation/:type', component: WalletActivationComponent},
-            {path: 'complete_onboarding', component: CompleteOnboardingComponent},
             {path: 'admin/platform_bank_account', component: PlatformBankAccountComponent},
             {path: 'admin/platform_bank_account/new', component: NewPlatformBankAccountComponent},
             {path: 'exchange', component: ExchangeComponent},

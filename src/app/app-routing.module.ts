@@ -51,6 +51,9 @@ import { SignInComponent } from './authentication/sign-in/sign-in.component';
 import { NewInstanceComponent } from './authentication/new-instance/new-instance.component';
 import { PlatformConfigComponent } from './admin/platform-config/platform-config.component';
 import { IdentityGuard } from './settings/user/identity/identity.guard';
+import { VeriffComponent } from './settings/user/identity/veriff/veriff.component';
+import { TermsAcceptedGuard } from './settings/user/identity/accept-terms/terms-accepted.guard';
+import { AcceptTermsComponent } from './settings/user/identity/accept-terms/accept-terms.component';
 
 const appRoutes: Routes = [
     {
@@ -93,7 +96,12 @@ const appRoutes: Routes = [
             {
                 path: 'settings', children: [
                     {path: 'user', component: UserComponent},
-                    {path: 'user/identity', component: IdentityComponent, canActivate: [IdentityGuard]}
+                    {
+                        path: 'user/identity', component: IdentityComponent, canActivate: [IdentityGuard], children: [
+                            {path: '', component: AcceptTermsComponent},
+                            {path: 'veriff', component: VeriffComponent, canActivate: [TermsAcceptedGuard]}
+                        ]
+                    },
                 ]
             },
             {path: 'manage_groups', component: ManageOrganizationsComponent},

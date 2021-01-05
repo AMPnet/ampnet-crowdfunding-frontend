@@ -33,7 +33,6 @@ import { CreateOrganizationComponent } from './organizations/create-organization
 import { ManageOrganizationsComponent } from './organizations/manage-organizations/manage-organizations.component';
 import { OrganizationDetailsComponent } from './organizations/organization-details/organization-details.component';
 import { CreateNewProjectComponent } from './organizations/organization-details/manage-projects/create-new-project/create-new-project.component';
-import { OnboardingComponent } from './settings/user/identity/onboarding/onboarding.component';
 import { ManageProjectsComponent } from './organizations/organization-details/manage-projects/manage-projects.component';
 import { ManageSingleProjectComponent } from './organizations/organization-details/manage-projects/manage-single-project/manage-single-project.component';
 import { VerifySignOfferComponent } from './offers/offer-details/verify-sign-offer/verify-sign-offer.component';
@@ -103,6 +102,8 @@ import { CaptchaNoticeComponent } from './shared/components/captcha-notice/captc
 import { SentryProvider } from './shared/providers/sentry.provider';
 import { BackNavigationDirective } from './shared/directives/back-navigation.directive';
 import { TranslationsModule } from './translations.module';
+import { VeriffComponent } from './settings/user/identity/veriff/veriff.component';
+import { AcceptTermsComponent } from './settings/user/identity/accept-terms/accept-terms.component';
 
 @NgModule({
     declarations: [
@@ -132,7 +133,8 @@ import { TranslationsModule } from './translations.module';
         ManageOrganizationsComponent,
         OrganizationDetailsComponent,
         CreateNewProjectComponent,
-        OnboardingComponent,
+        AcceptTermsComponent,
+        VeriffComponent,
         ManageProjectsComponent,
         ManageSingleProjectComponent,
         SingleProjectItemComponent,

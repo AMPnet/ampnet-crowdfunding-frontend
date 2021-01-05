@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BackendHttpClient } from '../backend-http-client.service';
-import { OrgDocument, Organization, OrganizationBasic } from './organization.service';
+import { Organization, OrganizationBasic, OrgDocument } from './organization.service';
 import { CacheService } from '../cache.service';
 import { Wallet } from '../wallet/wallet.service';
 import { AppConfigService } from '../app-config.service';

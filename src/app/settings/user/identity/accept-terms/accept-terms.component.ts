@@ -20,6 +20,6 @@ export class AcceptTermsComponent {
     }
 
     goToKYCProvider() {
-        this.router.navigate(['/dash/settings/user/identity/veriff'], {state: {termsAccepted: 'accepted'}});
+        this.router.navigate(['/dash/settings/user/identity/identyum'], {state: {termsAccepted: 'accepted'}});
     }
 }

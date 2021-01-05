@@ -4,11 +4,11 @@ import { BackendHttpClient } from '../backend-http-client.service';
 @Injectable({
     providedIn: 'root'
 })
-export class OnboardingService {
+export class VeriffService {
     constructor(private http: BackendHttpClient) {
     }
 
-    getVeriffSession() {
+    getSession() {
         return this.http.get<VeriffSession>('/api/user/veriff/session');
     }
 }
@@ -31,7 +31,7 @@ export enum State {
     CREATED = 'created',
     /**
      * The user has clicked on verification URL and started verification process.
-     * In given moment, user has not finished verification process yet.
+     * In the given moment, the user has not finished verification process yet.
      */
     STARTED = 'started',
     /**
@@ -63,9 +63,6 @@ export enum DecisionStatus {
 enum DeclineDecisionCode {
     PHYSICAL_DOCUMENT_NOT_USED = 101,
     SUSPECTED_DOCUMENT = 102,
-    /**
-     * Person showing the document does not appear to match document photo.
-     */
     NO_MATCH_DOCUMENT_PHOTO = 103,
     SUSPICIOUS_BEHAVIOUR = 105,
     KNOWN_FRAUD = 106,

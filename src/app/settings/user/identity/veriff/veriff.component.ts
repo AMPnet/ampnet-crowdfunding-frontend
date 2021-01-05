@@ -1,5 +1,5 @@
 import { Component, Renderer2 } from '@angular/core';
-import { DecisionStatus, OnboardingService, State, VeriffSession } from '../../../../shared/services/user/onboarding.service';
+import { DecisionStatus, State, VeriffService, VeriffSession } from '../../../../shared/services/user/veriff.service';
 import { BehaviorSubject, EMPTY, Observable, Subject, timer } from 'rxjs';
 import { catchError, switchMap, tap } from 'rxjs/operators';
 import { PopupService } from '../../../../shared/services/popup.service';
@@ -34,9 +34,9 @@ export class VeriffComponent {
                 private errorService: ErrorService,
                 private translate: TranslateService,
                 private fb: FormBuilder,
-                private onboardingService: OnboardingService) {
+                private veriffService: VeriffService) {
         this.session$ = this.sessionSubject.asObservable().pipe(
-            switchMap(_ => this.onboardingService.getVeriffSession()),
+            switchMap(_ => this.veriffService.getSession()),
             tap(session => {
                 if (this.decisionPending(session)) {
                     timer(5000).pipe(tap(() => this.sessionSubject.next())).subscribe();

@@ -104,6 +104,7 @@ import { BackNavigationDirective } from './shared/directives/back-navigation.dir
 import { TranslationsModule } from './translations.module';
 import { VeriffComponent } from './settings/user/identity/veriff/veriff.component';
 import { AcceptTermsComponent } from './settings/user/identity/accept-terms/accept-terms.component';
+import { IdentyumComponent } from './settings/user/identity/identyum/identyum.component';
 
 @NgModule({
     declarations: [
@@ -135,6 +136,7 @@ import { AcceptTermsComponent } from './settings/user/identity/accept-terms/acce
         CreateNewProjectComponent,
         AcceptTermsComponent,
         VeriffComponent,
+        IdentyumComponent,
         ManageProjectsComponent,
         ManageSingleProjectComponent,
         SingleProjectItemComponent,

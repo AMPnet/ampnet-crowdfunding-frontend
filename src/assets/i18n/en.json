@@ -371,6 +371,9 @@
           "decision_pending": "Your account is in process of verification. Please wait...",
           "approved": "User data has been successfully verified.",
           "start_verification": "Start verification"
+        },
+        "identyum": {
+          "approved": "User data has been successfully verified."
         }
       }
     }

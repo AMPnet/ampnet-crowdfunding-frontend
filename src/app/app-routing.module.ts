@@ -54,6 +54,7 @@ import { IdentityGuard } from './settings/user/identity/identity.guard';
 import { VeriffComponent } from './settings/user/identity/veriff/veriff.component';
 import { TermsAcceptedGuard } from './settings/user/identity/accept-terms/terms-accepted.guard';
 import { AcceptTermsComponent } from './settings/user/identity/accept-terms/accept-terms.component';
+import { IdentyumComponent } from './settings/user/identity/identyum/identyum.component';
 
 const appRoutes: Routes = [
     {
@@ -99,7 +100,8 @@ const appRoutes: Routes = [
                     {
                         path: 'user/identity', component: IdentityComponent, canActivate: [IdentityGuard], children: [
                             {path: '', component: AcceptTermsComponent},
-                            {path: 'veriff', component: VeriffComponent, canActivate: [TermsAcceptedGuard]}
+                            {path: 'veriff', component: VeriffComponent, canActivate: [TermsAcceptedGuard]},
+                            {path: 'identyum', component: IdentyumComponent, canActivate: [TermsAcceptedGuard]}
                         ]
                     },
                 ]

@@ -181,6 +181,10 @@ export interface CustomConfig {
         id?: string;
         env?: string;
     };
+    identyum?: {
+        envURL?: string;
+        startLanguage?: string;
+    };
     googleClientId?: string;
     facebookAppId?: string;
     reCaptchaSiteKey?: string;

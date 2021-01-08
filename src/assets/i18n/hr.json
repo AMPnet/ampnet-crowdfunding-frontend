@@ -6,7 +6,7 @@
   "offers.single_offer_item.ends_on": "Završava {{ end_date }}",
   "offers.single_offer_item.return": "Očekivani povrat: | {{ from }} - {{ to }}",
   "offers.single_offer_item.published_by": "Vlasnik projekta",
-  "offers.single_offer_item.see_more": "Pregledaj projekte",
+  "offers.single_offer_item.see_more": "Pogledaj",
   "offers.offer_details.title": "Detalji projekta",
   "offers.offer_details.title.portfolio": "Detalji projekta",
   "offers.offer_details.invest": "Investiraj",

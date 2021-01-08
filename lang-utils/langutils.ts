@@ -49,8 +49,13 @@ const generateXls = (lang: string) => {
 
     const workbook = new excel.Workbook();
     const worksheet = workbook.addWorksheet('Sheet 1');
+    for (let i = 1; i < Object.entries(secondaries).length + 3; i++) {
+        worksheet.column(i).setWidth(50);
+    }
     const style = workbook.createStyle({
-        // numberFormat: '$#,##0.00; ($#,##0.00); -'
+        alignment: {
+            wrapText: true,
+        }
     });
 
     const [primKey, primEntries] = Object.entries(primary)[0];

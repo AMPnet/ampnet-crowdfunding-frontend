@@ -5,7 +5,7 @@ Utilities to import and export language translations.
 ## Export
 
 Languages are always exported from `<lang>.json` files to a single `.xlsx` file. Generated `.xlsx` file is meant to be
-sent to the translator for specific language.
+sent to a translator to translate it for a specific language.
 
 ### Commands
 
@@ -26,5 +26,5 @@ npm run lang-gen-xls
 When `.xlsx` file is successfully translated, use the next command to import the values:
 
 ```shell
-npm run xls-to-json filename.xlsx
+npm run xls-to-json /absolute/path/to/filename.xlsx
 ```

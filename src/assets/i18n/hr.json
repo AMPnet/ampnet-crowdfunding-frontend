@@ -2,39 +2,21 @@
   "landing.explore": "Pregledaj projekte",
   "offers.title": "Projekti",
   "offers.no_projects_available": "Trenutno nema objavljenih projekata za investiranje.",
-  "offers.single_offer_item.raised": "{{ raised }} | investirano od kapaciteta {{ goal }}",
+  "offers.single_offer_item.raised": "{{ raised }} | investirano od ukupno {{ goal }}",
   "offers.single_offer_item.ends_on": "Završava {{ end_date }}",
-  "offers.single_offer_item.return": {
-    "richText": [
-      {
-        "font": {
-          "size": 12,
-          "color": {
-            "argb": "FF000000"
-          },
-          "name": "Calibri",
-          "family": 1,
-          "charset": 1
-        },
-        "text": "Očekivani povrat: "
-      },
-      {
-        "font": {
-          "size": 12,
-          "color": {
-            "argb": "FF000000"
-          },
-          "name": "Calibri",
-          "family": 1
-        },
-        "text": "| {{ from }} - {{ to }}"
-      }
-    ]
-  },
+  "offers.single_offer_item.return": "Očekivani povrat: | {{ from }} - {{ to }}",
   "offers.single_offer_item.published_by": "Vlasnik projekta",
   "offers.single_offer_item.see_more": "Pregledaj projekte",
   "offers.offer_details.title": "Detalji projekta",
   "offers.offer_details.title.portfolio": "Detalji projekta",
+  "offers.offer_details.invest": "Investiraj",
+  "offers.offer_details.invest.portfolio.short": "Investiraj",
+  "offers.offer_details.verify_profile.short": "Verificiraj profil",
+  "offers.offer_details.share": "Podijeli",
+  "offers.offer_details.link_copied": "Poveznica kopirana",
+  "offers.offer_details.subtitle_docs": "Dokumenti",
+  "offers.offer_details.news.subtitle": "Novosti",
+  "offers.offer_details.news.read_more": "Više",
   "general.popup.warning.title": "Upozorenje",
   "general.popup.error.title": "Greška"
 }

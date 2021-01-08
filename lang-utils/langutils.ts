@@ -87,24 +87,17 @@ const generateXls = (lang: string) => {
 };
 
 const xlsToJson = async (filePath: string) => {
-    console.log('xlsToJson');
-
     const Excel = require('exceljs');
     const workbook = new Excel.Workbook();
     await workbook.xlsx.readFile(filePath);
     const worksheet = workbook.getWorksheet(1);
 
-    const getIJ = (i: number, j: number): string => worksheet.getRow(i).getCell(j).value;
-
-    console.log(getIJ(1, 2));
-    console.log(getIJ(1, 3));
+    const getIJ = (i: number, j: number): string => worksheet.getRow(i).getCell(j).text;
 
     const langs: string[] = [];
 
     for (let j = 3; ; j++) {
-        console.log(j);
         const lang = getIJ(1, j);
-        console.log(lang);
         if (lang) {
             langs.push(lang);
             continue;
@@ -113,7 +106,6 @@ const xlsToJson = async (filePath: string) => {
         break;
     }
 
-    console.log(langs);
     for (let langIndex = 0; langIndex < langs.length; langIndex++) {
         const lang = {};
 
@@ -130,9 +122,7 @@ const xlsToJson = async (filePath: string) => {
             break;
         }
 
-        console.log(JSON.stringify(lang));
-
-        fs.writeFileSync(`${__dirname}/../src/assets/i18n/${langs[langIndex]}.json`, JSON.stringify(lang));
+        fs.writeFileSync(`${__dirname}/../src/assets/i18n/${langs[langIndex]}.json`, JSON.stringify(lang, null, 2) + '\n');
     }
 };
 

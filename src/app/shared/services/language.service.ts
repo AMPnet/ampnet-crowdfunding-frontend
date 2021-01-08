@@ -32,7 +32,7 @@ export class LanguageService {
             tap(() => {
                 const supportedLangs = this.supportedLanguages.map(l => l.lang);
                 this.translate.addLangs(supportedLangs);
-                this.setLanguage();
+                this.setLanguage().subscribe();
             })
         ).subscribe();
     }
@@ -55,10 +55,10 @@ export class LanguageService {
             this.appConfig.config.config.languages.fallback ? this.stockLang.lang : current
         );
 
-        this.translate.use(current).pipe(
+        return this.translate.use(current).pipe(
             switchMap(newLang => this.registerLocale(current).pipe(switchMap(() => of(newLang)))),
             tap(newLang => this.languageChange$.next(newLang))
-        ).subscribe();
+        );
     }
 
     getCurrentLanguage(): string {

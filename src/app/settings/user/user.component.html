@@ -36,7 +36,7 @@
                     <div id="languages" class="d-flex flex-wrap">
                         <div *ngFor="let language of languageService.supportedLanguages"
                              class="mx-3">
-                            <a [routerLink]="" (click)="languageService.setLanguage(language.lang)"
+                            <a [routerLink]="" (click)="changeLanguage(language.lang).subscribe()"
                                [class.font-weight-bold]="language.lang === languageService.getCurrentLanguage()">
                                 {{ language.displayName }}
                             </a>

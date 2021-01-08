@@ -1,7 +1,6 @@
 import { Component, ElementRef, Inject, Renderer2, ViewChild } from '@angular/core';
 import { AppConfigService } from '../../../../shared/services/app-config.service';
 import { catchError, switchMap, take } from 'rxjs/operators';
-import { Router } from '@angular/router';
 import { combineLatest, EMPTY, Observable, Subject } from 'rxjs';
 import { DOCUMENT } from '@angular/common';
 import { PopupService } from '../../../../shared/services/popup.service';
@@ -9,6 +8,7 @@ import { ErrorService } from '../../../../shared/services/error.service';
 import { UserService } from '../../../../shared/services/user/user.service';
 import { IdentyumClientToken, IdentyumService } from '../../../../shared/services/user/identyum.service';
 import { TranslateService } from '@ngx-translate/core';
+import { RouterService } from '../../../../shared/services/router.service';
 
 @Component({
     selector: 'app-identyum',
@@ -25,7 +25,7 @@ export class IdentyumComponent {
     constructor(private renderer2: Renderer2,
                 @Inject(DOCUMENT) private document: Document,
                 private appConfig: AppConfigService,
-                private router: Router,
+                private router: RouterService,
                 private popupService: PopupService,
                 private identyumService: IdentyumService,
                 private errorService: ErrorService,

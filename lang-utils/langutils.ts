@@ -92,12 +92,12 @@ const xlsToJson = async (filePath: string) => {
     await workbook.xlsx.readFile(filePath);
     const worksheet = workbook.getWorksheet(1);
 
-    const getIJ = (i: number, j: number): string => worksheet.getRow(i).getCell(j).text;
+    const getCell = (i: number, j: number): string => worksheet.getRow(i).getCell(j).text;
 
     const langs: string[] = [];
 
     for (let j = 3; ; j++) {
-        const lang = getIJ(1, j);
+        const lang = getCell(1, j);
         if (lang) {
             langs.push(lang);
             continue;
@@ -110,9 +110,9 @@ const xlsToJson = async (filePath: string) => {
         const lang = {};
 
         for (let i = 2; ; i++) {
-            const key = getIJ(i, 1);
+            const key = getCell(i, 1);
             if (key) {
-                const val = getIJ(i, 3 + langIndex);
+                const val = getCell(i, 3 + langIndex);
                 if (val) {
                     lang[key] = val;
                 }

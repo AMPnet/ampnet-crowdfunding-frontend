@@ -7,8 +7,6 @@ Utilities to import and export language translations.
 Languages are always exported from `<lang>.json` files to a single `.xlsx` file. Generated `.xlsx` file is meant to be
 sent to a translator to translate it for a specific language.
 
-### Commands
-
 To export a single language (e.g. Croatian - hr), use the next command:
 
 ```shell

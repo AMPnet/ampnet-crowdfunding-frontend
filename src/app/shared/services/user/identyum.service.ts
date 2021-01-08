@@ -14,7 +14,7 @@ export class IdentyumService {
     }
 
     verifyUser(sessionState: string) {
-        return this.http.post<User>('/api/user/me/verify', <VerifyUserData>{
+        return this.http.post<User>('/api/user/identyum/verify', <VerifyUserData>{
             session_state: sessionState
         });
     }

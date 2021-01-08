@@ -12,8 +12,8 @@ export class AcceptTermsComponent {
     acceptTermsForm: FormGroup;
 
     constructor(private fb: FormBuilder,
-                public appConfig: AppConfigService,
-                private router: RouterService) {
+                private router: RouterService,
+                public appConfig: AppConfigService) {
         this.acceptTermsForm = this.fb.group({
             statute_confirmation: [!this.appConfig.config.config?.coop_statute_url, Validators.requiredTrue]
         });

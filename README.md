@@ -14,9 +14,11 @@ npm install
 npm start
 ```
 
-## Testing
+## Additional Content
 
-```sh
-# before any commit, fix linter issues
-npm run lint-fix
-```
+Deployment:
+* [Production Docker build](prod-build/README.md)
+
+Translations:
+* [Developer guide](lang-utils/README.md)
+* [Translator guide](lang-utils/TRANSLATION_GUIDE.md)

@@ -74,6 +74,7 @@ export interface User {
     role: UserRole;
     enabled: boolean;
     verified: boolean;
+    language: string;
 }
 
 export enum UserRole {

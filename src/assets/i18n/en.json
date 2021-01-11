@@ -358,16 +358,22 @@
       "languages": "Languages",
       "identity": {
         "title": "Verify Identity",
-        "onboarding": {
-          "resubmission_requested": "Resubmission requested",
-          "declined": "Declined",
-          "decision_pending": "Your account is in process of verification. Please wait...",
-          "approved": "User data has been successfully verified.",
+        "accept_terms": {
           "statute_confirmation_input": {
             "title": "Accept Platform Terms & Conditions",
             "notice": "Check here to indicate that you have read and agree to the | {{ coopName }} Terms & Conditions |"
           },
+          "get_verified": "Get verified"
+        },
+        "veriff": {
+          "resubmission_requested": "Resubmission requested",
+          "declined": "Declined",
+          "decision_pending": "Your account is in process of verification. Please wait...",
+          "approved": "User data has been successfully verified.",
           "start_verification": "Start verification"
+        },
+        "identyum": {
+          "approved": "User data has been successfully verified."
         }
       }
     }

@@ -1,0 +1,35 @@
+<div class="d-flex justify-content-center mt-3">
+    <form [formGroup]="acceptTermsForm">
+        <div [hidden]="!appConfig.config.config?.coop_statute_url">
+            <label class="app-page-label mt-3">
+                {{ 'settings.user.identity.accept_terms.statute_confirmation_input.title' | translate }}
+            </label>
+            <div class="d-flex align-items-center">
+                <input class="form-control w-auto h-auto m-2" id="google-client-id"
+                       formControlName="statute_confirmation"
+                       type="checkbox">
+                <label class="small mb-0" for="google-client-id">
+                    <span>
+                        {{ 'settings.user.identity.accept_terms.statute_confirmation_input.notice' | translate | splitPart:0 }}
+                    </span>
+                    <span class="d-inline-flex">
+                        <a href="{{ appConfig.config.config?.coop_statute_url }}" target="_blank"
+                           rel="noopener noreferrer">
+                            {{ 'settings.user.identity.accept_terms.statute_confirmation_input.notice'
+                                | translate | splitPart:1 | interpolate:['coopName', appConfig.config.name] }}
+                        </a>
+                    </span>
+                    <span>
+                        {{ 'settings.user.identity.accept_terms.statute_confirmation_input.notice' | translate | splitPart:2 }}
+                    </span>
+                </label>
+            </div>
+        </div>
+
+        <button class="btn btn-primary w-auto mx-auto my-3"
+                [disabled]="!acceptTermsForm.valid"
+                (click)="goToKYCProvider()">
+            {{ 'settings.user.identity.accept_terms.get_verified' | translate }}
+        </button>
+    </form>
+</div>

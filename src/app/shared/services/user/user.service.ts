@@ -6,6 +6,7 @@ import { BehaviorSubject, EMPTY, Observable, of, throwError } from 'rxjs';
 import { CacheService } from '../cache.service';
 import { AppConfigService } from '../app-config.service';
 import { SocialAuthService } from 'angularx-social-login';
+import { LanguageService } from '../language.service';
 
 @Injectable({
     providedIn: 'root',
@@ -20,6 +21,7 @@ export class UserService {
 
     constructor(private http: BackendHttpClient,
                 private appConfig: AppConfigService,
+                private languageService: LanguageService,
                 private cacheService: CacheService) {
     }
 
@@ -43,6 +45,10 @@ export class UserService {
         this.refreshUserSubject.next();
     }
 
+    updateUser(updateData: UpdateUserData) {
+        return this.isLoggedIn() ? this.http.put<User>('/api/user/me/update', updateData) : EMPTY;
+    }
+
     getUserByEmail(email: string): Observable<User | null> {
         return this.http.get<PageableUsersResponse>('/api/user/admin/user/find', {
             email: email
@@ -60,7 +66,10 @@ export class UserService {
                 email: email,
                 password: password
             }
-        }, true).pipe(this.saveTokens.bind(this));
+        }, true).pipe(
+            this.saveTokens.bind(this),
+            tap(() => this.updateBackendLanguage.subscribe())
+        );
     }
 
     socialLogin(provider: string, authToken: string) {
@@ -70,7 +79,15 @@ export class UserService {
             credentials: {
                 token: authToken
             }
-        }, true).pipe(this.saveTokens.bind(this));
+        }, true).pipe(
+            this.saveTokens.bind(this),
+            tap(() => this.updateBackendLanguage.subscribe())
+        );
+    }
+
+    get updateBackendLanguage() {
+        return this.updateUser({language: this.languageService.getCurrentLanguage()}).pipe(
+            catchError(() => EMPTY));
     }
 
     refreshUserToken() {
@@ -114,11 +131,15 @@ interface PageableUsersResponse {
     total_pages: number;
 }
 
-export class UserAuthResponse {
+interface UserAuthResponse {
     access_token: string;
     expires_in: number;
     refresh_token: string;
     refresh_token_expires_in: number;
+}
+
+interface UpdateUserData {
+    language: string;
 }
 
 export const socialAuthServiceFactory = (appConfig: AppConfigService) => {

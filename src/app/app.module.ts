@@ -33,7 +33,6 @@ import { CreateOrganizationComponent } from './organizations/create-organization
 import { ManageOrganizationsComponent } from './organizations/manage-organizations/manage-organizations.component';
 import { OrganizationDetailsComponent } from './organizations/organization-details/organization-details.component';
 import { CreateNewProjectComponent } from './organizations/organization-details/manage-projects/create-new-project/create-new-project.component';
-import { OnboardingComponent } from './settings/user/identity/onboarding/onboarding.component';
 import { ManageProjectsComponent } from './organizations/organization-details/manage-projects/manage-projects.component';
 import { ManageSingleProjectComponent } from './organizations/organization-details/manage-projects/manage-single-project/manage-single-project.component';
 import { VerifySignOfferComponent } from './offers/offer-details/verify-sign-offer/verify-sign-offer.component';
@@ -48,7 +47,6 @@ import { WalletActivationComponent } from './admin/wallet-activation/wallet-acti
 import { UserActivationComponent } from './admin/wallet-activation/user-activation/user-activation.component';
 import { GroupActivationComponent } from './admin/wallet-activation/group-activation/group-activation.component';
 import { ProjectActivationComponent } from './admin/wallet-activation/project-activation/project-activation.component';
-import { CompleteOnboardingComponent } from './complete-onboarding/complete-onboarding.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { PlatformBankAccountComponent } from './admin/platform-bank-account/platform-bank-account.component';
 import { NewPlatformBankAccountComponent } from './admin/platform-bank-account/new-platform-bank-account/new-platform-bank-account.component';
@@ -103,6 +101,9 @@ import { CaptchaNoticeComponent } from './shared/components/captcha-notice/captc
 import { SentryProvider } from './shared/providers/sentry.provider';
 import { BackNavigationDirective } from './shared/directives/back-navigation.directive';
 import { TranslationsModule } from './translations.module';
+import { VeriffComponent } from './settings/user/identity/veriff/veriff.component';
+import { AcceptTermsComponent } from './settings/user/identity/accept-terms/accept-terms.component';
+import { IdentyumComponent } from './settings/user/identity/identyum/identyum.component';
 
 @NgModule({
     declarations: [
@@ -132,7 +133,9 @@ import { TranslationsModule } from './translations.module';
         ManageOrganizationsComponent,
         OrganizationDetailsComponent,
         CreateNewProjectComponent,
-        OnboardingComponent,
+        AcceptTermsComponent,
+        VeriffComponent,
+        IdentyumComponent,
         ManageProjectsComponent,
         ManageSingleProjectComponent,
         SingleProjectItemComponent,
@@ -149,7 +152,6 @@ import { TranslationsModule } from './translations.module';
         UserActivationComponent,
         GroupActivationComponent,
         ProjectActivationComponent,
-        CompleteOnboardingComponent,
         PlatformBankAccountComponent,
         NewPlatformBankAccountComponent,
         ExchangeComponent,

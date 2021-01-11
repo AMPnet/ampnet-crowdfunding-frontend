@@ -3,6 +3,7 @@ import { CustomConfig } from '../app/shared/services/app-config.service';
 export const environment = {
     production: false,
     baseHref: '/',
+    commitHash: process.env.COMMIT_HASH || '',
     sentry: {
         dsn: '', // keep empty for local development
         env: 'dev'

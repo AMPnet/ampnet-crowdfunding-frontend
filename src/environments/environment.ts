@@ -19,7 +19,6 @@ export const environment = {
             env: 'staging',
         },
         identyum: {
-            envURL: 'https://web-components.stage.identyum.com/flow-manager/component',
             startLanguage: 'en'
         },
         googleClientId: '507079277405-o3834fb5jojeq3u9tmm14aobeukg3jmo.apps.googleusercontent.com',

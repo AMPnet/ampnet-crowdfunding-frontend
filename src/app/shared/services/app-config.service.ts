@@ -182,7 +182,6 @@ export interface CustomConfig {
         env?: string;
     };
     identyum?: {
-        envURL?: string;
         startLanguage?: string;
     };
     googleClientId?: string;

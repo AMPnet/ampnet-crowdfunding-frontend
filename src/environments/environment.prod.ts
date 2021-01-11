@@ -1,12 +1,13 @@
 import { CustomConfig } from '../app/shared/services/app-config.service';
+import { Window } from '../../typings';
 
 export const environment = {
     production: true,
     baseHref: '/',
     commitHash: process.env.COMMIT_HASH || '',
     sentry: {
-        dsn: 'https://877dd92a057e4517b8edc97c1e48f510@o471123.ingest.sentry.io/5504571',
-        env: 'prod'
+        dsn: (window as unknown as Window).env.sentryDSN || '',
+        env: (window as unknown as Window).env.sentryEnv || 'prod',
     },
     customConfig: { // NOTICE: when adding a new config property, add it to AppConfig interface first.
         title: 'AMPnet',
@@ -16,8 +17,8 @@ export const environment = {
             fallback: true,
         },
         arkane: {
-            id: 'AMPnet',
-            env: 'staging',
+            id: (window as unknown as Window).env.arkaneID || 'AMPnet',
+            env: (window as unknown as Window).env.arkaneEnv || 'prod',
         },
         identyum: {
             startLanguage: 'en'

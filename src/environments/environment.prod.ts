@@ -6,8 +6,8 @@ export const environment = {
     baseHref: '/',
     commitHash: process.env.COMMIT_HASH || '',
     sentry: {
-        dsn: (window as unknown as Window).env.sentryDSN || '',
-        env: (window as unknown as Window).env.sentryEnv || 'prod',
+        dsn: (window as unknown as Window)?.env?.sentryDSN || '',
+        env: (window as unknown as Window)?.env?.sentryEnv || 'prod',
     },
     customConfig: { // NOTICE: when adding a new config property, add it to AppConfig interface first.
         title: 'AMPnet',
@@ -17,8 +17,8 @@ export const environment = {
             fallback: true,
         },
         arkane: {
-            id: (window as unknown as Window).env.arkaneID || 'AMPnet',
-            env: (window as unknown as Window).env.arkaneEnv || 'prod',
+            id: (window as unknown as Window)?.env?.arkaneID || 'AMPnet',
+            env: (window as unknown as Window)?.env?.arkaneEnv || 'prod',
         },
         identyum: {
             startLanguage: 'en'

@@ -320,7 +320,7 @@
         "revenue_share": {
           "title": "Revenue share",
           "description": "Enter the amount of money to be paid out to investors.",
-          "placeholder": "Enter maximum investment per user",
+          "placeholder": "Enter amount to share",
           "errors.invalid_amount": "Payout must be lower or equal to balance.",
           "submit_button": "Start payout",
           "submit_button.short": "Payout",

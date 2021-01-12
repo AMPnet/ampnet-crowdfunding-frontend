@@ -154,7 +154,11 @@
         </ul>
 
         <ul class="list-unstyled components app-version" id="main-menu">
-            <li>{{ appVersion }}</li>
+            <li>{{ appVersion }}
+                <span *ngIf="commitHash">
+                    ({{ commitHash }})
+                </span>
+            </li>
         </ul>
 
         <ng-template #ToolTipNotVerified>

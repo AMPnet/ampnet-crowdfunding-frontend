@@ -7,6 +7,7 @@ import { WalletDetailsWithState, WalletService, WalletState } from '../shared/se
 import { version } from '../../../package.json';
 import { AppConfigService } from '../shared/services/app-config.service';
 import { RouterService } from '../shared/services/router.service';
+import { environment } from '../../environments/environment';
 
 
 @Component({
@@ -16,6 +17,7 @@ import { RouterService } from '../shared/services/router.service';
 })
 export class SidebarComponent implements AfterViewInit {
     appVersion: string = version;
+    commitHash = environment.commitHash;
     userRole = UserRole;
 
     user$ = this.userService.user$;

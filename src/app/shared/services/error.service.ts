@@ -305,6 +305,9 @@ export class ErrorService {
                     case MiddlewareError.INVEST_FUNDING_ENDED:
                         display$ = this.displayMessage('errors.middleware.funding_ended');
                         break;
+                    case MiddlewareError.WITHDRAW_AMOUNT_TOO_LOW:
+                        display$ = this.displayMessage('errors.middleware.withdraw_amount_too_low');
+                        break;
                     case MiddlewareError.REVENUE_SHARE_ORG_OWNER_PERMISSION:
                         display$ = this.displayMessage('errors.middleware.revenue_share_org_owner_permission');
                         break;
@@ -337,7 +340,6 @@ export class ErrorService {
                     case MiddlewareError.DEPOSIT_APPROVE_FAILED:
                     case MiddlewareError.WITHDRAW_FAILED:
                     case MiddlewareError.WITHDRAW_AMOUNT_TOO_HIGH:
-                    case MiddlewareError.WITHDRAW_AMOUNT_TOO_LOW:
                     case MiddlewareError.TOKEN_ISSUER_PERMISSION_REQUIRED:
                     case MiddlewareError.ACTIVATED_WALLET_REQUIRED:
                     case MiddlewareError.CREATE_ORG_UNAUTHORIZED:

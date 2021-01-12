@@ -814,6 +814,7 @@
       "investment_cap_exceeded": "The investment would make total funds raised greater than the project's investment cap.",
       "fraction_non_funded": "The investment would leave tiny fraction of project non-funded.",
       "funding_ended": "Project funding period is over.",
+      "withdraw_amount_too_low": "Not enough funds to withdraw the requested amount.",
       "revenue_share_org_owner_permission": "Only organization owner can initiate revenue share payout.",
       "revenue_share_project_still_funding": "Cannot start revenue share payout on a project which is still in the funding phase.",
       "revenue_share_zero": "The revenue amount is zero.",

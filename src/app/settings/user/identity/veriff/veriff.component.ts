@@ -1,7 +1,7 @@
 import { Component, Renderer2 } from '@angular/core';
 import { DecisionStatus, State, VeriffService, VeriffSession } from '../../../../shared/services/user/veriff.service';
 import { BehaviorSubject, EMPTY, interval, Observable, Subject, timer } from 'rxjs';
-import { catchError, filter, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { catchError, filter, switchMap, take, takeUntil, tap } from 'rxjs/operators';
 import { PopupService } from '../../../../shared/services/popup.service';
 import { AppConfigService } from '../../../../shared/services/app-config.service';
 import { RouterService } from '../../../../shared/services/router.service';
@@ -56,6 +56,7 @@ export class VeriffComponent {
                     takeUntil(this.userService.user$.pipe(filter(user => user.verified)))
                 )
             ),
+            take(1),
             switchMap(() => this.popupService.success(
                 this.translate.instant('settings.user.identity.veriff.approved')
             )),

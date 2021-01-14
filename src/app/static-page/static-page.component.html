@@ -1,0 +1,19 @@
+<app-header [onlyLogo]="true"></app-header>
+<div class="container">
+    <a [routerLink]="" appBackNavigation class="nostyle">
+        <div class="app-page-title-back">
+            <i class="fas fa-long-arrow-alt-left mr-3"></i>
+            {{ 'general.back.title' | translate }}
+        </div>
+    </a>
+
+    <ng-container *ngIf="page === staticPage.TOS">
+        <h1>Terms of Service</h1>
+    </ng-container>
+    <ng-container *ngIf="page === staticPage.PRIVACY">
+        <h1>Privacy Policy</h1>
+    </ng-container>
+    <ng-container *ngIf="page === staticPage.COOKIES">
+        <h1>Cookies Policy</h1>
+    </ng-container>
+</div>

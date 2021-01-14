@@ -153,13 +153,16 @@
             </li>
         </ul>
 
-        <ul class="list-unstyled components app-version" id="main-menu">
-            <li>{{ appVersion }}
-                <span *ngIf="commitHash">
-                    ({{ commitHash }})
-                </span>
-            </li>
-        </ul>
+        <!-- TODO: Uncomment when texts are ready -->
+        <!--        <div class="d-flex flex-column px-4 py-1">-->
+        <!--            <a [routerLink]="'/static/tos' | coopPath">Terms of Service</a>-->
+        <!--            <a [routerLink]="'/static/privacy' | coopPath">Privacy Policy</a>-->
+        <!--            <a [routerLink]="'/static/cookies' | coopPath">Cookies Policy</a>-->
+        <!--        </div>-->
+
+        <div class="app-version">
+            {{ appVersion }} <span *ngIf="commitHash">({{ commitHash }})</span>
+        </div>
 
         <ng-template #ToolTipNotVerified>
             <div *ngIf="!isUserVerified(states.user)">

@@ -54,14 +54,24 @@ import { VeriffComponent } from './settings/user/identity/veriff/veriff.componen
 import { TermsAcceptedGuard } from './settings/user/identity/accept-terms/terms-accepted.guard';
 import { AcceptTermsComponent } from './settings/user/identity/accept-terms/accept-terms.component';
 import { IdentyumComponent } from './settings/user/identity/identyum/identyum.component';
+import { StaticPageComponent } from './static-page/static-page.component';
+import { NoAuthGuard } from './authentication/no-auth.guard';
 
 const appRoutes: Routes = [
     {
         path: '', component: PublicLayoutComponent,
         children: [
-            {path: '', component: LandingPageComponent},
             {
-                path: '', component: AuthLayoutComponent, children: [
+                path: '', canActivate: [NoAuthGuard], children: [
+                    {path: '', component: LandingPageComponent},
+                    {path: 'overview', component: OffersComponent, data: {isOverview: true}},
+                    {path: 'overview/orgs/:id', component: OrganizationDetailsComponent, data: {isPublic: true, isOverview: true}},
+                    {path: 'overview/:id', component: OfferDetailsComponent, canActivate: [OfferDetailsGuard], data: {isOverview: true}},
+                    {path: 'sign_in_auto/:email/:password', component: SignInAutoComponent},
+                ]
+            },
+            {
+                path: '', canActivate: [NoAuthGuard], component: AuthLayoutComponent, children: [
                     {path: 'sign_up', component: SignUpComponent},
                     {path: 'sign_in', component: SignInComponent},
                     {path: 'forgot_password', component: ForgotPasswordComponent},
@@ -69,10 +79,7 @@ const appRoutes: Routes = [
                     {path: 'new_instance', component: NewInstanceComponent},
                 ]
             },
-            {path: 'overview', component: OffersComponent, data: {isOverview: true}},
-            {path: 'overview/orgs/:id', component: OrganizationDetailsComponent, data: {isPublic: true, isOverview: true}},
-            {path: 'overview/:id', component: OfferDetailsComponent, canActivate: [OfferDetailsGuard], data: {isOverview: true}},
-            {path: 'sign_in_auto/:email/:password', component: SignInAutoComponent},
+            {path: 'static/:page', component: StaticPageComponent},
         ]
     },
     {

@@ -10,6 +10,7 @@
       "raised": "{{ raised }} | raised of {{ goal }} goal",
       "ends_on": "Ends on {{ end_date }}",
       "return": "Annual interest rate: | {{ from }} - {{ to }}",
+      "return.single": "Annual interest rate: | {{ to }}",
       "published_by": "Published by",
       "see_more": "See more"
     },
@@ -21,6 +22,7 @@
       "published_by": "Published by",
       "raised": "{{ raised }} | raised of {{ goal }} goal",
       "return": "{{ from }} - {{ to }} | Annual interest rate",
+      "return.single": "{{ to }} | Annual interest rate",
       "min_invest": "{{ amount }} | Min Investment",
       "max_invest": "{{ amount }} | Max Investment",
       "funding_period": "Funding period | {{ from }} - {{ to }}",

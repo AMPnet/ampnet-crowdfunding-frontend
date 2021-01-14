@@ -361,6 +361,8 @@
   "admin.platform_config.languages_fallback_input.title": "Koristi Engleski kao rezervni jezik",
   "admin.platform_config.verification_required_input.title": "Verifikacija korisnika uključena",
   "admin.platform_config.submit": "Ažuriraj",
+  "header.sign_up": "Upis",
+  "header.sign_in": "Prijava",
   "auth.forgot_password.title": "Izgubljena lozinka",
   "auth.forgot_password.instructions_notice": "Upišite vašu email adresu na koju ćemo vam poslati upute kako poništiti lozinku.",
   "auth.forgot_password.email_input.placeholder": "ivan.horvat@email.com",

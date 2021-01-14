@@ -6,9 +6,9 @@
     </div>
     <div *ngIf="!onlyLogo" id="auth-buttons" class="flex__center">
         <button class="btn mr-md-3 mr-2"
-                [routerLink]="'/sign_up' | coopPath">Sign Up</button>
+                [routerLink]="'/sign_up' | coopPath">{{ 'header.sign_up' | translate }}</button>
 
         <button class="btn btn-grey"
-                [routerLink]="'/sign_in' | coopPath">Sign In</button>
+                [routerLink]="'/sign_in' | coopPath">{{ 'header.sign_in' | translate }}</button>
     </div>
 </nav>

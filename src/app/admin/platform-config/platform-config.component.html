@@ -66,6 +66,16 @@
                     </label>
                 </div>
 
+                <label for="footer" class="app-page-label mt-3">
+                    {{ 'admin.platform_config.footer_input.title' | translate }}
+                </label>
+                <div class="input-group">
+                    <quill-editor id="footer"
+                                  formControlName="footerHTML"
+                                  [styles]="{ height: '200px' }">
+                    </quill-editor>
+                </div>
+
                 <!-- Hidden because of security reasons. -->
                 <div [hidden]="!showSecureConfig">
                     <label for="arkane-id" class="app-page-label mt-3">

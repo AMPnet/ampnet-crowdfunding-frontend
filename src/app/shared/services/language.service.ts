@@ -92,7 +92,13 @@ export class LanguageService {
     }
 
     private updatedLangConfigs(langConfigs: string): LanguageConfig[] {
-        const languages: LanguageConfig[] = langConfigs.match(langConfigRE)
+        const languages = this.extractLanguages(langConfigs);
+
+        return languages ? [this.stockLang, ...languages] : [this.stockLang];
+    }
+
+    extractLanguages(langConfigs: string): LanguageConfig[] {
+        return langConfigs.match(langConfigRE)
             ?.map((langVal) => {
                 const [_full, lang, name, _optionalGroup, url] = langVal.match(extractLangFromConfigRE);
                 return {
@@ -101,8 +107,6 @@ export class LanguageService {
                     configURL: url
                 };
             });
-
-        return languages ? [this.stockLang, ...languages] : [this.stockLang];
     }
 
     private setRemoteConfigURL(url: string): void {

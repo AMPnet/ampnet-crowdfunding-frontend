@@ -215,9 +215,12 @@ import { IdentyumComponent } from './settings/user/identity/identyum/identyum.co
         BsDatepickerModule.forRoot(),
         NgxCaptchaModule
     ],
-    entryComponents: [
-        MapModalComponent
-    ],
+    // TODO: Test whether maps work without entryComponent in production build
+    // Maybe we need to remove it because this error happened when added quill editor
+    // inside platform configuration: https://github.com/angular/angular/issues/31221
+    // entryComponents: [
+    //     MapModalComponent
+    // ],
     providers: [
         AppConfigService,
         {

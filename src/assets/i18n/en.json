@@ -613,6 +613,7 @@
         "placeholder": "fr:\"French\" el:\"Greek\":\"https://path.to/el.json\" fr-CA:\"French (Canada)\":\"https://path.to/fr-CA.json\""
       },
       "languages_fallback_input.title": "Use English as a fallback language",
+      "footer_input.title": "Footer",
       "arkane_id_input": {
         "title": "Arkane ID",
         "placeholder": "arkaneID"

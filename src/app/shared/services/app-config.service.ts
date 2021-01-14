@@ -187,4 +187,5 @@ export interface CustomConfig {
     googleClientId?: string;
     facebookAppId?: string;
     reCaptchaSiteKey?: string;
+    footerHTML?: string;
 }

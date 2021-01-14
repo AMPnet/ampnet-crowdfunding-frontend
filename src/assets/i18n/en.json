@@ -1,6 +1,6 @@
 {
   "landing": {
-    "welcome": "Welcome to | {{ coopName }} | investing platform.",
+    "welcome": "Welcome to | {{ coopName }} | funding platform.",
     "explore": "Explore projects"
   },
   "offers": {
@@ -9,7 +9,7 @@
     "single_offer_item": {
       "raised": "{{ raised }} | raised of {{ goal }} goal",
       "ends_on": "Ends on {{ end_date }}",
-      "return": "Expected yearly return: | {{ from }} - {{ to }}",
+      "return": "Annual interest rate: | {{ from }} - {{ to }}",
       "published_by": "Published by",
       "see_more": "See more"
     },
@@ -20,7 +20,7 @@
       "show_location": "Show location",
       "published_by": "Published by",
       "raised": "{{ raised }} | raised of {{ goal }} goal",
-      "return": "{{ from }} - {{ to }} | Expected yearly return",
+      "return": "{{ from }} - {{ to }} | Annual interest rate",
       "min_invest": "{{ amount }} | Min Investment",
       "max_invest": "{{ amount }} | Max Investment",
       "funding_period": "Funding period | {{ from }} - {{ to }}",

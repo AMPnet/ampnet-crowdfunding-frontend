@@ -24,5 +24,5 @@ npm run lang-gen-xls
 When `.xlsx` file is successfully translated, use the next command to import the values:
 
 ```shell
-npm run xls-to-json /absolute/path/to/filename.xlsx
+npm run lang-xls-to-json /absolute/path/to/filename.xlsx
 ```

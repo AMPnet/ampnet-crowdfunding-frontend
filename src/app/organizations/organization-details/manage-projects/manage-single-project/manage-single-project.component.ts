@@ -80,6 +80,7 @@ export class ManageSingleProjectComponent {
                     }),
                     newImage: [null],
                     currentImage: [project.main_image],
+                    newTerms: [null],
                     newDocuments: [[]],
                     oldDocuments: [project.documents]
                 });
@@ -159,11 +160,12 @@ export class ManageSingleProjectComponent {
                 roi: {
                     from: Number(form.get('roi.from').value),
                     to: Number(form.get('roi.to').value)
-                }
-            }, form.get('newImage').value, form.get('newDocuments').value).pipe(
+                },
+            }, form.get('newImage').value, form.get('newTerms').value, form.get('newDocuments').value).pipe(
                 this.errorService.handleError,
                 tap(() => {
                     form.get('newImage').reset();
+                    form.get('newTerms').reset();
                     form.get('newDocuments').reset();
                 }),
                 tap(updatedProject => this.refreshProjectSubject.next(updatedProject)),

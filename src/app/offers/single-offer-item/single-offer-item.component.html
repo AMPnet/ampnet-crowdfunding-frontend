@@ -66,7 +66,7 @@
                         {{ 'offers.single_offer_item.return' | translate | splitPart:0 }}
                     </span>
                     <span class="bold">
-                        <ng-container *ngIf="projectWallet.project.roi.from !== 0; else singleReturn">
+                        <ng-container *ngIf="projectWallet.project.roi.from !== projectWallet.project.roi.to; else singleReturn">
                             {{ 'offers.single_offer_item.return' | translate | splitPart:1
                                 | interpolate:['from', projectWallet.project.roi.from / 100 | percent:'1.0-2']:['to', projectWallet.project.roi.to / 100 | percent:'1.0-2'] }}
                         </ng-container>

@@ -12,7 +12,7 @@ export class CoopService {
                 private captchaService: CaptchaService) {
     }
 
-    createCoop(data: CreateCoopData, logo: File) {
+    createCoop(data: CreateCoopData, logo: File, banner: File) {
         return this.captchaService.getToken(CaptchaAction.NEW_INSTANCE).pipe(
             switchMap(captchaToken => {
                 const reqData: CreateCoopReqData = {
@@ -23,6 +23,7 @@ export class CoopService {
                 const formData = new FormData();
 
                 formData.append('logo', logo, 'logo.png');
+                formData.append('banner', banner, 'banner.png');
 
                 formData.append('request', new Blob([JSON.stringify(reqData)], {
                     type: 'application/json'
@@ -32,7 +33,7 @@ export class CoopService {
             }));
     }
 
-    updateCoop(data: UpdateCoopData, logo: File) {
+    updateCoop(data: UpdateCoopData, logo: File, banner: File) {
         const removeEmpty = (obj) => {
             Object.keys(obj).forEach(key => {
                 if (obj[key] && typeof obj[key] === 'object') {
@@ -51,6 +52,10 @@ export class CoopService {
 
         if (logo) {
             formData.append('logo', logo, 'logo.png');
+        }
+
+        if (banner) {
+            formData.append('banner', banner, 'banner.png');
         }
 
         formData.append('request', new Blob([JSON.stringify(removeEmpty(data))], {

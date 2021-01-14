@@ -603,6 +603,7 @@
         "placeholder": "Instance"
       },
       "logo_input.title": "Logo",
+      "banner_input.title": "Banner image",
       "icon_url_input": {
         "title": "Icon URL",
         "placeholder": "https://path/to/icon.png"
@@ -674,6 +675,9 @@
       },
       "logo_input": {
         "title": "Logo"
+      },
+      "banner_input": {
+        "title": "Banner image"
       },
       "submit": "Create"
     },

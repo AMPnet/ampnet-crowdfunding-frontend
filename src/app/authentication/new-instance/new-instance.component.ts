@@ -33,7 +33,8 @@ export class NewInstanceComponent implements OnInit {
             name: ['', [Validators.required]],
             identifier: ['', [Validators.required, Validators.pattern(/^[a-z0-9\-_]{3,}$/)]],
             webTitle: ['', [Validators.required]],
-            logo: [null, FileValidator.validate]
+            logo: [null, FileValidator.validate],
+            banner: [null, FileValidator.validate]
         });
     }
 
@@ -50,7 +51,7 @@ export class NewInstanceComponent implements OnInit {
             }
         };
 
-        return this.coopService.createCoop(createCoopData, coop.logo).pipe(
+        return this.coopService.createCoop(createCoopData, coop.logo, coop.banner).pipe(
             this.errorService.handleError,
             switchMap(() => this.popupService.success('Cooperative has been created!')),
             tap(() => this.router.router.navigate([`/${coop.identifier}`])),

@@ -49,9 +49,11 @@
 .side-active {
   background: rgba($primary-color, 0.15);
   border-right: 3px solid $primary-color;
+
   .menu-icon {
     color: $primary-color;
   }
+
   span {
     color: $title-color;
   }
@@ -98,8 +100,7 @@
 .app-version {
   font-style: italic;
   font-size: smaller;
-}
-
-@include media-breakpoint-up(lg) {
-  
+  position: absolute;
+  bottom: 0;
+  padding-left: 2em;
 }

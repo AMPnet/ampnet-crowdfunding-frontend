@@ -36,6 +36,7 @@ export class PlatformConfigComponent {
                     name: [appConfig.name, Validators.required],
                     title: [appConfig.config?.title],
                     logo: [null],
+                    banner: [null],
                     icon: [appConfig.config?.icon_url],
                     coop_statute: [appConfig.config?.coop_statute_url],
                     languages: [appConfig.config?.languages?.config, this.langsPattern],
@@ -77,10 +78,11 @@ export class PlatformConfigComponent {
                     facebookAppId: appConfig.facebookAppID,
                     reCaptchaSiteKey: appConfig.reCaptchaSiteKey
                 }
-            }, appConfig.logo).pipe(
+            }, appConfig.logo, appConfig.banner).pipe(
                 this.errorService.handleError,
                 tap(newAppConfig => {
                     form.get('logo').reset();
+                    form.get('banner').reset();
                     this.appConfigService.config = newAppConfig;
                     this.refreshAppConfig.next(newAppConfig);
                 })

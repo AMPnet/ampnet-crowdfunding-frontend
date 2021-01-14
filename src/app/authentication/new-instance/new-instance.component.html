@@ -40,6 +40,18 @@
                      [firstFileControl]="createCoopForm.get('logo')">
     </app-upload-area>
 
+    <label for="banner-image" class="app-page-label mt-3">
+        {{ 'auth.new_instance.banner_input.title' | translate }}
+    </label>
+    <app-upload-area areaID='banner-image' id="banner-image"
+                     [restrictions]="{
+                        allowedFileTypes: ['image/*'],
+                        maxFileSize: 10 * 1024 * 1024,
+                        maxNumberOfFiles: 1
+                     }"
+                     [firstFileControl]="createCoopForm.get('banner')">
+    </app-upload-area>
+
     <button app-action-button
             text="{{ 'auth.new_instance.submit' | translate }}"
             faIcon="fa-paper-plane"

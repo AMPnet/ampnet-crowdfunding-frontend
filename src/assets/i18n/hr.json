@@ -392,6 +392,8 @@
   "admin.platform_config.facebook_app_id_input.title": "Facebook App ID",
   "admin.platform_config.facebook_app_id_input.placeholder": "facebookAppID",
   "admin.platform_config.submit": "Ažuriraj",
+  "header.sign_up": "Upis",
+  "header.sign_in": "Prijava",
   "auth.forgot_password.title": "Izgubljena lozinka",
   "auth.forgot_password.instructions_notice": "Upišite vašu email adresu na koju ćemo vam poslati upute kako poništiti lozinku.",
   "auth.forgot_password.email_input.title": "Email",

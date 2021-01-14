@@ -640,6 +640,10 @@
       "submit": "Update configuration"
     }
   },
+  "header": {
+    "sign_up": "Sign Up",
+    "sign_in": "Sign In"
+  },
   "auth": {
     "forgot_password": {
       "title": "Forgot password",

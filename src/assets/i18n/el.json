@@ -354,6 +354,8 @@
   "admin.platform_roles.change_confirmation.no": "Ακύρωση",
   "admin.platform_roles.change_confirmation.success": "Ολοκλήρωση μεταβίβασης αρμοδιοτήτων.",
   "admin.platform_roles.user_not_found": "Ο χρήστης με αυτό το mail δεν βρέθηκε.",
+  "header.sign_up": "Συνδέσου",
+  "header.sign_in": "Συνδέσου",
   "auth.forgot_password.title": "Ξέχασες τον κωδικό σου",
   "auth.forgot_password.instructions_notice": "Εισηγαγε το email σου και θα σου στείλουμε οδηγίες για να επαναφέρεις τον κωδικό πρόσβασής σου.",
   "auth.forgot_password.email_input.title": "Email",

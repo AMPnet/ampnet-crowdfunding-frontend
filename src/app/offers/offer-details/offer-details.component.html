@@ -54,12 +54,12 @@
 
                         <div class="right__progress">
                             <ng-container *ngIf="!!states.walletMW else smallSpinner">
-                            <span class="bold">
-                                {{ 'offers.offer_details.raised' | translate | splitPart:0 | interpolate:['raised', states.walletMW.totalFundsRaised | currencyDefault] }}
-                            </span>
+                                <span class="bold">
+                                    {{ 'offers.offer_details.raised' | translate | splitPart:0 | interpolate:['raised', states.walletMW.totalFundsRaised | currencyDefault] }}
+                                </span>
                                 <span>
-                                {{ 'offers.offer_details.raised' | translate | splitPart:1 | interpolate:['goal', states.walletMW.investmentCap | currencyDefault] }}
-                            </span>
+                                    {{ 'offers.offer_details.raised' | translate | splitPart:1 | interpolate:['goal', states.walletMW.investmentCap | currencyDefault] }}
+                                </span>
 
                                 <div class="progress__element">
                                     <div [style.width.%]="(states.walletMW?.totalFundsRaised / states.walletMW?.investmentCap) * 100"
@@ -93,32 +93,32 @@
                             </ng-container>
 
                             <div class="right__min-invest">
-                            <span class="bold">
-                                {{ 'offers.offer_details.min_invest' | translate | splitPart:0 | interpolate:['amount', states.project.min_per_user | currencyDefault] }}
-                            </span>
+                                <span class="bold">
+                                    {{ 'offers.offer_details.min_invest' | translate | splitPart:0 | interpolate:['amount', states.project.min_per_user | currencyDefault] }}
+                                </span>
                                 <span>
-                                {{ 'offers.offer_details.min_invest' | translate | splitPart:1 }}
-                            </span>
+                                    {{ 'offers.offer_details.min_invest' | translate | splitPart:1 }}
+                                </span>
                             </div>
                             <div class="dropdown-divider"></div>
 
                             <div class="right__max-invest">
-                            <span class="bold">
-                                {{ 'offers.offer_details.max_invest' | translate | splitPart:0 | interpolate:['amount', states.project.max_per_user | currencyDefault] }}
-                            </span>
+                                <span class="bold">
+                                    {{ 'offers.offer_details.max_invest' | translate | splitPart:0 | interpolate:['amount', states.project.max_per_user | currencyDefault] }}
+                                </span>
                                 <span>
-                                {{ 'offers.offer_details.max_invest' | translate | splitPart:1 }}
-                            </span>
+                                    {{ 'offers.offer_details.max_invest' | translate | splitPart:1 }}
+                                </span>
                             </div>
                             <div class="dropdown-divider"></div>
 
                             <div class="right__fund-period">
-                            <span class="bold">
-                                {{ 'offers.offer_details.funding_period' | translate | splitPart:0 }}
-                            </span>
+                                <span class="bold">
+                                    {{ 'offers.offer_details.funding_period' | translate | splitPart:0 }}
+                                </span>
                                 <span>
-                                {{ 'offers.offer_details.funding_period' | translate | splitPart:1 | interpolate:['from', states.project.start_date | date:'mediumDate']:['to', states.project.end_date | date:'mediumDate'] }}
-                            </span>
+                                    {{ 'offers.offer_details.funding_period' | translate | splitPart:1 | interpolate:['from', states.project.start_date | date:'mediumDate']:['to', states.project.end_date | date:'mediumDate'] }}
+                                </span>
                             </div>
                         </div>
 
@@ -153,7 +153,7 @@
                                         id="invest-button"
                                         [routerLink]="'/sign_up' | coopPath">
                                     <i class="mr-2 fas fa-chart-pie"></i>
-                                    <span>Sign Up & Invest</span>
+                                    <span>{{ 'offers.offer_details.invest.overview' | translate }}</span>
                                 </button>
 
                                 <div *ngIf="!isOverview">
@@ -165,11 +165,11 @@
                                             <i class="mr-2 fas fa-chart-pie"></i>
                                             <!-- Button content for laptop sizes -->
                                             <span class="d-none d-lg-block d-xl-none">
-                                            {{ (isPortfolioView ? 'offers.offer_details.invest.portfolio.short' : 'offers.offer_details.invest') | translate }}
-                                        </span>
+                                                {{ (isPortfolioView ? 'offers.offer_details.invest.portfolio.short' : 'offers.offer_details.invest') | translate }}
+                                            </span>
                                             <span class="d-lg-none d-xl-block">
-                                            {{ (isPortfolioView ? 'offers.offer_details.invest.portfolio' : 'offers.offer_details.invest') | translate }}
-                                        </span>
+                                                {{ (isPortfolioView ? 'offers.offer_details.invest.portfolio' : 'offers.offer_details.invest') | translate }}
+                                            </span>
                                         </button>
                                         <button *ngIf="!user.verified" [disabled]="!states.project.active"
                                                 class="btn btn-primary w-100 flex__center"
@@ -177,11 +177,11 @@
                                             <i class="mr-2 fas fa-chart-pie"></i>
                                             <!-- Button content for laptop sizes -->
                                             <span class="d-none d-lg-inline-block d-xl-none">
-                                            {{ 'offers.offer_details.verify_profile.short' | translate }}
-                                        </span>
+                                                {{ 'offers.offer_details.verify_profile.short' | translate }}
+                                            </span>
                                             <span class="d-lg-none d-xl-inline-block">
-                                            {{ 'offers.offer_details.verify_profile' | translate }}
-                                        </span>
+                                                {{ 'offers.offer_details.verify_profile' | translate }}
+                                            </span>
                                         </button>
                                     </ng-container>
                                 </div>

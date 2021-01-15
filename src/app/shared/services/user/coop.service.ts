@@ -22,8 +22,8 @@ export class CoopService {
 
                 const formData = new FormData();
 
-                formData.append('logo', logo, 'logo.png');
-                formData.append('banner', banner, 'banner.png');
+                formData.append('logo', logo, logo.name);
+                formData.append('banner', banner, banner.name);
 
                 formData.append('request', new Blob([JSON.stringify(reqData)], {
                     type: 'application/json'
@@ -51,11 +51,11 @@ export class CoopService {
         const formData = new FormData();
 
         if (logo) {
-            formData.append('logo', logo, 'logo.png');
+            formData.append('logo', logo, logo.name);
         }
 
         if (banner) {
-            formData.append('banner', banner, 'banner.png');
+            formData.append('banner', banner, banner.name);
         }
 
         formData.append('request', new Blob([JSON.stringify(removeEmpty(data))], {

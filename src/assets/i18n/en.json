@@ -1,6 +1,6 @@
 {
   "landing": {
-    "welcome": "Welcome to | {{ coopName }} | investing platform.",
+    "welcome": "Welcome to | {{ coopName }} | funding platform.",
     "explore": "Explore projects"
   },
   "offers": {
@@ -9,7 +9,8 @@
     "single_offer_item": {
       "raised": "{{ raised }} | raised of {{ goal }} goal",
       "ends_on": "Ends on {{ end_date }}",
-      "return": "Expected yearly return: | {{ from }} - {{ to }}",
+      "return": "Annual interest rate: | {{ from }} - {{ to }}",
+      "return.single": "Annual interest rate: | {{ to }}",
       "published_by": "Published by",
       "see_more": "See more"
     },
@@ -20,7 +21,8 @@
       "show_location": "Show location",
       "published_by": "Published by",
       "raised": "{{ raised }} | raised of {{ goal }} goal",
-      "return": "{{ from }} - {{ to }} | Expected yearly return",
+      "return": "{{ from }} - {{ to }} | Annual interest rate",
+      "return.single": "{{ to }} | Annual interest rate",
       "min_invest": "{{ amount }} | Min Investment",
       "max_invest": "{{ amount }} | Max Investment",
       "funding_period": "Funding period | {{ from }} - {{ to }}",
@@ -267,6 +269,7 @@
         "date_range_input.title": "Dates (From - To)",
         "investment_range_input.title": "Investment per member (From - To)",
         "expected_funding_input.title": "Expected funding",
+        "terms_input.title": "Project Investment Terms URL",
         "project_image_input": {
           "title": "Project image",
           "no_image_notice": "Project has no image set"
@@ -600,6 +603,7 @@
         "placeholder": "Instance"
       },
       "logo_input.title": "Logo",
+      "banner_input.title": "Banner image",
       "icon_url_input": {
         "title": "Icon URL",
         "placeholder": "https://path/to/icon.png"
@@ -613,6 +617,7 @@
         "placeholder": "fr:\"French\" el:\"Greek\":\"https://path.to/el.json\" fr-CA:\"French (Canada)\":\"https://path.to/fr-CA.json\""
       },
       "languages_fallback_input.title": "Use English as a fallback language",
+      "footer_input.title": "Footer",
       "arkane_id_input": {
         "title": "Arkane ID",
         "placeholder": "arkaneID"
@@ -670,6 +675,9 @@
       },
       "logo_input": {
         "title": "Logo"
+      },
+      "banner_input": {
+        "title": "Banner image"
       },
       "submit": "Create"
     },

@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { map, shareReplay, switchMap, tap } from 'rxjs/operators';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { CoopService } from '../../shared/services/user/coop.service';
 import { AppConfig, AppConfigService } from '../../shared/services/app-config.service';
 import { ErrorService } from '../../shared/services/error.service';
 import { ActivatedRoute } from '@angular/router';
-import { langConfigRE } from '../../shared/regex';
+import { LanguageService } from '../../shared/services/language.service';
 
 @Component({
     selector: 'app-platform-config',
@@ -23,6 +23,7 @@ export class PlatformConfigComponent {
                 private coopService: CoopService,
                 private appConfigService: AppConfigService,
                 private errorService: ErrorService,
+                private languageService: LanguageService,
                 private fb: FormBuilder) {
         this.showSecureConfig = !!this.route.snapshot.queryParams.secure;
         this.appConfig$ = this.refreshAppConfig.pipe(
@@ -35,10 +36,12 @@ export class PlatformConfigComponent {
                     name: [appConfig.name, Validators.required],
                     title: [appConfig.config?.title],
                     logo: [null],
+                    banner: [null],
                     icon: [appConfig.config?.icon_url],
                     coop_statute: [appConfig.config?.coop_statute_url],
-                    languages: [appConfig.config?.languages?.config, Validators.pattern(langConfigRE)],
+                    languages: [appConfig.config?.languages?.config, this.langsPattern],
                     languagesFallback: [appConfig.config?.languages?.fallback],
+                    footerHTML: [appConfig.config?.footerHTML],
                     hostname: [appConfig.hostname],
                     arkaneID: [appConfig.config?.arkane?.id],
                     arkaneEnv: [appConfig.config?.arkane?.env],
@@ -66,6 +69,7 @@ export class PlatformConfigComponent {
                         config: appConfig.languages,
                         fallback: appConfig.languagesFallback,
                     },
+                    footerHTML: appConfig.footerHTML,
                     arkane: {
                         id: appConfig.arkaneID,
                         env: appConfig.arkaneEnv,
@@ -74,14 +78,24 @@ export class PlatformConfigComponent {
                     facebookAppId: appConfig.facebookAppID,
                     reCaptchaSiteKey: appConfig.reCaptchaSiteKey
                 }
-            }, appConfig.logo).pipe(
+            }, appConfig.logo, appConfig.banner).pipe(
                 this.errorService.handleError,
                 tap(newAppConfig => {
                     form.get('logo').reset();
+                    form.get('banner').reset();
                     this.appConfigService.config = newAppConfig;
                     this.refreshAppConfig.next(newAppConfig);
                 })
             );
+        };
+    }
+
+    private get langsPattern(): ValidatorFn {
+        return (c: FormControl) => {
+            const langsLen = this.languageService.extractLanguages(c.value).length;
+            const langGroupsLen = String(c.value)
+                .trim().split(' ').filter(v => v !== '').length;
+            return langsLen === langGroupsLen ? null : {invalid: true};
         };
     }
 }

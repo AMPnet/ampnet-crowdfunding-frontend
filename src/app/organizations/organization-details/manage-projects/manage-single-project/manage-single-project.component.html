@@ -60,8 +60,7 @@
                                                         <label for="project-name">
                                                             {{ 'projects.edit.details.name_input.title' | translate }}
                                                         </label>
-                                                        <input aria-describedby="basic-addon1"
-                                                               aria-label="Username" class="input-reg w-100"
+                                                        <input class="input-reg w-100"
                                                                id="project-name"
                                                                formControlName="name"
                                                                type="text">
@@ -193,54 +192,62 @@
                                                         <div class="upload__label">
                                                             {{ 'projects.edit.details.project_files_input.title' | translate }}
                                                         </div>
-                                                        <div class="d-flex">
-                                                            <div class="row">
-                                                                <div class="col-12 uppy-docs">
-                                                                    <app-upload-area areaID='project-image'
-                                                                                     style="width: max-content"
-                                                                                     [restrictions]="{
+                                                        <app-upload-area areaID='project-image'
+                                                                         style="width: max-content"
+                                                                         [restrictions]="{
                                                                                         allowedFileTypes: ['image/*', 'application/pdf', 'application/zip', 'audio/*', 'video/*'],
                                                                                         maxFileSize: 10 * 1024 * 1024,
                                                                                         maxNumberOfFiles: 20
                                                                                      }"
-                                                                                     [filesControl]="updateForm.get('newDocuments')">
-                                                                    </app-upload-area>
-                                                                </div>
-                                                                <div class="col-12 uppy-docs__content">
-                                                                    <ng-container
-                                                                            *ngIf="states.project.documents?.length > 0 else noDocuments">
-                                                                        <div *ngFor="let file of states.project.documents; let i = index">
-                                                                            <div class="uppy-docs__content">
-                                                                                <div class="flex__center--space">
-                                                                                    <div class="docs__name"
-                                                                                         style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis">
-                                                                                        {{ file.name }}
-                                                                                    </div>
-                                                                                    <div class="docs__icons">
-                                                                                        <a [routerLink]=""
-                                                                                           (click)="deleteFile(states.project, file.id).subscribe()">
+                                                                         [filesControl]="updateForm.get('newDocuments')">
+                                                        </app-upload-area>
+                                                        <ng-container
+                                                                *ngIf="states.project.documents?.length > 0 else noDocuments">
+                                                            <div *ngFor="let file of states.project.documents; let i = index">
+                                                                <div class="uppy-docs__content">
+                                                                    <div class="flex__center--space">
+                                                                        <div class="docs__name"
+                                                                             style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis">
+                                                                            {{ file.name }}
+                                                                        </div>
+                                                                        <div class="docs__icons">
+                                                                            <a [routerLink]=""
+                                                                               (click)="deleteFile(states.project, file.id).subscribe()">
                                                                                             <span class="mr-3 gray-text">
                                                                                                 <i class="fas fa-trash"></i>
                                                                                             </span>
-                                                                                        </a>
-                                                                                        <a class="cursor-pointer gray-text"
-                                                                                           href="{{ file.link }}">
-                                                                                            <i class="fas fa-file-download"></i>
-                                                                                        </a>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
+                                                                            </a>
+                                                                            <a class="cursor-pointer gray-text"
+                                                                               href="{{ file.link }}">
+                                                                                <i class="fas fa-file-download"></i>
+                                                                            </a>
                                                                         </div>
-                                                                    </ng-container>
-                                                                    <ng-template #noDocuments>
-                                                                        <div class="text-center uppy-docs__content">
-                                                                            {{ 'projects.edit.details.project_files_input.no_files_notice' | translate }}
-                                                                        </div>
-                                                                    </ng-template>
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
+                                                        </ng-container>
+                                                        <ng-template #noDocuments>
+                                                            <div class="text-center uppy-docs__content">
+                                                                {{ 'projects.edit.details.project_files_input.no_files_notice' | translate }}
+                                                            </div>
+                                                        </ng-template>
                                                     </div>
+
+<!--                                                    TODO: WIP; implement when backend is ready-->
+<!--                                                    <div class="right__upload-docs mt-3">-->
+<!--                                                        <div class="upload__label">-->
+<!--                                                            {{ 'projects.edit.details.terms_input.title' | translate }}-->
+<!--                                                        </div>-->
+<!--                                                        <app-upload-area areaID='project-terms'-->
+<!--                                                                         style="width: max-content"-->
+<!--                                                                         [restrictions]="{-->
+<!--                                                                                        allowedFileTypes: ['image/*', 'application/pdf', 'application/zip', 'audio/*', 'video/*'],-->
+<!--                                                                                        maxFileSize: 10 * 1024 * 1024,-->
+<!--                                                                                        maxNumberOfFiles: 1-->
+<!--                                                                                     }"-->
+<!--                                                                         [firstFileControl]="updateForm.get('newTerms')">-->
+<!--                                                        </app-upload-area>-->
+<!--                                                    </div>-->
                                                 </div>
                                             </div>
                                         </form>

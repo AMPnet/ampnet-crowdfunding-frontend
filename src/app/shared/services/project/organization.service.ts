@@ -19,7 +19,7 @@ export class OrganizationService {
             description: description
         };
 
-        formData.append('image', photo, 'image.png');
+        formData.append('image', photo, photo.name);
         formData.append('request', new Blob([JSON.stringify(orgInfo)], {
             type: 'application/json'
         }), 'request.json');
@@ -33,10 +33,6 @@ export class OrganizationService {
 
     getSingleOrganization(orgID: string) {
         return this.http.get<Organization>(`/api/project/public/organization/${orgID}`);
-    }
-
-    getAllOrganizations() {
-        return this.http.get<PageableOrganizationsResponse>('/api/project/organization');
     }
 
     inviteUser(orgID: string, emails: string[]) {

@@ -62,21 +62,26 @@ const generateXls = (lang: string) => {
 
     let x = 1;
     for (const [primEntry, primVal] of Object.entries(primEntries)) {
+        let headerRow: boolean;
         if (x === 1) {
-            worksheet.cell(x, 2).string(primKey).style(style);
-        } else {
-            worksheet.cell(x, 1).string(primEntry).style(style);
-            worksheet.cell(x, 2).string(primVal).style(style);
+            headerRow = true;
+            x++;
         }
+
+        if (headerRow) {
+            worksheet.cell(x - 1, 2).string(primKey).style(style);
+        }
+
+        worksheet.cell(x, 1).string(primEntry).style(style);
+        worksheet.cell(x, 2).string(primVal).style(style);
 
         const secLangs = Object.entries(secondaries);
         for (let secIndex = 0; secIndex < secLangs.length; secIndex++) {
             const [secKey, secEntries] = secLangs[secIndex];
-            if (x === 1) {
-                worksheet.cell(x, 3 + secIndex).string(secKey).style(style);
-            } else {
-                worksheet.cell(x, 3 + secIndex).string(secEntries[primEntry] || '').style(style);
+            if (headerRow) {
+                worksheet.cell(x - 1, 3 + secIndex).string(secKey).style(style);
             }
+            worksheet.cell(x, 3 + secIndex).string(secEntries[primEntry] || '').style(style);
         }
 
         x++;

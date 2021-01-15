@@ -8,10 +8,6 @@ import { UserService } from '../shared/services/user/user.service';
     styleUrls: ['./public-layout.component.css']
 })
 export class PublicLayoutComponent {
-    constructor(private router: RouterService,
-                private userService: UserService) {
-        if (this.userService.isLoggedIn()) {
-            router.navigate(['/dash']);
-        }
+    constructor() {
     }
 }

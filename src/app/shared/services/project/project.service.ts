@@ -25,7 +25,7 @@ export class ProjectService {
     }
 
     updateProject(projectID: string, data: UpdateProjectData,
-                  image?: File, documents?: File[]) {
+                  image?: File, terms?: File, documents?: File[]) {
         const formData = new FormData();
 
         formData.append('request', new Blob([JSON.stringify(data)], {
@@ -34,6 +34,10 @@ export class ProjectService {
 
         if (image) {
             formData.append('image', image, image.name);
+        }
+
+        if (terms) {
+            formData.append('termsOfService', terms, terms.name);
         }
 
         if (!!documents && documents.length > 0) {

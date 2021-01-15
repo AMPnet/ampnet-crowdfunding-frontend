@@ -165,6 +165,7 @@ export interface AppConfig {
     created_at?: Date;
     hostname?: string;
     logo?: string;
+    banner?: string;
     need_user_verification?: boolean;
     config?: CustomConfig;
 }
@@ -187,4 +188,5 @@ export interface CustomConfig {
     googleClientId?: string;
     facebookAppId?: string;
     reCaptchaSiteKey?: string;
+    footerHTML?: string;
 }

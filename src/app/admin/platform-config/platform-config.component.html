@@ -36,6 +36,18 @@
                                  [firstFileControl]="updateForm.get('logo')">
                 </app-upload-area>
 
+                <label for="banner" class="app-page-label mt-3">
+                    {{ 'admin.platform_config.banner_input.title' | translate }}
+                </label>
+                <app-upload-area areaID='banner-image' id="banner"
+                                 [restrictions]="{
+                                    allowedFileTypes: ['image/*'],
+                                    maxFileSize: 10 * 1024 * 1024,
+                                    maxNumberOfFiles: 1
+                                 }"
+                                 [firstFileControl]="updateForm.get('banner')">
+                </app-upload-area>
+
                 <label for="icon" class="app-page-label mt-3">
                     {{ 'admin.platform_config.icon_url_input.title' | translate }}
                 </label>
@@ -64,6 +76,16 @@
                     <label for="languages-fallback" class="app-page-label ml-2 mb-0">
                         {{ 'admin.platform_config.languages_fallback_input.title' | translate }}
                     </label>
+                </div>
+
+                <label for="footer" class="app-page-label mt-3">
+                    {{ 'admin.platform_config.footer_input.title' | translate }}
+                </label>
+                <div class="input-group">
+                    <quill-editor id="footer"
+                                  formControlName="footerHTML"
+                                  [styles]="{ height: '200px' }">
+                    </quill-editor>
                 </div>
 
                 <!-- Hidden because of security reasons. -->

@@ -104,6 +104,7 @@ import { TranslationsModule } from './translations.module';
 import { VeriffComponent } from './settings/user/identity/veriff/veriff.component';
 import { AcceptTermsComponent } from './settings/user/identity/accept-terms/accept-terms.component';
 import { IdentyumComponent } from './settings/user/identity/identyum/identyum.component';
+import { StaticPageComponent } from './static-page/static-page.component';
 
 @NgModule({
     declarations: [
@@ -191,6 +192,7 @@ import { IdentyumComponent } from './settings/user/identity/identyum/identyum.co
         NewInstanceComponent,
         PlatformConfigComponent,
         CaptchaNoticeComponent,
+        StaticPageComponent,
         InterpolatePipe,
         SplitPartPipe,
         BackNavigationDirective
@@ -215,9 +217,12 @@ import { IdentyumComponent } from './settings/user/identity/identyum/identyum.co
         BsDatepickerModule.forRoot(),
         NgxCaptchaModule
     ],
-    entryComponents: [
-        MapModalComponent
-    ],
+    // TODO: Test whether maps work without entryComponent in production build
+    // Maybe we need to remove it because this error happened when added quill editor
+    // inside platform configuration: https://github.com/angular/angular/issues/31221
+    // entryComponents: [
+    //     MapModalComponent
+    // ],
     providers: [
         AppConfigService,
         {

@@ -30,8 +30,7 @@
             </div>
 
             <div class="offer-right first"
-                 [class.add-padding]="states.project.documents.length === 0 &&
-             states.project.news.length === 0">
+                 [class.add-padding]="states.project.documents.length === 0 && states.project.news.length === 0">
                 <div class="right__container app__full-width--padding">
                     <div class="right__text">
                         <div>
@@ -75,7 +74,8 @@
                             <ng-container *ngIf="states.project.roi.to != 0">
                                 <div class="right__return-rate">
                                 <span class="bold">
-                                    <ng-container *ngIf="states.project.roi.from !== states.project.roi.to; else returnSingle">
+                                    <ng-container
+                                            *ngIf="states.project.roi.from !== states.project.roi.to; else returnSingle">
                                         {{ 'offers.offer_details.return' | translate | splitPart:0
                                             | interpolate:['from', states.project.roi.from / 100 | percent:'1.0-2']:['to', states.project.roi.to / 100 | percent:'1.0-2'] }}
                                     </ng-container>

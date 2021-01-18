@@ -1,8 +1,7 @@
 @import "app";
 
 .top-container {
-  background-color: var(--primary-color);
-  min-height: 100vh;
+  background-color: $primary-color;
 }
 
 .content-container {

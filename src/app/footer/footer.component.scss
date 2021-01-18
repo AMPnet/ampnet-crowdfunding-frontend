@@ -1,0 +1,6 @@
+@import "colors.scss";
+
+.divider-top {
+  border: thin solid transparent;
+  border-top-color: $border-color;
+}

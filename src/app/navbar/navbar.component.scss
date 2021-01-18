@@ -36,6 +36,6 @@
 
 @include media-breakpoint-up(lg) {
   .navbar {
-    display: none;
+    visibility: hidden;
   }
 }

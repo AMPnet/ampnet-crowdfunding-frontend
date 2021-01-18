@@ -204,7 +204,7 @@
                                                         <ng-container
                                                                 *ngIf="states.project.documents?.length > 0 else noDocuments">
                                                             <div *ngFor="let file of states.project.documents; let i = index">
-                                                                <div class="uppy-docs__content">
+                                                                <div class="uppy-docs__content mt-2">
                                                                     <div class="flex__center--space">
                                                                         <div class="docs__name"
                                                                              style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis">
@@ -233,21 +233,38 @@
                                                         </ng-template>
                                                     </div>
 
-<!--                                                    TODO: WIP; implement when backend is ready-->
-<!--                                                    <div class="right__upload-docs mt-3">-->
-<!--                                                        <div class="upload__label">-->
-<!--                                                            {{ 'projects.edit.details.terms_input.title' | translate }}-->
-<!--                                                        </div>-->
-<!--                                                        <app-upload-area areaID='project-terms'-->
-<!--                                                                         style="width: max-content"-->
-<!--                                                                         [restrictions]="{-->
-<!--                                                                                        allowedFileTypes: ['image/*', 'application/pdf', 'application/zip', 'audio/*', 'video/*'],-->
-<!--                                                                                        maxFileSize: 10 * 1024 * 1024,-->
-<!--                                                                                        maxNumberOfFiles: 1-->
-<!--                                                                                     }"-->
-<!--                                                                         [firstFileControl]="updateForm.get('newTerms')">-->
-<!--                                                        </app-upload-area>-->
-<!--                                                    </div>-->
+                                                    <div class="right__upload-docs mt-3">
+                                                        <div class="upload__label">
+                                                            {{ 'projects.edit.details.terms_file_input.title' | translate }}
+                                                        </div>
+                                                        <app-upload-area areaID='project-terms'
+                                                                         style="width: max-content"
+                                                                         [restrictions]="{
+                                                                                        allowedFileTypes: ['image/*', 'application/pdf', 'application/zip', 'audio/*', 'video/*'],
+                                                                                        maxFileSize: 10 * 1024 * 1024,
+                                                                                        maxNumberOfFiles: 1
+                                                                                     }"
+                                                                         [firstFileControl]="updateForm.get('newTerms')">
+                                                        </app-upload-area>
+                                                        <div class="mt-2">
+                                                            <ng-container *ngIf="states.project.terms_of_service; else noTermsFile">
+                                                                <span>
+                                                                    {{ 'projects.edit.details.terms_file_input.download_file' | translate
+                                                                        | splitPart:0 }}
+                                                                </span>
+                                                                <a href="{{ states.project.terms_of_service }}" target="_blank" rel="noopener noreferrer">
+                                                                    {{ 'projects.edit.details.terms_file_input.download_file' | translate | splitPart:1 }}
+                                                                </a>
+                                                                <span>
+                                                                    {{ 'projects.edit.details.terms_file_input.download_file' | translate
+                                                                        | splitPart:2 }}
+                                                                </span>
+                                                            </ng-container>
+                                                            <ng-template #noTermsFile>
+                                                                {{ 'projects.edit.details.terms_file_input.no_file' | translate }}
+                                                            </ng-template>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </form>

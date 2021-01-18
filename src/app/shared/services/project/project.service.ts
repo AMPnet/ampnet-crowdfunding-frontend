@@ -108,6 +108,7 @@ export interface Project {
     gallery: string[];
     active: boolean;
     coop: string;
+    terms_of_service: string;
     organization?: Organization | OrganizationBasic;
     wallet: Wallet;
 }

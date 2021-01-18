@@ -269,7 +269,6 @@
         "date_range_input.title": "Dates (From - To)",
         "investment_range_input.title": "Investment per member (From - To)",
         "expected_funding_input.title": "Expected funding",
-        "terms_input.title": "Project Investment Terms URL",
         "project_image_input": {
           "title": "Project image",
           "no_image_notice": "Project has no image set"
@@ -278,6 +277,11 @@
         "project_files_input": {
           "title": "Project files",
           "no_files_notice": "No files added"
+        },
+        "terms_file_input": {
+          "title": "Project Investment Terms",
+          "no_file": "No file added",
+          "download_file": "Download current terms | here |"
         }
       },
       "news": {

@@ -1,4 +1,4 @@
-<div class="w-100 p-3 divider-top">
+<div class="w-100 p-3 divider-top" *ngIf="appConfig.config.config?.footerHTML">
     <quill-view [content]="appConfig.config.config?.footerHTML"
                 format="html" theme="snow">
     </quill-view>

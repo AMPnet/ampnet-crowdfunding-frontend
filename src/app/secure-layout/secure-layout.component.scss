@@ -9,13 +9,12 @@
   z-index: 1006;
   transform: all 0.3s;
   width: 220px;
-  height: 100%;
 }
 
 #main-container {
   display: flex;
   flex-direction: column;
-  min-height: calc(100vh - 50px);
+  min-height: 100vh;
   position: relative;
   width: 100%;
 }

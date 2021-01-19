@@ -682,7 +682,8 @@
       "banner_input": {
         "title": "Banner image"
       },
-      "submit": "Create"
+      "submit": "Create",
+      "created": "Instance has been created!"
     },
     "sign_up": {
       "title": "Sign up",

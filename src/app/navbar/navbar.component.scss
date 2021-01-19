@@ -1,31 +1,31 @@
 @import 'app';
 
 .navbar {
-    height: 56px;
-    position: sticky;
-    position: -webkit-sticky;
-    top: 0;
-    color: #DEA546;
-    background: #fff;
-    box-shadow: 5px 3px 6px rgba(0, 0, 0, 0.1);
-    z-index: 1001 !important;
-    width: 100%;
-    &-logo img {
-      max-width: 150px;
-      max-height: 35px;
-      margin-left: 10px;
+  height: 56px;
+  color: #DEA546;
+  background: #fff;
+  box-shadow: 5px 3px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1001 !important;
+  width: 100%;
+
+  &-logo img {
+    max-width: 150px;
+    max-height: 35px;
+    margin-left: 10px;
+  }
+
+  &-hamburger {
+    color: #111111;
+
+    svg {
+      font-size: 17px;
+      margin-right: 10px;
     }
-    &-hamburger {
-      color: #111111;
-      svg {
-        font-size: 17px;
-        margin-right: 10px;
-      }
-    }
+  }
 }
 
 .sidebar-hidden {
-    left: -240px!important;
+  left: -240px !important;
 }
 
 #basic-addon1 {
@@ -36,6 +36,6 @@
 
 @include media-breakpoint-up(lg) {
   .navbar {
-    visibility: hidden;
+    display: none;
   }
 }

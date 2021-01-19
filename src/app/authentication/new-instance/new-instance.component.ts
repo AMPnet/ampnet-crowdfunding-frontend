@@ -53,7 +53,9 @@ export class NewInstanceComponent implements OnInit {
 
         return this.coopService.createCoop(createCoopData, coop.logo, coop.banner).pipe(
             this.errorService.handleError,
-            switchMap(() => this.popupService.success('Cooperative has been created!')),
+            switchMap(() => this.popupService.success(
+                this.translate.instant('auth.new_instance.created')
+            )),
             tap(() => this.router.router.navigate([`/${coop.identifier}`])),
         );
     }

@@ -126,9 +126,10 @@
                             <div *ngIf="!isPortfolioView">
                                 <ng-container *ngTemplateOutlet="investButtons"></ng-container>
                             </div>
-                            <div *ngIf="isPortfolioView && !disableInvestButton(states.project, states.walletMW)"
-                                 class="portfolio__invest">
-                                <ng-container *ngTemplateOutlet="investButtons"></ng-container>
+                            <div *ngIf="isPortfolioView" class="portfolio__invest">
+                                <ng-container *ngIf="!disableInvestButton(states.project, states.walletMW)">
+                                    <ng-container *ngTemplateOutlet="investButtons"></ng-container>
+                                </ng-container>
 
                                 <ng-container *ngIf="(isProjectCancelable$ | async) as isCancelable">
                                     <button app-action-button

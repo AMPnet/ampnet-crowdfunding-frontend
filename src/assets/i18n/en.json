@@ -280,8 +280,7 @@
         },
         "terms_file_input": {
           "title": "Project Investment Terms",
-          "no_file": "No file added",
-          "download_file": "Download current terms | here |"
+          "no_file": "No file added"
         }
       },
       "news": {

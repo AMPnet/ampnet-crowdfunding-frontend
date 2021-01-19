@@ -13,6 +13,7 @@ import { URLValidator } from '../../../../shared/validators/url.validator';
 import { RouterService } from '../../../../shared/services/router.service';
 import { ErrorService } from '../../../../shared/services/error.service';
 import { TranslateService } from '@ngx-translate/core';
+import { DocPurpose, Document } from '../../../../shared/services/project/organization.service';
 
 @Component({
     selector: 'app-manage-single-project',
@@ -22,7 +23,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class ManageSingleProjectComponent {
     walletState = WalletState;
 
-    project$: Observable<Project>;
+    project$: Observable<ProjectView>;
     projectWallet$: Observable<Wallet | WalletState>;
     updateForm$: Observable<FormGroup>;
     newsForm: FormGroup;
@@ -45,6 +46,11 @@ export class ManageSingleProjectComponent {
         const projectUUID = this.route.snapshot.params.projectID;
         this.project$ = this.refreshProjectSubject.pipe(
             switchMap(project => project !== null ? of(project) : this.projectService.getProject(projectUUID)),
+            map(project => (<ProjectView>{
+                ...project,
+                generic_documents: project.documents.filter(d => d.purpose === DocPurpose.GENERIC),
+                terms_document: project.documents.filter(d => d.purpose === DocPurpose.TERMS)[0]
+            })),
             shareReplay(1)
         );
 
@@ -197,4 +203,9 @@ export class ManageSingleProjectComponent {
         const to = roiFromGroup.get('to').value;
         return from !== null && to !== null && from <= to ? null : {invalidROI: true};
     }
+}
+
+interface ProjectView extends Project {
+    generic_documents: Document[];
+    terms_document: Document;
 }

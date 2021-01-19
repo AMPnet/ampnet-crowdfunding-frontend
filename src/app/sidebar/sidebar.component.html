@@ -141,12 +141,13 @@
 
         <ul class="list-unstyled components" id="main-menu">
             <span class="full-name">{{ states.user?.first_name | titlecase }} {{ states.user?.last_name | titlecase }}</span>
-            <li routerLinkActive="side-active" class="mt-2">
-                <a href="mailto://info@ampnet.io" style="all: unset">
+            <a href="mailto://info@ampnet.io" style="all: unset">
+                <li routerLinkActive="side-active" class="mt-2">
                     <i class="menu-icon fas fa-envelope-open"></i>
                     <span>{{ 'navigation.info.contact_us' | translate }}</span>
-                </a>
-            </li>
+                </li>
+            </a>
+
             <li (click)="onLogout()" routerLinkActive="side-active">
                 <i class="menu-icon fas fa-sign-out-alt"></i>
                 <span>{{ 'navigation.info.logout' | translate }}</span>

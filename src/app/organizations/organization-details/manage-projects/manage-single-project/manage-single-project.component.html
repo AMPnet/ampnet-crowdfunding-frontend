@@ -202,8 +202,8 @@
                                                                          [filesControl]="updateForm.get('newDocuments')">
                                                         </app-upload-area>
                                                         <ng-container
-                                                                *ngIf="states.project.documents?.length > 0 else noDocuments">
-                                                            <div *ngFor="let file of states.project.documents; let i = index">
+                                                                *ngIf="states.project.generic_documents?.length > 0 else noDocuments">
+                                                            <div *ngFor="let file of states.project.generic_documents; let i = index">
                                                                 <div class="uppy-docs__content mt-2">
                                                                     <div class="flex__center--space">
                                                                         <div class="docs__name"
@@ -237,7 +237,8 @@
                                                         <div class="upload__label">
                                                             {{ 'projects.edit.details.terms_file_input.title' | translate }}
                                                         </div>
-                                                        <app-upload-area areaID='project-terms'
+                                                        <app-upload-area *ngIf="!states.project.terms_document"
+                                                                         areaID='project-terms'
                                                                          style="width: max-content"
                                                                          [restrictions]="{
                                                                                         allowedFileTypes: ['image/*', 'application/pdf', 'application/zip', 'audio/*', 'video/*'],
@@ -247,18 +248,28 @@
                                                                          [firstFileControl]="updateForm.get('newTerms')">
                                                         </app-upload-area>
                                                         <div class="mt-2">
-                                                            <ng-container *ngIf="states.project.terms_of_service; else noTermsFile">
-                                                                <span>
-                                                                    {{ 'projects.edit.details.terms_file_input.download_file' | translate
-                                                                        | splitPart:0 }}
-                                                                </span>
-                                                                <a href="{{ states.project.terms_of_service }}" target="_blank" rel="noopener noreferrer">
-                                                                    {{ 'projects.edit.details.terms_file_input.download_file' | translate | splitPart:1 }}
-                                                                </a>
-                                                                <span>
-                                                                    {{ 'projects.edit.details.terms_file_input.download_file' | translate
-                                                                        | splitPart:2 }}
-                                                                </span>
+                                                            <ng-container
+                                                                    *ngIf="states.project.terms_document; else noTermsFile">
+                                                                <div class="uppy-docs__content mt-2">
+                                                                    <div class="flex__center--space">
+                                                                        <div class="docs__name"
+                                                                             style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis">
+                                                                            {{ states.project.terms_document.name }}
+                                                                        </div>
+                                                                        <div class="docs__icons">
+                                                                            <a [routerLink]=""
+                                                                               (click)="deleteFile(states.project, states.project.terms_document.id).subscribe()">
+                                                                                <span class="mr-3 gray-text">
+                                                                                    <i class="fas fa-trash"></i>
+                                                                                </span>
+                                                                            </a>
+                                                                            <a class="cursor-pointer gray-text"
+                                                                               href="{{ states.project.terms_document.link }}">
+                                                                                <i class="fas fa-file-download"></i>
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                             </ng-container>
                                                             <ng-template #noTermsFile>
                                                                 {{ 'projects.edit.details.terms_file_input.no_file' | translate }}

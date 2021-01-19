@@ -73,7 +73,7 @@ export interface Organization {
     description: string;
     header_image: string;
     legal_info: string;
-    documents?: OrgDocument[];
+    documents?: Document[];
     wallet_hash?: string;
     project_count: number;
 }
@@ -83,13 +83,19 @@ export interface OrganizationBasic {
     name: string;
 }
 
-export interface OrgDocument {
+export interface Document {
     id: number;
     link: string;
     name: string;
     type: string;
+    purpose: DocPurpose;
     size: number;
     created_at: string;
+}
+
+export enum DocPurpose {
+    GENERIC = 'GENERIC',
+    TERMS = 'TERMS'
 }
 
 interface PageableOrganizationsResponse {

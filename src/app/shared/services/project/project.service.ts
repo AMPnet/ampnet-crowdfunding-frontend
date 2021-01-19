@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BackendHttpClient } from '../backend-http-client.service';
-import { Organization, OrganizationBasic, OrgDocument } from './organization.service';
+import { Organization, OrganizationBasic, Document } from './organization.service';
 import { CacheService } from '../cache.service';
 import { Wallet } from '../wallet/wallet.service';
 import { AppConfigService } from '../app-config.service';
@@ -104,11 +104,10 @@ export interface Project {
     max_per_user: number;
     main_image: string;
     news: string[];
-    documents: OrgDocument[];
+    documents: Document[];
     gallery: string[];
     active: boolean;
     coop: string;
-    terms_of_service: string;
     organization?: Organization | OrganizationBasic;
     wallet: Wallet;
 }

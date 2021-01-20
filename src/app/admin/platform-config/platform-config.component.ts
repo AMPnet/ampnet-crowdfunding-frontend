@@ -96,7 +96,7 @@ export class PlatformConfigComponent {
 
     private get langsPattern(): ValidatorFn {
         return (c: FormControl) => {
-            const langsLen = this.languageService.extractLanguages(c.value || '').length;
+            const langsLen = this.languageService.extractLanguages(c.value).length;
             const langGroupsLen = String(c.value)
                 .trim().split(' ').filter(v => v !== '').length;
             return langsLen === langGroupsLen ? null : {invalid: true};

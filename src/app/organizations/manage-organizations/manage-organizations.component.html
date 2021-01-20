@@ -4,35 +4,49 @@
             invites: organizationInvites$ | async
     } as states">
         <div class="app-page-header">
-            <h1 class="app-page-title">Investment groups</h1>
+            <h1 class="app-page-title">
+                {{ 'organizations.title' | translate }}
+            </h1>
             <div *ngIf="states.organizations !== null">
                 <button class="btn btn-center" routerLink="new">
-                    <i class="fas fa-plus mr-lg-3" ></i>
-                    <span class="btn__text">Create group</span>
+                    <i class="fas fa-plus mr-lg-3"></i>
+                    <span class="btn__text">
+                        {{ 'organizations.create_org' | translate }}
+                    </span>
                 </button>
             </div>
         </div>
 
-        <div class="space">
-            <div *ngIf="states.invites?.length > 0" 
-                class="alert alert-success w-100 flex__center-space col-12 col-lg-4">
-               <div>
-                   <i class="fas fa-bolt"></i>
-                   <b>You have invites pending</b>
-               </div>
-           </div>
+        <div *ngIf="states.invites?.length > 0"
+             class="alert alert-success w-100 flex__center--space col-12 col-lg-6 col-xl-4">
+            <div>
+                <i class="fas fa-bolt"></i>
+                <b>{{ 'organizations.pending_invite_notice' | translate }}</b>
+            </div>
         </div>
-        
+
 
         <ng-container *ngIf="states.organizations !== null else spinner">
-            <div *ngIf="states.organizations?.length > 0" class="groups space">
+            <div class="app-page-subtitle">
+                {{ 'organizations.my' | translate }}
+            </div>
+            <div *ngIf="states.organizations?.length > 0" class="groups">
                 <ul class="list-group">
                     <li *ngFor="let org of states.organizations" class="list__item"
                         routerLink="{{ org.uuid }}">
                         <div class="item__desc">
-                            <div class="item__title">{{ org.name }}</div>
-                            <div class="item__projects-count"><b>{{org.project_count}} </b>
-                                {{ org.project_count === 1 ? "Project" : "Projects" }}
+                            <div class="item__title">{{ org.name | uppercase }}</div>
+                            <div class="item__projects-count">
+                                <span>
+                                    {{ 'organizations.org_item.project_count' | translate | splitPart:0 }}
+                                </span>
+                                <span class="bold">
+                                    {{ 'organizations.org_item.project_count' | translate
+                                        | splitPart:1 | interpolate:['count', org.project_count] }}
+                                </span>
+                                <span>
+                                    {{ 'organizations.org_item.project_count' | translate | splitPart:2 }}
+                                </span>
                             </div>
                         </div>
                         <div class="item__img">
@@ -42,22 +56,31 @@
                 </ul>
             </div>
             <div *ngIf="states.organizations.length === 0"
-                 class="empty-group space">
-                <div class="app-page-subtitle">My groups</div>
+                 class="empty-group">
                 <div class="empty__label" class="row justify-content-center">
-                    You currently don't have access to any groups.
+                    {{ 'organizations.empty' | translate }}
                 </div>
             </div>
         </ng-container>
 
         <div class="invites">
-            <div class="app-page-subtitle space">Group invites</div>
-            <ng-container *ngIf="states.invites !== null else spinner" class="space">
-                <div class="space">
+            <div class="app-page-subtitle">
+                {{ 'organizations.invites.title' | translate }}
+            </div>
+            <ng-container *ngIf="states.invites !== null else spinner">
+                <div>
                     <ul *ngIf="states.invites?.length > 0" class="list-group">
                         <li *ngFor="let invite of states.invites" class="list__item">
                             <div class="item__content">
-                                <div class="item__title">{{ invite.organization_name }}</div>
+                                <div class="item__desc">
+                                    <div class="item__title">{{ invite.organization_name | titlecase }}</div>
+
+                                    <!-- TODO: implement when data is available from API -->
+                                    <!-- <div class="item__projects-count d-lg-none"><b>3 </b>
+                                        Projects
+                                    </div> -->
+                                </div>
+
                                 <div class="item__img">
                                     <img src="{{invite.organization_header_image}}" alt="Organization image">
                                 </div>
@@ -66,13 +89,15 @@
                                 <button (click)="acceptInvite(invite.organization_uuid)"
                                         class="btn btn-success">
                                     <i class="far fa-check mr-3"></i>
-                                    <span class="">Join group</span>
+                                    <span>
+                                        {{ 'organizations.invites.join' | translate }}
+                                    </span>
                                 </button>
                             </div>
                         </li>
                     </ul>
                     <div *ngIf="states.invites?.length === 0" class="row justify-content-center">
-                        Not invited to any groups
+                        {{ 'organizations.invites.empty' | translate }}
                     </div>
                 </div>
             </ng-container>

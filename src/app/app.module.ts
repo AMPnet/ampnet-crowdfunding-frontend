@@ -9,14 +9,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { WalletComponent } from './wallet/wallet.component';
 import { OffersComponent } from './offers/offers.component';
 import { SingleOfferItemComponent } from './offers/single-offer-item/single-offer-item.component';
-import { WalletTxHistoryComponent } from './wallet/wallet-tx-history/wallet-tx-history.component';
 import { OfferDetailsComponent } from './offers/offer-details/offer-details.component';
-import { DepositModalComponent } from './wallet/deposit-modal/deposit-modal.component';
 import { InvestComponent } from './invest/invest.component';
 import { MyPortfolioComponent } from './my-portfolio/my-portfolio.component';
 import { SingleInvestItemComponent } from './my-portfolio/single-invest-item/single-invest-item.component';
 import { InvestmentDetailsComponent } from './investment-details/investment-details.component';
-import { SingleProposalItemComponent } from './investment-details/single-proposal-item/single-proposal-item.component';
 import { PaymentOptionsComponent } from './payment-options/payment-options.component';
 import { FooterComponent } from './footer/footer.component';
 import { NewProposalComponent } from './investment-details/new-proposal/new-proposal.component';
@@ -27,41 +24,34 @@ import { PublicLayoutComponent } from './public-layout/public-layout.component';
 import { SecureLayoutComponent } from './secure-layout/secure-layout.component';
 import { HeaderComponent } from './public-layout/header/header.component';
 import { SignUpComponent } from './authentication/sign-up/sign-up.component';
-import { TxOverviewComponent } from './wallet/tx-overview/tx-overview.component';
-import { LogInModalComponent } from './authentication/log-in-modal/log-in-modal.component';
 import { NewPaymentOptionComponent } from './payment-options/new-payment-option/new-payment-option.component';
-import { WithdrawModalComponent } from './wallet/withdraw-modal/withdraw-modal.component';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { ConfirmEmailComponent } from './authentication/confirm-email/confirm-email.component';
-import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from 'angularx-social-login';
-import { NgxSpinnerModule } from 'ngx-spinner';
+import { SocialLoginModule } from 'angularx-social-login';
 import { CreateOrganizationComponent } from './organizations/create-organization/create-organization.component';
 import { ManageOrganizationsComponent } from './organizations/manage-organizations/manage-organizations.component';
 import { OrganizationDetailsComponent } from './organizations/organization-details/organization-details.component';
 import { CreateNewProjectComponent } from './organizations/organization-details/manage-projects/create-new-project/create-new-project.component';
-import { OnboardingComponent } from './settings/user/identity/onboarding/onboarding.component';
 import { ManageProjectsComponent } from './organizations/organization-details/manage-projects/manage-projects.component';
 import { ManageSingleProjectComponent } from './organizations/organization-details/manage-projects/manage-single-project/manage-single-project.component';
 import { VerifySignOfferComponent } from './offers/offer-details/verify-sign-offer/verify-sign-offer.component';
 import { ManagePaymentsComponent } from './organizations/organization-details/manage-projects/manage-single-project/manage-payments/manage-payments.component';
-import { ManageWithdrawalsComponent } from './manage-withdrawals/manage-withdrawals.component';
-import { SingleWithdrawalComponent } from './manage-withdrawals/single-withdrawal/single-withdrawal.component';
+import { ManageWithdrawalsComponent } from './admin/manage-withdrawals/manage-withdrawals.component';
+import { SingleWithdrawalComponent } from './admin/manage-withdrawals/single-withdrawal/single-withdrawal.component';
 import { DepositComponent } from './deposit/deposit.component';
-import { ManageDepositsComponent } from './manage-deposits/manage-deposits.component';
-import { ManageSingleDepositComponent } from './manage-deposits/manage-single-deposit/manage-single-deposit.component';
+import { ManageDepositsComponent } from './admin/manage-deposits/manage-deposits.component';
+import { ManageSingleDepositComponent } from './admin/manage-deposits/manage-single-deposit/manage-single-deposit.component';
 import { WithdrawComponent } from './withdraw/withdraw.component';
-import { WalletActivationComponent } from './wallet-activation/wallet-activation.component';
-import { UserActivationComponent } from './wallet-activation/user-activation/user-activation.component';
-import { GroupActivationComponent } from './wallet-activation/group-activation/group-activation.component';
-import { ProjectActivationComponent } from './wallet-activation/project-activation/project-activation.component';
-import { CompleteOnboardingComponent } from './complete-onboarding/complete-onboarding.component';
+import { WalletActivationComponent } from './admin/wallet-activation/wallet-activation.component';
+import { UserActivationComponent } from './admin/wallet-activation/user-activation/user-activation.component';
+import { GroupActivationComponent } from './admin/wallet-activation/group-activation/group-activation.component';
+import { ProjectActivationComponent } from './admin/wallet-activation/project-activation/project-activation.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { PlatformBankAccountComponent } from './platform-bank-account/platform-bank-account.component';
-import { NewPlatformBankAccountComponent } from './platform-bank-account/new-platform-bank-account/new-platform-bank-account.component';
+import { PlatformBankAccountComponent } from './admin/platform-bank-account/platform-bank-account.component';
+import { NewPlatformBankAccountComponent } from './admin/platform-bank-account/new-platform-bank-account/new-platform-bank-account.component';
 import { ExchangeComponent } from './exchange/exchange.component';
-import { OwnershipComponent } from './ownership/ownership.component';
+import { OwnershipComponent } from './admin/ownership/ownership.component';
 import { CurrencyDefaultPipe } from './shared/pipes/currency-default.pipe';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TxAmountSign, TxIconStatus, TxIconType } from './wallet/wallet.pipe';
@@ -83,7 +73,7 @@ import { SafePipe } from './shared/pipes/safe.pipe';
 import { URLValidator } from './shared/validators/url.validator';
 import { ForgotPasswordComponent } from './authentication/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './authentication/reset-password/reset-password.component';
-import { ManageSingleDepositModalComponent } from './manage-deposits/manage-single-deposit/manage-single-deposit-modal/manage-single-deposit-modal.component';
+import { ManageSingleDepositModalComponent } from './admin/manage-deposits/manage-single-deposit/manage-single-deposit-modal/manage-single-deposit-modal.component';
 import { RevenueShareComponent } from './organizations/organization-details/manage-projects/manage-single-project/manage-payments/revenue-share/revenue-share.component';
 import { RevenueShareConfirmModalComponent } from './organizations/organization-details/manage-projects/manage-single-project/manage-payments/revenue-share/revenue-share-confirm-modal/revenue-share-confirm-modal.component';
 import { ProjectDepositComponent } from './organizations/organization-details/manage-projects/manage-single-project/project-deposit/project-deposit.component';
@@ -98,24 +88,23 @@ import { IdentityComponent } from './settings/user/identity/identity.component';
 import { CoopPathPipe } from './shared/pipes/coop-path.pipe';
 import { SingleProjectItemComponent } from './organizations/organization-details/manage-projects/single-project-item/single-project-item.component';
 import { NewBankAccountComponent } from './shared/components/new-bank-account/new-bank-account.component';
-
-// TODO: setup config to use values from app config service.
-const socialAuthServiceConfig = {
-    provide: 'SocialAuthServiceConfig',
-    useValue: {
-        autoLogin: false,
-        providers: [
-            {
-                id: GoogleLoginProvider.PROVIDER_ID,
-                provider: new GoogleLoginProvider(environment.customConfig.googleClientId),
-            },
-            {
-                id: FacebookLoginProvider.PROVIDER_ID,
-                provider: new FacebookLoginProvider(environment.customConfig.facebookAppId),
-            },
-        ]
-    } as SocialAuthServiceConfig
-};
+import { AuthLayoutComponent } from './authentication/auth-layout/auth-layout.component';
+import { SignInComponent } from './authentication/sign-in/sign-in.component';
+import { NgxCaptchaModule } from 'ngx-captcha';
+import { NewInstanceComponent } from './authentication/new-instance/new-instance.component';
+import { PlatformConfigComponent } from './admin/platform-config/platform-config.component';
+import { QuillModule } from 'ngx-quill';
+import { InterpolatePipe } from './shared/pipes/interpolate.pipe';
+import { SplitPartPipe } from './shared/pipes/split-part.pipe';
+import { DynamicLocaleProvider } from './shared/providers/locale.provider';
+import { CaptchaNoticeComponent } from './shared/components/captcha-notice/captcha-notice.component';
+import { SentryProvider } from './shared/providers/sentry.provider';
+import { BackNavigationDirective } from './shared/directives/back-navigation.directive';
+import { TranslationsModule } from './translations.module';
+import { VeriffComponent } from './settings/user/identity/veriff/veriff.component';
+import { AcceptTermsComponent } from './settings/user/identity/accept-terms/accept-terms.component';
+import { IdentyumComponent } from './settings/user/identity/identyum/identyum.component';
+import { StaticPageComponent } from './static-page/static-page.component';
 
 @NgModule({
     declarations: [
@@ -125,14 +114,11 @@ const socialAuthServiceConfig = {
         WalletComponent,
         OffersComponent,
         SingleOfferItemComponent,
-        WalletTxHistoryComponent,
         OfferDetailsComponent,
-        DepositModalComponent,
         InvestComponent,
         MyPortfolioComponent,
         SingleInvestItemComponent,
         InvestmentDetailsComponent,
-        SingleProposalItemComponent,
         PaymentOptionsComponent,
         FooterComponent,
         NewProposalComponent,
@@ -143,16 +129,14 @@ const socialAuthServiceConfig = {
         SecureLayoutComponent,
         HeaderComponent,
         SignUpComponent,
-        TxOverviewComponent,
-        LogInModalComponent,
         NewPaymentOptionComponent,
-        WithdrawModalComponent,
-        ConfirmEmailComponent,
         CreateOrganizationComponent,
         ManageOrganizationsComponent,
         OrganizationDetailsComponent,
         CreateNewProjectComponent,
-        OnboardingComponent,
+        AcceptTermsComponent,
+        VeriffComponent,
+        IdentyumComponent,
         ManageProjectsComponent,
         ManageSingleProjectComponent,
         SingleProjectItemComponent,
@@ -169,7 +153,6 @@ const socialAuthServiceConfig = {
         UserActivationComponent,
         GroupActivationComponent,
         ProjectActivationComponent,
-        CompleteOnboardingComponent,
         PlatformBankAccountComponent,
         NewPlatformBankAccountComponent,
         ExchangeComponent,
@@ -203,11 +186,22 @@ const socialAuthServiceConfig = {
         UserComponent,
         IdentityComponent,
         NewBankAccountComponent,
+        InvestmentDetailsComponent,
+        AuthLayoutComponent,
+        SignInComponent,
+        NewInstanceComponent,
+        PlatformConfigComponent,
+        CaptchaNoticeComponent,
+        StaticPageComponent,
+        InterpolatePipe,
+        SplitPartPipe,
+        BackNavigationDirective
     ],
     imports: [
         BrowserModule,
         RouterModule,
         AppRoutingModule,
+        TranslationsModule,
         DisqusModule.forRoot('ampnet.disqus.com/embed.js'),
         TooltipModule.forRoot(),
         ModalModule.forRoot(),
@@ -216,15 +210,19 @@ const socialAuthServiceConfig = {
         ReactiveFormsModule,
         HttpClientModule,
         SocialLoginModule,
-        NgxSpinnerModule,
         NgbModule,
         ModalModule.forRoot(),
+        QuillModule.forRoot(),
         BrowserAnimationsModule,
         BsDatepickerModule.forRoot(),
+        NgxCaptchaModule
     ],
-    entryComponents: [
-        MapModalComponent
-    ],
+    // TODO: Test whether maps work without entryComponent in production build
+    // Maybe we need to remove it because this error happened when added quill editor
+    // inside platform configuration: https://github.com/angular/angular/issues/31221
+    // entryComponents: [
+    //     MapModalComponent
+    // ],
     providers: [
         AppConfigService,
         {
@@ -238,15 +236,18 @@ const socialAuthServiceConfig = {
             provide: APP_BASE_HREF,
             useValue: environment.baseHref,
         },
-        socialAuthServiceConfig,
         {
             provide: DEFAULT_CURRENCY_CODE,
             useValue: 'EUR', // TODO: Set this from app config service.
         },
+        DynamicLocaleProvider,
+        SentryProvider,
         DatePipe,
         SafePipe,
         CurrencyPipe,
-        CoopPathPipe
+        CoopPathPipe,
+        InterpolatePipe,
+        SplitPartPipe
     ],
     bootstrap: [AppComponent]
 })

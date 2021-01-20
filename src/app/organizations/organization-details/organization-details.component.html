@@ -1,23 +1,35 @@
+<div *ngIf="isOverview">
+    <app-header></app-header>
+</div>
+
 <div *ngIf="{
     organization: organization$ | async,
-    orgWallet: orgWallet$ | async,
     orgMembers: orgMembers$ | async
 } as states" class="container">
     <ng-container *ngIf="!!states.organization else spinner">
         <div class="app-page-header">
-            <div class="app-page-title-back" (click)="backToGroupsScreen()">
-                <i class="fas fa-long-arrow-alt-left mr-3"></i>
-                Investment group details
-            </div>
-            <button [disabled]="!isWalletVerified(states.orgWallet)"
-                    class="btn"
-                    routerLink="create_project">
-                <i class="fas fa-plus mr-lg-3" ></i>
-                <span class="btn__text">Create project</span>
-            </button>
+            <a [routerLink]="" appBackNavigation class="nostyle">
+                <div class="app-page-title-back">
+                    <i class="fas fa-long-arrow-alt-left mr-3"></i>
+                    {{ 'general.back.title' | translate }}
+                </div>
+            </a>
+
+            <ng-container *ngIf="!isPublic">
+                <ng-container *ngIf="(orgWallet$ | async) as wallet">
+                    <button [disabled]="!isWalletVerified(wallet)"
+                            class="btn"
+                            routerLink="create_project">
+                        <i class="fas fa-plus mr-lg-3"></i>
+                        <span class="btn__text">
+                    {{ 'organizations.details.create_project' | translate }}
+                </span>
+                    </button>
+                </ng-container>
+            </ng-container>
         </div>
 
-        <ng-container *ngIf="!!states.orgWallet else spinner">
+        <ng-container>
             <div class="content">
                 <div class="organization-info">
                     <div class="organization__img">
@@ -25,76 +37,98 @@
                     </div>
                     <div class="organization__desc">
                         <div class="desc__title"> {{ states.organization.name }} </div>
-                        <div class="desc__project-count"> <b>{{ states.organization.project_count }} </b>
-                            {{ states.organization.project_count === 1 ? "Project" : "Projects" }}
+                        <div class="desc__project-count">
+                            <span>
+                                {{ 'organizations.details.project_count' | translate | splitPart:0 }}
+                            </span>
+                            <span class="bold">
+                                {{ 'organizations.details.project_count' | translate
+                                    | splitPart:1 | interpolate:['count', states.organization.project_count] }}
+                            </span>
+                            <span>
+                                {{ 'organizations.details.project_count' | translate | splitPart:2 }}
+                            </span>
                         </div>
+
                         <div class="desc__info"> {{ states.organization.description }} </div>
                     </div>
                 </div>
-                
-                <div *ngIf="!isWalletVerified(states.orgWallet)">
-                    <div class="alert alert-warning flex__center col-lg-10">
-                        <i class="fas fa-exclamation-triangle mr-2"></i>
-                        This group is pending approval from admin. During this time, you can't create new projects.
-                    </div>
-                </div>
+
+                <ng-container *ngIf="!isPublic">
+                    <ng-container *ngIf="(orgWallet$ | async) as wallet">
+                        <div *ngIf="!isWalletVerified(wallet)">
+                            <div class="alert alert-warning flex__center col-lg-10">
+                                <i class="fas fa-exclamation-triangle mr-2"></i>
+                                {{ 'organizations.details.wallet_not_verified' | translate }}
+                            </div>
+                        </div>
+                    </ng-container>
+                </ng-container>
 
                 <div class="tabs">
                     <tabset>
-                        <tab heading="Projects">
+                        <tab heading="{{ 'organizations.details.projects.title' | translate }}">
                             <div class="manage__projects">
-                                <app-manage-projects [groupID]="states.organization.uuid"></app-manage-projects>
+                                <app-manage-projects [groupID]="states.organization.uuid"
+                                                     [isPublic]=isPublic></app-manage-projects>
                             </div>
                         </tab>
-                        <tab heading="Members">
+                        <tab heading="{{ 'organizations.details.members.title' | translate }}">
                             <div class="manage__members">
-                                <div class="invite-members">
+                                <div class="invite-members app__full-width" *ngIf="!isPublic">
                                     <div class="invite__form">
                                         <form [formGroup]="inviteForm" style="display: contents">
-                                            <div class="form__input col-lg-5">
-                                                <input class="form-control input-reg" name=""
-                                                       placeholder="Add members"
+                                            <div class="form__input col-lg-6 col-xl-5 p-0">
+                                                <input class="input-reg w-100" name=""
+                                                       placeholder="{{ 'organizations.details.members.add_input.placeholder' | translate }}"
                                                        formControlName="emails"
                                                        type="text" value="">
                                             </div>
-                                            <div class="form__cta col-lg-2">
-                                                <app-action-button text="Add members" loadingText="Inviting..." faIcon="fas fa-plus"
-                                                                   [onClick]="inviteClicked(states.organization.uuid).bind(this)"
-                                                                   [disabled]="!inviteForm.valid" buttonClass="btn btn-success">
-                                                </app-action-button>
+                                            <div class="form__cta col-lg-1 col-xl-2 p-0">
+                                                <button app-action-button
+                                                        text="{{ 'organizations.details.members.add_button' | translate }}"
+                                                        textShort=""
+                                                        faIcon="fas fa-plus"
+                                                        [onClick]="inviteClicked(states.organization.uuid).bind(this)"
+                                                        [disabled]="!inviteForm.valid"
+                                                        class="btn btn-success w-100">
+                                                </button>
                                             </div>
                                         </form>
                                     </div>
-                                    <p class="invite__desc col-lg-7">Separated emails by comma e.g <b>joe@mail.com, jane@mail.com</b></p>
                                 </div>
-            
+
                                 <div class="users__list">
                                     <ng-container *ngIf="!!states.orgMembers else spinner">
                                         <ul class="list-group">
-                                            <li *ngFor="let member of states.orgMembers" class="list__item flex__center-space">
+                                            <li *ngFor="let member of states.orgMembers"
+                                                class="list__item flex__center--space">
                                                 <div class="item__left">
                                                     <div class="item__name">{{ member.first_name | titlecase }} {{ member.last_name | titlecase }}</div>
                                                     <div class="item__email">{{ member.email }}</div>
+                                                    <span class="d-inline-block d-lg-none item__joined">
+                                                        {{ 'organizations.details.members.join_date' | translate | interpolate:['date', member.member_since | date:'mediumDate'] }}
+                                                    </span>
                                                 </div>
                                                 <div class="item__right">
                                                     <div class="item__joined">
                                                         <span class="d-none d-lg-inline-block">
-                                                            Joined {{member.member_since | date: "longDate"}}
+                                                            {{ 'organizations.details.members.join_date' | translate | interpolate:['date', member.member_since | date:'longDate'] }}
                                                         </span>
-                                                        <span class="d-inline-block d-lg-none">
-                                                            Joined {{member.member_since | date:'mediumDate'}}
-                                                        </span>
+
+                                                        <a [routerLink]="" (click)="deleteMember(states.organization.uuid, member.uuid)">
+                                                            <span class="item__icon" *ngIf="!isPublic">
+                                                                <i class="fas fa-trash-alt cursor-pointer"></i>
+                                                            </span>
+                                                        </a>
                                                     </div>
-                                                        
-                                                    <span class="item__icon"
-                                                      (click)="deleteMember(states.organization.uuid, member.uuid)">
-                                                        <i class="fas fa-trash-alt cursor-pointer"></i>
-                                                    </span>
                                                 </div>
                                             </li>
                                         </ul>
-                                        <div *ngIf="states.orgMembers.length === 0" class="w-100 pt-3 pb-3 text-center explainer-mini">
-                                            You are the only member of {{ states.organization.name }}
+                                        <div *ngIf="states.orgMembers.length === 0"
+                                             class="w-100 pt-3 pb-3 text-center">
+                                            {{ 'organizations.details.members.empty'
+                                                | translate | interpolate:['org', states.organization.name] }}
                                         </div>
                                     </ng-container>
                                 </div>

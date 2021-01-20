@@ -1,0 +1,68 @@
+<h1 class="app-page-header">
+    {{ 'auth.new_instance.title' | translate }}
+</h1>
+
+<div class="dropdown-divider"></div>
+
+<form [formGroup]="createCoopForm" id="newCoopForm">
+    <label for="name" class="app-page-label">
+        {{ 'auth.new_instance.name_input.title' | translate }}
+    </label>
+    <input class="input-lg w-100" id="name" formControlName="name"
+           placeholder="{{ 'auth.new_instance.name_input.placeholder' | translate }}"
+           type="text">
+
+    <label for="identifier" class="app-page-label mt-3">
+        {{ 'auth.new_instance.identifier_input.title' | translate }}
+    </label>
+    <input class="input-lg w-100" id="identifier" formControlName="identifier"
+           placeholder="{{ 'auth.new_instance.identifier_input.placeholder' | translate }}" type="text">
+
+    <small class="form-text text-muted mt-2">
+        {{ 'auth.new_instance.identifier_input.example' | translate | interpolate:['url', generateURL()] }}
+    </small>
+
+    <label for="webTitle" class="app-page-label mt-3">
+        {{ 'auth.new_instance.web_title_input.title' | translate }}
+    </label>
+    <input class="input-lg w-100" id="webTitle" formControlName="webTitle"
+           placeholder="{{ 'auth.new_instance.web_title_input.placeholder' | translate }}" type="text">
+
+    <label for="logo-image" class="app-page-label mt-3">
+        {{ 'auth.new_instance.logo_input.title' | translate }}
+    </label>
+    <app-upload-area areaID='logo-image' id="logo-image"
+                     [restrictions]="{
+                        allowedFileTypes: ['image/*'],
+                        maxFileSize: 10 * 1024 * 1024,
+                        maxNumberOfFiles: 1
+                     }"
+                     [firstFileControl]="createCoopForm.get('logo')">
+    </app-upload-area>
+
+    <label for="banner-image" class="app-page-label mt-3">
+        {{ 'auth.new_instance.banner_input.title' | translate }}
+    </label>
+    <app-upload-area areaID='banner-image' id="banner-image"
+                     [restrictions]="{
+                        allowedFileTypes: ['image/*'],
+                        maxFileSize: 10 * 1024 * 1024,
+                        maxNumberOfFiles: 1
+                     }"
+                     [firstFileControl]="createCoopForm.get('banner')">
+    </app-upload-area>
+
+    <button app-action-button
+            text="{{ 'auth.new_instance.submit' | translate }}"
+            faIcon="fa-paper-plane"
+            [onClick]="onFormSubmit.bind(this)"
+            [disabled]="!createCoopForm.dirty || !createCoopForm.valid"
+            class="btn btn-primary w-100 mt-3">
+    </button>
+
+    <div class="dropdown-divider"></div>
+
+    <small class="form-text text-muted mt-2">
+        <app-captcha-notice></app-captcha-notice>
+    </small>
+</form>

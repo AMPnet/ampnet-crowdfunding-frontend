@@ -2,32 +2,54 @@
     user: user$ | async,
     wallet: wallet$ | async
 } as states">
-    <div *ngIf="!isUserVerified(states.user)" class="container">
+    <div *ngIf="!isUserVerified(states.user)">
         <div class="wallet-init-reminder">
             <p>
-                Profile not verified.
-                Please go <span class="reminder-link" [routerLink]="'/dash/settings/user' | coopPath">here</span> to verify
-                your profile and finish onboarding procedure.
+                <span>
+                    {{ 'user_state_reminder.not_verified' | translate | splitPart:0 }}
+                </span>
+                <span class="reminder-link d-inline-block" [routerLink]="'/dash/settings/user/identity' | coopPath">
+                    {{ 'user_state_reminder.not_verified' | translate | splitPart:1 }}
+                </span>
+                <span>
+                    {{ 'user_state_reminder.not_verified' | translate | splitPart:2 }}
+                </span>
             </p>
         </div>
     </div>
 
-    <div *ngIf="isUserVerified(states.user) && !isWalletInitialized(states.wallet)" class="container">
+    <div *ngIf="isUserVerified(states.user) && !isWalletInitialized(states.wallet)">
         <div class="wallet-init-reminder">
             <p>
-                Thank you for verifying your profile.
-                In order to manage funds, you need to have your wallet initialized.
-                Please initialize your wallet <span class="reminder-link" [routerLink]="'/dash/wallet' | coopPath">here</span>.
+                <span *ngIf="states.user?.role !== userRole.ADMIN">
+                    {{ 'user_state_reminder.initialize_wallet' | translate | splitPart:0 }}
+                </span>
+                <span>
+                    {{ 'user_state_reminder.initialize_wallet' | translate | splitPart:1 }}
+                </span>
+                <span class="reminder-link d-inline-block" [routerLink]="'/dash/wallet' | coopPath">
+                    {{ 'user_state_reminder.initialize_wallet' | translate | splitPart:2 }}
+                </span>
+                <span class="d-inline-block">
+                    {{ 'user_state_reminder.initialize_wallet' | translate | splitPart:3 }}
+                </span>
             </p>
         </div>
     </div>
 
-    <div *ngIf="isUserVerified(states.user) && isWalletInitialized(states.wallet) && !isWalletReady(states.wallet)"
-         class="container">
+    <div *ngIf="isWaitingWalletReady(states.user, states.wallet)">
         <div class="wallet-init-reminder">
             <p>
-                Thank you for initializing your wallet.
-                Please wait for the administrator to get it verified.
+                {{ 'user_state_reminder.activation_pending' | translate }}
+                <ng-container *ngIf="states.user?.role === userRole.ADMIN; else notAdmin">
+                    <span>
+                        {{ 'user_state_reminder.activation_pending.admin_notice' | translate }}
+                    </span>
+                    <app-spinner type="inline" color="white"></app-spinner>
+                </ng-container>
+                <ng-template #notAdmin>
+                    {{ 'user_state_reminder.activation_pending.user_notice' | translate }}
+                </ng-template>
             </p>
         </div>
     </div>

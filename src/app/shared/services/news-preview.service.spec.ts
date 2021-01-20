@@ -3,6 +3,7 @@ import { LinkPreview, NewsPreviewService } from './news-preview.service';
 import { BackendHttpClient } from './backend-http-client.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { of } from 'rxjs';
+import { AppConfigService } from './app-config.service';
 
 describe('NewsPreviewService', () => {
     let http: jasmine.SpyObj<BackendHttpClient>;
@@ -11,7 +12,7 @@ describe('NewsPreviewService', () => {
     beforeEach(async () => {
         TestBed.configureTestingModule({
             imports: [HttpClientTestingModule],
-            providers: [BackendHttpClient, NewsPreviewService],
+            providers: [BackendHttpClient, AppConfigService, NewsPreviewService],
         });
 
         http = TestBed.inject(BackendHttpClient) as jasmine.SpyObj<BackendHttpClient>;
@@ -21,12 +22,14 @@ describe('NewsPreviewService', () => {
     describe('getLinkPreview', () => {
         it('should return preview data for given URL', () => {
             const mockLinkPreviewData = <LinkPreview>{
-                title: 'Link Title',
-                description: 'Link description',
-                image: {
-                    url: 'https://google.com',
-                    height: '120',
-                    width: '120'
+                open_graph: {
+                    title: 'Link Title',
+                    description: 'Link description',
+                    image: {
+                        url: 'https://google.com',
+                        height: '120',
+                        width: '120'
+                    }
                 },
                 url: 'https://test-url.google.com'
             };

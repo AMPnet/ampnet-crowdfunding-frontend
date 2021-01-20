@@ -1,31 +1,39 @@
-<div class="" style="overflow-x: hidden; height: 100vh; ">
-    <app-header></app-header>
-    <div class="container w-75">
-        <div class="row justify-content-center align-items-center">
-            <img src="{{ appConfig.config.config.logo_url }}"
-                 alt="Cooperative logo"
-                 class="w-100 p-5">
-        </div>
-
-        <div class="row mt-3 justify-content-center">
-            <p class="mx-3">Welcome to {{ appConfig.config.name }} investing platform.</p>
-        </div>
-
-        <div class="row mt-3 justify-content-center align-items-center">
-            <button class="btn btn-primary"
-                    [routerLink]="'/overview/discover' | coopPath">
-                Explore projects
-            </button>
-        </div>
-
-        <!--        TODO: implement this section -->
-        <!--        <div class="row mt-3 mx-3 flex-column align-content-center"-->
-        <!--             *ngIf="(summary$ | async) as summary">-->
-        <!--            <h2 class="app-page-subtitle">Platform information</h2>-->
-
-        <!--            <ul>-->
-        <!--                <li>Total money raised: {{ summary.total_money_raised | currencyDefault }}</li>-->
-        <!--            </ul>-->
-        <!--        </div>-->
+<app-header></app-header>
+<div class="container w-75 min-vh-100">
+    <div class="row justify-content-center align-items-center">
+        <img src="{{ appConfig.config.banner || appConfig.config.logo }}"
+             alt="Cooperative logo"
+             class="w-100 p-5">
     </div>
+
+    <div class="row mt-3 justify-content-center">
+        <p>
+            <span>
+                {{ 'landing.welcome' | translate | splitPart:0 | interpolate:['coopName', appConfig.config.name] }}
+            </span>
+            <span>
+                {{ 'landing.welcome' | translate | splitPart:1 | interpolate:['coopName', appConfig.config.name] }}
+            </span>
+            <span>
+                {{ 'landing.welcome' | translate | splitPart:2 | interpolate:['coopName', appConfig.config.name] }}
+            </span>
+        </p>
+    </div>
+
+    <div class="row my-3 justify-content-center align-items-center">
+        <button class="btn btn-responsive-size"
+                [routerLink]="'/overview' | coopPath">
+            {{ 'landing.explore' | translate }}
+        </button>
+    </div>
+
+    <!--        TODO: implement this section -->
+    <!--        <div class="row mt-3 mx-3 flex-column align-content-center"-->
+    <!--             *ngIf="(summary$ | async) as summary">-->
+    <!--            <h2 class="app-page-subtitle">Platform information</h2>-->
+
+    <!--            <ul>-->
+    <!--                <li>Total money raised: {{ summary.total_money_raised | currencyDefault }}</li>-->
+    <!--            </ul>-->
+    <!--        </div>-->
 </div>

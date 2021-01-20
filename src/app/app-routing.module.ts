@@ -15,9 +15,7 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
 import { PublicLayoutComponent } from './public-layout/public-layout.component';
 import { SecureLayoutComponent } from './secure-layout/secure-layout.component';
 import { SignUpComponent } from './authentication/sign-up/sign-up.component';
-import { TxOverviewComponent } from './wallet/tx-overview/tx-overview.component';
 import { NewPaymentOptionComponent } from './payment-options/new-payment-option/new-payment-option.component';
-import { ConfirmEmailComponent } from './authentication/confirm-email/confirm-email.component';
 import { AuthGuard } from './authentication/auth.guard';
 import { CreateOrganizationComponent } from './organizations/create-organization/create-organization.component';
 import { ManageOrganizationsComponent } from './organizations/manage-organizations/manage-organizations.component';
@@ -26,20 +24,18 @@ import { CreateNewProjectComponent } from './organizations/organization-details/
 import { ManageProjectsComponent } from './organizations/organization-details/manage-projects/manage-projects.component';
 import { ManageSingleProjectComponent } from './organizations/organization-details/manage-projects/manage-single-project/manage-single-project.component';
 import { VerifySignOfferComponent } from './offers/offer-details/verify-sign-offer/verify-sign-offer.component';
-import { ManageWithdrawalsComponent } from './manage-withdrawals/manage-withdrawals.component';
-import { SingleWithdrawalComponent } from './manage-withdrawals/single-withdrawal/single-withdrawal.component';
-import { ManageDepositsComponent } from './manage-deposits/manage-deposits.component';
+import { ManageWithdrawalsComponent } from './admin/manage-withdrawals/manage-withdrawals.component';
+import { SingleWithdrawalComponent } from './admin/manage-withdrawals/single-withdrawal/single-withdrawal.component';
+import { ManageDepositsComponent } from './admin/manage-deposits/manage-deposits.component';
 import { DepositComponent } from './deposit/deposit.component';
-import { ManageSingleDepositComponent } from './manage-deposits/manage-single-deposit/manage-single-deposit.component';
+import { ManageSingleDepositComponent } from './admin/manage-deposits/manage-single-deposit/manage-single-deposit.component';
 import { WithdrawComponent } from './withdraw/withdraw.component';
-import { WalletActivationComponent } from './wallet-activation/wallet-activation.component';
-import { CompleteOnboardingComponent } from './complete-onboarding/complete-onboarding.component';
-import { PlatformBankAccountComponent } from './platform-bank-account/platform-bank-account.component';
-import { NewPlatformBankAccountComponent } from './platform-bank-account/new-platform-bank-account/new-platform-bank-account.component';
+import { WalletActivationComponent } from './admin/wallet-activation/wallet-activation.component';
+import { PlatformBankAccountComponent } from './admin/platform-bank-account/platform-bank-account.component';
+import { NewPlatformBankAccountComponent } from './admin/platform-bank-account/new-platform-bank-account/new-platform-bank-account.component';
 import { ExchangeComponent } from './exchange/exchange.component';
-import { OwnershipComponent } from './ownership/ownership.component';
+import { OwnershipComponent } from './admin/ownership/ownership.component';
 import { RevenueShareComponent } from './organizations/organization-details/manage-projects/manage-single-project/manage-payments/revenue-share/revenue-share.component';
-import { ManagePaymentsComponent } from './organizations/organization-details/manage-projects/manage-single-project/manage-payments/manage-payments.component';
 import { OfferDetailsGuard } from './offers/offer-details/offer-details.guard';
 import { ProjectWithdrawComponent } from './organizations/organization-details/manage-projects/manage-single-project/project-withdraw/project-withdraw.component';
 import { ProjectDepositComponent } from './organizations/organization-details/manage-projects/manage-single-project/project-deposit/project-deposit.component';
@@ -47,22 +43,43 @@ import { ForgotPasswordComponent } from './authentication/forgot-password/forgot
 import { ResetPasswordComponent } from './authentication/reset-password/reset-password.component';
 import { SignInAutoComponent } from './authentication/sign-in-auto/sign-in-auto.component';
 import { IdentityComponent } from './settings/user/identity/identity.component';
-import { UserGuard } from './settings/user/user.guard';
 import { UserComponent } from './settings/user/user.component';
 import { CoopGuard } from './shared/guards/coop.guard';
+import { AuthLayoutComponent } from './authentication/auth-layout/auth-layout.component';
+import { SignInComponent } from './authentication/sign-in/sign-in.component';
+import { NewInstanceComponent } from './authentication/new-instance/new-instance.component';
+import { PlatformConfigComponent } from './admin/platform-config/platform-config.component';
+import { IdentityGuard } from './settings/user/identity/identity.guard';
+import { VeriffComponent } from './settings/user/identity/veriff/veriff.component';
+import { TermsAcceptedGuard } from './settings/user/identity/accept-terms/terms-accepted.guard';
+import { AcceptTermsComponent } from './settings/user/identity/accept-terms/accept-terms.component';
+import { IdentyumComponent } from './settings/user/identity/identyum/identyum.component';
+import { StaticPageComponent } from './static-page/static-page.component';
+import { NoAuthGuard } from './authentication/no-auth.guard';
 
 const appRoutes: Routes = [
     {
         path: '', component: PublicLayoutComponent,
         children: [
-            {path: '', component: LandingPageComponent},
-            {path: 'sign_up', component: SignUpComponent},
-            {path: 'confirm_email', component: ConfirmEmailComponent},
-            {path: 'overview/:isOverview', component: OffersComponent},
-            {path: 'overview/:id/:isOverview', component: OfferDetailsComponent, canActivate: [OfferDetailsGuard]},
-            {path: 'forgot_password', component: ForgotPasswordComponent},
-            {path: 'reset_password', component: ResetPasswordComponent},
-            {path: 'sign_in_auto/:email/:password', component: SignInAutoComponent},
+            {
+                path: '', canActivate: [NoAuthGuard], children: [
+                    {path: '', component: LandingPageComponent},
+                    {path: 'overview', component: OffersComponent, data: {isOverview: true}},
+                    {path: 'overview/orgs/:id', component: OrganizationDetailsComponent, data: {isPublic: true, isOverview: true}},
+                    {path: 'overview/:id', component: OfferDetailsComponent, canActivate: [OfferDetailsGuard], data: {isOverview: true}},
+                    {path: 'sign_in_auto/:email/:password', component: SignInAutoComponent},
+                ]
+            },
+            {
+                path: '', canActivate: [NoAuthGuard], component: AuthLayoutComponent, children: [
+                    {path: 'sign_up', component: SignUpComponent},
+                    {path: 'sign_in', component: SignInComponent},
+                    {path: 'forgot_password', component: ForgotPasswordComponent},
+                    {path: 'reset_password', component: ResetPasswordComponent},
+                    {path: 'new_instance', component: NewInstanceComponent},
+                ]
+            },
+            {path: 'static/:page', component: StaticPageComponent},
         ]
     },
     {
@@ -72,6 +89,7 @@ const appRoutes: Routes = [
             {path: '', pathMatch: 'full', redirectTo: 'offers'},
             {path: 'offers', component: OffersComponent},
             {path: 'wallet', component: WalletComponent},
+            {path: 'orgs/:id', component: OrganizationDetailsComponent, data: {isPublic: true}},
             {path: 'offers/:id', component: OfferDetailsComponent},
             {path: 'offers/:id/invest', component: InvestComponent},
             {path: 'my_portfolio', component: MyPortfolioComponent},
@@ -80,13 +98,18 @@ const appRoutes: Routes = [
             {path: 'my_portfolio/investment_details/new_proposal', component: NewProposalComponent},
             {path: 'finish_new_proposal', component: FinishNewProposalComponent},
             {path: 'my_portfolio/investment_details/proposal_details', component: ProposalDetailsComponent},
-            {path: 'wallet/tx_overview', component: TxOverviewComponent},
             {path: 'payment_options/new', component: NewPaymentOptionComponent},
             {path: 'manage_groups/new', component: CreateOrganizationComponent},
             {
                 path: 'settings', children: [
-                    {path: 'user', component: UserComponent, canActivate: [UserGuard]},
-                    {path: 'user/identity', component: IdentityComponent}
+                    {path: 'user', component: UserComponent},
+                    {
+                        path: 'user/identity', component: IdentityComponent, canActivate: [IdentityGuard], children: [
+                            {path: '', component: AcceptTermsComponent},
+                            {path: 'veriff', component: VeriffComponent, canActivate: [TermsAcceptedGuard]},
+                            {path: 'identyum', component: IdentyumComponent, canActivate: [TermsAcceptedGuard]}
+                        ]
+                    },
                 ]
             },
             {path: 'manage_groups', component: ManageOrganizationsComponent},
@@ -95,17 +118,16 @@ const appRoutes: Routes = [
             {path: 'manage_groups/:id/projects', component: ManageProjectsComponent},
             {path: 'manage_groups/:groupID/manage_project/:projectID', component: ManageSingleProjectComponent},
             {path: 'offers/:offerID/invest/:investAmount/verify_sign', component: VerifySignOfferComponent},
-            {path: 'manage_groups/:groupID/manage_project/:projectID/manage_payments', component: ManagePaymentsComponent},
             {
-                path: 'manage_groups/:groupID/manage_project/:projectID/manage_payments/project_deposit',
+                path: 'manage_groups/:groupID/manage_project/:projectID/project_deposit',
                 component: ProjectDepositComponent
             },
             {
-                path: 'manage_groups/:groupID/manage_project/:projectID/manage_payments/project_withdraw',
+                path: 'manage_groups/:groupID/manage_project/:projectID/project_withdraw',
                 component: ProjectWithdrawComponent
             },
             {
-                path: 'manage_groups/:groupID/manage_project/:projectID/manage_payments/revenue_share/:amount',
+                path: 'manage_groups/:groupID/manage_project/:projectID/revenue_share/:amount',
                 component: RevenueShareComponent
             },
             {path: 'manage_withdrawals', component: ManageWithdrawalsComponent},
@@ -115,11 +137,11 @@ const appRoutes: Routes = [
             {path: 'wallet/deposit', component: DepositComponent},
             {path: 'wallet/withdraw', component: WithdrawComponent},
             {path: 'activation/:type', component: WalletActivationComponent},
-            {path: 'complete_onboarding', component: CompleteOnboardingComponent},
             {path: 'admin/platform_bank_account', component: PlatformBankAccountComponent},
             {path: 'admin/platform_bank_account/new', component: NewPlatformBankAccountComponent},
             {path: 'exchange', component: ExchangeComponent},
             {path: 'ownership', component: OwnershipComponent},
+            {path: 'platform_config', component: PlatformConfigComponent},
         ]
     }
 ];

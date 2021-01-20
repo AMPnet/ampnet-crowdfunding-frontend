@@ -1,0 +1,61 @@
+<div class="container">
+    <h1 class="app-page-title">
+        {{ 'admin.withdrawals.title' | translate }}
+    </h1>
+    <h2 class="app-page-subtitle">
+        {{ 'admin.withdrawals.users.title' | translate }}
+    </h2>
+    <ng-container *ngIf="(userWithdrawals$ | async) as userWithdrawals else spinner">
+        <div *ngIf="userWithdrawals.length > 0" class="list-group">
+            <a *ngFor="let userWithdrawal of userWithdrawals"
+               [routerLink]="['/dash', 'manage_withdrawals', userWithdrawal.withdraw.id] | coopPath"
+               class="list-group-item list-group-item-action">
+                <span class="float-left">
+                    {{ userWithdrawal.user.first_name }} {{ userWithdrawal.user.last_name }}
+                    ({{ userWithdrawal.user.email }})
+                </span>
+                <span class="float-right">
+                    {{ userWithdrawal.withdraw.amount | currencyDefault }}
+                </span>
+            </a>
+        </div>
+
+        <div *ngIf="userWithdrawals.length === 0" class="col-md-12 mt-3">
+            <div class="text-center text-uppercase">
+                {{ 'admin.withdrawals.users.empty' | translate }}
+            </div>
+        </div>
+    </ng-container>
+
+    <h2 class="app-page-subtitle">
+        {{ 'admin.withdrawals.projects.title' | translate }}
+    </h2>
+    <ng-container *ngIf="(projectWithdrawals$ | async) as projectWithdrawals else spinner">
+        <div *ngIf="projectWithdrawals.length > 0" class="list-group">
+            <a *ngFor="let projectWithdrawal of projectWithdrawals"
+               class="list-group-item list-group-item-action"
+               [routerLink]="['/dash', 'manage_withdrawals', projectWithdrawal.withdraw.id] | coopPath">
+                <div>
+                    <span class="float-left">
+                        {{ projectWithdrawal.project.name }}
+                        , {{ projectWithdrawal.user.first_name }} {{ projectWithdrawal.user.last_name }}
+                        ({{ projectWithdrawal.user.email }})
+                    </span>
+                    <span class="float-right">
+                        {{ projectWithdrawal.withdraw.amount | currencyDefault }}
+                    </span>
+                </div>
+            </a>
+        </div>
+
+        <div *ngIf="projectWithdrawals.length === 0" class="col-md-12 mt-3">
+            <div class="text-center text-uppercase">
+                {{ 'admin.withdrawals.projects.empty' | translate }}
+            </div>
+        </div>
+    </ng-container>
+
+    <ng-template #spinner>
+        <app-spinner type="overlay" style="height: 100px"></app-spinner>
+    </ng-template>
+</div>

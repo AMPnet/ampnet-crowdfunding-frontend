@@ -19,7 +19,7 @@ export class OrganizationService {
             description: description
         };
 
-        formData.append('image', photo, 'image.png');
+        formData.append('image', photo, photo.name);
         formData.append('request', new Blob([JSON.stringify(orgInfo)], {
             type: 'application/json'
         }), 'request.json');
@@ -32,11 +32,7 @@ export class OrganizationService {
     }
 
     getSingleOrganization(orgID: string) {
-        return this.http.get<Organization>(`/api/project/organization/${orgID}`);
-    }
-
-    getAllOrganizations() {
-        return this.http.get<PageableOrganizationsResponse>('/api/project/organization');
+        return this.http.get<Organization>(`/api/project/public/organization/${orgID}`);
     }
 
     inviteUser(orgID: string, emails: string[]) {
@@ -59,8 +55,9 @@ export class OrganizationService {
         });
     }
 
-    getMembersForOrganization(orgID: string) {
-        return this.http.get<OrganizationMembersResponse>(`/api/project/organization/${orgID}/members`);
+    getMembersForOrganization(orgID: string, options = { isPublic: true }) {
+        return options.isPublic ? this.http.get<OrganizationMembersResponse>(`/api/project/public/organization/${orgID}/members`) :
+            this.http.get<OrganizationMembersResponse>(`/api/project/organization/${orgID}/members`);
     }
 
     removeMemberFromOrganization(orgID: string, memberID: string) {
@@ -76,18 +73,29 @@ export interface Organization {
     description: string;
     header_image: string;
     legal_info: string;
-    documents?: DocumentModel[];
+    documents?: Document[];
     wallet_hash?: string;
     project_count: number;
 }
 
-export interface DocumentModel {
+export interface OrganizationBasic {
+    uuid: string;
+    name: string;
+}
+
+export interface Document {
     id: number;
     link: string;
     name: string;
     type: string;
+    purpose: DocPurpose;
     size: number;
     created_at: string;
+}
+
+export enum DocPurpose {
+    GENERIC = 'GENERIC',
+    TERMS = 'TERMS'
 }
 
 interface PageableOrganizationsResponse {
@@ -112,10 +120,10 @@ interface OrganizationMembersResponse {
 }
 
 export interface OrganizationMember {
-    uuid: string;
+    uuid?: string;
     first_name: string;
     last_name: string;
-    email: string;
+    email?: string;
     role: string;
     member_since: Date;
 }

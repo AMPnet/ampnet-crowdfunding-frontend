@@ -2,8 +2,10 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Project, ProjectService, ProjectWallet } from '../../../../shared/services/project/project.service';
 import { MiddlewareService, ProjectWalletInfo } from '../../../../shared/services/middleware/middleware.service';
 import { Observable } from 'rxjs';
-import { displayBackendErrorRx } from '../../../../utilities/error-handler';
 import { tap } from 'rxjs/operators';
+import { ErrorService } from '../../../../shared/services/error.service';
+import { ActivatedRoute } from '@angular/router';
+import { RouterService } from '../../../../shared/services/router.service';
 
 @Component({
     selector: 'app-single-project-item, [app-single-project-item]',
@@ -15,10 +17,14 @@ import { tap } from 'rxjs/operators';
 })
 export class SingleProjectItemComponent implements OnInit {
     @Input() projectWallet: ProjectWallet;
+    @Input() isPublic;
     walletInfo$: Observable<ProjectWalletInfo>;
 
     constructor(private middlewareService: MiddlewareService,
-                private projectService: ProjectService) {
+                private errorService: ErrorService,
+                private projectService: ProjectService,
+                private route: ActivatedRoute,
+                private router: RouterService) {
     }
 
     ngOnInit() {
@@ -30,9 +36,25 @@ export class SingleProjectItemComponent implements OnInit {
             return this.projectService.updateProject(project.uuid, {
                 active: !project.active
             }).pipe(
-                displayBackendErrorRx(),
+                this.errorService.handleError,
                 tap(updatedProject => this.projectWallet.project = updatedProject)
             );
         };
+    }
+
+    onClickedItem() {
+        if (this.isPublic) {
+            if (this.route.snapshot.data.isOverview) {
+                this.router.navigate(['/overview', this.projectWallet.project.uuid]);
+            } else {
+                this.router.navigate(['/dash', 'offers', this.projectWallet.project.uuid], {relativeTo: this.route.root});
+            }
+        } else {
+            if (this.route.snapshot.data.isOverview) {
+                this.router.navigate(['/overview', this.projectWallet.project.uuid]);
+            } else {
+                this.router.navigate(['manage_project/', this.projectWallet.project.uuid], {relativeTo: this.route});
+            }
+        }
     }
 }

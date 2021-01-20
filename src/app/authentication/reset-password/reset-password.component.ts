@@ -1,17 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControlOptions, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { SignupService } from '../../shared/services/user/signup.service';
 import { ActivatedRoute } from '@angular/router';
 import { PopupService } from '../../shared/services/popup.service';
 import { MustMatch } from '../sign-up/confirm-password-validator';
-import { displayBackendErrorRx } from '../../utilities/error-handler';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, tap } from 'rxjs/operators';
 import { RouterService } from '../../shared/services/router.service';
+import { ErrorService } from '../../shared/services/error.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-reset-password',
     templateUrl: './reset-password.component.html',
-    styleUrls: ['./reset-password.component.scss']
+    styleUrls: [
+        '../auth-layout/auth-layout.component.scss',
+        './reset-password.component.scss'
+    ],
 })
 export class ResetPasswordComponent implements OnInit {
     resetPasswordForm: FormGroup;
@@ -20,13 +24,15 @@ export class ResetPasswordComponent implements OnInit {
     constructor(private formBuilder: FormBuilder,
                 private signUpService: SignupService,
                 private router: RouterService,
+                private errorService: ErrorService,
+                private translate: TranslateService,
                 private popupService: PopupService,
                 private route: ActivatedRoute) {
 
         this.resetPasswordForm = this.formBuilder.group({
             password: new FormControl('', [Validators.required, Validators.minLength(8)]),
             confirmPassword: new FormControl('', [Validators.required, Validators.minLength(8)]),
-        }, {
+        }, <AbstractControlOptions>{
             validator: MustMatch('password', 'confirmPassword')
         });
     }
@@ -39,13 +45,11 @@ export class ResetPasswordComponent implements OnInit {
         const newPassword = this.resetPasswordForm.get('password').value;
 
         return this.signUpService.resetPassword(newPassword, this.token).pipe(
-            displayBackendErrorRx(),
-            switchMap(() => this.popupService.new({
-                type: 'success',
-                title: 'Success',
-                text: 'Your password has been changed successfully.'
-            })),
-            switchMap(() => this.router.navigate(['/']))
+            this.errorService.handleError,
+            switchMap(() => this.popupService.success(
+                this.translate.instant('auth.reset_password.success')
+            )),
+            tap(() => this.router.navigate(['/sign_in']))
         );
     }
 }

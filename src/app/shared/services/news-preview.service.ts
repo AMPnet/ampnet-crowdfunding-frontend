@@ -14,12 +14,14 @@ export class NewsPreviewService {
 }
 
 export interface LinkPreview {
-    title: string;
-    description: string;
-    image: {
-        url: string;
-        height: string;
-        width: string;
+    open_graph: {
+        title: string;
+        description: string;
+        image: {
+            url: string;
+            height: string;
+            width: string;
+        };
     };
     url: string;
 }

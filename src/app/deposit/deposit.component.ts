@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Deposit, DepositServiceService } from '../shared/services/wallet/deposit-service.service';
-import { displayBackendError, hideSpinnerAndDisplayError } from '../utilities/error-handler';
 import { SpinnerUtil } from '../utilities/spinner-utilities';
-import swal from 'sweetalert2';
 import { PlatformBankAccountService } from '../shared/services/wallet/platform-bank-account.service';
+import { ErrorService } from '../shared/services/error.service';
+import { catchError, finalize, tap } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 
 declare var $: any;
 
@@ -19,46 +20,36 @@ export class DepositComponent implements OnInit {
     projectUUID = '';
 
     constructor(private depositService: DepositServiceService,
-                private bankAccountService: PlatformBankAccountService) {
+                private bankAccountService: PlatformBankAccountService,
+                private errorService: ErrorService) {
     }
 
     ngOnInit() {
         SpinnerUtil.showSpinner();
         this.getMasterIban();
-        this.depositService.getMyPendingDeposit().subscribe(res => {
-            SpinnerUtil.hideSpinner();
-            this.depositModel = res;
-        }, err => {
-            SpinnerUtil.hideSpinner();
-            if (err.status === 404) {
-                this.generateDepositInfo();
-            } else {
-                displayBackendError(err);
-            }
-        });
+        this.depositService.getMyPendingDeposit().pipe(
+            this.errorService.handleError,
+            catchError(err => err.status === 404 ? this.generateDepositInfo() : throwError(err)),
+            tap(res => this.depositModel = res),
+            finalize(() => SpinnerUtil.hideSpinner())
+        ).subscribe();
     }
 
     generateDepositInfo() {
-        SpinnerUtil.showSpinner();
-        this.depositService.createDeposit().subscribe(res => {
-            SpinnerUtil.hideSpinner();
-            this.depositModel = res;
-        }, err => {
-            SpinnerUtil.hideSpinner();
-
-            if (err.error.err_code === '0509') {
-                swal('', 'You already have an existing deposit. Please wait until it\'s approved', 'info');
-            } else {
-                displayBackendError(err);
-            }
-        });
+        return this.depositService.createDeposit().pipe(
+            this.errorService.handleError,
+            tap(res => this.depositModel = res),
+            finalize(() => SpinnerUtil.hideSpinner())
+        );
     }
 
     getMasterIban() {
-        this.bankAccountService.bankAccounts$.subscribe(res => {
-            this.masterIban = res.bank_accounts[0].iban;
-        }, err => {
-            hideSpinnerAndDisplayError(err);
+        SpinnerUtil.showSpinner();
+        this.bankAccountService.bankAccounts$.pipe(
+            this.errorService.handleError,
+            finalize(() => SpinnerUtil.hideSpinner())
+        ).subscribe(res => {
+            this.masterIban = res.bank_accounts[0]?.iban;
         });
     }
 }

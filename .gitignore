@@ -48,3 +48,9 @@ yarn.lock
 
 # Node modules folder
 src/node_modules
+
+# lang-utils
+lang-utils/*.xlsx*
+
+# overrides
+!src/assets/env.template.js

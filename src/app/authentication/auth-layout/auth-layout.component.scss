@@ -1,0 +1,39 @@
+@import "app";
+
+.top-container {
+  background-color: $primary-color;
+}
+
+.content-container {
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+.card {
+  margin-left: 10px !important;
+  margin-right: 10px !important;
+  border-radius: unset !important;
+}
+
+h1 {
+  font-size: 2rem;
+  margin-top: 20px;
+  margin-bottom: 50px;
+  color: #111111;
+}
+
+.app-page-header {
+  margin: 20px 0 40px 0;
+}
+
+.dropdown-divider {
+  width: 60%;
+  margin: 40px auto;
+}
+
+@include media-breakpoint-up(lg) {
+  .card {
+    width: 50%;
+    margin: auto !important;
+  }
+}

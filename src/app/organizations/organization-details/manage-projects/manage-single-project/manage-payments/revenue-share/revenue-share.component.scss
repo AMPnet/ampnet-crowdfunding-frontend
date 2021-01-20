@@ -1,0 +1,54 @@
+@import "app";
+
+.btn-danger {
+  height: 64px;
+}
+
+.revenue {
+  &-info {
+    border: 1px solid $border-light-color;
+  }
+  &-info,
+  &-cta {
+    margin: 20px 15px 0 15px;
+  }
+}
+
+.info {
+  &__title {
+    background-color: $background-color;
+    border-bottom: 1px solid $border-light-color;
+    padding: 16px;
+  }
+  &__title,
+  &__project p,
+  &__amount p {
+    font-size: $font-size-mobile-body;
+    color: $body-color;
+  }
+  &__project p,
+  &__amount p {
+    padding: 0 16px;
+    margin: 0;
+  }
+  &__content {
+    padding: 16px 0;
+  }
+}
+
+@include media-breakpoint-up(lg) {
+  .revenue {
+    &-info,
+    &-cta {
+      margin: 20px 0 0 0;
+    }
+  }
+
+  .info {
+    &__title,
+    &__project p,
+    &__amount p {
+      font-size: $font-size-desktop-body;
+    }
+  }
+}

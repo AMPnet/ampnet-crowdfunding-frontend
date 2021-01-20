@@ -1,28 +1,23 @@
 @import "app";
 
 .container {
-  padding: 0;
+  overflow: hidden;
 }
 
-.row {
-  margin: 0;
+.map-holder {
+  height: 320px;
 }
 
-.col-lg-6 {
-  padding: 0;
+.alert-warning {
+  svg {
+    display: none;
+  }
 }
 
 .project-container {
-  padding: 0 20px;
-
   .right {
     &__title {
       margin: 20px 0;
-      font-size: $font-size-mobile-title;
-      text-transform: uppercase;
-      color: $title-color;
-      letter-spacing: 1px;
-      font-weight: normal;
     }
 
     &__input-name,
@@ -32,10 +27,9 @@
       margin-bottom: 20px;
     }
 
-    &__input-dates input:nth-of-type(2) {
-      border-left: unset;
-      &:focus {
-        border-left: 1px solid $primary-color;
+    &__input-dates .row div:nth-of-type(2) {
+      input {
+        margin-top: 10px;
       }
     }
 
@@ -53,6 +47,26 @@
         font-weight: bold;
         color: $title-color;
       }
+      span, div {
+        font-size: $font-size-mobile-title-small;
+      }
+    }
+  }
+
+  .left {
+    &__title {
+      margin: 32px 0;
+    }
+  }
+
+  .right,
+  .left {
+    &__title {
+      font-size: $font-size-mobile-title;
+      text-transform: uppercase;
+      color: $title-color;
+      letter-spacing: 1px;
+      font-weight: normal;
     }
   }
 
@@ -81,16 +95,12 @@
 }
 
 @include media-breakpoint-up(lg) {
-  .container {
-    padding: 0 15px;
-  }
-
   .map-holder {
     height: 100%;
+    margin-right: -20px;
   }
 
   .project-container {
-    padding: 0px;
     .right {
       &__title {
         margin: 0 0 34px 0;
@@ -107,17 +117,29 @@
         margin-bottom: 24px;
       }
 
+      &__input-dates .row div:nth-of-type(1) {
+        padding-right: 0;
+      }
+
+      &__input-dates .row div:nth-of-type(2) {
+        padding-left: 0;
+        input {
+          border-left: unset;
+          margin-top: 0;
+          &:focus {
+            border-left: 1px solid $primary-color;
+          }
+        }
+      }
+
       &__warning {
         margin-bottom: 24px;
         svg {
           font-size: $font-size-desktop-small;
           margin-top: 5px;
         }
-        div {
+        span, div {
           font-size: $font-size-desktop-body2;
-          span {
-            font-size: $font-size-desktop-body2;
-          }
         }
       }
       .btn {
@@ -135,12 +157,16 @@
       &-left {
         margin-bottom: 0;
         order: 1;
+        padding-right: 0;
       }
       &-right {
         order: 2;
-        padding: 40px 64px 67px 64px;
-        border: 1px solid $border-light-color;
-        border-radius: 1px;
+        padding-left: 0;
+        .right__wrapper {
+          padding: 40px 64px 67px 64px;
+          border: 1px solid $border-light-color;
+          border-radius: 1px;
+        }
       }
     }
 
@@ -148,6 +174,7 @@
       display: flex;
       svg {
         margin-top: 4px;
+        display: inline-block;
       }
     }
   }

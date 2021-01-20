@@ -5,9 +5,9 @@ import { UserService } from '../shared/services/user/user.service';
 import { User, UserRole } from '../shared/services/user/signup.service';
 import { WalletDetailsWithState, WalletService, WalletState } from '../shared/services/wallet/wallet.service';
 import { version } from '../../../package.json';
-import { UserAuthService } from '../shared/services/user/user-auth.service';
 import { AppConfigService } from '../shared/services/app-config.service';
 import { RouterService } from '../shared/services/router.service';
+import { environment } from '../../environments/environment';
 
 
 @Component({
@@ -17,6 +17,7 @@ import { RouterService } from '../shared/services/router.service';
 })
 export class SidebarComponent implements AfterViewInit {
     appVersion: string = version;
+    commitHash = environment.commitHash;
     userRole = UserRole;
 
     user$ = this.userService.user$;
@@ -25,7 +26,6 @@ export class SidebarComponent implements AfterViewInit {
     constructor(private router: RouterService,
                 public appConfigService: AppConfigService,
                 private userService: UserService,
-                private userAuthService: UserAuthService,
                 private walletService: WalletService) {
     }
 
@@ -36,7 +36,7 @@ export class SidebarComponent implements AfterViewInit {
     }
 
     onLogout() {
-        this.userAuthService.logout();
+        this.userService.logout();
         this.router.navigate(['/']);
     }
 

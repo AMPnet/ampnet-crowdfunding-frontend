@@ -1,0 +1,39 @@
+<div class="root container root-content-container">
+    <div class="row button-holder-activation mt-3 mt-lg-0">
+        <div class="col-4">
+            <button [class.active]="activationType === 'users'" class="btn btn-primary w-100 py-3"
+                    [routerLink]="'/dash/activation/users' | coopPath">
+                <i class="fas fa-user mr-2"></i>
+                {{ 'admin.activations.users_tab' | translate }}
+            </button>
+        </div>
+        <div class="col-4">
+            <button [class.active]="activationType === 'groups'" class="btn btn-primary w-100 py-3"
+                    [routerLink]="'/dash/activation/groups' | coopPath">
+                <i class="fas fa-users mr-2"></i>
+                {{ 'admin.activations.groups_tab' | translate }}
+            </button>
+        </div>
+        <div class="col-4">
+            <button [class.active]="activationType === 'projects'" class="btn btn-primary py-3 w-100"
+                    [routerLink]="'/dash/activation/projects' | coopPath">
+                <i class="fas fa-solar-panel mr-2"></i>
+                {{ 'admin.activations.projects_tab' | translate }}
+            </button>
+        </div>
+    </div>
+
+    <div class="row pt-4">
+        <div *ngIf="activationType === 'users'" class="col-md-12">
+            <app-user-activation></app-user-activation>
+        </div>
+
+        <div *ngIf="activationType === 'projects'" class="col-md-12">
+            <app-project-activation></app-project-activation>
+        </div>
+
+        <div *ngIf="activationType === 'groups'" class="col-md-12">
+            <app-group-activation></app-group-activation>
+        </div>
+    </div>
+</div>

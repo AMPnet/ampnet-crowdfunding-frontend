@@ -6,6 +6,4 @@ import { Component } from '@angular/core';
     styleUrls: ['./identity.component.scss']
 })
 export class IdentityComponent {
-    constructor() {
-    }
 }

@@ -1,12 +1,21 @@
-import { Component, ViewEncapsulation } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { Component } from '@angular/core';
+import {
+    AbstractControl,
+    AbstractControlOptions,
+    FormBuilder,
+    FormControl,
+    FormGroup,
+    ValidationErrors,
+    ValidatorFn,
+    Validators
+} from '@angular/forms';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import * as moment from 'moment';
 import { tap } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 import { ProjectService } from '../../../../shared/services/project/project.service';
-import { displayBackendErrorRx } from '../../../../utilities/error-handler';
 import { RouterService } from '../../../../shared/services/router.service';
+import { ErrorService } from '../../../../shared/services/error.service';
 
 @Component({
     selector: 'app-create-new-project',
@@ -22,6 +31,7 @@ export class CreateNewProjectComponent {
 
     constructor(private projectService: ProjectService,
                 private fb: FormBuilder,
+                private errorService: ErrorService,
                 private activatedRoute: ActivatedRoute,
                 private router: RouterService) {
 
@@ -32,7 +42,7 @@ export class CreateNewProjectComponent {
             expectedFunding: ['', [ProjectValidators.greaterThan(0)]],
             minPerUser: ['', [ProjectValidators.greaterThan(0)]],
             maxPerUser: ['', [ProjectValidators.greaterThan(0)]]
-        }, {
+        }, <AbstractControlOptions>{
             validator: Validators.compose([
                 ProjectValidators.fundingLimits,
                 ProjectValidators.fundingPeriodLimits
@@ -60,7 +70,7 @@ export class CreateNewProjectComponent {
             max_per_user: formValue.maxPerUser,
             active: false
         }).pipe(
-            displayBackendErrorRx(),
+            this.errorService.handleError,
             tap(project => {
                 this.router.navigate([`/dash/manage_groups/${orgID}/manage_project/${project.uuid}`]);
             })
@@ -75,10 +85,6 @@ export class CreateNewProjectComponent {
             isAnimated: true,
             dateInputFormat: 'DD-MM-YYYY'
         });
-    }
-
-    backToOrganizationDetailsScreen() {
-        this.router.navigate(['../'], {relativeTo: this.activatedRoute});
     }
 }
 

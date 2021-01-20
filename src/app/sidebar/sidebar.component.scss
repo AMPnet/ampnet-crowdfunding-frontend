@@ -7,21 +7,7 @@
   flex-direction: column;
   box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.1);
   overflow-y: auto;
-}
-
-a:hover {
-  cursor: pointer;
-  transition: all 0.3s;
-  text-decoration: none;
-}
-
-* {
   font-size: $font-size-desktop-small;
-}
-
-a {
-  color: #fff;
-  font-weight: bold;
 }
 
 #main-menu li {
@@ -34,6 +20,17 @@ a {
   letter-spacing: normal;
   display: flex;
   align-items: center;
+
+  a {
+    color: #fff;
+    font-weight: bold;
+  }
+
+  a:hover {
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+  }
 }
 
 #logo-image {
@@ -52,9 +49,11 @@ a {
 .side-active {
   background: rgba($primary-color, 0.15);
   border-right: 3px solid $primary-color;
+
   .menu-icon {
     color: $primary-color;
   }
+
   span {
     color: $title-color;
   }
@@ -99,22 +98,9 @@ a {
 }
 
 .app-version {
-  position: absolute;
-  bottom: 0;
   font-style: italic;
   font-size: smaller;
-}
-
-.app-version li {
-  padding-bottom: 0 !important;
-  color: gray !important;
-}
-
-.app-version li:hover {
-  background: initial !important;
-  cursor: initial !important;
-}
-
-@include media-breakpoint-up(lg) {
-  
+  position: absolute;
+  bottom: 0;
+  padding-left: 2em;
 }

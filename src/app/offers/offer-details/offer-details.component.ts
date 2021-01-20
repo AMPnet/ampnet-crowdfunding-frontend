@@ -3,7 +3,6 @@ import { Meta } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { LinkPreview, NewsPreviewService } from 'src/app/shared/services/news-preview.service';
 import { UserService } from 'src/app/shared/services/user/user.service';
-import { displayBackendErrorRx } from 'src/app/utilities/error-handler';
 import { Project, ProjectService } from '../../shared/services/project/project.service';
 import { WalletService } from '../../shared/services/wallet/wallet.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
@@ -17,6 +16,8 @@ import { PortfolioService, ProjectTransactions } from '../../shared/services/wal
 import { PopupService } from '../../shared/services/popup.service';
 import { ArkaneService } from '../../shared/services/arkane.service';
 import { RouterService } from '../../shared/services/router.service';
+import { ErrorService } from '../../shared/services/error.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-offer-details',
@@ -24,7 +25,7 @@ import { RouterService } from '../../shared/services/router.service';
     styleUrls: ['./offer-details.component.scss'],
 })
 export class OfferDetailsComponent implements OnInit {
-    isOverview = false;
+    isOverview: boolean;
 
     @Input() isPortfolioView = false;
 
@@ -46,13 +47,15 @@ export class OfferDetailsComponent implements OnInit {
                 private userService: UserService,
                 private meta: Meta,
                 private router: RouterService,
+                private translate: TranslateService,
                 private modalService: BsModalService,
                 private portfolioService: PortfolioService,
                 private popupService: PopupService,
+                private errorService: ErrorService,
                 private arkaneService: ArkaneService) {
         const projectID = this.route.snapshot.params.id;
         this.project$ = this.projectService.getProject(projectID).pipe(
-            displayBackendErrorRx(),
+            this.errorService.handleError,
             tap(project => this.setMetaTags(project)),
             shareReplay(1)
         );
@@ -61,18 +64,18 @@ export class OfferDetailsComponent implements OnInit {
             switchMap(project => forkJoin(
                 project.news.map(singleNews => {
                     return this.newsPreviewService.getLinkPreview(singleNews).pipe(
-                        displayBackendErrorRx(),
+                        this.errorService.handleError,
                     );
                 }))
             ),
         );
 
         this.projectWalletMW$ = this.walletService.getProjectWallet(projectID).pipe(
-            displayBackendErrorRx(),
+            this.errorService.handleError,
             shareReplay(),
             switchMap(projectWallet => {
                 return this.middlewareService.getProjectWalletInfoCached(projectWallet.hash).pipe(
-                    displayBackendErrorRx(),
+                    this.errorService.handleError,
                 );
             }),
         );
@@ -89,7 +92,7 @@ export class OfferDetailsComponent implements OnInit {
         );
 
         this.transactions$ = this.portfolioService.getInvestmentsInProject(projectID).pipe(
-            displayBackendErrorRx(),
+            this.errorService.handleError,
             shareReplay(1)
         );
 
@@ -97,7 +100,7 @@ export class OfferDetailsComponent implements OnInit {
             take(1),
             switchMap(([projectWallet, wallet]) => {
                 return this.portfolioService.investmentDetails(projectWallet.projectHash, wallet.wallet.hash).pipe(
-                    displayBackendErrorRx(),
+                    this.errorService.handleError,
                     map(res => res.investmentCancelable)
                 );
             })
@@ -105,37 +108,24 @@ export class OfferDetailsComponent implements OnInit {
     }
 
     ngOnInit() {
-        if (this.route.snapshot.params.isOverview) {
-            this.isOverview = true;
-        }
+        this.isOverview = this.route.snapshot.data.isOverview;
     }
 
     setMetaTags(project: Project) {
-        this.meta.addTag({
-            name: 'og:title',
-            content: project.name
-        });
-        this.meta.addTag({
-            name: 'og:description',
-            content: project.description
-        });
-        this.meta.addTag({
-            name: 'og:image:secure_url',
-            content: project.main_image
-        });
-        this.meta.addTag({
-            name: 'og:url',
-            content: window.location.href
-        });
+        this.meta.addTag({property: 'og:title', content: project.name});
+        this.meta.addTag({property: 'og:description', content: project.short_description});
+        this.meta.addTag({property: 'og:image', content: project.main_image});
+        this.meta.addTag({property: 'og:url', content: window.location.href});
+        this.meta.addTag({name: 'twitter:card', content: 'summary_large_image'});
     }
 
-    copyProjectDetailsUrl(el: TooltipDirective, projectUUID: string) {
+    copyProjectDetailsUrl(el: TooltipDirective, project: Project) {
         const selBox = document.createElement('textarea');
         selBox.style.position = 'fixed';
         selBox.style.left = '0';
         selBox.style.top = '0';
         selBox.style.opacity = '0';
-        selBox.value = this.getProjectURL(projectUUID, false);
+        selBox.value = this.getProjectURL(project, false);
         document.body.appendChild(selBox);
         selBox.focus();
         selBox.select();
@@ -144,18 +134,6 @@ export class OfferDetailsComponent implements OnInit {
 
         el.show();
         timer(2000).subscribe(() => el.hide());
-    }
-
-    backToPreviousScreen() {
-        if (!this.isPortfolioView) {
-            if (this.isOverview) {
-                this.router.navigate(['/overview/discover']);
-            } else {
-                this.router.navigate(['/dash/offers']);
-            }
-        } else {
-            this.router.navigate(['/dash/my_portfolio']);
-        }
     }
 
     openModal(project: Project) {
@@ -172,8 +150,8 @@ export class OfferDetailsComponent implements OnInit {
         return !project.active || (!walletMW || walletMW.investmentCap === walletMW.totalFundsRaised);
     }
 
-    getProjectURL(projectUUID: string, uriComponent = true) {
-        const url = `${window.location.host}/overview/${projectUUID}/discover`;
+    getProjectURL(project: Project, uriComponent = true) {
+        const url = `${window.location.host}/${project.coop}/overview/${project.uuid}`;
 
         return uriComponent ? encodeURIComponent(url) : encodeURI(url);
     }
@@ -185,15 +163,23 @@ export class OfferDetailsComponent implements OnInit {
     cancelInvestment(projectUUID: string) {
         return () => {
             return this.portfolioService.generateCancelInvestmentTransaction(projectUUID).pipe(
-                displayBackendErrorRx(),
+                this.errorService.handleError,
                 switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo)),
                 switchMap(() => this.popupService.new({
                     type: 'success',
-                    title: 'Transaction signed',
-                    text: 'Transaction is being processed...'
+                    title: this.translate.instant('general.transaction_signed.title'),
+                    text: this.translate.instant('general.transaction_signed.description')
                 })),
                 switchMap(() => this.router.navigate(['/dash/wallet']))
             );
         };
+    }
+
+    onPublishedByClicked(organizationUUID: string) {
+        if (this.route.snapshot.data.isOverview) {
+            this.router.navigate([`/overview/orgs/${organizationUUID}`]);
+        } else {
+            this.router.navigate([`/dash/orgs/${organizationUUID}`]);
+        }
     }
 }

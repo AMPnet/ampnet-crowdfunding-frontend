@@ -1,0 +1,10 @@
+.container {
+  padding-bottom: 60px;
+}
+
+@include media-breakpoint-up(lg) {
+  .container {
+    max-width: 1192px;
+    padding-top: 30px;
+  }
+}

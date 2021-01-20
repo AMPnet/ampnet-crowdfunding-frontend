@@ -1,13 +1,12 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { displayBackendErrorRx } from 'src/app/utilities/error-handler';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { catchError, map, shareReplay, switchMap } from 'rxjs/operators';
 import { MiddlewareService, ProjectWalletInfo } from '../../../../../shared/services/middleware/middleware.service';
-import { Project, ProjectService } from '../../../../../shared/services/project/project.service';
 import { WalletService } from '../../../../../shared/services/wallet/wallet.service';
 import { Observable, of } from 'rxjs';
 import { RouterService } from '../../../../../shared/services/router.service';
+import { ErrorService } from '../../../../../shared/services/error.service';
 
 @Component({
     selector: 'app-manage-payments',
@@ -15,25 +14,22 @@ import { RouterService } from '../../../../../shared/services/router.service';
     styleUrls: ['./manage-payments.component.scss']
 })
 export class ManagePaymentsComponent {
-    project$: Observable<Project>;
     projectWalletInfo$: Observable<ProjectWalletInfo>;
 
     revenueShareForm: FormGroup;
 
-    @Input() showProjectTitle = true;
-
     constructor(private walletService: WalletService,
                 private route: ActivatedRoute,
                 private router: RouterService,
-                private projectService: ProjectService,
+                private errorService: ErrorService,
                 private fb: FormBuilder,
                 private middlewareService: MiddlewareService) {
         const projectID = this.route.snapshot.params.projectID;
 
-        this.project$ = this.projectService.getProject(projectID).pipe(displayBackendErrorRx());
 
         this.projectWalletInfo$ = this.walletService.getProjectWallet(projectID).pipe(
-            switchMap(wallet => this.middlewareService.getProjectWalletInfoCached(wallet.hash).pipe(displayBackendErrorRx())),
+            switchMap(wallet => this.middlewareService.getProjectWalletInfoCached(wallet.hash)
+                .pipe(this.errorService.handleError)),
             shareReplay({refCount: true, bufferSize: 1})
         );
 

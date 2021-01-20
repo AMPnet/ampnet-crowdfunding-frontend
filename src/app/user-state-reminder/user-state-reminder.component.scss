@@ -1,0 +1,24 @@
+@import "app";
+
+.wallet-init-reminder {
+  width: 100%;
+  text-align: center;
+  background-color: #FE6250;
+  color: #ffffff;
+  padding: 0 15px;
+}
+
+.wallet-init-reminder p {
+  margin: 0;
+  padding: 0.3rem 0;
+}
+
+.reminder-link {
+  font-weight: bold;
+  text-decoration: underline;
+  cursor: pointer;
+  outline: none;
+}
+
+@include media-breakpoint-up(lg) {
+}

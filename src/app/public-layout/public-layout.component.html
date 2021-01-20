@@ -1,4 +1,9 @@
-<div class="public-root">
-    <router-outlet></router-outlet>
-    <app-log-in-modal></app-log-in-modal>
+<div class="d-flex flex-column min-vh-100">
+    <div class="flex-grow-1">
+        <router-outlet></router-outlet>
+    </div>
+
+    <div class="align-bottom mt-auto">
+        <app-footer></app-footer>
+    </div>
 </div>

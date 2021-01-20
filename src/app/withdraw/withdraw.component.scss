@@ -1,0 +1,73 @@
+@import "app";
+
+
+.withdraw {
+  &__amount {
+    margin-top: 20px;
+    .withdraw {
+      &__title{
+        font-size: $font-size-mobile-body;
+        text-transform: uppercase;
+        color: $body-color;
+        padding-bottom: 6px;
+      }
+    }
+  }
+  &__bank {
+    margin-top: 20px;
+    .bank {
+      &__title {
+        font-size: $font-size-mobile-body;
+        text-transform: uppercase;
+        color: $body-color;
+        padding-bottom: 6px;
+      }
+    }
+  }
+  &__cta {
+    margin-top: 20px;
+  }
+}
+
+.pending {
+  &__desc {
+    text-align: center;
+    margin-top: 20px;
+    p {
+      color: $body-color;
+      font-size: $font-size-mobile-body;
+    }
+  }
+  &__cta {
+    margin-top: 20px;
+  }
+}
+
+.empty {
+  &__title {
+    text-align: center;
+    font-size: $font-size-mobile-body;
+    color: $body-color;
+  }
+  &__title,
+  &__cta {
+    margin-top: 40px;
+  }
+}
+
+
+@include media-breakpoint-up(lg) {
+  .pending {
+    &__desc {
+      p {
+        font-size: $font-size-desktop-body;
+      }
+    }
+  }
+
+  .empty {
+    &__title {
+      font-size: $font-size-desktop-body;
+    }
+  }
+}

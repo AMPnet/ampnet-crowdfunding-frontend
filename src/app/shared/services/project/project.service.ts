@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BackendHttpClient } from '../backend-http-client.service';
-import { DocumentModel, Organization } from './organization.service';
+import { Organization, OrganizationBasic, Document } from './organization.service';
 import { CacheService } from '../cache.service';
 import { Wallet } from '../wallet/wallet.service';
 import { AppConfigService } from '../app-config.service';
@@ -25,7 +25,7 @@ export class ProjectService {
     }
 
     updateProject(projectID: string, data: UpdateProjectData,
-                  image?: File, documents?: File[]) {
+                  image?: File, terms?: File, documents?: File[]) {
         const formData = new FormData();
 
         formData.append('request', new Blob([JSON.stringify(data)], {
@@ -34,6 +34,10 @@ export class ProjectService {
 
         if (image) {
             formData.append('image', image, image.name);
+        }
+
+        if (terms) {
+            formData.append('termsOfService', terms, terms.name);
         }
 
         if (!!documents && documents.length > 0) {
@@ -59,7 +63,8 @@ export class ProjectService {
 interface CreateProjectData {
     organization_uuid: string;
     name: string;
-    description: string;
+    short_description?: string;
+    description?: string;
     location: { lat: number; long: number; };
     roi: { from: number; to: number; };
     start_date: Date;
@@ -74,6 +79,7 @@ interface CreateProjectData {
 
 interface UpdateProjectData {
     name?: string;
+    short_description?: string;
     description?: string;
     location?: { lat: number; long: number; };
     roi?: { from: number; to: number; };
@@ -85,6 +91,7 @@ interface UpdateProjectData {
 export interface Project {
     uuid: string;
     name: string;
+    short_description: string;
     description: string;
     location: { lat: number, long: number };
     location_text: string;
@@ -97,11 +104,11 @@ export interface Project {
     max_per_user: number;
     main_image: string;
     news: string[];
-    documents: DocumentModel[];
+    documents: Document[];
     gallery: string[];
     active: boolean;
     coop: string;
-    organization: Organization;
+    organization?: Organization | OrganizationBasic;
     wallet: Wallet;
 }
 

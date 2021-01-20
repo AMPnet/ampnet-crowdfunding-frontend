@@ -2,10 +2,6 @@
 @import "colors";
 @import url('//fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
 
-* {
-  font-family: 'Inter', sans-serif;
-}
-
 $font-size-desktop-title: 36px;
 $font-size-desktop-body: 16px;
 $font-size-desktop-body2: 14px;
@@ -20,7 +16,8 @@ $font-size-mobile-body: 14px;
 $font-size-mobile-title-small: 12px;
 $font-size-mobile-body-small: 10px;
 
-* {
+body {
+  font-family: 'Inter', sans-serif;
   font-size: $font-size-mobile-body;
 
   @include media-breakpoint-up(lg) {

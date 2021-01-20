@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BackendHttpClient } from '../../backend-http-client.service';
 import { TransactionInfo } from '../wallet.service';
+import { UserRole } from '../../user/signup.service';
 
 @Injectable({
     providedIn: 'root'
@@ -11,29 +12,16 @@ export class WalletCooperativeOwnershipService {
     constructor(private http: BackendHttpClient) {
     }
 
-    executePlatformManagerTransaction(walletAddress: string) {
-        return this.executeOwnershipChangeTransaction(walletAddress, OwnershipType.PLATFORM_MANAGER);
-    }
-
-    executeTokenIssuerTransaction(walletAddress: string) {
-        return this.executeOwnershipChangeTransaction(walletAddress, OwnershipType.TOKEN_ISSUER);
-    }
-
-    private executeOwnershipChangeTransaction(walletAddress: string, type: string) {
+    executeOwnershipChangeTransaction(userUUID: string, role: UserRole.PLATFORM_MANAGER | UserRole.TOKEN_ISSUER) {
         return this.http.post<TransactionInfo>(this.ownershipEndpoint,
             <OwnershipChangeTransactionData>{
-                wallet_address: walletAddress,
-                type: type
+                user_uuid: userUUID,
+                type: role
             });
     }
 }
 
 interface OwnershipChangeTransactionData {
-    wallet_address: string;
-    type: string;
-}
-
-enum OwnershipType {
-    PLATFORM_MANAGER = 'PLATFORM_MANAGER',
-    TOKEN_ISSUER = 'TOKEN_ISSUER'
+    user_uuid: string;
+    type: UserRole.PLATFORM_MANAGER | UserRole.TOKEN_ISSUER;
 }

@@ -1,18 +1,19 @@
 @import "app";
 
 .container {
-  padding: 0;
   overflow: hidden;
   color: $title-color;
-}
-
-.row {
-  padding: 0 5px;
 }
 
 .alert {
   padding: 12px 10px 12px 18px;
   margin-bottom: 40px;
+}
+
+.alert-warning {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 }
 
 .init-left {
@@ -75,6 +76,7 @@
 }
 
 .wallet-balance {
+
   .balance {
     &__content {
       border: 1px solid $border-light-color;
@@ -120,6 +122,11 @@
   margin-top: 20px;
 
   .alert-success {
+    div {
+      svg {
+        display: none;
+      }
+    }
     .btn {
       display: none;
     }
@@ -127,14 +134,12 @@
 }
 
 .transactions {
-  padding: 0 20px;
   margin-top: 30px;
 
   &__single-element {
-    margin: 5px 5px;
-    background-color: #f7f7f7;
-    padding: 20px;
-    border-radius: 1px;
+    margin: 0 5px;
+    border-bottom: 1px solid $border-light-color;
+    padding: 20px 0 10px 0;
     display: flex;
     justify-content: space-between;
   }
@@ -143,7 +148,7 @@
     text-transform: uppercase;
     font-size: $font-size-mobile-title-small;
     letter-spacing: 2px;
-    margin-bottom: 34px;
+    margin-bottom: 16px;
   }
 
   &__report {
@@ -254,11 +259,11 @@
   }
 }
 
-@include media-breakpoint-up(lg) {
-  .container {
-    padding: 0 15px;
-  }
+.bottom-report {
+  margin-top: 20px;
+}
 
+@include media-breakpoint-up(lg) {
   .init-left {
     padding: 40px 64px 80px 64px;
 
@@ -283,7 +288,7 @@
   .wallet-balance {
     border: 1px solid $border-light-color;
     border-radius: 1px;
-    margin-top: 20px;
+    margin: 20px 0 0 0;
     box-shadow: 0 6px 6px 0 lighten($title-color, 90%);
     padding: 0 34px;
 
@@ -330,7 +335,11 @@
 
     .alert-success {
       font-weight: bold;
-
+      div {
+        svg {
+          display: inline-block;
+        }
+      }
       .btn {
         display: inline-block;
       }
@@ -338,8 +347,16 @@
   }
 
   .transactions {
-    padding: 0;
     margin-top: 55px;
+
+    &__single-element {
+      margin: 0 0 5px 0;
+      background-color: $background-color;
+      border-bottom: none;
+      padding: 20px;
+      border-radius: 1px;
+    }
+    
 
     &__title {
       margin-bottom: 50px;
@@ -363,6 +380,10 @@
 
       &__transaction-type {
         padding-right: 5px;
+
+        span.bold {
+          font-weight: bold;
+        }
       }
 
       &__info {

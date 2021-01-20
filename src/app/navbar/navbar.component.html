@@ -1,15 +1,15 @@
-<nav class="navbar fixed-top navbar-expand-lg">
+<nav class="navbar navbar-expand-lg">
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
     </div>
 
     <a [routerLink]="'/dash/offers' | coopPath">
         <div class="navbar-logo">
-            <img src="{{ appConfigService.config.config.logo_url }}">
+            <img src="{{ appConfigService.config.logo }}">
         </div>
     </a>
 
-    <div (click)="menuButtonClicked()" class="navbar-hamburger float-right ml-auto">
+    <a [routerLink]="" (click)="menuButtonClicked()" class="navbar-hamburger float-right ml-auto">
         <img src="../../assets/bars.svg">
-    </div>
+    </a>
 </nav>

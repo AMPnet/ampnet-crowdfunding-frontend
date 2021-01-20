@@ -1,17 +1,14 @@
 <nav class="public-header navbar navbar-collapse navbar-dark bg-light pt-2">
     <div class="ml-2 ml-md-4">
         <a class="navbar-brand" [routerLink]="'/' | coopPath">
-            <img alt="Logo" src="{{ appConfigService.config.config.logo_url }}">
+            <img alt="Logo" src="{{ appConfigService.config.logo }}">
         </a>
     </div>
-    <div *ngIf="!onlyLogo" id="auth-buttons">
-		<span class="text-white">
-			<button class="btn btn-primary px-4 py-2 mr-md-5 mr-3 signup-button"
-                    [routerLink]="'/sign_up' | coopPath">Sign Up</button>
-		</span>
-        <span>
-			<a class="mr-md-4 mr-2 ml-2 ml-md-0 login" (click)="showLoginModal()"
-               data-toggle="modal">Log In</a>
-		</span>
+    <div *ngIf="!onlyLogo" id="auth-buttons" class="flex__center">
+        <button class="btn mr-md-3 mr-2"
+                [routerLink]="'/sign_up' | coopPath">{{ 'header.sign_up' | translate }}</button>
+
+        <button class="btn btn-grey"
+                [routerLink]="'/sign_in' | coopPath">{{ 'header.sign_in' | translate }}</button>
     </div>
 </nav>

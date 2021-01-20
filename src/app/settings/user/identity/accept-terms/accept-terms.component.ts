@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AppConfigService } from '../../../../shared/services/app-config.service';
+import { AppConfigService, KYCProvider } from '../../../../shared/services/app-config.service';
 import { RouterService } from '../../../../shared/services/router.service';
 
 @Component({
@@ -20,6 +20,19 @@ export class AcceptTermsComponent {
     }
 
     goToKYCProvider() {
-        this.router.navigate(['/dash/settings/user/identity/identyum'], {state: {termsAccepted: 'accepted'}});
+        let kycRelPath: string;
+        switch (this.appConfig.config.kyc_provider) {
+            case KYCProvider.VERIFF:
+                kycRelPath = 'veriff';
+                break;
+            case KYCProvider.IDENTYUM:
+                kycRelPath = 'identyum';
+                break;
+            default:
+                kycRelPath = 'veriff';
+        }
+
+        this.router.navigate([`/dash/settings/user/identity/${kycRelPath}`],
+            {state: {termsAccepted: 'accepted'}});
     }
 }

@@ -55,6 +55,17 @@
                        placeholder="{{ 'admin.platform_config.icon_url_input.placeholder' | translate }}"
                        type="text">
 
+                <label for="kyc-provider" class="app-page-label mt-3">
+                    {{ 'admin.platform_config.kyc_provider_input.title' | translate }}
+                </label>
+                <select name="kyc-providers" id="kyc-provider"
+                        class="input-reg w-100"
+                        formControlName="kycProvider">
+                    <option *ngFor="let provider of kycProviders" [ngValue]="provider">
+                        {{ provider }}
+                    </option>
+                </select>
+
                 <label for="coop-statute" class="app-page-label mt-3">
                     {{ 'admin.platform_config.coop_statute_input.title' | translate }}
                 </label>

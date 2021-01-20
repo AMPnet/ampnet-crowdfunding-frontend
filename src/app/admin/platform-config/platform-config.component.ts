@@ -3,7 +3,7 @@ import { map, shareReplay, switchMap, tap } from 'rxjs/operators';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { CoopService } from '../../shared/services/user/coop.service';
-import { AppConfig, AppConfigService } from '../../shared/services/app-config.service';
+import { AppConfig, AppConfigService, KYCProvider } from '../../shared/services/app-config.service';
 import { ErrorService } from '../../shared/services/error.service';
 import { ActivatedRoute } from '@angular/router';
 import { LanguageService } from '../../shared/services/language.service';
@@ -14,6 +14,8 @@ import { LanguageService } from '../../shared/services/language.service';
     styleUrls: ['./platform-config.component.scss']
 })
 export class PlatformConfigComponent {
+    kycProviders = Object.entries(KYCProvider).map(keyValue => keyValue[1]);
+
     showSecureConfig: boolean;
     private refreshAppConfig = new BehaviorSubject<AppConfig>(null);
     appConfig$: Observable<AppConfig>;
@@ -46,6 +48,7 @@ export class PlatformConfigComponent {
                     arkaneID: [appConfig.config?.arkane?.id],
                     arkaneEnv: [appConfig.config?.arkane?.env],
                     needUserVerification: [appConfig.need_user_verification],
+                    kycProvider: [appConfig.kyc_provider],
                     reCaptchaSiteKey: [appConfig.config?.reCaptchaSiteKey],
                     googleClientID: [appConfig.config?.googleClientId],
                     facebookAppID: [appConfig.config?.facebookAppId],
@@ -61,6 +64,7 @@ export class PlatformConfigComponent {
                 name: appConfig.name,
                 hostname: appConfig.hostname,
                 need_user_verification: appConfig.needUserVerification,
+                kyc_provider: appConfig.kycProvider,
                 config: {
                     title: appConfig.title,
                     icon_url: appConfig.icon,
@@ -92,7 +96,7 @@ export class PlatformConfigComponent {
 
     private get langsPattern(): ValidatorFn {
         return (c: FormControl) => {
-            const langsLen = this.languageService.extractLanguages(c.value || '').length;
+            const langsLen = this.languageService.extractLanguages(c.value).length;
             const langGroupsLen = String(c.value)
                 .trim().split(' ').filter(v => v !== '').length;
             return langsLen === langGroupsLen ? null : {invalid: true};

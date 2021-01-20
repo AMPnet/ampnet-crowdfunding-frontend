@@ -167,6 +167,7 @@ export interface AppConfig {
     logo?: string;
     banner?: string;
     need_user_verification?: boolean;
+    kyc_provider?: KYCProvider;
     config?: CustomConfig;
 }
 
@@ -189,4 +190,9 @@ export interface CustomConfig {
     facebookAppId?: string;
     reCaptchaSiteKey?: string;
     footerHTML?: string;
+}
+
+export enum KYCProvider {
+    VERIFF = 'VERIFF',
+    IDENTYUM = 'IDENTYUM'
 }

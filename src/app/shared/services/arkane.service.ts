@@ -11,7 +11,7 @@ import {
 } from '@arkane-network/arkane-connect';
 import { combineLatest, from, Observable, of, throwError } from 'rxjs';
 import { Account } from '@arkane-network/arkane-connect/dist/src/models/Account';
-import { catchError, concatMap, find, map, switchMap, take, takeWhile, tap, timeout } from 'rxjs/operators';
+import { catchError, concatMap, find, first, map, switchMap, take, takeWhile, tap, timeout } from 'rxjs/operators';
 import { TransactionInfo, WalletService, WalletState } from './wallet/wallet.service';
 import { PopupService } from './popup.service';
 import { BroadcastService } from './broadcast.service';
@@ -156,6 +156,11 @@ export class ArkaneService {
     private signTransaction(txToSign: Observable<string> | string): Observable<SignerResult> {
         return this.getMatchedWallet().pipe(
             switchMap(wallet => combineLatest([of(wallet), txToSign instanceof Observable ? txToSign : of(txToSign)])),
+            switchMap(([wallet, txDataToSign]) => this.popupService.info(
+                this.translate.instant('services.arkane.prompt_sign')
+            ).pipe(switchMap(popupRes => popupRes.dismiss === undefined ?
+                combineLatest([of(wallet), of(txDataToSign)]) :
+                ArkaneService.throwError(ArkaneError.SIGNING_ABORTED_BY_USER)))),
             switchMap(([wallet, txDataToSign]) =>
                 from(this.arkaneConnect.createSigner(WindowMode.POPUP).sign({
                     walletId: wallet.id,
@@ -236,6 +241,7 @@ enum ArkaneError {
     GET_ACCOUNT_FLOW_INTERRUPTED = 'GET_ACCOUNT_FLOW_INTERRUPTED',
     USER_NOT_AUTHENTICATED = 'USER_NOT_AUTHENTICATED',
     SIGNING_ABORTED = 'SIGNING_ABORTED',
+    SIGNING_ABORTED_BY_USER = 'SIGNING_ABORTED_BY_USER',
     SIGNING_FAILED = 'SIGNING_FAILED',
     NO_WALLETS_POPUP_DISMISSED = 'NO_WALLETS_POPUP_DISMISSED',
     WRONG_ACCOUNT_POPUP_DISMISSED = 'WRONG_ACCOUNT_POPUP_DISMISSED',

@@ -184,7 +184,12 @@ export class ArkaneService {
     }
 
     getAccountFlow(): Observable<Account> {
-        return from(this.arkaneConnect.flows.getAccount(this.secretType)).pipe(
+        return this.popupService.info(
+            this.translate.instant('services.arkane.prompt_sign_in')
+        ).pipe(
+            switchMap(popupRes => popupRes.dismiss === undefined ?
+                of('') : ArkaneService.throwError(ArkaneError.GET_ACCOUNT_FLOW_INTERRUPTED)),
+            switchMap(() => from(this.arkaneConnect.flows.getAccount(this.secretType))),
             switchMap(res => res.auth === undefined ?
                 ArkaneService.throwError(ArkaneError.GET_ACCOUNT_FLOW_INTERRUPTED) : of(res))
         );

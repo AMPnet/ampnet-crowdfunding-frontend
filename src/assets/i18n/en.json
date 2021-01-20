@@ -751,6 +751,7 @@
       "wallet_in_use": "Your wallets on Arkane are already in use. Please create a new wallet.",
       "prompt_create_wallet": "You will be prompted to create a new wallet on Arkane.",
       "prompt_login_again": "You are logged in with wrong Arkane account. You will be logged out.",
+      "prompt_sign_in": "You will be prompted to sign in to Arkane.",
       "prompt_sign": "You will be prompted to sign the transaction.",
       "generic_error": {
         "title": "Arkane authentication failed.",

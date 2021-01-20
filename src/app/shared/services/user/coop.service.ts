@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BackendHttpClient } from '../backend-http-client.service';
-import { AppConfig, CustomConfig } from '../app-config.service';
+import { AppConfig, CustomConfig, KYCProvider } from '../app-config.service';
 import { CaptchaAction, CaptchaService } from '../captcha.service';
 import { switchMap } from 'rxjs/operators';
 
@@ -85,5 +85,6 @@ interface UpdateCoopData {
     name: string;
     hostname: string;
     need_user_verification: boolean;
+    kyc_provider: KYCProvider;
     config: CustomConfig;
 }

@@ -611,6 +611,7 @@
         "title": "Icon URL",
         "placeholder": "https://path/to/icon.png"
       },
+      "kyc_provider_input.title": "KYC Provider",
       "coop_statute_input": {
         "title": "Platform Terms & Conditions",
         "placeholder": "https://path/to/terms.html | https://path/to/terms-file.pdf"

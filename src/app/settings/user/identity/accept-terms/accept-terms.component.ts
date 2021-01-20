@@ -20,19 +20,19 @@ export class AcceptTermsComponent {
     }
 
     goToKYCProvider() {
-        let relRelativePath: string;
+        let kycRelPath: string;
         switch (this.appConfig.config.kyc_provider) {
             case KYCProvider.VERIFF:
-                relRelativePath = 'veriff';
+                kycRelPath = 'veriff';
                 break;
             case KYCProvider.IDENTYUM:
-                relRelativePath = 'identyum';
+                kycRelPath = 'identyum';
                 break;
             default:
-                relRelativePath = 'veriff';
+                kycRelPath = 'veriff';
         }
 
-        this.router.navigate([`/dash/settings/user/identity/${relRelativePath}`],
+        this.router.navigate([`/dash/settings/user/identity/${kycRelPath}`],
             {state: {termsAccepted: 'accepted'}});
     }
 }

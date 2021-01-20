@@ -17,6 +17,7 @@ import { PopupService } from './popup.service';
 import { BroadcastService } from './broadcast.service';
 import { AppConfigService } from './app-config.service';
 import { ErrorService, WalletError } from './error.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
     providedIn: 'root'
@@ -29,6 +30,7 @@ export class ArkaneService {
                 private appConfigService: AppConfigService,
                 private broadcastService: BroadcastService,
                 private errorService: ErrorService,
+                private translate: TranslateService,
                 private popupService: PopupService) {
         this.appConfigService.config$.subscribe(config => {
             const arkaneConfig = config.config.arkane;
@@ -100,7 +102,9 @@ export class ArkaneService {
     }
 
     private arkaneWalletsAlreadyInUseProcedure(): Observable<Wallet> {
-        return this.popupService.info('Your wallets on Arkane are already in use. Please create a new wallet.').pipe(
+        return this.popupService.info(
+            this.translate.instant('services.arkane.wallet_in_use')
+        ).pipe(
             switchMap(popupRes => popupRes.dismiss === undefined ?
                 this.manageWalletsFlow() : ArkaneService.throwError(ArkaneError.CREATE_WALLET_POPUP_DISMISSED)),
             switchMap(() => this.getMatchedWallet())
@@ -108,7 +112,9 @@ export class ArkaneService {
     }
 
     private arkaneNoWalletsAvailableProcedure(): Observable<Wallet> {
-        return this.popupService.info('You will be prompted to create a new wallet on Arkane.').pipe(
+        return this.popupService.info(
+            this.translate.instant('services.arkane.prompt_create_wallet')
+        ).pipe(
             switchMap(popupRes => popupRes.dismiss === undefined ?
                 this.manageWalletsFlow() : ArkaneService.throwError(ArkaneError.NO_WALLETS_POPUP_DISMISSED)),
             switchMap(() => this.getMatchedWallet())
@@ -117,7 +123,9 @@ export class ArkaneService {
 
     private arkaneWrongAccountProcedure(): Observable<Wallet> {
         return this.logout().pipe(
-            switchMap(() => this.popupService.info('You are logged in with wrong Arkane account. You will be logged out.')),
+            switchMap(() => this.popupService.info(
+                this.translate.instant('services.arkane.prompt_login_again')
+            )),
             switchMap(popupRes => popupRes.dismiss === undefined ?
                 this.getAccountFlow() : ArkaneService.throwError(ArkaneError.WRONG_ACCOUNT_POPUP_DISMISSED)),
             switchMap(account => account.isAuthenticated ?
@@ -206,9 +214,8 @@ export class ArkaneService {
                 timeout(10000),
                 catchError(() => this.popupService.new({
                         type: 'error',
-                        title: 'Arkane authentication failed.',
-                        text: 'This might be caused by blocking 3rd-party cookies in your browser. ' +
-                            'Consider unblocking them to proceed.'
+                        title: this.translate.instant('services.arkane.generic_error.title'),
+                        text: this.translate.instant('services.arkane.generic_error.text')
                     }).pipe(switchMap(() =>
                         ArkaneService.throwError(ArkaneError.USER_NOT_AUTHENTICATED)))
                 )

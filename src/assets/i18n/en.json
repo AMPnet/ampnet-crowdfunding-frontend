@@ -746,6 +746,17 @@
       "submit": "Submit"
     }
   },
+  "services": {
+    "arkane": {
+      "wallet_in_use": "Your wallets on Arkane are already in use. Please create a new wallet.",
+      "prompt_create_wallet": "You will be prompted to create a new wallet on Arkane.",
+      "prompt_login_again": "You are logged in with wrong Arkane account. You will be logged out.",
+      "generic_error": {
+        "title": "Arkane authentication failed.",
+        "text": "This might be caused by blocking 3rd-party cookies in your browser. Consider unblocking them to proceed."
+      }
+    }
+  },
   "errors": {
     "registration": {
       "sign_up_invalid": "Invalid sign up data.",

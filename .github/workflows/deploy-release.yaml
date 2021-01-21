@@ -45,5 +45,5 @@ jobs:
           IMAGE_NAME="ampnet/ampnet-crowdfunding-frontend"
           IMAGE_VERSION_TAG="${IMAGE_NAME}:${APP_VERSION}"
 
-          docker build --no-cache -f prod-build/Dockerfile -t "${IMAGE_VERSION_TAG}" -t .
+          docker build --no-cache -f prod-build/Dockerfile -t "${IMAGE_VERSION_TAG}" .
           docker image push "${IMAGE_VERSION_TAG}"

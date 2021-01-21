@@ -3,14 +3,12 @@ on:
   push:
     branches:
       - release
-
 jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         node-version: [ 12.x ]
-
     steps:
       - uses: actions/checkout@v2
       - name: Cache node modules
@@ -46,8 +44,6 @@ jobs:
           APP_VERSION=$(npm run env | grep ^npm_package_version= | cut -d "=" -f 2)
           IMAGE_NAME="ampnet/ampnet-crowdfunding-frontend"
           IMAGE_VERSION_TAG="${IMAGE_NAME}:${APP_VERSION}"
-          IMAGE_LATEST_TAG="${IMAGE_NAME}:latest"
 
-          docker build --no-cache -f prod-build/Dockerfile -t "${IMAGE_VERSION_TAG}" -t "${IMAGE_LATEST_TAG}" .
+          docker build --no-cache -f prod-build/Dockerfile -t "${IMAGE_VERSION_TAG}" -t .
           docker image push "${IMAGE_VERSION_TAG}"
-          docker image push "${IMAGE_LATEST_TAG}"

@@ -37,5 +37,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh pr create --base release --title "Release $RELEASE_VERSION (->release)" --fill
-          gh pr create --base master --title "Release $RELEASE_VERSION (->master)" --fill
+          echo $(gh --version)
+          gh pr create --base release --title "Release $RELEASE_VERSION (->release)" --body ""
+          gh pr create --base master --title "Release $RELEASE_VERSION (->master)" --body ""

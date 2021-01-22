@@ -3,14 +3,13 @@ on:
   push:
     branches:
       - master
-
 jobs:
   build:
+    if: "!contains(github.event.head_commit.message, '[ci skip]')"
     runs-on: ubuntu-latest
     strategy:
       matrix:
         node-version: [ 12.x ]
-
     steps:
       - uses: actions/checkout@v1
       - name: Cache node modules
@@ -45,11 +44,10 @@ jobs:
           echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
           APP_VERSION=$(npm run env | grep ^npm_package_version= | cut -d "=" -f 2)
           IMAGE_NAME="ampnet/ampnet-crowdfunding-frontend"
-          IMAGE_ALPHA_TAG="${IMAGE_NAME}:alpha"
+          IMAGE_LATEST_TAG="${IMAGE_NAME}:latest"
 
-          docker build --no-cache -f prod-build/Dockerfile -t "${IMAGE_ALPHA_TAG}" .
-          docker image push "${IMAGE_ALPHA_TAG}"
-
+          docker build --no-cache -f prod-build/Dockerfile -t "${IMAGE_LATEST_TAG}" .
+          docker image push "${IMAGE_LATEST_TAG}"
       - name: Update image on staging
         uses: appleboy/ssh-action@v0.1.3
         with:

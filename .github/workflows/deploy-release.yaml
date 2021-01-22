@@ -3,14 +3,12 @@ on:
   push:
     branches:
       - release
-
 jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         node-version: [ 12.x ]
-
     steps:
       - uses: actions/checkout@v2
       - name: Cache node modules
@@ -37,7 +35,7 @@ jobs:
       - name: Generate production build
         run: npm run build-prod
 
-      - name: Push to docker hub
+      - name: "Release: Push to Docker Hub, set tag"
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
@@ -46,8 +44,9 @@ jobs:
           APP_VERSION=$(npm run env | grep ^npm_package_version= | cut -d "=" -f 2)
           IMAGE_NAME="ampnet/ampnet-crowdfunding-frontend"
           IMAGE_VERSION_TAG="${IMAGE_NAME}:${APP_VERSION}"
-          IMAGE_LATEST_TAG="${IMAGE_NAME}:latest"
 
-          docker build --no-cache -f prod-build/Dockerfile -t "${IMAGE_VERSION_TAG}" -t "${IMAGE_LATEST_TAG}" .
+          docker build --no-cache -f prod-build/Dockerfile -t "${IMAGE_VERSION_TAG}" .
           docker image push "${IMAGE_VERSION_TAG}"
-          docker image push "${IMAGE_LATEST_TAG}"
+
+          git tag $APP_VERSION
+          git push origin $APP_VERSION

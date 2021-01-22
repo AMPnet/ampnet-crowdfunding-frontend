@@ -3,7 +3,7 @@ on:
   create
 jobs:
   prepare-release:
-    if: ${{ startsWith(github.ref, 'refs/heads/release/') }}
+    if: ${{ startsWith(github.ref, 'refs/heads/release-') }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -27,7 +27,7 @@ jobs:
           git config user.name github-actions
           git config user.email github-actions@github.com
 
-          RELEASE_VERSION=$(git branch --show-current | sed -n "s/^release\/\(.*\)$/\1/p")
+          RELEASE_VERSION=$(git branch --show-current | sed -n "s/^release-\(.*\)$/\1/p")
 
           npm --no-git-tag-version version $RELEASE_VERSION
           git add package.json package-lock.json

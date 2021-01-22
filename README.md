@@ -16,9 +16,13 @@ npm start
 
 ## Additional Content
 
-Deployment:
+Development:
+* [Development guide](docs/DEV.md)
 * [Production Docker build](prod-build/README.md)
 
 Translations:
 * [Developer guide](lang-utils/README.md)
 * [Translator guide](lang-utils/TRANSLATION_GUIDE.md)
+
+Release: 
+* [Release procedure](docs/RELEASE.md)

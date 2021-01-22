@@ -28,6 +28,7 @@ jobs:
           git config user.email github-actions@github.com
 
           RELEASE_VERSION=$(git branch --show-current | sed -n "s/^release-\(.*\)$/\1/p")
+          echo "::set-env name=RELEASE_VERSION::$RELEASE_VERSION"
 
           npm --no-git-tag-version version $RELEASE_VERSION
           git add package.json package-lock.json
@@ -37,5 +38,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh pr create --base release --title "Release $RELEASE_VERSION (->release)" --body "Auto generated from Github Actions"
-          gh pr create --base master --title "Release $RELEASE_VERSION (->master)" --body "Auto generated from Github Actions"
+          gh pr create --base release --title "Release $RELEASE_VERSION (->release)" --fill
+          gh pr create --base master --title "Release $RELEASE_VERSION (->master)" --fill

@@ -35,4 +35,5 @@ jobs:
           git push
       - name: Create PRs
         run: |
-
+          gh pr create --base release --title "Release $RELEASE_VERSION (->release)" --body "Auto generated from Github Actions"
+          gh pr create --base master --title "Release $RELEASE_VERSION (->master)" --body "Auto generated from Github Actions"

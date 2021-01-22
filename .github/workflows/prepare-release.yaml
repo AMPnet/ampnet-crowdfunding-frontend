@@ -34,7 +34,8 @@ jobs:
           git commit -m "version bump to $RELEASE_VERSION"
           git push
       - name: Create PRs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh auth login --with-token ${{ secrets.GITHUB_TOKEN }}
           gh pr create --base release --title "Release $RELEASE_VERSION (->release)" --body "Auto generated from Github Actions"
           gh pr create --base master --title "Release $RELEASE_VERSION (->master)" --body "Auto generated from Github Actions"

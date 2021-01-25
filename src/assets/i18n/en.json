@@ -616,6 +616,10 @@
         "title": "Platform Terms & Conditions",
         "placeholder": "https://path/to/terms.html | https://path/to/terms-file.pdf"
       },
+      "contact_url_input": {
+        "title": "Contact URL",
+        "placeholder": "mailto:support@example.com | https://example.com/contact_us"
+      },
       "languages_input": {
         "title": "Languages",
         "placeholder": "fr:\"French\" el:\"Greek\":\"https://path.to/el.json\" fr-CA:\"French (Canada)\":\"https://path.to/fr-CA.json\""

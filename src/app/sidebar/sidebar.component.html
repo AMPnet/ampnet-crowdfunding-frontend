@@ -12,27 +12,27 @@
                 {{ 'navigation.menu.title' | translate }}
             </p>
             <li routerLink="offers" routerLinkActive="side-active">
-                <i class="menu-icon fas fa-align-left"></i>
+                <fa-icon class="menu-icon" icon="align-left"></fa-icon>
                 <span>{{ 'navigation.menu.offers' | translate }}</span>
             </li>
             <div [tooltip]="!isUserVerified(states.user) || !isWalletLazyReady(states.wallet) ? ToolTipNotVerified : null">
                 <li routerLink="my_portfolio" routerLinkActive="side-active"
                     [class.unverified-user-disabled]="!isUserVerified(states.user) || !isWalletEagerReady(states.wallet)">
-                    <i class="menu-icon fas fa-user"></i>
+                    <fa-icon class="menu-icon" icon="user"></fa-icon>
                     <span>{{ 'navigation.menu.my_portfolio' | translate }}</span>
                 </li>
             </div>
             <div [tooltip]="!isUserVerified(states.user) ? ToolTipNotVerified : null">
                 <li routerLink="wallet" routerLinkActive="side-active"
                     [class.unverified-user-disabled]="!isUserVerified(states.user)">
-                    <i class="menu-icon fas fa-wallet"></i>
+                    <fa-icon class="menu-icon" icon="wallet"></fa-icon>
                     <span>{{ 'navigation.menu.wallet' | translate }}</span>
                 </li>
             </div>
             <div [tooltip]="!isUserVerified(states.user) || !isWalletLazyReady(states.wallet) ? ToolTipNotVerified : null">
                 <li routerLink="manage_groups" routerLinkActive="side-active"
                     [class.unverified-user-disabled]="!isUserVerified(states.user) || !isWalletEagerReady(states.wallet)">
-                    <i class="menu-icon fas fa-layer-group"></i>
+                    <fa-icon class="menu-icon" icon="layer-group"></fa-icon>
                     <span>{{ 'navigation.menu.investment_groups' | translate }}</span>
                 </li>
             </div>
@@ -41,7 +41,7 @@
                  [tooltip]="!isUserVerified(states.user) || !isWalletLazyReady(states.wallet) ? ToolTipNotVerified : null">
                 <li routerLink="exchange" routerLinkActive="side-active"
                     [class.unverified-user-disabled]="!isUserVerified(states.user) || !isWalletEagerReady(states.wallet)">
-                    <i class="menu-icon fas fa-store"></i>
+                    <fa-icon class="menu-icon" icon="store"></fa-icon>
                     <span>Project market</span>
                 </li>
             </div>
@@ -52,11 +52,11 @@
                 {{ 'navigation.settings.title' | translate }}
             </p>
             <li routerLink="settings/user" routerLinkActive="side-active">
-                <i class="menu-icon fas fa-user-cog"></i>
+                <fa-icon class="menu-icon" icon="user-cog"></fa-icon>
                 <span>{{ 'navigation.settings.user_profile' | translate }}</span>
             </li>
             <li routerLink="payment_options" routerLinkActive="side-active">
-                <i class="menu-icon fas fa-credit-card"></i>
+                <fa-icon class="menu-icon" icon="credit-card"></fa-icon>
                 <span>{{ 'navigation.settings.payments' | translate }}</span>
             </li>
         </ul>
@@ -67,27 +67,27 @@
             </p>
             <ul class="list-unstyled components" id="main-menu">
                 <li routerLink="manage_withdrawals" routerLinkActive="side-active">
-                    <i class="menu-icon fas fa-arrow-circle-up"></i>
+                    <fa-icon class="menu-icon" icon="arrow-circle-up"></fa-icon>
                     <span>{{ 'navigation.admin.withdrawals' | translate }}</span>
                 </li>
                 <li routerLink="manage_deposits" routerLinkActive="side-active">
-                    <i class="menu-icon fas fa-arrow-circle-down"></i>
+                    <fa-icon class="menu-icon" icon="arrow-circle-down"></fa-icon>
                     <span>{{ 'navigation.admin.deposits' | translate }}</span>
                 </li>
                 <li routerLink="activation/users" routerLinkActive="side-active">
-                    <i class="menu-icon fas fa-flag-checkered"></i>
+                    <fa-icon class="menu-icon" icon="flag-checkered"></fa-icon>
                     <span>{{ 'navigation.admin.activations' | translate }}</span>
                 </li>
                 <li routerLink="admin/platform_bank_account" routerLinkActive="side-active">
-                    <i class="menu-icon fas fa-university"></i>
+                    <fa-icon class="menu-icon" icon="university"></fa-icon>
                     <span>{{ 'navigation.admin.bank_account' | translate }}</span>
                 </li>
                 <li routerLink="ownership" routerLinkActive="side-active">
-                    <i class="menu-icon fas fa-handshake"></i>
+                    <fa-icon class="menu-icon" icon="handshake"></fa-icon>
                     <span>{{ 'navigation.admin.platform_roles' | translate }}</span>
                 </li>
                 <li routerLink="platform_config" routerLinkActive="side-active">
-                    <i class="menu-icon fas fa-cogs"></i>
+                    <fa-icon class="menu-icon" icon="cogs"></fa-icon>
                     <span>{{ 'navigation.admin.platform_config' | translate }}</span>
                 </li>
             </ul>
@@ -99,19 +99,19 @@
             </p>
             <ul class="list-unstyled components" id="main-menu">
                 <li routerLink="manage_withdrawals" routerLinkActive="side-active">
-                    <i class="menu-icon fas fa-arrow-circle-up"></i>
+                    <fa-icon class="menu-icon" icon="arrow-circle-up"></fa-icon>
                     <span>{{ 'navigation.admin.withdrawals' | translate }}</span>
                 </li>
                 <li routerLink="manage_deposits" routerLinkActive="side-active">
-                    <i class="menu-icon fas fa-arrow-circle-down"></i>
+                    <fa-icon class="menu-icon" icon="arrow-circle-down"></fa-icon>
                     <span>{{ 'navigation.admin.deposits' | translate }}</span>
                 </li>
                 <li routerLink="admin/platform_bank_account" routerLinkActive="side-active">
-                    <i class="menu-icon fas fa-university"></i>
+                    <fa-icon class="menu-icon" icon="university"></fa-icon>
                     <span>{{ 'navigation.admin.bank_account' | translate }}</span>
                 </li>
                 <li routerLink="ownership" routerLinkActive="side-active">
-                    <i class="menu-icon fas fa-handshake"></i>
+                    <fa-icon class="menu-icon" icon="handshake"></fa-icon>
                     <span>{{ 'navigation.admin.platform_roles' | translate }}</span>
                 </li>
             </ul>
@@ -123,15 +123,15 @@
             </p>
             <ul class="list-unstyled components" id="main-menu">
                 <li routerLink="activation/users" routerLinkActive="side-active">
-                    <i class="menu-icon fas fa-flag-checkered"></i>
+                    <fa-icon class="menu-icon" icon="flag-checkered"></fa-icon>
                     <span>{{ 'navigation.admin.activations' | translate }}</span>
                 </li>
                 <li routerLink="ownership" routerLinkActive="side-active">
-                    <i class="menu-icon fas fa-handshake"></i>
+                    <fa-icon class="menu-icon" icon="handshake"></fa-icon>
                     <span>{{ 'navigation.admin.platform_roles' | translate }}</span>
                 </li>
                 <li routerLink="platform_config" routerLinkActive="side-active">
-                    <i class="menu-icon fas fa-cogs"></i>
+                    <fa-icon class="menu-icon" icon="cogs"></fa-icon>
                     <span>{{ 'navigation.admin.platform_config' | translate }}</span>
                 </li>
             </ul>
@@ -144,13 +144,13 @@
             <a href="{{ appConfigService.config.config.contact_url }}"
                *ngIf="appConfigService.config.config.contact_url" style="all: unset">
                 <li routerLinkActive="side-active" class="mt-2">
-                    <i class="menu-icon fas fa-envelope-open"></i>
+                    <fa-icon class="menu-icon" icon="envelope-open"></fa-icon>
                     <span>{{ 'navigation.info.contact_us' | translate }}</span>
                 </li>
             </a>
 
             <li (click)="onLogout()" routerLinkActive="side-active">
-                <i class="menu-icon fas fa-sign-out-alt"></i>
+                <fa-icon class="menu-icon" icon="sign-out-alt"></fa-icon>
                 <span>{{ 'navigation.info.logout' | translate }}</span>
             </li>
         </ul>

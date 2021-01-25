@@ -104,6 +104,8 @@ import { VeriffComponent } from './settings/user/identity/veriff/veriff.componen
 import { AcceptTermsComponent } from './settings/user/identity/accept-terms/accept-terms.component';
 import { IdentyumComponent } from './settings/user/identity/identyum/identyum.component';
 import { StaticPageComponent } from './static-page/static-page.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FaIconsService } from './shared/services/fa-icons.service';
 
 @NgModule({
     declarations: [
@@ -201,6 +203,7 @@ import { StaticPageComponent } from './static-page/static-page.component';
         RouterModule,
         AppRoutingModule,
         TranslationsModule,
+        FontAwesomeModule,
         TooltipModule.forRoot(),
         ModalModule.forRoot(),
         TabsModule.forRoot(),
@@ -250,4 +253,7 @@ import { StaticPageComponent } from './static-page/static-page.component';
     bootstrap: [AppComponent]
 })
 export class AppModule {
+    constructor(faIconsService: FaIconsService) {
+        faIconsService.addIcons();
+    }
 }

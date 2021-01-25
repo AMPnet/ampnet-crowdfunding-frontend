@@ -1,6 +1,6 @@
-@import "colors";
-@import "fonts";
-@import "bootstrap/scss/pagination";
+@import "../colors";
+@import "../fonts";
+@import "node_modules/bootstrap/scss/pagination";
 
 .pagination {
   .page-item .page-link {

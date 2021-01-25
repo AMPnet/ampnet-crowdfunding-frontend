@@ -31,14 +31,12 @@
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "src/assets/animate.css",
               "node_modules/@fortawesome/fontawesome-pro/css/all.css",
               "node_modules/bootstrap-select/dist/css/bootstrap-select.min.css",
               "node_modules/uppy/dist/uppy.min.css",
-              "node_modules/@chenfengyuan/datepicker/dist/datepicker.min.css",
               "node_modules/leaflet/dist/leaflet.css",
               "node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
-              "src/styles/app.scss"
+              "src/styles/styles.scss"
             ],
             "stylePreprocessorOptions": {
               "includePaths": [
@@ -107,7 +105,7 @@
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
             "styles": [
-              "src/styles/app.scss"
+              "src/styles/styles.scss"
             ],
             "stylePreprocessorOptions": {
               "includePaths": [

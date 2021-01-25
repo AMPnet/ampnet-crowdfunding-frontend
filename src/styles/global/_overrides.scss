@@ -1,9 +1,9 @@
-@import "colors";
-@import "bootstrap/scss/mixins/buttons";
+@import "../colors";
+//@import "node_modules/bootstrap/scss/mixins/buttons";
 
-@import './overrides/swal-overrides';
-@import './overrides/bootstrap-overrides';
-@import './overrides/uppy-overrides';
+@import 'overrides/swal-overrides';
+@import 'overrides/bootstrap-overrides';
+@import 'overrides/uppy-overrides';
 
 a {
   color: $primary-color;

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { WalletDetailsWithState, WalletService } from '../shared/services/wallet/wallet.service';
+import { WalletService } from '../shared/services/wallet/wallet.service';
 import { Project, ProjectService } from '../shared/services/project/project.service';
 import { ActivatedRoute } from '@angular/router';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
@@ -39,7 +39,7 @@ export class InvestComponent implements OnInit {
             switchMap(([project, wallet]) =>
                 this.portfolioService.investmentDetails(project.wallet.hash, wallet.wallet.hash).pipe(
                     this.errorService.handleError,
-                    map(invDetails => this.computeInvestmentData(project, wallet, invDetails))
+                    map(invDetails => this.computeInvestmentData(project, invDetails))
                 )
             ),
             shareReplay(1)
@@ -52,14 +52,12 @@ export class InvestComponent implements OnInit {
         });
     }
 
-    private computeInvestmentData(project: Project,
-                                  wallet: WalletDetailsWithState,
-                                  invDetails: DetailsResult): InvestmentData {
+    private computeInvestmentData(project: Project, invDetails: DetailsResult): InvestmentData {
         const expected = project.expected_funding;
         const min = project.min_per_user;
         const max = project.max_per_user;
         const funded = invDetails.totalFundsRaised;
-        const userBalance = wallet.wallet.balance;
+        const userBalance = invDetails.walletBalance;
         const userInvested = invDetails.amountInvested;
 
         const projectInvestGap = expected - funded;

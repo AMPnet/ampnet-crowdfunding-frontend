@@ -37,7 +37,10 @@ export class WalletService {
     getUserWallet(): Observable<WalletDetailsWithState> {
         return this.getFreshUserWallet().pipe(
             switchMap(wallet => {
-                const walletState = wallet.hash !== null ? WalletState.READY : WalletState.NOT_VERIFIED;
+                // Javascript beauty. Because `null >= 0` returns `true`, FFS!
+                // https://stackoverflow.com/questions/2910495/why-null-0-null-0-but-not-null-0
+                const walletState = wallet.hash !== null && (wallet.balance === 0 || wallet.balance > 0) ?
+                    WalletState.READY : WalletState.NOT_VERIFIED;
                 return of({state: walletState, wallet: wallet});
             }),
             catchError(err => {

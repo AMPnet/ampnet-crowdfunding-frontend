@@ -59,7 +59,6 @@ export class TxAmountSign implements PipeTransform {
 
 @Pipe({name: 'txIconStatus'})
 export class TxIconStatus implements PipeTransform {
-
     transform(type: TransactionState): string {
         switch (type) {
             case TransactionState.MINED: {

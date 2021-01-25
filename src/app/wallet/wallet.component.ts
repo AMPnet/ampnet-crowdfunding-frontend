@@ -14,8 +14,6 @@ import { ErrorService } from '../shared/services/error.service';
     styleUrls: ['./wallet.component.scss'],
 })
 export class WalletComponent implements OnDestroy {
-    arkaneConnect: ArkaneConnect;
-
     tablePage = 1;
     tablePageSize = 10;
     transactionItems = 0;

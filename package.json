@@ -24,7 +24,7 @@
     "@angular/platform-browser": "^11.0.5",
     "@angular/platform-browser-dynamic": "^11.0.5",
     "@angular/router": "^11.0.5",
-    "@arkane-network/arkane-connect": "1.21.0",
+    "@arkane-network/arkane-connect": "1.22.0",
     "@chenfengyuan/datepicker": "^1.0.8",
     "@fortawesome/fontawesome-pro": "^5.15.1",
     "@ng-bootstrap/ng-bootstrap": "^8.0.0",

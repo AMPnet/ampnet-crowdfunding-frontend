@@ -35,7 +35,7 @@
                                 </div>
                                 <a [routerLink]="" (click)="deleteBankAccountClicked(paymentOption.id)">
                                     <span class="float-right align-middle">
-                                        <i class="fas fa-trash-alt"></i>
+                                        <fa-icon icon="trash-alt"></fa-icon>
                                     </span>
                                 </a>
                             </div>
@@ -49,7 +49,7 @@
                 </div>
                 <div class="col-md-12 mb-5 mt-5">
                     <button class="btn btn-primary w-100 py-3 float-right" routerLink="new">
-                        <i class="mr-2 fas fa-plus-circle"></i>
+                        <fa-icon icon="plus-circle" class="mr-2"></fa-icon>
                         <span>
                             {{ 'admin.bank_account.add_new' | translate }}
                         </span>

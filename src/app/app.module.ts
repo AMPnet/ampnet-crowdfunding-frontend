@@ -53,7 +53,7 @@ import { ExchangeComponent } from './exchange/exchange.component';
 import { OwnershipComponent } from './admin/ownership/ownership.component';
 import { CurrencyDefaultPipe } from './shared/pipes/currency-default.pipe';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { TxAmountSign, TxIconStatus, TxIconType } from './wallet/wallet.pipe';
+import { TxAmountSign } from './wallet/wallet.pipe';
 import { UserStateReminderComponent } from './user-state-reminder/user-state-reminder.component';
 import { FileValidator } from './shared/validators/file.validator';
 import { FileValueAccessorDirective } from './shared/directives/file-value-accessor.directive';
@@ -162,7 +162,6 @@ import { FaIconsService } from './shared/services/fa-icons.service';
         CurrencyCentsPipe,
         CoopPathPipe,
         RevenueShareComponent,
-        TxIconType,
         UserStateReminderComponent,
         FileValidator,
         FileValueAccessorDirective,
@@ -170,7 +169,6 @@ import { FaIconsService } from './shared/services/fa-icons.service';
         SpinnerComponent,
         LocationMapComponent,
         MapModalComponent,
-        TxIconStatus,
         ManageSingleDepositModalComponent,
         TxAmountSign,
         ActionButtonComponent,

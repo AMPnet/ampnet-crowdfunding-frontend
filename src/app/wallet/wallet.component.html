@@ -7,7 +7,7 @@
         <div *ngIf="states.wallet?.state === walletState.EMPTY" class="row">
             <div class="init-left col-12 col-lg-6">
                 <div class="alert alert-warning flex__center">
-                    <i class="fas fa-exclamation-triangle mr-2"></i>
+                    <fa-icon icon="exclamation-triangle" class="mr-2"></fa-icon>
                     <b>{{ 'wallet.description.notice' | translate }}</b>
                 </div>
                 <div>
@@ -28,7 +28,6 @@
             </div>
             <!-- TODO: This is ready to go, uncomment and hook up once we have support for other wallets -->
             <!-- <div class="init-right col-12 col-lg-6">
-                <i class="fas fa-bolt"></i>
                 <div class="right__info">
                     <span class="right__info__title">Advanced users</span>
                     <p class="right__info__desc">This platform is powered by blockchain technology. A "wallet" is
@@ -55,7 +54,7 @@
                 <div class="balance__buttons col-12 col-lg-6 col-xl-4 flex__center">
                     <div class="col-6">
                         <button class="btn w-100 flex__center" routerLink="deposit">
-                            <i class="fas fa-arrow-circle-down mr-2"></i>
+                            <fa-icon icon="arrow-circle-down" class="mr-2"></fa-icon>
                             {{ 'wallet.deposit' | translate }}
                         </button>
                     </div>
@@ -63,7 +62,7 @@
                     <div class="col-6">
                         <button class="btn w-100 flex__center" routerLink="withdraw"
                                 [disabled]="states.wallet.state !== walletState.READY">
-                            <i class="fas fa-arrow-circle-up mr-2"></i>
+                            <fa-icon icon="arrow-circle-up" class="mr-2"></fa-icon>
                             {{ 'wallet.withdraw' | translate }}
                         </button>
                     </div>
@@ -74,7 +73,7 @@
                 <div *ngIf="states.wallet?.wallet?.activated_at === null"
                      class="alert alert-success w-100 flex__center--space">
                     <div>
-                        <i class="fas fa-bolt"></i>
+                        <fa-icon icon="bolt"></fa-icon>
                         {{ 'wallet.wallet_not_active_notice' | translate }}
                     </div>
                     <button class="btn" routerLink="deposit">
@@ -84,7 +83,7 @@
                 <div *ngIf="states.wallet?.wallet?.balance === 0"
                      class="alert alert-success w-100 flex__center--space">
                     <div>
-                        <i class="fas fa-bolt"></i>
+                        <fa-icon icon="bolt"></fa-icon>
                         {{ 'wallet.wallet_empty_notice' | translate }}
                     </div>
                     <button class="btn" routerLink="deposit">
@@ -197,13 +196,13 @@
                                                         *ngIf="transaction.state === transactionState.MINED else singleReportButtonDisabled">
                                                     <button app-action-button
                                                             class="btn text-dark bg-transparent text-right p-0"
-                                                            spinnerColor="black" faIcon="fa-file-chart-line"
+                                                            spinnerColor="black" faIcon="file-chart-line"
                                                             [onClick]="downloadSingleReport(transaction).bind(this)">
                                                     </button>
                                                 </ng-container>
                                                 <a href="{{ getExplorerLink(transaction.tx_hash) }}"
                                                    target="_blank" rel="noopener noreferrer" class="ml-2">
-                                                    <i class="fas fa-search" style="color: black"></i>
+                                                    <fa-icon icon="search" style="color: black"></fa-icon>
                                                 </a>
                                             </div>
                                         </div>
@@ -243,7 +242,7 @@
     <button app-action-button
             class="btn bg-transparent text-right p-0"
             disabled="disabled"
-            faIcon="fa-file-chart-line">
+            faIcon="file-chart-line">
     </button>
 </ng-template>
 
@@ -251,7 +250,7 @@
     <button app-action-button
             text="{{ 'wallet.transactions.pdf_report' | translate }}"
             loadingText="{{ 'wallet.transactions.pdf_report.downloading' | translate }}"
-            faIcon="fa-file-chart-line"
+            faIcon="file-chart-line"
             class="btn normal-text w-100"
             [onClick]="downloadReport.bind(this)">
     </button>

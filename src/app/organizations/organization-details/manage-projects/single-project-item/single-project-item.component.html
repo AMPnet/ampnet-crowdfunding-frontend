@@ -56,7 +56,7 @@
         <button app-action-button
                 text="{{ (projectWallet.project.active ? 'organizations.details.projects.item.unpublish' : 'organizations.details.projects.item.publish') | translate }}"
                 textShort="{{ (projectWallet.project.active ? 'organizations.details.projects.item.unpublish' : 'organizations.details.projects.item.publish') | translate }}"
-                faIcon="{{ projectWallet.project.active ? 'fa-eye-slash' : 'fa-eye' }}"
+                faIcon="{{ projectWallet.project.active ? 'eye-slash' : 'eye' }}"
                 [onClick]="toggleProject(projectWallet.project).bind(this)"
                 class="d-contents item__icon flex__center float-right mr-2">
         </button>

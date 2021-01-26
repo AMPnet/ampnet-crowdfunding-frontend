@@ -33,7 +33,7 @@ export class PopupService {
             footer: footer,
             customClass: 'popup-success',
             position: 'top',
-            confirmButtonText: `${this.translate.instant('general.popup.success.confirm')} <i class="fas fa-arrow-right ml-3"></i>`
+            confirmButtonText: `${this.translate.instant('general.popup.success.confirm')} <fa-icon icon="arrow-right" class="ml-3"></fa-icon>`
         }));
     }
 
@@ -78,7 +78,7 @@ export class PopupService {
             default:
                 defaults.customClass = 'popup-success';
                 defaults.confirmButtonText =
-                    `${this.translate.instant('general.popup.success.confirm')} <i class="fas fa-arrow-right ml-3"></i>`;
+                    `${this.translate.instant('general.popup.success.confirm')} <fa-icon icon="arrow-right" class="ml-3"></fa-icon>`;
         }
         return defaults;
     }

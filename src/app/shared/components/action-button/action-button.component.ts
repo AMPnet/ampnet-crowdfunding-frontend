@@ -1,6 +1,7 @@
 import { Component, HostBinding, HostListener, Input, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { finalize } from 'rxjs/operators';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 @Component({
     // tslint:disable-next-line:component-selector
@@ -11,8 +12,7 @@ import { finalize } from 'rxjs/operators';
 export class ActionButtonComponent implements OnInit, OnDestroy {
     @Input() text: string;
     @Input() loadingText: string;
-    @Input() faStyle = 'fas';
-    @Input() faIcon: string;
+    @Input() faIcon: IconProp;
     @Input() textShort: string;
     @Input() spinnerColor = 'white';
 

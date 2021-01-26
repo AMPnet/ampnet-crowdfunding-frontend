@@ -5,7 +5,7 @@
     <ng-container *ngIf="states.project && states.investmentData else spinner">
         <a [routerLink]="" appBackNavigation class="nostyle">
             <div class="app-page-title-back">
-                <i class="fas fa-long-arrow-alt-left mr-3"></i>
+                <fa-icon icon="long-arrow-alt-left" class="mr-3"></fa-icon>
                 {{ 'general.back.title' | translate }}
             </div>
         </a>
@@ -39,7 +39,7 @@
                                 type="submit"
                                 class="btn btn-primary w-100"
                                 [class.disabled-margin]="states.investmentData.investDisabled">
-                            <i class="fas fa-chart-pie mr-2"></i>
+                            <fa-icon icon="chart-pie" class="mr-2"></fa-icon>
                             {{ 'invest.button' | translate }}
                         </button>
                     </div>
@@ -62,7 +62,7 @@
 
             <div class="error-messages col-12 col-xl-8" *ngIf="investForm.dirty && investForm.invalid">
                 <div *ngIf="investForm.get('amount').errors?.amountBelowMin" class="alert alert-danger">
-                    <i class="fas fa-dizzy"></i>
+                    <fa-icon icon="dizzy"></fa-icon>
                     <b>
                         {{ 'invest.errors.amount_below_min' | translate | splitPart:0 }}&nbsp;
                     </b>
@@ -72,7 +72,7 @@
                 </div>
 
                 <div *ngIf="investForm.get('amount').errors?.amountAboveMax" class="alert alert-danger">
-                    <i class="fas fa-dizzy"></i>
+                    <fa-icon icon="dizzy"></fa-icon>
                     <b>
                         {{ 'invest.errors.amount_above_max' | translate | splitPart:0 }}&nbsp;
                     </b>
@@ -84,7 +84,7 @@
                 <div *ngIf="investForm.get('amount').errors?.amountAboveBalance"
                      class="alert alert-danger justify-content-around">
                     <div class="flex__center">
-                        <i class="fas fa-dizzy"></i>
+                        <fa-icon icon="dizzy"></fa-icon>
                         <b>{{ 'invest.errors.amount_above_balance' | translate }}</b>
                     </div>
                     <ng-container *ngTemplateOutlet="buttonToWalletScreen"></ng-container>
@@ -94,14 +94,14 @@
             <div class="error-messages col-12 col-xl-8">
                 <div *ngIf="states.investmentData.maximumReached"
                      class="alert alert-danger flex__center">
-                    <i class="fas fa-dizzy"></i>
+                    <fa-icon icon="dizzy"></fa-icon>
                     <b class="mr-2">{{ 'invest.errors.max_reached' | translate }}</b>
                 </div>
 
                 <div *ngIf="states.investmentData.notEnoughFunds"
                      class="alert alert-danger justify-content-around">
                     <div class="flex__center">
-                        <i class="fas fa-dizzy"></i>
+                        <fa-icon icon="dizzy"></fa-icon>
                         <b class="mr-2">{{ 'invest.errors.not_enough_funds' | translate }}</b>
                     </div>
                     <ng-container *ngTemplateOutlet="buttonToWalletScreen"></ng-container>

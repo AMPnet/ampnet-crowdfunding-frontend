@@ -2,7 +2,7 @@
     <div *ngIf="withdrawal === withdrawalState.EMPTY" class="container">
         <a [routerLink]="" appBackNavigation class="nostyle">
             <div class="app-page-title-back">
-                <i class="fas fa-long-arrow-alt-left mr-3"></i>
+                <fa-icon icon="long-arrow-alt-left" class="mr-3"></fa-icon>
                 {{ 'general.back.title' | translate }}
             </div>
         </a>
@@ -13,24 +13,22 @@
                     {{ 'projects.edit.manage_payments.withdraw.amount_input.title' | translate }}
                 </h2>
                 <app-money-input-field
-                    placeholder="{{ 'projects.edit.manage_payments.withdraw.amount_input.placeholder' | translate }}"
-                    [control]="requestWithdrawForm.get('amount')">
+                        placeholder="{{ 'projects.edit.manage_payments.withdraw.amount_input.placeholder' | translate }}"
+                        [control]="requestWithdrawForm.get('amount')">
                 </app-money-input-field>
 
                 <h2 class="app-page-subtitle">
                     {{ 'projects.edit.manage_payments.withdraw.bank_input.title' | translate }}
                 </h2>
-                <input
-                    class="input-lg w-100" id="iban-holder"
-                    formControlName="iban"
-                    placeholder="{{ 'projects.edit.manage_payments.withdraw.bank_input.placeholder' | translate }}"
-                    type="text"/>
+                <input class="input-lg w-100" id="iban-holder"
+                       formControlName="iban"
+                       placeholder="{{ 'projects.edit.manage_payments.withdraw.bank_input.placeholder' | translate }}"
+                       type="text"/>
 
-                <button
-                    app-action-button
-                    text="{{ 'projects.edit.manage_payments.withdraw.submit' | translate }}"
-                    [disabled]="!requestWithdrawForm.valid"
-                    [onClick]="requestWithdrawal.bind(this)">
+                <button app-action-button
+                        text="{{ 'projects.edit.manage_payments.withdraw.submit' | translate }}"
+                        [disabled]="!requestWithdrawForm.valid"
+                        [onClick]="requestWithdrawal.bind(this)">
                 </button>
             </form>
         </div>
@@ -52,15 +50,14 @@
                     {{ withdrawal.amount | currencyDefault }}
                 </div>
                 <div class="review__right" (click)="deleteWithdrawal(withdrawal).subscribe()">
-                    <i class="fas fa-trash"></i>
+                    <fa-icon icon="trash"></fa-icon>
                 </div>
             </div>
 
             <div class="details__cta">
-                <button
-                    app-action-button
-                    text="{{ 'projects.edit.manage_payments.withdraw.review.submit' | translate }}"
-                    [onClick]="burnWithdraw(withdrawal).bind(this)">
+                <button app-action-button
+                        text="{{ 'projects.edit.manage_payments.withdraw.review.submit' | translate }}"
+                        [onClick]="burnWithdraw(withdrawal).bind(this)">
                 </button>
             </div>
         </div>

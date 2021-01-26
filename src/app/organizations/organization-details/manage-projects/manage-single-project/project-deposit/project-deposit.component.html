@@ -7,14 +7,14 @@
         <ng-container *ngIf="!!states.deposit && !!states.masterIBAN; else spinner">
             <a [routerLink]="" appBackNavigation class="nostyle">
                 <div class="app-page-title-back">
-                    <i class="fas fa-long-arrow-alt-left mr-3"></i>
+                    <fa-icon icon="long-arrow-alt-left" class="mr-3"></fa-icon>
                     {{ 'general.back.title' | translate }}
                 </div>
             </a>
 
             <div class="alerts">
                 <div class="alert alert-info">
-                    <i class="fas fa-clock mr-2"></i>
+                    <fa-icon icon="clock" class="mr-2"></fa-icon>
                     {{ 'projects.edit.manage_payments.deposit.notice' | translate }}
                 </div>
             </div>
@@ -26,14 +26,14 @@
                 <div class="row">
                     <div class="deposit__iban col-lg-6">
                         <div class="iban__title flex__center">
-                            <i class="fas fa-piggy-bank mr-2"></i>
+                            <fa-icon icon="piggy-bank" class="mr-2"></fa-icon>
                             {{ 'projects.edit.manage_payments.deposit.iban' | translate }}
                         </div>
                         <div class="iban__content">{{ states.masterIBAN }}</div>
                     </div>
                     <div class="deposit__desc col-lg-6">
                         <div class="desc__title flex__center">
-                            <i class="fas fa-address-book mr-2"></i>
+                            <fa-icon icon="address-book" class="mr-2"></fa-icon>
                             {{ 'projects.edit.manage_payments.deposit.reference' | translate }}
                         </div>
                         <div class="desc__content">{{ states.deposit.reference }}</div>

@@ -14,57 +14,29 @@
     justify-content: center;
     box-shadow: none;
     color: $body-color;
+
     &:focus {
       box-shadow: 0 0 0 0.2rem rgba(57, 174, 171, 0.5);
     }
   }
+
   .page-item.active .page-link {
     background-color: $primary-color;
     color: $secondary-color;
   }
+
   .page-item.disabled .page-link {
     color: $icons-color;
   }
-  .page-item {
-    &:first-child {
-      :before {
-        // Adding new arrow icon
-        font-family: "Font Awesome 5 Pro";
-        content: "\f060";
-        font-weight: 400;
-        font-size: $font-size-desktop-small;
-        }
-      .page-link {
-        @include border-left-radius(8px);
-      }
-    }
-    &:last-child {
-      :before {
-        // Adding new arrow icon
-        font-family: "Font Awesome 5 Pro";
-        content: "\f061";
-        font-weight: 400;
-        font-size: $font-size-desktop-small;
-      }
-      .page-link {
-        @include border-right-radius(8px);
-      }
-    }
-    &:first-child,
-    &:last-child {
-      span {
-        display: none;
-      }
-    }
-  }
+
   @include media-breakpoint-up(lg) {
     .page-item .page-link {
-    width: 56px;
-    height: 40px;
+      width: 56px;
+      height: 40px;
     }
     .page-item {
       &:first-child,
-      &:last-child  {
+      &:last-child {
         :before {
           font-size: $font-size-desktop-body;
         }

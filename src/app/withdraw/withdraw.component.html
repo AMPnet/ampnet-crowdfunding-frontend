@@ -1,7 +1,7 @@
 <div class="container">
     <a [routerLink]="" appBackNavigation class="nostyle">
         <div class="app-page-title-back">
-            <i class="fas fa-long-arrow-alt-left mr-3"></i>
+            <fa-icon icon="long-arrow-alt-left" class="mr-3"></fa-icon>
             {{ 'general.back.title' | translate }}
         </div>
     </a>
@@ -30,7 +30,7 @@
                     {{ bank.iban }}
                     <span *ngIf="bank.alias"> - {{ bank.alias }}</span>
                     <span *ngIf="activeBankAccount === i" class="float-right">
-                        <i class="fas fa-check-circle"></i>
+                        <fa-icon icon="check-circle"></fa-icon>
                     </span>
                 </li>
             </ul>
@@ -62,7 +62,7 @@
                         {{ pendingWithdrawal.amount | currencyDefault }}
                     </span>
                     <span (click)="deleteWithdrawal().subscribe()" class="float-right cursor-pointer">
-                        <i class="fas fa-trash"></i>
+                        <fa-icon icon="trash" class="mr-3"></fa-icon>
                     </span>
                 </div>
             </div>
@@ -84,7 +84,7 @@
             </div>
             <div class="empty__cta">
                 <button class="btn btn-primary w-100" [routerLink]="'/dash/payment_options/new' | coopPath">
-                    <i class="fas fa-piggy-bank mr-2"></i>
+                    <fa-icon icon="piggy-bank" class="mr-2"></fa-icon>
                     {{ 'withdraw.no_bank.add_bank_account' | translate }}
                 </button>
             </div>

@@ -1,5 +1,6 @@
-@import "colors";
-@import "bootstrap/scss/mixins/buttons";
+@import "../colors";
+@import "../fonts";
+@import "node_modules/bootstrap/scss/mixins/buttons";
 
 .btn,
 .btn span {

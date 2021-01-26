@@ -9,7 +9,7 @@
 } as states" class="wow fadeIn container">
     <a [routerLink]="" appBackNavigation class="nostyle">
         <div class="app-page-title-back">
-            <i class="fas fa-long-arrow-alt-left mr-3"></i>
+            <fa-icon icon="long-arrow-alt-left" class="mr-3"></fa-icon>
             {{ 'general.back.title' | translate }}
         </div>
     </a>
@@ -46,7 +46,7 @@
 
                         <div class="right__location">
                             <p (click)="openModal(states.project)">
-                                <i class="location__icon fas fa-map-marker-alt"></i>
+                                <fa-icon icon="map-marked-alt" class="location__icon"></fa-icon>
                                 {{ 'offers.offer_details.show_location' | translate }}
                             </p>
                             {{ states.project.location_text }}
@@ -134,7 +134,7 @@
                                 <ng-container *ngIf="(isProjectCancelable$ | async) as isCancelable">
                                     <button app-action-button
                                             text="{{ 'offers.offer_details.cancel_investment' | translate }}"
-                                            faIcon="fa-times-circle"
+                                            faIcon="times-circle"
                                             class="btn btn-danger w-100 d-lg-none d-xl-block"
                                             [disabled]="!isCancelable"
                                             [onClick]="cancelInvestment(states.project.uuid).bind(this)">
@@ -142,7 +142,7 @@
                                     <!-- Laptop size screen button -->
                                     <button app-action-button
                                             text="{{ 'offers.offer_details.cancel_investment' | translate }}"
-                                            faIcon="fa-times-circle"
+                                            faIcon="times-circle"
                                             class="btn btn-danger w-100 d-none d-lg-block d-xl-none"
                                             [disabled]="!isCancelable"
                                             [onClick]="cancelInvestment(states.project.uuid).bind(this)">
@@ -153,7 +153,7 @@
                                 <button *ngIf="isOverview" class="btn btn-primary w-100 flex__center"
                                         id="invest-button"
                                         [routerLink]="'/sign_up' | coopPath">
-                                    <i class="mr-2 fas fa-chart-pie"></i>
+                                    <fa-icon icon="chart-pie" class="mr-2"></fa-icon>
                                     <span>{{ 'offers.offer_details.invest.overview' | translate }}</span>
                                 </button>
 
@@ -163,7 +163,7 @@
                                                 [disabled]="disableInvestButton(states.project, states.walletMW)"
                                                 class="btn btn-primary w-100 flex__center"
                                                 (click)="goToInvest(states.project.uuid)">
-                                            <i class="mr-2 fas fa-chart-pie"></i>
+                                            <fa-icon icon="chart-pie" class="mr-2"></fa-icon>
                                             <!-- Button content for laptop sizes -->
                                             <span class="d-none d-lg-block d-xl-none">
                                                 {{ (isPortfolioView ? 'offers.offer_details.invest.portfolio.short' : 'offers.offer_details.invest') | translate }}
@@ -175,7 +175,7 @@
                                         <button *ngIf="!user.verified" [disabled]="!states.project.active"
                                                 class="btn btn-primary w-100 flex__center"
                                                 [routerLink]="'/dash/settings/user' | coopPath">
-                                            <i class="mr-2 fas fa-chart-pie"></i>
+                                            <fa-icon icon="chart-pie" class="mr-2"></fa-icon>
                                             <!-- Button content for laptop sizes -->
                                             <span class="d-none d-lg-inline-block d-xl-none">
                                                 {{ 'offers.offer_details.verify_profile.short' | translate }}
@@ -197,20 +197,20 @@
                         <div class="socials__link">
                             <a href="https://twitter.com/intent/tweet?url={{ getProjectURL(states.project) }}"
                                target="_blank" rel="noopener noreferrer">
-                                <i class="socials__icon fab fa-twitter"></i>
+                                <fa-icon [icon]="['fab', 'twitter']" class="socials__icon"></fa-icon>
                             </a>
                         </div>
                         <div class="socials__link">
                             <a href="https://www.facebook.com/sharer/sharer.php?u={{ getProjectURL(states.project) }}"
                                target="_blank" rel="noopener noreferrer">
-                                <i class="socials__icon fab fa-facebook-f"></i>
+                                <fa-icon [icon]="['fab', 'facebook-f']" class="socials__icon"></fa-icon>
                             </a>
                         </div>
                         <div class="socials__link" #copyToClipboard="bs-tooltip"
                              (click)="copyProjectDetailsUrl(copyToClipboard, states.project)"
                              tooltip="{{ 'offers.offer_details.link_copied' | translate }}"
                              triggers="">
-                            <i class="fas fa-link"></i>
+                            <fa-icon icon="link"></fa-icon>
                         </div>
                     </div>
                 </div>
@@ -233,7 +233,7 @@
                     <div *ngFor="let doc of states.project.documents">
                         <div class="docs__links">
                             <a href="{{ doc.link }}">
-                                <i class="fas fa-file-download"></i>
+                                <fa-icon icon="file-download" class="mr-2"></fa-icon>
                                 <span>{{ doc.name }}</span>
                             </a>
                         </div>
@@ -328,7 +328,7 @@
                                 <div class="history__right">
                                     <!-- TODO: Implement download transaction report functionality
                                     <div class="history__icon">
-                                        <i class="fas fa-file-chart-line"></i>
+                                        <fa-icon icon="file-chart-line"></fa-icon>
                                     </div> -->
                                 </div>
                             </div>

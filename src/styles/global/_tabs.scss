@@ -1,19 +1,26 @@
 @import "fonts";
-@import "colors";
-@import "bootstrap/scss/nav";
+@import "../colors";
+
+@import "node_modules/bootstrap/scss/nav";
+@import "node_modules/bootstrap/scss/mixins/border-radius";
+@import "node_modules/bootstrap/scss/mixins/hover";
+@import "node_modules/bootstrap/scss/mixins/breakpoints";
 
 .tab-container {
   .nav-tabs {
     margin: 27px 0 18px 0;
     border-bottom: none;
+
     .nav-item {
       margin-bottom: 0;
       text-transform: uppercase;
       letter-spacing: 2px;
+
       span {
         font-size: $font-size-mobile-title-small;
       }
     }
+
     .nav-link {
       border: none;
       padding: 0;
@@ -24,6 +31,7 @@
         border-color: transparent;
       }
     }
+
     .nav-link.active,
     .nav-item.show .nav-link {
       color: $primary-color;
@@ -31,19 +39,21 @@
       padding-bottom: 4px;
     }
   }
-} 
+}
 
 @include media-breakpoint-up(lg) {
   .tab-container {
     .nav-tabs {
       margin: 27px 0 24px 0;
+
       .nav-link.active,
       .nav-item.show .nav-link {
         border-bottom: 2px solid $primary-color;
       }
     }
+
     .nav-item {
       padding-left: 11px;
     }
-  } 
+  }
 }

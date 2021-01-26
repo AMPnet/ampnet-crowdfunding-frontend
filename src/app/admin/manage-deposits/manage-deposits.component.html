@@ -16,7 +16,7 @@
                         [disabled]="!referenceForm.valid"
                         type="button"
                         class="btn btn-primary py-3 mt-3 w-100">
-                    <i class="fas fa-info-circle mr-2"></i>
+                    <fa-icon icon="info-circle" class="mr-2"></fa-icon>
                     {{ 'admin.deposits.submit' | translate }}
                 </button>
             </form>
@@ -39,11 +39,11 @@
                     </span>
                     <a [routerLink]="" (click)="declineDeposit(deposit.deposit.id).subscribe()">
                         <span class="float-right">
-                            <i class="fas fa-trash-alt"></i>
+                            <fa-icon icon="trash-alt"></fa-icon>
                         </span>
                     </a>
                     <a class="float-right mr-4" href="mailto:{{ deposit.user.email }}">
-                        <i class="fas fa-envelope"></i>
+                        <fa-icon icon="envelope"></fa-icon>
                     </a>
                 </li>
             </ul>

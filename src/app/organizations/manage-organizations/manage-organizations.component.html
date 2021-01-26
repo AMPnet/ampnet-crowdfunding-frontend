@@ -9,7 +9,7 @@
             </h1>
             <div *ngIf="states.organizations !== null">
                 <button class="btn btn-center" routerLink="new">
-                    <i class="fas fa-plus mr-lg-3"></i>
+                    <fa-icon icon="plus" class="mr-lg-3"></fa-icon>
                     <span class="btn__text">
                         {{ 'organizations.create_org' | translate }}
                     </span>
@@ -20,7 +20,7 @@
         <div *ngIf="states.invites?.length > 0"
              class="alert alert-success w-100 flex__center--space col-12 col-lg-6 col-xl-4">
             <div>
-                <i class="fas fa-bolt"></i>
+                <fa-icon icon="bolt"></fa-icon>
                 <b>{{ 'organizations.pending_invite_notice' | translate }}</b>
             </div>
         </div>
@@ -88,7 +88,7 @@
                             <div class="item__cta">
                                 <button (click)="acceptInvite(invite.organization_uuid)"
                                         class="btn btn-success">
-                                    <i class="far fa-check mr-3"></i>
+                                    <fa-icon icon="check" class="mr-3"></fa-icon>
                                     <span>
                                         {{ 'organizations.invites.join' | translate }}
                                     </span>

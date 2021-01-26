@@ -84,8 +84,9 @@ export class LanguageService {
     }
 
     private registerLocale(lang: string): Observable<string> {
-        // TODO: remove eager mode to shrink the bundle size (this will generate a file for each separate locale)
-        return from(import(/* webpackMode: "eager" */`@angular/common/locales/${lang}.js`)).pipe(
+        return from(import(
+            /* webpackChunkName: "[request]" */
+            `@angular/common/locales/${lang}.js`)).pipe(
             tap(locale => registerLocaleData(locale.default)),
             map(() => lang)
         );

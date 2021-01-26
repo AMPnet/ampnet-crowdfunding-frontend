@@ -10,7 +10,7 @@
         <div class="app-page-header">
             <a [routerLink]="" appBackNavigation class="nostyle">
                 <div class="app-page-title-back">
-                    <i class="fas fa-long-arrow-alt-left mr-3"></i>
+                    <fa-icon icon="long-arrow-alt-left" class="mr-3"></fa-icon>
                     {{ 'general.back.title' | translate }}
                 </div>
             </a>
@@ -20,7 +20,7 @@
                     <button [disabled]="!isWalletVerified(wallet)"
                             class="btn"
                             routerLink="create_project">
-                        <i class="fas fa-plus mr-lg-3"></i>
+                        <fa-icon icon="plus" class="mr-lg-3"></fa-icon>
                         <span class="btn__text">
                     {{ 'organizations.details.create_project' | translate }}
                 </span>
@@ -58,7 +58,7 @@
                     <ng-container *ngIf="(orgWallet$ | async) as wallet">
                         <div *ngIf="!isWalletVerified(wallet)">
                             <div class="alert alert-warning flex__center col-lg-10">
-                                <i class="fas fa-exclamation-triangle mr-2"></i>
+                                <fa-icon icon="exclamation-triangle" class="mr-2"></fa-icon>
                                 {{ 'organizations.details.wallet_not_verified' | translate }}
                             </div>
                         </div>
@@ -88,7 +88,7 @@
                                                 <button app-action-button
                                                         text="{{ 'organizations.details.members.add_button' | translate }}"
                                                         textShort=""
-                                                        faIcon="fas fa-plus"
+                                                        faIcon="plus"
                                                         [onClick]="inviteClicked(states.organization.uuid).bind(this)"
                                                         [disabled]="!inviteForm.valid"
                                                         class="btn btn-success w-100">
@@ -116,9 +116,11 @@
                                                             {{ 'organizations.details.members.join_date' | translate | interpolate:['date', member.member_since | date:'longDate'] }}
                                                         </span>
 
-                                                        <a [routerLink]="" (click)="deleteMember(states.organization.uuid, member.uuid)">
+                                                        <a [routerLink]=""
+                                                           (click)="deleteMember(states.organization.uuid, member.uuid)">
                                                             <span class="item__icon" *ngIf="!isPublic">
-                                                                <i class="fas fa-trash-alt cursor-pointer"></i>
+                                                                <fa-icon icon="trash-alt"
+                                                                         class="cursor-pointer"></fa-icon>
                                                             </span>
                                                         </a>
                                                     </div>

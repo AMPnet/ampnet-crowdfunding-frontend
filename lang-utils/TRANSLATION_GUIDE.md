@@ -14,7 +14,7 @@ a targeted language, **always** consider checking the form of the English value.
 
 ## String interpolation (variable injection)
 
-The platform support injecting variables in translations with double curly braces (`{{ value }}`).
+The platform supports injecting variables in translations with double curly braces (`{{ value }}`).
 
 For example, an English translation landing page message could look like this:
 

@@ -21,11 +21,11 @@ export class DepositServiceService {
     }
 
     public getMyPendingDeposit() {
-        return this.http.get<Deposit>(this.endpoint);
+        return this.http.get<Deposit>(`${this.endpoint}/pending`);
     }
 
     public getProjectPendingDeposit(projectID: string) {
-        return this.http.get<Deposit>(`${this.endpointProjectDeposit}/${projectID}`);
+        return this.http.get<Deposit>(`${this.endpointProjectDeposit}/${projectID}/pending`);
     }
 
     public deleteDeposit(id: number) {

@@ -27,7 +27,16 @@ export class WalletCooperativeWithdrawService {
     }
 
     getWithdrawal(id: number) {
-        return this.http.get<CoopWithdraw>(`${this.endpoint}/${id}`);
+        // TODO: Remove 'approved' segment
+        return this.http.get<CoopWithdraw>(`${this.endpoint}/approved/${id}`);
+    }
+
+    approveWithdrawal(withdrawalID: number, document: File) {
+        const formData = new FormData();
+
+        formData.append('file', document, document.name);
+
+        return this.http.post<Withdraw>(`${this.endpoint}/${withdrawalID}/document`, formData);
     }
 }
 

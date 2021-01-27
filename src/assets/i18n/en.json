@@ -468,16 +468,18 @@
         "empty": "No pending project withdrawals"
       },
       "single_withdrawal": {
-        "title": "Examine withdrawal",
+        "title": "Withdrawal",
         "info": {
           "project_name": "Project name",
           "user_name": "User name",
           "iban": "IBAN",
           "amount": "Amount"
         },
-        "payout_notice": "Please perform the payout | after | finalizing the withdrawal!",
-        "submit": "Finalize withdrawal",
-        "submit.loading": "Finalize withdrawal"
+        "submit": "Sign & Verify",
+        "submit.loading": "Signing",
+        "payout_notice": "| Now make a bank transfer to user's account. After that, please upload a bank statement of this transaction. |",
+        "document_input.title": "Document",
+        "submit_document": "Submit"
       }
     },
     "deposits": {

@@ -32,7 +32,7 @@ export class SingleWithdrawalComponent implements OnInit {
 
     ngOnInit() {
         this.withdrawalID = Number(this.route.snapshot.params.ID);
-        this.withdrawal$ = this.withdrawCoopService.getApprovedWithdrawal(this.withdrawalID);
+        this.withdrawal$ = this.withdrawCoopService.getWithdrawal(this.withdrawalID);
     }
 
     approveAndGenerateCodeClicked() {

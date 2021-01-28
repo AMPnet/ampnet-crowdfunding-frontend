@@ -20,7 +20,7 @@ export class DepositServiceService {
         return this.http.post<Deposit>(`${this.endpointProjectDeposit}/${projectID}`, <CreateDepositData>{});
     }
 
-    public getMyPendingDeposit() {
+    public myPendingDeposit() {
         return this.http.get<Deposit>(`${this.endpoint}/pending`);
     }
 

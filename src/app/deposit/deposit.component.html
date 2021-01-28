@@ -9,7 +9,7 @@
         </div>
     </div>
 
-    <div *ngIf="depositModel !== undefined" class="mt-5 card">
+    <div class="mt-5 card">
         <div class="card-body">
             <div class="card-title">
                 {{ 'deposit.payment_details' | translate }}
@@ -23,7 +23,9 @@
                         <fa-icon icon="piggy-bank" class="mr-2"></fa-icon>
                         {{ 'deposit.iban' | translate }}
                     </div>
-                    <div>{{ masterIban || 'unknown' }}</div>
+                    <div *ngIf="(masterIBAN$ | async) as masterIBAN; else spinner">
+                        {{ masterIBAN || 'unknown' }}
+                    </div>
                 </div>
 
                 <!-- REFERENCE -->
@@ -32,9 +34,14 @@
                         <fa-icon icon="address-book" class="mr-2"></fa-icon>
                         {{ 'deposit.reference' | translate }}
                     </div>
-                    <div>{{ depositModel.reference }}</div>
+                    <div *ngIf="(deposit$ | async) as deposit; else spinner">
+                        {{ deposit.reference }}
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<ng-template #spinner>
+    <app-spinner type="inline"></app-spinner>
+</ng-template>

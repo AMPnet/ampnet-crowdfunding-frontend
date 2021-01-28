@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { PaymentService, UserBankAccount } from '../shared/services/payment.service';
-import { SpinnerUtil } from '../utilities/spinner-utilities';
 import { Withdraw, WithdrawService } from '../shared/services/wallet/withdraw.service';
-import { WalletService } from '../shared/services/wallet/wallet.service';
-import { catchError, finalize, switchMap, tap } from 'rxjs/operators';
+import { WalletDetailsWithState, WalletService } from '../shared/services/wallet/wallet.service';
+import { catchError, map, switchMap, take, tap } from 'rxjs/operators';
 import { ArkaneService } from '../shared/services/arkane.service';
 import { PopupService } from '../shared/services/popup.service';
-import { RouterService } from '../shared/services/router.service';
 import { ErrorService } from '../shared/services/error.service';
 import { TranslateService } from '@ngx-translate/core';
-import { EMPTY, throwError } from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable, of, throwError } from 'rxjs';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 
 @Component({
     selector: 'app-withdraw',
@@ -17,10 +16,14 @@ import { EMPTY, throwError } from 'rxjs';
     styleUrls: ['./withdraw.component.scss']
 })
 export class WithdrawComponent implements OnInit {
-    activeBankAccount = 0;
-    banks: UserBankAccount[];
-    pendingWithdrawal: Withdraw;
-    withdrawAmount = 0;
+    response = Response;
+
+    wallet$: Observable<WalletDetailsWithState>;
+    banks$: Observable<UserBankAccount[]>;
+    withdrawal$: Observable<Withdraw | Response>;
+    refreshWithdrawalSubject = new BehaviorSubject<Withdraw>(null);
+
+    withdrawForm: FormGroup;
 
     constructor(private paymentService: PaymentService,
                 private withdrawService: WithdrawService,
@@ -29,70 +32,90 @@ export class WithdrawComponent implements OnInit {
                 private popupService: PopupService,
                 private errorService: ErrorService,
                 private translate: TranslateService,
-                private router: RouterService) {
+                private fb: FormBuilder) {
     }
 
     ngOnInit() {
-        this.getBankAccounts();
-        this.getMyPendingWithdraw();
-    }
+        this.wallet$ = this.walletService.wallet$;
 
-    getBankAccounts() {
-        SpinnerUtil.showSpinner();
-        this.paymentService.getMyBankAccounts().pipe(
+        this.banks$ = this.paymentService.getMyBankAccounts().pipe(
             this.errorService.handleError,
-            finalize(() => SpinnerUtil.hideSpinner())
-        ).subscribe(res => {
-            this.banks = res.bank_accounts;
+            map(res => res.bank_accounts)
+        );
+
+        this.withdrawal$ = this.refreshWithdrawalSubject.asObservable().pipe(
+            switchMap(w => w !== null ? of(w) :
+                this.withdrawService.getMyPendingWithdraw().pipe(
+                    this.errorService.handleError,
+                    catchError(err => err.status === 404 ? of(Response.EMPTY) : throwError(err)),
+                )
+            ),
+        );
+
+        this.withdrawForm = this.fb.group({
+            amount: [0, [], [this.validAmount.bind(this)]],
+            bank: [null, Validators.required]
         });
     }
 
-    getMyPendingWithdraw() {
-        SpinnerUtil.showSpinner();
-        this.withdrawService.getMyPendingWithdraw().pipe(
-            this.errorService.handleError,
-            catchError(err => err.status === 404 ? EMPTY : throwError(err)),
-            finalize(() => SpinnerUtil.hideSpinner())
-        ).subscribe(res => {
-            this.pendingWithdrawal = res;
-        });
+    private validAmount(control: AbstractControl): Observable<ValidationErrors | null> {
+        return combineLatest([this.wallet$]).pipe(take(1),
+            map(([wallet]) => {
+                const amount = control.value;
+
+                if (wallet.wallet.balance === 0) {
+                    return {balanceZero: true};
+                } else if (amount > wallet.wallet.balance) {
+                    return {amountAboveBalance: true};
+                } else {
+                    return null;
+                }
+            })
+        );
     }
 
-    changeActiveAccount(index: number) {
-        this.activeBankAccount = index;
+    setBank(bank: UserBankAccount) {
+        this.withdrawForm.get('bank').setValue(bank);
     }
 
     requestWithdrawal() {
-        const iban = this.banks[this.activeBankAccount].iban;
-        return this.withdrawService.createWithdrawRequest(this.withdrawAmount, iban).pipe(
+        const form = this.withdrawForm.value;
+        return this.withdrawService.createWithdrawRequest(form.amount, form.bank.iban).pipe(
             this.errorService.handleError,
-            tap(res => this.pendingWithdrawal = res)
+            tap(w => {
+                this.withdrawForm.reset();
+                this.refreshWithdrawalSubject.next(w);
+            })
         );
     }
 
-    burnWithdraw() {
-        SpinnerUtil.showSpinner();
-        return this.withdrawService.generateApproveWithdrawTx(this.pendingWithdrawal.id).pipe(
-            this.errorService.handleError,
-            switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo)),
-            switchMap(() => this.popupService.new({
-                type: 'success',
-                title: this.translate.instant('general.transaction_signed.title'),
-                text: this.translate.instant('general.transaction_signed.description')
-            })),
-            switchMap(() => this.router.navigate(['/dash/wallet'])),
-            finalize(() => SpinnerUtil.hideSpinner()),
-        );
+    signWithdrawal(withdrawalID: number) {
+        return () => {
+            return this.withdrawService.generateApproveWithdrawTx(withdrawalID).pipe(
+                this.errorService.handleError,
+                switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo)),
+                switchMap(() => this.popupService.new({
+                    type: 'success',
+                    title: this.translate.instant('general.transaction_signed.title'),
+                    text: this.translate.instant('general.transaction_signed.description')
+                })),
+                tap(() => this.refreshWithdrawalSubject.next(null)),
+            );
+        };
     }
 
-    deleteWithdrawal() {
-        SpinnerUtil.showSpinner();
-
-        return this.withdrawService.deleteWithdrawal(this.pendingWithdrawal.id).pipe(
-            this.errorService.handleError,
-            switchMap(() => this.popupService.success(this.translate.instant('withdraw.withdrawal_deleted'))),
-            tap(() => this.pendingWithdrawal = undefined),
-            finalize(() => SpinnerUtil.hideSpinner()),
-        );
+    deleteWithdrawal(withdrawalID: number) {
+        return () => {
+            return this.withdrawService.deleteWithdrawal(withdrawalID).pipe(
+                this.errorService.handleError,
+                switchMap(() => this.popupService.success(
+                    this.translate.instant('withdraw.withdrawal_deleted'))),
+                tap(() => this.refreshWithdrawalSubject.next(null)),
+            );
+        };
     }
+}
+
+enum Response {
+    EMPTY = 'EMPTY'
 }

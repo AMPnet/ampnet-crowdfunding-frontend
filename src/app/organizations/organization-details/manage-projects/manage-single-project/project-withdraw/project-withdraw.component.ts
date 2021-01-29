@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
 
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { catchError, finalize, switchMap, tap } from 'rxjs/operators';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { catchError, map, shareReplay, switchMap, take, tap } from 'rxjs/operators';
 import { ArkaneService } from '../../../../../shared/services/arkane.service';
 import { ActivatedRoute } from '@angular/router';
 import { Withdraw, WithdrawService } from '../../../../../shared/services/wallet/withdraw.service';
-import { SpinnerUtil } from '../../../../../utilities/spinner-utilities';
 import { PopupService } from '../../../../../shared/services/popup.service';
-import { BehaviorSubject, EMPTY, Observable, of } from 'rxjs';
+import { BehaviorSubject, combineLatest, EMPTY, Observable, of } from 'rxjs';
 import { RouterService } from '../../../../../shared/services/router.service';
 import { ErrorService } from '../../../../../shared/services/error.service';
 import { TranslateService } from '@ngx-translate/core';
+import { Wallet, WalletService } from '../../../../../shared/services/wallet/wallet.service';
 
 @Component({
     selector: 'app-project-withdraw',
@@ -19,15 +19,17 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class ProjectWithdrawComponent {
     withdrawalState = WithdrawalState;
-    projectID: string;
-    orgID: string;
 
-    refreshWithdrawalSubject = new BehaviorSubject<Withdraw | WithdrawalState>(null);
+    projectID: string;
+
+    projectWallet$: Observable<Wallet>;
+    refreshWithdrawalSubject = new BehaviorSubject<Withdraw>(null);
     withdrawal$: Observable<Withdraw | WithdrawalState>;
 
-    requestWithdrawForm: FormGroup;
+    withdrawalForm: FormGroup;
 
     constructor(private withdrawService: WithdrawService,
+                private walletService: WalletService,
                 private router: RouterService,
                 private popupService: PopupService,
                 private arkaneService: ArkaneService,
@@ -36,11 +38,14 @@ export class ProjectWithdrawComponent {
                 private route: ActivatedRoute,
                 private fb: FormBuilder) {
         this.projectID = this.route.snapshot.params.projectID;
-        this.orgID = this.route.snapshot.params.groupID;
+
+        this.projectWallet$ = this.walletService.getProjectWallet(this.projectID).pipe(
+            this.errorService.handleError,
+            shareReplay(1)
+        );
 
         this.withdrawal$ = this.refreshWithdrawalSubject.pipe(
-            switchMap(data => data !== null ?
-                of(data) :
+            switchMap(data => data !== null ? of(data) :
                 this.withdrawService.getProjectPendingWithdraw(this.projectID).pipe(
                     this.errorService.handleError,
                     catchError(err => err.status === 404 ?
@@ -49,29 +54,47 @@ export class ProjectWithdrawComponent {
             )
         );
 
-        this.requestWithdrawForm = this.fb.group({
-            amount: [0, [
-                Validators.required,
-                (c: FormControl) => c.value > 0 ? null : {invalid: true}]
-            ],
+        this.withdrawalForm = this.fb.group({
+            amount: [0, [], [this.validAmount.bind(this)]],
             iban: ['', [Validators.required]],
         });
     }
 
-    requestWithdrawal() {
-        const amount: number = this.requestWithdrawForm.get('amount').value;
-        const iban: string = this.requestWithdrawForm.get('iban').value.replace(/\s/g, '');
+    private validAmount(control: AbstractControl): Observable<ValidationErrors | null> {
+        return combineLatest([this.projectWallet$]).pipe(take(1),
+            map(([wallet]) => {
+                const amount = control.value;
 
-        return this.withdrawService.createProjectWithdrawRequest(amount, iban, this.projectID).pipe(
-            this.errorService.handleError,
-            tap(withdraw => this.refreshWithdrawalSubject.next(withdraw))
+                if (amount === 0) {
+                    return {amountZero: true};
+                } else if (wallet.balance === 0) {
+                    return {balanceZero: true};
+                }
+                if (amount > wallet.balance) {
+                    return {amountAboveBalance: true};
+                } else {
+                    return null;
+                }
+            })
         );
     }
 
-    burnWithdraw(withdrawal: Withdraw) {
+    requestWithdrawal() {
+        const amount: number = this.withdrawalForm.get('amount').value;
+        const iban: string = this.withdrawalForm.get('iban').value.replace(/\s/g, '');
+
+        return this.withdrawService.createProjectWithdrawRequest(amount, iban, this.projectID).pipe(
+            this.errorService.handleError,
+            tap(withdraw => {
+                this.refreshWithdrawalSubject.next(withdraw);
+                this.withdrawalForm.reset();
+            })
+        );
+    }
+
+    signWithdrawal(withdrawalID: number) {
         return () => {
-            SpinnerUtil.showSpinner();
-            return this.withdrawService.generateApproveWithdrawTx(withdrawal.id).pipe(
+            return this.withdrawService.generateApproveWithdrawTx(withdrawalID).pipe(
                 this.errorService.handleError,
                 switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo)),
                 switchMap(() => this.popupService.new({
@@ -79,22 +102,21 @@ export class ProjectWithdrawComponent {
                     title: this.translate.instant('general.transaction_signed.title'),
                     text: this.translate.instant('general.transaction_signed.description')
                 })),
-                switchMap(() => this.recoverBack()),
-                finalize(() => SpinnerUtil.hideSpinner())
+                tap(() => this.refreshWithdrawalSubject.next(null)),
             );
         };
     }
 
-    deleteWithdrawal(withdrawal: Withdraw) {
-        SpinnerUtil.showSpinner();
-        return this.withdrawService.deleteWithdrawal(withdrawal.id).pipe(
-            this.errorService.handleError,
-            switchMap(() => this.popupService.success(
-                this.translate.instant('projects.edit.manage_payments.withdraw.review.deleted')
-            )),
-            tap(() => this.refreshWithdrawalSubject.next(WithdrawalState.EMPTY)),
-            finalize(() => SpinnerUtil.hideSpinner())
-        );
+    deleteWithdrawal(withdrawalID: number) {
+        return () => {
+            return this.withdrawService.deleteWithdrawal(withdrawalID).pipe(
+                this.errorService.handleError,
+                switchMap(() => this.popupService.success(
+                    this.translate.instant('projects.edit.manage_payments.withdraw.deleted')
+                )),
+                tap(() => this.refreshWithdrawalSubject.next(null)),
+            );
+        };
     }
 
     private recoverBack(): Observable<never> {

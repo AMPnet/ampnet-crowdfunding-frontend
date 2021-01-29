@@ -309,19 +309,22 @@
           "title": "Withdraw",
           "amount_input": {
             "title": "Withdrawal amount",
-            "placeholder": "Enter withdrawal amount"
+            "placeholder": "Enter withdrawal amount",
+            "wallet_balance": "Current wallet balance: {{ balance }}"
           },
+          "request": {
+            "amount": "Amount",
+            "destination": "Bank account IBAN"
+          },
+          "pending_notice": "You have a pending withdrawal request. It can take up to 24 hours to process the transaction.",
+          "sign_button": "Sign transaction",
+          "cancel_button": "Cancel request",
           "bank_input": {
             "title": "Bank account details",
             "placeholder": "IBAN"
           },
-          "submit": "Withdraw money",
-          "review": {
-            "notice": "You have a pending withdrawal request. | To have the money deposited into your bank account, you need to sign the transaction. | After successful signing, it can take up to 24 hours to process the transaction.",
-            "amount": "Withdrawal amount",
-            "submit": "Verify & Withdraw",
-            "deleted": "Withdrawal deleted."
-          }
+          "submit": "Request withdrawal",
+          "deleted": "Withdrawal deleted."
         },
         "revenue_share": {
           "title": "Revenue share",

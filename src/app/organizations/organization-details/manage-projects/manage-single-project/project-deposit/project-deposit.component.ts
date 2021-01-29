@@ -15,9 +15,10 @@ import { TranslateService } from '@ngx-translate/core';
     styleUrls: ['./project-deposit.component.scss']
 })
 export class ProjectDepositComponent {
-    masterIBAN$: Observable<string>;
-    deposit$: Observable<Deposit>;
     orgID: string;
+
+    deposit$: Observable<Deposit>;
+    masterIBAN$: Observable<string>;
 
     constructor(private depositService: DepositServiceService,
                 private route: ActivatedRoute,

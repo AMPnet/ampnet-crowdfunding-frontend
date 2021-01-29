@@ -5,8 +5,6 @@ import { ErrorService } from '../shared/services/error.service';
 import { catchError, map } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
 
-declare var $: any;
-
 @Component({
     selector: 'app-deposit',
     templateUrl: './deposit.component.html',

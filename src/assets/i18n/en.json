@@ -156,7 +156,8 @@
       "notice": "You cannot withdraw money without an active bank account.",
       "add_bank_account": "Add bank account"
     },
-    "withdrawal_deleted": "Withdrawal deleted"
+    "withdrawal_deleted": "Withdrawal deleted",
+    "burned_notice": "Halo doar 'an."
   },
   "organizations": {
     "title": "Investment groups",
@@ -324,7 +325,8 @@
             "placeholder": "IBAN"
           },
           "submit": "Request withdrawal",
-          "deleted": "Withdrawal deleted."
+          "deleted": "Withdrawal deleted.",
+          "burned_notice": "Halo doar 'an."
         },
         "revenue_share": {
           "title": "Revenue share",

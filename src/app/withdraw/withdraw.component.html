@@ -104,15 +104,22 @@
             </ng-container>
 
             <ng-template #withdrawalSigned>
-                <div class="alert alert-info px-3 mt-3">
-                    {{ 'withdraw.pending_notice' | translate }}
-                </div>
+                <ng-container *ngIf="!withdrawal.burned_tx_hash; else withdrawalBurned">
+                    <div class="alert alert-info px-3 mt-3">
+                        {{ 'withdraw.pending_notice' | translate }}
+                    </div>
 
-                <button app-action-button
-                        class="btn btn-primary btn-danger"
-                        text="{{ 'withdraw.cancel_button' | translate }}"
-                        [onClick]="deleteWithdrawal(withdrawal.id).bind(this)">
-                </button>
+                    <button app-action-button
+                            class="btn btn-primary btn-danger"
+                            text="{{ 'withdraw.cancel_button' | translate }}"
+                            [onClick]="deleteWithdrawal(withdrawal.id).bind(this)">
+                    </button>
+                </ng-container>
+                <ng-template #withdrawalBurned>
+                    <div class="alert alert-info px-3 mt-3">
+                        {{ 'withdraw.burned_notice' | translate }}
+                    </div>
+                </ng-template>
             </ng-template>
         </ng-template>
     </ng-container>

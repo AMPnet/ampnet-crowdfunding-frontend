@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Deposit, DepositServiceService } from '../shared/services/wallet/deposit-service.service';
-import { PlatformBankAccountService } from '../shared/services/wallet/platform-bank-account.service';
+import { PlatformBankAccount, PlatformBankAccountService } from '../shared/services/wallet/platform-bank-account.service';
 import { ErrorService } from '../shared/services/error.service';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, map, shareReplay } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
 
 @Component({
@@ -12,7 +12,7 @@ import { Observable, throwError } from 'rxjs';
 })
 export class DepositComponent implements OnInit {
     deposit$: Observable<Deposit>;
-    masterIBAN$: Observable<string>;
+    bankAccount$: Observable<PlatformBankAccount>;
 
     constructor(private depositService: DepositServiceService,
                 private bankAccountService: PlatformBankAccountService,
@@ -20,9 +20,10 @@ export class DepositComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.masterIBAN$ = this.bankAccountService.bankAccounts$.pipe(
+        this.bankAccount$ = this.bankAccountService.bankAccounts$.pipe(
             this.errorService.handleError,
-            map(res => res.bank_accounts[0]?.iban)
+            map(res => res.bank_accounts[0]),
+            shareReplay(1)
         );
 
         this.deposit$ = this.depositService.myPendingDeposit().pipe(

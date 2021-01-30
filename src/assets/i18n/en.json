@@ -125,7 +125,7 @@
         "pending": "Pending",
         "failed": "Failed"
       },
-      "pdf_report": "Generate PDF Report",
+      "pdf_report": "Generate Report",
       "pdf_report.downloading": "Downloading..."
     }
   },
@@ -134,7 +134,8 @@
     "notice": "After you have deposited the money onto our bank account it can take up to 24h for it to become visible on the platform. You will be notified by email when your money has been received.",
     "payment_details": "Deposit payment details",
     "iban": "IBAN",
-    "reference": "Description"
+    "swift": "SWIFT/BIC",
+    "reference": "Reference"
   },
   "withdraw": {
     "title": "Withdraw",

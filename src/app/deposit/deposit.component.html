@@ -17,20 +17,28 @@
         </div>
         <div class="card-text">
             <div class="row justify-content-between pb-3 px-3">
-                <!-- IBAN -->
-                <div class="col-lg-6">
-                    <div class="text-uppercase mb-2">
+                <div class="col-lg-4">
+                    <div class="text-uppercase mt-3">
                         <fa-icon icon="piggy-bank" class="mr-2"></fa-icon>
                         {{ 'deposit.iban' | translate }}
                     </div>
-                    <div *ngIf="(masterIBAN$ | async) as masterIBAN; else spinner">
-                        {{ masterIBAN || 'unknown' }}
+                    <div *ngIf="(bankAccount$ | async) as bankAccount; else spinner">
+                        {{ bankAccount.iban || 'unknown' }}
                     </div>
                 </div>
 
-                <!-- REFERENCE -->
-                <div class="col-lg-6">
-                    <div class="mb-2">
+                <div class="col-lg-4">
+                    <div class="text-uppercase mt-3">
+                        <fa-icon icon="money-check-alt" class="mr-2"></fa-icon>
+                        {{ 'deposit.swift' | translate }}
+                    </div>
+                    <div *ngIf="(bankAccount$ | async) as bankAccount; else spinner">
+                        {{ bankAccount.bank_code || 'unknown' }}
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="text-uppercase mt-3">
                         <fa-icon icon="address-book" class="mr-2"></fa-icon>
                         {{ 'deposit.reference' | translate }}
                     </div>

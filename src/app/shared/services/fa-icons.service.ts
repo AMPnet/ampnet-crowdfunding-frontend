@@ -34,6 +34,7 @@ import {
     faLock,
     faLongArrowAltLeft,
     faMapMarkedAlt,
+    faMoneyCheckAlt,
     faPaperPlane,
     faPiggyBank,
     faPlus,
@@ -69,7 +70,7 @@ export class FaIconsService {
         faFileDownload, faLock, faExclamationTriangle, faPlus, faTrash, faTrashAlt, faChartLine,
         faPlusCircle, faArrowLeft, faArrowRight, faBolt, faFileChartLine, faCheck, faEye, faEyeSlash,
         faSearch, faCheckCircle, faSolarPanel, faUsers, faFacebookF, faFacebookSquare,
-        faTwitter, faGoogle, faInfoCircle, faEnvelope
+        faTwitter, faGoogle, faInfoCircle, faEnvelope, faMoneyCheckAlt
     ];
 
     constructor(private lib: FaIconLibrary) {

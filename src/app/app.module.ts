@@ -106,6 +106,7 @@ import { IdentyumComponent } from './settings/user/identity/identyum/identyum.co
 import { StaticPageComponent } from './static-page/static-page.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FaIconsService } from './shared/services/fa-icons.service';
+import { LanguageService } from './shared/services/language.service';
 
 @NgModule({
     declarations: [
@@ -226,10 +227,12 @@ import { FaIconsService } from './shared/services/fa-icons.service';
         AppConfigService,
         {
             provide: APP_INITIALIZER,
-            useFactory: (config: AppConfigService) =>
-                () => config.load().toPromise(),
+            useFactory: (config: AppConfigService, lang: LanguageService) =>
+                () => Promise.resolve()
+                    .then(() => config.load().toPromise())
+                    .then(() => lang.setLanguage().toPromise()),
             multi: true,
-            deps: [AppConfigService]
+            deps: [AppConfigService, LanguageService]
         },
         {
             provide: APP_BASE_HREF,

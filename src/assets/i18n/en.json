@@ -158,7 +158,7 @@
       "add_bank_account": "Add bank account"
     },
     "withdrawal_deleted": "Withdrawal deleted",
-    "burned_notice": "Halo doar 'an."
+    "burned_notice": "Platform manager has approved and processed your withdrawal request. Please allow up to 48 hours for funds to reach your selected bank account."
   },
   "organizations": {
     "title": "Investment groups",
@@ -327,7 +327,7 @@
           },
           "submit": "Request withdrawal",
           "deleted": "Withdrawal deleted.",
-          "burned_notice": "Halo doar 'an."
+          "burned_notice": "Platform manager has approved and processed your withdrawal request. Please allow up to 48 hours for funds to reach your selected bank account."
         },
         "revenue_share": {
           "title": "Revenue share",

@@ -20,39 +20,42 @@
                     {{ 'admin.deposits.submit' | translate }}
                 </button>
             </form>
+        </div>
 
-        </div>
-        <div class="col-md-12 mt-3">
-            <hr>
-        </div>
-        <div class="col-md-12 mt-3">
-            <div class="text-uppercase">
-                {{ 'admin.deposits.unapproved.title' | translate }}
+        <!-- Hidden for security reasons -->
+        <ng-container *ngIf="false">
+            <div class="col-md-12 mt-3">
+                <hr>
             </div>
-        </div>
-        <div *ngIf="(unapprovedDeposits$ | async) as unapprovedDeposits else spinner" class="col-md-12">
-            <ul class="list-group mt-3">
-                <li *ngFor="let deposit of unapprovedDeposits; let i = index"
-                    class="list-group-item">
+            <div class="col-md-12 mt-3">
+                <div class="text-uppercase">
+                    {{ 'admin.deposits.unapproved.title' | translate }}
+                </div>
+            </div>
+            <div *ngIf="(unapprovedDeposits$ | async) as unapprovedDeposits else spinner" class="col-md-12">
+                <ul class="list-group mt-3">
+                    <li *ngFor="let deposit of unapprovedDeposits; let i = index"
+                        class="list-group-item">
                     <span class="float-left">
                         {{ deposit.deposit.reference }} ({{ deposit.user.email }})
                     </span>
-                    <a [routerLink]="" (click)="declineDeposit(deposit.deposit.id).subscribe()">
+                        <a [routerLink]="" (click)="declineDeposit(deposit.deposit.id).subscribe()">
                         <span class="float-right">
                             <fa-icon icon="trash-alt"></fa-icon>
                         </span>
-                    </a>
-                    <a class="float-right mr-4" href="mailto:{{ deposit.user.email }}">
-                        <fa-icon icon="envelope"></fa-icon>
-                    </a>
-                </li>
-            </ul>
-            <div *ngIf="unapprovedDeposits.length ===  0" class="text-center mt-5">
-                {{ 'admin.deposits.unapproved.empty' | translate }}
+                        </a>
+                        <a class="float-right mr-4" href="mailto:{{ deposit.user.email }}">
+                            <fa-icon icon="envelope"></fa-icon>
+                        </a>
+                    </li>
+                </ul>
+                <div *ngIf="unapprovedDeposits.length ===  0" class="text-center mt-5">
+                    {{ 'admin.deposits.unapproved.empty' | translate }}
+                </div>
             </div>
-        </div>
-        <ng-template #spinner>
-            <app-spinner type="overlay" style="width: 100%"></app-spinner>
-        </ng-template>
+            <ng-template #spinner>
+                <app-spinner type="overlay" style="width: 100%"></app-spinner>
+            </ng-template>
+        </ng-container>
     </div>
 </div>

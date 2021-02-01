@@ -5,12 +5,15 @@ import {
     WalletCooperativeWithdrawService
 } from 'src/app/shared/services/wallet/wallet-cooperative/wallet-cooperative-withdraw.service';
 import { PopupService } from '../../../shared/services/popup.service';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, tap } from 'rxjs/operators';
 import { ArkaneService } from '../../../shared/services/arkane.service';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { RouterService } from '../../../shared/services/router.service';
 import { ErrorService } from '../../../shared/services/error.service';
 import { TranslateService } from '@ngx-translate/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { FileValidator } from '../../../shared/validators/file.validator';
+import { Withdraw } from '../../../shared/services/wallet/withdraw.service';
 
 @Component({
     selector: 'app-single-withdrawal',
@@ -19,7 +22,11 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class SingleWithdrawalComponent implements OnInit {
     withdrawalID: number;
+
+    refreshWithdrawalSubject = new BehaviorSubject<void>(null);
     withdrawal$: Observable<CoopWithdraw>;
+
+    documentForm: FormGroup;
 
     constructor(private route: ActivatedRoute,
                 private withdrawCoopService: WalletCooperativeWithdrawService,
@@ -27,15 +34,22 @@ export class SingleWithdrawalComponent implements OnInit {
                 private popupService: PopupService,
                 private errorService: ErrorService,
                 private translate: TranslateService,
+                private fb: FormBuilder,
                 private router: RouterService) {
     }
 
     ngOnInit() {
         this.withdrawalID = Number(this.route.snapshot.params.ID);
-        this.withdrawal$ = this.withdrawCoopService.getApprovedWithdrawal(this.withdrawalID);
+        this.withdrawal$ = this.refreshWithdrawalSubject.asObservable().pipe(
+            switchMap(() => this.withdrawCoopService.getWithdrawal(this.withdrawalID))
+        );
+
+        this.documentForm = this.fb.group({
+            document: [null, FileValidator.validate]
+        });
     }
 
-    approveAndGenerateCodeClicked() {
+    signTransaction() {
         return this.withdrawCoopService.generateBurnWithdrawTx(this.withdrawalID).pipe(
             this.errorService.handleError,
             switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo)),
@@ -44,7 +58,16 @@ export class SingleWithdrawalComponent implements OnInit {
                 title: this.translate.instant('general.transaction_signed.title'),
                 text: this.translate.instant('general.transaction_signed.description')
             })),
-            switchMap(() => this.router.navigate(['/dash/manage_withdrawals']))
+            tap(() => this.refreshWithdrawalSubject.next())
+        );
+    }
+
+    submitDocument(): Observable<Withdraw> {
+        return this.withdrawCoopService.approveWithdrawal(
+            this.withdrawalID, this.documentForm.get('document').value
+        ).pipe(
+            this.errorService.handleError,
+            tap(() => this.router.navigate(['/dash/manage_withdrawals']))
         );
     }
 }

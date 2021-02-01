@@ -20,12 +20,12 @@ export class DepositServiceService {
         return this.http.post<Deposit>(`${this.endpointProjectDeposit}/${projectID}`, <CreateDepositData>{});
     }
 
-    public getMyPendingDeposit() {
-        return this.http.get<Deposit>(this.endpoint);
+    public myPendingDeposit() {
+        return this.http.get<Deposit>(`${this.endpoint}/pending`);
     }
 
     public getProjectPendingDeposit(projectID: string) {
-        return this.http.get<Deposit>(`${this.endpointProjectDeposit}/${projectID}`);
+        return this.http.get<Deposit>(`${this.endpointProjectDeposit}/${projectID}/pending`);
     }
 
     public deleteDeposit(id: number) {

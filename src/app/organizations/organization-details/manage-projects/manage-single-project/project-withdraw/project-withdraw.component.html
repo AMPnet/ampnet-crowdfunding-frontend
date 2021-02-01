@@ -1,65 +1,110 @@
-<ng-container *ngIf="withdrawal$ | async as withdrawal">
-    <div *ngIf="withdrawal === withdrawalState.EMPTY" class="container">
-        <a [routerLink]="" appBackNavigation class="nostyle">
-            <div class="app-page-title-back">
-                <fa-icon icon="long-arrow-alt-left" class="mr-3"></fa-icon>
-                {{ 'general.back.title' | translate }}
-            </div>
-        </a>
+<div class="container">
+    <a [routerLink]="" appBackNavigation class="nostyle">
+        <div class="app-page-title-back">
+            <fa-icon icon="long-arrow-alt-left" class="mr-3"></fa-icon>
+            {{ 'general.back.title' | translate }}
+        </div>
+    </a>
 
-        <div class="withdraw__form">
-            <form [formGroup]="requestWithdrawForm">
-                <h2 class="app-page-subtitle">
+    <ng-container *ngIf="(withdrawal$ | async) as withdrawal; else spinner">
+        <ng-container *ngIf="withdrawal === withdrawalState.EMPTY; else withdrawalExists">
+            <form [formGroup]="withdrawalForm">
+                <label for="amount" class="app-page-label">
                     {{ 'projects.edit.manage_payments.withdraw.amount_input.title' | translate }}
-                </h2>
+                </label>
                 <app-money-input-field
+                        id="amount"
+                        inputClass="input-reg w-100"
                         placeholder="{{ 'projects.edit.manage_payments.withdraw.amount_input.placeholder' | translate }}"
-                        [control]="requestWithdrawForm.get('amount')">
+                        [control]="withdrawalForm.get('amount')">
                 </app-money-input-field>
+                <div>
+                    <small>
+                        <ng-container *ngIf="(projectWallet$ | async) as wallet; else smallSpinner">
+                            {{ 'projects.edit.manage_payments.withdraw.amount_input.wallet_balance'
+                                | translate | interpolate:['balance', wallet.balance | currencyDefault] }}
+                        </ng-container>
+                    </small>
+                </div>
 
-                <h2 class="app-page-subtitle">
+                <label for="iban" class="app-page-label mt-2">
                     {{ 'projects.edit.manage_payments.withdraw.bank_input.title' | translate }}
-                </h2>
-                <input class="input-lg w-100" id="iban-holder"
+                </label>
+                <input id="iban"
+                       class="input-reg w-100"
                        formControlName="iban"
                        placeholder="{{ 'projects.edit.manage_payments.withdraw.bank_input.placeholder' | translate }}"
                        type="text"/>
 
                 <button app-action-button
+                        class="btn btn-primary mt-2"
                         text="{{ 'projects.edit.manage_payments.withdraw.submit' | translate }}"
-                        [disabled]="!requestWithdrawForm.valid"
+                        [disabled]="!withdrawalForm.valid"
                         [onClick]="requestWithdrawal.bind(this)">
                 </button>
             </form>
-        </div>
-    </div>
-
-    <div *ngIf="withdrawal !== withdrawalState.EMPTY" class="container">
-        <div class="withdrawal__details">
-            <div class="details__content">
-                <p>{{ 'projects.edit.manage_payments.withdraw.review.notice' | translate | splitPart:0 }}</p>
-                <p>{{ 'projects.edit.manage_payments.withdraw.review.notice' | translate | splitPart:1 }}</p>
-                <p>{{ 'projects.edit.manage_payments.withdraw.review.notice' | translate | splitPart:2 }}</p>
-            </div>
-
-            <div class="details__review flex__center--space">
-                <div class="review__left">
-                    <h2 class="app-page-subtitle">
-                        {{ 'projects.edit.manage_payments.withdraw.review.amount' | translate }}
-                    </h2>
-                    {{ withdrawal.amount | currencyDefault }}
+        </ng-container>
+        <ng-template #withdrawalExists>
+            <div class="card-text">
+                <div class="row">
+                    <div class="col-md-6 mt-3">
+                        <div>
+                            <fa-icon icon="chart-line" class="mr-3"></fa-icon>
+                            {{ 'projects.edit.manage_payments.withdraw.request.amount' | translate }}
+                        </div>
+                        <div class="mt-2 h3">
+                            {{ withdrawal.amount | currencyDefault }}
+                        </div>
+                    </div>
+                    <div class="col-md-6 mt-3">
+                        <div>
+                            <fa-icon icon="solar-panel" class="mr-3"></fa-icon>
+                            {{ 'projects.edit.manage_payments.withdraw.request.destination' | translate }}
+                        </div>
+                        <div class="mt-2 h3">
+                            {{ withdrawal.bank_account }}
+                        </div>
+                    </div>
                 </div>
-                <div class="review__right" (click)="deleteWithdrawal(withdrawal).subscribe()">
-                    <fa-icon icon="trash"></fa-icon>
+            </div>
+            <ng-container *ngIf="!withdrawal.approved_tx_hash; else withdrawalSigned">
+                <div class="d-flex mt-5">
+                    <button app-action-button
+                            text="{{ 'projects.edit.manage_payments.withdraw.sign_button' | translate }}"
+                            [onClick]="signWithdrawal(withdrawal.id).bind(this)">
+                    </button>
+                    <button app-action-button
+                            class="btn btn-primary btn-danger ml-3"
+                            text="{{ 'projects.edit.manage_payments.withdraw.cancel_button' | translate }}"
+                            [onClick]="deleteWithdrawal(withdrawal.id).bind(this)">
+                    </button>
                 </div>
-            </div>
+            </ng-container>
 
-            <div class="details__cta">
-                <button app-action-button
-                        text="{{ 'projects.edit.manage_payments.withdraw.review.submit' | translate }}"
-                        [onClick]="burnWithdraw(withdrawal).bind(this)">
-                </button>
-            </div>
-        </div>
-    </div>
-</ng-container>
+            <ng-template #withdrawalSigned>
+                <ng-container *ngIf="!withdrawal.burned_tx_hash; else withdrawalBurned">
+                    <div class="alert alert-info px-3 mt-3 font-weight-bolder">
+                        {{ 'projects.edit.manage_payments.withdraw.pending_notice' | translate }}
+                    </div>
+
+                    <button app-action-button
+                            class="btn btn-primary btn-danger"
+                            text="{{ 'projects.edit.manage_payments.withdraw.cancel_button' | translate }}"
+                            [onClick]="deleteWithdrawal(withdrawal.id).bind(this)">
+                    </button>
+                </ng-container>
+                <ng-template #withdrawalBurned>
+                    <div class="alert alert-info px-3 mt-3 font-weight-bolder">
+                        {{ 'projects.edit.manage_payments.withdraw.burned_notice' | translate }}
+                    </div>
+                </ng-template>
+            </ng-template>
+        </ng-template>
+    </ng-container>
+</div>
+<ng-template #spinner>
+    <app-spinner type="overlay"></app-spinner>
+</ng-template>
+<ng-template #smallSpinner>
+    <app-spinner type="inline"></app-spinner>
+</ng-template>

@@ -7,9 +7,9 @@
     <div class="modal-body">
         <form [formGroup]="confirmForm">
             <div class="row">
-                <h5 class="text-uppercase gray-text col-md-12">
-                    <b>{{ 'admin.deposits.single_deposit.modal.amount_input.title' | translate }}</b>
-                </h5>
+                <label class="col-md-12">
+                    {{ 'admin.deposits.single_deposit.modal.amount_input.title' | translate }}
+                </label>
 
                 <div class="col-md-12">
                     <app-money-input-field

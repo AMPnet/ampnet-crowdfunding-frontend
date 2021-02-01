@@ -36,12 +36,16 @@
                        placeholder="{{ 'projects.edit.manage_payments.withdraw.bank_input.placeholder' | translate }}"
                        type="text"/>
 
-                <button app-action-button
-                        class="btn btn-primary mt-2"
-                        text="{{ 'projects.edit.manage_payments.withdraw.submit' | translate }}"
-                        [disabled]="!withdrawalForm.valid"
-                        [onClick]="requestWithdrawal.bind(this)">
-                </button>
+                <div class="row">
+                    <div class="col-md-4">
+                        <button app-action-button
+                                class="btn btn-primary mt-2 w-100"
+                                text="{{ 'projects.edit.manage_payments.withdraw.submit' | translate }}"
+                                [disabled]="!withdrawalForm.valid"
+                                [onClick]="requestWithdrawal.bind(this)">
+                        </button>
+                    </div>
+                </div>
             </form>
         </ng-container>
         <ng-template #withdrawalExists>
@@ -68,16 +72,21 @@
                 </div>
             </div>
             <ng-container *ngIf="!withdrawal.approved_tx_hash; else withdrawalSigned">
-                <div class="d-flex mt-5">
-                    <button app-action-button
-                            text="{{ 'projects.edit.manage_payments.withdraw.sign_button' | translate }}"
-                            [onClick]="signWithdrawal(withdrawal.id).bind(this)">
-                    </button>
-                    <button app-action-button
-                            class="btn btn-primary btn-danger ml-3"
-                            text="{{ 'projects.edit.manage_payments.withdraw.cancel_button' | translate }}"
-                            [onClick]="deleteWithdrawal(withdrawal.id).bind(this)">
-                    </button>
+                <div class="row mt-5">
+                    <div class="col-md-6">
+                        <button app-action-button
+                                class="btn btn-primary w-100 mt-2"
+                                text="{{ 'projects.edit.manage_payments.withdraw.sign_button' | translate }}"
+                                [onClick]="signWithdrawal(withdrawal.id).bind(this)">
+                        </button>
+                    </div>
+                    <div class="col-md-6">
+                        <button app-action-button
+                                class="btn btn-primary btn-danger w-100 mt-2"
+                                text="{{ 'projects.edit.manage_payments.withdraw.cancel_button' | translate }}"
+                                [onClick]="deleteWithdrawal(withdrawal.id).bind(this)">
+                        </button>
+                    </div>
                 </div>
             </ng-container>
 
@@ -87,11 +96,15 @@
                         {{ 'projects.edit.manage_payments.withdraw.pending_notice' | translate }}
                     </div>
 
-                    <button app-action-button
-                            class="btn btn-primary btn-danger"
-                            text="{{ 'projects.edit.manage_payments.withdraw.cancel_button' | translate }}"
-                            [onClick]="deleteWithdrawal(withdrawal.id).bind(this)">
-                    </button>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <button app-action-button
+                                    class="btn btn-primary btn-danger w-100"
+                                    text="{{ 'projects.edit.manage_payments.withdraw.cancel_button' | translate }}"
+                                    [onClick]="deleteWithdrawal(withdrawal.id).bind(this)">
+                            </button>
+                        </div>
+                    </div>
                 </ng-container>
                 <ng-template #withdrawalBurned>
                     <div class="alert alert-info px-3 mt-3 font-weight-bolder">

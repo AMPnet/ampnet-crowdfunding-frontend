@@ -79,23 +79,28 @@
                             <fa-icon icon="solar-panel" class="mr-3"></fa-icon>
                             {{ 'withdraw.request.destination' | translate }}
                         </div>
-                        <div class="mt-2 h3">
+                        <div class="mt-2 h3 overflow-auto">
                             {{ withdrawal.bank_account }}
                         </div>
                     </div>
                 </div>
             </div>
             <ng-container *ngIf="!withdrawal.approved_tx_hash; else withdrawalSigned">
-                <div class="d-flex mt-5">
-                    <button app-action-button
-                            text="{{ 'withdraw.sign_button' | translate }}"
-                            [onClick]="signWithdrawal(withdrawal.id).bind(this)">
-                    </button>
-                    <button app-action-button
-                            class="btn btn-primary btn-danger ml-3"
-                            text="{{ 'withdraw.cancel_button' | translate }}"
-                            [onClick]="deleteWithdrawal(withdrawal.id).bind(this)">
-                    </button>
+                <div class="row mt-5">
+                    <div class="col-md-6">
+                        <button app-action-button
+                                class="btn btn-primary mt-2 w-100"
+                                text="{{ 'withdraw.sign_button' | translate }}"
+                                [onClick]="signWithdrawal(withdrawal.id).bind(this)">
+                        </button>
+                    </div>
+                    <div class="col-md-6">
+                        <button app-action-button
+                                class="btn btn-primary btn-danger mt-2 w-100"
+                                text="{{ 'withdraw.cancel_button' | translate }}"
+                                [onClick]="deleteWithdrawal(withdrawal.id).bind(this)">
+                        </button>
+                    </div>
                 </div>
             </ng-container>
 
@@ -105,11 +110,15 @@
                         {{ 'withdraw.pending_notice' | translate }}
                     </div>
 
-                    <button app-action-button
-                            class="btn btn-primary btn-danger"
-                            text="{{ 'withdraw.cancel_button' | translate }}"
-                            [onClick]="deleteWithdrawal(withdrawal.id).bind(this)">
-                    </button>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <button app-action-button
+                                    class="btn btn-primary btn-danger w-100"
+                                    text="{{ 'withdraw.cancel_button' | translate }}"
+                                    [onClick]="deleteWithdrawal(withdrawal.id).bind(this)">
+                            </button>
+                        </div>
+                    </div>
                 </ng-container>
                 <ng-template #withdrawalBurned>
                     <div class="alert alert-info px-3 mt-3 font-weight-bolder">

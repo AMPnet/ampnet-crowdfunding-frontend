@@ -69,8 +69,7 @@ export class ProjectWithdrawComponent {
                     return {amountZero: true};
                 } else if (wallet.balance === 0) {
                     return {balanceZero: true};
-                }
-                if (amount > wallet.balance) {
+                } else if (amount > wallet.balance) {
                     return {amountAboveBalance: true};
                 } else {
                     return null;

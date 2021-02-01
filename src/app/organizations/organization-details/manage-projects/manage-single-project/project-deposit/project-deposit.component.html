@@ -5,7 +5,8 @@
     <div class="mt-3">
         <div class="alert alert-info px-3">
             <fa-icon icon="clock" class="mr-2"></fa-icon>
-            {{ 'projects.edit.manage_payments.deposit.notice' | translate }}
+            {{ 'projects.edit.manage_payments.deposit.notice'
+                | translate | interpolate:['bankAccountName', appConfig.config.name]  }}
         </div>
     </div>
 
@@ -23,8 +24,8 @@
                         <fa-icon icon="piggy-bank" class="mr-2"></fa-icon>
                         {{ 'projects.edit.manage_payments.deposit.iban' | translate }}
                     </div>
-                    <div *ngIf="(masterIBAN$ | async) as masterIBAN; else spinner">
-                        {{ masterIBAN || 'unknown' }}
+                    <div *ngIf="(bankAccount$ | async) as bankAccount; else spinner">
+                        {{ bankAccount.iban || 'unknown' }}
                     </div>
                 </div>
 

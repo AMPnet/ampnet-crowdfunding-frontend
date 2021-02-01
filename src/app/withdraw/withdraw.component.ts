@@ -63,7 +63,9 @@ export class WithdrawComponent implements OnInit {
             map(([wallet]) => {
                 const amount = control.value;
 
-                if (wallet.wallet.balance === 0) {
+                if (amount === 0) {
+                    return {amountZero: true};
+                } else if (wallet.wallet.balance === 0) {
                     return {balanceZero: true};
                 } else if (amount > wallet.wallet.balance) {
                     return {amountAboveBalance: true};

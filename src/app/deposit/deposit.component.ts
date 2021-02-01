@@ -4,6 +4,7 @@ import { PlatformBankAccount, PlatformBankAccountService } from '../shared/servi
 import { ErrorService } from '../shared/services/error.service';
 import { catchError, map, shareReplay } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
+import { AppConfigService } from '../shared/services/app-config.service';
 
 @Component({
     selector: 'app-deposit',
@@ -14,7 +15,8 @@ export class DepositComponent implements OnInit {
     deposit$: Observable<Deposit>;
     bankAccount$: Observable<PlatformBankAccount>;
 
-    constructor(private depositService: DepositServiceService,
+    constructor(public appConfig: AppConfigService,
+                private depositService: DepositServiceService,
                 private bankAccountService: PlatformBankAccountService,
                 private errorService: ErrorService) {
     }

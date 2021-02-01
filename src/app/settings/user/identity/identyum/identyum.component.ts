@@ -1,6 +1,6 @@
 import { Component, ElementRef, Inject, Renderer2, ViewChild } from '@angular/core';
 import { AppConfigService } from '../../../../shared/services/app-config.service';
-import { catchError, filter, switchMap, take, takeUntil, tap } from 'rxjs/operators';
+import { catchError, find, last, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { EMPTY, interval, Observable, Subject } from 'rxjs';
 import { DOCUMENT } from '@angular/common';
 import { PopupService } from '../../../../shared/services/popup.service';
@@ -46,10 +46,10 @@ export class IdentyumComponent {
             switchMap(() =>
                 interval(1000).pipe(
                     tap(() => this.userService.refreshUser()),
-                    takeUntil(this.userService.user$.pipe(filter(user => user.verified)))
+                    takeUntil(this.userService.user$.pipe(find(user => user.verified))),
+                    last()
                 )
             ),
-            take(1),
             switchMap(() => this.popupService.success(
                 this.translate.instant('settings.user.identity.identyum.approved'))),
             switchMap(() => this.userService.refreshUserToken()

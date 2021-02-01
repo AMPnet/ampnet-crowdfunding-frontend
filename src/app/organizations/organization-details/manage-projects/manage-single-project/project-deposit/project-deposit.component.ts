@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { catchError, map, shareReplay, switchMap } from 'rxjs/operators';
 import { EMPTY, Observable } from 'rxjs';
 import { Deposit, DepositServiceService } from '../../../../../shared/services/wallet/deposit-service.service';
-import { PlatformBankAccountService } from '../../../../../shared/services/wallet/platform-bank-account.service';
+import { PlatformBankAccount, PlatformBankAccountService } from '../../../../../shared/services/wallet/platform-bank-account.service';
 import { PopupService } from '../../../../../shared/services/popup.service';
 import { RouterService } from '../../../../../shared/services/router.service';
 import { ErrorService, WalletError } from '../../../../../shared/services/error.service';
 import { TranslateService } from '@ngx-translate/core';
+import { AppConfigService } from '../../../../../shared/services/app-config.service';
 
 @Component({
     selector: 'app-project-deposit',
@@ -18,9 +19,10 @@ export class ProjectDepositComponent {
     orgID: string;
 
     deposit$: Observable<Deposit>;
-    masterIBAN$: Observable<string>;
+    bankAccount$: Observable<PlatformBankAccount>;
 
-    constructor(private depositService: DepositServiceService,
+    constructor(public appConfig: AppConfigService,
+                private depositService: DepositServiceService,
                 private route: ActivatedRoute,
                 private router: RouterService,
                 private popupService: PopupService,
@@ -35,9 +37,10 @@ export class ProjectDepositComponent {
             catchError(err => err.status === 404 ? this.generateDepositInfo(projectUUID) : this.recoverBack())
         );
 
-        this.masterIBAN$ = this.bankAccountService.bankAccounts$.pipe(
+        this.bankAccount$ = this.bankAccountService.bankAccounts$.pipe(
             this.errorService.handleError,
-            map(res => res.bank_accounts[0]?.iban || 'unknown')
+            map(res => res.bank_accounts[0]),
+            shareReplay(1)
         );
     }
 

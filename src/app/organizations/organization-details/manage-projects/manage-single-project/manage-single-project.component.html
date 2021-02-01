@@ -211,7 +211,7 @@
                                                                              style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis">
                                                                             {{ file.name }}
                                                                         </div>
-                                                                        <div class="docs__icons">
+                                                                        <div class="d-flex">
                                                                             <a [routerLink]=""
                                                                                (click)="deleteFile(states.project, file.id).subscribe()">
                                                                                 <span class="mr-3 gray-text">
@@ -257,7 +257,7 @@
                                                                              style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis">
                                                                             {{ states.project.terms_document.name }}
                                                                         </div>
-                                                                        <div class="docs__icons">
+                                                                        <div class="d-flex">
                                                                             <a [routerLink]=""
                                                                                (click)="deleteFile(states.project, states.project.terms_document.id).subscribe()">
                                                                                 <span class="mr-3 gray-text">

@@ -5,7 +5,7 @@
     <div class="mt-3">
         <div class="alert alert-info px-3">
             <fa-icon icon="clock" class="mr-2"></fa-icon>
-            {{ 'deposit.notice' | translate }}
+            {{ 'deposit.notice' | translate | interpolate:['bankAccountName', appConfig.config.name]  }}
         </div>
     </div>
 

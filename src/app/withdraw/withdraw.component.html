@@ -52,17 +52,13 @@
                 </div>
 
                 <div *ngIf="banks.length === 0">
-                    <div class="empty">
-                        <div class="empty__title">
-                            {{ 'withdraw.no_bank.notice' | translate }}
-                        </div>
-                        <div class="empty__cta">
-                            <button class="btn btn-primary w-100" [routerLink]="'/dash/payment_options/new' | coopPath">
-                                <fa-icon icon="piggy-bank" class="mr-2"></fa-icon>
-                                {{ 'withdraw.no_bank.add_bank_account' | translate }}
-                            </button>
-                        </div>
+                    <div class="alert alert-info px-3 mt-3 font-weight-bolder">
+                        {{ 'withdraw.no_bank.notice' | translate }}
                     </div>
+                    <button class="btn btn-primary w-100" [routerLink]="'/dash/payment_options/new' | coopPath">
+                        <fa-icon icon="piggy-bank" class="mr-2"></fa-icon>
+                        {{ 'withdraw.no_bank.add_bank_account' | translate }}
+                    </button>
                 </div>
             </ng-container>
         </ng-container>
@@ -105,7 +101,7 @@
 
             <ng-template #withdrawalSigned>
                 <ng-container *ngIf="!withdrawal.burned_tx_hash; else withdrawalBurned">
-                    <div class="alert alert-info px-3 mt-3">
+                    <div class="alert alert-info px-3 mt-3 font-weight-bolder">
                         {{ 'withdraw.pending_notice' | translate }}
                     </div>
 
@@ -116,7 +112,7 @@
                     </button>
                 </ng-container>
                 <ng-template #withdrawalBurned>
-                    <div class="alert alert-info px-3 mt-3">
+                    <div class="alert alert-info px-3 mt-3 font-weight-bolder">
                         {{ 'withdraw.burned_notice' | translate }}
                     </div>
                 </ng-template>

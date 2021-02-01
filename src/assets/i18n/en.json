@@ -304,7 +304,8 @@
           "notice": "Please deposit funds to your wallet by making a bank transfer to the {{ bankAccountName }} bank account using the payment details presented below. Make sure that you also include the unique deposit code as the reference for the transaction. After you have transferred the money to our bank account it can take up to 48h for it to become visible on the platform. You will be notified by email when your money has been received.",
           "details": "Deposit payment details",
           "iban": "IBAN",
-          "reference": "Description",
+          "swift": "SWIFT/BIC",
+          "reference": "Reference",
           "existing_deposit": "You already have an existing deposit. Please wait until it is approved"
         },
         "withdraw": {

@@ -3,8 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { Wallet, WalletService } from '../../shared/services/wallet/wallet.service';
 import { Organization, OrganizationMember, OrganizationService } from '../../shared/services/project/organization.service';
-import { BehaviorSubject, EMPTY, Observable, of } from 'rxjs';
-import { catchError, finalize, map, switchMap, tap } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, EMPTY, Observable, of } from 'rxjs';
+import { catchError, finalize, map, shareReplay, switchMap, tap } from 'rxjs/operators';
 import { ArkaneService } from '../../shared/services/arkane.service';
 import { PopupService } from '../../shared/services/popup.service';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
@@ -31,6 +31,7 @@ export class OrganizationDetailsComponent implements OnInit {
     organization$: Observable<Organization>;
     orgWallet$: Observable<Wallet>;
     orgMembers$: Observable<OrganizationMember[]>;
+    writeable$: Observable<boolean>;
 
     inviteForm: FormGroup;
 
@@ -77,7 +78,8 @@ export class OrganizationDetailsComponent implements OnInit {
         this.user$ = this.userService.user$;
         this.organization$ = this.refreshOrganizationSubject.asObservable().pipe(
             switchMap(() => this.organizationService.getSingleOrganization(orgID)
-                .pipe(this.errorService.handleError))
+                .pipe(this.errorService.handleError)),
+            shareReplay(1),
         );
         this.orgWallet$ = this.refreshOrgWalletSubject.asObservable().pipe(
             switchMap(() => this.walletService.getOrganizationWallet(orgID).pipe(
@@ -104,9 +106,17 @@ export class OrganizationDetailsComponent implements OnInit {
                 .pipe(this.errorService.handleError)),
             map(res => res.members));
 
+        this.writeable$ = this.isPublic ? of(false) : this.isOrgOwner;
+
         this.inviteForm = this.fb.group({
             emails: ['', OrganizationDetailsComponent.emailsValidator]
         });
+    }
+
+    private get isOrgOwner() {
+        return combineLatest([this.organization$, this.user$]).pipe(
+            map(([org, user]) => org.owner_uuid === user.uuid)
+        );
     }
 
     inviteClicked(orgUUID: string) {

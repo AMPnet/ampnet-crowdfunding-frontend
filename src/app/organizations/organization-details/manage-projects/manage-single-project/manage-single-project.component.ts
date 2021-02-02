@@ -5,7 +5,7 @@ import { Project, ProjectService } from '../../../../shared/services/project/pro
 import { Wallet, WalletService, WalletState } from '../../../../shared/services/wallet/wallet.service';
 import { ManageProjectsService } from '../../../../shared/services/project/manage-projects.service';
 import { catchError, finalize, map, shareReplay, switchMap, tap } from 'rxjs/operators';
-import { BehaviorSubject, EMPTY, Observable, of, throwError } from 'rxjs';
+import { BehaviorSubject, combineLatest, EMPTY, Observable, of, throwError } from 'rxjs';
 import { ArkaneService } from '../../../../shared/services/arkane.service';
 import { PopupService } from '../../../../shared/services/popup.service';
 import { FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
@@ -14,6 +14,7 @@ import { RouterService } from '../../../../shared/services/router.service';
 import { ErrorService } from '../../../../shared/services/error.service';
 import { TranslateService } from '@ngx-translate/core';
 import { DocPurpose, Document } from '../../../../shared/services/project/organization.service';
+import { UserService } from '../../../../shared/services/user/user.service';
 
 @Component({
     selector: 'app-manage-single-project',
@@ -25,6 +26,7 @@ export class ManageSingleProjectComponent {
 
     project$: Observable<ProjectView>;
     projectWallet$: Observable<Wallet | WalletState>;
+    isProjectOwner: Observable<boolean>;
     updateForm$: Observable<FormGroup>;
     newsForm: FormGroup;
 
@@ -35,6 +37,7 @@ export class ManageSingleProjectComponent {
 
     constructor(private projectService: ProjectService,
                 private walletService: WalletService,
+                private userService: UserService,
                 private manageProjectsService: ManageProjectsService,
                 private arkaneService: ArkaneService,
                 private popupService: PopupService,
@@ -69,6 +72,11 @@ export class ManageSingleProjectComponent {
                     catchError(() => EMPTY)
                 )
             )
+        );
+
+        this.isProjectOwner = combineLatest([this.userService.user$, this.project$]).pipe(
+            // TODO: find out how to get project owner uuid from project response (ask eugen)
+            map(([user, project]) => user.uuid === project.uuid)
         );
 
         this.updateForm$ = this.project$.pipe(map(project => {

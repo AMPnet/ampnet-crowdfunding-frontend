@@ -12,21 +12,16 @@
                 </div>
             </a>
 
-            <ng-container *ngIf="!isPublic">
-                <ng-container *ngIf="(user$ | async) as user">
-                    <ng-container *ngIf="user.uuid === organization.owner_uuid">
-                        <ng-container *ngIf="(orgWallet$ | async) as wallet">
-                            <button *ngIf="user.uuid"
-                                    [disabled]="!isWalletVerified(wallet)"
-                                    class="btn"
-                                    routerLink="create_project">
-                                <fa-icon icon="plus" class="mr-lg-3"></fa-icon>
-                                <span class="btn__text">
-                                    {{ 'organizations.details.create_project' | translate }}
-                                </span>
-                            </button>
-                        </ng-container>
-                    </ng-container>
+            <ng-container *ngIf="writeable$ | async">
+                <ng-container *ngIf="(orgWallet$ | async) as wallet">
+                    <button [disabled]="!isWalletVerified(wallet)"
+                            class="btn"
+                            routerLink="create_project">
+                        <fa-icon icon="plus" class="mr-lg-3"></fa-icon>
+                        <span class="btn__text">
+                            {{ 'organizations.details.create_project' | translate }}
+                        </span>
+                    </button>
                 </ng-container>
             </ng-container>
         </div>
@@ -72,13 +67,13 @@
                 <tabset>
                     <tab heading="{{ 'organizations.details.projects.title' | translate }}">
                         <div class="manage__projects">
-                            <app-manage-projects [groupID]="organization.uuid"
-                                                 [isPublic]=isPublic></app-manage-projects>
+                            <app-manage-projects [groupID]="organization.uuid" [isPublic]=isPublic>
+                            </app-manage-projects>
                         </div>
                     </tab>
                     <tab heading="{{ 'organizations.details.members.title' | translate }}">
                         <div class="manage__members">
-                            <div class="invite-members app__full-width" *ngIf="!isPublic">
+                            <div class="invite-members app__full-width" *ngIf="writeable$ | async">
                                 <div class="invite__form">
                                     <form [formGroup]="inviteForm" style="display: contents">
                                         <div class="form__input col-lg-6 col-xl-5 p-0">
@@ -110,21 +105,21 @@
                                                 <div class="item__name">{{ member.first_name | titlecase }} {{ member.last_name | titlecase }}</div>
                                                 <div class="item__email">{{ member.email }}</div>
                                                 <span class="d-inline-block d-lg-none item__joined">
-                                                            {{ 'organizations.details.members.join_date' | translate | interpolate:['date', member.member_since | date:'mediumDate'] }}
-                                                        </span>
+                                                    {{ 'organizations.details.members.join_date' | translate | interpolate:['date', member.member_since | date:'mediumDate'] }}
+                                                </span>
                                             </div>
                                             <div class="item__right">
                                                 <div class="item__joined">
-                                                            <span class="d-none d-lg-inline-block">
-                                                                {{ 'organizations.details.members.join_date' | translate | interpolate:['date', member.member_since | date:'longDate'] }}
-                                                            </span>
+                                                    <span class="d-none d-lg-inline-block">
+                                                        {{ 'organizations.details.members.join_date' | translate | interpolate:['date', member.member_since | date:'longDate'] }}
+                                                    </span>
 
                                                     <a [routerLink]=""
                                                        (click)="deleteMember(organization.uuid, member.uuid)">
-                                                                <span class="item__icon" *ngIf="!isPublic">
-                                                                    <fa-icon icon="trash-alt"
-                                                                             class="cursor-pointer"></fa-icon>
-                                                                </span>
+                                                        <span class="item__icon" *ngIf="writeable$ | async">
+                                                            <fa-icon icon="trash-alt"
+                                                                     class="cursor-pointer"></fa-icon>
+                                                        </span>
                                                     </a>
                                                 </div>
                                             </div>

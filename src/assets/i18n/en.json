@@ -829,7 +829,8 @@
       "min_investment_greater_than_max": "The minimum investment cannot be greater than maximum investment.",
       "expected_funding_too_high": "The expected funding is too high.",
       "max_investment_too_high": "The maximum investment per user is too high.",
-      "invalid_roi": "Invalid return on investment value."
+      "invalid_roi": "Invalid return on investment value.",
+      "no_write_privilege": "You have no privilege for this action."
     },
     "internal": {
       "something_went_wrong": "Something went wrong."

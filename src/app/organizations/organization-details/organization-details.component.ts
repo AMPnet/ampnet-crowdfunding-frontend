@@ -11,6 +11,8 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors,
 import { RouterService } from '../../shared/services/router.service';
 import { ErrorService } from '../../shared/services/error.service';
 import { TranslateService } from '@ngx-translate/core';
+import { User } from '../../shared/services/user/signup.service';
+import { UserService } from '../../shared/services/user/user.service';
 
 @Component({
     selector: 'app-organization-details',
@@ -25,6 +27,7 @@ export class OrganizationDetailsComponent implements OnInit {
     refreshOrgWalletSubject = new BehaviorSubject<void>(null);
     refreshOrgMembersSubject = new BehaviorSubject<void>(null);
 
+    user$: Observable<User>;
     organization$: Observable<Organization>;
     orgWallet$: Observable<Wallet>;
     orgMembers$: Observable<OrganizationMember[]>;
@@ -33,6 +36,7 @@ export class OrganizationDetailsComponent implements OnInit {
 
     constructor(private activatedRoute: ActivatedRoute,
                 private router: RouterService,
+                private userService: UserService,
                 private organizationService: OrganizationService,
                 private walletService: WalletService,
                 private errorService: ErrorService,
@@ -70,6 +74,7 @@ export class OrganizationDetailsComponent implements OnInit {
         this.isOverview = this.activatedRoute.snapshot.data.isOverview;
         const orgID = this.activatedRoute.snapshot.params.id;
 
+        this.user$ = this.userService.user$;
         this.organization$ = this.refreshOrganizationSubject.asObservable().pipe(
             switchMap(() => this.organizationService.getSingleOrganization(orgID)
                 .pipe(this.errorService.handleError))

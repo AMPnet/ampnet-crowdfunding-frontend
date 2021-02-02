@@ -68,6 +68,7 @@ export class OrganizationService {
 export interface Organization {
     uuid: string;
     name: string;
+    owner_uuid: string;
     created_at: string;
     approved: boolean;
     description: string;

@@ -3,14 +3,16 @@ import { ActivatedRoute } from '@angular/router';
 import { SpinnerUtil } from 'src/app/utilities/spinner-utilities';
 import { Wallet, WalletService } from '../../shared/services/wallet/wallet.service';
 import { Organization, OrganizationMember, OrganizationService } from '../../shared/services/project/organization.service';
-import { BehaviorSubject, EMPTY, Observable, of } from 'rxjs';
-import { catchError, finalize, map, switchMap, tap } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, EMPTY, Observable, of } from 'rxjs';
+import { catchError, finalize, map, shareReplay, switchMap, tap } from 'rxjs/operators';
 import { ArkaneService } from '../../shared/services/arkane.service';
 import { PopupService } from '../../shared/services/popup.service';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { RouterService } from '../../shared/services/router.service';
 import { ErrorService } from '../../shared/services/error.service';
 import { TranslateService } from '@ngx-translate/core';
+import { User } from '../../shared/services/user/signup.service';
+import { UserService } from '../../shared/services/user/user.service';
 
 @Component({
     selector: 'app-organization-details',
@@ -25,14 +27,17 @@ export class OrganizationDetailsComponent implements OnInit {
     refreshOrgWalletSubject = new BehaviorSubject<void>(null);
     refreshOrgMembersSubject = new BehaviorSubject<void>(null);
 
+    user$: Observable<User>;
     organization$: Observable<Organization>;
     orgWallet$: Observable<Wallet>;
     orgMembers$: Observable<OrganizationMember[]>;
+    writeable$: Observable<boolean>;
 
     inviteForm: FormGroup;
 
     constructor(private activatedRoute: ActivatedRoute,
                 private router: RouterService,
+                private userService: UserService,
                 private organizationService: OrganizationService,
                 private walletService: WalletService,
                 private errorService: ErrorService,
@@ -70,9 +75,11 @@ export class OrganizationDetailsComponent implements OnInit {
         this.isOverview = this.activatedRoute.snapshot.data.isOverview;
         const orgID = this.activatedRoute.snapshot.params.id;
 
+        this.user$ = this.userService.user$;
         this.organization$ = this.refreshOrganizationSubject.asObservable().pipe(
             switchMap(() => this.organizationService.getSingleOrganization(orgID)
-                .pipe(this.errorService.handleError))
+                .pipe(this.errorService.handleError)),
+            shareReplay(1),
         );
         this.orgWallet$ = this.refreshOrgWalletSubject.asObservable().pipe(
             switchMap(() => this.walletService.getOrganizationWallet(orgID).pipe(
@@ -99,9 +106,17 @@ export class OrganizationDetailsComponent implements OnInit {
                 .pipe(this.errorService.handleError)),
             map(res => res.members));
 
+        this.writeable$ = this.isPublic ? of(false) : this.isOrgOwner;
+
         this.inviteForm = this.fb.group({
             emails: ['', OrganizationDetailsComponent.emailsValidator]
         });
+    }
+
+    private get isOrgOwner() {
+        return combineLatest([this.organization$, this.user$]).pipe(
+            map(([org, user]) => org.owner_uuid === user.uuid)
+        );
     }
 
     inviteClicked(orgUUID: string) {

@@ -90,6 +90,7 @@ interface UpdateProjectData {
 
 export interface Project {
     uuid: string;
+    owner_uuid: string;
     name: string;
     short_description: string;
     description: string;

@@ -332,7 +332,7 @@
                             </tab>
 
                             <tab heading="{{ 'projects.edit.manage_payments.title' | translate }}"
-                                 *ngIf="isWalletVerified(states.wallet)"
+                                 *ngIf="(isProjectOwner$ | async) && isWalletVerified(states.wallet)"
                                  (selectTab)="detailsShown=false">
                                 <div class="edit-payments">
                                     <app-manage-payments></app-manage-payments>

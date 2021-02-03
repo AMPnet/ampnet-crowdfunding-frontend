@@ -26,7 +26,7 @@ export class ManageSingleProjectComponent {
 
     project$: Observable<ProjectView>;
     projectWallet$: Observable<Wallet | WalletState>;
-    isProjectOwner: Observable<boolean>;
+    isProjectOwner$: Observable<boolean>;
     updateForm$: Observable<FormGroup>;
     newsForm: FormGroup;
 
@@ -74,9 +74,8 @@ export class ManageSingleProjectComponent {
             )
         );
 
-        this.isProjectOwner = combineLatest([this.userService.user$, this.project$]).pipe(
-            // TODO: find out how to get project owner uuid from project response (ask eugen)
-            map(([user, project]) => user.uuid === project.uuid)
+        this.isProjectOwner$ = combineLatest([this.userService.user$, this.project$]).pipe(
+            map(([user, project]) => user.uuid === project.owner_uuid)
         );
 
         this.updateForm$ = this.project$.pipe(map(project => {
@@ -210,7 +209,7 @@ export class ManageSingleProjectComponent {
         const from = roiFromGroup.get('from').value;
         const to = roiFromGroup.get('to').value;
         return from !== null && to !== null && from <= to ? null : {invalidROI: true};
-    }
+    };
 }
 
 interface ProjectView extends Project {

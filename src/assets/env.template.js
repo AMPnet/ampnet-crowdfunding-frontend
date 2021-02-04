@@ -6,6 +6,4 @@
     window.env.arkaneEnv = '${ARKANE_ENV}';
     window.env.sentryDSN = '${SENTRY_DSN}';
     window.env.sentryEnv = '${SENTRY_ENV}';
-
-
 })(this);

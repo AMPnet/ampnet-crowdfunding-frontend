@@ -9,14 +9,14 @@
                 <div class="app-page-header">
                     <a [routerLink]="" appBackNavigation class="nostyle">
                         <div class="app-page-title-back">
-                            <i class="fas fa-long-arrow-alt-left mr-3"></i>
+                            <fa-icon icon="long-arrow-alt-left" class="mr-3"></fa-icon>
                             {{ 'general.back.title' | translate }}
                         </div>
                     </a>
 
                     <button class="btn btn-center"
                             [routerLink]="['/dash', 'offers', states.project.uuid] | coopPath">
-                        <i class="fas fa-caret-right mr-lg-3"></i>
+                        <fa-icon icon="caret-right" class="mr-lg-3"></fa-icon>
                         <span class="btn__text">
                             {{ 'projects.edit.preview' | translate }}
                         </span>
@@ -31,7 +31,7 @@
 
                     <div *ngIf="!isWalletVerified(states.wallet)">
                         <div class="alert alert-warning flex__center">
-                            <i class="fas fa-exclamation-triangle mr-3"></i>
+                            <fa-icon icon="exclamation-triangle" class="mr-3"></fa-icon>
                             <b>
                                 {{ 'projects.edit.wallet_not_verified_notice' | translate }}
                             </b>
@@ -84,6 +84,7 @@
                                                         <div class="input-group">
                                                             <quill-editor id="project-description"
                                                                           formControlName="description"
+                                                                          style="max-width: 100%"
                                                                           [styles]="{ height: '50vh' }">
                                                             </quill-editor>
                                                         </div>
@@ -104,7 +105,7 @@
                                                     <div class="left__dates">
                                                         <div class="dates__label flex__center--space">
                                                             {{ 'projects.edit.details.date_range_input.title' | translate }}
-                                                            <i class="fas fa-lock"></i>
+                                                            <fa-icon icon="lock"></fa-icon>
                                                         </div>
                                                         <div>
                                                             <input class="input-reg w-50" disabled
@@ -118,7 +119,7 @@
                                                     <div class="left__investments">
                                                         <div class="investments__label flex__center--space">
                                                             {{ 'projects.edit.details.investment_range_input.title' | translate }}
-                                                            <i class="fas fa-lock"></i>
+                                                            <fa-icon icon="lock"></fa-icon>
                                                         </div>
 
                                                         <div>
@@ -134,7 +135,7 @@
                                                     <div class="left__expected-funding">
                                                         <div class="funding__label flex__center--space">
                                                             {{ 'projects.edit.details.expected_funding_input.title' | translate }}
-                                                            <i class="fas fa-lock"></i>
+                                                            <fa-icon icon="lock"></fa-icon>
                                                         </div>
                                                         <input class="input-reg w-100" disabled
                                                                [value]="states.project.expected_funding | currencyDefault"
@@ -210,16 +211,17 @@
                                                                              style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis">
                                                                             {{ file.name }}
                                                                         </div>
-                                                                        <div class="docs__icons">
+                                                                        <div class="d-flex">
                                                                             <a [routerLink]=""
                                                                                (click)="deleteFile(states.project, file.id).subscribe()">
-                                                                                            <span class="mr-3 gray-text">
-                                                                                                <i class="fas fa-trash"></i>
-                                                                                            </span>
+                                                                                <span class="mr-3 gray-text">
+                                                                                    <fa-icon icon="trash"></fa-icon>
+                                                                                </span>
                                                                             </a>
                                                                             <a class="cursor-pointer gray-text"
                                                                                href="{{ file.link }}">
-                                                                                <i class="fas fa-file-download"></i>
+                                                                                <fa-icon icon="file-download"
+                                                                                         class="mr-2"></fa-icon>
                                                                             </a>
                                                                         </div>
                                                                     </div>
@@ -241,10 +243,10 @@
                                                                          areaID='project-terms'
                                                                          style="width: max-content"
                                                                          [restrictions]="{
-                                                                                        allowedFileTypes: ['image/*', 'application/pdf', 'application/zip', 'audio/*', 'video/*'],
-                                                                                        maxFileSize: 10 * 1024 * 1024,
-                                                                                        maxNumberOfFiles: 1
-                                                                                     }"
+                                                                            allowedFileTypes: ['image/*', 'application/pdf', 'application/zip', 'audio/*', 'video/*'],
+                                                                            maxFileSize: 10 * 1024 * 1024,
+                                                                            maxNumberOfFiles: 1
+                                                                         }"
                                                                          [firstFileControl]="updateForm.get('newTerms')">
                                                         </app-upload-area>
                                                         <div class="mt-2">
@@ -256,16 +258,17 @@
                                                                              style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis">
                                                                             {{ states.project.terms_document.name }}
                                                                         </div>
-                                                                        <div class="docs__icons">
+                                                                        <div class="d-flex">
                                                                             <a [routerLink]=""
                                                                                (click)="deleteFile(states.project, states.project.terms_document.id).subscribe()">
                                                                                 <span class="mr-3 gray-text">
-                                                                                    <i class="fas fa-trash"></i>
+                                                                                    <fa-icon icon="trash"></fa-icon>
                                                                                 </span>
                                                                             </a>
                                                                             <a class="cursor-pointer gray-text"
                                                                                href="{{ states.project.terms_document.link }}">
-                                                                                <i class="fas fa-file-download"></i>
+                                                                                <fa-icon icon="file-download"
+                                                                                         class="mr-2"></fa-icon>
                                                                             </a>
                                                                         </div>
                                                                     </div>
@@ -300,10 +303,10 @@
                                                 </div>
                                                 <div class="col-lg-1 form__btn">
                                                     <button app-action-button
-                                                            faIcon="fa-plus ml-lg-0"
+                                                            faIcon="plus"
                                                             [disabled]="!newsForm.dirty || !newsForm.valid"
                                                             [onClick]="addNewsLink(states.project, newsForm).bind(this)"
-                                                            class="w-100 btn">
+                                                            class="w-100 btn ml-lg-0">
                                                     </button>
                                                 </div>
                                             </div>
@@ -320,7 +323,7 @@
                                                 </a>
                                                 <a [routerLink]=""
                                                    (click)="deleteNewsClicked(states.project, item).subscribe()">
-                                                    <i class="fas fa-trash-alt"></i>
+                                                    <fa-icon icon="trash-alt"></fa-icon>
                                                 </a>
                                             </li>
                                         </ul>
@@ -329,7 +332,7 @@
                             </tab>
 
                             <tab heading="{{ 'projects.edit.manage_payments.title' | translate }}"
-                                 *ngIf="isWalletVerified(states.wallet)"
+                                 *ngIf="(isProjectOwner$ | async) && isWalletVerified(states.wallet)"
                                  (selectTab)="detailsShown=false">
                                 <div class="edit-payments">
                                     <app-manage-payments></app-manage-payments>
@@ -350,7 +353,7 @@
                         <button app-action-button
                                 text="{{ (states.project.active ? 'projects.edit.hide' : 'projects.edit.show') | translate }}"
                                 textShort="{{ (states.project.active ? 'projects.edit.hide.short' : 'projects.edit.show.short') | translate }}"
-                                faIcon="{{ states.project.active ? 'fa-eye-slash' : 'fa-eye' }}"
+                                faIcon="{{ states.project.active ? 'eye-slash' : 'eye' }}"
                                 [disabled]="!isWalletVerified(states.wallet)"
                                 [onClick]="toggleProjectStatusClicked(states.project).bind(this)"
                                 class="btn btn-info">
@@ -362,8 +365,8 @@
                                 loadingText="{{ 'projects.edit.update.loading' | translate }}"
                                 [disabled]="!(updateForm.dirty && updateForm.valid)"
                                 [onClick]="updateProject(states.project, updateForm).bind(this)"
-                                class="btn w-100 p-0"
-                                faIcon="far fa-check mr-3">
+                                class="btn w-100 p-0 mr-3"
+                                faIcon="check">
                         </button>
                     </div>
                 </div>

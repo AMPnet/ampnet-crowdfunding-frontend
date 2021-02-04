@@ -1,7 +1,7 @@
 <div class="container">
     <a [routerLink]="" appBackNavigation class="nostyle">
         <div class="app-page-title-back">
-            <i class="fas fa-long-arrow-alt-left mr-3"></i>
+            <fa-icon icon="long-arrow-alt-left" class="mr-3"></fa-icon>
             {{ 'general.back.title' | translate }}
         </div>
     </a>
@@ -36,7 +36,7 @@
                             <div class="input__label">
                                 {{ 'projects.new.period_input.title' | translate }}
                             </div>
-                            <i class="fas fa-lock"></i>
+                            <fa-icon icon="lock"></fa-icon>
                         </div>
                         <div class="row">
                             <div class="col-12 col-lg-6">
@@ -62,7 +62,7 @@
                             <div class="input__label">
                                 {{ 'projects.new.investment_range_input.title' | translate }}
                             </div>
-                            <i class="fas fa-lock"></i>
+                            <fa-icon icon="lock"></fa-icon>
                         </div>
                         <app-money-input-field
                                 placeholder="{{ 'projects.new.investment_range_input.placeholder.start' | translate }}"
@@ -80,7 +80,7 @@
                             <div class="input__label">
                                 {{ 'projects.new.expected_funding_input.title' | translate }}
                             </div>
-                            <i class="fas fa-lock"></i>
+                            <fa-icon icon="lock"></fa-icon>
                         </div>
                         <app-money-input-field
                                 placeholder="{{ 'projects.new.expected_funding_input.placeholder' | translate }}"
@@ -89,7 +89,7 @@
                         </app-money-input-field>
                     </div>
                     <div class="right__warning">
-                        <i class="fas fa-lock"></i>
+                        <fa-icon icon="lock" class="mr-2"></fa-icon>
                         <div>
                             <span>
                                 {{ 'projects.new.lock_notice' | translate }}
@@ -99,7 +99,7 @@
                     <div *ngIf="createForm.dirty && createForm.invalid">
                         <ng-container *ngIf="createForm.get('startDate').dirty && createForm.get('endDate').dirty">
                             <div class="alert alert-warning my-3" *ngIf="createForm.hasError('invalidStartEndDate')">
-                                <i class="fas fa-exclamation-triangle mr-2"></i>
+                                <fa-icon icon="exclamation-triangle" class="mr-2"></fa-icon>
                                 <div>
                                     {{ 'projects.new.errors.invalid_start_end_date' | translate }}
                                 </div>
@@ -111,13 +111,13 @@
                                 createForm.get('maxPerUser').dirty">
                             <div class="alert alert-warning my-3"
                                  *ngIf="createForm.hasError('invalidMaxExpectedFunding')">
-                                <i class="fas fa-exclamation-triangle mr-2"></i>
+                                <fa-icon icon="exclamation-triangle" class="mr-2"></fa-icon>
                                 <div>
                                     {{ 'projects.new.errors.invalid_max_expected_funding' | translate }}
                                 </div>
                             </div>
                             <div class="alert alert-warning my-3" *ngIf="createForm.hasError('invalidMinMax')">
-                                <i class="fas fa-exclamation-triangle mr-2"></i>
+                                <fa-icon icon="exclamation-triangle" class="mr-2"></fa-icon>
                                 <div>
                                     {{ 'projects.new.errors.invalid_min_max' | translate }}
                                 </div>
@@ -129,7 +129,7 @@
                             loadingText="{{ 'projects.new.create_button.loading' | translate }}"
                             [onClick]="submitForm.bind(this)" [disabled]="!createForm.valid"
                             class="btn btn-primary btn-success d-none d-lg-block w-100"
-                            faIcon="fa-plus">
+                            faIcon="plus">
                     </button>
                 </div>
             </div>
@@ -140,7 +140,7 @@
                         loadingText="{{ 'projects.new.create_button.loading' | translate }}"
                         [onClick]="submitForm.bind(this)" [disabled]="!createForm.valid"
                         class="btn btn-success d-block d-lg-none w-100"
-                        faIcon="fa-plus">
+                        faIcon="plus">
                 </button>
             </div>
         </div>

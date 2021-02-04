@@ -1,7 +1,6 @@
 // tslint:disable:max-line-length
 import { BrowserModule } from '@angular/platform-browser';
 import { APP_INITIALIZER, DEFAULT_CURRENCY_CODE, NgModule } from '@angular/core';
-import { DisqusModule } from 'ngx-disqus';
 import { AppComponent } from './app.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -54,7 +53,7 @@ import { ExchangeComponent } from './exchange/exchange.component';
 import { OwnershipComponent } from './admin/ownership/ownership.component';
 import { CurrencyDefaultPipe } from './shared/pipes/currency-default.pipe';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { TxAmountSign, TxIconStatus, TxIconType } from './wallet/wallet.pipe';
+import { TxAmountSign } from './wallet/wallet.pipe';
 import { UserStateReminderComponent } from './user-state-reminder/user-state-reminder.component';
 import { FileValidator } from './shared/validators/file.validator';
 import { FileValueAccessorDirective } from './shared/directives/file-value-accessor.directive';
@@ -105,6 +104,9 @@ import { VeriffComponent } from './settings/user/identity/veriff/veriff.componen
 import { AcceptTermsComponent } from './settings/user/identity/accept-terms/accept-terms.component';
 import { IdentyumComponent } from './settings/user/identity/identyum/identyum.component';
 import { StaticPageComponent } from './static-page/static-page.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FaIconsService } from './shared/services/fa-icons.service';
+import { LanguageService } from './shared/services/language.service';
 
 @NgModule({
     declarations: [
@@ -161,7 +163,6 @@ import { StaticPageComponent } from './static-page/static-page.component';
         CurrencyCentsPipe,
         CoopPathPipe,
         RevenueShareComponent,
-        TxIconType,
         UserStateReminderComponent,
         FileValidator,
         FileValueAccessorDirective,
@@ -169,7 +170,6 @@ import { StaticPageComponent } from './static-page/static-page.component';
         SpinnerComponent,
         LocationMapComponent,
         MapModalComponent,
-        TxIconStatus,
         ManageSingleDepositModalComponent,
         TxAmountSign,
         ActionButtonComponent,
@@ -202,7 +202,7 @@ import { StaticPageComponent } from './static-page/static-page.component';
         RouterModule,
         AppRoutingModule,
         TranslationsModule,
-        DisqusModule.forRoot('ampnet.disqus.com/embed.js'),
+        FontAwesomeModule,
         TooltipModule.forRoot(),
         ModalModule.forRoot(),
         TabsModule.forRoot(),
@@ -227,10 +227,12 @@ import { StaticPageComponent } from './static-page/static-page.component';
         AppConfigService,
         {
             provide: APP_INITIALIZER,
-            useFactory: (config: AppConfigService) =>
-                () => config.load().toPromise(),
+            useFactory: (config: AppConfigService, lang: LanguageService) =>
+                () => Promise.resolve()
+                    .then(() => config.load().toPromise())
+                    .then(() => lang.setLanguage().toPromise()),
             multi: true,
-            deps: [AppConfigService]
+            deps: [AppConfigService, LanguageService]
         },
         {
             provide: APP_BASE_HREF,
@@ -252,4 +254,7 @@ import { StaticPageComponent } from './static-page/static-page.component';
     bootstrap: [AppComponent]
 })
 export class AppModule {
+    constructor(faIconsService: FaIconsService) {
+        faIconsService.addIcons();
+    }
 }

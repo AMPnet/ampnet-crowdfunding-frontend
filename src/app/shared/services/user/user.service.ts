@@ -27,10 +27,15 @@ export class UserService {
 
     private getFreshUser() {
         return this.http.get<User>('/api/user/me').pipe(
-            switchMap(user => user.role === this.getRoleFromAuthorities() ?
+            switchMap(user => this.checkIntegrity(user) ?
                 of(user) : this.refreshUserToken().pipe(switchMap(() => of(user)))
             )
         );
+    }
+
+    private checkIntegrity(user: User): boolean {
+        return user.role === this.getRoleFromAuthorities()
+            && user.verified === this.http.getJWTUser().verified;
     }
 
     private getRoleFromAuthorities(): UserRole {

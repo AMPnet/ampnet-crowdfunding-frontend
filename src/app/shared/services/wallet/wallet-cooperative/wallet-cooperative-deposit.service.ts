@@ -36,10 +36,8 @@ export class WalletCooperativeDepositService {
         return this.http.get<DepositListResponse>(`${this.endpoint}/approved`);
     }
 
-    declineDeposit(id: number, comment: string) {
-        return this.http.post<Deposit>(`${this.endpoint}/${id}/decline`, {
-            comment: comment
-        });
+    deleteDeposit(id: number) {
+        return this.http.delete<Deposit>(`${this.endpoint}/${id}`);
     }
 
     generateDepositMintTx(id: number) {

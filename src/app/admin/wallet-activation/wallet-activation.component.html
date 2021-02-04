@@ -3,21 +3,21 @@
         <div class="col-4">
             <button [class.active]="activationType === 'users'" class="btn btn-primary w-100 py-3"
                     [routerLink]="'/dash/activation/users' | coopPath">
-                <i class="fas fa-user mr-2"></i>
+                <fa-icon icon="user" class="mr-2"></fa-icon>
                 {{ 'admin.activations.users_tab' | translate }}
             </button>
         </div>
         <div class="col-4">
             <button [class.active]="activationType === 'groups'" class="btn btn-primary w-100 py-3"
                     [routerLink]="'/dash/activation/groups' | coopPath">
-                <i class="fas fa-users mr-2"></i>
+                <fa-icon icon="users" class="mr-2"></fa-icon>
                 {{ 'admin.activations.groups_tab' | translate }}
             </button>
         </div>
         <div class="col-4">
             <button [class.active]="activationType === 'projects'" class="btn btn-primary py-3 w-100"
                     [routerLink]="'/dash/activation/projects' | coopPath">
-                <i class="fas fa-solar-panel mr-2"></i>
+                <fa-icon icon="solar-panel" class="mr-2"></fa-icon>
                 {{ 'admin.activations.projects_tab' | translate }}
             </button>
         </div>

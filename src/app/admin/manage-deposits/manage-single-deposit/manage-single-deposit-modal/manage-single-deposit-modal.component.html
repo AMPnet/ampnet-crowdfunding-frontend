@@ -7,9 +7,9 @@
     <div class="modal-body">
         <form [formGroup]="confirmForm">
             <div class="row">
-                <h5 class="text-uppercase gray-text col-md-12">
-                    <b>{{ 'admin.deposits.single_deposit.modal.amount_input.title' | translate }}</b>
-                </h5>
+                <label class="col-md-12">
+                    {{ 'admin.deposits.single_deposit.modal.amount_input.title' | translate }}
+                </label>
 
                 <div class="col-md-12">
                     <app-money-input-field
@@ -30,7 +30,8 @@
                     <button (click)="onConfirm()"
                             [disabled]="!confirmForm.valid"
                             class="btn btn-primary w-100 float-right mt-4 py-3 px-3"
-                            type="submit"><i class="fas fa-check-circle mr-2"></i>
+                            type="submit">
+                        <fa-icon icon="check-circle" class="mr-2"></fa-icon>
                         {{ 'admin.deposits.single_deposit.modal.submit' | translate }}
                     </button>
                 </div>

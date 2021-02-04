@@ -9,7 +9,6 @@ import { AppConfigService } from '../shared/services/app-config.service';
 import { RouterService } from '../shared/services/router.service';
 import { environment } from '../../environments/environment';
 
-
 @Component({
     selector: 'app-sidebar',
     templateUrl: './sidebar.component.html',

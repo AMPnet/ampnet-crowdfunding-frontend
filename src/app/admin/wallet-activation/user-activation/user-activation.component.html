@@ -8,7 +8,7 @@
                 {{ user.user.first_name }} {{ user.user.last_name }} (<i>{{ user.user.email }}</i>)
                 <a [routerLink]="" (click)="activateUserClicked(user.wallet.uuid).subscribe()">
                     <span class="float-right hover-fg text-decoration-none">
-                        <i class="fas fa-check-circle mr-2"></i>
+                        <fa-icon icon="check-circle" class="mr-2"></fa-icon>
                         {{ 'admin.activations.users.activate' | translate }}
                     </span>
                 </a>

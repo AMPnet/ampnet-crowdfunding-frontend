@@ -18,14 +18,14 @@
             <div class="row">
                 <div class="col-6">
                     <button class="btn w-100" routerLink="project_deposit">
-                        <i class="fas fa-arrow-circle-down mr-2"></i>
+                        <fa-icon icon="arrow-circle-down" class="mr-2"></fa-icon>
                         {{ 'projects.edit.manage_payments.wallet.deposit_button' | translate }}
                     </button>
                 </div>
                 <div class="col-6">
                     <button class="btn w-100" routerLink="project_withdraw"
                             [disabled]="!states.walletInfo || !isProjectFullyFunded(states.walletInfo)">
-                        <i class="fas fa-arrow-circle-up mr-2"></i>
+                        <fa-icon icon="arrow-circle-up" class="mr-2"></fa-icon>
                         {{ 'projects.edit.manage_payments.wallet.withdraw_button' | translate }}
                     </button>
                 </div>
@@ -60,7 +60,7 @@
                             id="buttonStartPayout"
                             routerLink="revenue_share/{{ revenueShareForm.get('amount').value }}"
                             class="btn btn-primary btn-warning btn-action w-100">
-                        <i class="fas fa-chart-pie mr-2"></i>
+                        <fa-icon icon="chart-pie" class="mr-2"></fa-icon>
                         <!-- Laptop size text handling -->
                         <span class="d-none d-lg-block d-xl-none">
                             {{ 'projects.edit.manage_payments.revenue_share.submit_button.short' | translate }}

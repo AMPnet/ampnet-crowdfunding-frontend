@@ -1,12 +1,6 @@
-@import "bootstrap/scss/bootstrap";
+@import "node_modules/bootstrap/scss/functions";
+@import "node_modules/bootstrap/scss/variables";
+@import "node_modules/bootstrap/scss/mixins/breakpoints";
+
 @import "fonts";
 @import "colors";
-@import "buttons";
-@import "inputs";
-@import "alert";
-@import "common";
-@import "pagination";
-@import "tabs";
-@import "rich-text-editor";
-
-@import "overrides";

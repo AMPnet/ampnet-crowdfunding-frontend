@@ -234,6 +234,10 @@ export class ErrorService {
                         display$ = this.displayMessage('errors.project.invalid_roi');
                         break;
 
+                    case ProjectError.NO_WRITE_PRIVILEGE:
+                        display$ = this.displayMessage('errors.project.no_write_privilege');
+                        break;
+
                     case InternalError.UPLOAD_DOCUMENT_FAILED:
                     case InternalError.INVALID_VALUE_IN_REQUEST:
                     case InternalError.GRPC_FAILED_BLOCKCHAIN_SERVICE:
@@ -488,6 +492,7 @@ export enum ProjectError {
     EXPECTED_FUNDING_TOO_HIGH = '0709',
     MAX_INVESTMENT_TOO_HIGH = '0710',
     INVALID_ROI = '0711',
+    NO_WRITE_PRIVILEGE = '0713',
 }
 
 export enum InternalError {

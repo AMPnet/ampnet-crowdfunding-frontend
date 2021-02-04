@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { BehaviorSubject, EMPTY, from, Observable, of, Subject } from 'rxjs';
 import { distinct, map, switchMap, tap } from 'rxjs/operators';
-import { registerLocaleData } from '@angular/common';
+import { DOCUMENT, registerLocaleData } from '@angular/common';
 import { AppConfigService } from './app-config.service';
 import { extractLangFromConfigRE, langConfigRE } from '../regex';
 
@@ -16,7 +16,8 @@ export class LanguageService {
 
     languageChange$ = new Subject<string>();
 
-    constructor(private translate: TranslateService,
+    constructor(@Inject(DOCUMENT) private document: Document,
+                private translate: TranslateService,
                 private appConfig: AppConfigService) {
         this.appConfig.config$.pipe(
             map(cfg => cfg.config.languages),
@@ -84,9 +85,13 @@ export class LanguageService {
     }
 
     private registerLocale(lang: string): Observable<string> {
-        // TODO: remove eager mode to shrink the bundle size (this will generate a file for each separate locale)
-        return from(import(/* webpackMode: "eager" */`@angular/common/locales/${lang}.js`)).pipe(
-            tap(locale => registerLocaleData(locale.default)),
+        return from(import(
+            /* webpackChunkName: "[request]" */
+            `@angular/common/locales/${lang}.js`)).pipe(
+            tap(locale => {
+                this.document.documentElement.lang = lang;
+                registerLocaleData(locale.default, lang);
+            }),
             map(() => lang)
         );
     }

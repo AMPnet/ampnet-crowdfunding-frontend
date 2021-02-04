@@ -125,38 +125,40 @@
         "pending": "Pending",
         "failed": "Failed"
       },
-      "pdf_report": "Generate PDF Report",
+      "pdf_report": "Generate Report",
       "pdf_report.downloading": "Downloading..."
     }
   },
   "deposit": {
     "title": "Deposit",
-    "notice": "After you have deposited the money onto our bank account it can take up to 24h for it to become visible on the platform. You will be notified by email when your money has been received.",
+    "notice": "Please deposit funds to your wallet by making a bank transfer to the {{ bankAccountName }} bank account using the payment details presented below. Make sure that you also include the unique deposit code as the reference for the transaction. After you have transferred the money to our bank account it can take up to 48h for it to become visible on the platform. You will be notified by email when your money has been received.",
     "payment_details": "Deposit payment details",
     "iban": "IBAN",
-    "reference": "Description"
+    "swift": "SWIFT/BIC",
+    "reference": "Reference"
   },
   "withdraw": {
     "title": "Withdraw",
     "amount_input": {
       "title": "Withdrawal amount",
-      "placeholder": "Enter withdrawal amount"
+      "placeholder": "Enter withdrawal amount",
+      "wallet_balance": "Current wallet balance: {{ balance }}"
     },
-    "bank_picker": {
-      "title": "Choose bank account"
+    "bank_picker.title": "Choose bank account",
+    "withdraw_button": "Request withdrawal",
+    "request": {
+      "amount": "Amount",
+      "destination": "Bank account IBAN"
     },
-    "withdraw_button": "Withdraw money",
-    "pending": {
-      "notice": "You have a pending withdrawal request. | Please approve it to have money deposited into your account. | It can take up to 24 hours to process the transaction.",
-      "info_title": "Withdrawal amount",
-      "confirm_withdrawal": "Confirm withdrawal",
-      "confirm_withdrawal.loading": "Processing..."
-    },
+    "pending_notice": "You have a pending withdrawal request. It can take up to 24 hours to process the transaction.",
+    "sign_button": "Sign transaction",
+    "cancel_button": "Cancel request",
     "no_bank": {
       "notice": "You cannot withdraw money without an active bank account.",
       "add_bank_account": "Add bank account"
     },
-    "withdrawal_deleted": "Withdrawal deleted"
+    "withdrawal_deleted": "Withdrawal deleted",
+    "burned_notice": "Platform manager has approved and processed your withdrawal request. Please allow up to 48 hours for funds to reach your selected bank account."
   },
   "organizations": {
     "title": "Investment groups",
@@ -299,29 +301,34 @@
         },
         "deposit": {
           "title": "Deposit",
-          "notice": "After you have deposited the money onto our bank account it can take up to 24h for it to become visible on the platform. You will be notified by email when your money has been received.",
+          "notice": "Please deposit funds to your wallet by making a bank transfer to the {{ bankAccountName }} bank account using the payment details presented below. Make sure that you also include the unique deposit code as the reference for the transaction. After you have transferred the money to our bank account it can take up to 48h for it to become visible on the platform. You will be notified by email when your money has been received.",
           "details": "Deposit payment details",
           "iban": "IBAN",
-          "reference": "Description",
+          "swift": "SWIFT/BIC",
+          "reference": "Reference",
           "existing_deposit": "You already have an existing deposit. Please wait until it is approved"
         },
         "withdraw": {
           "title": "Withdraw",
           "amount_input": {
             "title": "Withdrawal amount",
-            "placeholder": "Enter withdrawal amount"
+            "placeholder": "Enter withdrawal amount",
+            "wallet_balance": "Current wallet balance: {{ balance }}"
           },
+          "request": {
+            "amount": "Amount",
+            "destination": "Bank account IBAN"
+          },
+          "pending_notice": "You have a pending withdrawal request. It can take up to 24 hours to process the transaction.",
+          "sign_button": "Sign transaction",
+          "cancel_button": "Cancel request",
           "bank_input": {
             "title": "Bank account details",
             "placeholder": "IBAN"
           },
-          "submit": "Withdraw money",
-          "review": {
-            "notice": "You have a pending withdrawal request. | To have the money deposited into your bank account, you need to sign the transaction. | After successful signing, it can take up to 24 hours to process the transaction.",
-            "amount": "Withdrawal amount",
-            "submit": "Verify & Withdraw",
-            "deleted": "Withdrawal deleted."
-          }
+          "submit": "Request withdrawal",
+          "deleted": "Withdrawal deleted.",
+          "burned_notice": "Platform manager has approved and processed your withdrawal request. Please allow up to 48 hours for funds to reach your selected bank account."
         },
         "revenue_share": {
           "title": "Revenue share",
@@ -468,16 +475,18 @@
         "empty": "No pending project withdrawals"
       },
       "single_withdrawal": {
-        "title": "Examine withdrawal",
+        "title": "Withdrawal",
         "info": {
           "project_name": "Project name",
           "user_name": "User name",
           "iban": "IBAN",
           "amount": "Amount"
         },
-        "payout_notice": "Please perform the payout | after | finalizing the withdrawal!",
-        "submit": "Finalize withdrawal",
-        "submit.loading": "Finalize withdrawal"
+        "submit": "Sign & Verify",
+        "submit.loading": "Signing",
+        "payout_notice": "| Now make a bank transfer to user's account. After that, please upload a bank statement of this transaction. |",
+        "document_input.title": "Document",
+        "submit_document": "Submit"
       }
     },
     "deposits": {
@@ -615,6 +624,10 @@
       "coop_statute_input": {
         "title": "Platform Terms & Conditions",
         "placeholder": "https://path/to/terms.html | https://path/to/terms-file.pdf"
+      },
+      "contact_url_input": {
+        "title": "Contact URL",
+        "placeholder": "mailto:support@example.com | https://example.com/contact_us"
       },
       "languages_input": {
         "title": "Languages",
@@ -816,7 +829,8 @@
       "min_investment_greater_than_max": "The minimum investment cannot be greater than maximum investment.",
       "expected_funding_too_high": "The expected funding is too high.",
       "max_investment_too_high": "The maximum investment per user is too high.",
-      "invalid_roi": "Invalid return on investment value."
+      "invalid_roi": "Invalid return on investment value.",
+      "no_write_privilege": "You have no privilege for this action."
     },
     "internal": {
       "something_went_wrong": "Something went wrong."

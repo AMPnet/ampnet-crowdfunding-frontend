@@ -1,48 +1,56 @@
-<ng-container
-        *ngIf="{
-        deposit: deposit$ | async,
-        masterIBAN: masterIBAN$ | async
-    } as states">
-    <div class="container">
-        <ng-container *ngIf="!!states.deposit && !!states.masterIBAN; else spinner">
-            <a [routerLink]="" appBackNavigation class="nostyle">
-                <div class="app-page-title-back">
-                    <i class="fas fa-long-arrow-alt-left mr-3"></i>
-                    {{ 'general.back.title' | translate }}
-                </div>
-            </a>
-
-            <div class="alerts">
-                <div class="alert alert-info">
-                    <i class="fas fa-clock mr-2"></i>
-                    {{ 'projects.edit.manage_payments.deposit.notice' | translate }}
-                </div>
-            </div>
-
-            <div class="deposit-details">
-                <h4>
-                    {{ 'projects.edit.manage_payments.deposit.details' | translate }}
-                </h4>
-                <div class="row">
-                    <div class="deposit__iban col-lg-6">
-                        <div class="iban__title flex__center">
-                            <i class="fas fa-piggy-bank mr-2"></i>
-                            {{ 'projects.edit.manage_payments.deposit.iban' | translate }}
-                        </div>
-                        <div class="iban__content">{{ states.masterIBAN }}</div>
-                    </div>
-                    <div class="deposit__desc col-lg-6">
-                        <div class="desc__title flex__center">
-                            <i class="fas fa-address-book mr-2"></i>
-                            {{ 'projects.edit.manage_payments.deposit.reference' | translate }}
-                        </div>
-                        <div class="desc__content">{{ states.deposit.reference }}</div>
-                    </div>
-                </div>
-            </div>
-        </ng-container>
-        <ng-template #spinner>
-            <app-spinner type="overlay"></app-spinner>
-        </ng-template>
+<div class="container">
+    <div class="app-page-title">
+        {{ 'projects.edit.manage_payments.deposit.title' | translate }}
     </div>
-</ng-container>
+    <div class="mt-3">
+        <div class="alert alert-info px-3">
+            <fa-icon icon="clock" class="mr-2"></fa-icon>
+            {{ 'projects.edit.manage_payments.deposit.notice'
+                | translate | interpolate:['bankAccountName', appConfig.config.name] }}
+        </div>
+    </div>
+
+    <div class="mt-5 card">
+        <div class="card-body">
+            <div class="card-title">
+                {{ 'projects.edit.manage_payments.deposit.details' | translate }}
+            </div>
+        </div>
+        <div class="card-text">
+            <div class="row justify-content-between pb-3 px-3">
+                <div class="col-lg-4">
+                    <div class="text-uppercase mt-3">
+                        <fa-icon icon="piggy-bank" class="mr-2"></fa-icon>
+                        {{ 'projects.edit.manage_payments.deposit.iban' | translate }}
+                    </div>
+                    <div *ngIf="(bankAccount$ | async) as bankAccount; else spinner">
+                        {{ bankAccount.iban || 'unknown' }}
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="text-uppercase mt-3">
+                        <fa-icon icon="money-check-alt" class="mr-2"></fa-icon>
+                        {{ 'projects.edit.manage_payments.deposit.swift' | translate }}
+                    </div>
+                    <div *ngIf="(bankAccount$ | async) as bankAccount; else spinner">
+                        {{ bankAccount.bank_code || 'unknown' }}
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="text-uppercase mt-3">
+                        <fa-icon icon="address-book" class="mr-2"></fa-icon>
+                        {{ 'projects.edit.manage_payments.deposit.reference' | translate }}
+                    </div>
+                    <div *ngIf="(deposit$ | async) as deposit; else spinner">
+                        {{ deposit.reference }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<ng-template #spinner>
+    <app-spinner type="inline"></app-spinner>
+</ng-template>

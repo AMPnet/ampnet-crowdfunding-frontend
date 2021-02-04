@@ -42,10 +42,9 @@ export class ManageDepositsComponent {
         this.router.navigate(['/dash', 'manage_deposits', reference]);
     }
 
-    // TODO: Implement adding a comment to decline deposit
     declineDeposit(id: number) {
         SpinnerUtil.showSpinner();
-        return this.depositCooperativeService.declineDeposit(id, '').pipe(
+        return this.depositCooperativeService.deleteDeposit(id).pipe(
             this.errorService.handleError,
             tap(() => this.refreshDepositsSubject.next()),
             finalize(() => SpinnerUtil.hideSpinner())

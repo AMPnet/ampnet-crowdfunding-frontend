@@ -58,7 +58,7 @@
             <div class="col-md-6 mt-3">
                 <button app-action-button
                         text="{{ 'payment_options.new_bank_account.submit' | translate }}"
-                        faIcon="fa-plus-circle"
+                        faIcon="plus-circle"
                         [disabled]="!newBankAccountForm.dirty || !newBankAccountForm.valid"
                         [onClick]="onSubmit.bind(this)">
                 </button>

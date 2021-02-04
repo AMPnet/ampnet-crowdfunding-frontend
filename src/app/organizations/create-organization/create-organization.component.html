@@ -1,7 +1,7 @@
 <div class="container">
     <a [routerLink]="" appBackNavigation class="nostyle">
         <div class="app-page-title-back">
-            <i class="fas fa-long-arrow-alt-left mr-3"></i>
+            <fa-icon icon="long-arrow-alt-left" class="mr-3"></fa-icon>
             {{ 'general.back.title' | translate }}
         </div>
     </a>
@@ -27,7 +27,6 @@
                 </div>
                 <!-- TODO: This is styled and ready to go, uncomment when we have 2nd wallet integrated -->
                 <!-- <div class="left__advanced-users">
-                    <i class="fas fa-bolt"></i>
                     <div>
                         <span class="left__advanced__title">Welcome to investment groups</span>
                         <p class="left__advanced__desc">This platform is powered by blockchain technology. A "wallet" is
@@ -60,7 +59,8 @@
                 <div>
                     <button app-action-button
                             text="{{ 'organizations.new.submit_button' | translate }}"
-                            loadingText="{{ 'organizations.new.submit_button.loading' | translate }}" faIcon="fa-plus"
+                            loadingText="{{ 'organizations.new.submit_button.loading' | translate }}"
+                            faIcon="plus"
                             [disabled]="!newOrganizationForm.valid"
                             class="btn btn-responsive-size btn-success w-100"
                             [onClick]="createOrganization.bind(this)">

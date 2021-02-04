@@ -19,15 +19,23 @@ export class WalletCooperativeWithdrawService {
     }
 
     getApprovedWithdrawals() {
-        return this.http.get<CoopWithdrawListResponse>(`${this.endpoint}/approved?type=${WithdrawRelation.USER}`);
+        return this.http.get<CoopWithdrawListResponse>(`${this.endpoint}/pending?type=${WithdrawRelation.USER}`);
     }
 
     getApprovedProjectWithdrawals() {
-        return this.http.get<CoopWithdrawListResponse>(`${this.endpoint}/approved?type=${WithdrawRelation.PROJECT}`);
+        return this.http.get<CoopWithdrawListResponse>(`${this.endpoint}/pending?type=${WithdrawRelation.PROJECT}`);
     }
 
-    getApprovedWithdrawal(id: number) {
-        return this.http.get<CoopWithdraw>(`${this.endpoint}/approved/${id}`);
+    getWithdrawal(id: number) {
+        return this.http.get<CoopWithdraw>(`${this.endpoint}/${id}`);
+    }
+
+    approveWithdrawal(withdrawalID: number, document: File) {
+        const formData = new FormData();
+
+        formData.append('file', document, document.name);
+
+        return this.http.post<Withdraw>(`${this.endpoint}/${withdrawalID}/document`, formData);
     }
 }
 

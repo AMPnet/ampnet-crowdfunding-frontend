@@ -1,5 +1,4 @@
 import { Component, OnDestroy } from '@angular/core';
-import { ArkaneConnect } from '@arkane-network/arkane-connect';
 import { TransactionState, TransactionType, UserTransaction, WalletService, WalletState } from '../shared/services/wallet/wallet.service';
 import { BehaviorSubject, combineLatest, EMPTY } from 'rxjs';
 import { map, switchMap, take, tap } from 'rxjs/operators';
@@ -14,8 +13,6 @@ import { ErrorService } from '../shared/services/error.service';
     styleUrls: ['./wallet.component.scss'],
 })
 export class WalletComponent implements OnDestroy {
-    arkaneConnect: ArkaneConnect;
-
     tablePage = 1;
     tablePageSize = 10;
     transactionItems = 0;

@@ -1,7 +1,7 @@
-@import "colors";
-@import "fonts";
+@import "src/styles/colors";
+@import "src/styles/fonts";
 
-@mixin popup-buttton-color($color) {
+@mixin popup-button-color($color) {
   button.swal2-confirm {
     background-color: $color !important;
   }
@@ -64,19 +64,19 @@
 }
 
 .popup-success {
-  @include popup-buttton-color($success-color);
+  @include popup-button-color($success-color);
 }
 
 .popup-warning {
-  @include popup-buttton-color($warning-color);
+  @include popup-button-color($warning-color);
 }
 
 .popup-error {
-  @include popup-buttton-color($error-color);
+  @include popup-button-color($error-color);
 }
 
 .popup-info {
-  @include popup-buttton-color($primary-color);
+  @include popup-button-color($primary-color);
 }
 
 @include media-breakpoint-up(lg) {

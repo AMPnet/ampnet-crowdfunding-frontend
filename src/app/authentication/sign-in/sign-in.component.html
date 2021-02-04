@@ -6,8 +6,7 @@
     <div class="col-xl-6 align-self-center">
         <button app-action-button
                 text="{{ 'auth.sign_in.with_facebook' | translate }}"
-                faStyle="fab"
-                faIcon="fa-facebook-square"
+                [faIcon]="['fab', 'facebook-square']"
                 [onClick]="signInFacebook.bind(this)"
                 class="btn btn-primary btn-socials-facebook w-100 my-2">
         </button>
@@ -15,8 +14,7 @@
     <div class="col-xl-6 align-self-center">
         <button app-action-button
                 text="{{ 'auth.sign_in.with_google' | translate }}"
-                faStyle="fab"
-                faIcon="fa-google"
+                [faIcon]="['fab', 'google']"
                 [onClick]="signInGoogle.bind(this)"
                 class="btn btn-primary btn-socials-google w-100 my-2">
         </button>
@@ -48,7 +46,7 @@
     <button app-action-button
             text="{{ 'auth.sign_in.submit' | translate }}"
             loadingText="{{ 'auth.sign_in.submit.loading' | translate }}"
-            faIcon="fa-paper-plane"
+            faIcon="paper-plane"
             [onClick]="onFormSubmit.bind(this)"
             [disabled]="!signInForm.dirty || !signInForm.valid"
             class="btn btn-primary w-100 mt-3">

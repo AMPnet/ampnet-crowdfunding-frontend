@@ -57,6 +57,7 @@ export class ProjectWithdrawComponent {
         this.withdrawalForm = this.fb.group({
             amount: [0, [], [this.validAmount.bind(this)]],
             iban: ['', [Validators.required]],
+            swift: ['', [Validators.required]],
         });
     }
 
@@ -81,8 +82,9 @@ export class ProjectWithdrawComponent {
     requestWithdrawal() {
         const amount: number = this.withdrawalForm.get('amount').value;
         const iban: string = this.withdrawalForm.get('iban').value.replace(/\s/g, '');
+        const swift: string = String(this.withdrawalForm.get('swift').value).trim();
 
-        return this.withdrawService.createProjectWithdrawRequest(amount, iban, this.projectID).pipe(
+        return this.withdrawService.createProjectWithdrawRequest(amount, iban, swift, this.projectID).pipe(
             this.errorService.handleError,
             tap(withdraw => {
                 this.refreshWithdrawalSubject.next(withdraw);

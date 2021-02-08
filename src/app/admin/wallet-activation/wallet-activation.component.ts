@@ -1,6 +1,5 @@
-
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, interval, Observable } from 'rxjs';
 import { finalize, map, switchMap, tap } from 'rxjs/operators';
 import { ErrorService } from '../../shared/services/error.service';
 import { ArkaneService } from '../../shared/services/arkane.service';
@@ -8,7 +7,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { PopupService } from '../../shared/services/popup.service';
 import {
     CooperativeProject,
-    CooperativeUser, CoopWalletActivationService,
+    CooperativeUser,
+    CoopWalletActivationService,
     OrganizationWallet
 } from '../../shared/services/wallet/wallet-cooperative/coop-wallet-activation.service';
 import { SpinnerUtil } from '../../utilities/spinner-utilities';
@@ -22,6 +22,7 @@ export class WalletActivationComponent implements OnInit {
     users$: Observable<CooperativeUser[]>;
     organizations$: Observable<OrganizationWallet[]>;
     projects$: Observable<CooperativeProject[]>;
+    autoRefresh$: Observable<number>;
 
     refreshUsersSubject = new BehaviorSubject<void>(null);
     refreshOrgsSubject = new BehaviorSubject<void>(null);
@@ -51,6 +52,14 @@ export class WalletActivationComponent implements OnInit {
             switchMap(() => this.activationService.getProjectWallets()),
             this.errorService.handleError,
             map(res => res.projects)
+        );
+
+        this.autoRefresh$ = interval(10_000).pipe(
+            tap(() => {
+                this.refreshUsersSubject.next();
+                this.refreshOrgsSubject.next();
+                this.refreshProjectsSubject.next();
+            })
         );
     }
 

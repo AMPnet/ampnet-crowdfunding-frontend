@@ -1,3 +1,6 @@
+<ng-container *ngIf="autoRefresh$ | async">
+</ng-container>
+
 <div class="container">
     <h1 class="app-page-title">
         {{ 'admin.activations.title' | translate }}
@@ -5,22 +8,28 @@
 
     <div class="row pt-4">
         <div class="col-md-4">
-            <h5 class="app-page-header">
+            <h5 class="d-flex text-uppercase justify-content-md-center mt-3">
                 {{ 'admin.activations.users.title' | translate }}
             </h5>
             <ng-container *ngIf="(users$ | async) as users; else spinner">
                 <div *ngIf="users.length > 0" class="mt-3">
                     <div class="list-group">
-                        <a [routerLink]="" *ngFor="let user of users"
+                        <a [routerLink]="" *ngFor="let user of users" class="nostyle"
                            (click)="activateUserWallet(user.wallet.uuid).subscribe()">
                             <div class="list-group-item list-group-item-action">
-                                {{ user.user.first_name }} {{ user.user.last_name }} (<i>{{ user.user.email }}</i>)
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        {{ user.user.first_name }} {{ user.user.last_name }}
+                                        (<i>{{ user.user.email }}</i>)
+                                    </div>
+                                    <fa-icon icon="check-circle" class="ml-1 flex-shrink-0"></fa-icon>
+                                </div>
                             </div>
                         </a>
                     </div>
                 </div>
                 <div *ngIf="users.length === 0" class="mt-3">
-                    <div class="text-center mt-5">
+                    <div class="text-center mt-4">
                         {{ 'admin.activations.users.empty' | translate }}
                     </div>
                 </div>
@@ -28,22 +37,27 @@
         </div>
 
         <div class="col-md-4">
-            <h5 class="app-page-header">
+            <h5 class="d-flex text-uppercase justify-content-md-center mt-3">
                 {{ 'admin.activations.groups.title' | translate }}
             </h5>
             <ng-container *ngIf="(organizations$ | async) as orgs; else spinner">
                 <div *ngIf="orgs.length > 0" class="mt-3">
                     <div class="list-group">
-                        <a [routerLink]="" *ngFor="let org of orgs"
+                        <a [routerLink]="" *ngFor="let org of orgs" class="nostyle"
                            (click)="activateOrgWallet(org.wallet.uuid).subscribe()">
                             <div class="list-group-item list-group-item-action">
-                                {{ org.organization.name }}
+                                <div class="d-flex justify-content-between">
+                                    <a [routerLink]="['/dash', 'orgs', org.organization.uuid] | coopPath">
+                                        {{ org.organization.name }}
+                                    </a>
+                                    <fa-icon icon="check-circle" class="ml-1 flex-shrink-0"></fa-icon>
+                                </div>
                             </div>
                         </a>
                     </div>
                 </div>
                 <div *ngIf="orgs.length === 0" class="mt-3">
-                    <div class="text-center mt-5">
+                    <div class="text-center mt-4">
                         {{ 'admin.activations.groups.empty' | translate }}
                     </div>
                 </div>
@@ -51,22 +65,27 @@
         </div>
 
         <div class="col-md-4">
-            <h5 class="app-page-header">
+            <h5 class="d-flex text-uppercase justify-content-md-center mt-3">
                 {{ 'admin.activations.projects.title' | translate }}
             </h5>
-            <ng-container *ngIf="(users$ | async) as users; else spinner">
-                <div *ngIf="users.length > 0" class="mt-3">
+            <ng-container *ngIf="(projects$ | async) as projects; else spinner">
+                <div *ngIf="projects.length > 0" class="mt-3">
                     <div class="list-group">
-                        <a [routerLink]="" *ngFor="let user of users"
-                           (click)="activateUserWallet(user.wallet.uuid).subscribe()">
+                        <a [routerLink]="" *ngFor="let project of projects" class="nostyle"
+                           (click)="activateProjectWallet(project.wallet.uuid).subscribe()">
                             <div class="list-group-item list-group-item-action">
-                                {{ user.user.first_name }} {{ user.user.last_name }} (<i>{{ user.user.email }}</i>)
+                                <div class="d-flex justify-content-between">
+                                    <a [routerLink]="['/dash', 'offers', project.project.uuid] | coopPath">
+                                        {{ project.project.name }}
+                                    </a>
+                                    <fa-icon icon="check-circle" class="ml-1 flex-shrink-0"></fa-icon>
+                                </div>
                             </div>
                         </a>
                     </div>
                 </div>
-                <div *ngIf="users.length === 0" class="mt-3">
-                    <div class="text-center mt-5">
+                <div *ngIf="projects.length === 0" class="mt-3">
+                    <div class="text-center mt-4">
                         {{ 'admin.activations.projects.empty' | translate }}
                     </div>
                 </div>

@@ -30,12 +30,13 @@ export class OfferDetailsComponent implements OnInit {
     @Input() isPortfolioView = false;
 
     project$: Observable<Project>;
-    news$: Observable<LinkPreview[]>;
+    news$: Observable<{ newsList: LinkPreview[] }>;
     user$: Observable<User>;
     projectWalletMW$: Observable<ProjectWalletInfo>;
     investmentTotal$: Observable<number>;
     transactions$: Observable<ProjectTransactions>;
     isProjectCancelable$: Observable<boolean>;
+    isProjectWalletActive$: Observable<boolean>;
 
     bsModalRef: BsModalRef;
 
@@ -61,23 +62,24 @@ export class OfferDetailsComponent implements OnInit {
         );
 
         this.news$ = this.project$.pipe(
-            switchMap(project => forkJoin(
+            switchMap(project => project.news.length ? forkJoin(
                 project.news.map(singleNews => {
                     return this.newsPreviewService.getLinkPreview(singleNews).pipe(
                         this.errorService.handleError,
                     );
-                }))
+                })) : of([])
             ),
+            map(news => ({newsList: news})),
         );
 
-        this.projectWalletMW$ = this.walletService.getProjectWallet(projectID).pipe(
+        this.isProjectWalletActive$ = this.project$.pipe(
+            map(project => project.wallet.balance === 0 || project.wallet.balance > 0)
+        );
+
+        this.projectWalletMW$ = this.isProjectWalletActive$.pipe(
+            switchMap(isActive => isActive ? this.walletService.getProjectWallet(projectID) : EMPTY),
+            switchMap(wallet => this.middlewareService.getProjectWalletInfoCached(wallet.hash)),
             this.errorService.handleError,
-            shareReplay(),
-            switchMap(projectWallet => {
-                return this.middlewareService.getProjectWalletInfoCached(projectWallet.hash).pipe(
-                    this.errorService.handleError,
-                );
-            }),
         );
 
         this.user$ = of(!this.isOverview).pipe(

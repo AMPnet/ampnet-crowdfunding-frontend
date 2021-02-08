@@ -74,6 +74,7 @@
                             {{ withdrawal.amount | currencyDefault }}
                         </div>
                     </div>
+
                     <div class="col-md-6 mt-3">
                         <div>
                             <fa-icon icon="solar-panel" class="mr-3"></fa-icon>
@@ -81,6 +82,16 @@
                         </div>
                         <div class="mt-2 h3 overflow-auto">
                             {{ withdrawal.bank_account }}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mt-3">
+                        <div>
+                            <fa-icon icon="solar-panel" class="mr-3"></fa-icon>
+                            {{ 'withdraw.request.swift' | translate }}
+                        </div>
+                        <div class="mt-2 h3 overflow-auto">
+                            {{ withdrawal.bank_code }}
                         </div>
                     </div>
                 </div>

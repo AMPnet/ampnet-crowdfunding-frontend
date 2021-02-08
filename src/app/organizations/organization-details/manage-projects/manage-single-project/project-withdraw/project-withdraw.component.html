@@ -36,6 +36,15 @@
                        placeholder="{{ 'projects.edit.manage_payments.withdraw.bank_input.placeholder' | translate }}"
                        type="text"/>
 
+                <label for="swift" class="app-page-label mt-2">
+                    {{ 'projects.edit.manage_payments.withdraw.swift_input.title' | translate }}
+                </label>
+                <input id="swift"
+                       class="input-reg w-100"
+                       formControlName="swift"
+                       placeholder="{{ 'projects.edit.manage_payments.withdraw.swift_input.placeholder' | translate }}"
+                       type="text"/>
+
                 <div class="row">
                     <div class="col-md-4">
                         <button app-action-button
@@ -67,6 +76,15 @@
                         </div>
                         <div class="mt-2 h3 overflow-auto">
                             {{ withdrawal.bank_account }}
+                        </div>
+                    </div>
+                    <div class="col-md-6 mt-3">
+                        <div>
+                            <fa-icon icon="solar-panel" class="mr-3"></fa-icon>
+                            {{ 'projects.edit.manage_payments.withdraw.request.swift' | translate }}
+                        </div>
+                        <div class="mt-2 h3 overflow-auto">
+                            {{ withdrawal.bank_code }}
                         </div>
                     </div>
                 </div>

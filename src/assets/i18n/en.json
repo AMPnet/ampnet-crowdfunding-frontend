@@ -148,7 +148,8 @@
     "withdraw_button": "Request withdrawal",
     "request": {
       "amount": "Amount",
-      "destination": "Bank account IBAN"
+      "destination": "IBAN",
+      "swift": "SWIFT/BIC"
     },
     "pending_notice": "You have a pending withdrawal request. It can take up to 24 hours to process the transaction.",
     "sign_button": "Sign transaction",
@@ -317,14 +318,19 @@
           },
           "request": {
             "amount": "Amount",
-            "destination": "Bank account IBAN"
+            "destination": "IBAN",
+            "swift": "SWIFT/BIC"
           },
           "pending_notice": "You have a pending withdrawal request. It can take up to 24 hours to process the transaction.",
           "sign_button": "Sign transaction",
           "cancel_button": "Cancel request",
           "bank_input": {
-            "title": "Bank account details",
-            "placeholder": "IBAN"
+            "title": "IBAN",
+            "placeholder": "NL47INGB5697455291"
+          },
+          "swift_input": {
+            "title": "SWIFT/BIC",
+            "placeholder": "RACZHUH1"
           },
           "submit": "Request withdrawal",
           "deleted": "Withdrawal deleted.",
@@ -480,6 +486,7 @@
           "project_name": "Project name",
           "user_name": "User name",
           "iban": "IBAN",
+          "swift": "SWIFT/BIC",
           "amount": "Amount"
         },
         "submit": "Sign & Verify",

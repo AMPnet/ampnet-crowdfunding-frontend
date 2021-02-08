@@ -13,17 +13,19 @@ export class WithdrawService {
     constructor(private http: BackendHttpClient) {
     }
 
-    createWithdrawRequest(amount: number, iban: string) {
+    createWithdrawRequest(amount: number, iban: string, swift: string) {
         return this.http.post<Withdraw>(this.endpoint, {
             amount: amount.toString(),
-            bank_account: iban
+            bank_account: iban,
+            bank_code: swift
         });
     }
 
-    createProjectWithdrawRequest(amount: number, iban: string, projectID: string) {
+    createProjectWithdrawRequest(amount: number, iban: string, swift: string, projectID: string) {
         return this.http.post<Withdraw>(`${this.projectWithdrawEndPoint}/${projectID}`, {
             amount: amount.toString(),
-            bank_account: iban
+            bank_account: iban,
+            bank_code: swift
         });
     }
 
@@ -58,6 +60,7 @@ export interface Withdraw {
     burned_by?: any;
     burned_at?: any;
     bank_account: string;
+    bank_code?: string;
     created_at: Date;
     document_response?: WithdrawDocument;
 }

@@ -60,7 +60,7 @@ export interface Withdraw {
     burned_by?: any;
     burned_at?: any;
     bank_account: string;
-    bank_code: string;
+    bank_code?: string;
     created_at: Date;
     document_response?: WithdrawDocument;
 }

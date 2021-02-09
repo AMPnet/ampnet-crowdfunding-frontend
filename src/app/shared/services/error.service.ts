@@ -68,6 +68,10 @@ export class ErrorService {
                         display$ = this.displayMessage('errors.registration.captcha_failed');
                         break;
 
+                    case RegistrationError.SIGN_UP_DISABLED:
+                        display$ = this.displayMessage('errors.registration.sign_up_disabled');
+                        break;
+
                     case AuthError.INVALID_LOGIN_METHOD:
                         display$ = this.displayMessage('errors.auth.invalid_login_method');
                         break;
@@ -433,6 +437,7 @@ export enum RegistrationError {
     CONFIRMATION_TOKEN_EXPIRED = '0105',
     SOCIAL_FAILED = '0106',
     CAPTCHA_FAILED = '0110',
+    SIGN_UP_DISABLED = '0112',
 }
 
 export enum AuthError {

@@ -168,6 +168,7 @@ export interface AppConfig {
     banner?: string;
     need_user_verification?: boolean;
     kyc_provider?: KYCProvider;
+    disable_sign_up?: boolean;
     config?: CustomConfig;
 }
 

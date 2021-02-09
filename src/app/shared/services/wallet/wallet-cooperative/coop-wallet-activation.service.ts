@@ -5,21 +5,21 @@ import { TransactionInfo, Wallet } from '../wallet.service';
 @Injectable({
     'providedIn': 'root'
 })
-export class WalletCooperativeWalletService {
+export class CoopWalletActivationService {
     private endpoint = '/api/wallet/cooperative/wallet';
 
     constructor(private http: BackendHttpClient) {
     }
 
-    getUnactivatedUserWallets() {
+    getUserWallets() {
         return this.http.get<CooperativeUserWallet>(`${this.endpoint}/user`);
     }
 
-    getUnactivatedOrganizationWallets() {
+    getOrgWallets() {
         return this.http.get<CooperativeOrganizationWallet>(`${this.endpoint}/organization`);
     }
 
-    getUnactivatedProjectWallets() {
+    getProjectWallets() {
         return this.http.get<CooperativeProjectWallet>(`${this.endpoint}/project`);
     }
 

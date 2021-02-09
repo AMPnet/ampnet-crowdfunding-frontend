@@ -539,21 +539,19 @@
       }
     },
     "activations": {
-      "users_tab": "Users",
-      "groups_tab": "Groups",
-      "projects_tab": "Projects",
+      "title": "Wallet Activations",
       "users": {
-        "title": "Unactivated users",
+        "title": "Users",
         "activate": "Activate",
         "empty": "No unactivated users"
       },
       "projects": {
-        "title": "Unactivated projects",
+        "title": "Projects",
         "activate": "Activate",
         "empty": "No unactivated projects"
       },
       "groups": {
-        "title": "Unactivated groups",
+        "title": "Groups",
         "activate": "Activate",
         "empty": "No unactivated groups"
       }

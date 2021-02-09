@@ -43,9 +43,6 @@ import { ManageDepositsComponent } from './admin/manage-deposits/manage-deposits
 import { ManageSingleDepositComponent } from './admin/manage-deposits/manage-single-deposit/manage-single-deposit.component';
 import { WithdrawComponent } from './withdraw/withdraw.component';
 import { WalletActivationComponent } from './admin/wallet-activation/wallet-activation.component';
-import { UserActivationComponent } from './admin/wallet-activation/user-activation/user-activation.component';
-import { GroupActivationComponent } from './admin/wallet-activation/group-activation/group-activation.component';
-import { ProjectActivationComponent } from './admin/wallet-activation/project-activation/project-activation.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { PlatformBankAccountComponent } from './admin/platform-bank-account/platform-bank-account.component';
 import { NewPlatformBankAccountComponent } from './admin/platform-bank-account/new-platform-bank-account/new-platform-bank-account.component';
@@ -152,9 +149,6 @@ import { LanguageService } from './shared/services/language.service';
         WithdrawComponent,
         SafePipe,
         WalletActivationComponent,
-        UserActivationComponent,
-        GroupActivationComponent,
-        ProjectActivationComponent,
         PlatformBankAccountComponent,
         NewPlatformBankAccountComponent,
         ExchangeComponent,

@@ -787,7 +787,8 @@
       "confirmation_token_invalid": "Invalid email confirmation data.",
       "confirmation_token_expired": "Confirmation link has expired.",
       "social_failed": "There is a problem with the social login method. Try again later.",
-      "captcha_failed": "You have failed captcha validation. Please, try again."
+      "captcha_failed": "You have failed captcha validation. Please, try again.",
+      "sign_up_disabled": "Signing up is temporarily disabled."
     },
     "auth": {
       "invalid_login_method": "Invalid login method",

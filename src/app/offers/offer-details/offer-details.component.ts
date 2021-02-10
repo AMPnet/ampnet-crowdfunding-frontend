@@ -36,7 +36,7 @@ export class OfferDetailsComponent implements OnInit {
     investmentTotal$: Observable<number>;
     transactions$: Observable<ProjectTransactions>;
     isProjectCancelable$: Observable<boolean>;
-    isProjectWalletActive$: Observable<boolean>;
+    isProjectWalletCreated$: Observable<boolean>;
 
     bsModalRef: BsModalRef;
 
@@ -72,12 +72,12 @@ export class OfferDetailsComponent implements OnInit {
             map(news => ({newsList: news})),
         );
 
-        this.isProjectWalletActive$ = this.project$.pipe(
-            map(project => project.wallet.balance === 0 || project.wallet.balance > 0)
+        this.isProjectWalletCreated$ = this.project$.pipe(
+            map(project => Boolean(project.wallet.hash))
         );
 
-        this.projectWalletMW$ = this.isProjectWalletActive$.pipe(
-            switchMap(isActive => isActive ? this.walletService.getProjectWallet(projectID) : EMPTY),
+        this.projectWalletMW$ = this.isProjectWalletCreated$.pipe(
+            switchMap(isCreated => isCreated ? this.walletService.getProjectWallet(projectID) : EMPTY),
             switchMap(wallet => this.middlewareService.getProjectWalletInfoCached(wallet.hash)),
             this.errorService.handleError,
         );

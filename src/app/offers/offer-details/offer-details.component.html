@@ -48,7 +48,7 @@
                             {{ project.location_text }}
                         </div>
 
-                        <div class="right__progress" *ngIf="isProjectWalletActive$ | async">
+                        <div class="right__progress" *ngIf="isProjectWalletCreated$ | async">
                             <ng-container *ngIf="(projectWalletMW$ | async) as walletMW; else smallSpinner">
                                 <span class="bold">
                                     {{ 'offers.offer_details.raised' | translate | splitPart:0 | interpolate:['raised', walletMW.totalFundsRaised | currencyDefault] }}

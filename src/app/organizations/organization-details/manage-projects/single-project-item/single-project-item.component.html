@@ -1,7 +1,7 @@
 <div class="item__top">
     <div class="top__left">
         <a [routerLink]="" (click)="onClickedItem()">
-            <img src="{{ projectWallet.project.main_image }}"
+            <img src="{{ projectWallet.project.main_image }}" @enterTrigger
                  onerror="this.onerror=null; this.src='../../../../assets/noimage.png'"
                  alt="Project image">
         </a>
@@ -27,13 +27,11 @@
     <div class="item__progress-bar" *ngIf="projectWallet.wallet.hash">
         <ng-container
                 *ngIf="(walletInfo$ | async) as wallet else walletLoading">
-            <div style="visibility:hidden" class="fadeIn wow">
-                <div>
-                    <div class="progress">
-                        <div [style.width.%]="(wallet.totalFundsRaised / wallet.investmentCap) * 100"
-                             class="progress__bar"
-                             role="progressbar"></div>
-                    </div>
+            <div @enterTrigger>
+                <div class="progress">
+                    <div [style.width.%]="(wallet.totalFundsRaised / wallet.investmentCap) * 100"
+                         class="progress__bar"
+                         role="progressbar"></div>
                 </div>
                 <div>
                     <div class="progress__raised">

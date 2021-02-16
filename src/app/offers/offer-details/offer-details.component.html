@@ -19,7 +19,7 @@
         </div>
         <div class="wrapper">
             <div class="offer-left first app__full-width">
-                <div class="wow fadeIn">
+                <div @enterTrigger>
                     <img class="left__img w-100" src="{{ project.main_image }}"
                          onerror="this.onerror=null; this.src='../../../../assets/noimage.png'">
                 </div>
@@ -49,7 +49,7 @@
                         </div>
 
                         <div class="right__progress" *ngIf="isProjectWalletCreated$ | async">
-                            <ng-container *ngIf="(projectWalletMW$ | async) as walletMW; else smallSpinner">
+                            <div *ngIf="(projectWalletMW$ | async) as walletMW; else smallSpinner" @enterTrigger>
                                 <span class="bold">
                                     {{ 'offers.offer_details.raised' | translate | splitPart:0 | interpolate:['raised', walletMW.totalFundsRaised | currencyDefault] }}
                                 </span>
@@ -63,7 +63,7 @@
                                          role="progressbar">
                                     </div>
                                 </div>
-                            </ng-container>
+                            </div>
                         </div>
 
                         <div class="right__info">
@@ -147,7 +147,7 @@
                             </div>
                             <ng-template #investButtons>
                                 <button *ngIf="isOverview" class="btn btn-primary w-100 flex__center"
-                                        id="invest-button"
+                                        id="invest-button" @enterTrigger
                                         [routerLink]="'/sign_up' | coopPath">
                                     <fa-icon icon="chart-pie" class="mr-2"></fa-icon>
                                     <span>{{ 'offers.offer_details.invest.overview' | translate }}</span>

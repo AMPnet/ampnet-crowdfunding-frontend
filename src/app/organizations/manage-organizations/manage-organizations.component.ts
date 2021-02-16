@@ -6,11 +6,13 @@ import { finalize, map, switchMap, tap } from 'rxjs/operators';
 import { PopupService } from '../../shared/services/popup.service';
 import { ErrorService } from '../../shared/services/error.service';
 import { TranslateService } from '@ngx-translate/core';
+import { enterTrigger } from '../../animations';
 
 @Component({
     selector: 'app-manage-organizations',
     templateUrl: './manage-organizations.component.html',
-    styleUrls: ['./manage-organizations.component.scss']
+    styleUrls: ['./manage-organizations.component.scss'],
+    animations: [enterTrigger]
 })
 export class ManageOrganizationsComponent {
     organizations$: Observable<Organization[]>;

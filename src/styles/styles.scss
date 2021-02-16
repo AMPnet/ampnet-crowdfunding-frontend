@@ -1,4 +1,9 @@
 @import "bootstrap/scss/bootstrap";
+
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
 @import "global/fonts";
 @import "global/buttons";
 @import "global/inputs";

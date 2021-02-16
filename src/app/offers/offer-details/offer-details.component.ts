@@ -18,11 +18,13 @@ import { ArkaneService } from '../../shared/services/arkane.service';
 import { RouterService } from '../../shared/services/router.service';
 import { ErrorService } from '../../shared/services/error.service';
 import { TranslateService } from '@ngx-translate/core';
+import { enterTrigger } from '../../animations';
 
 @Component({
     selector: 'app-offer-details',
     templateUrl: './offer-details.component.html',
     styleUrls: ['./offer-details.component.scss'],
+    animations: [enterTrigger]
 })
 export class OfferDetailsComponent implements OnInit {
     isOverview: boolean;

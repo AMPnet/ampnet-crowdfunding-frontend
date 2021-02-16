@@ -6,11 +6,14 @@
     <h1 class="app-page-title">{{ 'offers.title' | translate }}</h1>
     <ng-container *ngIf="(projectsWallets$ | async) as projectsWallets else loadingProjects">
         <div id="component-container" *ngIf="projectsWallets.length > 0">
-            <div *ngFor="let projectWallet of projectsWallets"
-                 style="visibility:hidden"
-                 class="fadeIn wow single-item">
-                <app-single-offer-item [projectWallet]=projectWallet></app-single-offer-item>
-            </div>
+            <app-lazy-load *ngFor="let projectWallet of projectsWallets">
+                <ng-template>
+                    <div class="single-item">
+                        <app-single-offer-item [projectWallet]=projectWallet>
+                        </app-single-offer-item>
+                    </div>
+                </ng-template>
+            </app-lazy-load>
         </div>
 
         <div class="d-flex justify-content-center mt-3"

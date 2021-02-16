@@ -7,7 +7,7 @@
             <h1 class="app-page-title">
                 {{ 'organizations.title' | translate }}
             </h1>
-            <div *ngIf="states.organizations !== null">
+            <div *ngIf="states.organizations !== null" @enterTrigger>
                 <button class="btn btn-center" routerLink="new">
                     <fa-icon icon="plus" class="mr-lg-3"></fa-icon>
                     <span class="btn__text">
@@ -25,12 +25,11 @@
             </div>
         </div>
 
-
         <ng-container *ngIf="states.organizations !== null else spinner">
             <div class="app-page-subtitle">
                 {{ 'organizations.my' | translate }}
             </div>
-            <div *ngIf="states.organizations?.length > 0" class="groups">
+            <div *ngIf="states.organizations?.length > 0" @enterTrigger class="groups">
                 <ul class="list-group">
                     <li *ngFor="let org of states.organizations" class="list__item"
                         routerLink="{{ org.uuid }}">
@@ -69,7 +68,7 @@
             </div>
             <ng-container *ngIf="states.invites !== null else spinner">
                 <div>
-                    <ul *ngIf="states.invites?.length > 0" class="list-group">
+                    <ul *ngIf="states.invites?.length > 0" @enterTrigger class="list-group">
                         <li *ngFor="let invite of states.invites" class="list__item">
                             <div class="item__content">
                                 <div class="item__desc">

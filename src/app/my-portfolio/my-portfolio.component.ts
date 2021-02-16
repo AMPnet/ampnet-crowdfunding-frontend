@@ -3,12 +3,14 @@ import { Portfolio, PortfolioService } from '../shared/services/wallet/portfolio
 import { WalletService, WalletState } from '../shared/services/wallet/wallet.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { enterTrigger } from '../animations';
 
 
 @Component({
     selector: 'app-my-portfolio',
     templateUrl: './my-portfolio.component.html',
-    styleUrls: ['./my-portfolio.component.scss']
+    styleUrls: ['./my-portfolio.component.scss'],
+    animations: [enterTrigger]
 })
 export class MyPortfolioComponent {
     constructor(private portfolioService: PortfolioService,

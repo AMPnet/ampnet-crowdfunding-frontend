@@ -6,11 +6,13 @@ import { WebsocketService } from '../shared/services/websocket.service';
 import { ArkaneService } from '../shared/services/arkane.service';
 import { ReportService } from '../shared/services/report/report.service';
 import { ErrorService } from '../shared/services/error.service';
+import { enterTrigger } from '../animations';
 
 @Component({
     selector: 'app-wallet',
     templateUrl: './wallet.component.html',
     styleUrls: ['./wallet.component.scss'],
+    animations: [enterTrigger]
 })
 export class WalletComponent implements OnDestroy {
     tablePage = 1;

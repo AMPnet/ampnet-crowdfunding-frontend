@@ -2,7 +2,7 @@
     <div class="card-left">
         <div class="left__img app__full-width">
             <a [routerLink]="" (click)="onClickedItem()">
-                <img class="img__base w-100"
+                <img class="img__base w-100" @enterTrigger
                      src="{{ projectWallet.project.main_image }}">
             </a>
         </div>
@@ -12,19 +12,17 @@
         </h1>
         <div class="left__progress">
             <ng-container *ngIf="(projectWallet$ | async) as wallet else walletLoading">
-                <div style="visibility:hidden" class="fadeIn wow">
-                    <div>
-                        <div class="progress__raised">
-                            <div>
+                <div @enterTrigger>
+                    <div class="progress__raised">
+                        <div>
                                 <span class="bold">
                                     {{ 'offers.single_offer_item.raised' | translate | splitPart:0
                                         | interpolate:['raised', wallet.totalFundsRaised | currencyDefault] }}
                                 </span>
-                                <span>
+                            <span>
                                     {{ 'offers.single_offer_item.raised' | translate | splitPart:1
-                                        | interpolate:['goal', wallet.investmentCap | currencyDefault] }}
+                                    | interpolate:['goal', wallet.investmentCap | currencyDefault] }}
                                 </span>
-                            </div>
                         </div>
                     </div>
                     <div>

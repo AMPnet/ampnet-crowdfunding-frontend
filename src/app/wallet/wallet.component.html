@@ -108,7 +108,7 @@
                             {{ 'wallet.transactions.empty_notice' | translate }}
                         </span>
                     </div>
-                    <div *ngIf="transactionHistory !== undefined && transactionHistory.length > 0" class="wow fadeIn">
+                    <div *ngIf="transactionHistory !== undefined && transactionHistory.length > 0" @enterTrigger>
                         <div class="transactions__history">
                             <ng-container *ngFor="let transaction of transactionHistoryPage">
                                 <ng-container *ngIf="shouldShowTransaction(transaction, transactionHistory)">

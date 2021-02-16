@@ -104,6 +104,7 @@ import { StaticPageComponent } from './static-page/static-page.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FaIconsService } from './shared/services/fa-icons.service';
 import { LanguageService } from './shared/services/language.service';
+import { LazyLoadComponent } from './shared/components/lazy-load/lazy-load.component';
 
 @NgModule({
     declarations: [
@@ -189,7 +190,8 @@ import { LanguageService } from './shared/services/language.service';
         StaticPageComponent,
         InterpolatePipe,
         SplitPartPipe,
-        BackNavigationDirective
+        BackNavigationDirective,
+        LazyLoadComponent,
     ],
     imports: [
         BrowserModule,

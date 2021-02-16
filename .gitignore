@@ -54,3 +54,4 @@ lang-utils/*.xlsx*
 
 # overrides
 !src/assets/env.template.js
+!tailwind.config.js

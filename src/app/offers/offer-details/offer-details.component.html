@@ -2,7 +2,7 @@
     <app-header></app-header>
 </div>
 
-<div *ngIf="(project$ | async) as project; else overlaySpinner" class="wow fadeIn container">
+<div class="container" *ngIf="(project$ | async) as project; else overlaySpinner">
     <a [routerLink]="" appBackNavigation class="nostyle">
         <div class="app-page-title-back">
             <fa-icon icon="long-arrow-alt-left" class="mr-3"></fa-icon>

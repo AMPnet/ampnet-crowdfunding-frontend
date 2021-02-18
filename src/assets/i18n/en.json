@@ -1,6 +1,6 @@
 {
   "landing": {
-    "welcome": "Welcome to | {{ coopName }} | funding platform.",
+    "welcome": "Welcome To The | {{ coopName }} | Funding Platform",
     "explore": "Explore projects"
   },
   "offers": {

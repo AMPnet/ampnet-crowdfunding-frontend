@@ -3,8 +3,6 @@ import { AppConfigService } from './shared/services/app-config.service';
 import { Title } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/common';
 
-declare var WOW: any;
-
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
@@ -17,8 +15,6 @@ export class AppComponent implements OnInit {
     }
 
     ngOnInit() {
-        new WOW().init();
-
         this.appConfigService.config$.subscribe(configRes => {
             this.title.setTitle(configRes.config.title);
             this.document.getElementById('appFavicon')

@@ -1,0 +1,5 @@
+<div #wrapper [style.minHeight.px]="minHeight">
+    <div *ngIf="showContent" @enterTrigger>
+        <ng-container *ngTemplateOutlet="innerTemplate"></ng-container>
+    </div>
+</div>

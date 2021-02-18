@@ -81,8 +81,9 @@ export class WithdrawComponent implements OnInit {
     }
 
     requestWithdrawal() {
-        const form = this.withdrawForm.value;
-        return this.withdrawService.createWithdrawRequest(form.amount, form.bank.iban).pipe(
+        const amount: number = this.withdrawForm.value.amount;
+        const bank: UserBankAccount = this.withdrawForm.value.bank;
+        return this.withdrawService.createWithdrawRequest(amount, bank.iban, bank.bank_code).pipe(
             this.errorService.handleError,
             tap(w => {
                 this.withdrawForm.reset();

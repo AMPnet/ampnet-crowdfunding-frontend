@@ -18,11 +18,13 @@ import { ArkaneService } from '../../shared/services/arkane.service';
 import { RouterService } from '../../shared/services/router.service';
 import { ErrorService } from '../../shared/services/error.service';
 import { TranslateService } from '@ngx-translate/core';
+import { enterTrigger } from '../../animations';
 
 @Component({
     selector: 'app-offer-details',
     templateUrl: './offer-details.component.html',
     styleUrls: ['./offer-details.component.scss'],
+    animations: [enterTrigger]
 })
 export class OfferDetailsComponent implements OnInit {
     isOverview: boolean;
@@ -30,12 +32,13 @@ export class OfferDetailsComponent implements OnInit {
     @Input() isPortfolioView = false;
 
     project$: Observable<Project>;
-    news$: Observable<LinkPreview[]>;
+    news$: Observable<{ newsList: LinkPreview[] }>;
     user$: Observable<User>;
     projectWalletMW$: Observable<ProjectWalletInfo>;
     investmentTotal$: Observable<number>;
     transactions$: Observable<ProjectTransactions>;
     isProjectCancelable$: Observable<boolean>;
+    isProjectWalletCreated$: Observable<boolean>;
 
     bsModalRef: BsModalRef;
 
@@ -61,23 +64,24 @@ export class OfferDetailsComponent implements OnInit {
         );
 
         this.news$ = this.project$.pipe(
-            switchMap(project => forkJoin(
+            switchMap(project => project.news.length ? forkJoin(
                 project.news.map(singleNews => {
                     return this.newsPreviewService.getLinkPreview(singleNews).pipe(
                         this.errorService.handleError,
                     );
-                }))
+                })) : of([])
             ),
+            map(news => ({newsList: news})),
         );
 
-        this.projectWalletMW$ = this.walletService.getProjectWallet(projectID).pipe(
+        this.isProjectWalletCreated$ = this.project$.pipe(
+            map(project => Boolean(project.wallet.hash))
+        );
+
+        this.projectWalletMW$ = this.isProjectWalletCreated$.pipe(
+            switchMap(isCreated => isCreated ? this.walletService.getProjectWallet(projectID) : EMPTY),
+            switchMap(wallet => this.middlewareService.getProjectWalletInfoCached(wallet.hash)),
             this.errorService.handleError,
-            shareReplay(),
-            switchMap(projectWallet => {
-                return this.middlewareService.getProjectWalletInfoCached(projectWallet.hash).pipe(
-                    this.errorService.handleError,
-                );
-            }),
         );
 
         this.user$ = of(!this.isOverview).pipe(

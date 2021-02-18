@@ -6,6 +6,7 @@ import { tap } from 'rxjs/operators';
 import { ErrorService } from '../../../../shared/services/error.service';
 import { ActivatedRoute } from '@angular/router';
 import { RouterService } from '../../../../shared/services/router.service';
+import { enterTrigger } from '../../../../animations';
 
 @Component({
     selector: 'app-single-project-item, [app-single-project-item]',
@@ -13,7 +14,8 @@ import { RouterService } from '../../../../shared/services/router.service';
     styleUrls: [
         '../manage-projects.component.scss',
         './single-project-item.component.scss'
-    ]
+    ],
+    animations: [enterTrigger]
 })
 export class SingleProjectItemComponent implements OnInit {
     @Input() projectWallet: ProjectWallet;

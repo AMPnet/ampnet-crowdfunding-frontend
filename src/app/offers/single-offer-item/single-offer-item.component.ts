@@ -5,11 +5,13 @@ import { WalletService } from '../../shared/services/wallet/wallet.service';
 import { Observable } from 'rxjs';
 import { MiddlewareService, ProjectWalletInfo } from '../../shared/services/middleware/middleware.service';
 import { RouterService } from '../../shared/services/router.service';
+import { enterTrigger } from '../../animations';
 
 @Component({
     selector: 'app-single-offer-item',
     templateUrl: './single-offer-item.component.html',
-    styleUrls: ['./single-offer-item.component.scss']
+    styleUrls: ['./single-offer-item.component.scss'],
+    animations: [enterTrigger]
 })
 export class SingleOfferItemComponent implements OnInit {
     @Input() projectWallet: ProjectWallet;

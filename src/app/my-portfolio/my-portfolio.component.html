@@ -8,18 +8,17 @@
                 stats: portfolioStats$ | async,
                 portfolio: portfolio$ | async
             } as states">
-
                 <div class="investment-total">
                     <div class="investment-total__left">
                         <p>{{ 'my_portfolio.total_investment' | translate }}</p>
                         <ng-container *ngIf="!!states.stats else smallSpinner">
-                            <h2>{{ states.stats.investments | currencyDefault }}</h2>
+                            <h2 @enterTrigger>{{ states.stats.investments | currencyDefault }}</h2>
                         </ng-container>
                     </div>
                     <div class="investment-total__right">
                         <p>{{ 'my_portfolio.total_earnings' | translate }}</p>
                         <ng-container *ngIf="!!states.stats else smallSpinner">
-                            <h2>{{ states.stats.earnings | currencyDefault }}</h2>
+                            <h2 @enterTrigger>{{ states.stats.earnings | currencyDefault }}</h2>
                         </ng-container>
                     </div>
                 </div>
@@ -33,18 +32,16 @@
                     </div>
 
                     <ng-container *ngIf="states.portfolio else overlaySpinner">
-                        <div *ngFor="let item of states.portfolio"
-                             class="history__item wow fadeIn" style="visibility:hidden">
+                        <div *ngFor="let item of states.portfolio" class="history__item" @enterTrigger>
                             <app-single-invest-item [investment]=item></app-single-invest-item>
                         </div>
                     </ng-container>
-
                 </div>
             </ng-container>
         </div>
 
-        <ng-container *ngIf="!walletActivated">
-            <div class="wow fadeIn mt-5">
+        <ng-container *ngIf="!walletActivated" @enterTrigger>
+            <div class="mt-5">
                 <h6 class="text-center w-100">
                     {{ 'my_portfolio.wallet_not_activated_notice' | translate }}
                 </h6>

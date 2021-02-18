@@ -69,9 +69,6 @@
               "optimization": {
                 "fonts": {
                   "inline": true
-                },
-                "styles": {
-                  "inlineCritical": true
                 }
               },
               "outputHashing": "all",

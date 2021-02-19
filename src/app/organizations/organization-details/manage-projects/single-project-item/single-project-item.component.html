@@ -24,7 +24,7 @@
     </div>
 </div>
 <div class="item__bottom">
-    <div class="item__progress-bar" *ngIf="projectWallet.wallet.hash">
+    <div class="item__progress-bar" *ngIf="projectWallet.wallet?.hash">
         <ng-container
                 *ngIf="(walletInfo$ | async) as wallet else walletLoading">
             <div @enterTrigger>
@@ -50,7 +50,7 @@
             </div>
         </ng-container>
     </div>
-    <div class="item__toggle" *ngIf="projectWallet.wallet.hash && !isPublic">
+    <div class="item__toggle" *ngIf="projectWallet.wallet?.hash && !isPublic">
         <button app-action-button
                 text="{{ (projectWallet.project.active ? 'organizations.details.projects.item.unpublish' : 'organizations.details.projects.item.publish') | translate }}"
                 textShort="{{ (projectWallet.project.active ? 'organizations.details.projects.item.unpublish' : 'organizations.details.projects.item.publish') | translate }}"

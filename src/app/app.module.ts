@@ -25,7 +25,6 @@ import { HeaderComponent } from './public-layout/header/header.component';
 import { SignUpComponent } from './authentication/sign-up/sign-up.component';
 import { NewPaymentOptionComponent } from './payment-options/new-payment-option/new-payment-option.component';
 import { RouterModule } from '@angular/router';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { SocialLoginModule } from 'angularx-social-login';
 import { CreateOrganizationComponent } from './organizations/create-organization/create-organization.component';
@@ -48,25 +47,15 @@ import { PlatformBankAccountComponent } from './admin/platform-bank-account/plat
 import { NewPlatformBankAccountComponent } from './admin/platform-bank-account/new-platform-bank-account/new-platform-bank-account.component';
 import { ExchangeComponent } from './exchange/exchange.component';
 import { OwnershipComponent } from './admin/ownership/ownership.component';
-import { CurrencyDefaultPipe } from './shared/pipes/currency-default.pipe';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TxAmountSign } from './wallet/wallet.pipe';
 import { UserStateReminderComponent } from './user-state-reminder/user-state-reminder.component';
-import { FileValidator } from './shared/validators/file.validator';
-import { FileValueAccessorDirective } from './shared/directives/file-value-accessor.directive';
-import { SpinnerComponent } from './shared/components/spinner/spinner.component';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { LocationMapComponent } from './location-map/location-map.component';
 import { MapModalComponent } from './location-map/map-modal/map-modal.component';
-import { ActionButtonComponent } from './shared/components/action-button/action-button.component';
-import { CurrencyCentsPipe } from './shared/pipes/currency-cents.pipe';
 import { environment } from '../environments/environment.prod';
-import { MoneyInputFieldComponent } from './shared/components/money-input-field/money-input-field.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-import { UploadAreaComponent } from './shared/components/upload-area/upload-area.component';
-import { SafePipe } from './shared/pipes/safe.pipe';
-import { URLValidator } from './shared/validators/url.validator';
 import { ForgotPasswordComponent } from './authentication/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './authentication/reset-password/reset-password.component';
 import { ManageSingleDepositModalComponent } from './admin/manage-deposits/manage-single-deposit/manage-single-deposit-modal/manage-single-deposit-modal.component';
@@ -75,36 +64,29 @@ import { RevenueShareConfirmModalComponent } from './organizations/organization-
 import { ProjectDepositComponent } from './organizations/organization-details/manage-projects/manage-single-project/project-deposit/project-deposit.component';
 import { ProjectWithdrawComponent } from './organizations/organization-details/manage-projects/manage-single-project/project-withdraw/project-withdraw.component';
 import { TabsModule } from 'ngx-bootstrap/tabs';
-import { APP_BASE_HREF, CurrencyPipe, DatePipe } from '@angular/common';
+import { APP_BASE_HREF } from '@angular/common';
 import { SignInAutoComponent } from './authentication/sign-in-auto/sign-in-auto.component';
 import { AppConfigService } from './shared/services/app-config.service';
 import { ClickOutsideDirective } from './navbar/directives/click-outside.directive';
 import { UserComponent } from './settings/user/user.component';
 import { IdentityComponent } from './settings/user/identity/identity.component';
-import { CoopPathPipe } from './shared/pipes/coop-path.pipe';
 import { SingleProjectItemComponent } from './organizations/organization-details/manage-projects/single-project-item/single-project-item.component';
-import { NewBankAccountComponent } from './shared/components/new-bank-account/new-bank-account.component';
 import { AuthLayoutComponent } from './authentication/auth-layout/auth-layout.component';
 import { SignInComponent } from './authentication/sign-in/sign-in.component';
 import { NgxCaptchaModule } from 'ngx-captcha';
 import { NewInstanceComponent } from './authentication/new-instance/new-instance.component';
 import { PlatformConfigComponent } from './admin/platform-config/platform-config.component';
 import { QuillModule } from 'ngx-quill';
-import { InterpolatePipe } from './shared/pipes/interpolate.pipe';
-import { SplitPartPipe } from './shared/pipes/split-part.pipe';
 import { DynamicLocaleProvider } from './shared/providers/locale.provider';
-import { CaptchaNoticeComponent } from './shared/components/captcha-notice/captcha-notice.component';
 import { SentryProvider } from './shared/providers/sentry.provider';
-import { BackNavigationDirective } from './shared/directives/back-navigation.directive';
 import { TranslationsModule } from './translations.module';
 import { VeriffComponent } from './settings/user/identity/veriff/veriff.component';
 import { AcceptTermsComponent } from './settings/user/identity/accept-terms/accept-terms.component';
 import { IdentyumComponent } from './settings/user/identity/identyum/identyum.component';
 import { StaticPageComponent } from './static-page/static-page.component';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FaIconsService } from './shared/services/fa-icons.service';
 import { LanguageService } from './shared/services/language.service';
-import { LazyLoadComponent } from './shared/components/lazy-load/lazy-load.component';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
     declarations: [
@@ -148,31 +130,20 @@ import { LazyLoadComponent } from './shared/components/lazy-load/lazy-load.compo
         ManageDepositsComponent,
         ManageSingleDepositComponent,
         WithdrawComponent,
-        SafePipe,
         WalletActivationComponent,
         PlatformBankAccountComponent,
         NewPlatformBankAccountComponent,
         ExchangeComponent,
         OwnershipComponent,
-        CurrencyDefaultPipe,
-        CurrencyCentsPipe,
-        CoopPathPipe,
         RevenueShareComponent,
         UserStateReminderComponent,
-        FileValidator,
-        FileValueAccessorDirective,
         RevenueShareConfirmModalComponent,
-        SpinnerComponent,
         LocationMapComponent,
         MapModalComponent,
         ManageSingleDepositModalComponent,
         TxAmountSign,
-        ActionButtonComponent,
-        MoneyInputFieldComponent,
         ProjectDepositComponent,
         ProjectWithdrawComponent,
-        UploadAreaComponent,
-        URLValidator,
         ForgotPasswordComponent,
         ResetPasswordComponent,
         SignInAutoComponent,
@@ -180,45 +151,31 @@ import { LazyLoadComponent } from './shared/components/lazy-load/lazy-load.compo
         SignInAutoComponent,
         UserComponent,
         IdentityComponent,
-        NewBankAccountComponent,
         InvestmentDetailsComponent,
         AuthLayoutComponent,
         SignInComponent,
         NewInstanceComponent,
         PlatformConfigComponent,
-        CaptchaNoticeComponent,
         StaticPageComponent,
-        InterpolatePipe,
-        SplitPartPipe,
-        BackNavigationDirective,
-        LazyLoadComponent,
     ],
     imports: [
         BrowserModule,
+        HttpClientModule,
         RouterModule,
         AppRoutingModule,
         TranslationsModule,
-        FontAwesomeModule,
+        BrowserAnimationsModule,
         TooltipModule.forRoot(),
         ModalModule.forRoot(),
         TabsModule.forRoot(),
-        FormsModule,
-        ReactiveFormsModule,
-        HttpClientModule,
+        SharedModule,
         SocialLoginModule,
         NgbModule,
         ModalModule.forRoot(),
         QuillModule.forRoot(),
-        BrowserAnimationsModule,
         BsDatepickerModule.forRoot(),
         NgxCaptchaModule
     ],
-    // TODO: Test whether maps work without entryComponent in production build
-    // Maybe we need to remove it because this error happened when added quill editor
-    // inside platform configuration: https://github.com/angular/angular/issues/31221
-    // entryComponents: [
-    //     MapModalComponent
-    // ],
     providers: [
         AppConfigService,
         {
@@ -240,12 +197,6 @@ import { LazyLoadComponent } from './shared/components/lazy-load/lazy-load.compo
         },
         DynamicLocaleProvider,
         SentryProvider,
-        DatePipe,
-        SafePipe,
-        CurrencyPipe,
-        CoopPathPipe,
-        InterpolatePipe,
-        SplitPartPipe
     ],
     bootstrap: [AppComponent]
 })

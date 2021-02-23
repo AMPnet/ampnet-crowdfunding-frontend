@@ -6,7 +6,7 @@ import { tap } from 'rxjs/operators';
 import { ErrorService } from '../../../../shared/services/error.service';
 import { ActivatedRoute } from '@angular/router';
 import { RouterService } from '../../../../shared/services/router.service';
-import { enterTrigger } from '../../../../animations';
+import { enterTrigger } from '../../../../shared/animations';
 
 @Component({
     selector: 'app-single-project-item, [app-single-project-item]',

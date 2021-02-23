@@ -1,0 +1,60 @@
+<div class="container">
+    <a [routerLink]="" appBackNavigation class="nostyle">
+        <div class="app-page-title-back">
+            <fa-icon icon="long-arrow-alt-left" class="mr-3"></fa-icon>
+            {{ 'general.back.title' | translate }}
+        </div>
+    </a>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card p-3 gray-text">
+                <div class="card-body">
+                    <div class="card-title">
+                        <div>
+                            {{ 'invest.verify_sign.title' | translate }}
+                        </div>
+                    </div>
+                    <div class="card-text">
+                        <div class="row">
+                            <div class="col-md-6 mt-3">
+                                <div>
+                                    <fa-icon icon="chart-line" class="mr-3"></fa-icon>
+                                    <span>
+                                        {{ 'invest.verify_sign.amount' | translate }}
+                                    </span>
+                                </div>
+                                <div class="mt-2 h3" @enterTrigger>
+                                    {{ investAmount | currencyDefault }}
+                                </div>
+                            </div>
+                            <div class="col-md-6 mt-3">
+                                <div>
+                                    <fa-icon icon="solar-panel" class="mr-3"></fa-icon>
+                                    <span>
+                                        {{ 'invest.verify_sign.project' | translate }}
+                                    </span>
+                                </div>
+                                <div class="mt-2 h3" @enterTrigger
+                                     *ngIf="(project$ | async) as project; else smallSpinner">
+                                    {{ project.name }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button app-action-button
+                    text="{{ 'invest.verify_sign.verify_invest' | translate }}"
+                    class="btn btn-primary w-100"
+                    [disabled]="!(project$ | async)"
+                    [onClick]="sign.bind(this)">
+            </button>
+        </div>
+    </div>
+</div>
+
+<ng-template #smallSpinner>
+    <app-spinner type="inline"></app-spinner>
+</ng-template>

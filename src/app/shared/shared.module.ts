@@ -19,6 +19,7 @@ import { FileValidator } from './validators/file.validator';
 import { URLValidator } from './validators/url.validator';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { TranslationsModule } from '../translations.module';
 
 const components = [
     ActionButtonComponent,
@@ -52,7 +53,8 @@ const validators = [
 const importExportModules = [
     FormsModule,
     ReactiveFormsModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    TranslationsModule
 ];
 
 @NgModule({
@@ -67,9 +69,10 @@ const importExportModules = [
         ...validators
     ],
     providers: [
+        ...pipes,
+        // pipes to be used as DI
         CurrencyPipe,
         DatePipe,
-        ...pipes
     ],
     exports: [
         ...components,

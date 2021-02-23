@@ -45,7 +45,7 @@
                         <p class="balance__title">
                             {{ 'wallet.balance' | translate }}
                         </p>
-                        <p class="balance__amount">
+                        <p class="balance__amount" @enterTrigger>
                             {{ states.wallet?.wallet?.balance | currencyCents }}
                         </p>
                     </div>

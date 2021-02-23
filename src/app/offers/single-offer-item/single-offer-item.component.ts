@@ -5,7 +5,7 @@ import { WalletService } from '../../shared/services/wallet/wallet.service';
 import { Observable } from 'rxjs';
 import { MiddlewareService, ProjectWalletInfo } from '../../shared/services/middleware/middleware.service';
 import { RouterService } from '../../shared/services/router.service';
-import { enterTrigger } from '../../animations';
+import { enterTrigger } from '../../shared/animations';
 
 @Component({
     selector: 'app-single-offer-item',

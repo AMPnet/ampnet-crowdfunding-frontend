@@ -6,7 +6,7 @@ import { finalize, map, switchMap, tap } from 'rxjs/operators';
 import { PopupService } from '../../shared/services/popup.service';
 import { ErrorService } from '../../shared/services/error.service';
 import { TranslateService } from '@ngx-translate/core';
-import { enterTrigger } from '../../animations';
+import { enterTrigger } from '../../shared/animations';
 
 @Component({
     selector: 'app-manage-organizations',

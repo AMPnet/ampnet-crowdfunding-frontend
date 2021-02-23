@@ -8,16 +8,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { WalletComponent } from './wallet/wallet.component';
 import { OffersComponent } from './offers/offers.component';
 import { SingleOfferItemComponent } from './offers/single-offer-item/single-offer-item.component';
-import { OfferDetailsComponent } from './offers/offer-details/offer-details.component';
-import { InvestComponent } from './invest/invest.component';
+import { OfferComponent } from './offers/offer/offer.component';
 import { MyPortfolioComponent } from './my-portfolio/my-portfolio.component';
 import { SingleInvestItemComponent } from './my-portfolio/single-invest-item/single-invest-item.component';
-import { InvestmentDetailsComponent } from './investment-details/investment-details.component';
 import { PaymentOptionsComponent } from './payment-options/payment-options.component';
 import { FooterComponent } from './footer/footer.component';
-import { NewProposalComponent } from './investment-details/new-proposal/new-proposal.component';
-import { FinishNewProposalComponent } from './investment-details/finish-new-proposal/finish-new-proposal.component';
-import { ProposalDetailsComponent } from './investment-details/proposal-details/proposal-details.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { PublicLayoutComponent } from './public-layout/public-layout.component';
 import { SecureLayoutComponent } from './secure-layout/secure-layout.component';
@@ -33,7 +28,6 @@ import { OrganizationDetailsComponent } from './organizations/organization-detai
 import { CreateNewProjectComponent } from './organizations/organization-details/manage-projects/create-new-project/create-new-project.component';
 import { ManageProjectsComponent } from './organizations/organization-details/manage-projects/manage-projects.component';
 import { ManageSingleProjectComponent } from './organizations/organization-details/manage-projects/manage-single-project/manage-single-project.component';
-import { VerifySignOfferComponent } from './offers/offer-details/verify-sign-offer/verify-sign-offer.component';
 import { ManagePaymentsComponent } from './organizations/organization-details/manage-projects/manage-single-project/manage-payments/manage-payments.component';
 import { ManageWithdrawalsComponent } from './admin/manage-withdrawals/manage-withdrawals.component';
 import { SingleWithdrawalComponent } from './admin/manage-withdrawals/single-withdrawal/single-withdrawal.component';
@@ -79,7 +73,6 @@ import { PlatformConfigComponent } from './admin/platform-config/platform-config
 import { QuillModule } from 'ngx-quill';
 import { DynamicLocaleProvider } from './shared/providers/locale.provider';
 import { SentryProvider } from './shared/providers/sentry.provider';
-import { TranslationsModule } from './translations.module';
 import { VeriffComponent } from './settings/user/identity/veriff/veriff.component';
 import { AcceptTermsComponent } from './settings/user/identity/accept-terms/accept-terms.component';
 import { IdentyumComponent } from './settings/user/identity/identyum/identyum.component';
@@ -87,6 +80,9 @@ import { StaticPageComponent } from './static-page/static-page.component';
 import { FaIconsService } from './shared/services/fa-icons.service';
 import { LanguageService } from './shared/services/language.service';
 import { SharedModule } from './shared/shared.module';
+import { OfferInvestComponent } from './offers/offer-invest/offer-invest.component';
+import { OfferInvestVerifyComponent } from './offers/offer-invest-verify/offer-invest-verify.component';
+import { InvestmentComponent } from './my-portfolio/investment/investment.component';
 
 @NgModule({
     declarations: [
@@ -96,16 +92,14 @@ import { SharedModule } from './shared/shared.module';
         WalletComponent,
         OffersComponent,
         SingleOfferItemComponent,
-        OfferDetailsComponent,
-        InvestComponent,
+        OfferComponent,
+        OfferInvestComponent,
+        OfferInvestVerifyComponent,
         MyPortfolioComponent,
         SingleInvestItemComponent,
-        InvestmentDetailsComponent,
+        InvestmentComponent,
         PaymentOptionsComponent,
         FooterComponent,
-        NewProposalComponent,
-        FinishNewProposalComponent,
-        ProposalDetailsComponent,
         LandingPageComponent,
         PublicLayoutComponent,
         SecureLayoutComponent,
@@ -122,7 +116,6 @@ import { SharedModule } from './shared/shared.module';
         ManageProjectsComponent,
         ManageSingleProjectComponent,
         SingleProjectItemComponent,
-        VerifySignOfferComponent,
         ManagePaymentsComponent,
         ManageWithdrawalsComponent,
         SingleWithdrawalComponent,
@@ -151,7 +144,6 @@ import { SharedModule } from './shared/shared.module';
         SignInAutoComponent,
         UserComponent,
         IdentityComponent,
-        InvestmentDetailsComponent,
         AuthLayoutComponent,
         SignInComponent,
         NewInstanceComponent,
@@ -163,7 +155,6 @@ import { SharedModule } from './shared/shared.module';
         HttpClientModule,
         RouterModule,
         AppRoutingModule,
-        TranslationsModule,
         BrowserAnimationsModule,
         TooltipModule.forRoot(),
         ModalModule.forRoot(),

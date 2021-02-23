@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ContentChild, ElementRef, Input, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
-import { enterTrigger } from '../../../animations';
+import { enterTrigger } from '../../animations';
 
 @Component({
     selector: 'app-lazy-load',

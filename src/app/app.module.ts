@@ -22,8 +22,6 @@ import { NewPaymentOptionComponent } from './payment-options/new-payment-option/
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { SocialLoginModule } from 'angularx-social-login';
-import { CreateOrganizationComponent } from './organizations/create-organization/create-organization.component';
-import { OrganizationDetailsComponent } from './organizations/organization-details/organization-details.component';
 import { CreateNewProjectComponent } from './organizations/organization-details/manage-projects/create-new-project/create-new-project.component';
 import { ManageProjectsComponent } from './organizations/organization-details/manage-projects/manage-projects.component';
 import { ManageSingleProjectComponent } from './organizations/organization-details/manage-projects/manage-single-project/manage-single-project.component';
@@ -81,10 +79,12 @@ import { LanguageService } from './shared/services/language.service';
 import { SharedModule } from './shared/shared.module';
 import { OfferInvestComponent } from './offers/offer-invest/offer-invest.component';
 import { OfferInvestVerifyComponent } from './offers/offer-invest-verify/offer-invest-verify.component';
-import { InvestmentComponent } from './my-portfolio/investment/investment.component';
 import { ProjectsComponent } from './projects/projects.component';
 import { ProjectNewComponent } from './projects/project-new/project-new.component';
 import { ProjectEditComponent } from './projects/project-edit/project-edit.component';
+import { GroupComponent } from './groups/group/group.component';
+import { GroupNewComponent } from './groups/group-new/group-new.component';
+import { GroupEditComponent } from './groups/group-edit/group-edit.component';
 
 @NgModule({
     declarations: [
@@ -99,10 +99,12 @@ import { ProjectEditComponent } from './projects/project-edit/project-edit.compo
         OfferInvestVerifyComponent,
         MyPortfolioComponent,
         SingleInvestItemComponent,
-        InvestmentComponent,
         ProjectsComponent,
         ProjectNewComponent,
         ProjectEditComponent,
+        GroupComponent,
+        GroupNewComponent,
+        GroupEditComponent,
         PaymentOptionsComponent,
         FooterComponent,
         LandingPageComponent,
@@ -111,8 +113,6 @@ import { ProjectEditComponent } from './projects/project-edit/project-edit.compo
         HeaderComponent,
         SignUpComponent,
         NewPaymentOptionComponent,
-        CreateOrganizationComponent,
-        OrganizationDetailsComponent,
         CreateNewProjectComponent,
         AcceptTermsComponent,
         VeriffComponent,

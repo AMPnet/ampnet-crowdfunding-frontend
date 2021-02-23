@@ -185,7 +185,7 @@
       }
     }
   },
-  "organizations": {
+  "groups": {
     "new": {
       "title": "Create a new investment group",
       "title.back": "New group",
@@ -204,7 +204,7 @@
       "submit_button.loading": "Creating group...",
       "created": "Investment group created!"
     },
-    "details": {
+    "show": {
       "title.back": "Investment groups",
       "create_project": "Create project",
       "project_count": "| {{ count }} | Projects",

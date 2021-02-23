@@ -1,1 +1,72 @@
-<p>group-new works!</p>
+<div class="container">
+    <a [routerLink]="" appBackNavigation class="nostyle">
+        <div class="app-page-title-back">
+            <fa-icon icon="long-arrow-alt-left" class="mr-3"></fa-icon>
+            {{ 'general.back.title' | translate }}
+        </div>
+    </a>
+
+    <form [formGroup]="newOrganizationForm">
+        <div class="form-container row">
+            <div class="form-left col-lg-6">
+                <h4 class="left__title">
+                    {{ 'groups.new.title' | translate }}
+                </h4>
+                <div class="left__upload">
+                    <h2 class="left__upload__subtitle">
+                        {{ 'groups.new.logo_input.title' | translate }}
+                    </h2>
+                    <app-upload-area areaID='group-image' class="left__upload__area"
+                                     [restrictions]="{
+                                        allowedFileTypes: ['image/*'],
+                                        maxFileSize: 10 * 1024 * 1024,
+                                        maxNumberOfFiles: 1
+                                     }"
+                                     [firstFileControl]="newOrganizationForm.get('photo')">
+                    </app-upload-area>
+                </div>
+                <!-- TODO: This is styled and ready to go, uncomment when we have 2nd wallet integrated -->
+                <!-- <div class="left__advanced-users">
+                    <div>
+                        <span class="left__advanced__title">Welcome to investment groups</span>
+                        <p class="left__advanced__desc">This platform is powered by blockchain technology. A "wallet" is
+                            a keystorage service used for signing transactions. If you're an advanced user
+                            and would like to sign transactions yourself, <u>click here</u>
+                        </p>
+                    </div>
+                </div> -->
+            </div>
+
+            <div class="form-right col-lg-6">
+                <label class="right__label" for="group-name">
+                    {{ 'groups.new.group_name_input.title' | translate }}
+                </label>
+                <input class="input-lg w-100"
+                       formControlName="name"
+                       placeholder="{{ 'groups.new.group_name_input.placeholder' | translate }}"
+                       type="text"
+                       id="group-name">
+                <label class="right__label" for="group-description">
+                    {{ 'groups.new.description_input.title' | translate }}
+                </label>
+                <textarea class="w-100"
+                          formControlName="description"
+                          type="text"
+                          rows="7"
+                          placeholder="{{ 'groups.new.description_input.placeholder' | translate }}"
+                          id="group-description">
+                </textarea>
+                <div>
+                    <button app-action-button
+                            text="{{ 'groups.new.submit_button' | translate }}"
+                            loadingText="{{ 'groups.new.submit_button.loading' | translate }}"
+                            faIcon="plus"
+                            [disabled]="!newOrganizationForm.valid"
+                            class="btn btn-responsive-size btn-success w-100"
+                            [onClick]="createOrganization.bind(this)">
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

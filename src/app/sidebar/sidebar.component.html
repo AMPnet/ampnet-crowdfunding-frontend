@@ -34,6 +34,9 @@
                     [class.unverified-user-disabled]="!isUserVerified(states.user) || !isWalletEagerReady(states.wallet)">
                     <fa-icon class="menu-icon" icon="layer-group"></fa-icon>
                     <span>{{ 'navigation.menu.project_management' | translate }}</span>
+
+                    <!-- Used to stay active on groups -->
+                    <span routerLink="groups" style="display: none">Groups</span>
                 </li>
             </div>
             <!-- TODO: Remove hidden when project market is implemented -->

@@ -5,14 +5,11 @@ import { WalletComponent } from './wallet/wallet.component';
 import { OffersComponent } from './offers/offers.component';
 import { MyPortfolioComponent } from './my-portfolio/my-portfolio.component';
 import { PaymentOptionsComponent } from './payment-options/payment-options.component';
-import { LandingPageComponent } from './landing-page/landing-page.component';
 import { PublicLayoutComponent } from './public-layout/public-layout.component';
 import { SecureLayoutComponent } from './secure-layout/secure-layout.component';
 import { SignUpComponent } from './authentication/sign-up/sign-up.component';
 import { NewPaymentOptionComponent } from './payment-options/new-payment-option/new-payment-option.component';
 import { AuthGuard } from './authentication/auth.guard';
-import { CreateOrganizationComponent } from './organizations/create-organization/create-organization.component';
-import { OrganizationDetailsComponent } from './organizations/organization-details/organization-details.component';
 import { ManageWithdrawalsComponent } from './admin/manage-withdrawals/manage-withdrawals.component';
 import { SingleWithdrawalComponent } from './admin/manage-withdrawals/single-withdrawal/single-withdrawal.component';
 import { ManageDepositsComponent } from './admin/manage-deposits/manage-deposits.component';
@@ -50,7 +47,6 @@ import { OfferComponent } from './offers/offer/offer.component';
 import { OfferGuard } from './offers/offer/offer.guard';
 import { OfferInvestComponent } from './offers/offer-invest/offer-invest.component';
 import { OfferInvestVerifyComponent } from './offers/offer-invest-verify/offer-invest-verify.component';
-import { InvestmentComponent } from './my-portfolio/investment/investment.component';
 
 const appRoutes: Routes = [
     {
@@ -58,10 +54,11 @@ const appRoutes: Routes = [
         children: [
             {
                 path: '', canActivate: [NoAuthGuard], children: [
-                    {path: '', component: LandingPageComponent},
-                    {path: 'overview', component: OffersComponent, data: {isOverview: true}},
-                    {path: 'overview/orgs/:id', component: OrganizationDetailsComponent, data: {isPublic: true, isOverview: true}},
-                    {path: 'overview/:id', component: OfferComponent, canActivate: [OfferGuard], data: {isOverview: true}},
+                    {path: '', pathMatch: 'full', redirectTo: 'offers'},
+                    // {path: '', component: LandingPageComponent},
+                    {path: 'offers', component: OffersComponent, data: {isOverview: true}},
+                    {path: 'offers/:id', component: OfferComponent, canActivate: [OfferGuard], data: {isOverview: true}},
+                    {path: 'groups/:id', component: GroupComponent, data: {isPublic: true, isOverview: true}},
                     {path: 'sign_in_auto/:email/:password', component: SignInAutoComponent},
                 ]
             },
@@ -99,12 +96,11 @@ const appRoutes: Routes = [
             {path: 'groups/:id', component: GroupComponent},
             {path: 'groups/:id/edit', component: GroupEditComponent},
 
-            // {path: 'orgs/:id', component: OrganizationDetailsComponent, data: {isPublic: true}},
             {path: 'my_portfolio', component: MyPortfolioComponent},
-            {path: 'my_portfolio/:id/:inPortfolio', component: InvestmentComponent},
+            {path: 'my_portfolio/:id', component: OfferComponent, data: {isPortfolioView: true}},
+
             {path: 'payment_options', component: PaymentOptionsComponent},
             {path: 'payment_options/new', component: NewPaymentOptionComponent},
-            {path: 'manage_groups/new', component: CreateOrganizationComponent},
             {
                 path: 'settings', children: [
                     {path: 'user', component: UserComponent},

@@ -38,4 +38,14 @@ project_management.groups.invites.accepted
 
 ---
 
+organizations.new
+
+groups.new
+
+---
+
+organizations.details
+
+groups.show
+
 ```

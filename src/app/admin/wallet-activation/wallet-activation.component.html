@@ -47,7 +47,7 @@
                            (click)="activateOrgWallet(org.wallet.uuid).subscribe()">
                             <div class="list-group-item list-group-item-action">
                                 <div class="d-flex justify-content-between">
-                                    <a [routerLink]="['/dash', 'orgs', org.organization.uuid] | coopPath">
+                                    <a [routerLink]="['/dash', 'groups', org.organization.uuid] | coopPath">
                                         {{ org.organization.name }}
                                     </a>
                                     <fa-icon icon="check-circle" class="ml-1 flex-shrink-0"></fa-icon>

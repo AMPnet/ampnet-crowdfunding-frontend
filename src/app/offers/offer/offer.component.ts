@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Meta } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { LinkPreview, NewsPreviewService } from 'src/app/shared/services/news-preview.service';
@@ -26,10 +26,9 @@ import { enterTrigger } from '../../shared/animations';
     styleUrls: ['./offer.component.scss'],
     animations: [enterTrigger]
 })
-export class OfferComponent implements OnInit {
+export class OfferComponent {
     isOverview: boolean;
-
-    @Input() isPortfolioView = false;
+    isPortfolioView: boolean;
 
     project$: Observable<Project>;
     news$: Observable<{ newsList: LinkPreview[] }>;
@@ -56,7 +55,10 @@ export class OfferComponent implements OnInit {
                 private popupService: PopupService,
                 private errorService: ErrorService,
                 private arkaneService: ArkaneService) {
+        this.isOverview = this.route.snapshot.data.isOverview;
+        this.isPortfolioView = this.route.snapshot.data.isPortfolioView;
         const projectID = this.route.snapshot.params.id;
+
         this.project$ = this.projectService.getProject(projectID).pipe(
             this.errorService.handleError,
             tap(project => this.setMetaTags(project)),
@@ -111,10 +113,6 @@ export class OfferComponent implements OnInit {
         );
     }
 
-    ngOnInit() {
-        this.isOverview = this.route.snapshot.data.isOverview;
-    }
-
     setMetaTags(project: Project) {
         this.meta.addTag({property: 'og:title', content: project.name});
         this.meta.addTag({property: 'og:description', content: project.short_description});
@@ -155,7 +153,7 @@ export class OfferComponent implements OnInit {
     }
 
     getProjectURL(project: Project, uriComponent = true) {
-        const url = `${window.location.host}/${project.coop}/overview/${project.uuid}`;
+        const url = `${window.location.host}/${project.coop}/offers/${project.uuid}`;
 
         return uriComponent ? encodeURIComponent(url) : encodeURI(url);
     }
@@ -181,9 +179,9 @@ export class OfferComponent implements OnInit {
 
     onPublishedByClicked(organizationUUID: string) {
         if (this.route.snapshot.data.isOverview) {
-            this.router.navigate([`/overview/orgs/${organizationUUID}`]);
+            this.router.navigate([`/groups/${organizationUUID}`]);
         } else {
-            this.router.navigate([`/dash/orgs/${organizationUUID}`]);
+            this.router.navigate([`/dash/groups/${organizationUUID}`]);
         }
     }
 }

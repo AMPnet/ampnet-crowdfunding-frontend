@@ -1,1 +1,145 @@
-<p>group works!</p>
+<div *ngIf="isOverview">
+    <app-header></app-header>
+</div>
+
+<div class="container">
+    <ng-container *ngIf="(organization$ | async) as organization; else spinner">
+        <div class="app-page-header">
+            <a [routerLink]="" appBackNavigation class="nostyle">
+                <div class="app-page-title-back">
+                    <fa-icon icon="long-arrow-alt-left" class="mr-3"></fa-icon>
+                    {{ 'general.back.title' | translate }}
+                </div>
+            </a>
+
+            <ng-container *ngIf="writeable$ | async">
+                <ng-container *ngIf="(orgWallet$ | async) as wallet">
+                    <button [disabled]="!isWalletVerified(wallet)"
+                            class="btn"
+                            [routerLink]="'/dash/projects/new' | coopPath">
+                        <fa-icon icon="plus" class="mr-lg-3"></fa-icon>
+                        <span class="btn__text">
+                            {{ 'organizations.details.create_project' | translate }}
+                        </span>
+                    </button>
+                </ng-container>
+            </ng-container>
+        </div>
+
+        <div class="content">
+            <div class="organization-info">
+                <div class="organization__img">
+                    <img src="{{ organization.header_image }}" alt="">
+                </div>
+                <div class="organization__desc">
+                    <div class="desc__title"> {{ organization.name }} </div>
+                    <div class="desc__project-count">
+                        <span>
+                            {{ 'groups.show.project_count' | translate | splitPart:0 }}
+                        </span>
+                        <span class="bold">
+                            {{ 'groups.show.project_count' | translate
+                                | splitPart:1 | interpolate:['count', organization.project_count] }}
+                        </span>
+                        <span>
+                            {{ 'groups.show.project_count' | translate | splitPart:2 }}
+                        </span>
+                    </div>
+
+                    <div class="desc__info">
+                        {{ organization.description }}
+                    </div>
+                </div>
+            </div>
+
+            <ng-container *ngIf="!isPublic">
+                <ng-container *ngIf="(orgWallet$ | async) as wallet">
+                    <div *ngIf="!isWalletVerified(wallet)">
+                        <div class="alert alert-warning flex__center col-lg-10">
+                            <fa-icon icon="exclamation-triangle" class="mr-2"></fa-icon>
+                            {{ 'groups.show.wallet_not_verified' | translate }}
+                        </div>
+                    </div>
+                </ng-container>
+            </ng-container>
+
+            <div class="tabs">
+                <tabset>
+                    <tab heading="{{ 'groups.show.projects.title' | translate }}">
+                        <div class="manage__projects">
+                            <app-manage-projects [groupID]="organization.uuid" [isPublic]=isPublic>
+                            </app-manage-projects>
+                        </div>
+                    </tab>
+                    <tab heading="{{ 'groups.show.members.title' | translate }}">
+                        <div class="manage__members">
+                            <div class="invite-members app__full-width" *ngIf="writeable$ | async">
+                                <div class="invite__form">
+                                    <form [formGroup]="inviteForm" style="display: contents">
+                                        <div class="form__input col-lg-6 col-xl-5 p-0">
+                                            <input class="input-reg w-100" name=""
+                                                   placeholder="{{ 'groups.show.members.add_input.placeholder' | translate }}"
+                                                   formControlName="emails"
+                                                   type="text" value="">
+                                        </div>
+                                        <div class="form__cta col-lg-1 col-xl-2 p-0">
+                                            <button app-action-button
+                                                    text="{{ 'groups.show.members.add_button' | translate }}"
+                                                    textShort=""
+                                                    faIcon="plus"
+                                                    [onClick]="inviteClicked(organization.uuid).bind(this)"
+                                                    [disabled]="!inviteForm.valid"
+                                                    class="btn btn-success w-100">
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <div class="users__list">
+                                <ng-container *ngIf="(orgMembers$ | async) as orgMembers; else spinner">
+                                    <ul class="list-group">
+                                        <li *ngFor="let member of orgMembers"
+                                            class="list__item flex__center--space">
+                                            <div class="item__left">
+                                                <div class="item__name">{{ member.first_name | titlecase }} {{ member.last_name | titlecase }}</div>
+                                                <div class="item__email">{{ member.email }}</div>
+                                                <span class="d-inline-block d-lg-none item__joined">
+                                                    {{ 'groups.show.members.join_date' | translate | interpolate:['date', member.member_since | date:'mediumDate'] }}
+                                                </span>
+                                            </div>
+                                            <div class="item__right">
+                                                <div class="item__joined">
+                                                    <span class="d-none d-lg-inline-block">
+                                                        {{ 'groups.show.members.join_date' | translate | interpolate:['date', member.member_since | date:'longDate'] }}
+                                                    </span>
+
+                                                    <a [routerLink]=""
+                                                       (click)="deleteMember(organization.uuid, member.uuid)">
+                                                        <span class="item__icon" *ngIf="writeable$ | async">
+                                                            <fa-icon icon="trash-alt"
+                                                                     class="cursor-pointer"></fa-icon>
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <div *ngIf="orgMembers.length === 0"
+                                         class="w-100 pt-3 pb-3 text-center">
+                                        {{ 'groups.show.members.empty'
+                                            | translate | interpolate:['org', organization.name] }}
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </tab>
+                </tabset>
+            </div>
+        </div>
+    </ng-container>
+</div>
+
+<ng-template #spinner>
+    <app-spinner type="overlay" class="w-100"></app-spinner>
+</ng-template>

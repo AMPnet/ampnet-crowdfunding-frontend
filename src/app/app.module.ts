@@ -23,7 +23,6 @@ import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { SocialLoginModule } from 'angularx-social-login';
 import { CreateOrganizationComponent } from './organizations/create-organization/create-organization.component';
-import { ManageOrganizationsComponent } from './organizations/manage-organizations/manage-organizations.component';
 import { OrganizationDetailsComponent } from './organizations/organization-details/organization-details.component';
 import { CreateNewProjectComponent } from './organizations/organization-details/manage-projects/create-new-project/create-new-project.component';
 import { ManageProjectsComponent } from './organizations/organization-details/manage-projects/manage-projects.component';
@@ -83,6 +82,9 @@ import { SharedModule } from './shared/shared.module';
 import { OfferInvestComponent } from './offers/offer-invest/offer-invest.component';
 import { OfferInvestVerifyComponent } from './offers/offer-invest-verify/offer-invest-verify.component';
 import { InvestmentComponent } from './my-portfolio/investment/investment.component';
+import { ProjectsComponent } from './projects/projects.component';
+import { ProjectNewComponent } from './projects/project-new/project-new.component';
+import { ProjectEditComponent } from './projects/project-edit/project-edit.component';
 
 @NgModule({
     declarations: [
@@ -98,6 +100,9 @@ import { InvestmentComponent } from './my-portfolio/investment/investment.compon
         MyPortfolioComponent,
         SingleInvestItemComponent,
         InvestmentComponent,
+        ProjectsComponent,
+        ProjectNewComponent,
+        ProjectEditComponent,
         PaymentOptionsComponent,
         FooterComponent,
         LandingPageComponent,
@@ -107,7 +112,6 @@ import { InvestmentComponent } from './my-portfolio/investment/investment.compon
         SignUpComponent,
         NewPaymentOptionComponent,
         CreateOrganizationComponent,
-        ManageOrganizationsComponent,
         OrganizationDetailsComponent,
         CreateNewProjectComponent,
         AcceptTermsComponent,

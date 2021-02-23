@@ -49,8 +49,12 @@ export class ProjectService {
         return this.http.put<Project>(`/api/project/project/${projectID}`, formData);
     }
 
+    getPersonal() {
+        return this.http.get<PageableProjectsResponse>('/api/project/project/personal');
+    }
+
     getAllActiveProjects() {
-        return this.http.get<PageableProjectsResponse>('/api/project/public/project/active', {
+        return this.http.get<PageableProjectsWalletsResponse>('/api/project/public/project/active', {
             coop: this.appConfig.config.identifier
         });
     }
@@ -114,6 +118,12 @@ export interface Project {
 }
 
 export interface PageableProjectsResponse {
+    projects: Project[];
+    page: number;
+    total_pages: number;
+}
+
+export interface PageableProjectsWalletsResponse {
     projects_wallets: ProjectWallet[];
     page: number;
     total_pages: number;

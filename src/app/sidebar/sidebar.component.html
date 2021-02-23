@@ -30,10 +30,10 @@
                 </li>
             </div>
             <div [tooltip]="!isUserVerified(states.user) || !isWalletLazyReady(states.wallet) ? ToolTipNotVerified : null">
-                <li routerLink="manage_groups" routerLinkActive="side-active"
+                <li routerLink="projects" routerLinkActive="side-active"
                     [class.unverified-user-disabled]="!isUserVerified(states.user) || !isWalletEagerReady(states.wallet)">
                     <fa-icon class="menu-icon" icon="layer-group"></fa-icon>
-                    <span>{{ 'navigation.menu.investment_groups' | translate }}</span>
+                    <span>{{ 'navigation.menu.project_management' | translate }}</span>
                 </li>
             </div>
             <!-- TODO: Remove hidden when project market is implemented -->

@@ -77,7 +77,7 @@ export class OrganizationDetailsComponent implements OnInit {
 
         this.user$ = this.userService.user$;
         this.organization$ = this.refreshOrganizationSubject.asObservable().pipe(
-            switchMap(() => this.organizationService.getSingleOrganization(orgID)
+            switchMap(() => this.organizationService.get(orgID)
                 .pipe(this.errorService.handleError)),
             shareReplay(1),
         );

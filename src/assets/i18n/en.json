@@ -161,21 +161,31 @@
     "withdrawal_deleted": "Withdrawal deleted",
     "burned_notice": "Platform manager has approved and processed your withdrawal request. Please allow up to 48 hours for funds to reach your selected bank account."
   },
+  "project_management": {
+    "projects": {
+      "title": "Project management",
+      "my": "My Projects",
+      "create": "Create Project",
+      "empty": "You currently don't have access to any project."
+    },
+    "groups": {
+      "title": "Investment groups",
+      "create_org": "Create group",
+      "pending_invite_notice": "You have invites pending",
+      "my": "My groups",
+      "empty": "You currently don't have access to any groups.",
+      "org_item": {
+        "project_count": "| {{ count }} | Projects"
+      },
+      "invites": {
+        "title": "Group invites",
+        "join": "Join group",
+        "empty": "Not invited to any groups",
+        "accepted": "Accepted invitation to the organization."
+      }
+    }
+  },
   "organizations": {
-    "title": "Investment groups",
-    "create_org": "Create group",
-    "pending_invite_notice": "You have invites pending",
-    "my": "My groups",
-    "empty": "You currently don't have access to any groups.",
-    "org_item": {
-      "project_count": "| {{ count }} | Projects"
-    },
-    "invites": {
-      "title": "Group invites",
-      "join": "Join group",
-      "empty": "Not invited to any groups",
-      "accepted": "Accepted invitation to the organization."
-    },
     "new": {
       "title": "Create a new investment group",
       "title.back": "New group",
@@ -403,7 +413,7 @@
       "offers": "Offers",
       "my_portfolio": "My portfolio",
       "wallet": "Wallet",
-      "investment_groups": "Investment groups"
+      "project_management": "Project management"
     },
     "settings": {
       "title": "SETTINGS",

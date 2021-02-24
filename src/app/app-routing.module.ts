@@ -47,6 +47,9 @@ import { OfferComponent } from './offers/offer/offer.component';
 import { OfferGuard } from './offers/offer/offer.guard';
 import { OfferInvestComponent } from './offers/offer-invest/offer-invest.component';
 import { OfferInvestVerifyComponent } from './offers/offer-invest-verify/offer-invest-verify.component';
+import { ProjectDepositComponent } from './projects/project-deposit/project-deposit.component';
+import { ProjectWithdrawComponent } from './projects/project-withdraw/project-withdraw.component';
+import { ProjectRevenueShareComponent } from './projects/project-revenue-share/project-revenue-share.component';
 
 const appRoutes: Routes = [
     {
@@ -55,7 +58,7 @@ const appRoutes: Routes = [
             {
                 path: '', canActivate: [NoAuthGuard], children: [
                     {path: '', pathMatch: 'full', redirectTo: 'offers'},
-                    // {path: '', component: LandingPageComponent},
+                    // {path: '', component: LandingPageComponent}, TODO: chat with others if this is OK
                     {path: 'offers', component: OffersComponent, data: {isOverview: true}},
                     {path: 'offers/:id', component: OfferComponent, canActivate: [OfferGuard], data: {isOverview: true}},
                     {path: 'groups/:id', component: GroupComponent, data: {isPublic: true, isOverview: true}},
@@ -91,6 +94,9 @@ const appRoutes: Routes = [
             {path: 'projects', component: ProjectsComponent},
             {path: 'projects/new', component: ProjectNewComponent},
             {path: 'projects/:id/edit', component: ProjectEditComponent},
+            {path: 'projects/:id/deposit', component: ProjectDepositComponent},
+            {path: 'projects/:id/withdraw', component: ProjectWithdrawComponent},
+            {path: 'projects/:id/revenue_share/:amount', component: ProjectRevenueShareComponent},
 
             {path: 'groups/new', component: GroupNewComponent},
             {path: 'groups/:id', component: GroupComponent},
@@ -114,23 +120,6 @@ const appRoutes: Routes = [
                 ]
             },
 
-            // {path: 'manage_groups', component: ManageOrganizationsComponent},
-            // {path: 'manage_groups/:id', component: OrganizationDetailsComponent},
-            // {path: 'manage_groups/:orgId/create_project', component: CreateNewProjectComponent},
-            // {path: 'manage_groups/:id/projects', component: ManageProjectsComponent},
-            // {path: 'manage_groups/:groupID/manage_project/:projectID', component: ManageSingleProjectComponent},
-            // {
-            //     path: 'manage_groups/:groupID/manage_project/:projectID/project_deposit',
-            //     component: ProjectDepositComponent
-            // },
-            // {
-            //     path: 'manage_groups/:groupID/manage_project/:projectID/project_withdraw',
-            //     component: ProjectWithdrawComponent
-            // },
-            // {
-            //     path: 'manage_groups/:groupID/manage_project/:projectID/revenue_share/:amount',
-            //     component: RevenueShareComponent
-            // },
             {path: 'manage_withdrawals', component: ManageWithdrawalsComponent},
             {path: 'manage_withdrawals/:ID', component: SingleWithdrawalComponent},
             {path: 'manage_deposits', component: ManageDepositsComponent},
@@ -138,7 +127,6 @@ const appRoutes: Routes = [
             {path: 'activation/:type', component: WalletActivationComponent},
             {path: 'admin/platform_bank_account', component: PlatformBankAccountComponent},
             {path: 'admin/platform_bank_account/new', component: NewPlatformBankAccountComponent},
-            // {path: 'exchange', component: ExchangeComponent},
             {path: 'ownership', component: OwnershipComponent},
             {path: 'platform_config', component: PlatformConfigComponent},
         ]

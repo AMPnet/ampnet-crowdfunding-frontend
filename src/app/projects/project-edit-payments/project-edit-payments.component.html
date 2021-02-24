@@ -17,13 +17,13 @@
         <div class="col-lg-6 col-xl-4 p-0">
             <div class="row">
                 <div class="col-6">
-                    <button class="btn w-100" routerLink="project_deposit">
+                    <button class="btn w-100" routerLink="../deposit">
                         <fa-icon icon="arrow-circle-down" class="mr-2"></fa-icon>
                         {{ 'projects.edit.manage_payments.wallet.deposit_button' | translate }}
                     </button>
                 </div>
                 <div class="col-6">
-                    <button class="btn w-100" routerLink="project_withdraw"
+                    <button class="btn w-100" routerLink="../withdraw"
                             [disabled]="!states.walletInfo || !isProjectFullyFunded(states.walletInfo)">
                         <fa-icon icon="arrow-circle-up" class="mr-2"></fa-icon>
                         {{ 'projects.edit.manage_payments.wallet.withdraw_button' | translate }}
@@ -41,8 +41,8 @@
             <div class="row">
                 <div class="col-12 col-lg-8">
                     <app-money-input-field
-                        placeholder="{{ 'projects.edit.manage_payments.revenue_share.placeholder' | translate }}"
-                        [control]="revenueShareForm.get('amount')">
+                            placeholder="{{ 'projects.edit.manage_payments.revenue_share.placeholder' | translate }}"
+                            [control]="revenueShareForm.get('amount')">
                     </app-money-input-field>
                     <p class="payout__desc">
                         {{ 'projects.edit.manage_payments.revenue_share.description' | translate }}
@@ -51,14 +51,14 @@
                     <div *ngIf="revenueShareForm.dirty && revenueShareForm.invalid">
                         <div *ngIf="revenueShareForm.get('amount').errors?.inputAmountInvalid"
                              class="alert alert-danger">
-                             {{ 'projects.edit.manage_payments.revenue_share.errors.invalid_amount' | translate }}
+                            {{ 'projects.edit.manage_payments.revenue_share.errors.invalid_amount' | translate }}
                         </div>
                     </div>
                 </div>
                 <div class="col-12 col-lg-4">
                     <button [disabled]="!revenueShareForm.dirty || revenueShareForm.invalid"
                             id="buttonStartPayout"
-                            routerLink="revenue_share/{{ revenueShareForm.get('amount').value }}"
+                            routerLink="../revenue_share/{{ revenueShareForm.get('amount').value }}"
                             class="btn btn-primary btn-warning btn-action w-100">
                         <fa-icon icon="chart-pie" class="mr-2"></fa-icon>
                         <!-- Laptop size text handling -->

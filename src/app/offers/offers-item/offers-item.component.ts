@@ -8,12 +8,12 @@ import { RouterService } from '../../shared/services/router.service';
 import { enterTrigger } from '../../shared/animations';
 
 @Component({
-    selector: 'app-single-offer-item',
-    templateUrl: './single-offer-item.component.html',
-    styleUrls: ['./single-offer-item.component.scss'],
+    selector: 'app-offers-item',
+    templateUrl: './offers-item.component.html',
+    styleUrls: ['./offers-item.component.scss'],
     animations: [enterTrigger]
 })
-export class SingleOfferItemComponent implements OnInit {
+export class OffersItemComponent implements OnInit {
     @Input() projectWallet: ProjectWallet;
     projectWallet$: Observable<ProjectWalletInfo>;
 

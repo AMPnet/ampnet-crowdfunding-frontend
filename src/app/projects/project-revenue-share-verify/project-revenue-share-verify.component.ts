@@ -1,25 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { RouterService } from '../../shared/services/router.service';
 import { BsModalRef } from 'ngx-bootstrap/modal';
-import { SpinnerUtil } from '../../../../../../../utilities/spinner-utilities';
-import { RevenueShareService } from '../../../../../../../shared/services/wallet/revenue-share.service';
-import { ActivatedRoute } from '@angular/router';
-import { finalize, switchMap, tap } from 'rxjs/operators';
-import { ArkaneService } from '../../../../../../../shared/services/arkane.service';
-import { PopupService } from '../../../../../../../shared/services/popup.service';
-import { RouterService } from '../../../../../../../shared/services/router.service';
-import { ErrorService } from '../../../../../../../shared/services/error.service';
+import { RevenueShareService } from '../../shared/services/wallet/revenue-share.service';
+import { ArkaneService } from '../../shared/services/arkane.service';
+import { ErrorService } from '../../shared/services/error.service';
 import { TranslateService } from '@ngx-translate/core';
+import { ActivatedRoute } from '@angular/router';
+import { PopupService } from '../../shared/services/popup.service';
+import { SpinnerUtil } from '../../utilities/spinner-utilities';
+import { finalize, switchMap, tap } from 'rxjs/operators';
 
 @Component({
-    selector: 'app-revenue-share-confirm-modal',
-    templateUrl: './revenue-share-confirm-modal.component.html',
-    styleUrls: ['./revenue-share-confirm-modal.component.scss']
+    selector: 'app-project-revenue-share-verify',
+    templateUrl: './project-revenue-share-verify.component.html',
+    styleUrls: ['./project-revenue-share-verify.component.scss']
 })
-
-export class RevenueShareConfirmModalComponent implements OnInit {
-    orgID: string;
-    projectID: string;
+export class ProjectRevenueShareVerifyComponent implements OnInit {
+    projectUUID: string;
     amountInvestedConfirm: string;
 
     confirmForm: FormGroup;
@@ -43,7 +41,7 @@ export class RevenueShareConfirmModalComponent implements OnInit {
 
     generateTransaction(amountInvested: number) {
         SpinnerUtil.showSpinner();
-        return this.revenueShareService.generateRevenueShareTx(this.projectID, amountInvested).pipe(
+        return this.revenueShareService.generateRevenueShareTx(this.projectUUID, amountInvested).pipe(
             this.errorService.handleError,
             switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo)),
             switchMap(() => this.popupService.new({
@@ -51,7 +49,7 @@ export class RevenueShareConfirmModalComponent implements OnInit {
                 title: this.translate.instant('general.transaction_signed.title'),
                 text: this.translate.instant('general.transaction_signed.description')
             })),
-            tap(() => this.router.navigate([`/dash/manage_groups/${this.orgID}/manage_project/${this.projectID}`])),
+            tap(() => this.router.navigate([`/dash/projects/${this.projectUUID}/edit`])),
             finalize(() => SpinnerUtil.hideSpinner())
         );
     }

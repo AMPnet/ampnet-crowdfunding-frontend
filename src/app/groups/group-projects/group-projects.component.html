@@ -1,13 +1,13 @@
 <ng-container *ngIf="(projectsWallets$ | async) as projectsWallets else spinner">
     <div *ngIf="projectsWallets.length === 0" class="col-md-12">
         <div class="w-100 text-center mt-5 mb-5">
-            <p>{{ 'organizations.details.projects.empty' | translate }}</p>
+            <p>{{ 'groups.show.projects.empty' | translate }}</p>
         </div>
     </div>
 
     <ul class="list-group">
         <li *ngFor="let projectWallet of projectsWallets" class="list__item"
-            app-single-project-item [isPublic]="isPublic" [projectWallet]="projectWallet">
+            app-group-projects-item [isPublic]="isPublic" [projectWallet]="projectWallet">
         </li>
     </ul>
 </ng-container>

@@ -1,19 +1,19 @@
-import { Component, Input } from '@angular/core';
-import { OrganizationService } from '../../../shared/services/project/organization.service';
-import { ProjectWallet } from '../../../shared/services/project/project.service';
+import { Component, Input, OnInit } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { ProjectWallet } from '../../shared/services/project/project.service';
+import { RouterService } from '../../shared/services/router.service';
+import { ErrorService } from '../../shared/services/error.service';
+import { OrganizationService } from '../../shared/services/project/organization.service';
 import { map, switchMap } from 'rxjs/operators';
-import { RouterService } from '../../../shared/services/router.service';
-import { ErrorService } from '../../../shared/services/error.service';
 
 @Component({
-    selector: 'app-manage-projects',
-    templateUrl: './manage-projects.component.html',
-    styleUrls: ['./manage-projects.component.scss'],
+  selector: 'app-group-projects',
+  templateUrl: './group-projects.component.html',
+  styleUrls: ['./group-projects.component.scss']
 })
-export class ManageProjectsComponent {
+export class GroupProjectsComponent {
     @Input() groupID: string;
-    @Input() isPublic = false;
+    @Input() isPublic: boolean;
 
     refreshProjectsSubject = new BehaviorSubject<void>(null);
     projectsWallets$: Observable<ProjectWallet[]>;
@@ -27,4 +27,5 @@ export class ManageProjectsComponent {
             map(res => res.projects_wallets)
         );
     }
+
 }

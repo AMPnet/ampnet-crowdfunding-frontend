@@ -7,7 +7,6 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { AppRoutingModule } from './app-routing.module';
 import { WalletComponent } from './wallet/wallet.component';
 import { OffersComponent } from './offers/offers.component';
-import { SingleOfferItemComponent } from './offers/single-offer-item/single-offer-item.component';
 import { OfferComponent } from './offers/offer/offer.component';
 import { MyPortfolioComponent } from './my-portfolio/my-portfolio.component';
 import { SingleInvestItemComponent } from './my-portfolio/single-invest-item/single-invest-item.component';
@@ -22,10 +21,6 @@ import { NewPaymentOptionComponent } from './payment-options/new-payment-option/
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { SocialLoginModule } from 'angularx-social-login';
-import { CreateNewProjectComponent } from './organizations/organization-details/manage-projects/create-new-project/create-new-project.component';
-import { ManageProjectsComponent } from './organizations/organization-details/manage-projects/manage-projects.component';
-import { ManageSingleProjectComponent } from './organizations/organization-details/manage-projects/manage-single-project/manage-single-project.component';
-import { ManagePaymentsComponent } from './organizations/organization-details/manage-projects/manage-single-project/manage-payments/manage-payments.component';
 import { ManageWithdrawalsComponent } from './admin/manage-withdrawals/manage-withdrawals.component';
 import { SingleWithdrawalComponent } from './admin/manage-withdrawals/single-withdrawal/single-withdrawal.component';
 import { DepositComponent } from './deposit/deposit.component';
@@ -36,7 +31,6 @@ import { WalletActivationComponent } from './admin/wallet-activation/wallet-acti
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { PlatformBankAccountComponent } from './admin/platform-bank-account/platform-bank-account.component';
 import { NewPlatformBankAccountComponent } from './admin/platform-bank-account/new-platform-bank-account/new-platform-bank-account.component';
-import { ExchangeComponent } from './exchange/exchange.component';
 import { OwnershipComponent } from './admin/ownership/ownership.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TxAmountSign } from './wallet/wallet.pipe';
@@ -50,10 +44,6 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ForgotPasswordComponent } from './authentication/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './authentication/reset-password/reset-password.component';
 import { ManageSingleDepositModalComponent } from './admin/manage-deposits/manage-single-deposit/manage-single-deposit-modal/manage-single-deposit-modal.component';
-import { RevenueShareComponent } from './organizations/organization-details/manage-projects/manage-single-project/manage-payments/revenue-share/revenue-share.component';
-import { RevenueShareConfirmModalComponent } from './organizations/organization-details/manage-projects/manage-single-project/manage-payments/revenue-share/revenue-share-confirm-modal/revenue-share-confirm-modal.component';
-import { ProjectDepositComponent } from './organizations/organization-details/manage-projects/manage-single-project/project-deposit/project-deposit.component';
-import { ProjectWithdrawComponent } from './organizations/organization-details/manage-projects/manage-single-project/project-withdraw/project-withdraw.component';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { APP_BASE_HREF } from '@angular/common';
 import { SignInAutoComponent } from './authentication/sign-in-auto/sign-in-auto.component';
@@ -61,7 +51,6 @@ import { AppConfigService } from './shared/services/app-config.service';
 import { ClickOutsideDirective } from './navbar/directives/click-outside.directive';
 import { UserComponent } from './settings/user/user.component';
 import { IdentityComponent } from './settings/user/identity/identity.component';
-import { SingleProjectItemComponent } from './organizations/organization-details/manage-projects/single-project-item/single-project-item.component';
 import { AuthLayoutComponent } from './authentication/auth-layout/auth-layout.component';
 import { SignInComponent } from './authentication/sign-in/sign-in.component';
 import { NgxCaptchaModule } from 'ngx-captcha';
@@ -85,6 +74,14 @@ import { ProjectEditComponent } from './projects/project-edit/project-edit.compo
 import { GroupComponent } from './groups/group/group.component';
 import { GroupNewComponent } from './groups/group-new/group-new.component';
 import { GroupEditComponent } from './groups/group-edit/group-edit.component';
+import { GroupProjectsComponent } from './groups/group-projects/group-projects.component';
+import { GroupProjectsItemComponent } from './groups/group-projects-item/group-projects-item.component';
+import { ProjectEditPaymentsComponent } from './projects/project-edit-payments/project-edit-payments.component';
+import { ProjectRevenueShareComponent } from './projects/project-revenue-share/project-revenue-share.component';
+import { ProjectRevenueShareVerifyComponent } from './projects/project-revenue-share-verify/project-revenue-share-verify.component';
+import { ProjectDepositComponent } from './projects/project-deposit/project-deposit.component';
+import { ProjectWithdrawComponent } from './projects/project-withdraw/project-withdraw.component';
+import { OffersItemComponent } from './offers/offers-item/offers-item.component';
 
 @NgModule({
     declarations: [
@@ -93,7 +90,7 @@ import { GroupEditComponent } from './groups/group-edit/group-edit.component';
         NavbarComponent,
         WalletComponent,
         OffersComponent,
-        SingleOfferItemComponent,
+        OffersItemComponent,
         OfferComponent,
         OfferInvestComponent,
         OfferInvestVerifyComponent,
@@ -102,9 +99,16 @@ import { GroupEditComponent } from './groups/group-edit/group-edit.component';
         ProjectsComponent,
         ProjectNewComponent,
         ProjectEditComponent,
+        ProjectEditPaymentsComponent,
+        ProjectDepositComponent,
+        ProjectWithdrawComponent,
+        ProjectRevenueShareComponent,
+        ProjectRevenueShareVerifyComponent,
         GroupComponent,
         GroupNewComponent,
         GroupEditComponent,
+        GroupProjectsComponent,
+        GroupProjectsItemComponent,
         PaymentOptionsComponent,
         FooterComponent,
         LandingPageComponent,
@@ -113,14 +117,9 @@ import { GroupEditComponent } from './groups/group-edit/group-edit.component';
         HeaderComponent,
         SignUpComponent,
         NewPaymentOptionComponent,
-        CreateNewProjectComponent,
         AcceptTermsComponent,
         VeriffComponent,
         IdentyumComponent,
-        ManageProjectsComponent,
-        ManageSingleProjectComponent,
-        SingleProjectItemComponent,
-        ManagePaymentsComponent,
         ManageWithdrawalsComponent,
         SingleWithdrawalComponent,
         DepositComponent,
@@ -130,17 +129,12 @@ import { GroupEditComponent } from './groups/group-edit/group-edit.component';
         WalletActivationComponent,
         PlatformBankAccountComponent,
         NewPlatformBankAccountComponent,
-        ExchangeComponent,
         OwnershipComponent,
-        RevenueShareComponent,
         UserStateReminderComponent,
-        RevenueShareConfirmModalComponent,
         LocationMapComponent,
         MapModalComponent,
         ManageSingleDepositModalComponent,
         TxAmountSign,
-        ProjectDepositComponent,
-        ProjectWithdrawComponent,
         ForgotPasswordComponent,
         ResetPasswordComponent,
         SignInAutoComponent,

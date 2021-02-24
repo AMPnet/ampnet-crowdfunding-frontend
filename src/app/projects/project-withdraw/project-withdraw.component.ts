@@ -1,16 +1,15 @@
 import { Component } from '@angular/core';
-
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
-import { catchError, map, shareReplay, switchMap, take, tap } from 'rxjs/operators';
-import { ArkaneService } from '../../../../../shared/services/arkane.service';
-import { ActivatedRoute } from '@angular/router';
-import { Withdraw, WithdrawService } from '../../../../../shared/services/wallet/withdraw.service';
-import { PopupService } from '../../../../../shared/services/popup.service';
 import { BehaviorSubject, combineLatest, EMPTY, Observable, of } from 'rxjs';
-import { RouterService } from '../../../../../shared/services/router.service';
-import { ErrorService } from '../../../../../shared/services/error.service';
+import { Wallet, WalletService } from '../../shared/services/wallet/wallet.service';
+import { Withdraw, WithdrawService } from '../../shared/services/wallet/withdraw.service';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { RouterService } from '../../shared/services/router.service';
+import { PopupService } from '../../shared/services/popup.service';
+import { ArkaneService } from '../../shared/services/arkane.service';
+import { ErrorService } from '../../shared/services/error.service';
 import { TranslateService } from '@ngx-translate/core';
-import { Wallet, WalletService } from '../../../../../shared/services/wallet/wallet.service';
+import { ActivatedRoute } from '@angular/router';
+import { catchError, map, shareReplay, switchMap, take, tap } from 'rxjs/operators';
 
 @Component({
     selector: 'app-project-withdraw',
@@ -20,7 +19,7 @@ import { Wallet, WalletService } from '../../../../../shared/services/wallet/wal
 export class ProjectWithdrawComponent {
     withdrawalState = WithdrawalState;
 
-    projectID: string;
+    projectUUID: string;
 
     projectWallet$: Observable<Wallet>;
     refreshWithdrawalSubject = new BehaviorSubject<Withdraw>(null);
@@ -37,16 +36,16 @@ export class ProjectWithdrawComponent {
                 private translate: TranslateService,
                 private route: ActivatedRoute,
                 private fb: FormBuilder) {
-        this.projectID = this.route.snapshot.params.projectID;
+        this.projectUUID = this.route.snapshot.params.id;
 
-        this.projectWallet$ = this.walletService.getProjectWallet(this.projectID).pipe(
+        this.projectWallet$ = this.walletService.getProjectWallet(this.projectUUID).pipe(
             this.errorService.handleError,
             shareReplay(1)
         );
 
         this.withdrawal$ = this.refreshWithdrawalSubject.pipe(
             switchMap(data => data !== null ? of(data) :
-                this.withdrawService.getProjectPendingWithdraw(this.projectID).pipe(
+                this.withdrawService.getProjectPendingWithdraw(this.projectUUID).pipe(
                     this.errorService.handleError,
                     catchError(err => err.status === 404 ?
                         of(WithdrawalState.EMPTY) : this.recoverBack())
@@ -84,7 +83,7 @@ export class ProjectWithdrawComponent {
         const iban: string = this.withdrawalForm.get('iban').value.replace(/\s/g, '');
         const swift: string = String(this.withdrawalForm.get('swift').value).trim();
 
-        return this.withdrawService.createProjectWithdrawRequest(amount, iban, swift, this.projectID).pipe(
+        return this.withdrawService.createProjectWithdrawRequest(amount, iban, swift, this.projectUUID).pipe(
             this.errorService.handleError,
             tap(withdraw => {
                 this.refreshWithdrawalSubject.next(withdraw);

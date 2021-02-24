@@ -18,6 +18,7 @@
   &__funding {
     font-size: $font-size-mobile-title-small;
     color: $body-color;
+
     span.bold {
       color: $title-color;
       font-weight: bold;
@@ -44,16 +45,20 @@
       border-radius: 2px;
       background-color: $border-color;
       margin-bottom: 6px;
+
       &__raised {
         color: $body-color;
+
         div {
           font-size: $font-size-desktop-small;
         }
+
         span.bold {
           color: $title-color;
           font-weight: bold;
         }
       }
+
       &__bar {
         height: 2px;
         border-radius: 2px;
@@ -69,15 +74,18 @@
       display: block;
       margin-right: 32px;
     }
+
     &__left,
     &__left img {
       height: 144px;
-      width: 288px;
+      min-width: 288px;
       border-radius: 1px;
     }
+
     &__left img {
       object-fit: cover;
     }
+
     &__right {
       padding: 10px 0;
     }
@@ -92,6 +100,7 @@
     &__funding {
       font-size: $font-size-mobile-title-small;
       color: $body-color;
+
       b {
         color: $title-color;
         font-size: $font-size-desktop-body2;
@@ -116,6 +125,7 @@
       order: 1;
       background-color: unset;
       transition: all 0.3s ease-in-out;
+
       &:hover {
         background-color: $border-light-color;
       }
@@ -123,17 +133,22 @@
 
     &__progress-bar {
       order: 2;
+
       .progress {
         height: 4px;
+
         &__raised {
           color: $body-color;
+
           div {
             font-size: $font-size-desktop-small;
           }
+
           span {
             font-size: $font-size-desktop-small;
           }
         }
+
         &__bar {
           height: 4px;
         }

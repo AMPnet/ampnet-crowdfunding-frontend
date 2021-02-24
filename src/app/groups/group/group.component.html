@@ -19,7 +19,7 @@
                             [routerLink]="'/dash/projects/new' | coopPath">
                         <fa-icon icon="plus" class="mr-lg-3"></fa-icon>
                         <span class="btn__text">
-                            {{ 'organizations.details.create_project' | translate }}
+                            {{ 'groups.show.create_project' | translate }}
                         </span>
                     </button>
                 </ng-container>
@@ -67,8 +67,8 @@
                 <tabset>
                     <tab heading="{{ 'groups.show.projects.title' | translate }}">
                         <div class="manage__projects">
-                            <app-manage-projects [groupID]="organization.uuid" [isPublic]=isPublic>
-                            </app-manage-projects>
+                            <app-group-projects [groupID]="organization.uuid" [isPublic]="isPublic">
+                            </app-group-projects>
                         </div>
                     </tab>
                     <tab heading="{{ 'groups.show.members.title' | translate }}">

@@ -1,19 +1,19 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
-import { catchError, map, shareReplay, switchMap } from 'rxjs/operators';
-import { MiddlewareService, ProjectWalletInfo } from '../../../../../shared/services/middleware/middleware.service';
-import { WalletService } from '../../../../../shared/services/wallet/wallet.service';
 import { Observable, of } from 'rxjs';
-import { RouterService } from '../../../../../shared/services/router.service';
-import { ErrorService } from '../../../../../shared/services/error.service';
+import { MiddlewareService, ProjectWalletInfo } from '../../shared/services/middleware/middleware.service';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { WalletService } from '../../shared/services/wallet/wallet.service';
+import { ActivatedRoute } from '@angular/router';
+import { RouterService } from '../../shared/services/router.service';
+import { ErrorService } from '../../shared/services/error.service';
+import { catchError, map, shareReplay, switchMap } from 'rxjs/operators';
 
 @Component({
-    selector: 'app-manage-payments',
-    templateUrl: './manage-payments.component.html',
-    styleUrls: ['./manage-payments.component.scss']
+    selector: 'app-project-edit-payments',
+    templateUrl: './project-edit-payments.component.html',
+    styleUrls: ['./project-edit-payments.component.scss']
 })
-export class ManagePaymentsComponent {
+export class ProjectEditPaymentsComponent {
     projectWalletInfo$: Observable<ProjectWalletInfo>;
 
     revenueShareForm: FormGroup;
@@ -24,10 +24,9 @@ export class ManagePaymentsComponent {
                 private errorService: ErrorService,
                 private fb: FormBuilder,
                 private middlewareService: MiddlewareService) {
-        const projectID = this.route.snapshot.params.projectID;
+        const projectUUID = this.route.snapshot.params.id;
 
-
-        this.projectWalletInfo$ = this.walletService.getProjectWallet(projectID).pipe(
+        this.projectWalletInfo$ = this.walletService.getProjectWallet(projectUUID).pipe(
             switchMap(wallet => this.middlewareService.getProjectWalletInfoCached(wallet.hash)
                 .pipe(this.errorService.handleError)),
             shareReplay({refCount: true, bufferSize: 1})

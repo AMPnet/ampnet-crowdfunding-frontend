@@ -19,7 +19,8 @@ import { FileValidator } from './validators/file.validator';
 import { URLValidator } from './validators/url.validator';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { TranslationsModule } from '../translations.module';
+import { TranslationsModule } from './modules/translations.module';
+import { QuillModule } from 'ngx-quill';
 
 const components = [
     ActionButtonComponent,
@@ -54,7 +55,8 @@ const importExportModules = [
     FormsModule,
     ReactiveFormsModule,
     FontAwesomeModule,
-    TranslationsModule
+    TranslationsModule,
+    QuillModule
 ];
 
 @NgModule({

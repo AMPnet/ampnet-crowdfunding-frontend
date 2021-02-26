@@ -10,28 +10,20 @@ import { OffersComponent } from './offers/offers.component';
 import { OfferComponent } from './offers/offer/offer.component';
 import { MyPortfolioComponent } from './my-portfolio/my-portfolio.component';
 import { SingleInvestItemComponent } from './my-portfolio/single-invest-item/single-invest-item.component';
-import { PaymentOptionsComponent } from './payment-options/payment-options.component';
+import { PaymentOptionsComponent } from './settings/payment-options/payment-options.component';
 import { FooterComponent } from './footer/footer.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { PublicLayoutComponent } from './public-layout/public-layout.component';
 import { SecureLayoutComponent } from './secure-layout/secure-layout.component';
 import { HeaderComponent } from './public-layout/header/header.component';
 import { SignUpComponent } from './authentication/sign-up/sign-up.component';
-import { NewPaymentOptionComponent } from './payment-options/new-payment-option/new-payment-option.component';
+import { NewPaymentOptionComponent } from './settings/payment-options/new-payment-option/new-payment-option.component';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { SocialLoginModule } from 'angularx-social-login';
-import { ManageWithdrawalsComponent } from './admin/manage-withdrawals/manage-withdrawals.component';
-import { SingleWithdrawalComponent } from './admin/manage-withdrawals/single-withdrawal/single-withdrawal.component';
 import { DepositComponent } from './deposit/deposit.component';
-import { ManageDepositsComponent } from './admin/manage-deposits/manage-deposits.component';
-import { ManageSingleDepositComponent } from './admin/manage-deposits/manage-single-deposit/manage-single-deposit.component';
 import { WithdrawComponent } from './withdraw/withdraw.component';
-import { WalletActivationComponent } from './admin/wallet-activation/wallet-activation.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { PlatformBankAccountComponent } from './admin/platform-bank-account/platform-bank-account.component';
-import { NewPlatformBankAccountComponent } from './admin/platform-bank-account/new-platform-bank-account/new-platform-bank-account.component';
-import { OwnershipComponent } from './admin/ownership/ownership.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TxAmountSign } from './wallet/wallet.pipe';
 import { UserStateReminderComponent } from './user-state-reminder/user-state-reminder.component';
@@ -43,7 +35,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ForgotPasswordComponent } from './authentication/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './authentication/reset-password/reset-password.component';
-import { ManageSingleDepositModalComponent } from './admin/manage-deposits/manage-single-deposit/manage-single-deposit-modal/manage-single-deposit-modal.component';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { APP_BASE_HREF } from '@angular/common';
 import { SignInAutoComponent } from './authentication/sign-in-auto/sign-in-auto.component';
@@ -55,7 +46,6 @@ import { AuthLayoutComponent } from './authentication/auth-layout/auth-layout.co
 import { SignInComponent } from './authentication/sign-in/sign-in.component';
 import { NgxCaptchaModule } from 'ngx-captcha';
 import { NewInstanceComponent } from './authentication/new-instance/new-instance.component';
-import { PlatformConfigComponent } from './admin/platform-config/platform-config.component';
 import { QuillModule } from 'ngx-quill';
 import { DynamicLocaleProvider } from './shared/providers/locale.provider';
 import { SentryProvider } from './shared/providers/sentry.provider';
@@ -82,6 +72,7 @@ import { ProjectRevenueShareVerifyComponent } from './projects/project-revenue-s
 import { ProjectDepositComponent } from './projects/project-deposit/project-deposit.component';
 import { ProjectWithdrawComponent } from './projects/project-withdraw/project-withdraw.component';
 import { OffersItemComponent } from './offers/offers-item/offers-item.component';
+import { TranslateStore } from '@ngx-translate/core';
 
 @NgModule({
     declarations: [
@@ -120,20 +111,11 @@ import { OffersItemComponent } from './offers/offers-item/offers-item.component'
         AcceptTermsComponent,
         VeriffComponent,
         IdentyumComponent,
-        ManageWithdrawalsComponent,
-        SingleWithdrawalComponent,
         DepositComponent,
-        ManageDepositsComponent,
-        ManageSingleDepositComponent,
         WithdrawComponent,
-        WalletActivationComponent,
-        PlatformBankAccountComponent,
-        NewPlatformBankAccountComponent,
-        OwnershipComponent,
         UserStateReminderComponent,
         LocationMapComponent,
         MapModalComponent,
-        ManageSingleDepositModalComponent,
         TxAmountSign,
         ForgotPasswordComponent,
         ResetPasswordComponent,
@@ -145,7 +127,6 @@ import { OffersItemComponent } from './offers/offers-item/offers-item.component'
         AuthLayoutComponent,
         SignInComponent,
         NewInstanceComponent,
-        PlatformConfigComponent,
         StaticPageComponent,
     ],
     imports: [
@@ -163,10 +144,11 @@ import { OffersItemComponent } from './offers/offers-item/offers-item.component'
         ModalModule.forRoot(),
         QuillModule.forRoot(),
         BsDatepickerModule.forRoot(),
-        NgxCaptchaModule
+        NgxCaptchaModule,
     ],
     providers: [
         AppConfigService,
+        TranslateStore,
         {
             provide: APP_INITIALIZER,
             useFactory: (config: AppConfigService, lang: LanguageService) =>

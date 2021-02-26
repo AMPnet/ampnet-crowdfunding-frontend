@@ -22,7 +22,7 @@ export class TranslationsLoader implements TranslateLoader {
 
 @NgModule({
     imports: [
-        TranslateModule.forRoot({
+        TranslateModule.forChild({
             loader: {
                 provide: TranslateLoader,
                 useFactory: (translationsLoaderFactory),

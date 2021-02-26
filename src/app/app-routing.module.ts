@@ -4,22 +4,14 @@ import { RouterModule, Routes } from '@angular/router';
 import { WalletComponent } from './wallet/wallet.component';
 import { OffersComponent } from './offers/offers.component';
 import { MyPortfolioComponent } from './my-portfolio/my-portfolio.component';
-import { PaymentOptionsComponent } from './payment-options/payment-options.component';
+import { PaymentOptionsComponent } from './settings/payment-options/payment-options.component';
 import { PublicLayoutComponent } from './public-layout/public-layout.component';
 import { SecureLayoutComponent } from './secure-layout/secure-layout.component';
 import { SignUpComponent } from './authentication/sign-up/sign-up.component';
-import { NewPaymentOptionComponent } from './payment-options/new-payment-option/new-payment-option.component';
+import { NewPaymentOptionComponent } from './settings/payment-options/new-payment-option/new-payment-option.component';
 import { AuthGuard } from './authentication/auth.guard';
-import { ManageWithdrawalsComponent } from './admin/manage-withdrawals/manage-withdrawals.component';
-import { SingleWithdrawalComponent } from './admin/manage-withdrawals/single-withdrawal/single-withdrawal.component';
-import { ManageDepositsComponent } from './admin/manage-deposits/manage-deposits.component';
 import { DepositComponent } from './deposit/deposit.component';
-import { ManageSingleDepositComponent } from './admin/manage-deposits/manage-single-deposit/manage-single-deposit.component';
 import { WithdrawComponent } from './withdraw/withdraw.component';
-import { WalletActivationComponent } from './admin/wallet-activation/wallet-activation.component';
-import { PlatformBankAccountComponent } from './admin/platform-bank-account/platform-bank-account.component';
-import { NewPlatformBankAccountComponent } from './admin/platform-bank-account/new-platform-bank-account/new-platform-bank-account.component';
-import { OwnershipComponent } from './admin/ownership/ownership.component';
 import { ForgotPasswordComponent } from './authentication/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './authentication/reset-password/reset-password.component';
 import { SignInAutoComponent } from './authentication/sign-in-auto/sign-in-auto.component';
@@ -29,7 +21,6 @@ import { CoopGuard } from './shared/guards/coop.guard';
 import { AuthLayoutComponent } from './authentication/auth-layout/auth-layout.component';
 import { SignInComponent } from './authentication/sign-in/sign-in.component';
 import { NewInstanceComponent } from './authentication/new-instance/new-instance.component';
-import { PlatformConfigComponent } from './admin/platform-config/platform-config.component';
 import { IdentityGuard } from './settings/user/identity/identity.guard';
 import { VeriffComponent } from './settings/user/identity/veriff/veriff.component';
 import { TermsAcceptedGuard } from './settings/user/identity/accept-terms/terms-accepted.guard';
@@ -106,8 +97,6 @@ const appRoutes: Routes = [
             {path: 'my_portfolio', component: MyPortfolioComponent},
             {path: 'my_portfolio/:id', component: OfferComponent, data: {isPortfolioView: true}},
 
-            {path: 'payment_options', component: PaymentOptionsComponent},
-            {path: 'payment_options/new', component: NewPaymentOptionComponent},
             {
                 path: 'settings', children: [
                     {path: 'user', component: UserComponent},
@@ -118,18 +107,14 @@ const appRoutes: Routes = [
                             {path: 'identyum', component: IdentyumComponent, canActivate: [TermsAcceptedGuard]}
                         ]
                     },
+                    {path: 'payment_options', component: PaymentOptionsComponent},
+                    {path: 'payment_options/new', component: NewPaymentOptionComponent},
                 ]
             },
-
-            {path: 'manage_withdrawals', component: ManageWithdrawalsComponent},
-            {path: 'manage_withdrawals/:ID', component: SingleWithdrawalComponent},
-            {path: 'manage_deposits', component: ManageDepositsComponent},
-            {path: 'manage_deposits/:ID', component: ManageSingleDepositComponent},
-            {path: 'activation/:type', component: WalletActivationComponent},
-            {path: 'admin/platform_bank_account', component: PlatformBankAccountComponent},
-            {path: 'admin/platform_bank_account/new', component: NewPlatformBankAccountComponent},
-            {path: 'ownership', component: OwnershipComponent},
-            {path: 'platform_config', component: PlatformConfigComponent},
+            {
+                path: 'admin',
+                loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
+            }
         ]
     }
 ];

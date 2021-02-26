@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { PaymentService } from '../../shared/services/payment.service';
+import { PaymentService } from '../../../shared/services/payment.service';
 import 'bootstrap-select';
-import { RouterService } from '../../shared/services/router.service';
+import { RouterService } from '../../../shared/services/router.service';
 import { tap } from 'rxjs/operators';
-import { ErrorService } from '../../shared/services/error.service';
+import { ErrorService } from '../../../shared/services/error.service';
 
 declare var $: any;
 
@@ -21,7 +21,7 @@ export class NewPaymentOptionComponent {
     addNewBankAccount(iban: string, swift: string, alias: string) {
         return this.paymentService.createBankAccount(iban, swift, alias).pipe(
             this.errorService.handleError,
-            tap(() => this.router.navigate(['/dash/payment_options']))
+            tap(() => this.router.navigate(['/dash/settings/payment_options']))
         );
     }
 }

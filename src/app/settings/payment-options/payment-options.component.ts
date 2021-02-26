@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { PaymentService, UserBankAccount } from '../shared/services/payment.service';
+import { PaymentService, UserBankAccount } from '../../shared/services/payment.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
-import { RouterService } from '../shared/services/router.service';
+import { RouterService } from '../../shared/services/router.service';
 
 
 @Component({
@@ -24,7 +24,7 @@ export class PaymentOptionsComponent {
     }
 
     toNewBankAccount() {
-        return this.router.navigate(['/dash/payment_options/new']);
+        return this.router.navigate(['/dash/settings/payment_options/new']);
     }
 
     deleteBankAccountClicked(id: number) {

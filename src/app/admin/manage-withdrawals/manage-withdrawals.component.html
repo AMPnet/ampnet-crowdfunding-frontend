@@ -8,7 +8,7 @@
     <ng-container *ngIf="(userWithdrawals$ | async) as userWithdrawals else spinner">
         <div *ngIf="userWithdrawals.length > 0" class="list-group">
             <a *ngFor="let userWithdrawal of userWithdrawals"
-               [routerLink]="['/dash', 'manage_withdrawals', userWithdrawal.withdraw.id] | coopPath"
+               [routerLink]="['/dash/admin', 'manage_withdrawals', userWithdrawal.withdraw.id] | coopPath"
                class="list-group-item list-group-item-action">
                 <span class="float-left">
                     {{ userWithdrawal.user.first_name }} {{ userWithdrawal.user.last_name }}
@@ -34,7 +34,7 @@
         <div *ngIf="projectWithdrawals.length > 0" class="list-group">
             <a *ngFor="let projectWithdrawal of projectWithdrawals"
                class="list-group-item list-group-item-action"
-               [routerLink]="['/dash', 'manage_withdrawals', projectWithdrawal.withdraw.id] | coopPath">
+               [routerLink]="['/dash/admin', 'manage_withdrawals', projectWithdrawal.withdraw.id] | coopPath">
                 <div>
                     <span class="float-left">
                         {{ projectWithdrawal.project.name }}

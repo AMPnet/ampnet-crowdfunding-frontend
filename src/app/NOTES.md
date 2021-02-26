@@ -87,7 +87,7 @@ offers.show
     - if there are groups, add a dropdown to pick the group
     - add small text below dropdown to create a new group
 - // {path: '', component: LandingPageComponent}, TODO: chat with others if this is OK
-- prefix all admin routes with /admin
-    - make a module of admin routes and make it lazy loaded
-- set payment-options under settings
-- set authentication as a module? and maybe lazy load it?
+- set auth as a module? and maybe lazy load it?
+  - if so, fix the routes
+- extensively test if everything about shared and admin modules work as intended. might be a thin ice if not tested properly. try to make a production build and see how it behaves.
+- settings as a module (?)

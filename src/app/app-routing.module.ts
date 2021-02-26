@@ -93,6 +93,7 @@ const appRoutes: Routes = [
 
             {path: 'projects', component: ProjectsComponent},
             {path: 'projects/new', component: ProjectNewComponent},
+            {path: 'projects/:id', component: OfferComponent},
             {path: 'projects/:id/edit', component: ProjectEditComponent},
             {path: 'projects/:id/deposit', component: ProjectDepositComponent},
             {path: 'projects/:id/withdraw', component: ProjectWithdrawComponent},

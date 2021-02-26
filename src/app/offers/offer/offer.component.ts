@@ -38,6 +38,7 @@ export class OfferComponent {
     transactions$: Observable<ProjectTransactions>;
     isProjectCancelable$: Observable<boolean>;
     isProjectWalletCreated$: Observable<boolean>;
+    isProjectEditable$: Observable<boolean>;
 
     bsModalRef: BsModalRef;
 
@@ -57,9 +58,9 @@ export class OfferComponent {
                 private arkaneService: ArkaneService) {
         this.isOverview = this.route.snapshot.data.isOverview;
         this.isPortfolioView = this.route.snapshot.data.isPortfolioView;
-        const projectID = this.route.snapshot.params.id;
+        const projectUUID = this.route.snapshot.params.id;
 
-        this.project$ = this.projectService.getProject(projectID).pipe(
+        this.project$ = this.projectService.getProject(projectUUID).pipe(
             this.errorService.handleError,
             tap(project => this.setMetaTags(project)),
             shareReplay(1)
@@ -81,7 +82,7 @@ export class OfferComponent {
         );
 
         this.projectWalletMW$ = this.isProjectWalletCreated$.pipe(
-            switchMap(isCreated => isCreated ? this.walletService.getProjectWallet(projectID) : EMPTY),
+            switchMap(isCreated => isCreated ? this.walletService.getProjectWallet(projectUUID) : EMPTY),
             switchMap(wallet => this.middlewareService.getProjectWalletInfoCached(wallet.hash)),
             this.errorService.handleError,
         );
@@ -97,7 +98,7 @@ export class OfferComponent {
             map(portfolio => portfolio?.investment)
         );
 
-        this.transactions$ = this.portfolioService.getInvestmentsInProject(projectID).pipe(
+        this.transactions$ = this.portfolioService.getInvestmentsInProject(projectUUID).pipe(
             this.errorService.handleError,
             shareReplay(1)
         );
@@ -110,6 +111,11 @@ export class OfferComponent {
                     map(res => res.investmentCancelable)
                 );
             })
+        );
+
+        this.isProjectEditable$ = this.projectService.getPersonal().pipe(
+            this.errorService.handleError,
+            map(projects => Boolean(projects.projects.find(p => p.uuid === projectUUID)))
         );
     }
 

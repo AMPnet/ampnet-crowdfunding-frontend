@@ -25,7 +25,7 @@
             <div *ngIf="states.projects?.length > 0" @enterTrigger class="groups">
                 <ul class="list-group">
                     <li *ngFor="let project of states.projects" class="list__item"
-                        [routerLink]="['/dash/offers', project.uuid] | coopPath">
+                        [routerLink]="['/dash/projects', project.uuid] | coopPath">
                         <div class="item__desc">
                             <div class="item__title">{{ project.name | uppercase }}</div>
                         </div>

@@ -47,7 +47,11 @@ export class GroupProjectsItemComponent implements OnInit {
         if (this.route.snapshot.data.isOverview) {
             this.router.navigate(['/offers', this.projectWallet.project.uuid]);
         } else {
-            this.router.navigate(['/dash/offers', this.projectWallet.project.uuid]);
+            if (this.isPublic) {
+                this.router.navigate(['/dash/offers', this.projectWallet.project.uuid]);
+            } else {
+                this.router.navigate(['/dash/projects', this.projectWallet.project.uuid]);
+            }
         }
     }
 }

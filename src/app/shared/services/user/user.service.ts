@@ -29,13 +29,19 @@ export class UserService {
         return this.http.get<User>('/api/user/me').pipe(
             switchMap(user => this.checkIntegrity(user) ?
                 of(user) : this.refreshUserToken().pipe(switchMap(() => of(user)))
-            )
-        );
+            ),
+            switchMap(user => this.checkDefaultLang(user) ?
+                of(user) : this.updateUser({language: this.languageService.getPreferredLang()})
+            ));
     }
 
     private checkIntegrity(user: User): boolean {
         return user.role === this.getRoleFromAuthorities()
             && user.verified === this.http.getJWTUser().verified;
+    }
+
+    private checkDefaultLang(user: User): boolean {
+        return user.language === this.languageService.getPreferredLang();
     }
 
     private getRoleFromAuthorities(): UserRole {

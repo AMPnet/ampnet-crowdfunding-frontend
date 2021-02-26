@@ -1,6 +1,6 @@
 # Translation guide
 
-To translate words from the frontend application, a translator will be provided by Excell file (`.xslx`) that contains:
+To translate words from the frontend application, a translator will be provided by Excel file (`.xslx`) that contains:
 
 1. Language abbreviations in the first row (should not be touched),
 2. Key (labels) in the first column (should not be touched),
@@ -28,7 +28,7 @@ become `Welcome to My company investing platform.`.
 ### Variables
 
 Variables inside the curly braces **must not be renamed**. They are used internally inside the code to fetch the
-appropriate. Using string interpolation is optional and can be omitted.
+appropriate value. While using string interpolation is optional and can be omitted, if there is an interpolated value in English, it should be set in translated language.
 
 ```
 # english translation
@@ -48,8 +48,7 @@ Dobrodošli u investicijsku platformu.
 ### Split parts
 
 Translation values can be split into multiple parts. This is useful if a particular word inside the sentence needs to be
-accentuated or extracted. These rules are defined inside the code, and a translator cannot change them, only change
-their order in a sentence.
+accentuated or extracted. These rules are defined inside the code, and a translator cannot change them. The only thing that can be changed is the order of the parts in a sentence.
 
 For example, if a particular word needs to be a link to an external page, the English value can look like this:
 

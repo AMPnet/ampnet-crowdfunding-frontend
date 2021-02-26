@@ -1,5 +1,5 @@
 {
-  "landing.welcome": "Καλωσόρισες στην επενδυτική πλατφόρμα της | {{ platform name }} | .",
+  "landing.welcome": "Καλωσόρισες στην επενδυτική πλατφόρμα της | {{ coopName }} | .",
   "landing.explore": "Μάθε περισσότερα",
   "offers.title": "Διαθέσιμες επενδύσεις",
   "offers.no_projects_available": "Δεν υπάρχουν έργα διαθέσιμα για επένδυση.",
@@ -410,8 +410,8 @@
   "admin.platform_config.facebook_app_id_input.title": "Facebook App ID",
   "admin.platform_config.facebook_app_id_input.placeholder": "facebookAppID",
   "admin.platform_config.submit": "Ενημέρωση ρύθμισης παραμέτρων",
-  "header.sign_up": "Συνδέσου",
-  "header.sign_in": "Συνδέσου",
+  "header.sign_up": "ΕΓΓΡΑΦΗ",
+  "header.sign_in": "ΣΥΝΔΕΣΗ",
   "auth.forgot_password.title": "Ξέχασες τον κωδικό σου",
   "auth.forgot_password.instructions_notice": "Εισηγαγε το email σου και θα σου στείλουμε οδηγίες για να επαναφέρεις τον κωδικό πρόσβασής σου.",
   "auth.forgot_password.email_input.title": "Email",

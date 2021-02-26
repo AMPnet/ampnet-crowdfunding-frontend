@@ -45,7 +45,7 @@ export class ProjectDepositComponent {
         return this.depositService.createProjectDeposit(projectUUID).pipe(
             catchError(err =>
                 err.error.err_code === WalletError.UNAPPROVED_DEPOSIT_EXISTS ? this.popupService.info(
-                    this.translate.instant('projects.edit.manage_payments.deposit.existing_deposit')
+                    this.translate.instant('projects.deposit.existing_deposit')
                 ).pipe(switchMap(() => this.recoverBack())) : this.recoverBack()),
             this.errorService.handleError,
         );

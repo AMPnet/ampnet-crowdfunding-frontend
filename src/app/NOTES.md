@@ -48,4 +48,31 @@ organizations.details
 
 groups.show
 
+---
+
+projects.edit.manage_payments.deposit
+
+projects.deposit
+
+---
+
+projects.edit.manage_payments.withdraw
+
+projects.withdraw
+
+---
+
+projects.edit.manage_payments.revenue_share.review
+
+projects.revenue_share
+
+---
+
+projects.edit.manage_payments.revenue_share.confirm_modal
+
+projects.revenue_share.verify
+
+---
+
+
 ```

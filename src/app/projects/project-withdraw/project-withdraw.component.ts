@@ -112,7 +112,7 @@ export class ProjectWithdrawComponent {
             return this.withdrawService.deleteWithdrawal(withdrawalID).pipe(
                 this.errorService.handleError,
                 switchMap(() => this.popupService.success(
-                    this.translate.instant('projects.edit.manage_payments.withdraw.deleted')
+                    this.translate.instant('projects.withdraw.deleted')
                 )),
                 tap(() => this.refreshWithdrawalSubject.next(null)),
             );

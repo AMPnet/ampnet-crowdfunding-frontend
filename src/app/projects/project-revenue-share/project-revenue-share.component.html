@@ -9,18 +9,18 @@
 
         <div class="revenue-info">
             <div class="info__title">
-                {{ 'projects.edit.manage_payments.revenue_share.review.title' | translate }}
+                {{ 'projects.revenue_share.title' | translate }}
             </div>
             <div class="info__content flex__center--space">
                 <div class="info__project">
                     <p>
-                        {{ 'projects.edit.manage_payments.revenue_share.review.project_name' | translate }}
+                        {{ 'projects.revenue_share.project_name' | translate }}
                     </p>
                     <p>{{ project.name }}</p>
                 </div>
                 <div class="info__amount">
                     <p>
-                        {{ 'projects.edit.manage_payments.revenue_share.review.amount' | translate }}
+                        {{ 'projects.revenue_share.amount' | translate }}
                     </p>
                     <p>{{ amount | currencyDefault }}</p>
                 </div>
@@ -28,7 +28,7 @@
         </div>
         <div class="revenue-cta">
             <button class="btn btn-danger w-100" (click)="showConfirmModal(project)">
-                {{ 'projects.edit.manage_payments.revenue_share.review.submit' | translate }}
+                {{ 'projects.revenue_share.submit' | translate }}
             </button>
         </div>
     </div>

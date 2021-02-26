@@ -310,64 +310,13 @@
           "withdraw_button": "Withdraw",
           "balance": "Project balance"
         },
-        "deposit": {
-          "title": "Deposit",
-          "notice": "Please deposit funds to your wallet by making a bank transfer to the {{ bankAccountName }} bank account using the payment details presented below. Make sure that you also include the unique deposit code as the reference for the transaction. After you have transferred the money to our bank account it can take up to 48h for it to become visible on the platform. You will be notified by email when your money has been received.",
-          "details": "Deposit payment details",
-          "iban": "IBAN",
-          "swift": "SWIFT/BIC",
-          "reference": "Reference",
-          "existing_deposit": "You already have an existing deposit. Please wait until it is approved"
-        },
-        "withdraw": {
-          "title": "Withdraw",
-          "amount_input": {
-            "title": "Withdrawal amount",
-            "placeholder": "Enter withdrawal amount",
-            "wallet_balance": "Current wallet balance: {{ balance }}"
-          },
-          "request": {
-            "amount": "Amount",
-            "destination": "IBAN",
-            "swift": "SWIFT/BIC"
-          },
-          "pending_notice": "You have a pending withdrawal request. It can take up to 24 hours to process the transaction.",
-          "sign_button": "Sign transaction",
-          "cancel_button": "Cancel request",
-          "bank_input": {
-            "title": "IBAN",
-            "placeholder": "NL47INGB5697455291"
-          },
-          "swift_input": {
-            "title": "SWIFT/BIC",
-            "placeholder": "RACZHUH1"
-          },
-          "submit": "Request withdrawal",
-          "deleted": "Withdrawal deleted.",
-          "burned_notice": "Platform manager has approved and processed your withdrawal request. Please allow up to 48 hours for funds to reach your selected bank account."
-        },
         "revenue_share": {
           "title": "Revenue share",
           "description": "Enter the amount of money to be paid out to investors.",
           "placeholder": "Enter amount to share",
           "errors.invalid_amount": "Payout must be lower or equal to balance.",
           "submit_button": "Start payout",
-          "submit_button.short": "Payout",
-          "review": {
-            "title": "Revenue share information",
-            "project_name": "Project name",
-            "amount": "Amount to distribute",
-            "submit": "Verify and start revenue share"
-          },
-          "confirm_modal": {
-            "title": "Confirm revenue share amount",
-            "input": {
-              "title": "Amount",
-              "placeholder": "Enter revenue share amount"
-            },
-            "submit": "Confirm",
-            "cancel": "Cancel"
-          }
+          "submit_button.short": "Payout"
         }
       },
       "create_wallet_notice": "Verify the project creation with your blockchain wallet. You will be prompted now.",
@@ -375,6 +324,57 @@
         "question": "Are you sure you want to delete this file? This action cannot be reversed.",
         "yes": "Yes",
         "no": "No"
+      }
+    },
+    "deposit": {
+      "title": "Deposit",
+      "notice": "Please deposit funds to your wallet by making a bank transfer to the {{ bankAccountName }} bank account using the payment details presented below. Make sure that you also include the unique deposit code as the reference for the transaction. After you have transferred the money to our bank account it can take up to 48h for it to become visible on the platform. You will be notified by email when your money has been received.",
+      "details": "Deposit payment details",
+      "iban": "IBAN",
+      "swift": "SWIFT/BIC",
+      "reference": "Reference",
+      "existing_deposit": "You already have an existing deposit. Please wait until it is approved"
+    },
+    "withdraw": {
+      "title": "Withdraw",
+      "amount_input": {
+        "title": "Withdrawal amount",
+        "placeholder": "Enter withdrawal amount",
+        "wallet_balance": "Current wallet balance: {{ balance }}"
+      },
+      "request": {
+        "amount": "Amount",
+        "destination": "IBAN",
+        "swift": "SWIFT/BIC"
+      },
+      "pending_notice": "You have a pending withdrawal request. It can take up to 24 hours to process the transaction.",
+      "sign_button": "Sign transaction",
+      "cancel_button": "Cancel request",
+      "bank_input": {
+        "title": "IBAN",
+        "placeholder": "NL47INGB5697455291"
+      },
+      "swift_input": {
+        "title": "SWIFT/BIC",
+        "placeholder": "RACZHUH1"
+      },
+      "submit": "Request withdrawal",
+      "deleted": "Withdrawal deleted.",
+      "burned_notice": "Platform manager has approved and processed your withdrawal request. Please allow up to 48 hours for funds to reach your selected bank account."
+    },
+    "revenue_share": {
+      "title": "Revenue share information",
+      "project_name": "Project name",
+      "amount": "Amount to distribute",
+      "submit": "Verify and start revenue share",
+      "verify": {
+        "title": "Confirm revenue share amount",
+        "input": {
+          "title": "Amount",
+          "placeholder": "Enter revenue share amount"
+        },
+        "submit": "Confirm",
+        "cancel": "Cancel"
       }
     }
   },

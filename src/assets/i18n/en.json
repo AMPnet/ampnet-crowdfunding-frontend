@@ -164,8 +164,7 @@
   },
   "project_management": {
     "projects": {
-      "title": "Project management",
-      "my": "My Projects",
+      "title": "Projects",
       "create": "Create Project",
       "empty": "You currently don't have access to any project."
     },
@@ -173,7 +172,6 @@
       "title": "Investment groups",
       "create_org": "Create group",
       "pending_invite_notice": "You have invites pending",
-      "my": "My groups",
       "empty": "You currently don't have access to any groups.",
       "org_item": {
         "project_count": "| {{ count }} | Projects"
@@ -181,7 +179,6 @@
       "invites": {
         "title": "Group invites",
         "join": "Join group",
-        "empty": "Not invited to any groups",
         "accepted": "Accepted invitation to the organization."
       }
     }
@@ -236,9 +233,14 @@
     "new": {
       "title.back": "Back",
       "title": "Create a new project",
+      "no_orgs": "Before creating a project, you will need to create its investment group.",
       "name_input": {
         "title": "Project name",
         "placeholder": "Enter project name"
+      },
+      "org_input": {
+        "title": "Investment group",
+        "new_group": "Create a new group | here |"
       },
       "period_input": {
         "title": "Date period (Start - End)",

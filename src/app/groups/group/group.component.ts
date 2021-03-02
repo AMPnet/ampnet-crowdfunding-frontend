@@ -98,7 +98,9 @@ export class GroupComponent implements OnInit {
                             switchMap(() => this.recoverBack())
                         );
                     }
-                })))
+                })
+            )),
+            shareReplay(1)
         );
 
         this.orgMembers$ = this.refreshOrgMembersSubject.pipe(

@@ -19,9 +19,6 @@
         </div>
 
         <div *ngIf="states.projects !== null else spinner">
-            <div class="app-page-subtitle">
-                {{ 'project_management.projects.my' | translate }}
-            </div>
             <div *ngIf="states.projects?.length > 0" @enterTrigger class="groups">
                 <ul class="list-group">
                     <li *ngFor="let project of states.projects" class="list__item"
@@ -37,14 +34,14 @@
                 </ul>
             </div>
             <div *ngIf="states.projects.length === 0" class="empty-group">
-                <div class="row justify-content-center">
+                <div class="row justify-content-center mt-3">
                     {{ 'project_management.projects.empty' | translate }}
                 </div>
             </div>
         </div>
 
 
-        <div class="app-page-header mt-3">
+        <div class="app-page-header mt-20">
             <h1 class="app-page-title">
                 {{ 'project_management.groups.title' | translate }}
             </h1>
@@ -67,9 +64,6 @@
         </div>
 
         <ng-container *ngIf="states.groups !== null else spinner">
-            <div class="app-page-subtitle">
-                {{ 'project_management.groups.my' | translate }}
-            </div>
             <div *ngIf="states.groups?.length > 0" @enterTrigger class="groups">
                 <ul class="list-group">
                     <li *ngFor="let group of states.groups" class="list__item"
@@ -96,50 +90,45 @@
                 </ul>
             </div>
             <div *ngIf="states.groups.length === 0" class="empty-group">
-                <div class="row justify-content-center">
+                <div class="row justify-content-center mt-3">
                     {{ 'project_management.groups.empty' | translate }}
                 </div>
             </div>
         </ng-container>
 
-        <div class="invites">
+        <div class="invites" *ngIf="states?.invites?.length !== 0">
             <div class="app-page-subtitle">
                 {{ 'project_management.groups.invites.title' | translate }}
             </div>
-            <ng-container *ngIf="states.invites !== null else spinner">
-                <div>
-                    <ul *ngIf="states.invites?.length > 0" @enterTrigger class="list-group">
-                        <li *ngFor="let invite of states.invites" class="list__item">
-                            <div class="item__content">
-                                <div class="item__desc">
-                                    <div class="item__title">{{ invite.organization_name | titlecase }}</div>
+            <div>
+                <ul *ngIf="states.invites?.length > 0" @enterTrigger class="list-group">
+                    <li *ngFor="let invite of states.invites" class="list__item">
+                        <div class="item__content">
+                            <div class="item__desc">
+                                <div class="item__title">{{ invite.organization_name | titlecase }}</div>
 
-                                    <!-- TODO: implement when data is available from API -->
-                                    <!-- <div class="item__projects-count d-lg-none"><b>3 </b>
-                                        Projects
-                                    </div> -->
-                                </div>
-
-                                <div class="item__img">
-                                    <img src="{{invite.organization_header_image}}" alt="Group image">
-                                </div>
+                                <!-- TODO: implement when data is available from API -->
+                                <!-- <div class="item__projects-count d-lg-none"><b>3 </b>
+                                    Projects
+                                </div> -->
                             </div>
-                            <div class="item__cta">
-                                <button (click)="acceptInvite(invite.organization_uuid)"
-                                        class="btn btn-success">
-                                    <fa-icon icon="check" class="mr-3"></fa-icon>
-                                    <span>
+
+                            <div class="item__img">
+                                <img src="{{invite.organization_header_image}}" alt="Group image">
+                            </div>
+                        </div>
+                        <div class="item__cta">
+                            <button (click)="acceptInvite(invite.organization_uuid)"
+                                    class="btn btn-success">
+                                <fa-icon icon="check" class="mr-3"></fa-icon>
+                                <span>
                                         {{ 'project_management.groups.invites.join' | translate }}
                                     </span>
-                                </button>
-                            </div>
-                        </li>
-                    </ul>
-                    <div *ngIf="states.invites?.length === 0" class="row justify-content-center">
-                        {{ 'project_management.groups.invites.empty' | translate }}
-                    </div>
-                </div>
-            </ng-container>
+                            </button>
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </div>
     </ng-container>
 

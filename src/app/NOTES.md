@@ -83,9 +83,6 @@ offers.show
 
 ```
 
-- add popup on /projects/new if there is no group created and redirect to group creation
-    - if there are groups, add a dropdown to pick the group
-    - add small text below dropdown to create a new group
 - // {path: '', component: LandingPageComponent}, TODO: chat with others if this is OK
 - set auth as a module? and maybe lazy load it?
   - if so, fix the routes

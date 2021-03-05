@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ProjectWallet } from '../../shared/services/project/project.service';
 import { RouterService } from '../../shared/services/router.service';

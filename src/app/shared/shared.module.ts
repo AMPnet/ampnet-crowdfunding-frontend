@@ -21,6 +21,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { TranslationsModule } from './modules/translations.module';
 import { QuillModule } from 'ngx-quill';
+import { HeaderComponent } from './components/header/header.component';
+import { RouterModule } from '@angular/router';
 
 const components = [
     ActionButtonComponent,
@@ -29,7 +31,8 @@ const components = [
     MoneyInputFieldComponent,
     NewBankAccountComponent,
     SpinnerComponent,
-    UploadAreaComponent
+    UploadAreaComponent,
+    HeaderComponent
 ];
 
 const directives = [
@@ -52,6 +55,7 @@ const validators = [
 ];
 
 const importExportModules = [
+    RouterModule,
     FormsModule,
     ReactiveFormsModule,
     FontAwesomeModule,

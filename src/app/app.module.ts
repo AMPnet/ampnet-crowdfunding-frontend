@@ -10,14 +10,10 @@ import { OffersComponent } from './offers/offers.component';
 import { OfferComponent } from './offers/offer/offer.component';
 import { MyPortfolioComponent } from './my-portfolio/my-portfolio.component';
 import { SingleInvestItemComponent } from './my-portfolio/single-invest-item/single-invest-item.component';
-import { PaymentOptionsComponent } from './settings/payment-options/payment-options.component';
 import { FooterComponent } from './footer/footer.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { PublicLayoutComponent } from './public-layout/public-layout.component';
 import { SecureLayoutComponent } from './secure-layout/secure-layout.component';
-import { HeaderComponent } from './public-layout/header/header.component';
-import { SignUpComponent } from './authentication/sign-up/sign-up.component';
-import { NewPaymentOptionComponent } from './settings/payment-options/new-payment-option/new-payment-option.component';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { SocialLoginModule } from 'angularx-social-login';
@@ -33,25 +29,14 @@ import { MapModalComponent } from './location-map/map-modal/map-modal.component'
 import { environment } from '../environments/environment.prod';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-import { ForgotPasswordComponent } from './authentication/forgot-password/forgot-password.component';
-import { ResetPasswordComponent } from './authentication/reset-password/reset-password.component';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { APP_BASE_HREF } from '@angular/common';
-import { SignInAutoComponent } from './authentication/sign-in-auto/sign-in-auto.component';
 import { AppConfigService } from './shared/services/app-config.service';
 import { ClickOutsideDirective } from './navbar/directives/click-outside.directive';
-import { UserComponent } from './settings/user/user.component';
-import { IdentityComponent } from './settings/user/identity/identity.component';
-import { AuthLayoutComponent } from './authentication/auth-layout/auth-layout.component';
-import { SignInComponent } from './authentication/sign-in/sign-in.component';
 import { NgxCaptchaModule } from 'ngx-captcha';
-import { NewInstanceComponent } from './authentication/new-instance/new-instance.component';
 import { QuillModule } from 'ngx-quill';
 import { DynamicLocaleProvider } from './shared/providers/locale.provider';
 import { SentryProvider } from './shared/providers/sentry.provider';
-import { VeriffComponent } from './settings/user/identity/veriff/veriff.component';
-import { AcceptTermsComponent } from './settings/user/identity/accept-terms/accept-terms.component';
-import { IdentyumComponent } from './settings/user/identity/identyum/identyum.component';
 import { StaticPageComponent } from './static-page/static-page.component';
 import { FaIconsService } from './shared/services/fa-icons.service';
 import { LanguageService } from './shared/services/language.service';
@@ -100,39 +85,22 @@ import { TranslateStore } from '@ngx-translate/core';
         GroupEditComponent,
         GroupProjectsComponent,
         GroupProjectsItemComponent,
-        PaymentOptionsComponent,
         FooterComponent,
         LandingPageComponent,
         PublicLayoutComponent,
         SecureLayoutComponent,
-        HeaderComponent,
-        SignUpComponent,
-        NewPaymentOptionComponent,
-        AcceptTermsComponent,
-        VeriffComponent,
-        IdentyumComponent,
         DepositComponent,
         WithdrawComponent,
         UserStateReminderComponent,
         LocationMapComponent,
         MapModalComponent,
         TxAmountSign,
-        ForgotPasswordComponent,
-        ResetPasswordComponent,
-        SignInAutoComponent,
         ClickOutsideDirective,
-        SignInAutoComponent,
-        UserComponent,
-        IdentityComponent,
-        AuthLayoutComponent,
-        SignInComponent,
-        NewInstanceComponent,
         StaticPageComponent,
     ],
     imports: [
         BrowserModule,
         HttpClientModule,
-        RouterModule,
         AppRoutingModule,
         BrowserAnimationsModule,
         TooltipModule.forRoot(),

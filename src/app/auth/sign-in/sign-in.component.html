@@ -57,7 +57,7 @@
             {{ 'auth.sign_in.sign_up_notice' | translate | splitPart:0 }}
         </span>
         <span>
-            <a [routerLink]="'/sign_up' | coopPath">
+            <a [routerLink]="'/auth/sign_up' | coopPath">
                 {{ 'auth.sign_in.sign_up_notice' | translate | splitPart:1 }}
             </a>
         </span>
@@ -71,7 +71,7 @@
             {{ 'auth.sign_in.forgot_password_notice' | translate | splitPart:0 }}
         </span>
         <span>
-            <a [routerLink]="'/forgot_password' | coopPath">
+            <a [routerLink]="'/auth/forgot_password' | coopPath">
                 {{ 'auth.sign_in.forgot_password_notice' | translate | splitPart:1 }}
             </a>
         </span>

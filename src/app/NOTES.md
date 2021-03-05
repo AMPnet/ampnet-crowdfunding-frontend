@@ -84,7 +84,4 @@ offers.show
 ```
 
 - // {path: '', component: LandingPageComponent}, TODO: chat with others if this is OK
-- set auth as a module? and maybe lazy load it?
-  - if so, fix the routes
 - extensively test if everything about shared and admin modules work as intended. might be a thin ice if not tested properly. try to make a production build and see how it behaves.
-- settings as a module (?)

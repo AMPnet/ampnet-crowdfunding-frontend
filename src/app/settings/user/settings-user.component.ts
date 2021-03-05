@@ -4,11 +4,11 @@ import { LanguageService } from '../../shared/services/language.service';
 import { tap } from 'rxjs/operators';
 
 @Component({
-    selector: 'app-user',
-    templateUrl: './user.component.html',
-    styleUrls: ['./user.component.scss']
+    selector: 'app-settings-user',
+    templateUrl: './settings-user.component.html',
+    styleUrls: ['./settings-user.component.scss']
 })
-export class UserComponent {
+export class SettingsUserComponent {
     user$ = this.userService.user$;
 
     constructor(private userService: UserService,

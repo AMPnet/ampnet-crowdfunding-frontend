@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { AppConfigService } from '../../shared/services/app-config.service';
+import { AppConfigService } from '../../services/app-config.service';
 
 declare var $: any;
 

@@ -148,7 +148,7 @@
                             <ng-template #investButtons>
                                 <button *ngIf="isOverview" class="btn btn-primary w-100 flex__center"
                                         id="invest-button" @enterTrigger
-                                        [routerLink]="'/sign_up' | coopPath">
+                                        [routerLink]="'/auth/sign_up' | coopPath">
                                     <fa-icon icon="chart-pie" class="mr-2"></fa-icon>
                                     <span>{{ 'offers.show.invest.overview' | translate }}</span>
                                 </button>

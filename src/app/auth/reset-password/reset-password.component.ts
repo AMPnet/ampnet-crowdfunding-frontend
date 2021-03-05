@@ -49,7 +49,7 @@ export class ResetPasswordComponent implements OnInit {
             switchMap(() => this.popupService.success(
                 this.translate.instant('auth.reset_password.success')
             )),
-            tap(() => this.router.navigate(['/sign_in']))
+            tap(() => this.router.navigate(['/auth/sign_in']))
         );
     }
 }

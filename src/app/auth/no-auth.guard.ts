@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot } from '@angular/router';
-import { Observable } from 'rxjs';
 import { RouterService } from '../shared/services/router.service';
 import { UserService } from '../shared/services/user/user.service';
 
@@ -13,7 +12,6 @@ export class NoAuthGuard implements CanActivate {
     }
 
     canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-
         if (this.userService.isLoggedIn()) {
             this.router.navigate(['/dash']);
             return false;

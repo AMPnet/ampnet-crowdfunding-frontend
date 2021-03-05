@@ -13,7 +13,7 @@ export const environment = {
         title: 'AMPnet',
         icon_url: '/assets/favicon.ico',
         languages: {
-            config: 'es:"Español" el:"Ελληνικά" hr:"Hrvatski"',
+            config: 'de:"Deutsch" el:"ελληνικά" es:"español" fr:"français" hr:"Hrvatski" it:"italiano"',
             fallback: true,
         },
         arkane: {

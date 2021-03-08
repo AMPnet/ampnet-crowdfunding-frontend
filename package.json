@@ -1,9 +1,9 @@
 {
   "name": "ampnet-crowdfunding-frontend",
-  "version": "0.7.4",
+  "version": "0.7.5",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --proxy-config proxy.conf.json",
+    "start": "ng serve --proxy-config proxy.conf.json --disable-host-check",
     "hmr": "ng serve --hmr --proxy-config proxy.conf.json --disable-host-check",
     "test": "ng test",
     "lint-fix": "tslint --fix \"src/**/*.ts\" --project tsconfig.json",

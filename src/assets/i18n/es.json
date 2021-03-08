@@ -94,6 +94,7 @@
   "deposit.notice": "Una vez que haya depositado el dinero en nuestra cuenta bancaria, podrá tardar hasta 24h en ser visible en la plataforma. Será notificado por correo electrónico cuando hayamos recibido su dinero.",
   "deposit.payment_details": "Introducir detalles de pago",
   "deposit.iban": "IBAN",
+  "deposit.swift": "SWIFT/BIC",
   "deposit.reference": "Descripción",
   "withdraw.title": "Retirar",
   "withdraw.amount_input.title": "Importe a retirar",

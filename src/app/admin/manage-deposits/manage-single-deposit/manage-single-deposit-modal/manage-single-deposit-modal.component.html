@@ -14,7 +14,7 @@
                 <div class="col-md-12">
                     <app-money-input-field
                             placeholder="{{ 'admin.deposits.single_deposit.modal.amount_input.placeholder' | translate }}"
-                            [control]="confirmForm.get('amountToConfirm')">
+                            [control]="confirmForm.get('amountToConfirm')" [allowDecimals]="true">
                     </app-money-input-field>
                 </div>
 

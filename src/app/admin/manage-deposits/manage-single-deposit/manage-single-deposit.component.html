@@ -43,7 +43,7 @@
                 </div>
                 <app-money-input-field
                         placeholder="{{ 'admin.deposits.single_deposit.amount_input.placeholder' | translate }}"
-                        [control]="confirmDepositForm.get('amount')">
+                        [control]="confirmDepositForm.get('amount')" [allowDecimals]="true">
                 </app-money-input-field>
 
                 <div class="mt-3 mb-2">

@@ -1,6 +1,6 @@
 {
   "name": "ampnet-crowdfunding-frontend",
-  "version": "0.7.5",
+  "version": "0.7.6",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --proxy-config proxy.conf.json --disable-host-check",

@@ -110,73 +110,76 @@
         </div>
     </ng-container>
 
-    <ng-container *ngIf="(projection$ | async) as projection">
-        <div class="estimated-calculator" *ngIf="states.project?.roi?.to > 0">
-            <div class="estimated__return-label">
-                <p>{{'invest.projections.title' | translate }}</p>
-            </div>
-
-            <div class="estimated__content">
-                <div class="estimated__total-label">
-                    <h2>
-                        {{ 'invest.projections.total_investment' | translate | interpolate:['amount', projection.totalInvestment | currencyDefault] }}
-                    </h2>
-                </div>
-                <div class="estimated__invested-label">
-                    <p>
-                        {{ 'invest.projections.user_invested' | translate | interpolate:['amount', states.investmentData.userInvested | currencyDefault] }}
-                    </p>
+    <!-- TODO: The section is turned off due to questionable legal issues (Grv). Check it in the future -->
+    <ng-container *ngIf="false">
+        <ng-container *ngIf="(projection$ | async) as projection">
+            <div class="estimated-calculator" *ngIf="states.project?.roi?.to > 0">
+                <div class="estimated__return-label">
+                    <p>{{'invest.projections.title' | translate }}</p>
                 </div>
 
-                <div class="row">
-                    <div class="col-lg-4">
-                        <div class="estimated__return-header">
-                            <div class="estimated__header-label">
-                                <p>{{ 'invest.projections.return.1year.title' | translate }}</p>
-                            </div>
-                        </div>
-                        <div class="return__amounts">
-                            <div class="estimated__amount-label">
-                                <p>
-                                    {{ projection.oneYearReturn.from | currencyDefault }} -
-                                    {{ projection.oneYearReturn.to | currencyDefault}}
-                                </p>
-                            </div>
-                        </div>
+                <div class="estimated__content">
+                    <div class="estimated__total-label">
+                        <h2>
+                            {{ 'invest.projections.total_investment' | translate | interpolate:['amount', projection.totalInvestment | currencyDefault] }}
+                        </h2>
                     </div>
-                    <div class="col-lg-4">
-                        <div class="estimated__return-header">
-                            <div class="estimated__header-label">
-                                <p>{{ 'invest.projections.return.5years.title' | translate }}</p>
-                            </div>
-                        </div>
-                        <div class="return__amounts">
-                            <div class="estimated__amount-label">
-                                <p>
-                                    {{ projection.fiveYearsReturn.from | currencyDefault }} -
-                                    {{ projection.fiveYearsReturn.to | currencyDefault}}
-                                </p>
-                            </div>
-                        </div>
+                    <div class="estimated__invested-label">
+                        <p>
+                            {{ 'invest.projections.user_invested' | translate | interpolate:['amount', states.investmentData.userInvested | currencyDefault] }}
+                        </p>
                     </div>
-                    <div class="col-lg-4">
-                        <div class="estimated__return-header">
-                            <div class="estimated__header-label">
-                                <p>{{ 'invest.projections.return.10years.title' | translate }}</p>
+
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="estimated__return-header">
+                                <div class="estimated__header-label">
+                                    <p>{{ 'invest.projections.return.1year.title' | translate }}</p>
+                                </div>
+                            </div>
+                            <div class="return__amounts">
+                                <div class="estimated__amount-label">
+                                    <p>
+                                        {{ projection.oneYearReturn.from | currencyDefault }} -
+                                        {{ projection.oneYearReturn.to | currencyDefault}}
+                                    </p>
+                                </div>
                             </div>
                         </div>
-                        <div class="return__amounts">
-                            <div class="estimated__amount-label">
-                                <p>
-                                    {{ projection.tenYearsReturn.from | currencyDefault }} -
-                                    {{ projection.tenYearsReturn.to | currencyDefault}}
-                                </p>
+                        <div class="col-lg-4">
+                            <div class="estimated__return-header">
+                                <div class="estimated__header-label">
+                                    <p>{{ 'invest.projections.return.5years.title' | translate }}</p>
+                                </div>
+                            </div>
+                            <div class="return__amounts">
+                                <div class="estimated__amount-label">
+                                    <p>
+                                        {{ projection.fiveYearsReturn.from | currencyDefault }} -
+                                        {{ projection.fiveYearsReturn.to | currencyDefault}}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="estimated__return-header">
+                                <div class="estimated__header-label">
+                                    <p>{{ 'invest.projections.return.10years.title' | translate }}</p>
+                                </div>
+                            </div>
+                            <div class="return__amounts">
+                                <div class="estimated__amount-label">
+                                    <p>
+                                        {{ projection.tenYearsReturn.from | currencyDefault }} -
+                                        {{ projection.tenYearsReturn.to | currencyDefault}}
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </ng-container>
     </ng-container>
 </div>
 

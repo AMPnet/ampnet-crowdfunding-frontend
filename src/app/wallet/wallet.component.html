@@ -200,7 +200,8 @@
                                                             [onClick]="downloadSingleReport(transaction).bind(this)">
                                                     </button>
                                                 </ng-container>
-                                                <a href="{{ getExplorerLink(transaction.tx_hash) }}"
+                                                <!-- TODO: Turned off because it was too slow to show transaction -->
+                                                <a *ngIf="false" href="{{ getExplorerLink(transaction.tx_hash) }}"
                                                    target="_blank" rel="noopener noreferrer" class="ml-2">
                                                     <fa-icon icon="search" style="color: black"></fa-icon>
                                                 </a>

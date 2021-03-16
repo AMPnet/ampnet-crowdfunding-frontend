@@ -26,6 +26,7 @@ export class MoneyInputFieldComponent implements AfterViewInit, OnChanges {
     @Input() placeholder: string;
     @Input() control: AbstractControl;
     @Input() inputClass = 'input-lg w-100';
+    @Input() allowDecimals: boolean;
 
     @Input() realValue = 0;
     @Output() realValueChange = new EventEmitter<number>();
@@ -59,19 +60,18 @@ export class MoneyInputFieldComponent implements AfterViewInit, OnChanges {
     autonumericCurrency(domElement: any, currencySymbol: string = '€') {
         return new Autonumeric(domElement, {
             currencySymbol: currencySymbol,
-            decimalCharacter: ',',
-            digitGroupSeparator: '.',
-            decimalPlaces: 0,
             modifyValueOnWheel: false,
-            minimumValue: '0'
+            minimumValue: '0',
+            decimalCharacterAlternative: ',',
+            decimalPlaces: this.allowDecimals ? 2 : 0,
         });
     }
 
     stripCurrencyData(inputValue: string, currencySymbol: string = '€') {
-        return inputValue
+        return inputValue.trim()
             .replace(currencySymbol, '')
             .split(',').join('')
-            .split('.').join('');
+            .split(' ').join('');
     }
 
     private initialValue(...values: (number | string)[]): number | '' {

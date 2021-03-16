@@ -41,11 +41,11 @@
                                 <select name="group" id="group"
                                         class="input-reg w-100"
                                         formControlName="org">
-                                    <option *ngFor="let org of ownOrgs; index as i"
-                                            [selected]="org === createForm.get('org').value">
+                                    <option *ngFor="let org of ownOrgs; index as i" [ngValue]="org">
                                         {{ org.name }}
                                     </option>
                                 </select>
+
                                 <small>
                                     <span>
                                         {{ 'projects.new.org_input.new_group' | translate | splitPart:0 }}

@@ -24,8 +24,8 @@ import { ProjectDepositComponent } from './projects/project-deposit/project-depo
 import { ProjectWithdrawComponent } from './projects/project-withdraw/project-withdraw.component';
 import { ProjectRevenueShareComponent } from './projects/project-revenue-share/project-revenue-share.component';
 import { NoAuthGuard } from './auth/no-auth.guard';
-import { OfferGuard } from './offers/offer/offer.guard';
 import { SettingsModule } from './settings/settings.module';
+import { LandingPageComponent } from './landing-page/landing-page.component';
 
 const appRoutes: Routes = [
     {
@@ -33,10 +33,9 @@ const appRoutes: Routes = [
         children: [
             {
                 path: '', canActivate: [NoAuthGuard], children: [
-                    {path: '', pathMatch: 'full', redirectTo: 'offers'},
-                    // {path: '', component: LandingPageComponent}, TODO: chat with others if this is OK
+                    {path: '', component: LandingPageComponent},
                     {path: 'offers', component: OffersComponent, data: {isOverview: true}},
-                    {path: 'offers/:id', component: OfferComponent, canActivate: [OfferGuard], data: {isOverview: true}},
+                    {path: 'offers/:id', component: OfferComponent, data: {isOverview: true}},
                     {path: 'groups/:id', component: GroupComponent, data: {isPublic: true, isOverview: true}},
                 ]
             },
@@ -85,7 +84,12 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes, {scrollPositionRestoration: 'enabled', relativeLinkResolution: 'legacy'})],
+    imports: [RouterModule.forRoot(routes,
+        {
+            scrollPositionRestoration: 'enabled',
+            relativeLinkResolution: 'legacy',
+            // enableTracing: true // uncomment for testing purposes
+        })],
     exports: [RouterModule]
 })
 export class AppRoutingModule {

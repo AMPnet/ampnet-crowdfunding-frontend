@@ -79,7 +79,7 @@ export class ErrorService {
                     case AuthError.NO_FORGOT_PASS_TOKEN:
                     case AuthError.FORGOT_PASS_EXPIRED:
                         display$ = this.displayMessage('errors.auth.invalid_forgot_password_link');
-                        action$ = this.takeAction(() => this.router.navigate['/forgot_password']);
+                        action$ = this.takeAction(() => this.router.navigate['/auth/forgot_password']);
                         break;
 
                     case AuthError.INVALID_JWT:

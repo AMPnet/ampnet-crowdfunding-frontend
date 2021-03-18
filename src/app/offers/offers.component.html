@@ -9,8 +9,8 @@
             <app-lazy-load *ngFor="let projectWallet of projectsWallets">
                 <ng-template>
                     <div class="single-item">
-                        <app-single-offer-item [projectWallet]=projectWallet>
-                        </app-single-offer-item>
+                        <app-offers-item [projectWallet]=projectWallet>
+                        </app-offers-item>
                     </div>
                 </ng-template>
             </app-lazy-load>

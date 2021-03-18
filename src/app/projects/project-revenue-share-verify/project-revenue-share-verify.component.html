@@ -1,0 +1,40 @@
+<div class="alert-box">
+    <div class="modal-header">
+        <h4 class="modal-title">
+            {{ 'projects.revenue_share.verify.title' | translate }}
+        </h4>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="confirmForm">
+            <div class="row">
+                <label class="col-md-12">
+                    {{ 'projects.revenue_share.verify.input.title' | translate }}
+                </label>
+
+                <div class="col-md-12">
+                    <app-money-input-field
+                            placeholder="{{ 'projects.revenue_share.verify.input.placeholder' | translate }}"
+                            [control]="confirmForm.get('amount')">
+                    </app-money-input-field>
+                </div>
+
+                <div class="col-md-4">
+                    <button (click)="onConfirm()"
+                            [disabled]="!confirmForm.valid"
+                            class="btn btn-primary w-100 float-right mt-3 py-3 px-1"
+                            type="submit">
+                        {{ 'projects.revenue_share.verify.submit' | translate }}
+                    </button>
+                </div>
+
+                <div class="col-md-4">
+                    <button (click)="onCancel()"
+                            class="btn btn-primary w-100 float-right mt-3 py-3 px-1"
+                            type="button">
+                        {{ 'projects.revenue_share.verify.cancel' | translate }}
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

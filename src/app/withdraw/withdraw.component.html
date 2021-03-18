@@ -55,7 +55,8 @@
                     <div class="alert alert-info px-3 mt-3 font-weight-bolder">
                         {{ 'withdraw.no_bank.notice' | translate }}
                     </div>
-                    <button class="btn btn-primary w-100" [routerLink]="'/dash/payment_options/new' | coopPath">
+                    <button class="btn btn-primary w-100"
+                            [routerLink]="'/dash/settings/payment_options/new' | coopPath">
                         <fa-icon icon="piggy-bank" class="mr-2"></fa-icon>
                         {{ 'withdraw.no_bank.add_bank_account' | translate }}
                     </button>

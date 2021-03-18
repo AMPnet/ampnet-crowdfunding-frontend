@@ -27,11 +27,11 @@ export class OrganizationService {
         return this.http.post<Organization>('/api/project/organization', formData);
     }
 
-    getPersonalOrganizations() {
+    getPersonal() {
         return this.http.get<PageableOrganizationsResponse>('/api/project/organization/personal');
     }
 
-    getSingleOrganization(orgID: string) {
+    get(orgID: string) {
         return this.http.get<Organization>(`/api/project/public/organization/${orgID}`);
     }
 
@@ -55,7 +55,7 @@ export class OrganizationService {
         });
     }
 
-    getMembersForOrganization(orgID: string, options = { isPublic: true }) {
+    getMembersForOrganization(orgID: string, options = {isPublic: true}) {
         return options.isPublic ? this.http.get<OrganizationMembersResponse>(`/api/project/public/organization/${orgID}/members`) :
             this.http.get<OrganizationMembersResponse>(`/api/project/organization/${orgID}/members`);
     }

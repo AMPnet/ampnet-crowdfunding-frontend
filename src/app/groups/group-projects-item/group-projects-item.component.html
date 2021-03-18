@@ -1,0 +1,68 @@
+<div class="item__top">
+    <div class="top__left">
+        <a [routerLink]="" (click)="onClickedItem()">
+            <img src="{{ projectWallet.project.main_image }}" @enterTrigger
+                 onerror="this.onerror=null; this.src='../../../../assets/noimage.png'"
+                 alt="Project image">
+        </a>
+    </div>
+    <div class="top__right">
+        <a [routerLink]="" (click)="onClickedItem()" class="nostyle">
+            <h1 class="app-basic-title">
+                {{ projectWallet.project.name }}
+            </h1>
+        </a>
+        <div class="item__funding">
+            <span class="bold">
+                {{ 'groups.show.projects.item.period' | translate | splitPart:0 }}
+            </span>
+            <span>
+                {{ 'groups.show.projects.item.period' | translate | splitPart:1
+                    | interpolate:['from', projectWallet.project.start_date | date:'longDate']:['to', projectWallet.project.end_date | date:'longDate'] }}
+            </span>
+        </div>
+    </div>
+</div>
+<div class="item__bottom">
+    <div class="item__progress-bar" *ngIf="projectWallet.wallet?.hash">
+        <ng-container
+                *ngIf="(walletInfo$ | async) as wallet else walletLoading">
+            <div @enterTrigger>
+                <div class="progress">
+                    <div [style.width.%]="(wallet.totalFundsRaised / wallet.investmentCap) * 100"
+                         class="progress__bar"
+                         role="progressbar"></div>
+                </div>
+                <div>
+                    <div class="progress__raised">
+                        <div>
+                            <span class="bold">
+                                {{ 'groups.show.projects.item.raised' | translate | splitPart:0
+                                    | interpolate:['raised', wallet.totalFundsRaised | currencyDefault] }}
+                            </span>
+                            <span>
+                                {{ 'groups.show.projects.item.raised' | translate | splitPart:1
+                                    | interpolate:['goal', wallet.investmentCap | currencyDefault] }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+    <div class="item__toggle" *ngIf="projectWallet.wallet?.hash && !isPublic">
+        <button app-action-button
+                text="{{ (projectWallet.project.active ? 'groups.show.projects.item.unpublish' : 'groups.show.projects.item.publish') | translate }}"
+                textShort="{{ (projectWallet.project.active ? 'groups.show.projects.item.unpublish' : 'groups.show.projects.item.publish') | translate }}"
+                faIcon="{{ projectWallet.project.active ? 'eye-slash' : 'eye' }}"
+                [onClick]="toggleProject(projectWallet.project).bind(this)"
+                class="d-contents item__icon flex__center float-right mr-2">
+        </button>
+    </div>
+</div>
+
+<ng-template #walletLoading>
+    <span>
+        <app-spinner type="inline"></app-spinner>
+    </span>
+</ng-template>

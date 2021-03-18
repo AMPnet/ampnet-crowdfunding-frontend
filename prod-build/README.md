@@ -2,7 +2,7 @@
 
 This is procedure to serve production build locally while using remote backend. In short, we 
 generate production build in `dist/ampnet-frontend` directory and serve it through
-NGINX proxy which redirects backend API routes to production remote backend (api.ampnet.io). 
+NGINX proxy which redirects backend API routes to production remote backend (staging.ampnet.io). 
  
 ### Setup
 

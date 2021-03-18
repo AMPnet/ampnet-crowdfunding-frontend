@@ -36,6 +36,8 @@ http {
                 return 204;
             }
 
+            proxy_ssl_server_name on;
+
             # WebSocket support (nginx 1.4)
             proxy_set_header Upgrade $http_upgrade;
             proxy_set_header Connection "upgrade";

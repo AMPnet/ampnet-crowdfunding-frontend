@@ -3,7 +3,7 @@ import { Portfolio, PortfolioService } from '../shared/services/wallet/portfolio
 import { WalletService, WalletState } from '../shared/services/wallet/wallet.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { enterTrigger } from '../animations';
+import { enterTrigger } from '../shared/animations';
 
 
 @Component({

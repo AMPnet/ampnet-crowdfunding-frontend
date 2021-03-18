@@ -14,7 +14,7 @@
       "published_by": "Published by",
       "see_more": "See more"
     },
-    "offer_details": {
+    "show": {
       "title": "OFFER DETAILS",
       "title.portfolio": "PORTFOLIO DETAILS",
       "project_hidden": "The project is not open for funding. If you wish to invest, please come back later.",
@@ -33,6 +33,7 @@
       "invest.portfolio.short": "Reinvest",
       "verify_profile": "Verify Profile & Invest",
       "verify_profile.short": "Verify Profile",
+      "edit": "Edit",
       "share": "Share",
       "link_copied": "Link copied to clipboard",
       "subtitle_docs": "Project documents",
@@ -161,21 +162,28 @@
     "withdrawal_deleted": "Withdrawal deleted",
     "burned_notice": "Platform manager has approved and processed your withdrawal request. Please allow up to 48 hours for funds to reach your selected bank account."
   },
-  "organizations": {
-    "title": "Investment groups",
-    "create_org": "Create group",
-    "pending_invite_notice": "You have invites pending",
-    "my": "My groups",
-    "empty": "You currently don't have access to any groups.",
-    "org_item": {
-      "project_count": "| {{ count }} | Projects"
+  "project_management": {
+    "projects": {
+      "title": "Projects",
+      "create": "Create Project",
+      "empty": "You currently don't have access to any project."
     },
-    "invites": {
-      "title": "Group invites",
-      "join": "Join group",
-      "empty": "Not invited to any groups",
-      "accepted": "Accepted invitation to the organization."
-    },
+    "groups": {
+      "title": "Investment groups",
+      "create_org": "Create group",
+      "pending_invite_notice": "You have invites pending",
+      "empty": "You currently don't have access to any groups.",
+      "org_item": {
+        "project_count": "| {{ count }} | Projects"
+      },
+      "invites": {
+        "title": "Group invites",
+        "join": "Join group",
+        "accepted": "Accepted invitation to the organization."
+      }
+    }
+  },
+  "groups": {
     "new": {
       "title": "Create a new investment group",
       "title.back": "New group",
@@ -194,7 +202,7 @@
       "submit_button.loading": "Creating group...",
       "created": "Investment group created!"
     },
-    "details": {
+    "show": {
       "title.back": "Investment groups",
       "create_project": "Create project",
       "project_count": "| {{ count }} | Projects",
@@ -225,9 +233,14 @@
     "new": {
       "title.back": "Back",
       "title": "Create a new project",
+      "no_orgs": "Before creating a project, you will need to create its investment group.",
       "name_input": {
         "title": "Project name",
         "placeholder": "Enter project name"
+      },
+      "org_input": {
+        "title": "Investment group",
+        "new_group": "Create a new group | here |"
       },
       "period_input": {
         "title": "Date period (Start - End)",
@@ -300,64 +313,13 @@
           "withdraw_button": "Withdraw",
           "balance": "Project balance"
         },
-        "deposit": {
-          "title": "Deposit",
-          "notice": "Please deposit funds to your wallet by making a bank transfer to the {{ bankAccountName }} bank account using the payment details presented below. Make sure that you also include the unique deposit code as the reference for the transaction. After you have transferred the money to our bank account it can take up to 48h for it to become visible on the platform. You will be notified by email when your money has been received.",
-          "details": "Deposit payment details",
-          "iban": "IBAN",
-          "swift": "SWIFT/BIC",
-          "reference": "Reference",
-          "existing_deposit": "You already have an existing deposit. Please wait until it is approved"
-        },
-        "withdraw": {
-          "title": "Withdraw",
-          "amount_input": {
-            "title": "Withdrawal amount",
-            "placeholder": "Enter withdrawal amount",
-            "wallet_balance": "Current wallet balance: {{ balance }}"
-          },
-          "request": {
-            "amount": "Amount",
-            "destination": "IBAN",
-            "swift": "SWIFT/BIC"
-          },
-          "pending_notice": "You have a pending withdrawal request. It can take up to 24 hours to process the transaction.",
-          "sign_button": "Sign transaction",
-          "cancel_button": "Cancel request",
-          "bank_input": {
-            "title": "IBAN",
-            "placeholder": "NL47INGB5697455291"
-          },
-          "swift_input": {
-            "title": "SWIFT/BIC",
-            "placeholder": "RACZHUH1"
-          },
-          "submit": "Request withdrawal",
-          "deleted": "Withdrawal deleted.",
-          "burned_notice": "Platform manager has approved and processed your withdrawal request. Please allow up to 48 hours for funds to reach your selected bank account."
-        },
         "revenue_share": {
           "title": "Revenue share",
           "description": "Enter the amount of money to be paid out to investors.",
           "placeholder": "Enter amount to share",
           "errors.invalid_amount": "Payout must be lower or equal to balance.",
           "submit_button": "Start payout",
-          "submit_button.short": "Payout",
-          "review": {
-            "title": "Revenue share information",
-            "project_name": "Project name",
-            "amount": "Amount to distribute",
-            "submit": "Verify and start revenue share"
-          },
-          "confirm_modal": {
-            "title": "Confirm revenue share amount",
-            "input": {
-              "title": "Amount",
-              "placeholder": "Enter revenue share amount"
-            },
-            "submit": "Confirm",
-            "cancel": "Cancel"
-          }
+          "submit_button.short": "Payout"
         }
       },
       "create_wallet_notice": "Verify the project creation with your blockchain wallet. You will be prompted now.",
@@ -365,6 +327,57 @@
         "question": "Are you sure you want to delete this file? This action cannot be reversed.",
         "yes": "Yes",
         "no": "No"
+      }
+    },
+    "deposit": {
+      "title": "Deposit",
+      "notice": "Please deposit funds to your wallet by making a bank transfer to the {{ bankAccountName }} bank account using the payment details presented below. Make sure that you also include the unique deposit code as the reference for the transaction. After you have transferred the money to our bank account it can take up to 48h for it to become visible on the platform. You will be notified by email when your money has been received.",
+      "details": "Deposit payment details",
+      "iban": "IBAN",
+      "swift": "SWIFT/BIC",
+      "reference": "Reference",
+      "existing_deposit": "You already have an existing deposit. Please wait until it is approved"
+    },
+    "withdraw": {
+      "title": "Withdraw",
+      "amount_input": {
+        "title": "Withdrawal amount",
+        "placeholder": "Enter withdrawal amount",
+        "wallet_balance": "Current wallet balance: {{ balance }}"
+      },
+      "request": {
+        "amount": "Amount",
+        "destination": "IBAN",
+        "swift": "SWIFT/BIC"
+      },
+      "pending_notice": "You have a pending withdrawal request. It can take up to 24 hours to process the transaction.",
+      "sign_button": "Sign transaction",
+      "cancel_button": "Cancel request",
+      "bank_input": {
+        "title": "IBAN",
+        "placeholder": "NL47INGB5697455291"
+      },
+      "swift_input": {
+        "title": "SWIFT/BIC",
+        "placeholder": "RACZHUH1"
+      },
+      "submit": "Request withdrawal",
+      "deleted": "Withdrawal deleted.",
+      "burned_notice": "Platform manager has approved and processed your withdrawal request. Please allow up to 48 hours for funds to reach your selected bank account."
+    },
+    "revenue_share": {
+      "title": "Revenue share information",
+      "project_name": "Project name",
+      "amount": "Amount to distribute",
+      "submit": "Verify and start revenue share",
+      "verify": {
+        "title": "Confirm revenue share amount",
+        "input": {
+          "title": "Amount",
+          "placeholder": "Enter revenue share amount"
+        },
+        "submit": "Confirm",
+        "cancel": "Cancel"
       }
     }
   },
@@ -403,7 +416,7 @@
       "offers": "Offers",
       "my_portfolio": "My portfolio",
       "wallet": "Wallet",
-      "investment_groups": "Investment groups"
+      "project_management": "Project management"
     },
     "settings": {
       "title": "SETTINGS",

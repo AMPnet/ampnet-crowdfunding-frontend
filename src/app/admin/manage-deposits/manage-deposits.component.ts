@@ -39,7 +39,7 @@ export class ManageDepositsComponent {
     }
 
     getDepositInfoClicked(reference: string) {
-        this.router.navigate(['/dash', 'manage_deposits', reference]);
+        this.router.navigate(['/dash/admin', 'manage_deposits', reference]);
     }
 
     declineDeposit(id: number) {

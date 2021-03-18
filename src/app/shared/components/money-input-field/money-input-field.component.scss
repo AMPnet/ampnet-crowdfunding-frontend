@@ -2,6 +2,7 @@
 
 .border-left-none {
   border-left: unset;
+
   &:focus {
     border-left: 1px solid $primary-color;
   }

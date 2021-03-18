@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { TransactionState, TransactionType } from '../shared/services/wallet/wallet.service';
+import { TransactionType } from '../shared/services/wallet/wallet.service';
 
 @Pipe({name: 'txAmountSign'})
 export class TxAmountSign implements PipeTransform {

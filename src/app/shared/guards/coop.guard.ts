@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
-import { RouterService } from '../../shared/services/router.service';
+import { RouterService } from '../services/router.service';
 import { AppConfigService } from '../services/app-config.service';
 
 @Injectable({

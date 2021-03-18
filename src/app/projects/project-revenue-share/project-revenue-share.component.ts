@@ -5,7 +5,6 @@ import { ActivatedRoute } from '@angular/router';
 import { ErrorService } from '../../shared/services/error.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { ProjectRevenueShareVerifyComponent } from '../project-revenue-share-verify/project-revenue-share-verify.component';
-import { strictEqual } from 'assert';
 
 @Component({
     selector: 'app-project-revenue-share',

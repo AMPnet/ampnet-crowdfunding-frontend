@@ -55,7 +55,7 @@ export class OrganizationService {
         });
     }
 
-    getMembersForOrganization(orgID: string, options = { isPublic: true }) {
+    getMembersForOrganization(orgID: string, options = {isPublic: true}) {
         return options.isPublic ? this.http.get<OrganizationMembersResponse>(`/api/project/public/organization/${orgID}/members`) :
             this.http.get<OrganizationMembersResponse>(`/api/project/organization/${orgID}/members`);
     }

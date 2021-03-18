@@ -17,10 +17,10 @@ export class FileValueAccessorDirective implements ControlValueAccessor {
     value: any;
     $event: any;
     onChange = (_) => {
-    }
+    };
 
     onTouched = () => {
-    }
+    };
 
     writeValue(value) {
     }

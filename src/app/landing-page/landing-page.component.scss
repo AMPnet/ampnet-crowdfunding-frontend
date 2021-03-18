@@ -10,9 +10,9 @@ h1, h2 {
 }
 
 .featured-image {
-    background: linear-gradient(#B25050, rgba(0, 0, 0, 0)), url(../../assets/human.jpg);
-    background-size: cover !important;
-    transition: 0.5s all ease;
+  background: linear-gradient(#B25050, rgba(0, 0, 0, 0)), url(../../assets/human.jpg);
+  background-size: cover !important;
+  transition: 0.5s all ease;
 }
 
 .feature-holder {
@@ -20,7 +20,7 @@ h1, h2 {
 }
 
 .featured-image:hover {
-    backdrop-filter: blur(0.8)
+  backdrop-filter: blur(0.8)
 }
 
 .btn-responsive-size {

@@ -7,9 +7,9 @@ import { OrganizationService } from '../../shared/services/project/organization.
 import { map, switchMap } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-group-projects',
-  templateUrl: './group-projects.component.html',
-  styleUrls: ['./group-projects.component.scss']
+    selector: 'app-group-projects',
+    templateUrl: './group-projects.component.html',
+    styleUrls: ['./group-projects.component.scss']
 })
 export class GroupProjectsComponent {
     @Input() groupID: string;

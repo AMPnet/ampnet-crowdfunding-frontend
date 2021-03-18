@@ -14,13 +14,16 @@
     box-shadow: 0 6px 6px 0 lighten($title-color, 85%);
     border-radius: 2px;
     position: relative;
+
     .col-6:first-of-type {
       padding-right: 0;
     }
+
     .col-6:last-of-type {
       padding-left: 3px;
     }
   }
+
   &-payout {
     background-color: $background-color;
     padding-top: 20px;
@@ -33,11 +36,13 @@
   &__title {
     padding-bottom: 10px;
   }
+
   &__balance {
     font-size: $font-size-desktop-title;
     color: $title-color;
     letter-spacing: 1.5px;
     margin-bottom: 24px;
+
     p {
       margin-bottom: 0;
     }
@@ -48,6 +53,7 @@
   &__title {
     padding-bottom: 18px;
   }
+
   &__desc {
     font-size: $font-size-mobile-title-small;
     margin: 8px 0 16px 0;
@@ -63,13 +69,16 @@
       align-items: center;
       justify-content: space-between;
       padding: 23px 34px;
+
       .col-6:first-of-type {
         padding-right: 15px;
       }
+
       .col-6:last-of-type {
         padding-left: 15px;
       }
     }
+
     &-payout {
       border: 1px solid $border-light-color;
     }

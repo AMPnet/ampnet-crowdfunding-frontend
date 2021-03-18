@@ -8,6 +8,7 @@
   &-info {
     border: 1px solid $border-light-color;
   }
+
   &-info,
   &-cta {
     margin: 20px 15px 0 15px;
@@ -20,17 +21,20 @@
     border-bottom: 1px solid $border-light-color;
     padding: 16px;
   }
+
   &__title,
   &__project p,
   &__amount p {
     font-size: $font-size-mobile-body;
     color: $body-color;
   }
+
   &__project p,
   &__amount p {
     padding: 0 16px;
     margin: 0;
   }
+
   &__content {
     padding: 16px 0;
   }

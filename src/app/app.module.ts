@@ -14,7 +14,6 @@ import { FooterComponent } from './footer/footer.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { PublicLayoutComponent } from './public-layout/public-layout.component';
 import { SecureLayoutComponent } from './secure-layout/secure-layout.component';
-import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { SocialLoginModule } from 'angularx-social-login';
 import { DepositComponent } from './deposit/deposit.component';

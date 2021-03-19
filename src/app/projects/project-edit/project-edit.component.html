@@ -295,18 +295,18 @@
                                     <div class="news__form col-lg-8">
                                         <form [formGroup]="newsForm">
                                             <div class="row">
-                                                <div class="col-lg-11 form__input">
+                                                <div class="col-10 px-0">
                                                     <input class="input-reg w-100" id="newsLink"
                                                            placeholder="{{ 'projects.edit.news.news_input.placeholder' | translate }}"
                                                            formControlName="newsLink"
                                                            type="text">
                                                 </div>
-                                                <div class="col-lg-1 form__btn">
+                                                <div class="col-2 px-0">
                                                     <button app-action-button
                                                             faIcon="plus"
                                                             [disabled]="!newsForm.dirty || !newsForm.valid"
                                                             [onClick]="addNewsLink(states.project, newsForm).bind(this)"
-                                                            class="w-100 btn ml-lg-0">
+                                                            class="w-100 btn p-1">
                                                     </button>
                                                 </div>
                                             </div>
@@ -315,8 +315,8 @@
                                     <div class="news__list col-lg-8">
                                         <ul class="list-group">
                                             <li *ngFor="let item of states.project.news"
-                                                class="list__item flex__center--space">
-                                                <a href="{{ item }}"
+                                                class="list__item flex__center--space mx-0">
+                                                <a href="//{{ item }}"
                                                    target="_blank" rel="noopener noreferrer"
                                                    style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis">
                                                     {{ item }}

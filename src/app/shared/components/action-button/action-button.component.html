@@ -1,6 +1,7 @@
 <div class="d-flex justify-content-around">
     <div *ngIf="!loading">
-        <fa-icon [icon]="faIcon" *ngIf="!loading && faIcon" class="mr-2"></fa-icon>
+        <fa-icon [icon]="faIcon" *ngIf="!loading && faIcon"
+                 [class.mr-2]="text || textShort"></fa-icon>
         <span class="d-none d-xl-inline-block">{{ text }}</span>
         <span class="d-inline-block d-xl-none">{{ textShort }}</span>
     </div>

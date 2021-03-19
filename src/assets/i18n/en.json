@@ -39,8 +39,6 @@
       "subtitle_docs": "Project documents",
       "news": {
         "subtitle": "Project news",
-        "title_unknown": "Unknown article title",
-        "desc_unknown": "Unknown article description",
         "read_more": "Read more"
       },
       "transactions": {

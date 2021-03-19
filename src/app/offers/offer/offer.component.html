@@ -251,24 +251,23 @@
                         </div>
 
                         <div *ngFor="let news of newsRes.newsList">
-                            <ng-container *ngIf="news.open_graph !== null else newsPreviewFallback">
+                            <ng-container *ngIf="news.open_graph">
                                 <div class="news__item-preview">
                                     <div class="preview__inner">
-                                        <div class="preview__img">
-                                            <img class="w-100" src="{{ news.open_graph.image.url }}"
+                                        <div class="preview__img" *ngIf="news.open_graph.image?.url">
+                                            <img class="w-100" src="{{ news.open_graph.image?.url }}"
                                                  onerror="this.onerror=null; this.src='../../../../assets/noimage.png'">
                                         </div>
                                         <div class="preview__content">
-                                            <div class="preview__title">
-                                                {{ !news.open_graph.title ?
-                                                    ('offers.show.news.title_unknown' | translate) :
-                                                    news.open_graph.title | titlecase }}
+                                            <div class="preview__title" *ngIf="news.open_graph.title">
+                                                {{ news.open_graph.title }}
                                             </div>
-                                            <div class="preview__desc">
-                                                {{ !news.open_graph.description ?
-                                                    ('offers.show.news.desc_unknown' | translate) :
-                                                    news.open_graph.description }}
+                                            <div class="preview__desc" *ngIf="news.open_graph.description">
+                                                {{ news.open_graph.description }}
                                             </div>
+                                            <ng-container *ngIf="!news.open_graph.title">
+                                                <ng-container *ngTemplateOutlet="newsURL"></ng-container>
+                                            </ng-container>
                                         </div>
                                     </div>
                                     <div class="preview__cta">
@@ -279,16 +278,19 @@
                                         </a>
                                     </div>
                                 </div>
-
                             </ng-container>
 
-                            <ng-template #newsPreviewFallback>
+                            <ng-container *ngIf="!news.open_graph">
                                 <div class="news__item">
-                                    <div class="news__wrapper">
-                                        <a href="{{ news.url }}" target="_blank" rel="noopener noreferrer">
-                                            {{ news.url }}
-                                        </a>
-                                    </div>
+                                    <ng-container *ngTemplateOutlet="newsURL"></ng-container>
+                                </div>
+                            </ng-container>
+
+                            <ng-template #newsURL>
+                                <div class="news__wrapper">
+                                    <a href="//{{ news.url }}" target="_blank" rel="noopener noreferrer">
+                                        {{ news.url }}
+                                    </a>
                                 </div>
                             </ng-template>
                         </div>

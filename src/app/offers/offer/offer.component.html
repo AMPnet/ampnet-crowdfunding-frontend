@@ -131,7 +131,7 @@
                                     <button app-action-button
                                             text="{{ 'offers.show.cancel_investment' | translate }}"
                                             faIcon="times-circle"
-                                            class="btn btn-danger w-100 d-lg-none d-xl-block"
+                                            class="btn btn-danger w-100 mt-3 d-lg-none d-xl-block"
                                             [disabled]="!isCancelable"
                                             [onClick]="cancelInvestment(project.uuid).bind(this)">
                                     </button>
@@ -139,7 +139,7 @@
                                     <button app-action-button
                                             text="{{ 'offers.show.cancel_investment' | translate }}"
                                             faIcon="times-circle"
-                                            class="btn btn-danger w-100 d-none d-lg-block d-xl-none"
+                                            class="btn btn-danger w-100 mt-3 d-none d-lg-block d-xl-none"
                                             [disabled]="!isCancelable"
                                             [onClick]="cancelInvestment(project.uuid).bind(this)">
                                     </button>

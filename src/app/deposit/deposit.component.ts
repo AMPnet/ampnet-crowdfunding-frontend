@@ -12,8 +12,10 @@ import { AppConfigService } from '../shared/services/app-config.service';
     styleUrls: ['./deposit.component.scss']
 })
 export class DepositComponent implements OnInit {
+    bankAccountState = BankAccountState;
+
     deposit$: Observable<Deposit>;
-    bankAccount$: Observable<PlatformBankAccount>;
+    bankAccount$: Observable<PlatformBankAccount | BankAccountState>;
 
     constructor(public appConfig: AppConfigService,
                 private depositService: DepositServiceService,
@@ -25,6 +27,7 @@ export class DepositComponent implements OnInit {
         this.bankAccount$ = this.bankAccountService.bankAccounts$.pipe(
             this.errorService.handleError,
             map(res => res.bank_accounts[0]),
+            map(bankAccount => bankAccount ?? BankAccountState.NOT_FOUND),
             shareReplay(1)
         );
 
@@ -39,4 +42,8 @@ export class DepositComponent implements OnInit {
             this.errorService.handleError,
         );
     }
+}
+
+enum BankAccountState {
+    NOT_FOUND = 'NOT_FOUND'
 }

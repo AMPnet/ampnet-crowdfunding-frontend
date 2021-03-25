@@ -1,5 +1,5 @@
 module.exports = {
-    prefix: '',
+    prefix: 'tw-',
     purge: {
         content: [
             './src/**/*.{html,ts}',

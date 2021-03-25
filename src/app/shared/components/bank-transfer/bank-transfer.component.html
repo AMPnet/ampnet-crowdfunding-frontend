@@ -76,41 +76,6 @@
                     </div>
                 </div>
 
-                <!--                <div class="mt-5 card">-->
-                <!--                    <div class="card-body">-->
-                <!--                        <div class="card-title">-->
-
-                <!--                        </div>-->
-                <!--                    </div>-->
-                <!--                    <div class="card-text">-->
-                <!--                        <div class="row justify-content-between pb-3 px-3">-->
-                <!--                            <div class="col-lg-4">-->
-                <!--                                <div class="text-uppercase mt-3">-->
-                <!--                                    <fa-icon icon="piggy-bank" class="mr-2"></fa-icon>-->
-                <!--                                    {{ 'deposit.bank_transfer.iban' | translate }}-->
-                <!--                                </div>-->
-                <!--                                <div>{{ bankAccount.iban || 'unknown' }}</div>-->
-                <!--                            </div>-->
-
-                <!--                            <div class="col-lg-4">-->
-                <!--                                <div class="text-uppercase mt-3">-->
-                <!--                                    <fa-icon icon="money-check-alt" class="mr-2"></fa-icon>-->
-                <!--                                    {{ 'deposit.bank_transfer.swift' | translate }}-->
-                <!--                                </div>-->
-                <!--                                <div>{{ bankAccount.bank_code || 'unknown' }}</div>-->
-                <!--                            </div>-->
-
-                <!--                            <div class="col-lg-4">-->
-                <!--                                <div class="text-uppercase mt-3">-->
-                <!--                                    <fa-icon icon="address-book" class="mr-2"></fa-icon>-->
-                <!--                                    {{ 'deposit.bank_transfer.reference' | translate }}-->
-                <!--                                </div>-->
-                <!--                                <div>{{ deposit.reference }}</div>-->
-                <!--                            </div>-->
-                <!--                        </div>-->
-                <!--                    </div>-->
-                <!--                </div>-->
-
                 <button app-action-button [onClick]="deleteDeposit(deposit.id).bind(this)"
                         class="btn btn-primary my-2 w-100"
                         [text]="'deposit.bank_transfer.cancel' | translate"></button>

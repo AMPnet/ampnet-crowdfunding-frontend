@@ -141,7 +141,7 @@
         "fee": "Your wallet is like a bank account, you can deposit and withdraw as and when you want to. Your bank will charge a small fee for this, we do not."
       },
       "bank_details": "Bank details",
-      "receiver": "Receiver/ Payee/ Beneficiary Name",
+      "receiver": "Receiver / Payee / Beneficiary Name",
       "iban": "IBAN",
       "reference": "Reference code",
       "reference.warning": "You MUST include the Reference code in your deposit",

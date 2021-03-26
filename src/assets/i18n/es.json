@@ -28,6 +28,8 @@
   "offers.show.link_copied": "Enlace copiado en el portapapeles",
   "offers.show.subtitle_docs": "Documentación del proyecto",
   "offers.show.news.subtitle": "Noticias del proyecto",
+  "offers.show.news.title_unknown": "Título del artículo desconocido",
+  "offers.show.news.desc_unknown": "Descripción del artículo desconocida",
   "offers.show.news.read_more": "Leer más",
   "offers.show.transactions.title": "Transacciones",
   "offers.show.transactions.total_invested": "Total Invertido",

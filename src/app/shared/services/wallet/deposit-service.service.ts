@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BackendHttpClient } from '../backend-http-client.service';
+import { Observable } from 'rxjs';
 
 
 @Injectable({
@@ -12,29 +13,47 @@ export class DepositServiceService {
     constructor(private http: BackendHttpClient) {
     }
 
-    public createDeposit() {
-        return this.http.post<Deposit>(this.endpoint, <CreateDepositData>{});
+    pendingDeposit(projectUUID = ''): Observable<Deposit> {
+        return !projectUUID ? this.pendingUserDeposit()
+            : this.pendingProjectDeposit(projectUUID);
     }
 
-    public createProjectDeposit(projectID: string) {
-        return this.http.post<Deposit>(`${this.endpointProjectDeposit}/${projectID}`, <CreateDepositData>{});
+    createDeposit(amount: number, projectUUID = ''): Observable<Deposit> {
+        return !projectUUID ? this.createUserDeposit(amount)
+            : this.createProjectDeposit(projectUUID, amount);
     }
 
-    public myPendingDeposit() {
+    deleteDeposit(id: number) {
+        return this.http.delete<void>(`${this.endpoint}/${id}`);
+    }
+
+    confirmDeposit(id: number) {
+        return this.http.post<Deposit>(`${this.endpoint}/${id}/confirm`, {});
+    }
+
+    private createUserDeposit(amount: number) {
+        return this.http.post<Deposit>(this.endpoint, <CreateDepositData>{
+            amount: amount
+        });
+    }
+
+    private createProjectDeposit(projectID: string, amount: number) {
+        return this.http.post<Deposit>(`${this.endpointProjectDeposit}/${projectID}`, <CreateDepositData>{
+            amount: amount
+        });
+    }
+
+    private pendingUserDeposit() {
         return this.http.get<Deposit>(`${this.endpoint}/pending`);
     }
 
-    public getProjectPendingDeposit(projectID: string) {
+    private pendingProjectDeposit(projectID: string) {
         return this.http.get<Deposit>(`${this.endpointProjectDeposit}/${projectID}/pending`);
-    }
-
-    public deleteDeposit(id: number) {
-        return this.http.delete<void>(`${this.endpoint}/${id}`);
     }
 }
 
 interface CreateDepositData {
-    deposit?: number;
+    amount?: number;
 }
 
 export interface Deposit {
@@ -45,6 +64,7 @@ export interface Deposit {
     created_at: Date;
     created_by: string;
     type: string;
+    user_confirmation: boolean;
     approved_at?: any;
     amount: number;
     document_response?: any;

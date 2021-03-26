@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BackendHttpClient } from './backend-http-client.service';
+import { CreateWalletBankAccountData } from './wallet/platform-bank-account.service';
 
 @Injectable({
     providedIn: 'root'
@@ -14,13 +15,8 @@ export class PaymentService {
         return this.http.get<UserBankAccountsRes>(this.endpoint);
     }
 
-    createBankAccount(iban: String, bankCode: String, alias: String) {
-        return this.http.post<UserBankAccount>(this.endpoint,
-            <CreateUserBankAccountData>{
-                iban: iban,
-                bank_code: bankCode,
-                alias: alias
-            });
+    createBankAccount(data: CreateWalletBankAccountData) {
+        return this.http.post<UserBankAccount>(this.endpoint, data);
     }
 
     deleteBankAccount(id: number) {
@@ -34,14 +30,11 @@ export interface UserBankAccount {
     bank_code: string;
     created_at: Date;
     alias: string;
+    bank_name: string;
+    bank_address: string;
+    beneficiary_name: string;
 }
 
 interface UserBankAccountsRes {
     bank_accounts: UserBankAccount[];
-}
-
-interface CreateUserBankAccountData {
-    iban: string;
-    bank_code: string;
-    alias: string;
 }

@@ -23,6 +23,7 @@ import { TranslationsModule } from './modules/translations.module';
 import { QuillModule } from 'ngx-quill';
 import { HeaderComponent } from './components/header/header.component';
 import { RouterModule } from '@angular/router';
+import { BankTransferComponent } from './components/bank-transfer/bank-transfer.component';
 
 const components = [
     ActionButtonComponent,
@@ -32,7 +33,8 @@ const components = [
     NewBankAccountComponent,
     SpinnerComponent,
     UploadAreaComponent,
-    HeaderComponent
+    HeaderComponent,
+    BankTransferComponent
 ];
 
 const directives = [

@@ -20,6 +20,44 @@
         </div>
 
         <div *ngIf="!decisionPending(session)" class="mt-3">
+            <div class="alert alert-info">
+                <span>
+                    {{ 'settings.user.identity.veriff.notice.info' | translate | splitPart:0 }}
+                </span>
+                <a href="https://www.veriff.com/" class="tw-underline">
+                    {{ 'settings.user.identity.veriff.notice.info' | translate | splitPart:1 }}</a>
+                <span>
+                    {{ 'settings.user.identity.veriff.notice.info' | translate | splitPart:2 }}
+                </span>
+
+                <div class="tw-w-1/2 lg:tw-w-1/4 tw-m-auto tw-mt-4">
+                    <div class="tw-flex tw-items-center">
+                        <div class="tw-h-4 tw-w-4">
+                            <img src="assets/icons/phone-call.png" alt="Phone number">
+                        </div>
+                        <span class="tw-ml-3">
+                            {{ 'settings.user.identity.veriff.notice.phone' | translate }}
+                        </span>
+                    </div>
+                    <div class="tw-flex tw-items-center tw-mt-2">
+                        <div class="tw-h-4 tw-w-4">
+                            <img src="assets/icons/id-card.png" alt="Phone number">
+                        </div>
+                        <span class="tw-ml-3">
+                            {{ 'settings.user.identity.veriff.notice.id' | translate }}
+                        </span>
+                    </div>
+                    <div class="tw-flex tw-items-center tw-mt-2">
+                        <div class="tw-h-4 tw-w-4">
+                            <img src="assets/icons/photo-capture.png" alt="Phone number">
+                        </div>
+                        <span class="tw-ml-3">
+                            {{ 'settings.user.identity.veriff.notice.selfie' | translate }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+
             <button app-action-button
                     class="btn btn-primary w-auto mx-auto my-3"
                     [onClick]="createVeriffFrame(session.verification_url)"

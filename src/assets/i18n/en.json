@@ -412,6 +412,12 @@
           "declined": "Declined",
           "decision_pending": "Your account is in process of verification. Please wait...",
           "approved": "User data has been successfully verified.",
+          "notice": {
+            "info": "You must verify your identity before investing in the offered projects. We use | Veriff | as a trusted third party service. In order to fully verify your identity, you will be asked to provide following:",
+            "phone": "Phone number",
+            "id": "Photo of your ID",
+            "selfie": "Self-taken Camera Picture"
+          },
           "start_verification": "Start verification"
         },
         "identyum": {

@@ -26,22 +26,45 @@
                 </div>
             </ng-container>
             <ng-template #depositExists>
-                <div class="tw-grid tw-grid-cols-1 lg:tw-grid-cols-2 tw-gap-4 mt-3">
+                <div class="tw-grid tw-grid-cols-1 tw-max-w-2xl tw-m-auto tw-gap-4 tw-mt-3">
                     <div class="tw-flex tw-flex-col">
                         <div *ngIf="!deposit.user_confirmation" class="alert alert-warning">
-                            <div class="tw-grid tw-grid-cols-2 tw-gap-4">
-                                <div>
-                                    {{ 'deposit.bank_transfer.warning_notice.name' | translate }}
+                            <div class="tw-flex tw-flex-col tw-gap-4 tw-px-6 tw-py-2">
+                                <div class="tw-flex tw-items-center">
+                                    <div class="tw-w-6 tw-h-6 tw-flex-shrink-0">
+                                        <img src="assets/icons/phone-call.png" alt="Phone number">
+                                    </div>
+                                    <span class="tw-ml-6">
+                                        {{ 'deposit.bank_transfer.warning_notice.name' | translate }}
+                                    </span>
                                 </div>
-                                <div>
-                                    {{ 'deposit.bank_transfer.warning_notice.beneficiary'
-                                        | translate | interpolate:['beneficiaryName', bankAccount.beneficiary_name] }}
+
+                                <div class="tw-flex tw-items-center">
+                                    <div class="tw-w-6 tw-h-6 tw-flex-shrink-0">
+                                        <img src="assets/icons/phone-call.png" alt="Phone number">
+                                    </div>
+                                    <span class="tw-ml-6">
+                                        {{ 'deposit.bank_transfer.warning_notice.beneficiary'
+                                            | translate | interpolate:['beneficiaryName', bankAccount.beneficiary_name] }}
+                                    </span>
                                 </div>
-                                <div>
-                                    {{ 'deposit.bank_transfer.warning_notice.arrival' | translate }}
+
+                                <div class="tw-flex tw-items-center">
+                                    <div class="tw-w-6 tw-h-6 tw-flex-shrink-0">
+                                        <img src="assets/icons/phone-call.png" alt="Phone number">
+                                    </div>
+                                    <span class="tw-ml-6">
+                                        {{ 'deposit.bank_transfer.warning_notice.arrival' | translate }}
+                                    </span>
                                 </div>
-                                <div>
-                                    {{ 'deposit.bank_transfer.warning_notice.fee' | translate }}
+
+                                <div class="tw-flex tw-items-center">
+                                    <div class="tw-w-6 tw-h-6 tw-flex-shrink-0">
+                                        <img src="assets/icons/phone-call.png" alt="Phone number">
+                                    </div>
+                                    <span class="tw-ml-6">
+                                        {{ 'deposit.bank_transfer.warning_notice.fee' | translate }}
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -49,10 +72,8 @@
                             <span>
                                 {{ 'deposit.bank_transfer.confirmed_notice' | translate | splitPart:0 }}
                             </span>
-                            <a href="{{ appConfig.config.config.contact_url }}"
-                               class="tw-underline">
-                                {{ 'deposit.bank_transfer.confirmed_notice'
-                                    | translate | splitPart:1 }}
+                            <a href="{{ appConfig.config.config.contact_url }}" class="tw-underline">
+                                {{ 'deposit.bank_transfer.confirmed_notice' | translate | splitPart:1 }}
                             </a>
                             <span>
                                 {{ 'deposit.bank_transfer.confirmed_notice' | translate | splitPart:2 }}
@@ -110,7 +131,7 @@
                         </div>
 
                         <form [formGroup]="confirmDepositForm" *ngIf="!deposit.user_confirmation">
-                            <div class="tw-flex tw-align-middle tw-items-center tw-my-2">
+                            <div class="tw-flex tw-align-middle tw-items-center tw-my-4 tw-ml-3">
                                 <input class="tw-w-auto tw-my-1" id="confirmed"
                                        formControlName="confirmed"
                                        type="checkbox">
@@ -119,13 +140,13 @@
                                 </label>
                             </div>
 
-                            <div class="lg:tw-flex lg:tw-space-x-2">
+                            <div class="tw-flex tw-flex-col md:tw-flex-row md:tw-space-x-2">
                                 <button app-action-button [onClick]="confirmDeposit(deposit.id).bind(this)"
-                                        class="btn btn-primary btn-warning my-2 w-100"
+                                        class="btn btn-primary btn-warning tw-my-2 w-100"
                                         [disabled]="!confirmDepositForm.valid"
                                         [text]="'deposit.bank_transfer.confirm' | translate"></button>
                                 <button app-action-button [onClick]="deleteDeposit(deposit.id).bind(this)"
-                                        class="btn btn-primary my-2 w-100"
+                                        class="btn btn-primary tw-my-2 w-100"
                                         [text]="'deposit.bank_transfer.cancel' | translate"></button>
                             </div>
                         </form>

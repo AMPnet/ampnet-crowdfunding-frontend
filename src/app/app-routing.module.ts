@@ -26,6 +26,8 @@ import { ProjectRevenueShareComponent } from './projects/project-revenue-share/p
 import { NoAuthGuard } from './auth/no-auth.guard';
 import { SettingsModule } from './settings/settings.module';
 import { LandingPageComponent } from './landing-page/landing-page.component';
+import { AdminModule } from './admin/admin.module';
+import { AuthModule } from './auth/auth.module';
 
 const appRoutes: Routes = [
     {
@@ -39,7 +41,7 @@ const appRoutes: Routes = [
                     {path: 'groups/:id', component: GroupComponent, data: {isPublic: true, isOverview: true}},
                 ]
             },
-            {path: 'auth', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)},
+            {path: 'auth', loadChildren: () => AuthModule},
             {path: 'static/:page', component: StaticPageComponent},
         ]
     },
@@ -73,7 +75,7 @@ const appRoutes: Routes = [
             {path: 'my_portfolio/:id', component: OfferComponent, data: {isPortfolioView: true}},
 
             {path: 'settings', loadChildren: () => SettingsModule},
-            {path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)}
+            {path: 'admin', loadChildren: () => AdminModule}
         ]
     }
 ];

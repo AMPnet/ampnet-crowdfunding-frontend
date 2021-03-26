@@ -134,17 +134,26 @@
       "platform_bank_account_not_ready": "Deposits are temporarily disabled. Please, try again later.",
       "amount_input.title": "Amount",
       "create": "Continue",
-      "notice": "Please deposit funds to your wallet by making a bank transfer to the {{ bankAccountName }} bank account using the payment details presented below. Make sure that you also include the unique deposit code as the reference for the transaction. After you have transferred the money to our bank account it can take up to 48h for it to become visible on the platform. You will be notified by email when your money has been received.",
+      "warning_notice": {
+        "name": "The name you use must match the name registered to your platform account.",
+        "beneficiary": "The receiver name must be {{ beneficiaryName }}",
+        "arrival": "It may take up to 48 hours for funds to arrive, depending on your bank.",
+        "fee": "Your wallet is like a bank account, you can deposit and withdraw as and when you want to. Your bank will charge a small fee for this, we do not."
+      },
       "bank_details": "Bank details",
       "receiver": "Receiver/ Payee/ Beneficiary Name",
       "iban": "IBAN",
       "reference": "Reference code",
+      "reference.warning": "You MUST include the Reference code in your deposit",
       "additional_info": "Additional information",
       "swift": "SWIFT/BIC",
       "bank_name": "Bank name",
       "bank_address": "Bank address",
       "amount": "Amount",
-      "cancel": "Cancel"
+      "cancel": "Cancel",
+      "confirm": "Confirm",
+      "confirm_checkbox": "I have made a bank transaction using the presented payment details.",
+      "confirmed_notice": "Your funds are on the way. It may take up to 48 hours to become visible on the platform. You will be notified via e-mail notification after your transaction has been processed. For any questions please contact your | Platform Manager |"
     }
   },
   "withdraw": {
@@ -338,6 +347,7 @@
         "no": "No"
       }
     },
+    "deposit.title": "Project deposit",
     "withdraw": {
       "title": "Withdraw",
       "amount_input": {
@@ -448,8 +458,10 @@
     "title": "Bank accounts",
     "bank_account": {
       "iban": "IBAN",
-      "alias": "Name",
       "swift": "SWIFT/BIC",
+      "bank_name": "Bank name",
+      "bank_address": "Bank address",
+      "beneficiary_name": "Beneficiary name",
       "actions": "Actions"
     },
     "bank_accounts_empty": "No payment options available. Please add a new payment option.",
@@ -468,9 +480,17 @@
         "placeholder": "REVOGB21",
         "helper_notice": "Find it out | here |"
       },
-      "alias_input": {
-        "title": "Short name",
-        "placeholder": "Primary bank account"
+      "bank_name_input": {
+        "title": "Bank name",
+        "placeholder": "Springwell Banks Inc."
+      },
+      "bank_address_input": {
+        "title": "Bank address",
+        "placeholder": "923 Deerfield Ave., Brockton, MA 02301"
+      },
+      "beneficiary_name_input": {
+        "title": "Beneficiary name",
+        "placeholder": "Flowerwalk"
       },
       "submit": "Add bank account"
     }
@@ -573,8 +593,10 @@
       "title": "Platform Bank Account",
       "item": {
         "iban": "IBAN",
-        "alias": "Name",
         "swift": "SWIFT/BIC",
+        "bank_name": "Bank name",
+        "bank_address": "Bank address",
+        "beneficiary_name": "Beneficiary name",
         "actions": "Actions"
       },
       "empty": "No payment options available. Please add a new payment option.",

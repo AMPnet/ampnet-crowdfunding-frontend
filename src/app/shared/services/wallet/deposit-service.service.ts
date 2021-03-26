@@ -27,6 +27,10 @@ export class DepositServiceService {
         return this.http.delete<void>(`${this.endpoint}/${id}`);
     }
 
+    confirmDeposit(id: number) {
+        return this.http.post<Deposit>(`${this.endpoint}/${id}/confirm`, {});
+    }
+
     private createUserDeposit(amount: number) {
         return this.http.post<Deposit>(this.endpoint, <CreateDepositData>{
             amount: amount
@@ -60,6 +64,7 @@ export interface Deposit {
     created_at: Date;
     created_by: string;
     type: string;
+    user_confirmation: boolean;
     approved_at?: any;
     amount: number;
     document_response?: any;

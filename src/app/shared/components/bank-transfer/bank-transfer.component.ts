@@ -5,7 +5,7 @@ import { PlatformBankAccount, PlatformBankAccountService } from '../../services/
 import { AppConfigService } from '../../services/app-config.service';
 import { ErrorService } from '../../services/error.service';
 import { catchError, map, shareReplay, switchMap, tap } from 'rxjs/operators';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { enterTrigger } from '../../animations';
 
 @Component({
@@ -28,6 +28,7 @@ export class BankTransferComponent implements OnInit {
     depositState = DepositState;
 
     createDepositForm: FormGroup;
+    confirmDepositForm: FormGroup;
 
     constructor(public appConfig: AppConfigService,
                 private depositService: DepositServiceService,
@@ -45,9 +46,6 @@ export class BankTransferComponent implements OnInit {
         );
 
         this.deposit$ = this.refreshDepositSubject.pipe(
-            tap(() => {
-                console.log('refreshed deposit subject');
-            }),
             switchMap(() => this.depositService.pendingDeposit(this.projectUUID).pipe(
                 this.errorService.handleError,
                 catchError(err => err.status === 404 ? of(DepositState.NOT_FOUND) : throwError(err))
@@ -56,6 +54,10 @@ export class BankTransferComponent implements OnInit {
 
         this.createDepositForm = this.fb.group({
             amount: [0, (c: FormControl) => c.value > 0 ? null : {invalid: true}]
+        });
+
+        this.confirmDepositForm = this.fb.group({
+            confirmed: [false, Validators.requiredTrue]
         });
     }
 
@@ -74,6 +76,18 @@ export class BankTransferComponent implements OnInit {
     deleteDeposit(depositID: number) {
         return () => {
             return this.depositService.deleteDeposit(depositID).pipe(
+                this.errorService.handleError,
+                tap(() => {
+                    this.refreshDepositSubject.next();
+                    this.confirmDepositForm.reset();
+                })
+            );
+        };
+    }
+
+    confirmDeposit(depositID: number) {
+        return () => {
+            return this.depositService.confirmDeposit(depositID).pipe(
                 this.errorService.handleError,
                 tap(() => this.refreshDepositSubject.next())
             );

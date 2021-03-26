@@ -5,7 +5,7 @@
 
     <form [formGroup]="newBankAccountForm">
         <div class="row">
-            <div class="col-12 col-lg-8 mt-3">
+            <div class="col-12 col-lg-8 mt-2">
                 <label for="iban" class="app-page-label">
                     {{ 'payment_options.new_bank_account.iban_input.title' | translate }}
                 </label>
@@ -15,7 +15,7 @@
                        placeholder="{{ 'payment_options.new_bank_account.iban_input.placeholder' | translate }}"
                        type="text">
             </div>
-            <div class="col-12 col-lg-4 mt-3">
+            <div class="col-12 col-lg-4 mt-2">
                 <label for="bic" class="app-page-label">
                     {{ 'payment_options.new_bank_account.swift_input.title' | translate }}
                 </label>
@@ -42,20 +42,41 @@
         </div>
 
         <div class="row">
-            <div class="col mt-3">
-                <label for="alias" class="app-page-label">
-                    {{ 'payment_options.new_bank_account.alias_input.title' | translate }}
+            <div class="col-12 col-lg-4 mt-2">
+                <label for="bank_name" class="app-page-label">
+                    {{ 'payment_options.new_bank_account.bank_name_input.title' | translate }}
                 </label>
-                <input class="input-reg w-100" id="alias"
-                       formControlName="alias"
-                       name="Bank account alias"
-                       placeholder="{{ 'payment_options.new_bank_account.alias_input.placeholder' | translate }}"
+                <input class="input-reg w-100" id="bank_name"
+                       formControlName="bank_name"
+                       placeholder="{{ 'payment_options.new_bank_account.bank_name_input.placeholder' | translate }}"
+                       type="text">
+            </div>
+
+            <div class="col-12 col-lg-8 mt-2">
+                <label for="bank_address" class="app-page-label">
+                    {{ 'payment_options.new_bank_account.bank_address_input.title' | translate }}
+                </label>
+                <input class="input-reg w-100" id="bank_address"
+                       formControlName="bank_address"
+                       placeholder="{{ 'payment_options.new_bank_account.bank_address_input.placeholder' | translate }}"
                        type="text">
             </div>
         </div>
 
         <div class="row">
-            <div class="col-md-6 mt-3">
+            <div class="col-12 mt-2">
+                <label for="beneficiary_name" class="app-page-label">
+                    {{ 'payment_options.new_bank_account.beneficiary_name_input.title' | translate }}
+                </label>
+                <input class="input-reg w-100" id="beneficiary_name"
+                       formControlName="beneficiary_name"
+                       placeholder="{{ 'payment_options.new_bank_account.beneficiary_name_input.placeholder' | translate }}"
+                       type="text">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mt-2">
                 <button app-action-button
                         text="{{ 'payment_options.new_bank_account.submit' | translate }}"
                         faIcon="plus-circle"

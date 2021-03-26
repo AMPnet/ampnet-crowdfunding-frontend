@@ -31,6 +31,8 @@
   "offers.show.link_copied": "O σύνδεσμος έχει αντιγραφεί στο πρόχειρο",
   "offers.show.subtitle_docs": "Έγγραφα έργου",
   "offers.show.news.subtitle": "Ενημερώσεις έργου",
+  "offers.show.news.title_unknown": "Τίτλος ανώνυμου άρθρου",
+  "offers.show.news.desc_unknown": "Περιγραφή ανώνυμου έργου",
   "offers.show.news.read_more": "Διάβασε περισσότερα",
   "offers.show.transactions.title": "Συναλλαγές",
   "offers.show.transactions.total_invested": "Σύνολο επένδυσης",

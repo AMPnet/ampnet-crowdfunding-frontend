@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { Observable } from 'rxjs';
+import { from, Observable } from 'rxjs';
 import { NgModule } from '@angular/core';
+import { map } from 'rxjs/operators';
 
 export function translationsLoaderFactory(http: HttpClient) {
     return new TranslationsLoader(http);
@@ -12,7 +13,8 @@ export class TranslationsLoader implements TranslateLoader {
     }
 
     getTranslation(lang: string): Observable<Object> {
-        return this.http.get(this.customURL ? this.customURL : `/assets/i18n/${lang}.json`);
+        return this.customURL ? this.http.get(this.customURL) :
+            from(import(`../../../assets/i18n/${lang}.json`)).pipe(map(res => res.default));
     }
 
     get customURL(): string {

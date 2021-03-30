@@ -96,6 +96,11 @@
                                 <span class="tw-text-right">{{ bankAccount.iban || 'unknown' }}</span>
                             </div>
 
+                            <div class="tw-flex tw-justify-between tw-mt-2">
+                                <span>{{ 'deposit.bank_transfer.amount' | translate }}</span>
+                                <span class="tw-text-right tw-font-bold">{{ deposit.amount | currencyDefault }}</span>
+                            </div>
+
                             <div class="tw-flex tw-justify-between tw-mt-2 tw-font-bold">
                                 <span>{{ 'deposit.bank_transfer.reference' | translate }}</span>
                                 <span>{{ deposit.reference || 'unknown' }}</span>
@@ -122,11 +127,6 @@
                             <div class="tw-flex tw-justify-between tw-mt-2">
                                 <span>{{ 'deposit.bank_transfer.bank_address' | translate }}</span>
                                 <span class="tw-text-right">{{ bankAccount.bank_address }}</span>
-                            </div>
-
-                            <div class="tw-flex tw-justify-between tw-mt-2">
-                                <span>{{ 'deposit.bank_transfer.amount' | translate }}</span>
-                                <span class="tw-text-right tw-font-bold">{{ deposit.amount | currencyDefault }}</span>
                             </div>
                         </div>
 

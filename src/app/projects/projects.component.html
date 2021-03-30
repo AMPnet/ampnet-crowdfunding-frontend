@@ -21,16 +21,20 @@
         <div *ngIf="states.projects !== null else spinner">
             <div *ngIf="states.projects?.length > 0" @enterTrigger class="groups">
                 <ul class="list-group">
-                    <li *ngFor="let project of states.projects" class="list__item"
-                        [routerLink]="['/dash/projects', project.uuid] | coopPath">
-                        <div class="item__desc">
-                            <div class="item__title">{{ project.name | uppercase }}</div>
-                        </div>
-                        <div class="item__img">
-                            <img src="{{ project.main_image }}" alt="Project image"
-                                 onerror="this.onerror=null; this.src='../../../../assets/noimage.png'">
-                        </div>
-                    </li>
+                    <app-lazy-load *ngFor="let project of states.projects" minHeight="100">
+                        <ng-template>
+                            <li class="list__item"
+                                [routerLink]="['/dash/projects', project.uuid] | coopPath">
+                                <div class="item__desc">
+                                    <div class="item__title">{{ project.name | uppercase }}</div>
+                                </div>
+                                <div class="item__img">
+                                    <img src="{{ project.main_image }}" alt="Project image"
+                                         onerror="this.onerror=null; this.src='../../../../assets/noimage.png'">
+                                </div>
+                            </li>
+                        </ng-template>
+                    </app-lazy-load>
                 </ul>
             </div>
             <div *ngIf="states.projects.length === 0" class="empty-group">
@@ -66,27 +70,31 @@
         <ng-container *ngIf="states.groups !== null else spinner">
             <div *ngIf="states.groups?.length > 0" @enterTrigger class="groups">
                 <ul class="list-group">
-                    <li *ngFor="let group of states.groups" class="list__item"
-                        [routerLink]="['/dash/groups', group.uuid] | coopPath">
-                        <div class="item__desc">
-                            <div class="item__title">{{ group.name | uppercase }}</div>
-                            <div class="item__projects-count">
+                    <app-lazy-load *ngFor="let group of states.groups" minHeight="100">
+                        <ng-template>
+                            <li class="list__item"
+                                [routerLink]="['/dash/groups', group.uuid] | coopPath">
+                                <div class="item__desc">
+                                    <div class="item__title">{{ group.name | uppercase }}</div>
+                                    <div class="item__projects-count">
                                 <span>
                                     {{ 'project_management.groups.org_item.project_count' | translate | splitPart:0 }}
                                 </span>
                                 <span class="bold">
                                     {{ 'project_management.groups.org_item.project_count' | translate
-                                        | splitPart:1 | interpolate:['count', group.project_count] }}
+                                                | splitPart:1 | interpolate:['count', group.project_count] }}
                                 </span>
                                 <span>
                                     {{ 'project_management.groups.org_item.project_count' | translate | splitPart:2 }}
                                 </span>
-                            </div>
-                        </div>
-                        <div class="item__img">
-                            <img src="{{ group.header_image }}" alt="Organization image">
-                        </div>
-                    </li>
+                                    </div>
+                                </div>
+                                <div class="item__img">
+                                    <img src="{{ group.header_image }}" alt="Organization image">
+                                </div>
+                            </li>
+                        </ng-template>
+                    </app-lazy-load>
                 </ul>
             </div>
             <div *ngIf="states.groups.length === 0" class="empty-group">

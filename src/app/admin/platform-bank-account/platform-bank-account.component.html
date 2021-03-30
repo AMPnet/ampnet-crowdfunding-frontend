@@ -6,39 +6,38 @@
         <ng-container *ngIf="(banks$ | async) as banks; else spinner">
             <div *ngFor="let paymentOption of banks" class="col-md-12 mb-3">
                 <div class="card">
-                    <div class="card-body d-flex flex-column gray-text">
-                        <div class="d-flex flex-row justify-content-between text-left flex-wrap">
-                            <div class="mt-1">
-                                <div class="text-uppercase mb-2">
-                                    {{ 'admin.bank_account.item.iban' | translate }}
-                                </div>
-                                <b>{{ paymentOption.iban }}</b>
+                    <div class="tw-flex tw-justify-between tw-p-4">
+                        <div>
+                            <div>
+                                <span class="tw-uppercase tw-font-bold">{{ 'admin.bank_account.item.iban' | translate }}</span>
+                                <span class="tw-ml-4">{{ paymentOption.iban }}</span>
                             </div>
-
-                            <div class="mt-1" *ngIf="paymentOption.alias">
-                                <div class="text-uppercase mb-2">
-                                    {{ 'admin.bank_account.item.alias' | translate }}
-                                </div>
-                                <b>{{ paymentOption.alias }}</b>
+                            <div>
+                                <span class="tw-uppercase tw-font-bold">{{ 'admin.bank_account.item.swift' | translate }}</span>
+                                <span class="tw-ml-4">{{ paymentOption.bank_code }}</span>
                             </div>
-
-                            <div class="mt-1">
-                                <div class="text-uppercase mb-2">
-                                    {{ 'admin.bank_account.item.swift' | translate }}
-                                </div>
-                                <b>{{ paymentOption.bank_code }}</b>
+                            <div>
+                                <span class="tw-uppercase tw-font-bold">{{ 'admin.bank_account.item.bank_name' | translate }}</span>
+                                <span class="tw-ml-4">{{ paymentOption.bank_name }}</span>
                             </div>
-
-                            <div class="mt-1">
-                                <div class="text-uppercase mb-2">
-                                    {{ 'admin.bank_account.item.actions' | translate }}
-                                </div>
-                                <a [routerLink]="" (click)="deleteBankAccountClicked(paymentOption.id)">
+                            <div>
+                                <span class="tw-uppercase tw-font-bold">{{ 'admin.bank_account.item.bank_address' | translate }}</span>
+                                <span class="tw-ml-4">{{ paymentOption.bank_address }}</span>
+                            </div>
+                            <div>
+                                <span class="tw-uppercase tw-font-bold">{{ 'admin.bank_account.item.beneficiary_name' | translate }}</span>
+                                <span class="tw-ml-4">{{ paymentOption.beneficiary_name }}</span>
+                            </div>
+                        </div>
+                        <div class="tw-flex-grow-0">
+                            <div class="text-uppercase mb-2">
+                                {{ 'admin.bank_account.item.actions' | translate }}
+                            </div>
+                            <a [routerLink]="" (click)="deleteBankAccountClicked(paymentOption.id)">
                                     <span class="float-right align-middle">
                                         <fa-icon icon="trash-alt"></fa-icon>
                                     </span>
-                                </a>
-                            </div>
+                            </a>
                         </div>
                     </div>
                 </div>

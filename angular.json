@@ -8,7 +8,11 @@
       "sourceRoot": "src",
       "projectType": "application",
       "prefix": "app",
-      "schematics": {},
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
       "architect": {
         "build": {
           "builder": "@angular-builders/custom-webpack:browser",
@@ -72,7 +76,7 @@
                 }
               },
               "outputHashing": "all",
-              "sourceMap": false,
+              "sourceMap": true,
               "namedChunks": false,
               "aot": true,
               "extractLicenses": true,
@@ -165,10 +169,5 @@
   "defaultProject": "ampnet-frontend",
   "cli": {
     "analytics": "76102ae2-5c77-4aae-adf9-834e9cfa29ae"
-  },
-  "schematics": {
-    "@schematics/angular:component": {
-      "styleext": "scss"
-    }
   }
 }

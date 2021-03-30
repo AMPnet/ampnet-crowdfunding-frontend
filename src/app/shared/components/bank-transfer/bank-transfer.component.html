@@ -1,0 +1,162 @@
+<ng-container *ngIf="(bankAccount$ | async) as bankAccount; else spinner">
+    <ng-container *ngIf="bankAccount === bankAccountState.NOT_FOUND; else bankAccountExists">
+        <div class="alert alert-warning px-3">
+            {{ 'deposit.bank_transfer.platform_bank_account_not_ready' | translate }}
+        </div>
+    </ng-container>
+    <ng-template #bankAccountExists>
+        <ng-container *ngIf="(deposit$ | async) as deposit; else spinner">
+            <ng-container *ngIf="deposit === depositState.NOT_FOUND; else depositExists" @enterTrigger>
+                <div class="tw-mt-8 tw-mx-8 lg:tw-mx-64">
+                    <form [formGroup]="createDepositForm" id="emailForm">
+                        <label for="amount" class="app-page-label">
+                            {{ 'deposit.bank_transfer.amount_input.title' | translate }}
+                        </label>
+                        <app-money-input-field
+                                id="amount" [control]="createDepositForm.get('amount')">
+                        </app-money-input-field>
+
+                        <button app-action-button
+                                text="{{ 'deposit.bank_transfer.create' | translate }}"
+                                [onClick]="createDeposit(createDepositForm.get('amount').value).bind(this)"
+                                [disabled]="!createDepositForm.dirty || !createDepositForm.valid"
+                                class="btn btn-primary my-2 w-100">
+                        </button>
+                    </form>
+                </div>
+            </ng-container>
+            <ng-template #depositExists>
+                <div class="tw-grid tw-grid-cols-1 tw-max-w-2xl tw-m-auto tw-gap-4 tw-mt-3">
+                    <div class="tw-flex tw-flex-col">
+                        <div *ngIf="!deposit.user_confirmation" class="alert alert-warning">
+                            <div class="tw-flex tw-flex-col tw-gap-6 tw-px-6 tw-py-2">
+                                <div class="tw-flex tw-items-center">
+                                    <div class="tw-w-6 tw-h-6 tw-flex-shrink-0">
+                                        <img src="assets/icons/checkmark-male-user.png" alt="Checkmark male user">
+                                    </div>
+                                    <span class="tw-ml-6">
+                                        {{ 'deposit.bank_transfer.warning_notice.name' | translate }}
+                                    </span>
+                                </div>
+
+                                <div class="tw-flex tw-items-center">
+                                    <div class="tw-w-6 tw-h-6 tw-flex-shrink-0">
+                                        <img src="assets/icons/bank-account.png" alt="">
+                                    </div>
+                                    <span class="tw-ml-6">
+                                        {{ 'deposit.bank_transfer.warning_notice.beneficiary'
+                                            | translate | interpolate:['beneficiaryName', bankAccount.beneficiary_name] }}
+                                    </span>
+                                </div>
+
+                                <div class="tw-flex tw-items-center">
+                                    <div class="tw-w-6 tw-h-6 tw-flex-shrink-0">
+                                        <img src="assets/icons/clock.png" alt="Clock">
+                                    </div>
+                                    <span class="tw-ml-6">
+                                        {{ 'deposit.bank_transfer.warning_notice.arrival' | translate }}
+                                    </span>
+                                </div>
+
+                                <div class="tw-flex tw-items-center">
+                                    <div class="tw-w-6 tw-h-6 tw-flex-shrink-0">
+                                        <img src="assets/icons/bank-deposit.png" alt="Bank deposit">
+                                    </div>
+                                    <span class="tw-ml-6">
+                                        {{ 'deposit.bank_transfer.warning_notice.fee' | translate }}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="deposit.user_confirmation" class="alert alert-info">
+                            <span>
+                                {{ 'deposit.bank_transfer.confirmed_notice' | translate | splitPart:0 }}
+                            </span>
+                            <a href="{{ appConfig.config.config.contact_url }}" class="tw-underline">
+                                {{ 'deposit.bank_transfer.confirmed_notice' | translate | splitPart:1 }}
+                            </a>
+                            <span>
+                                {{ 'deposit.bank_transfer.confirmed_notice' | translate | splitPart:2 }}
+                            </span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="tw-border tw-rounded tw-p-4">
+                            <h3 class="tw-font-bold">
+                                {{ 'deposit.bank_transfer.bank_details' | translate }}
+                            </h3>
+
+                            <div class="tw-flex tw-justify-between tw-mt-4">
+                                <span>{{ 'deposit.bank_transfer.receiver' | translate }}</span>
+                                <span class="tw-text-right">{{ bankAccount.beneficiary_name }}</span>
+                            </div>
+
+                            <div class="tw-flex tw-justify-between tw-mt-2">
+                                <span>{{ 'deposit.bank_transfer.iban' | translate }}</span>
+                                <span class="tw-text-right">{{ bankAccount.iban || 'unknown' }}</span>
+                            </div>
+
+                            <div class="tw-flex tw-justify-between tw-mt-2">
+                                <span>{{ 'deposit.bank_transfer.amount' | translate }}</span>
+                                <span class="tw-text-right tw-font-bold">{{ deposit.amount | currencyDefault }}</span>
+                            </div>
+
+                            <div class="tw-flex tw-justify-between tw-mt-2 tw-font-bold">
+                                <span>{{ 'deposit.bank_transfer.reference' | translate }}</span>
+                                <span>{{ deposit.reference || 'unknown' }}</span>
+                            </div>
+                            <span *ngIf="!deposit.user_confirmation"
+                                  class="tw-text-xs tw-font-bold text-warning">
+                                {{ 'deposit.bank_transfer.reference.warning' | translate }}
+                            </span>
+
+                            <h3 class="tw-font-bold tw-mt-4">
+                                {{ 'deposit.bank_transfer.additional_info' | translate }}
+                            </h3>
+
+                            <div class="tw-flex tw-justify-between tw-mt-4">
+                                <span>{{ 'deposit.bank_transfer.swift' | translate }}</span>
+                                <span>{{ bankAccount.bank_code || 'unknown' }}</span>
+                            </div>
+
+                            <div class="tw-flex tw-justify-between tw-mt-2">
+                                <span>{{ 'deposit.bank_transfer.bank_name' | translate }}</span>
+                                <span class="tw-text-right">{{ bankAccount.bank_name }}</span>
+                            </div>
+
+                            <div class="tw-flex tw-justify-between tw-mt-2">
+                                <span>{{ 'deposit.bank_transfer.bank_address' | translate }}</span>
+                                <span class="tw-text-right">{{ bankAccount.bank_address }}</span>
+                            </div>
+                        </div>
+
+                        <form [formGroup]="confirmDepositForm" *ngIf="!deposit.user_confirmation">
+                            <div class="tw-flex tw-align-middle tw-items-center tw-my-4 tw-ml-3">
+                                <input class="tw-w-auto tw-my-1" id="confirmed"
+                                       formControlName="confirmed"
+                                       type="checkbox">
+                                <label for="confirmed" class="app-page-label tw-ml-2" style="margin-bottom: 0;">
+                                    {{ 'deposit.bank_transfer.confirm_checkbox' | translate }}
+                                </label>
+                            </div>
+
+                            <div class="tw-flex tw-flex-col md:tw-flex-row md:tw-space-x-2">
+                                <button app-action-button [onClick]="confirmDeposit(deposit.id).bind(this)"
+                                        class="btn btn-primary btn-warning tw-my-2 w-100"
+                                        [disabled]="!confirmDepositForm.valid"
+                                        [text]="'deposit.bank_transfer.confirm' | translate"></button>
+                                <button app-action-button [onClick]="deleteDeposit(deposit.id).bind(this)"
+                                        class="btn btn-primary tw-my-2 w-100"
+                                        [text]="'deposit.bank_transfer.cancel' | translate"></button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </ng-template>
+        </ng-container>
+    </ng-template>
+</ng-container>
+
+<ng-template #spinner>
+    <app-spinner type="overlay" class="w-100"></app-spinner>
+</ng-template>

@@ -12,6 +12,7 @@ export class NavbarComponent {
 
     constructor(public appConfigService: AppConfigService) {
     }
+
     public static toggleSidebar(toVisible: boolean) {
         const sidebar = $('.sidebar-fixer');
 

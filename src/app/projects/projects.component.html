@@ -1,0 +1,138 @@
+<div class="container">
+    <ng-container *ngIf="{
+        projects: projects$ | async,
+        groups: groups$ | async,
+        invites: groupInvites$ | async
+    } as states">
+        <div class="app-page-header">
+            <h1 class="app-page-title">
+                {{ 'project_management.projects.title' | translate }}
+            </h1>
+            <div *ngIf="states.projects !== null" @enterTrigger>
+                <button class="btn btn-center" routerLink="new">
+                    <fa-icon icon="plus" class="mr-lg-3"></fa-icon>
+                    <span class="btn__text">
+                        {{ 'project_management.projects.create' | translate }}
+                    </span>
+                </button>
+            </div>
+        </div>
+
+        <div *ngIf="states.projects !== null else spinner">
+            <div *ngIf="states.projects?.length > 0" @enterTrigger class="groups">
+                <ul class="list-group">
+                    <li *ngFor="let project of states.projects" class="list__item"
+                        [routerLink]="['/dash/projects', project.uuid] | coopPath">
+                        <div class="item__desc">
+                            <div class="item__title">{{ project.name | uppercase }}</div>
+                        </div>
+                        <div class="item__img">
+                            <img src="{{ project.main_image }}" alt="Project image"
+                                 onerror="this.onerror=null; this.src='../../../../assets/noimage.png'">
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div *ngIf="states.projects.length === 0" class="empty-group">
+                <div class="row justify-content-center mt-3">
+                    {{ 'project_management.projects.empty' | translate }}
+                </div>
+            </div>
+        </div>
+
+
+        <div class="app-page-header mt-20">
+            <h1 class="app-page-title">
+                {{ 'project_management.groups.title' | translate }}
+            </h1>
+            <div *ngIf="states.groups !== null" @enterTrigger>
+                <button class="btn btn-center" [routerLink]="['/dash/groups/new'] | coopPath">
+                    <fa-icon icon="plus" class="mr-lg-3"></fa-icon>
+                    <span class="btn__text">
+                        {{ 'project_management.groups.create_org' | translate }}
+                    </span>
+                </button>
+            </div>
+        </div>
+
+        <div *ngIf="states.invites?.length > 0"
+             class="alert alert-success w-100 flex__center--space col-12 col-lg-6 col-xl-4">
+            <div>
+                <fa-icon icon="bolt"></fa-icon>
+                <b>{{ 'project_management.groups.pending_invite_notice' | translate }}</b>
+            </div>
+        </div>
+
+        <ng-container *ngIf="states.groups !== null else spinner">
+            <div *ngIf="states.groups?.length > 0" @enterTrigger class="groups">
+                <ul class="list-group">
+                    <li *ngFor="let group of states.groups" class="list__item"
+                        [routerLink]="['/dash/groups', group.uuid] | coopPath">
+                        <div class="item__desc">
+                            <div class="item__title">{{ group.name | uppercase }}</div>
+                            <div class="item__projects-count">
+                                <span>
+                                    {{ 'project_management.groups.org_item.project_count' | translate | splitPart:0 }}
+                                </span>
+                                <span class="bold">
+                                    {{ 'project_management.groups.org_item.project_count' | translate
+                                        | splitPart:1 | interpolate:['count', group.project_count] }}
+                                </span>
+                                <span>
+                                    {{ 'project_management.groups.org_item.project_count' | translate | splitPart:2 }}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="item__img">
+                            <img src="{{ group.header_image }}" alt="Organization image">
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div *ngIf="states.groups.length === 0" class="empty-group">
+                <div class="row justify-content-center mt-3">
+                    {{ 'project_management.groups.empty' | translate }}
+                </div>
+            </div>
+        </ng-container>
+
+        <div class="invites" *ngIf="states?.invites?.length !== 0">
+            <div class="app-page-subtitle">
+                {{ 'project_management.groups.invites.title' | translate }}
+            </div>
+            <div>
+                <ul *ngIf="states.invites?.length > 0" @enterTrigger class="list-group">
+                    <li *ngFor="let invite of states.invites" class="list__item">
+                        <div class="item__content">
+                            <div class="item__desc">
+                                <div class="item__title">{{ invite.organization_name | titlecase }}</div>
+
+                                <!-- TODO: implement when data is available from API -->
+                                <!-- <div class="item__projects-count d-lg-none"><b>3 </b>
+                                    Projects
+                                </div> -->
+                            </div>
+
+                            <div class="item__img">
+                                <img src="{{invite.organization_header_image}}" alt="Group image">
+                            </div>
+                        </div>
+                        <div class="item__cta">
+                            <button (click)="acceptInvite(invite.organization_uuid)"
+                                    class="btn btn-success">
+                                <fa-icon icon="check" class="mr-3"></fa-icon>
+                                <span>
+                                        {{ 'project_management.groups.invites.join' | translate }}
+                                    </span>
+                            </button>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </ng-container>
+
+    <ng-template #spinner>
+        <app-spinner type="overlay" style="height: 100px"></app-spinner>
+    </ng-template>
+</div>

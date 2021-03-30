@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { BackendHttpClient } from '../backend-http-client.service';
-import { CacheService } from '../cache.service';
 
 @Injectable({
     providedIn: 'root'
@@ -8,19 +7,13 @@ import { CacheService } from '../cache.service';
 export class PlatformBankAccountService {
     endpoint = '/api/wallet/bank-account';
 
-    constructor(private http: BackendHttpClient,
-                private cacheService: CacheService) {
+    constructor(private http: BackendHttpClient) {
     }
 
     bankAccounts$ = this.http.get<WalletBankAccountsRes>(this.endpoint);
 
-    createBankAccount(iban: String, bankCode: String, alias: String) {
-        return this.http.post<PlatformBankAccount>(this.endpoint,
-            <CreateWalletBankAccountData>{
-                iban: iban,
-                bank_code: bankCode,
-                alias: alias
-            });
+    createBankAccount(data: CreateWalletBankAccountData) {
+        return this.http.post<PlatformBankAccount>(this.endpoint, data);
     }
 
     deleteBankAccount(id: number) {
@@ -33,14 +26,21 @@ export interface PlatformBankAccount {
     iban: string;
     bank_code: string;
     alias: string;
+    coop: string;
+    bank_name: string;
+    bank_address: string;
+    beneficiary_name: string;
 }
 
 interface WalletBankAccountsRes {
     bank_accounts: PlatformBankAccount[];
 }
 
-interface CreateWalletBankAccountData {
+export interface CreateWalletBankAccountData {
     iban: string;
     bank_code: string;
-    alias: string;
+    alias?: string;
+    bank_name?: string;
+    bank_address?: string;
+    beneficiary_name?: string;
 }

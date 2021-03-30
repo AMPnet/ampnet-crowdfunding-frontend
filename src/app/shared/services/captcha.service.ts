@@ -14,7 +14,7 @@ export class CaptchaService {
     getToken(action: CaptchaAction): Observable<string> {
         return from(this.reCaptchaService.executeAsPromise(
             this.appConfig.config.config.reCaptchaSiteKey,
-            action, { useGlobalDomain: false }
+            action, {useGlobalDomain: false}
         ));
     }
 }

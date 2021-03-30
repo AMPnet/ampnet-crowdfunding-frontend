@@ -37,8 +37,8 @@ export class ManageSingleDepositComponent implements OnInit {
                 private errorService: ErrorService,
                 private translate: TranslateService,
                 private router: RouterService) {
-        const id = this.route.snapshot.params.ID;
-        this.deposit$ = this.getDepositProcedure(id);
+        const depositID = this.route.snapshot.params.id;
+        this.deposit$ = this.getDepositProcedure(depositID);
     }
 
     ngOnInit() {
@@ -73,7 +73,7 @@ export class ManageSingleDepositComponent implements OnInit {
                         switchMap(() => EMPTY)
                     );
                 } else {
-                    this.router.navigate(['/dash/manage_deposits']);
+                    this.router.navigate(['/dash/admin/manage_deposits']);
                     return EMPTY;
                 }
             }),
@@ -90,7 +90,7 @@ export class ManageSingleDepositComponent implements OnInit {
                 title: this.translate.instant('general.transaction_signed.title'),
                 text: this.translate.instant('general.transaction_signed.description')
             })),
-            switchMap(() => this.router.navigate(['/dash/manage_deposits']))
+            switchMap(() => this.router.navigate(['/dash/admin/manage_deposits']))
         );
     }
 
@@ -118,7 +118,7 @@ export class ManageSingleDepositComponent implements OnInit {
     }
 
     private recoverBack(): Observable<never> {
-        this.router.navigate(['/dash/manage_deposits'], {relativeTo: this.route});
+        this.router.navigate(['/dash/admin/manage_deposits'], {relativeTo: this.route});
         return EMPTY;
     }
 }

@@ -39,7 +39,7 @@ export class SingleWithdrawalComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.withdrawalID = Number(this.route.snapshot.params.ID);
+        this.withdrawalID = Number(this.route.snapshot.params.id);
         this.withdrawal$ = this.refreshWithdrawalSubject.asObservable().pipe(
             switchMap(() => this.withdrawCoopService.getWithdrawal(this.withdrawalID))
         );
@@ -67,7 +67,7 @@ export class SingleWithdrawalComponent implements OnInit {
             this.withdrawalID, this.documentForm.get('document').value
         ).pipe(
             this.errorService.handleError,
-            tap(() => this.router.navigate(['/dash/manage_withdrawals']))
+            tap(() => this.router.navigate(['/dash/admin/manage_withdrawals']))
         );
     }
 }

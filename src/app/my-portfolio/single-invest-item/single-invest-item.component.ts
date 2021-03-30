@@ -14,7 +14,6 @@ export class SingleInvestItemComponent {
     }
 
     onClickedItem() {
-        this.router.navigate(['/dash', 'my_portfolio', this.investment.project.uuid, 'in_portfolio'],
-            {state: {data: this.investment}});
+        this.router.navigate(['/dash', 'my_portfolio', this.investment.project.uuid]);
     }
 }

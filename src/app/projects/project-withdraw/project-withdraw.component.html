@@ -1,0 +1,141 @@
+<div class="container">
+    <a [routerLink]="" appBackNavigation class="nostyle">
+        <div class="app-page-title-back">
+            <fa-icon icon="long-arrow-alt-left" class="mr-3"></fa-icon>
+            {{ 'general.back.title' | translate }}
+        </div>
+    </a>
+
+    <ng-container *ngIf="(withdrawal$ | async) as withdrawal; else spinner">
+        <ng-container *ngIf="withdrawal === withdrawalState.EMPTY; else withdrawalExists">
+            <form [formGroup]="withdrawalForm">
+                <label for="amount" class="app-page-label">
+                    {{ 'projects.withdraw.amount_input.title' | translate }}
+                </label>
+                <app-money-input-field
+                        id="amount"
+                        inputClass="input-reg w-100"
+                        placeholder="{{ 'projects.withdraw.amount_input.placeholder' | translate }}"
+                        [control]="withdrawalForm.get('amount')">
+                </app-money-input-field>
+                <div>
+                    <small>
+                        <ng-container *ngIf="(projectWallet$ | async) as wallet; else smallSpinner">
+                            {{ 'projects.withdraw.amount_input.wallet_balance'
+                                | translate | interpolate:['balance', wallet.balance | currencyDefault] }}
+                        </ng-container>
+                    </small>
+                </div>
+
+                <label for="iban" class="app-page-label mt-2">
+                    {{ 'projects.withdraw.bank_input.title' | translate }}
+                </label>
+                <input id="iban"
+                       class="input-reg w-100"
+                       formControlName="iban"
+                       placeholder="{{ 'projects.withdraw.bank_input.placeholder' | translate }}"
+                       type="text"/>
+
+                <label for="swift" class="app-page-label mt-2">
+                    {{ 'projects.withdraw.swift_input.title' | translate }}
+                </label>
+                <input id="swift"
+                       class="input-reg w-100"
+                       formControlName="swift"
+                       placeholder="{{ 'projects.withdraw.swift_input.placeholder' | translate }}"
+                       type="text"/>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <button app-action-button
+                                class="btn btn-primary mt-2 w-100"
+                                text="{{ 'projects.withdraw.submit' | translate }}"
+                                [disabled]="!withdrawalForm.valid"
+                                [onClick]="requestWithdrawal.bind(this)">
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </ng-container>
+        <ng-template #withdrawalExists>
+            <div class="card-text">
+                <div class="row">
+                    <div class="col-md-6 mt-3">
+                        <div>
+                            <fa-icon icon="chart-line" class="mr-3"></fa-icon>
+                            {{ 'projects.withdraw.request.amount' | translate }}
+                        </div>
+                        <div class="mt-2 h3">
+                            {{ withdrawal.amount | currencyDefault }}
+                        </div>
+                    </div>
+                    <div class="col-md-6 mt-3">
+                        <div>
+                            <fa-icon icon="solar-panel" class="mr-3"></fa-icon>
+                            {{ 'projects.withdraw.request.destination' | translate }}
+                        </div>
+                        <div class="mt-2 h3 overflow-auto">
+                            {{ withdrawal.bank_account }}
+                        </div>
+                    </div>
+                    <div class="col-md-6 mt-3">
+                        <div>
+                            <fa-icon icon="solar-panel" class="mr-3"></fa-icon>
+                            {{ 'projects.withdraw.request.swift' | translate }}
+                        </div>
+                        <div class="mt-2 h3 overflow-auto">
+                            {{ withdrawal.bank_code }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <ng-container *ngIf="!withdrawal.approved_tx_hash; else withdrawalSigned">
+                <div class="row mt-5">
+                    <div class="col-md-6">
+                        <button app-action-button
+                                class="btn btn-primary w-100 mt-2"
+                                text="{{ 'projects.withdraw.sign_button' | translate }}"
+                                [onClick]="signWithdrawal(withdrawal.id).bind(this)">
+                        </button>
+                    </div>
+                    <div class="col-md-6">
+                        <button app-action-button
+                                class="btn btn-primary btn-danger w-100 mt-2"
+                                text="{{ 'projects.withdraw.cancel_button' | translate }}"
+                                [onClick]="deleteWithdrawal(withdrawal.id).bind(this)">
+                        </button>
+                    </div>
+                </div>
+            </ng-container>
+
+            <ng-template #withdrawalSigned>
+                <ng-container *ngIf="!withdrawal.burned_tx_hash; else withdrawalBurned">
+                    <div class="alert alert-info px-3 mt-3 font-weight-bolder">
+                        {{ 'projects.withdraw.pending_notice' | translate }}
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <button app-action-button
+                                    class="btn btn-primary btn-danger w-100"
+                                    text="{{ 'projects.withdraw.cancel_button' | translate }}"
+                                    [onClick]="deleteWithdrawal(withdrawal.id).bind(this)">
+                            </button>
+                        </div>
+                    </div>
+                </ng-container>
+                <ng-template #withdrawalBurned>
+                    <div class="alert alert-info px-3 mt-3 font-weight-bolder">
+                        {{ 'projects.withdraw.burned_notice' | translate }}
+                    </div>
+                </ng-template>
+            </ng-template>
+        </ng-template>
+    </ng-container>
+</div>
+<ng-template #spinner>
+    <app-spinner type="overlay"></app-spinner>
+</ng-template>
+<ng-template #smallSpinner>
+    <app-spinner type="inline"></app-spinner>
+</ng-template>

@@ -1,0 +1,63 @@
+<div class="container">
+    <h1 class="app-page-title">
+        {{ 'payment_options.title' | translate }}
+    </h1>
+
+    <ng-container *ngIf="(bankAccounts$ | async) as bankAccounts else loading">
+        <div *ngFor="let bankAccount of bankAccounts" class="my-3">
+            <div class="card">
+                <div class="tw-flex tw-justify-between tw-p-4">
+                    <div>
+                        <div>
+                            <span class="tw-uppercase tw-font-bold">{{ 'payment_options.bank_account.iban' | translate }}</span>
+                            <span class="tw-ml-4">{{ bankAccount.iban }}</span>
+                        </div>
+                        <div>
+                            <span class="tw-uppercase tw-font-bold">{{ 'payment_options.bank_account.swift' | translate }}</span>
+                            <span class="tw-ml-4">{{ bankAccount.bank_code }}</span>
+                        </div>
+                        <div>
+                            <span class="tw-uppercase tw-font-bold">{{ 'payment_options.bank_account.bank_name' | translate }}</span>
+                            <span class="tw-ml-4">{{ bankAccount.bank_name }}</span>
+                        </div>
+                        <div>
+                            <span class="tw-uppercase tw-font-bold">{{ 'payment_options.bank_account.bank_address' | translate }}</span>
+                            <span class="tw-ml-4">{{ bankAccount.bank_address }}</span>
+                        </div>
+                        <div>
+                            <span class="tw-uppercase tw-font-bold">{{ 'payment_options.bank_account.beneficiary_name' | translate }}</span>
+                            <span class="tw-ml-4">{{ bankAccount.beneficiary_name }}</span>
+                        </div>
+                    </div>
+                    <div class="tw-flex-grow-0">
+                        <div class="text-uppercase mb-2">
+                            {{ 'payment_options.bank_account.actions' | translate }}
+                        </div>
+                        <a [routerLink]="" (click)="deleteBankAccountClicked(bankAccount.id)">
+                                <span class="float-right align-middle">
+                                    <fa-icon icon="trash-alt"></fa-icon>
+                                </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="bankAccounts.length === 0" class="mt-3">
+            <div class="text-center">
+                {{ 'payment_options.bank_accounts_empty' | translate }}
+            </div>
+        </div>
+        <div class="mb-5 mt-5">
+            <button class="btn btn-primary w-100 py-3 float-right" (click)="toNewBankAccount()">
+                <fa-icon icon="plus-circle" class="mr-2"></fa-icon>
+                <span>
+                    {{ 'payment_options.add_new' | translate }}
+                </span>
+            </button>
+        </div>
+    </ng-container>
+</div>
+
+<ng-template #loading>
+    <app-spinner type="overlay"></app-spinner>
+</ng-template>

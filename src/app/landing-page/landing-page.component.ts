@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { AppConfigService } from '../shared/services/app-config.service';
 import { SummaryService } from '../shared/services/summary.service';
 import { ErrorService } from '../shared/services/error.service';
-import { enterTrigger } from '../animations';
+import { enterTrigger } from '../shared/animations';
 
 @Component({
     selector: 'app-landing-page',

@@ -85,9 +85,7 @@ export class LanguageService {
     }
 
     private registerLocale(lang: string): Observable<string> {
-        return from(import(
-            /* webpackChunkName: "[request]" */
-            `@angular/common/locales/${lang}.js`)).pipe(
+        return from(import(`@angular/common/locales/${lang}.js`)).pipe(
             tap(locale => {
                 this.document.documentElement.lang = lang;
                 registerLocaleData(locale.default, lang);

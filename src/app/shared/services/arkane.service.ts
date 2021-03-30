@@ -11,7 +11,7 @@ import {
 } from '@arkane-network/arkane-connect';
 import { combineLatest, from, Observable, of, throwError } from 'rxjs';
 import { Account } from '@arkane-network/arkane-connect/dist/src/models/Account';
-import { catchError, concatMap, find, first, map, switchMap, take, takeWhile, tap, timeout } from 'rxjs/operators';
+import { catchError, concatMap, find, map, switchMap, take, takeWhile, tap, timeout } from 'rxjs/operators';
 import { TransactionInfo, WalletService, WalletState } from './wallet/wallet.service';
 import { PopupService } from './popup.service';
 import { BroadcastService } from './broadcast.service';

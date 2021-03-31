@@ -31,7 +31,7 @@ export class GroupComponent implements OnInit {
     organization$: Observable<Organization>;
     orgWallet$: Observable<Wallet>;
     orgMembers$: Observable<OrganizationMember[]>;
-    writeable$: Observable<boolean>;
+    writeable$: Observable<{ permission: boolean }>;
 
     inviteForm: FormGroup;
 
@@ -103,12 +103,15 @@ export class GroupComponent implements OnInit {
             shareReplay(1)
         );
 
-        this.orgMembers$ = this.refreshOrgMembersSubject.pipe(
-            switchMap(_ => this.organizationService.getMembersForOrganization(orgID, {isPublic: this.isPublic})
-                .pipe(this.errorService.handleError)),
-            map(res => res.members));
+        this.writeable$ = (this.isPublic ? of(false) : this.isOrgOwner).pipe(
+            map(permission => ({permission: permission}))
+        );
 
-        this.writeable$ = this.isPublic ? of(false) : this.isOrgOwner;
+        this.orgMembers$ = combineLatest([this.refreshOrgMembersSubject, this.writeable$]).pipe(
+            switchMap(([_, writeable]) => this.organizationService.getMembersForOrganization(orgID, {
+                isPublic: this.isPublic || !writeable.permission
+            }).pipe(this.errorService.handleError)),
+            map(res => res.members));
 
         this.inviteForm = this.fb.group({
             emails: ['', GroupComponent.emailsValidator]

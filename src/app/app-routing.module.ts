@@ -75,10 +75,10 @@ const appRoutes: Routes = [
             {path: 'my_portfolio/:id', component: OfferComponent, data: {isPortfolioView: true}},
 
             {path: 'settings', loadChildren: () => SettingsModule},
-            {path: 'admin', loadChildren: () => AdminModule}
+            {path: 'admin', loadChildren: () => AdminModule},
         ]
     },
-    {path: '**', redirectTo: '/'}
+    {path: '**', redirectTo: ''}
 ];
 
 const routes: Routes = [

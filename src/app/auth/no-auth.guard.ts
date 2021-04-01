@@ -22,7 +22,7 @@ export class NoAuthGuard implements CanActivate {
 
     tryAuthorizedRoute(url: string) {
         const urlTree = this.router.router.parseUrl(url);
-        urlTree.root.children.primary.segments.splice(1, 0, new UrlSegment('dash', {}));
+        urlTree.root.children.primary?.segments?.splice(1, 0, new UrlSegment('dash', {}));
         this.router.router.navigate([`/${urlTree.toString()}`]);
     }
 }

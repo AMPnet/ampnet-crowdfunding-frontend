@@ -77,7 +77,8 @@ const appRoutes: Routes = [
             {path: 'settings', loadChildren: () => SettingsModule},
             {path: 'admin', loadChildren: () => AdminModule}
         ]
-    }
+    },
+    {path: '**', redirectTo: '/'}
 ];
 
 const routes: Routes = [

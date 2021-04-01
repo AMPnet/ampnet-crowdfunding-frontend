@@ -244,58 +244,62 @@
                     </div>
                 </div>
 
-                <ng-container *ngIf="(news$ | async) as newsRes; else overlaySpinner">
-                    <div class="right__news" *ngIf="newsRes.newsList.length !== 0">
-                        <div class="news__title app-page-subtitle">
-                            {{ 'offers.show.news.subtitle' | translate }}
-                        </div>
+                <app-lazy-load minHeight="100">
+                    <ng-template>
+                        <ng-container *ngIf="(news$ | async) as newsRes; else overlaySpinner">
+                            <div class="right__news" *ngIf="newsRes.newsList.length !== 0">
+                                <div class="news__title app-page-subtitle">
+                                    {{ 'offers.show.news.subtitle' | translate }}
+                                </div>
 
-                        <div *ngFor="let news of newsRes.newsList">
-                            <ng-container *ngIf="news.open_graph">
-                                <div class="news__item-preview">
-                                    <div class="preview__inner">
-                                        <div class="preview__img" *ngIf="news.open_graph.image?.url">
-                                            <img class="w-100" src="{{ news.open_graph.image?.url }}"
-                                                 onerror="this.onerror=null; this.src='../../../../assets/noimage.png'">
-                                        </div>
-                                        <div class="preview__content">
-                                            <div class="preview__title" *ngIf="news.open_graph.title">
-                                                {{ news.open_graph.title }}
+                                <div *ngFor="let news of newsRes.newsList">
+                                    <ng-container *ngIf="news.open_graph">
+                                        <div class="news__item-preview">
+                                            <div class="preview__inner">
+                                                <div class="preview__img" *ngIf="news.open_graph.image?.url">
+                                                    <img class="w-100" src="{{ news.open_graph.image?.url }}"
+                                                         onerror="this.onerror=null; this.src='../../../../assets/noimage.png'">
+                                                </div>
+                                                <div class="preview__content">
+                                                    <div class="preview__title" *ngIf="news.open_graph.title">
+                                                        {{ news.open_graph.title }}
+                                                    </div>
+                                                    <div class="preview__desc" *ngIf="news.open_graph.description">
+                                                        {{ news.open_graph.description }}
+                                                    </div>
+                                                    <ng-container *ngIf="!news.open_graph.title">
+                                                        <ng-container *ngTemplateOutlet="newsURL"></ng-container>
+                                                    </ng-container>
+                                                </div>
                                             </div>
-                                            <div class="preview__desc" *ngIf="news.open_graph.description">
-                                                {{ news.open_graph.description }}
+                                            <div class="preview__cta">
+                                                <a href="{{ news.url }}" target="_blank" rel="noopener noreferrer">
+                                                    <button class="btn w-100">
+                                                        {{ 'offers.show.news.read_more' | translate }}
+                                                    </button>
+                                                </a>
                                             </div>
-                                            <ng-container *ngIf="!news.open_graph.title">
-                                                <ng-container *ngTemplateOutlet="newsURL"></ng-container>
-                                            </ng-container>
                                         </div>
-                                    </div>
-                                    <div class="preview__cta">
-                                        <a href="{{ news.url }}" target="_blank" rel="noopener noreferrer">
-                                            <button class="btn w-100">
-                                                {{ 'offers.show.news.read_more' | translate }}
-                                            </button>
-                                        </a>
-                                    </div>
-                                </div>
-                            </ng-container>
+                                    </ng-container>
 
-                            <ng-container *ngIf="!news.open_graph">
-                                <div class="news__item">
-                                    <ng-container *ngTemplateOutlet="newsURL"></ng-container>
-                                </div>
-                            </ng-container>
+                                    <ng-container *ngIf="!news.open_graph">
+                                        <div class="news__item">
+                                            <ng-container *ngTemplateOutlet="newsURL"></ng-container>
+                                        </div>
+                                    </ng-container>
 
-                            <ng-template #newsURL>
-                                <div class="news__wrapper">
-                                    <a href="//{{ news.url }}" target="_blank" rel="noopener noreferrer">
-                                        {{ news.url }}
-                                    </a>
+                                    <ng-template #newsURL>
+                                        <div class="news__wrapper">
+                                            <a href="//{{ news.url }}" target="_blank" rel="noopener noreferrer">
+                                                {{ news.url }}
+                                            </a>
+                                        </div>
+                                    </ng-template>
                                 </div>
-                            </ng-template>
-                        </div>
-                    </div>
-                </ng-container>
+                            </div>
+                        </ng-container>
+                    </ng-template>
+                </app-lazy-load>
             </div>
         </div>
 

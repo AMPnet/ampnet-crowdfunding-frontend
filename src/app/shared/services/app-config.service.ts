@@ -176,6 +176,7 @@ export interface CustomConfig {
     title?: string;
     icon_url?: string;
     coop_statute_url?: string;
+    risk_warning_url?: string;
     contact_url?: string;
     languages?: {
         config?: string;

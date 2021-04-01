@@ -41,6 +41,7 @@ export class PlatformConfigComponent {
                     banner: [null],
                     icon: [appConfig.config?.icon_url],
                     coop_statute: [appConfig.config?.coop_statute_url],
+                    risk_warning: [appConfig.config?.risk_warning_url],
                     contact_url: [appConfig.config?.contact_url],
                     languages: [appConfig.config?.languages?.config, this.langsPattern],
                     languagesFallback: [appConfig.config?.languages?.fallback],
@@ -70,6 +71,7 @@ export class PlatformConfigComponent {
                     title: appConfig.title,
                     icon_url: appConfig.icon,
                     coop_statute_url: appConfig.coop_statute,
+                    risk_warning_url: appConfig.risk_warning,
                     contact_url: appConfig.contact_url,
                     languages: {
                         config: appConfig.languages,

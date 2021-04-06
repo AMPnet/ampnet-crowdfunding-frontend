@@ -116,13 +116,15 @@ export class UserService {
     }
 
     logout() {
-        this.http.post<void>(`/api/user/logout`, {})
-            .pipe(catchError(_ => EMPTY)).subscribe();
+        return this.http.post<void>(`/api/user/logout`, {}).pipe(
+            catchError(_ => of(null)),
+            tap(() => {
+                this.http.accessToken = null;
+                this.http.refreshToken = null;
 
-        this.http.accessToken = null;
-        this.http.refreshToken = null;
-
-        this.cacheService.clearAll();
+                this.cacheService.clearAll();
+            }),
+        );
     }
 
     private saveTokens(source: Observable<UserAuthResponse>) {

@@ -8,6 +8,7 @@ import { version } from '../../../package.json';
 import { AppConfigService } from '../shared/services/app-config.service';
 import { RouterService } from '../shared/services/router.service';
 import { environment } from '../../environments/environment';
+import { tap } from 'rxjs/operators';
 
 @Component({
     selector: 'app-sidebar',
@@ -35,8 +36,9 @@ export class SidebarComponent implements AfterViewInit {
     }
 
     onLogout() {
-        this.userService.logout();
-        this.router.navigate(['/']);
+        this.userService.logout().pipe(
+            tap(() => this.router.navigate(['/']))
+        ).subscribe();
     }
 
     isWalletEagerReady(wallet: WalletDetailsWithState) {

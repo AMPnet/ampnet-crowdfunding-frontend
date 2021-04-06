@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { EMPTY, Observable, of, throwError } from 'rxjs';
-import { catchError, switchMap } from 'rxjs/operators';
+import { catchError, concatMap, switchMap, tap } from 'rxjs/operators';
 import { PopupService } from './popup.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';
@@ -41,7 +41,7 @@ export class ErrorService {
             } else if (errorRes.status === 400) {  // server-side error
                 const error = errorRes.error as BackendError;
 
-                switch (error.err_code) {
+                switch (error?.err_code) {
                     case RegistrationError.SIGN_UP_INCOMPLETE:
                         display$ = this.displayMessage('errors.registration.sign_up_incomplete');
                         break;
@@ -83,11 +83,21 @@ export class ErrorService {
                         break;
 
                     case AuthError.INVALID_JWT:
+                        if (!errorRes.url.includes('/api/user/token/refresh')) {
+                            action$ = this.takeAction(() => this.userService.refreshUserToken().pipe(
+                                this.handleError,
+                                concatMap(() => _caught)
+                            ));
+                            break;
+                        }
+                    // tslint:disable-next-line:no-switch-case-fall-through
                     case AuthError.MISSING_JWT:
                     case AuthError.CANNOT_REGISTER_JWT:
                     case UserError.USER_JWT_MISSING:
-                        action$ = this.takeAction(() => of(this.userService.logout())
-                            .pipe(this.router.navigate['/']));
+                    case undefined: // TODO: backend returns 400 with no err_code. fix this. this is workaround.
+                        action$ = this.takeAction(() => this.userService.logout().pipe(
+                            tap(() => this.router.navigate(['/'])))
+                        );
                         break;
 
                     case AuthError.INVALID_CREDENTIALS:
@@ -407,7 +417,7 @@ export class ErrorService {
             return of('').pipe(
                 switchMap(it => shouldDisplay && display$ ? display$ : of(it)),
                 switchMap(it => shouldTakeAction && errorProcessed ?
-                    (action$ ? action$ : of(it)).pipe(switchMap(() => EMPTY))
+                    (action$ ? action$ : of(it)).pipe(catchError(() => EMPTY))
                     : throwError(err))
             );
         };

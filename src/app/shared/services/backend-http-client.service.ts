@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { AppConfigService } from './app-config.service';
+import { switchMap } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -12,30 +13,42 @@ export class BackendHttpClient {
     }
 
     get<T>(path: string, params?: object, publicRoute = false): Observable<T> {
-        const httpOptions = this.authHttpOptions(publicRoute);
+        return of('').pipe(
+            switchMap(() => {
+                const httpOptions = this.authHttpOptions(publicRoute);
 
-        if (params !== undefined) {
-            httpOptions['params'] = params;
-        }
+                if (params !== undefined) {
+                    httpOptions['params'] = params;
+                }
 
-        return this.http.get<T>(path, httpOptions);
+                return this.http.get<T>(path, httpOptions);
+            })
+        );
     }
 
     post<T>(path: string, body: any, publicRoute = false): Observable<T> {
-        return this.http.post<T>(path, body, this.authHttpOptions(publicRoute));
+        return of('').pipe(
+            switchMap(() => this.http.post<T>(path, body, this.authHttpOptions(publicRoute)))
+        );
     }
 
     put<T>(path: string, body: object): Observable<T> {
-        return this.http.put<T>(path, body, this.authHttpOptions());
+        return of('').pipe(
+            switchMap(() => this.http.put<T>(path, body, this.authHttpOptions()))
+        );
     }
 
     delete<T>(path: string, params?: object): Observable<T> {
-        const httpOptions = this.authHttpOptions();
-        if (params !== undefined) {
-            httpOptions['params'] = params;
-        }
+        return of('').pipe(
+            switchMap(() => {
+                const httpOptions = this.authHttpOptions();
+                if (params !== undefined) {
+                    httpOptions['params'] = params;
+                }
 
-        return this.http.delete<T>(path, httpOptions);
+                return this.http.delete<T>(path, httpOptions);
+            })
+        );
     }
 
     public authHttpOptions(publicRoute = false) {

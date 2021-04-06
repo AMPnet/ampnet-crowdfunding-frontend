@@ -130,7 +130,7 @@
                             </div>
                         </div>
 
-                        <div class="deposit-notice tw-mt-8">
+                        <div class="deposit-notice tw-mt-8" *ngIf="appConfig.config.config?.depositNoticeHTML">
                             <quill-view [content]="appConfig.config.config?.depositNoticeHTML"
                                         format="html" theme="snow">
                             </quill-view>

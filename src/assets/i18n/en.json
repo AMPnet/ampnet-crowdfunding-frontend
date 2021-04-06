@@ -99,7 +99,11 @@
     "description": {
       "notice": "You must initialize your wallet to invest.",
       "title": "Your private, secure wallet",
-      "details": "We're committed to making sure your funds are as safe as they can possibly be when using our platform. To do this, we prevent the management of your money by anyone other than you. | This is why we use a third-party secure wallet to store your money and approve investments into projects. To start the process of initializing your wallet - click on the button below."
+      "details": "We're committed to making sure your funds are as safe as they can be when using our platform. To do this, we prevent the management of your money by anyone other than you. | This is why we use a third-party secure wallet to store your money and approve investments into projects. To start the process of initializing your wallet - click on the button below."
+    },
+    "risk_warning_confirmation_input": {
+      "title": "Risk Warning",
+      "notice": "I have read and agreed with the platform | Risk Warning |"
     },
     "initialize_wallet": "Initialize secure wallet",
     "balance": "Balance",
@@ -671,6 +675,10 @@
         "title": "Platform Terms & Conditions",
         "placeholder": "https://path/to/terms.html | https://path/to/terms-file.pdf"
       },
+      "risk_warning_input": {
+        "title": "Risk Warning",
+        "placeholder": "https://path/to/risk-warning.html | https://path/to/risk-warning.pdf"
+      },
       "contact_url_input": {
         "title": "Contact URL",
         "placeholder": "mailto:support@example.com | https://example.com/contact_us"
@@ -681,6 +689,7 @@
       },
       "languages_fallback_input.title": "Use English as a fallback language",
       "footer_input.title": "Footer",
+      "deposit_notice_input.title": "Deposit notice",
       "arkane_id_input": {
         "title": "Arkane ID",
         "placeholder": "arkaneID"

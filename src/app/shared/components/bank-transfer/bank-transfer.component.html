@@ -130,6 +130,12 @@
                             </div>
                         </div>
 
+                        <div class="deposit-notice tw-mt-8" *ngIf="appConfig.config.config?.depositNoticeHTML">
+                            <quill-view [content]="appConfig.config.config?.depositNoticeHTML"
+                                        format="html" theme="snow">
+                            </quill-view>
+                        </div>
+
                         <form [formGroup]="confirmDepositForm" *ngIf="!deposit.user_confirmation">
                             <div class="tw-flex tw-align-middle tw-items-center tw-my-4 tw-ml-3">
                                 <input class="tw-w-auto tw-my-1" id="confirmed"

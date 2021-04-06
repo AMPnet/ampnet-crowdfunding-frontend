@@ -20,10 +20,40 @@
                     </p>
                 </div>
                 <div class="init-left__btn">
-                    <button app-action-button
-                            text="{{ 'wallet.initialize_wallet' | translate }}"
-                            [onClick]="setUpArkane.bind(this)">
-                    </button>
+                    <form [formGroup]="acceptTermsForm">
+                        <div [hidden]="!appConfig.config.config?.risk_warning_url">
+                            <label class="app-page-label mt-3">
+                                {{ 'wallet.risk_warning_confirmation_input.title' | translate }}
+                            </label>
+                            <div class="d-flex align-items-center">
+                                <input class="form-control w-auto h-auto m-2" id="google-client-id"
+                                       formControlName="risk_warning_confirmation"
+                                       type="checkbox">
+                                <label class="small mb-0" for="google-client-id">
+                                    <span>
+                                        {{ 'wallet.risk_warning_confirmation_input.notice' | translate | splitPart:0 }}
+                                    </span>
+                                    <span class="d-inline-flex">
+                                        <a href="{{ appConfig.config.config?.risk_warning_url }}" target="_blank"
+                                           rel="noopener noreferrer">
+                                            {{ 'wallet.risk_warning_confirmation_input.notice'
+                                                | translate | splitPart:1 }}
+                                        </a>
+                                    </span>
+                                    <span>
+                                        {{ 'wallet.risk_warning_confirmation_input.notice' | translate | splitPart:2 }}
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <button app-action-button
+                                class="btn btn-primary tw-w-full tw-mt-4"
+                                text="{{ 'wallet.initialize_wallet' | translate }}"
+                                [disabled]="!acceptTermsForm.valid"
+                                [onClick]="setUpArkane.bind(this)">
+                        </button>
+                    </form>
                 </div>
             </div>
             <!-- TODO: This is ready to go, uncomment and hook up once we have support for other wallets -->

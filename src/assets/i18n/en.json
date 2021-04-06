@@ -99,7 +99,11 @@
     "description": {
       "notice": "You must initialize your wallet to invest.",
       "title": "Your private, secure wallet",
-      "details": "We're committed to making sure your funds are as safe as they can possibly be when using our platform. To do this, we prevent the management of your money by anyone other than you. | This is why we use a third-party secure wallet to store your money and approve investments into projects. To start the process of initializing your wallet - click on the button below."
+      "details": "We're committed to making sure your funds are as safe as they can be when using our platform. To do this, we prevent the management of your money by anyone other than you. | This is why we use a third-party secure wallet to store your money and approve investments into projects. To start the process of initializing your wallet - click on the button below."
+    },
+    "risk_warning_confirmation_input": {
+      "title": "Risk Warning",
+      "notice": "I have read and agreed with the platform | Risk Warning |"
     },
     "initialize_wallet": "Initialize secure wallet",
     "balance": "Balance",

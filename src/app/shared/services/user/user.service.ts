@@ -31,8 +31,13 @@ export class UserService {
                 of(user) : this.refreshUserToken().pipe(switchMap(() => of(user)))
             ),
             switchMap(user => this.checkDefaultLang(user) ?
-                of(user) : this.updateUser({language: this.languageService.getPreferredLang()})
-            ));
+                of(user) : this.updateUser({language: this.languageService.getPreferredLang()}) as Observable<User>
+            ),
+            map(user => ({
+                ...user,
+                verified: !this.appConfig.config.need_user_verification || user.verified
+            }))
+        );
     }
 
     private checkIntegrity(user: User): boolean {
@@ -56,7 +61,7 @@ export class UserService {
         this.refreshUserSubject.next();
     }
 
-    updateUser(updateData: UpdateUserData) {
+    updateUser(updateData: UpdateUserData): Observable<User> {
         return this.isLoggedIn() ? this.http.put<User>('/api/user/me/update', updateData) : EMPTY;
     }
 

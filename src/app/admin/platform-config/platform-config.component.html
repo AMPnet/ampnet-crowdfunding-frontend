@@ -113,6 +113,16 @@
                     </quill-editor>
                 </div>
 
+                <label for="deposit-notice" class="app-page-label mt-3">
+                    {{ 'admin.platform_config.deposit_notice_input.title' | translate }}
+                </label>
+                <div class="input-group">
+                    <quill-editor id="deposit-notice"
+                                  formControlName="depositNoticeHTML"
+                                  [styles]="{ height: '200px' }">
+                    </quill-editor>
+                </div>
+
                 <!-- Hidden because of security reasons. -->
                 <div [hidden]="!showSecureConfig">
                     <label for="arkane-id" class="app-page-label mt-3">

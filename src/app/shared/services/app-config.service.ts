@@ -193,6 +193,7 @@ export interface CustomConfig {
     facebookAppId?: string;
     reCaptchaSiteKey?: string;
     footerHTML?: string;
+    depositNoticeHTML?: string;
 }
 
 export enum KYCProvider {

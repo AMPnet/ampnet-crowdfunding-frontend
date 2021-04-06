@@ -689,6 +689,7 @@
       },
       "languages_fallback_input.title": "Use English as a fallback language",
       "footer_input.title": "Footer",
+      "deposit_notice_input.title": "Deposit notice",
       "arkane_id_input": {
         "title": "Arkane ID",
         "placeholder": "arkaneID"

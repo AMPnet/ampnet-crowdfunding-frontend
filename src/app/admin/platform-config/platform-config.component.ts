@@ -46,6 +46,7 @@ export class PlatformConfigComponent {
                     languages: [appConfig.config?.languages?.config, this.langsPattern],
                     languagesFallback: [appConfig.config?.languages?.fallback],
                     footerHTML: [appConfig.config?.footerHTML],
+                    depositNoticeHTML: [appConfig.config?.depositNoticeHTML],
                     hostname: [appConfig.hostname],
                     arkaneID: [appConfig.config?.arkane?.id],
                     arkaneEnv: [appConfig.config?.arkane?.env],
@@ -78,6 +79,7 @@ export class PlatformConfigComponent {
                         fallback: appConfig.languagesFallback,
                     },
                     footerHTML: appConfig.footerHTML,
+                    depositNoticeHTML: appConfig.depositNoticeHTML,
                     arkane: {
                         id: appConfig.arkaneID,
                         env: appConfig.arkaneEnv,

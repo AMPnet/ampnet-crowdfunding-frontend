@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AppConfigService } from '../shared/services/app-config.service';
 import { SummaryService } from '../shared/services/summary.service';
 import { ErrorService } from '../shared/services/error.service';
 import { enterTrigger } from '../shared/animations';
+import { RouterService } from '../shared/services/router.service';
+import { UserService } from '../shared/services/user/user.service';
 
 @Component({
     selector: 'app-landing-page',
@@ -10,13 +12,22 @@ import { enterTrigger } from '../shared/animations';
     styleUrls: ['./landing-page.component.scss'],
     animations: [enterTrigger]
 })
-export class LandingPageComponent {
+export class LandingPageComponent implements OnInit {
     summary$ = this.summaryService.getBlockchainMiddlewareData().pipe(
         this.errorService.handleError
     );
 
     constructor(public appConfig: AppConfigService,
+                private userService: UserService,
+                private router: RouterService,
                 private errorService: ErrorService,
                 private summaryService: SummaryService) {
+    }
+
+    ngOnInit() {
+        // TODO: Dirty fix for dedicated hostname routing issue.
+        if (this.userService.isLoggedIn()) {
+            this.router.navigate(['/dash']);
+        }
     }
 }

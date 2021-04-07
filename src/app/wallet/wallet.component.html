@@ -36,8 +36,8 @@
                                     <span class="d-inline-flex">
                                         <a href="{{ appConfig.config.config?.risk_warning_url }}" target="_blank"
                                            rel="noopener noreferrer">
-                                            {{ 'wallet.risk_warning_confirmation_input.notice'
-                                                | translate | splitPart:1 }}
+                                            {{ 'wallet.risk_warning_confirmation_input.notice' | translate | splitPart:1
+                                                | interpolate:['coopName', appConfig.config.name] }}
                                         </a>
                                     </span>
                                     <span>

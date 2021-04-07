@@ -53,7 +53,7 @@ export class IdentyumComponent {
             switchMap(() => this.popupService.success(
                 this.translate.instant('settings.user.identity.identyum.approved'))),
             switchMap(() => this.userService.refreshUserToken()
-                .pipe(this.errorService.displayError)),
+                .pipe(this.errorService.handleError)),
             catchError(() => {
                 this.router.navigate(['/dash/settings/user']);
                 return EMPTY;

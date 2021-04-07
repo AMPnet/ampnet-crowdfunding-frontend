@@ -42,7 +42,7 @@ export class UserService {
 
     private checkIntegrity(user: User): boolean {
         return user.role === this.getRoleFromAuthorities()
-            && user.verified === this.http.getJWTUser().verified;
+            && (!this.appConfig.config.need_user_verification || user.verified) === this.http.getJWTUser().verified;
     }
 
     private checkDefaultLang(user: User): boolean {
@@ -115,7 +115,7 @@ export class UserService {
         );
     }
 
-    logout() {
+    logout(): Observable<void> {
         return this.http.post<void>(`/api/user/logout`, {}).pipe(
             catchError(_ => of(null)),
             tap(() => {

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { EMPTY, Observable, of, throwError } from 'rxjs';
-import { catchError, concatMap, switchMap, tap } from 'rxjs/operators';
+import { EMPTY, Observable, throwError } from 'rxjs';
+import { catchError, finalize, switchMap, tap } from 'rxjs/operators';
 import { PopupService } from './popup.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';
@@ -24,232 +24,227 @@ export class ErrorService {
         };
     }
 
-    get displayError() {
-        return <T>(source: Observable<T>): Observable<T> => {
-            return source.pipe(catchError(this.processError(true, false)));
-        };
-    }
-
-    private processError<T>(shouldDisplay = true, shouldTakeAction = true) {
-        return (err: any, _caught: Observable<T>) => {
+    private processError<T>() {
+        return (err: any, caught: Observable<T>) => {
             const errorRes = err as HttpErrorResponse;
-            let display$: Observable<any>;
-            let action$: Observable<any>;
+            let action$: Observable<any> = throwError(err);
+            let completeAfterAction = true;
 
             if (errorRes.error instanceof ErrorEvent) { // client-side error
-                return throwError(err);
+                return action$;
             } else if (errorRes.status === 400) {  // server-side error
                 const error = errorRes.error as BackendError;
 
                 switch (error?.err_code) {
                     case RegistrationError.SIGN_UP_INCOMPLETE:
-                        display$ = this.displayMessage('errors.registration.sign_up_incomplete');
+                        action$ = this.displayMessage('errors.registration.sign_up_incomplete');
                         break;
 
                     case RegistrationError.USER_EXISTS:
-                        display$ = this.displayMessage('errors.registration.user_exists');
+                        action$ = this.displayMessage('errors.registration.user_exists');
                         break;
 
                     case RegistrationError.CONFIRMATION_TOKEN_INVALID:
-                        display$ = this.displayMessage('errors.registration.confirmation_token_invalid');
-                        action$ = this.takeAction(() => this.router.navigate['/']);
+                        action$ = this.displayMessage('errors.registration.confirmation_token_invalid').pipe(
+                            finalize(() => this.router.navigate['/'])
+                        );
                         break;
 
                     case RegistrationError.CONFIRMATION_TOKEN_EXPIRED:
-                        display$ = this.displayMessage('errors.registration.confirmation_token_expired');
+                        action$ = this.displayMessage('errors.registration.confirmation_token_expired');
                         // TODO: Implement redirect to resend email confirmation when it gets implemented.
                         break;
 
                     case RegistrationError.SOCIAL_FAILED:
-                        display$ = this.displayMessage('errors.registration.social_failed');
+                        action$ = this.displayMessage('errors.registration.social_failed');
                         break;
 
                     case RegistrationError.CAPTCHA_FAILED:
-                        display$ = this.displayMessage('errors.registration.captcha_failed');
+                        action$ = this.displayMessage('errors.registration.captcha_failed');
                         break;
 
                     case RegistrationError.SIGN_UP_DISABLED:
-                        display$ = this.displayMessage('errors.registration.sign_up_disabled');
+                        action$ = this.displayMessage('errors.registration.sign_up_disabled');
                         break;
 
                     case AuthError.INVALID_LOGIN_METHOD:
-                        display$ = this.displayMessage('errors.auth.invalid_login_method');
+                        action$ = this.displayMessage('errors.auth.invalid_login_method');
                         break;
 
                     case AuthError.NO_FORGOT_PASS_TOKEN:
                     case AuthError.FORGOT_PASS_EXPIRED:
-                        display$ = this.displayMessage('errors.auth.invalid_forgot_password_link');
-                        action$ = this.takeAction(() => this.router.navigate['/auth/forgot_password']);
+                        action$ = this.displayMessage('errors.auth.invalid_forgot_password_link').pipe(
+                            finalize(() => this.router.navigate['/auth/forgot_password'])
+                        );
                         break;
 
                     case AuthError.INVALID_JWT:
-                        if (!errorRes.url.includes('/api/user/token/refresh')) {
-                            action$ = this.takeAction(() => this.userService.refreshUserToken().pipe(
-                                this.handleError,
-                                concatMap(() => _caught)
-                            ));
-                            break;
-                        }
-                    // tslint:disable-next-line:no-switch-case-fall-through
+                        action$ = this.userService.refreshUserToken().pipe(
+                            this.handleError,
+                            switchMap(() => caught)
+                        );
+                        completeAfterAction = false;
+                        break;
                     case AuthError.MISSING_JWT:
                     case AuthError.CANNOT_REGISTER_JWT:
                     case UserError.USER_JWT_MISSING:
-                    case undefined: // TODO: backend returns 400 with no err_code. fix this. this is workaround.
-                        action$ = this.takeAction(() => this.userService.logout().pipe(
-                            tap(() => this.router.navigate(['/'])))
+                    case AuthError.INVALID_REFRESH_TOKEN:
+                    case InternalError.JWT_VALIDATION_FAILED:
+                        action$ = this.userService.logout().pipe(
+                            tap(() => this.router.navigate(['/auth/sign_in']))
                         );
                         break;
 
                     case AuthError.INVALID_CREDENTIALS:
-                        display$ = this.displayMessage('errors.auth.invalid_credentials');
+                        action$ = this.displayMessage('errors.auth.invalid_credentials');
                         break;
 
                     case UserError.NO_USER:
-                        display$ = this.displayMessage('errors.user.no_user');
+                        action$ = this.displayMessage('errors.user.no_user');
                         break;
 
                     case UserError.INVALID_BANK_ACCOUNT_DATA:
-                        display$ = this.displayMessage('errors.user.invalid_bank_account_data');
+                        action$ = this.displayMessage('errors.user.invalid_bank_account_data');
                         break;
 
                     case UserError.DIFFERENT_PASSWORD:
-                        display$ = this.displayMessage('errors.user.different_password');
+                        action$ = this.displayMessage('errors.user.different_password');
                         break;
 
                     case UserError.INVALID_PRIVILEGE:
-                        display$ = this.displayMessage('errors.user.invalid_privilege');
+                        action$ = this.displayMessage('errors.user.invalid_privilege');
                         break;
 
                     case WalletError.MISSING_WALLET:
-                        display$ = this.displayMessage('errors.wallet.missing_wallet');
+                        action$ = this.displayMessage('errors.wallet.missing_wallet');
                         break;
 
                     case WalletError.CANNOT_CREATE_NEW_WALLET:
-                        display$ = this.displayMessage('errors.wallet.cannot_create_new_wallet');
+                        action$ = this.displayMessage('errors.wallet.cannot_create_new_wallet');
                         break;
 
                     case WalletError.NOT_ENOUGH_FUNDS:
-                        display$ = this.displayMessage('errors.wallet.not_enough_funds');
+                        action$ = this.displayMessage('errors.wallet.not_enough_funds');
                         break;
 
                     case WalletError.WALLET_ALREADY_REGISTERED:
-                        display$ = this.displayMessage('errors.wallet.wallet_already_registered');
+                        action$ = this.displayMessage('errors.wallet.wallet_already_registered');
                         break;
 
                     case WalletError.MISSING_DEPOSIT:
-                        display$ = this.displayMessage('errors.wallet.missing_deposit');
+                        action$ = this.displayMessage('errors.wallet.missing_deposit');
                         break;
 
                     case WalletError.DEPOSIT_ALREADY_MINTED:
-                        display$ = this.displayMessage('errors.wallet.deposit_already_minted');
+                        action$ = this.displayMessage('errors.wallet.deposit_already_minted');
                         break;
 
                     case WalletError.DEPOSIT_NOT_APPROVED:
-                        display$ = this.displayMessage('errors.wallet.deposit_not_approved');
+                        action$ = this.displayMessage('errors.wallet.deposit_not_approved');
                         break;
 
                     case WalletError.UNAPPROVED_DEPOSIT_EXISTS:
-                        display$ = this.displayMessage('errors.wallet.unapproved_deposit_exists');
+                        action$ = this.displayMessage('errors.wallet.unapproved_deposit_exists');
                         break;
 
                     case WalletError.MISSING_WITHDRAWAL:
-                        display$ = this.displayMessage('errors.wallet.missing_withdrawal');
+                        action$ = this.displayMessage('errors.wallet.missing_withdrawal');
                         break;
 
                     case WalletError.UNAPPROVED_WITHDRAW_EXISTS:
-                        display$ = this.displayMessage('errors.wallet.unapproved_withdraw_exists');
+                        action$ = this.displayMessage('errors.wallet.unapproved_withdraw_exists');
                         break;
 
                     case WalletError.WITHDRAW_ALREADY_APPROVED:
-                        display$ = this.displayMessage('errors.wallet.withdraw_already_approved');
+                        action$ = this.displayMessage('errors.wallet.withdraw_already_approved');
                         break;
 
                     case WalletError.WITHDRAW_NOT_APPROVED:
-                        display$ = this.displayMessage('errors.wallet.withdraw_not_approved');
+                        action$ = this.displayMessage('errors.wallet.withdraw_not_approved');
                         break;
 
                     case WalletError.WITHDRAW_ALREADY_BURNED:
-                        display$ = this.displayMessage('errors.wallet.withdraw_already_burned');
+                        action$ = this.displayMessage('errors.wallet.withdraw_already_burned');
                         break;
 
                     case WalletError.WALLET_NOT_ACTIVATED_BY_ADMIN:
-                        display$ = this.displayMessage('errors.wallet.wallet_not_activated_by_admin');
+                        action$ = this.displayMessage('errors.wallet.wallet_not_activated_by_admin');
                         break;
 
                     case WalletError.MISSING_REVENUE_PAYOUT:
-                        display$ = this.displayMessage('errors.wallet.missing_revenue_payout');
+                        action$ = this.displayMessage('errors.wallet.missing_revenue_payout');
                         break;
 
                     case OrganizationError.ORG_MISSING:
-                        display$ = this.displayMessage('errors.organization.org_missing');
+                        action$ = this.displayMessage('errors.organization.org_missing');
                         break;
 
                     case OrganizationError.USER_ALREADY_MEMBER:
-                        display$ = this.displayMessage('errors.organization.user_already_member');
+                        action$ = this.displayMessage('errors.organization.user_already_member');
                         break;
 
                     case OrganizationError.USER_ALREADY_INVITED:
-                        display$ = this.displayMessage('errors.organization.user_already_invited');
+                        action$ = this.displayMessage('errors.organization.user_already_invited');
                         break;
 
                     case OrganizationError.ORG_NAME_ALREADY_EXISTS:
-                        display$ = this.displayMessage('errors.organization.org_name_already_exists');
+                        action$ = this.displayMessage('errors.organization.org_name_already_exists');
                         break;
 
                     case OrganizationError.ORG_MISSING_PRIVILEGE:
-                        display$ = this.displayMessage('errors.organization.org_missing_privilege');
+                        action$ = this.displayMessage('errors.organization.org_missing_privilege');
                         break;
 
                     case OrganizationError.INVALID_ORG_INVITATION:
-                        display$ = this.displayMessage('errors.organization.invalid_org_invitation');
+                        action$ = this.displayMessage('errors.organization.invalid_org_invitation');
                         break;
 
                     case OrganizationError.ORG_MEMBERSHIP_MISSING:
-                        display$ = this.displayMessage('errors.organization.org_membership_missing');
+                        action$ = this.displayMessage('errors.organization.org_membership_missing');
                         break;
 
                     case ProjectError.PROJECT_MISSING:
-                        display$ = this.displayMessage('errors.project.project_missing');
+                        action$ = this.displayMessage('errors.project.project_missing');
                         break;
 
                     case ProjectError.INVALID_DATE:
-                        display$ = this.displayMessage('errors.project.invalid_date');
+                        action$ = this.displayMessage('errors.project.invalid_date');
                         break;
 
                     case ProjectError.PROJECT_EXPIRED:
-                        display$ = this.displayMessage('errors.project.project_expired');
+                        action$ = this.displayMessage('errors.project.project_expired');
                         break;
 
                     case ProjectError.USER_EXCEEDED_MAX_FUNDS:
-                        display$ = this.displayMessage('errors.project.user_exceeded_max_funds');
+                        action$ = this.displayMessage('errors.project.user_exceeded_max_funds');
                         break;
 
                     case ProjectError.PROJECT_REACHED_EXPECTED_FUNDING:
-                        display$ = this.displayMessage('errors.project.project_reached_expected_funding');
+                        action$ = this.displayMessage('errors.project.project_reached_expected_funding');
                         break;
 
                     case ProjectError.PROJECT_NOT_ACTIVE:
-                        display$ = this.displayMessage('errors.project.project_not_active');
+                        action$ = this.displayMessage('errors.project.project_not_active');
                         break;
 
                     case ProjectError.MIN_INVESTMENT_GREATER_THAN_MAX:
-                        display$ = this.displayMessage('errors.project.min_investment_greater_than_max');
+                        action$ = this.displayMessage('errors.project.min_investment_greater_than_max');
                         break;
 
                     case ProjectError.EXPECTED_FUNDING_TOO_HIGH:
-                        display$ = this.displayMessage('errors.project.expected_funding_too_high');
+                        action$ = this.displayMessage('errors.project.expected_funding_too_high');
                         break;
 
                     case ProjectError.MAX_INVESTMENT_TOO_HIGH:
-                        display$ = this.displayMessage('errors.project.max_investment_too_high');
+                        action$ = this.displayMessage('errors.project.max_investment_too_high');
                         break;
 
                     case ProjectError.INVALID_ROI:
-                        display$ = this.displayMessage('errors.project.invalid_roi');
+                        action$ = this.displayMessage('errors.project.invalid_roi');
                         break;
 
                     case ProjectError.NO_WRITE_PRIVILEGE:
-                        display$ = this.displayMessage('errors.project.no_write_privilege');
+                        action$ = this.displayMessage('errors.project.no_write_privilege');
                         break;
 
                     case InternalError.UPLOAD_DOCUMENT_FAILED:
@@ -262,84 +257,84 @@ export class ErrorService {
                     case InternalError.INVALID_REQUEST_DATA:
                     case InternalError.GRPC_FAILED_WALLET_SERVICE:
                     case InternalError.PDF_GENERATION_FAILED:
-                        display$ = this.displayMessage('errors.internal.something_went_wrong');
+                        action$ = this.displayMessage('errors.internal.something_went_wrong');
                         break;
 
                     case TransactionError.TRANSACTION_MISSING:
-                        display$ = this.displayMessage('errors.transaction.transaction_missing');
+                        action$ = this.displayMessage('errors.transaction.transaction_missing');
                         break;
                     case TransactionError.MISSING_COMPANION_DATA:
-                        display$ = this.displayMessage('errors.transaction.missing_companion_data');
+                        action$ = this.displayMessage('errors.transaction.missing_companion_data');
                         break;
 
                     case CooperativeError.COOP_MISSING:
-                        display$ = this.displayMessage('errors.cooperative.coop_missing');
+                        action$ = this.displayMessage('errors.cooperative.coop_missing');
                         break;
                     case CooperativeError.COOP_ALREADY_EXISTS:
-                        display$ = this.displayMessage('errors.cooperative.coop_already_exists');
+                        action$ = this.displayMessage('errors.cooperative.coop_already_exists');
                         break;
 
                     case MiddlewareError.TRANSACTION_NOT_SIGNED:
-                        display$ = this.displayMessage('errors.middleware.transaction_not_signed');
+                        action$ = this.displayMessage('errors.middleware.transaction_not_signed');
                         break;
                     case MiddlewareError.TRANSACTION_NOT_MINED:
-                        display$ = this.displayMessage('errors.middleware.transaction_not_mined');
+                        action$ = this.displayMessage('errors.middleware.transaction_not_mined');
                         break;
                     case MiddlewareError.TRANSACTION_NOT_FOUND:
-                        display$ = this.displayMessage('errors.middleware.transaction_not_found');
+                        action$ = this.displayMessage('errors.middleware.transaction_not_found');
                         break;
                     case MiddlewareError.WALLET_NOT_FOUND:
-                        display$ = this.displayMessage('errors.middleware.wallet_not_found');
+                        action$ = this.displayMessage('errors.middleware.wallet_not_found');
                         break;
                     case MiddlewareError.WALLET_ALREADY_EXISTS:
-                        display$ = this.displayMessage('errors.middleware.wallet_already_exists');
+                        action$ = this.displayMessage('errors.middleware.wallet_already_exists');
                         break;
 
                     // Synchronous errors that are reasonable to show
                     case MiddlewareError.TOKEN_NOT_INITIALIZED:
-                        display$ = this.displayMessage('errors.middleware.token_not_initialized');
+                        action$ = this.displayMessage('errors.middleware.token_not_initialized');
                         break;
                     case MiddlewareError.INVEST_FAILED_PROJECT_FUNDED:
-                        display$ = this.displayMessage('errors.middleware.project_funded');
+                        action$ = this.displayMessage('errors.middleware.project_funded');
                         break;
                     case MiddlewareError.INVEST_FAILED_ZERO_TOKENS:
-                        display$ = this.displayMessage('errors.middleware.invest_zero_tokens');
+                        action$ = this.displayMessage('errors.middleware.invest_zero_tokens');
                         break;
                     case MiddlewareError.INVEST_FAILED_INSUFFICIENT_FUNDS:
-                        display$ = this.displayMessage('errors.middleware.insufficient_funds');
+                        action$ = this.displayMessage('errors.middleware.insufficient_funds');
                         break;
                     case MiddlewareError.INVEST_MAX_PER_USER_EXCEEDED:
-                        display$ = this.displayMessage('errors.middleware.max_per_user_exceeded');
+                        action$ = this.displayMessage('errors.middleware.max_per_user_exceeded');
                         break;
                     case MiddlewareError.INVEST_MIN_PER_USER_REQUIRED:
-                        display$ = this.displayMessage('errors.middleware.min_per_user_required');
+                        action$ = this.displayMessage('errors.middleware.min_per_user_required');
                         break;
                     case MiddlewareError.INVEST_INVESTMENT_CAP_EXCEEDED:
-                        display$ = this.displayMessage('errors.middleware.investment_cap_exceeded');
+                        action$ = this.displayMessage('errors.middleware.investment_cap_exceeded');
                         break;
                     case MiddlewareError.INVEST_FRACTION_NON_FUNDED:
-                        display$ = this.displayMessage('errors.middleware.fraction_non_funded');
+                        action$ = this.displayMessage('errors.middleware.fraction_non_funded');
                         break;
                     case MiddlewareError.INVEST_FUNDING_ENDED:
-                        display$ = this.displayMessage('errors.middleware.funding_ended');
+                        action$ = this.displayMessage('errors.middleware.funding_ended');
                         break;
                     case MiddlewareError.WITHDRAW_AMOUNT_TOO_LOW:
-                        display$ = this.displayMessage('errors.middleware.withdraw_amount_too_low');
+                        action$ = this.displayMessage('errors.middleware.withdraw_amount_too_low');
                         break;
                     case MiddlewareError.REVENUE_SHARE_ORG_OWNER_PERMISSION:
-                        display$ = this.displayMessage('errors.middleware.revenue_share_org_owner_permission');
+                        action$ = this.displayMessage('errors.middleware.revenue_share_org_owner_permission');
                         break;
                     case MiddlewareError.REVENUE_SHARE_PROJECT_STILL_FUNDING:
-                        display$ = this.displayMessage('errors.middleware.revenue_share_project_still_funding');
+                        action$ = this.displayMessage('errors.middleware.revenue_share_project_still_funding');
                         break;
                     case MiddlewareError.REVENUE_SHARE_ZERO:
-                        display$ = this.displayMessage('errors.middleware.revenue_share_zero');
+                        action$ = this.displayMessage('errors.middleware.revenue_share_zero');
                         break;
                     case MiddlewareError.REVENUE_SHARE_PROJECT_BALANCE_LOW:
-                        display$ = this.displayMessage('errors.middleware.revenue_share_project_balance_low');
+                        action$ = this.displayMessage('errors.middleware.revenue_share_project_balance_low');
                         break;
                     case MiddlewareError.REVENUE_SHARE_ALREADY_STARTED:
-                        display$ = this.displayMessage('errors.middleware.revenue_share_already_started');
+                        action$ = this.displayMessage('errors.middleware.revenue_share_already_started');
                         break;
 
                     // Error that are unlikely to happen on frontend.
@@ -407,24 +402,16 @@ export class ErrorService {
                     case MiddlewareError.COOPERATIVE_MISSING:
                     case MiddlewareError.CONTRACT_DEPLOYMENT_FAILED:
                     case MiddlewareError.UNKNOWN_ERROR:
-                        display$ = this.displayMessage('errors.middleware.general_error');
+                        action$ = this.displayMessage('errors.middleware.general_error');
                         break;
+                    case undefined:
+                    default:
+                        action$ = this.displayMessage('errors.internal.something_went_wrong');
                 }
             }
 
-            const errorProcessed = display$ || action$;
-
-            return of('').pipe(
-                switchMap(it => shouldDisplay && display$ ? display$ : of(it)),
-                switchMap(it => shouldTakeAction && errorProcessed ?
-                    (action$ ? action$ : of(it)).pipe(catchError(() => EMPTY))
-                    : throwError(err))
-            );
+            return completeAfterAction ? action$.pipe(switchMap(() => EMPTY)) : action$;
         };
-    }
-
-    private takeAction<T>(source: () => Observable<T> | Promise<T>): Observable<T> {
-        return of('').pipe(switchMap(source));
     }
 
     private displayMessage(translationKey: string) {
@@ -458,6 +445,7 @@ export enum AuthError {
     MISSING_JWT = '0205',
     CANNOT_REGISTER_JWT = '0206',
     INVALID_CREDENTIALS = '0207',
+    INVALID_REFRESH_TOKEN = '0208',
 }
 
 export enum UserError {
@@ -521,6 +509,7 @@ export enum InternalError {
     INVALID_REQUEST_DATA = '0808',
     GRPC_FAILED_WALLET_SERVICE = '0809',
     PDF_GENERATION_FAILED = '0810',
+    JWT_VALIDATION_FAILED = '0813',
 }
 
 export enum TransactionError {

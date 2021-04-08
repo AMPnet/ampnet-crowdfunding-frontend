@@ -3,6 +3,9 @@ import { LinkPreview, NewsPreviewService } from './news-preview.service';
 import { BackendHttpClient } from './backend-http-client.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { of } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
+import { RouterTestingModule } from '@angular/router/testing';
+import { SharedModule } from '../shared.module';
 import { AppConfigService } from './app-config.service';
 
 describe('NewsPreviewService', () => {
@@ -11,8 +14,13 @@ describe('NewsPreviewService', () => {
 
     beforeEach(async () => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
-            providers: [BackendHttpClient, AppConfigService, NewsPreviewService],
+            imports: [
+                RouterTestingModule,
+                TranslateModule.forRoot(),
+                HttpClientTestingModule,
+                SharedModule
+            ],
+            providers: [NewsPreviewService, AppConfigService],
         });
 
         http = TestBed.inject(BackendHttpClient) as jasmine.SpyObj<BackendHttpClient>;

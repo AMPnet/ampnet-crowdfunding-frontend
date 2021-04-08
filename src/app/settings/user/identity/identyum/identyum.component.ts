@@ -4,7 +4,6 @@ import { catchError, find, last, switchMap, takeUntil, tap } from 'rxjs/operator
 import { EMPTY, interval, Observable, Subject } from 'rxjs';
 import { DOCUMENT } from '@angular/common';
 import { PopupService } from '../../../../shared/services/popup.service';
-import { ErrorService } from '../../../../shared/services/error.service';
 import { UserService } from '../../../../shared/services/user/user.service';
 import { IdentyumCredentials, IdentyumService } from '../../../../shared/services/user/identyum.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -28,11 +27,9 @@ export class IdentyumComponent {
                 private router: RouterService,
                 private popupService: PopupService,
                 private identyumService: IdentyumService,
-                private errorService: ErrorService,
                 private translate: TranslateService,
                 private userService: UserService) {
         this.loaded$ = this.identyumService.getSession().pipe(
-            errorService.handleError,
             switchMap(session =>
                 this.loadIdentyumScript(session.web_component_url).pipe(
                     switchMap(() => this.setFlowManager(session.credentials,
@@ -52,8 +49,7 @@ export class IdentyumComponent {
             ),
             switchMap(() => this.popupService.success(
                 this.translate.instant('settings.user.identity.identyum.approved'))),
-            switchMap(() => this.userService.refreshUserToken()
-                .pipe(this.errorService.handleError)),
+            switchMap(() => this.userService.refreshUserToken()),
             catchError(() => {
                 this.router.navigate(['/dash/settings/user']);
                 return EMPTY;

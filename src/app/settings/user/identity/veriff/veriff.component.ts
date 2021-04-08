@@ -7,7 +7,6 @@ import { AppConfigService } from '../../../../shared/services/app-config.service
 import { RouterService } from '../../../../shared/services/router.service';
 import { UserService } from '../../../../shared/services/user/user.service';
 import { createVeriffFrame, MESSAGES } from '@veriff/incontext-sdk';
-import { ErrorService } from '../../../../shared/services/error.service';
 import { TranslateService } from '@ngx-translate/core';
 import { FormBuilder } from '@angular/forms';
 
@@ -31,7 +30,6 @@ export class VeriffComponent {
                 private router: RouterService,
                 private popupService: PopupService,
                 private userService: UserService,
-                private errorService: ErrorService,
                 private translate: TranslateService,
                 private fb: FormBuilder,
                 private veriffService: VeriffService) {
@@ -60,8 +58,7 @@ export class VeriffComponent {
             switchMap(() => this.popupService.success(
                 this.translate.instant('settings.user.identity.veriff.approved')
             )),
-            switchMap(() => this.userService.refreshUserToken()
-                .pipe(this.errorService.handleError)),
+            switchMap(() => this.userService.refreshUserToken()),
             catchError(() => {
                 this.router.navigate(['/dash/settings/user']);
                 return EMPTY;

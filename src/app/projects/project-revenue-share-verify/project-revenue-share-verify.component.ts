@@ -4,7 +4,6 @@ import { RouterService } from '../../shared/services/router.service';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { RevenueShareService } from '../../shared/services/wallet/revenue-share.service';
 import { ArkaneService } from '../../shared/services/arkane.service';
-import { ErrorService } from '../../shared/services/error.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ActivatedRoute } from '@angular/router';
 import { PopupService } from '../../shared/services/popup.service';
@@ -27,7 +26,6 @@ export class ProjectRevenueShareVerifyComponent implements OnInit {
                 private formBuilder: FormBuilder,
                 private revenueShareService: RevenueShareService,
                 private arkaneService: ArkaneService,
-                private errorService: ErrorService,
                 private translate: TranslateService,
                 private route: ActivatedRoute,
                 private popupService: PopupService) {
@@ -42,7 +40,6 @@ export class ProjectRevenueShareVerifyComponent implements OnInit {
     generateTransaction(amountInvested: number) {
         SpinnerUtil.showSpinner();
         return this.revenueShareService.generateRevenueShareTx(this.projectUUID, amountInvested).pipe(
-            this.errorService.handleError,
             switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo)),
             switchMap(() => this.popupService.new({
                 type: 'success',

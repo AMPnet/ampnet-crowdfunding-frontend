@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
-import { EMPTY, Observable, throwError } from 'rxjs';
+import { defer, EMPTY, Observable, of, throwError } from 'rxjs';
 import { catchError, finalize, switchMap, tap } from 'rxjs/operators';
 import { PopupService } from './popup.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';
 import { RouterService } from './router.service';
-import { UserService } from './user/user.service';
-
+import { JwtTokenService } from './jwt-token.service';
 
 @Injectable({
     providedIn: 'root'
@@ -14,7 +13,7 @@ import { UserService } from './user/user.service';
 export class ErrorService {
     constructor(private popupService: PopupService,
                 private router: RouterService,
-                private userService: UserService,
+                private jwtTokenService: JwtTokenService,
                 private translate: TranslateService) {
     }
 
@@ -79,19 +78,23 @@ export class ErrorService {
                         break;
 
                     case AuthError.INVALID_JWT:
-                        action$ = this.userService.refreshUserToken().pipe(
+                        action$ = this.jwtTokenService.refreshAccessToken().pipe(
                             this.handleError,
                             switchMap(() => caught)
                         );
                         completeAfterAction = false;
                         break;
+
                     case AuthError.MISSING_JWT:
                     case AuthError.CANNOT_REGISTER_JWT:
                     case UserError.USER_JWT_MISSING:
                     case AuthError.INVALID_REFRESH_TOKEN:
                     case InternalError.JWT_VALIDATION_FAILED:
-                        action$ = this.userService.logout().pipe(
-                            tap(() => this.router.navigate(['/auth/sign_in']))
+                        action$ = of(this.jwtTokenService.removeTokens()).pipe(
+                            tap(() => {
+                                console.log('navigate to sign_in');
+                                this.router.navigate(['/auth/sign_in']);
+                            })
                         );
                         break;
 

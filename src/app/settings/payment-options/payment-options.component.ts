@@ -3,7 +3,6 @@ import { PaymentService, UserBankAccount } from '../../shared/services/payment.s
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { RouterService } from '../../shared/services/router.service';
-import { ErrorService } from '../../shared/services/error.service';
 
 
 @Component({
@@ -16,14 +15,11 @@ export class PaymentOptionsComponent {
     private refreshBankAccountsSubject = new BehaviorSubject<void>(null);
 
     bankAccounts$: Observable<UserBankAccount[]> = this.refreshBankAccountsSubject.pipe(
-        switchMap(_ => this.paymentService.getMyBankAccounts().pipe(
-            this.errorService.handleError,
-        )),
+        switchMap(_ => this.paymentService.getMyBankAccounts()),
         map(res => res.bank_accounts)
     );
 
     constructor(private paymentService: PaymentService,
-                private errorService: ErrorService,
                 private router: RouterService) {
     }
 

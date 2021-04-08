@@ -5,7 +5,6 @@ import { WalletDetailsWithState, WalletService } from '../shared/services/wallet
 import { catchError, map, switchMap, take, tap } from 'rxjs/operators';
 import { ArkaneService } from '../shared/services/arkane.service';
 import { PopupService } from '../shared/services/popup.service';
-import { ErrorService } from '../shared/services/error.service';
 import { TranslateService } from '@ngx-translate/core';
 import { BehaviorSubject, combineLatest, Observable, of, throwError } from 'rxjs';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
@@ -30,7 +29,6 @@ export class WithdrawComponent implements OnInit {
                 private walletService: WalletService,
                 private arkaneService: ArkaneService,
                 private popupService: PopupService,
-                private errorService: ErrorService,
                 private translate: TranslateService,
                 private fb: FormBuilder) {
     }
@@ -39,14 +37,12 @@ export class WithdrawComponent implements OnInit {
         this.wallet$ = this.walletService.wallet$;
 
         this.banks$ = this.paymentService.getMyBankAccounts().pipe(
-            this.errorService.handleError,
             map(res => res.bank_accounts)
         );
 
         this.withdrawal$ = this.refreshWithdrawalSubject.asObservable().pipe(
             switchMap(w => w !== null ? of(w) :
                 this.withdrawService.getMyPendingWithdraw().pipe(
-                    this.errorService.handleError,
                     catchError(err => err.status === 404 ? of(Response.EMPTY) : throwError(err)),
                 )
             ),
@@ -84,7 +80,6 @@ export class WithdrawComponent implements OnInit {
         const amount: number = this.withdrawForm.value.amount;
         const bank: UserBankAccount = this.withdrawForm.value.bank;
         return this.withdrawService.createWithdrawRequest(amount, bank.iban, bank.bank_code).pipe(
-            this.errorService.handleError,
             tap(w => {
                 this.withdrawForm.reset();
                 this.refreshWithdrawalSubject.next(w);
@@ -95,7 +90,6 @@ export class WithdrawComponent implements OnInit {
     signWithdrawal(withdrawalID: number) {
         return () => {
             return this.withdrawService.generateApproveWithdrawTx(withdrawalID).pipe(
-                this.errorService.handleError,
                 switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo)),
                 switchMap(() => this.popupService.new({
                     type: 'success',
@@ -110,7 +104,6 @@ export class WithdrawComponent implements OnInit {
     deleteWithdrawal(withdrawalID: number) {
         return () => {
             return this.withdrawService.deleteWithdrawal(withdrawalID).pipe(
-                this.errorService.handleError,
                 switchMap(() => this.popupService.success(
                     this.translate.instant('withdraw.withdrawal_deleted'))),
                 tap(() => this.refreshWithdrawalSubject.next(null)),

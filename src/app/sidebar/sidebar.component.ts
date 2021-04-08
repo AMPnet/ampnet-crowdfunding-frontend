@@ -9,6 +9,7 @@ import { AppConfigService } from '../shared/services/app-config.service';
 import { RouterService } from '../shared/services/router.service';
 import { environment } from '../../environments/environment';
 import { tap } from 'rxjs/operators';
+import { JwtTokenService } from '../shared/services/jwt-token.service';
 
 @Component({
     selector: 'app-sidebar',
@@ -26,6 +27,7 @@ export class SidebarComponent implements AfterViewInit {
     constructor(private router: RouterService,
                 public appConfigService: AppConfigService,
                 private userService: UserService,
+                private jwtTokenService: JwtTokenService,
                 private walletService: WalletService) {
     }
 
@@ -36,7 +38,7 @@ export class SidebarComponent implements AfterViewInit {
     }
 
     onLogout() {
-        this.userService.logout().pipe(
+        this.jwtTokenService.logout().pipe(
             tap(() => this.router.navigate(['/']))
         ).subscribe();
     }

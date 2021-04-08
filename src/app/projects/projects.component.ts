@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Organization, OrganizationInvite, OrganizationService } from '../shared/services/project/organization.service';
-import { ErrorService } from '../shared/services/error.service';
 import { TranslateService } from '@ngx-translate/core';
 import { PopupService } from '../shared/services/popup.service';
 import { finalize, map, switchMap, tap } from 'rxjs/operators';
@@ -26,22 +25,18 @@ export class ProjectsComponent {
 
     constructor(private projectService: ProjectService,
                 private organizationService: OrganizationService,
-                private errorService: ErrorService,
                 private translate: TranslateService,
                 private popupService: PopupService) {
         this.projects$ = this.refreshProjectsSubject.pipe(
-            switchMap(_ => this.projectService.getPersonal()
-                .pipe(this.errorService.handleError)),
+            switchMap(_ => this.projectService.getPersonal()),
             map(res => res.projects));
 
         this.groups$ = this.refreshGroupsSubject.pipe(
-            switchMap(_ => this.organizationService.getPersonal()
-                .pipe(this.errorService.handleError)),
+            switchMap(_ => this.organizationService.getPersonal()),
             map(res => res.organizations));
 
         this.groupInvites$ = this.refreshInvitesSubject.pipe(
-            switchMap(_ => this.organizationService.getMyInvitations()
-                .pipe(this.errorService.handleError)),
+            switchMap(_ => this.organizationService.getMyInvitations()),
             map(res => res.organization_invites));
     }
 
@@ -54,7 +49,6 @@ export class ProjectsComponent {
     acceptInvite(orgID: string) {
         SpinnerUtil.showSpinner();
         return this.organizationService.acceptInvite(orgID).pipe(
-            this.errorService.handleError,
             switchMap(() =>
                 this.popupService.success(
                     this.translate.instant('project_management.groups.invites.accepted')

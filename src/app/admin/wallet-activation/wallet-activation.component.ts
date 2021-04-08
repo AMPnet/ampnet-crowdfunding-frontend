@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject, interval, Observable } from 'rxjs';
 import { finalize, map, switchMap, tap } from 'rxjs/operators';
-import { ErrorService } from '../../shared/services/error.service';
 import { ArkaneService } from '../../shared/services/arkane.service';
 import { TranslateService } from '@ngx-translate/core';
 import { PopupService } from '../../shared/services/popup.service';
@@ -29,7 +28,6 @@ export class WalletActivationComponent implements OnInit {
     refreshProjectsSubject = new BehaviorSubject<void>(null);
 
     constructor(private activationService: CoopWalletActivationService,
-                private errorService: ErrorService,
                 private arkaneService: ArkaneService,
                 private translate: TranslateService,
                 private popupService: PopupService) {
@@ -38,19 +36,16 @@ export class WalletActivationComponent implements OnInit {
     ngOnInit() {
         this.users$ = this.refreshUsersSubject.asObservable().pipe(
             switchMap(() => this.activationService.getUserWallets()),
-            this.errorService.handleError,
             map(res => res.users)
         );
 
         this.organizations$ = this.refreshOrgsSubject.asObservable().pipe(
             switchMap(() => this.activationService.getOrgWallets()),
-            this.errorService.handleError,
             map(res => res.organizations)
         );
 
         this.projects$ = this.refreshProjectsSubject.asObservable().pipe(
             switchMap(() => this.activationService.getProjectWallets()),
-            this.errorService.handleError,
             map(res => res.projects)
         );
 
@@ -66,7 +61,6 @@ export class WalletActivationComponent implements OnInit {
     private activateWallet(walletUUID: string) {
         SpinnerUtil.showSpinner();
         return this.activationService.activateWallet(walletUUID).pipe(
-            this.errorService.handleError,
             switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo)),
             switchMap(() => this.popupService.new({
                 type: 'success',

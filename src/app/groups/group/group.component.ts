@@ -7,7 +7,6 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors,
 import { ActivatedRoute } from '@angular/router';
 import { RouterService } from '../../shared/services/router.service';
 import { UserService } from '../../shared/services/user/user.service';
-import { ErrorService } from '../../shared/services/error.service';
 import { ArkaneService } from '../../shared/services/arkane.service';
 import { TranslateService } from '@ngx-translate/core';
 import { PopupService } from '../../shared/services/popup.service';
@@ -40,7 +39,6 @@ export class GroupComponent implements OnInit {
                 private userService: UserService,
                 private organizationService: OrganizationService,
                 private walletService: WalletService,
-                private errorService: ErrorService,
                 private arkaneService: ArkaneService,
                 private translate: TranslateService,
                 private fb: FormBuilder,
@@ -77,13 +75,11 @@ export class GroupComponent implements OnInit {
 
         this.user$ = this.userService.user$;
         this.organization$ = this.refreshOrganizationSubject.asObservable().pipe(
-            switchMap(() => this.organizationService.get(orgID)
-                .pipe(this.errorService.handleError)),
+            switchMap(() => this.organizationService.get(orgID)),
             shareReplay(1),
         );
         this.orgWallet$ = this.refreshOrgWalletSubject.asObservable().pipe(
             switchMap(() => this.walletService.getOrganizationWallet(orgID).pipe(
-                this.errorService.handleError,
                 catchError(err => {
                     if (err.status === 404) {
                         return this.popupService.info(
@@ -94,7 +90,6 @@ export class GroupComponent implements OnInit {
                         );
                     } else {
                         return of(err).pipe(
-                            this.errorService.handleError,
                             switchMap(() => this.recoverBack())
                         );
                     }
@@ -110,7 +105,7 @@ export class GroupComponent implements OnInit {
         this.orgMembers$ = combineLatest([this.refreshOrgMembersSubject, this.writeable$]).pipe(
             switchMap(([_, writeable]) => this.organizationService.getMembersForOrganization(orgID, {
                 isPublic: this.isPublic || !writeable.permission
-            }).pipe(this.errorService.handleError)),
+            })),
             map(res => res.members));
 
         this.inviteForm = this.fb.group({
@@ -129,7 +124,6 @@ export class GroupComponent implements OnInit {
             const emails = GroupComponent.extractEmails(this.inviteForm.get('emails').value);
 
             return this.organizationService.inviteUser(orgUUID, emails).pipe(
-                this.errorService.handleError,
                 switchMap(() => this.popupService.success(
                     this.translate.instant('groups.show.members.invited')
                 )),
@@ -140,7 +134,6 @@ export class GroupComponent implements OnInit {
 
     createOrgWallet(orgUUID: string) {
         return this.walletService.createOrganizationWalletTransaction(orgUUID).pipe(
-            this.errorService.handleError,
             switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo)),
             catchError(() => this.recoverBack()),
             switchMap(() => this.popupService.new({
@@ -160,7 +153,6 @@ export class GroupComponent implements OnInit {
     deleteMember(orgID: string, memberID: string) {
         SpinnerUtil.showSpinner();
         this.organizationService.removeMemberFromOrganization(orgID, memberID).pipe(
-            this.errorService.handleError,
             switchMap(() => this.popupService.success(
                 this.translate.instant('groups.show.members.deleted')
             )),

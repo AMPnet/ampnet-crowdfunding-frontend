@@ -103,7 +103,7 @@
     },
     "risk_warning_confirmation_input": {
       "title": "Risk Warning",
-      "notice": "I have read and agreed with the platform | Risk Warning |"
+      "notice": "I have read and agreed with the | {{ coopName }} Risk Warning |"
     },
     "initialize_wallet": "Initialize secure wallet",
     "balance": "Balance",

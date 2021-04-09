@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TransactionState, TransactionType, UserTransaction, WalletService, WalletState } from '../shared/services/wallet/wallet.service';
 import { BehaviorSubject, combineLatest, EMPTY } from 'rxjs';
 import { map, switchMap, take, tap } from 'rxjs/operators';
@@ -7,6 +7,8 @@ import { ArkaneService } from '../shared/services/arkane.service';
 import { ReportService } from '../shared/services/report/report.service';
 import { ErrorService } from '../shared/services/error.service';
 import { enterTrigger } from '../shared/animations';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AppConfigService } from '../shared/services/app-config.service';
 
 @Component({
     selector: 'app-wallet',
@@ -14,12 +16,14 @@ import { enterTrigger } from '../shared/animations';
     styleUrls: ['./wallet.component.scss'],
     animations: [enterTrigger]
 })
-export class WalletComponent implements OnDestroy {
+export class WalletComponent implements OnInit, OnDestroy {
     tablePage = 1;
     tablePageSize = 10;
     transactionItems = 0;
     transactionHistory: UserTransaction[] = [];
     transactionHistoryPage: UserTransaction[] = [];
+
+    acceptTermsForm: FormGroup;
 
     wallet$ = this.walletService.wallet$;
 
@@ -68,10 +72,18 @@ export class WalletComponent implements OnDestroy {
     ).subscribe(() => this.refreshTransactionHistorySubject.next('fromPending'));
 
     constructor(private walletService: WalletService,
-                public arkaneService: ArkaneService,
                 private errorService: ErrorService,
                 private reportService: ReportService,
-                private websocketService: WebsocketService) {
+                private fb: FormBuilder,
+                private websocketService: WebsocketService,
+                public arkaneService: ArkaneService,
+                public appConfig: AppConfigService) {
+    }
+
+    ngOnInit() {
+        this.acceptTermsForm = this.fb.group({
+            risk_warning_confirmation: [!this.appConfig.config.config?.risk_warning_url, Validators.requiredTrue]
+        });
     }
 
     ngOnDestroy() {

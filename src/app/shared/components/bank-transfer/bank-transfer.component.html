@@ -150,6 +150,12 @@
                                         [text]="'deposit.bank_transfer.cancel' | translate"></button>
                             </div>
                         </form>
+
+                        <div class="deposit-notice tw-mt-8" *ngIf="appConfig.config.config?.depositNoticeHTML">
+                            <quill-view [content]="appConfig.config.config?.depositNoticeHTML"
+                                        format="html" theme="snow">
+                            </quill-view>
+                        </div>
                     </div>
                 </div>
             </ng-template>

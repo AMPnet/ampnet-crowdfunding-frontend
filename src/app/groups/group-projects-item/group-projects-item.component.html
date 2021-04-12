@@ -1,9 +1,8 @@
 <div class="item__top">
     <div class="top__left">
         <a [routerLink]="" (click)="onClickedItem()">
-            <img src="{{ projectWallet.project.main_image }}" @enterTrigger
-                 onerror="this.onerror=null; this.src='../../../../assets/noimage.png'"
-                 alt="Project image">
+            <app-picture @enterTrigger [image]="projectWallet.project.image" type="wideMedium">
+            </app-picture>
         </a>
     </div>
     <div class="top__right">

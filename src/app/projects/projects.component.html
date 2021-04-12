@@ -28,10 +28,9 @@
                                 <div class="item__desc">
                                     <div class="item__title">{{ project.name | uppercase }}</div>
                                 </div>
-                                <div class="item__img">
-                                    <img src="{{ project.main_image }}" alt="Project image"
-                                         onerror="this.onerror=null; this.src='../../../../assets/noimage.png'">
-                                </div>
+                                <app-picture class="item__img" @enterTrigger
+                                             [image]="project.image" type="squareSmall">
+                                </app-picture>
                             </li>
                         </ng-template>
                     </app-lazy-load>
@@ -77,21 +76,21 @@
                                 <div class="item__desc">
                                     <div class="item__title">{{ group.name | uppercase }}</div>
                                     <div class="item__projects-count">
-                                <span>
-                                    {{ 'project_management.groups.org_item.project_count' | translate | splitPart:0 }}
-                                </span>
-                                <span class="bold">
-                                    {{ 'project_management.groups.org_item.project_count' | translate
-                                                | splitPart:1 | interpolate:['count', group.project_count] }}
-                                </span>
-                                <span>
-                                    {{ 'project_management.groups.org_item.project_count' | translate | splitPart:2 }}
-                                </span>
+                                    <span>
+                                        {{ 'project_management.groups.org_item.project_count' | translate | splitPart:0 }}
+                                    </span>
+                                    <span class="bold">
+                                        {{ 'project_management.groups.org_item.project_count' | translate
+                                                    | splitPart:1 | interpolate:['count', group.project_count] }}
+                                    </span>
+                                    <span>
+                                        {{ 'project_management.groups.org_item.project_count' | translate | splitPart:2 }}
+                                    </span>
                                     </div>
                                 </div>
-                                <div class="item__img">
-                                    <img src="{{ group.header_image }}" alt="Organization image">
-                                </div>
+                                <app-picture class="item__img" @enterTrigger
+                                             [image]="group.image" type="squareSmall">
+                                </app-picture>
                             </li>
                         </ng-template>
                     </app-lazy-load>
@@ -130,8 +129,8 @@
                                     class="btn btn-success">
                                 <fa-icon icon="check" class="mr-3"></fa-icon>
                                 <span>
-                                        {{ 'project_management.groups.invites.join' | translate }}
-                                    </span>
+                                    {{ 'project_management.groups.invites.join' | translate }}
+                                </span>
                             </button>
                         </div>
                     </li>

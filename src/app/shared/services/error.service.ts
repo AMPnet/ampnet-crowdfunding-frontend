@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { defer, EMPTY, Observable, of, throwError } from 'rxjs';
+import { EMPTY, Observable, of, throwError } from 'rxjs';
 import { catchError, finalize, switchMap, tap } from 'rxjs/operators';
 import { PopupService } from './popup.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -91,10 +91,7 @@ export class ErrorService {
                     case AuthError.INVALID_REFRESH_TOKEN:
                     case InternalError.JWT_VALIDATION_FAILED:
                         action$ = of(this.jwtTokenService.removeTokens()).pipe(
-                            tap(() => {
-                                console.log('navigate to sign_in');
-                                this.router.navigate(['/auth/sign_in']);
-                            })
+                            tap(() => this.router.navigate(['/auth/sign_in']))
                         );
                         break;
 

@@ -19,10 +19,8 @@
         </div>
         <div class="wrapper">
             <div class="offer-left first app__full-width">
-                <div @enterTrigger>
-                    <img class="left__img w-100" src="{{ project.main_image }}"
-                         onerror="this.onerror=null; this.src='../../../../assets/noimage.png'">
-                </div>
+                <app-picture @enterTrigger [image]="project.image" type="wideMedium">
+                </app-picture>
             </div>
 
             <div class="offer-right first"

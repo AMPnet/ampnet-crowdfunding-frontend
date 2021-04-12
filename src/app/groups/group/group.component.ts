@@ -12,11 +12,13 @@ import { TranslateService } from '@ngx-translate/core';
 import { PopupService } from '../../shared/services/popup.service';
 import { catchError, finalize, map, shareReplay, switchMap, tap } from 'rxjs/operators';
 import { SpinnerUtil } from '../../utilities/spinner-utilities';
+import { enterTrigger } from '../../shared/animations';
 
 @Component({
     selector: 'app-group',
     templateUrl: './group.component.html',
-    styleUrls: ['./group.component.scss']
+    styleUrls: ['./group.component.scss'],
+    animations: [enterTrigger]
 })
 export class GroupComponent implements OnInit {
     isPublic: boolean;

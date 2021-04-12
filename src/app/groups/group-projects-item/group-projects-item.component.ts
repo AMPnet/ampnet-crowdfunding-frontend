@@ -2,7 +2,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Project, ProjectService, ProjectWallet } from '../../shared/services/project/project.service';
 import { Observable } from 'rxjs';
 import { MiddlewareService, ProjectWalletInfo } from '../../shared/services/middleware/middleware.service';
-import { ErrorService } from '../../shared/services/error.service';
 import { ActivatedRoute } from '@angular/router';
 import { RouterService } from '../../shared/services/router.service';
 import { tap } from 'rxjs/operators';
@@ -21,7 +20,6 @@ export class GroupProjectsItemComponent implements OnInit {
     walletInfo$: Observable<ProjectWalletInfo>;
 
     constructor(private middlewareService: MiddlewareService,
-                private errorService: ErrorService,
                 private projectService: ProjectService,
                 private route: ActivatedRoute,
                 private router: RouterService) {
@@ -37,7 +35,6 @@ export class GroupProjectsItemComponent implements OnInit {
             return this.projectService.updateProject(project.uuid, {
                 active: !project.active
             }).pipe(
-                this.errorService.handleError,
                 tap(updatedProject => this.projectWallet.project = updatedProject)
             );
         };

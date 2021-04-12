@@ -5,7 +5,6 @@ import { SignupService } from '../../shared/services/user/signup.service';
 import { PopupService } from '../../shared/services/popup.service';
 import { EMPTY, throwError } from 'rxjs';
 import { RouterService } from '../../shared/services/router.service';
-import { ErrorService } from '../../shared/services/error.service';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -22,7 +21,6 @@ export class ForgotPasswordComponent {
     constructor(private formBuilder: FormBuilder,
                 private signUpService: SignupService,
                 private router: RouterService,
-                private errorService: ErrorService,
                 private translate: TranslateService,
                 private popupService: PopupService) {
 
@@ -35,7 +33,6 @@ export class ForgotPasswordComponent {
         const email = this.forgotPasswordForm.get('email').value;
 
         return this.signUpService.forgotPassword(email).pipe(
-            this.errorService.handleError,
             catchError(err => {
                 return err.status === 404 ?
                     this.popupService.error(

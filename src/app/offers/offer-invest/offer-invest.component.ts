@@ -6,7 +6,6 @@ import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators }
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { map, shareReplay, switchMap, take } from 'rxjs/operators';
 import { DetailsResult, PortfolioService } from '../../shared/services/wallet/portfolio.service';
-import { ErrorService } from '../../shared/services/error.service';
 
 @Component({
     selector: 'app-offer-invest',
@@ -26,19 +25,16 @@ export class OfferInvestComponent implements OnInit {
                 private projectService: ProjectService,
                 private portfolioService: PortfolioService,
                 private route: ActivatedRoute,
-                private errorService: ErrorService,
                 private fb: FormBuilder) {
         const projectID = this.route.snapshot.params.id;
 
         this.project$ = this.projectService.getProject(projectID).pipe(
-            this.errorService.handleError,
             shareReplay(1)
         );
 
         this.investmentData$ = combineLatest([this.project$, this.walletService.wallet$]).pipe(take(1),
             switchMap(([project, wallet]) =>
                 this.portfolioService.investmentDetails(project.wallet.hash, wallet.wallet.hash).pipe(
-                    this.errorService.handleError,
                     map(invDetails => this.computeInvestmentData(project, invDetails))
                 )
             ),

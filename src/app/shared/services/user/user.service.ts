@@ -5,8 +5,8 @@ import { User, UserRole } from './signup.service';
 import { BehaviorSubject, EMPTY, Observable, of, throwError } from 'rxjs';
 import { CacheService } from '../cache.service';
 import { AppConfigService } from '../app-config.service';
-import { SocialAuthService } from 'angularx-social-login';
 import { LanguageService } from '../language.service';
+import { JwtTokenService } from '../jwt-token.service';
 
 @Injectable({
     providedIn: 'root',
@@ -22,27 +22,32 @@ export class UserService {
     constructor(private http: BackendHttpClient,
                 private appConfig: AppConfigService,
                 private languageService: LanguageService,
+                private jwtTokenService: JwtTokenService,
                 private cacheService: CacheService) {
     }
 
     private getFreshUser() {
         return this.http.get<User>('/api/user/me').pipe(
             switchMap(user => this.checkIntegrity(user) ?
-                of(user) : this.refreshUserToken().pipe(switchMap(() => of(user)))
+                of(user) : this.jwtTokenService.refreshAccessToken().pipe(switchMap(() => of(user)))
             ),
             switchMap(user => this.checkDefaultLang(user) ?
                 of(user) : this.updateUser({language: this.languageService.getPreferredLang()}) as Observable<User>
             ),
             map(user => ({
                 ...user,
-                verified: !this.appConfig.config.need_user_verification || user.verified
+                verified: this.isVerified(user.verified)
             }))
         );
     }
 
+    isVerified(userVerified: boolean) {
+        return !this.appConfig.config.need_user_verification || userVerified;
+    }
+
     private checkIntegrity(user: User): boolean {
         return user.role === this.getRoleFromAuthorities()
-            && user.verified === this.http.getJWTUser().verified;
+            && this.isVerified(user.verified) === this.jwtTokenService.getJWTUser().verified;
     }
 
     private checkDefaultLang(user: User): boolean {
@@ -50,7 +55,7 @@ export class UserService {
     }
 
     private getRoleFromAuthorities(): UserRole {
-        return this.http.getJWTUser().authorities
+        return this.jwtTokenService.getJWTUser().authorities
             .filter(authority => authority.startsWith('ROLE'))
             .map(authority => authority.replace('ROLE_', ''))
             .shift() as UserRole;
@@ -62,7 +67,8 @@ export class UserService {
     }
 
     updateUser(updateData: UpdateUserData): Observable<User> {
-        return this.isLoggedIn() ? this.http.put<User>('/api/user/me/update', updateData) : EMPTY;
+        return this.jwtTokenService.isLoggedIn() ?
+            this.http.put<User>('/api/user/me/update', updateData) : EMPTY;
     }
 
     getUserByEmail(email: string): Observable<User | null> {
@@ -74,70 +80,28 @@ export class UserService {
         );
     }
 
-    emailLogin(email: string, password: string) {
-        return this.http.post<UserAuthResponse>('/api/user/token', {
-            coop: this.appConfig.config.identifier,
-            login_method: 'EMAIL',
-            credentials: {
-                email: email,
-                password: password
-            }
-        }, true).pipe(
-            this.saveTokens.bind(this),
+    loginEmail(email: string, password: string) {
+        return this.http.loginEmail(email, password).pipe(
             tap(() => this.updateBackendLanguage.subscribe())
         );
     }
 
-    socialLogin(provider: string, authToken: string) {
-        return this.http.post<UserAuthResponse>('/api/user/token', {
-            coop: this.appConfig.config.identifier,
-            login_method: provider,
-            credentials: {
-                token: authToken
-            }
-        }, true).pipe(
-            this.saveTokens.bind(this),
+    loginSocial(provider: string, authToken: string) {
+        return this.http.loginSocial(provider, authToken).pipe(
             tap(() => this.updateBackendLanguage.subscribe())
         );
     }
 
     get updateBackendLanguage() {
         return this.updateUser({language: this.languageService.getCurrentLanguage()}).pipe(
-            catchError(() => EMPTY));
+            catchError(() => EMPTY)
+        );
     }
 
     refreshUserToken() {
-        return this.http.post<UserAuthResponse>('/api/user/token/refresh', {
-            refresh_token: this.http.refreshToken
-        }, true).pipe(
-            this.saveTokens.bind(this),
+        return this.jwtTokenService.refreshAccessToken().pipe(
             tap(() => this.refreshUser())
         );
-    }
-
-    logout() {
-        this.http.post<void>(`/api/user/logout`, {})
-            .pipe(catchError(_ => EMPTY)).subscribe();
-
-        this.http.accessToken = null;
-        this.http.refreshToken = null;
-
-        this.cacheService.clearAll();
-    }
-
-    private saveTokens(source: Observable<UserAuthResponse>) {
-        return source.pipe(
-            tap(res => {
-                this.http.accessToken = res.access_token;
-                this.http.refreshToken = res.refresh_token;
-            })
-        );
-    }
-
-    isLoggedIn(): boolean {
-        const jwtUser = this.http.getJWTUser();
-
-        return jwtUser && jwtUser.coop === this.appConfig.config.identifier;
     }
 }
 
@@ -147,23 +111,6 @@ interface PageableUsersResponse {
     total_pages: number;
 }
 
-interface UserAuthResponse {
-    access_token: string;
-    expires_in: number;
-    refresh_token: string;
-    refresh_token_expires_in: number;
-}
-
 interface UpdateUserData {
     language: string;
 }
-
-export const socialAuthServiceFactory = (appConfig: AppConfigService) => {
-    return new SocialAuthService(appConfig.socialAuthConfig());
-};
-
-export const socialAuthServiceProvider = {
-    provide: SocialAuthService,
-    useFactory: socialAuthServiceFactory,
-    deps: [AppConfigService]
-};

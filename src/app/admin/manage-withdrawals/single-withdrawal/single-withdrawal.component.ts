@@ -9,7 +9,6 @@ import { switchMap, tap } from 'rxjs/operators';
 import { ArkaneService } from '../../../shared/services/arkane.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { RouterService } from '../../../shared/services/router.service';
-import { ErrorService } from '../../../shared/services/error.service';
 import { TranslateService } from '@ngx-translate/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { FileValidator } from '../../../shared/validators/file.validator';
@@ -32,7 +31,6 @@ export class SingleWithdrawalComponent implements OnInit {
                 private withdrawCoopService: WalletCooperativeWithdrawService,
                 private arkaneService: ArkaneService,
                 private popupService: PopupService,
-                private errorService: ErrorService,
                 private translate: TranslateService,
                 private fb: FormBuilder,
                 private router: RouterService) {
@@ -51,7 +49,6 @@ export class SingleWithdrawalComponent implements OnInit {
 
     signTransaction() {
         return this.withdrawCoopService.generateBurnWithdrawTx(this.withdrawalID).pipe(
-            this.errorService.handleError,
             switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo)),
             switchMap(() => this.popupService.new({
                 type: 'success',
@@ -66,7 +63,6 @@ export class SingleWithdrawalComponent implements OnInit {
         return this.withdrawCoopService.approveWithdrawal(
             this.withdrawalID, this.documentForm.get('document').value
         ).pipe(
-            this.errorService.handleError,
             tap(() => this.router.navigate(['/dash/admin/manage_withdrawals']))
         );
     }

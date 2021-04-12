@@ -5,7 +5,6 @@ import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators }
 import { WalletService } from '../../shared/services/wallet/wallet.service';
 import { ActivatedRoute } from '@angular/router';
 import { RouterService } from '../../shared/services/router.service';
-import { ErrorService } from '../../shared/services/error.service';
 import { catchError, map, shareReplay, switchMap } from 'rxjs/operators';
 
 @Component({
@@ -21,14 +20,12 @@ export class ProjectEditPaymentsComponent {
     constructor(private walletService: WalletService,
                 private route: ActivatedRoute,
                 private router: RouterService,
-                private errorService: ErrorService,
                 private fb: FormBuilder,
                 private middlewareService: MiddlewareService) {
         const projectUUID = this.route.snapshot.params.id;
 
         this.projectWalletInfo$ = this.walletService.getProjectWallet(projectUUID).pipe(
-            switchMap(wallet => this.middlewareService.getProjectWalletInfoCached(wallet.hash)
-                .pipe(this.errorService.handleError)),
+            switchMap(wallet => this.middlewareService.getProjectWalletInfoCached(wallet.hash)),
             shareReplay({refCount: true, bufferSize: 1})
         );
 

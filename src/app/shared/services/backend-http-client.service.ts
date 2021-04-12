@@ -1,41 +1,76 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { defer, EMPTY, Observable } from 'rxjs';
 import { AppConfigService } from './app-config.service';
+import { ErrorService } from './error.service';
+import { tap } from 'rxjs/operators';
+import { CacheService } from './cache.service';
+import { SocialAuthService } from 'angularx-social-login';
+import { JwtTokenService } from './jwt-token.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class BackendHttpClient {
     constructor(public http: HttpClient,
-                private appConfig: AppConfigService) {
+                private errorService: ErrorService,
+                private cacheService: CacheService,
+                private jwtTokenService: JwtTokenService) {
     }
 
-    get<T>(path: string, params?: object, publicRoute = false): Observable<T> {
-        const httpOptions = this.authHttpOptions(publicRoute);
+    get<T>(path: string, params?: object, publicRoute = false, shouldHandleErrors = true): Observable<T> {
+        return defer(() => {
+            const httpOptions = this.authHttpOptions(publicRoute);
 
-        if (params !== undefined) {
-            httpOptions['params'] = params;
-        }
+            if (params !== undefined) {
+                httpOptions['params'] = params;
+            }
 
-        return this.http.get<T>(path, httpOptions);
+            return this.http.get<T>(path, httpOptions);
+        }).pipe(this.handleError(shouldHandleErrors));
     }
 
-    post<T>(path: string, body: any, publicRoute = false): Observable<T> {
-        return this.http.post<T>(path, body, this.authHttpOptions(publicRoute));
+    post<T>(path: string, body: any, publicRoute = false, shouldHandleErrors = true): Observable<T> {
+        return defer(() => this.http.post<T>(path, body, this.authHttpOptions(publicRoute))).pipe(
+            this.handleError(shouldHandleErrors)
+        );
     }
 
-    put<T>(path: string, body: object): Observable<T> {
-        return this.http.put<T>(path, body, this.authHttpOptions());
+    put<T>(path: string, body: object, shouldHandleErrors = true): Observable<T> {
+        return defer(() => this.http.put<T>(path, body, this.authHttpOptions())).pipe(
+            this.handleError(shouldHandleErrors)
+        );
     }
 
-    delete<T>(path: string, params?: object): Observable<T> {
-        const httpOptions = this.authHttpOptions();
-        if (params !== undefined) {
-            httpOptions['params'] = params;
-        }
+    delete<T>(path: string, params?: object, shouldHandleErrors = true): Observable<T> {
+        return defer(() => {
+            const httpOptions = this.authHttpOptions();
+            if (params !== undefined) {
+                httpOptions['params'] = params;
+            }
 
-        return this.http.delete<T>(path, httpOptions);
+            return this.http.delete<T>(path, httpOptions);
+        }).pipe(
+            this.handleError(shouldHandleErrors)
+        );
+    }
+
+    loginEmail(email: string, password: string) {
+        return this.jwtTokenService.authEmail(email, password).pipe(
+            this.errorService.handleError
+        );
+    }
+
+    loginSocial(provider: string, authToken: string) {
+        return this.jwtTokenService.authSocial(provider, authToken).pipe(
+            this.errorService.handleError
+        );
+    }
+
+    logout(): Observable<void> {
+        return this.jwtTokenService.logout().pipe(
+            tap(() => this.cacheService.clearAll())
+        );
     }
 
     public authHttpOptions(publicRoute = false) {
@@ -44,59 +79,24 @@ export class BackendHttpClient {
         };
         httpOptions.headers.append('Connection', 'Keep-Alive');
 
-        if (this.accessToken !== null && !publicRoute) {
+        if (this.jwtTokenService.accessToken !== null && !publicRoute) {
             httpOptions.headers = httpOptions
-                .headers.append('Authorization', `Bearer ${this.accessToken}`);
+                .headers.append('Authorization', `Bearer ${this.jwtTokenService.accessToken}`);
         }
 
         return httpOptions;
     }
 
-    getJWTUser(): JWTUser | null {
-        try {
-            const payload: JWTPayload = JSON.parse(atob(this.accessToken.split('.')[1]));
-            return JSON.parse(payload.user);
-        } catch (_err) {
-            return null;
-        }
-    }
-
-    get accessToken() {
-        return localStorage.getItem(this.scopedKey('access_token'));
-    }
-
-    set accessToken(value: string) {
-        !value ? localStorage.removeItem(this.scopedKey('access_token')) :
-            localStorage.setItem(this.scopedKey('access_token'), String(value));
-    }
-
-    get refreshToken() {
-        return localStorage.getItem(this.scopedKey('refresh_token'));
-    }
-
-    set refreshToken(value: unknown) {
-        !value ? localStorage.removeItem(this.scopedKey('refresh_token')) :
-            localStorage.setItem(this.scopedKey('refresh_token'), String(value));
-    }
-
-    private scopedKey(key: string) {
-        return `${this.appConfig.config.identifier}_${key}`;
-    }
+    private handleError = (handleErrors: boolean) => (source: Observable<any>) =>
+        source.pipe(handleErrors ? this.errorService.handleError : () => EMPTY);
 }
 
-interface JWTPayload {
-    sub: string;
-    user: string;
-    iat: number;
-    exp: number;
-}
+export const socialAuthServiceFactory = (appConfig: AppConfigService) => {
+    return new SocialAuthService(appConfig.socialAuthConfig());
+};
 
-interface JWTUser {
-    uuid: string;
-    email: string;
-    name: string;
-    authorities: string[];
-    enabled: boolean;
-    verified: boolean;
-    coop: string;
-}
+export const socialAuthServiceProvider = {
+    provide: SocialAuthService,
+    useFactory: socialAuthServiceFactory,
+    deps: [AppConfigService]
+};

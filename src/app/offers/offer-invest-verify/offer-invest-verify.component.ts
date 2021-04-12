@@ -6,7 +6,6 @@ import { ArkaneService } from '../../shared/services/arkane.service';
 import { shareReplay, switchMap } from 'rxjs/operators';
 import { PopupService } from '../../shared/services/popup.service';
 import { RouterService } from '../../shared/services/router.service';
-import { ErrorService } from '../../shared/services/error.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { enterTrigger } from '../../shared/animations';
@@ -27,7 +26,6 @@ export class OfferInvestVerifyComponent implements OnInit {
                 private projectService: ProjectService,
                 private walletService: WalletService,
                 private arkaneService: ArkaneService,
-                private errorService: ErrorService,
                 private translate: TranslateService,
                 private popupService: PopupService) {
     }
@@ -37,14 +35,12 @@ export class OfferInvestVerifyComponent implements OnInit {
         this.investAmount = this.route.snapshot.params.amount;
 
         this.project$ = this.projectService.getProject(this.projectID).pipe(
-            this.errorService.handleError,
             shareReplay(1)
         );
     }
 
     sign() {
         return this.walletService.investToProject(this.projectID, this.investAmount).pipe(
-            this.errorService.handleError,
             switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo)),
             switchMap(() => this.popupService.new({
                 type: 'success',

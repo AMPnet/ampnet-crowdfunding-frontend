@@ -4,7 +4,6 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 import { FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { CoopService } from '../../shared/services/user/coop.service';
 import { AppConfig, AppConfigService, KYCProvider } from '../../shared/services/app-config.service';
-import { ErrorService } from '../../shared/services/error.service';
 import { ActivatedRoute } from '@angular/router';
 import { LanguageService } from '../../shared/services/language.service';
 
@@ -24,7 +23,6 @@ export class PlatformConfigComponent {
     constructor(private route: ActivatedRoute,
                 private coopService: CoopService,
                 private appConfigService: AppConfigService,
-                private errorService: ErrorService,
                 private languageService: LanguageService,
                 private fb: FormBuilder) {
         this.showSecureConfig = !!this.route.snapshot.queryParams.secure;
@@ -89,7 +87,6 @@ export class PlatformConfigComponent {
                     reCaptchaSiteKey: appConfig.reCaptchaSiteKey
                 }
             }, appConfig.logo, appConfig.banner).pipe(
-                this.errorService.handleError,
                 tap(newAppConfig => {
                     form.get('logo').reset();
                     form.get('banner').reset();

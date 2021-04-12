@@ -6,7 +6,6 @@ import { combineLatest, EMPTY, interval, Observable, of } from 'rxjs';
 import { filter, map, switchMap, take, tap } from 'rxjs/operators';
 import { ArkaneService } from '../../shared/services/arkane.service';
 import { PopupService } from '../../shared/services/popup.service';
-import { ErrorService } from '../../shared/services/error.service';
 import { TranslateService } from '@ngx-translate/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { InterpolatePipe } from '../../shared/pipes/interpolate.pipe';
@@ -28,7 +27,6 @@ export class OwnershipComponent {
                 private ownershipService: WalletCooperativeOwnershipService,
                 private arkaneService: ArkaneService,
                 private fb: FormBuilder,
-                private errorService: ErrorService,
                 private translate: TranslateService,
                 private interpolatePipe: InterpolatePipe,
                 private popupService: PopupService) {
@@ -49,7 +47,6 @@ export class OwnershipComponent {
                 switchMap(user => this.ownershipService.executeOwnershipChangeTransaction(user.uuid, role)),
                 switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo)),
                 switchMap(() => this.waitForRoleChange(role)),
-                this.errorService.handleError,
                 switchMap(() => this.popupService.success(
                     this.translate.instant('admin.platform_roles.change_confirmation.success')
                 ))

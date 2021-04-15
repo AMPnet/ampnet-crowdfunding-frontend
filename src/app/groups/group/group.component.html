@@ -29,9 +29,9 @@
 
             <div class="content">
                 <div class="organization-info">
-                    <div class="organization__img">
-                        <img src="{{ organization.header_image }}" alt="">
-                    </div>
+                    <app-picture class="organization__img" @enterTrigger
+                                 [image]="organization.image" type="squareSmall">
+                    </app-picture>
                     <div class="organization__desc">
                         <div class="desc__title"> {{ organization.name }} </div>
                         <div class="desc__project-count">

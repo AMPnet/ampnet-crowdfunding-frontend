@@ -4,6 +4,7 @@ import { Document, Organization, OrganizationBasic } from './organization.servic
 import { CacheService } from '../cache.service';
 import { Wallet } from '../wallet/wallet.service';
 import { AppConfigService } from '../app-config.service';
+import { ImageType } from '../../components/picture/picture.component';
 
 @Injectable({
     providedIn: 'root'
@@ -108,6 +109,7 @@ export interface Project {
     min_per_user: number;
     max_per_user: number;
     main_image: string;
+    image: ImageType;
     news: string[];
     documents: Document[];
     gallery: string[];

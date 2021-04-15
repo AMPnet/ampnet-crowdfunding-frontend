@@ -1,9 +1,11 @@
 <div class="card-holder app__full-width--padding">
     <div class="card-left">
-        <div class="left__img app__full-width">
+        <div class="left__img app__full-width lg:tw--m-4">
             <a [routerLink]="" (click)="onClickedItem()">
-                <img class="img__base w-100" @enterTrigger
-                     src="{{ projectWallet.project.main_image }}">
+                <app-picture class="tw-w-full" @enterTrigger
+                             [image]="projectWallet.project.image"
+                             type="wideMedium">
+                </app-picture>
             </a>
         </div>
         <!-- title for mobile view -->
@@ -15,14 +17,14 @@
                 <div @enterTrigger>
                     <div class="progress__raised">
                         <div>
-                                <span class="bold">
-                                    {{ 'offers.single_offer_item.raised' | translate | splitPart:0
-                                        | interpolate:['raised', wallet.totalFundsRaised | currencyDefault] }}
-                                </span>
+                            <span class="bold">
+                                {{ 'offers.single_offer_item.raised' | translate | splitPart:0
+                                    | interpolate:['raised', wallet.totalFundsRaised | currencyDefault] }}
+                            </span>
                             <span>
-                                    {{ 'offers.single_offer_item.raised' | translate | splitPart:1
+                                {{ 'offers.single_offer_item.raised' | translate | splitPart:1
                                     | interpolate:['goal', wallet.investmentCap | currencyDefault] }}
-                                </span>
+                            </span>
                         </div>
                     </div>
                     <div>

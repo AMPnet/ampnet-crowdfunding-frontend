@@ -24,6 +24,7 @@ import { QuillModule } from 'ngx-quill';
 import { HeaderComponent } from './components/header/header.component';
 import { RouterModule } from '@angular/router';
 import { BankTransferComponent } from './components/bank-transfer/bank-transfer.component';
+import { PictureComponent } from './components/picture/picture.component';
 
 const components = [
     ActionButtonComponent,
@@ -34,7 +35,8 @@ const components = [
     SpinnerComponent,
     UploadAreaComponent,
     HeaderComponent,
-    BankTransferComponent
+    BankTransferComponent,
+    PictureComponent
 ];
 
 const directives = [

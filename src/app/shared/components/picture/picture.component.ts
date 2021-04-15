@@ -22,6 +22,10 @@ export class PictureComponent implements OnInit {
     }
 
     private getURL(image: ImageType, type: ImageTypeText): string {
+        if (!image) {
+            return '../../../assets/noimage.png';
+        }
+
         switch (type) {
             case 'squareSmall':
                 return image.square_small;

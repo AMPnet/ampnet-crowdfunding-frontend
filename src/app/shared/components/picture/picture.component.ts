@@ -9,6 +9,9 @@ import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core
 export class PictureComponent implements OnInit {
     @Input() image: ImageType;
     @Input() type: ImageTypeText;
+    @Input() width = '100%';
+    @Input() height = '100%';
+    @Input() objectFit: ObjectFit = 'cover';
     mainImageURL = '';
 
     constructor() {
@@ -19,16 +22,16 @@ export class PictureComponent implements OnInit {
     }
 
     private getURL(image: ImageType, type: ImageTypeText): string {
-       switch (type) {
-           case 'squareSmall':
-               return image.square_small;
-           case 'wideMedium':
-               return image.wide_medium;
-           case 'full':
-               return image.full;
-           case 'original':
-               return image.original;
-       }
+        switch (type) {
+            case 'squareSmall':
+                return image.square_small;
+            case 'wideMedium':
+                return image.wide_medium;
+            case 'full':
+                return image.full;
+            case 'original':
+                return image.original;
+        }
     }
 
 }
@@ -41,3 +44,4 @@ export interface ImageType {
 }
 
 type ImageTypeText = 'squareSmall' | 'wideMedium' | 'full' | 'original';
+type ObjectFit = 'contain' | 'cover' | 'fill' | 'scale' | 'none';

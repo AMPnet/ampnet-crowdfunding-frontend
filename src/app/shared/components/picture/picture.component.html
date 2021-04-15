@@ -1,6 +1,6 @@
 <picture>
     <source srcset="{{ mainImageURL }}">
-    <img src="{{ image.original }}" alt=""
+    <img src="{{ image?.original }}" alt=""
          [style]="{'width': width, 'height': height, 'object-fit': objectFit}"
          onerror="this.onerror=null;this.parentNode.children[0].srcset = this.src;">
 </picture>

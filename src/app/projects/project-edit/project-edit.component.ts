@@ -32,8 +32,6 @@ export class ProjectEditComponent {
     refreshProjectSubject = new BehaviorSubject<Project>(null);
     refreshProjectWalletSubject = new BehaviorSubject<void>(null);
 
-    detailsShown = true;
-
     constructor(private projectService: ProjectService,
                 private walletService: WalletService,
                 private userService: UserService,
@@ -83,7 +81,7 @@ export class ProjectEditComponent {
                     roi: fb.group({
                         from: [project.roi.from, Validators.pattern(/^\d*\.?\d+$/)],
                         to: [project.roi.to, Validators.pattern(/^\d*\.?\d+$/)],
-                    }, {validators: this.roiValidator}),
+                    }, {validators: [this.roiValidator()]}),
                     location: fb.group({
                         lat: [project.location.lat],
                         long: [project.location.long],
@@ -197,10 +195,10 @@ export class ProjectEditComponent {
         return !!wallet && !!wallet?.hash;
     }
 
-    private roiValidator(roiFromGroup: FormGroup): ValidatorFn {
-        return (_control: AbstractControl) => {
-            const from = roiFromGroup.get('from').value;
-            const to = roiFromGroup.get('to').value;
+    private roiValidator(): ValidatorFn {
+        return (control: AbstractControl) => {
+            const from = control.get('from').value;
+            const to = control.get('to').value;
             return from !== null && to !== null && from <= to ? null : {invalidROI: true};
         };
     }

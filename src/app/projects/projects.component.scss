@@ -10,10 +10,6 @@
   }
 }
 
-.app-page-header {
-  background-color: $background-color;
-}
-
 .app-page-subtitle {
   color: $title-color;
 }
@@ -111,10 +107,6 @@
     &__text {
       display: inline-block;
     }
-  }
-
-  .app-page-header {
-    background-color: unset;
   }
 
   .alert-success {

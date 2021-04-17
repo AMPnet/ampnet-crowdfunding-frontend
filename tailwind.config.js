@@ -1,9 +1,13 @@
+const {guessProductionMode} = require("@ngneat/tailwind");
+
+process.env.TAILWIND_MODE = guessProductionMode() ? 'build' : 'watch';
+
 module.exports = {
     prefix: 'tw-',
+    mode: 'jit',
     purge: {
-        enabled: process.env.NODE_ENV === 'prod',
         content: [
-            './src/**/*.{html,ts}',
+            './src/**/*.{html,ts,css,scss,sass,less,styl}',
         ]
     },
     darkMode: false, // or 'media' or 'class'
@@ -13,5 +17,5 @@ module.exports = {
     variants: {
         extend: {},
     },
-    plugins: [],
-}
+    plugins: [require('@tailwindcss/aspect-ratio')],
+};

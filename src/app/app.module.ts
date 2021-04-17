@@ -57,6 +57,8 @@ import { ProjectDepositComponent } from './projects/project-deposit/project-depo
 import { ProjectWithdrawComponent } from './projects/project-withdraw/project-withdraw.component';
 import { OffersItemComponent } from './offers/offers-item/offers-item.component';
 import { TranslateStore } from '@ngx-translate/core';
+import { ProjectEditNewsComponent } from './projects/project-edit-news/project-edit-news.component';
+import { ProjectEditDetailsComponent } from './projects/project-edit-details/project-edit-details.component';
 
 @NgModule({
     declarations: [
@@ -96,6 +98,8 @@ import { TranslateStore } from '@ngx-translate/core';
         TxAmountSign,
         ClickOutsideDirective,
         StaticPageComponent,
+        ProjectEditNewsComponent,
+        ProjectEditDetailsComponent,
     ],
     imports: [
         BrowserModule,

@@ -4,8 +4,10 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+@import url('//fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
 @import "global/fonts";
 @import "global/buttons";
+@import "global/colors";
 @import "global/inputs";
 @import "global/alert";
 @import "global/common";

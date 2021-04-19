@@ -4,8 +4,8 @@
         groups: groups$ | async,
         invites: groupInvites$ | async
     } as states">
-        <div class="app-page-header">
-            <h1 class="app-page-title">
+        <div class="app-page-header tw-sticky tw-top-14 lg:tw-top-0 tw-bg-white">
+            <h1 class="app-page-title !tw-mb-0 tw-flex tw-items-center">
                 {{ 'project_management.projects.title' | translate }}
             </h1>
             <div *ngIf="states.projects !== null" @enterTrigger>
@@ -44,8 +44,8 @@
         </div>
 
 
-        <div class="app-page-header mt-20">
-            <h1 class="app-page-title">
+        <div class="app-page-header tw-sticky tw-top-14 lg:tw-top-0 tw-bg-white tw-mt-10">
+            <h1 class="app-page-title !tw-mb-0 tw-flex tw-items-center">
                 {{ 'project_management.groups.title' | translate }}
             </h1>
             <div *ngIf="states.groups !== null" @enterTrigger>

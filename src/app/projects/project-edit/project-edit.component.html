@@ -5,51 +5,53 @@
     <div class="container" id="core-root-manager">
         <ng-container *ngIf="!!states.project && !!states.wallet else spinner">
             <div *ngIf="states.wallet !== walletState.EMPTY">
-                <div class="app-page-header">
-                    <a [routerLink]="" appBackNavigation class="nostyle w-100">
-                        <div class="app-page-title-back">
-                            <fa-icon icon="long-arrow-alt-left" class="mr-3"></fa-icon>
-                            {{ 'general.back.title' | translate }}
-                        </div>
-                    </a>
+                <ng-container *ngIf="(updateForm$ | async) as updateForm">
+                    <div class="app-page-header">
+                        <a [routerLink]="" appBackNavigation class="nostyle w-100">
+                            <div class="app-page-title-back">
+                                <fa-icon icon="long-arrow-alt-left" class="mr-3"></fa-icon>
+                                {{ 'general.back.title' | translate }}
+                            </div>
+                        </a>
 
-                    <button class="btn btn-center"
-                            [routerLink]="['/dash', 'offers', states.project.uuid] | coopPath">
-                        <fa-icon icon="caret-right" class="mr-lg-3"></fa-icon>
-                        <span class="btn__text">
-                            {{ 'projects.edit.preview' | translate }}
-                        </span>
-                    </button>
-                </div>
-                <div class="edit-project">
-                    <ng-container *ngIf="states.project.main_image">
-                        <div class="project__img app__full-width">
-                            <img src="{{states.project.main_image}}" alt="Project image">
-                        </div>
-                    </ng-container>
-
-                    <div *ngIf="!isWalletVerified(states.wallet)">
-                        <div class="alert alert-warning flex__center">
-                            <fa-icon icon="exclamation-triangle" class="mr-3"></fa-icon>
-                            <b>
-                                {{ 'projects.edit.wallet_not_verified_notice' | translate }}
-                            </b>
-                        </div>
+                        <button class="btn btn-center"
+                                [disabled]="updateForm.dirty"
+                                [routerLink]="['/dash', 'offers', states.project.uuid] | coopPath">
+                            <fa-icon icon="caret-right" class="mr-lg-3"></fa-icon>
+                            <span class="btn__text">
+                                {{ 'projects.edit.preview' | translate }}
+                            </span>
+                        </button>
                     </div>
+                    <div class="edit-project">
+                        <ng-container *ngIf="states.project.main_image">
+                            <div class="project__img app__full-width">
+                                <img src="{{states.project.main_image}}" alt="Project image">
+                            </div>
+                        </ng-container>
 
-                    <div class="edit-header app__full-width--padding">
-                        <div class="edit__title">
-                            <h4>{{ states.project.name }}</h4>
+                        <div *ngIf="!isWalletVerified(states.wallet)">
+                            <div class="alert alert-warning flex__center">
+                                <fa-icon icon="exclamation-triangle" class="mr-3"></fa-icon>
+                                <b>
+                                    {{ 'projects.edit.wallet_not_verified_notice' | translate }}
+                                </b>
+                            </div>
                         </div>
-                        <div class="edit__state">
-                            {{ (states.project.active ?
-                                'projects.edit.active.public' : 'projects.edit.active.hidden') | translate }}
+
+                        <div class="edit-header app__full-width--padding">
+                            <div class="edit__title">
+                                <h4>{{ states.project.name }}</h4>
+                            </div>
+                            <div class="edit__state">
+                                {{ (states.project.active ?
+                                    'projects.edit.active.public' : 'projects.edit.active.hidden') | translate }}
+                            </div>
                         </div>
-                    </div>
-                    <div class="tabs">
-                        <tabset>
-                            <tab heading="{{ 'projects.edit.details.title' | translate }}">
-                                <ng-container *ngIf="(updateForm$ | async) as updateForm">
+
+                        <div class="tabs">
+                            <tabset>
+                                <tab heading="{{ 'projects.edit.details.title' | translate }}">
                                     <div class="edit-info">
                                         <form [formGroup]="updateForm" style="width: 100%">
                                             <div class="row">
@@ -286,7 +288,7 @@
                                                         text="{{ (states.project.active ? 'projects.edit.hide' : 'projects.edit.show') | translate }}"
                                                         textShort="{{ (states.project.active ? 'projects.edit.hide.short' : 'projects.edit.show.short') | translate }}"
                                                         faIcon="{{ states.project.active ? 'eye-slash' : 'eye' }}"
-                                                        [disabled]="!isWalletVerified(states.wallet)"
+                                                        [disabled]="!isWalletVerified(states.wallet) || updateForm.dirty"
                                                         [onClick]="toggleProjectStatusClicked(states.project).bind(this)"
                                                         class="btn btn-info">
                                                 </button>
@@ -302,62 +304,62 @@
                                             </div>
                                         </form>
                                     </div>
-                                </ng-container>
-                            </tab>
+                                </tab>
 
-                            <tab heading="{{ 'projects.edit.news.title' | translate }}">
-                                <div class="edit-news">
-                                    <p class="news__title">
-                                        {{ 'projects.edit.news.news_input.title' | translate }}
-                                    </p>
-                                    <div class="news__form col-lg-8">
-                                        <form [formGroup]="newsForm">
-                                            <div class="row">
-                                                <div class="col-10 px-0">
-                                                    <input class="input-reg w-100" id="newsLink"
-                                                           placeholder="{{ 'projects.edit.news.news_input.placeholder' | translate }}"
-                                                           formControlName="newsLink"
-                                                           type="text">
+                                <tab heading="{{ 'projects.edit.news.title' | translate }}">
+                                    <div class="edit-news">
+                                        <p class="news__title">
+                                            {{ 'projects.edit.news.news_input.title' | translate }}
+                                        </p>
+                                        <div class="news__form col-lg-8">
+                                            <form [formGroup]="newsForm">
+                                                <div class="row">
+                                                    <div class="col-10 px-0">
+                                                        <input class="input-reg w-100" id="newsLink"
+                                                               placeholder="{{ 'projects.edit.news.news_input.placeholder' | translate }}"
+                                                               formControlName="newsLink"
+                                                               type="text">
+                                                    </div>
+                                                    <div class="col-2 px-0">
+                                                        <button app-action-button
+                                                                faIcon="plus"
+                                                                [disabled]="!newsForm.dirty || !newsForm.valid"
+                                                                [onClick]="addNewsLink(states.project, newsForm).bind(this)"
+                                                                class="w-100 btn p-1">
+                                                        </button>
+                                                    </div>
                                                 </div>
-                                                <div class="col-2 px-0">
-                                                    <button app-action-button
-                                                            faIcon="plus"
-                                                            [disabled]="!newsForm.dirty || !newsForm.valid"
-                                                            [onClick]="addNewsLink(states.project, newsForm).bind(this)"
-                                                            class="w-100 btn p-1">
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </form>
+                                            </form>
+                                        </div>
+                                        <div class="news__list col-lg-8">
+                                            <ul class="list-group">
+                                                <li *ngFor="let item of states.project.news"
+                                                    class="list__item flex__center--space mx-0">
+                                                    <a href="//{{ item }}"
+                                                       target="_blank" rel="noopener noreferrer"
+                                                       style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis">
+                                                        {{ item }}
+                                                    </a>
+                                                    <a [routerLink]=""
+                                                       (click)="deleteNewsClicked(states.project, item).subscribe()">
+                                                        <fa-icon icon="trash-alt"></fa-icon>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
-                                    <div class="news__list col-lg-8">
-                                        <ul class="list-group">
-                                            <li *ngFor="let item of states.project.news"
-                                                class="list__item flex__center--space mx-0">
-                                                <a href="//{{ item }}"
-                                                   target="_blank" rel="noopener noreferrer"
-                                                   style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis">
-                                                    {{ item }}
-                                                </a>
-                                                <a [routerLink]=""
-                                                   (click)="deleteNewsClicked(states.project, item).subscribe()">
-                                                    <fa-icon icon="trash-alt"></fa-icon>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </tab>
+                                </tab>
 
-                            <tab heading="{{ 'projects.edit.manage_payments.title' | translate }}"
-                                 *ngIf="(isProjectOwner$ | async) && isWalletVerified(states.wallet)">
-                                <div class="edit-payments">
-                                    <app-project-edit-payments></app-project-edit-payments>
-                                </div>
-                            </tab>
-                        </tabset>
+                                <tab heading="{{ 'projects.edit.manage_payments.title' | translate }}"
+                                     *ngIf="(isProjectOwner$ | async) && isWalletVerified(states.wallet)">
+                                    <div class="edit-payments">
+                                        <app-project-edit-payments></app-project-edit-payments>
+                                    </div>
+                                </tab>
+                            </tabset>
+                        </div>
                     </div>
-                </div>
+                </ng-container>
             </div>
         </ng-container>
     </div>

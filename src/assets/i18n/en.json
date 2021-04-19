@@ -288,7 +288,7 @@
       "create_button.loading": "Creating project..."
     },
     "edit": {
-      "preview": "Preview",
+      "preview": "View Project",
       "wallet_not_verified_notice": "This project is pending approval from an administrator. During this time, the project cannot be publicly shown.",
       "active.public": "Public",
       "active.hidden": "Hidden",
@@ -296,7 +296,7 @@
       "show.short": "Show",
       "hide": "Hide project",
       "hide.short": "Hide",
-      "update": "Update all",
+      "update": "Save",
       "update.loading": "Updating...",
       "details": {
         "title": "Details",

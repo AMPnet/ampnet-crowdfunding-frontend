@@ -4,10 +4,10 @@ import { ActivatedRoute } from '@angular/router';
 import { AbstractControlOptions, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthService } from 'angularx-social-login';
 import { MustMatch } from './confirm-password-validator';
-import { switchMap, tap } from 'rxjs/operators';
+import { catchError, switchMap, tap } from 'rxjs/operators';
 import { RouterService } from '../../shared/services/router.service';
 import { PopupService } from '../../shared/services/popup.service';
-import { from } from 'rxjs';
+import { EMPTY, from } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { UserService } from '../../shared/services/user/user.service';
 import { socialAuthServiceProvider } from '../../shared/services/backend-http-client.service';
@@ -55,7 +55,9 @@ export class SignUpComponent {
     }
 
     performSocialSignup(provider: string) {
-        return from(this.socialAuthService.signIn(provider)).pipe(
+        return this.socialAuthService.initState.pipe(
+            switchMap(() => from(this.socialAuthService.signIn(provider))),
+            catchError(() => EMPTY),
             switchMap(socialRes =>
                 this.signUpService.signupSocial(socialRes.provider, socialRes.authToken).pipe(
                     switchMap(() => this.userService.loginSocial(provider, socialRes.authToken))

@@ -145,6 +145,7 @@
         <ul class="list-unstyled components" id="main-menu">
             <span class="full-name">{{ states.user?.first_name | titlecase }} {{ states.user?.last_name | titlecase }}</span>
             <a href="{{ appConfigService.config.config.contact_url }}"
+               target="_blank" rel="noopener noreferrer"
                *ngIf="appConfigService.config.config.contact_url" style="all: unset">
                 <li routerLinkActive="side-active" class="mt-2">
                     <fa-icon class="menu-icon" icon="envelope-open"></fa-icon>

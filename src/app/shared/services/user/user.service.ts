@@ -82,13 +82,15 @@ export class UserService {
 
     loginEmail(email: string, password: string) {
         return this.http.loginEmail(email, password).pipe(
-            tap(() => this.updateBackendLanguage.subscribe())
+            tap(() => this.updateBackendLanguage.subscribe()),
+            tap(() => this.refreshUser())
         );
     }
 
     loginSocial(provider: string, authToken: string) {
         return this.http.loginSocial(provider, authToken).pipe(
-            tap(() => this.updateBackendLanguage.subscribe())
+            tap(() => this.updateBackendLanguage.subscribe()),
+            tap(() => this.refreshUser())
         );
     }
 

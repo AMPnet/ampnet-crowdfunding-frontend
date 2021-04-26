@@ -24,7 +24,7 @@
     "@angular/platform-browser": "^11.2.10",
     "@angular/platform-browser-dynamic": "^11.2.10",
     "@angular/router": "^11.2.10",
-    "@arkane-network/arkane-connect": "1.22.0",
+    "@arkane-network/arkane-connect": "1.23.0",
     "@fortawesome/angular-fontawesome": "^0.8.1",
     "@fortawesome/fontawesome-pro": "^5.15.1",
     "@fortawesome/fontawesome-svg-core": "^1.2.34",

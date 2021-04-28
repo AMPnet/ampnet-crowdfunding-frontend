@@ -6,8 +6,6 @@ import { tap } from 'rxjs/operators';
 import { CreateWalletBankAccountData } from '../../../shared/services/wallet/platform-bank-account.service';
 import { OnAddNewBankAccountData } from '../../../shared/components/new-bank-account/new-bank-account.component';
 
-declare var $: any;
-
 @Component({
     selector: 'app-new-payment-option',
     templateUrl: './new-payment-option.component.html',
@@ -25,7 +23,10 @@ export class NewPaymentOptionComponent {
             alias: data.alias,
             bank_name: data.bank_name,
             bank_address: data.bank_address,
-            beneficiary_name: data.beneficiary_name
+            beneficiary_name: data.beneficiary_name,
+            beneficiary_address: data.beneficiary_address,
+            beneficiary_city: data.beneficiary_city,
+            beneficiary_country: data.beneficiary_country,
         };
         return this.paymentService.createBankAccount(bankAccountData).pipe(
             tap(() => this.router.navigate(['/dash/settings/payment_options']))

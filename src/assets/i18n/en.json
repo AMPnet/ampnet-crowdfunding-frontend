@@ -499,7 +499,7 @@
       },
       "bank_address_input": {
         "title": "Bank address",
-        "placeholder": "923 Deerfield Ave., Brockton, MA 02301"
+        "placeholder": "Rudolstaedter Strasse 18, Elsenfeld, Freistaat Bayern, 63815"
       },
       "beneficiary_name_input": {
         "title": "Beneficiary name",
@@ -507,15 +507,15 @@
       },
       "beneficiary_address_input": {
         "title": "Beneficiary address",
-        "placeholder": "97  Melody Lane"
+        "placeholder": "Fasanenstrasse 85"
       },
       "beneficiary_city_input": {
         "title": "Beneficiary city",
-        "placeholder": "Richmond"
+        "placeholder": "Hamburg Sasel"
       },
       "beneficiary_country_input": {
         "title": "Beneficiary country",
-        "placeholder": "Virginia, USA"
+        "placeholder": "Germany"
       },
       "submit": "Add bank account"
     }

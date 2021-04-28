@@ -472,6 +472,9 @@
       "bank_name": "Bank name",
       "bank_address": "Bank address",
       "beneficiary_name": "Beneficiary name",
+      "beneficiary_address": "Beneficiary address",
+      "beneficiary_city": "Beneficiary city",
+      "beneficiary_country": "Beneficiary country",
       "actions": "Actions"
     },
     "bank_accounts_empty": "No payment options available. Please add a new payment option.",
@@ -496,11 +499,23 @@
       },
       "bank_address_input": {
         "title": "Bank address",
-        "placeholder": "923 Deerfield Ave., Brockton, MA 02301"
+        "placeholder": "Rudolstaedter Strasse 18, Elsenfeld, Freistaat Bayern, 63815"
       },
       "beneficiary_name_input": {
         "title": "Beneficiary name",
         "placeholder": "Flowerwalk"
+      },
+      "beneficiary_address_input": {
+        "title": "Beneficiary address",
+        "placeholder": "Fasanenstrasse 85"
+      },
+      "beneficiary_city_input": {
+        "title": "Beneficiary city",
+        "placeholder": "Hamburg Sasel"
+      },
+      "beneficiary_country_input": {
+        "title": "Beneficiary country",
+        "placeholder": "Germany"
       },
       "submit": "Add bank account"
     }
@@ -607,6 +622,9 @@
         "bank_name": "Bank name",
         "bank_address": "Bank address",
         "beneficiary_name": "Beneficiary name",
+        "beneficiary_address": "Beneficiary address",
+        "beneficiary_city": "Beneficiary city",
+        "beneficiary_country": "Beneficiary country",
         "actions": "Actions"
       },
       "empty": "No payment options available. Please add a new payment option.",

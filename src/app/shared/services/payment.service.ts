@@ -33,6 +33,9 @@ export interface UserBankAccount {
     bank_name: string;
     bank_address: string;
     beneficiary_name: string;
+    beneficiary_address: string;
+    beneficiary_city: string;
+    beneficiary_country: string;
 }
 
 interface UserBankAccountsRes {

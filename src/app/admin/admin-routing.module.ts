@@ -9,7 +9,9 @@ import { ManageSingleDepositComponent } from './manage-deposits/manage-single-de
 import { PlatformBankAccountComponent } from './platform-bank-account/platform-bank-account.component';
 import { NewPlatformBankAccountComponent } from './platform-bank-account/new-platform-bank-account/new-platform-bank-account.component';
 import { OwnershipComponent } from './ownership/ownership.component';
-import { PlatformConfigComponent } from './platform-config/platform-config.component';
+import { PlatformComponent } from './platform/platform.component';
+import { PlatformConfigComponent } from './platform/platform-config/platform-config.component';
+import { PlatformUsersComponent } from './platform/platform-users/platform-users.component';
 
 const routes: Routes = [
     {path: 'manage_withdrawals', component: ManageWithdrawalsComponent},
@@ -20,7 +22,13 @@ const routes: Routes = [
     {path: 'platform_bank_account', component: PlatformBankAccountComponent},
     {path: 'platform_bank_account/new', component: NewPlatformBankAccountComponent},
     {path: 'ownership', component: OwnershipComponent},
-    {path: 'platform_config', component: PlatformConfigComponent},
+    {
+        path: 'platform', component: PlatformComponent, children: [
+            {path: '', pathMatch: 'full', redirectTo: 'config'},
+            {path: 'config', component: PlatformConfigComponent},
+            {path: 'users', component: PlatformUsersComponent}
+        ]
+    },
 ];
 
 @NgModule({

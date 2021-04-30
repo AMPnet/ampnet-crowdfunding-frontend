@@ -24,6 +24,8 @@ export class CoopPathPipe implements PipeTransform {
             }
         }
 
+        console.log('path', path);
+
         return path;
     }
 }

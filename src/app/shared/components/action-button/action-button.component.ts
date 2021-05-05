@@ -1,4 +1,4 @@
-import { Component, HostBinding, HostListener, Input, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostBinding, HostListener, Input, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
@@ -8,6 +8,7 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
     selector: 'button[app-action-button]',
     templateUrl: './action-button.component.html',
     styleUrls: ['./action-button.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ActionButtonComponent implements OnInit, OnDestroy {
     @Input() text: string;
@@ -24,6 +25,9 @@ export class ActionButtonComponent implements OnInit, OnDestroy {
     loading = false;
     sub: Subscription;
 
+    constructor(private changeRef: ChangeDetectorRef) {
+    }
+
     @HostBinding('class') get buttonClass() {
         return this.class || 'btn btn-primary';
     }
@@ -39,9 +43,10 @@ export class ActionButtonComponent implements OnInit, OnDestroy {
         }
 
         this.loading = true;
-        this.sub = this.onClick()
-            .pipe(finalize(() => this.loading = false))
-            .subscribe();
+        this.sub = this.onClick().pipe(finalize(() => {
+            this.loading = false;
+            this.changeRef.markForCheck();
+        })).subscribe();
     }
 
     ngOnInit() {

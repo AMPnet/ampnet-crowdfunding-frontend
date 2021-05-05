@@ -76,7 +76,7 @@ const importExportModules = [
         ...components,
         ...directives,
         ...pipes,
-        ...validators
+        ...validators,
     ],
     providers: [
         ...pipes,

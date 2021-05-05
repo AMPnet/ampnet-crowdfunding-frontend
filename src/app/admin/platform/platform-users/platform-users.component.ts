@@ -1,16 +1,17 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ReportService } from '../../../shared/services/report/report.service';
 
 @Component({
-  selector: 'app-platform-users',
-  templateUrl: './platform-users.component.html',
-  styleUrls: ['./platform-users.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'app-platform-users',
+    templateUrl: './platform-users.component.html',
+    styleUrls: ['./platform-users.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PlatformUsersComponent implements OnInit {
+export class PlatformUsersComponent {
+    constructor(private reportService: ReportService) {
+    }
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+    downloadReport() {
+        return this.reportService.usersSummary();
+    }
 }

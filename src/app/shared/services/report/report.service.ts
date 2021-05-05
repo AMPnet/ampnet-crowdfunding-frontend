@@ -61,6 +61,34 @@ export class ReportService {
         );
     }
 
+
+    usersSummary(from?: Date, to?: Date): Observable<void> {
+        const params = {};
+        if (!!from) {
+            params['from'] = this.datePipe.transform(from, 'yyyy-MM-dd');
+        }
+        if (!!to) {
+            params['to'] = this.datePipe.transform(to, 'yyyy-MM-dd');
+        }
+
+        return this.http.http.get('/api/report/admin/report/user', {
+            params: params,
+            headers: this.http.authHttpOptions().headers,
+            responseType: 'arraybuffer'
+        }).pipe(
+            map(data => {
+                const fileName = [
+                    'usersSummary',
+                    this.datePipe.transform(new Date(), 'yMdhhmmss'),
+                    `${!!from ? 'from' + params['from'] : ''}`,
+                    `${!!to ? 'to' + params['to'] : ''}`
+                ].filter(text => !!text).join('_') + '.pdf';
+
+                this.downloadFile(data, fileName);
+            })
+        );
+    }
+
     downloadFile(data: ArrayBuffer, fileName: string): void {
         const file = new Blob([data], {type: 'application/pdf'});
         const fileURL = URL.createObjectURL(file);

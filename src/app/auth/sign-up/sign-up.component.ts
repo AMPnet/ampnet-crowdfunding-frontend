@@ -36,11 +36,9 @@ export class SignUpComponent {
                 private fb: FormBuilder,
     ) {
         this.signupForm = this.fb.group({
-            firstName: ['', [Validators.required]],
-            lastName: ['', [Validators.required]],
+            email: ['', [Validators.required, Validators.email]],
             password: ['', [Validators.required, Validators.minLength(8)]],
             confirmPassword: ['', [Validators.required, Validators.minLength(8)]],
-            email: ['', [Validators.required, Validators.email]]
         }, <AbstractControlOptions>{
             validator: MustMatch('password', 'confirmPassword')
         });
@@ -70,7 +68,7 @@ export class SignUpComponent {
     onFormSubmit() {
         const user = this.signupForm.value;
 
-        return this.signUpService.signupEmail(user.email, user.firstName, user.lastName, user.password).pipe(
+        return this.signUpService.signupEmail(user.email, user.password).pipe(
             switchMap(_ => this.userService.loginEmail(user.email, user.password)),
             switchMap(() => this.popupService.success(this.translate.instant('auth.sign_up.success'))),
             tap(() => this.router.navigate(['/dash'])),

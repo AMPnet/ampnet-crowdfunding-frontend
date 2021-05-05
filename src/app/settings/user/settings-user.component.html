@@ -4,14 +4,14 @@
 
         <div>
             <div class="row mt-3">
-                <div class="col-md-4">
+                <div class="col-md-4" *ngIf="user.first_name">
                     <label for="first_name" class="app-page-label">
                         {{ 'settings.user.first_name' | translate }}
                     </label>
                     <input class="form-control input-reg" id="first_name" disabled type="text"
                            [value]="user.first_name">
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4" *ngIf="user.last_name">
                     <label for="last_name" class="app-page-label">
                         {{ 'settings.user.last_name' | translate }}
                     </label>

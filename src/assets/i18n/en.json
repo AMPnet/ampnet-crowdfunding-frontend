@@ -669,67 +669,78 @@
       },
       "user_not_found": "User with this email was not found."
     },
-    "platform_config": {
-      "title": "Platform configuration",
-      "instance_name_input": {
-        "title": "Instance name",
-        "placeholder": "Instance name"
+    "platform": {
+      "tabs": {
+        "config": "Platform config",
+        "users": "Users"
       },
-      "identifier_input": {
-        "title": "Identifier"
+      "config": {
+        "title": "Platform configuration",
+        "instance_name_input": {
+          "title": "Instance name",
+          "placeholder": "Instance name"
+        },
+        "identifier_input": {
+          "title": "Identifier"
+        },
+        "web_title_input": {
+          "title": "Web title",
+          "placeholder": "Instance"
+        },
+        "logo_input.title": "Logo",
+        "banner_input.title": "Banner image",
+        "icon_url_input": {
+          "title": "Icon URL",
+          "placeholder": "https://path/to/icon.png"
+        },
+        "kyc_provider_input.title": "KYC Provider",
+        "coop_statute_input": {
+          "title": "Platform Terms & Conditions",
+          "placeholder": "https://path/to/terms.html | https://path/to/terms-file.pdf"
+        },
+        "risk_warning_input": {
+          "title": "Risk Warning",
+          "placeholder": "https://path/to/risk-warning.html | https://path/to/risk-warning.pdf"
+        },
+        "contact_url_input": {
+          "title": "Contact URL",
+          "placeholder": "mailto:support@example.com | https://example.com/contact_us"
+        },
+        "languages_input": {
+          "title": "Languages",
+          "placeholder": "fr:\"French\" el:\"Greek\":\"https://path.to/el.json\" fr-CA:\"French (Canada)\":\"https://path.to/fr-CA.json\""
+        },
+        "languages_fallback_input.title": "Use English as a fallback language",
+        "footer_input.title": "Footer",
+        "deposit_notice_input.title": "Deposit notice",
+        "arkane_id_input": {
+          "title": "Arkane ID",
+          "placeholder": "arkaneID"
+        },
+        "arkane_env_input": {
+          "title": "Arkane environment",
+          "placeholder": "arkaneEnv"
+        },
+        "verification_required_input.title": "User verification required",
+        "captcha_key_input": {
+          "title": "ReCaptcha Site Key",
+          "placeholder": "reCaptchaSiteKey"
+        },
+        "google_client_id_input": {
+          "title": "Google Client ID",
+          "placeholder": "googleClientID"
+        },
+        "facebook_app_id_input": {
+          "title": "Facebook App ID",
+          "placeholder": "facebookAppID"
+        },
+        "submit": "Update configuration"
       },
-      "web_title_input": {
-        "title": "Web title",
-        "placeholder": "Instance"
-      },
-      "logo_input.title": "Logo",
-      "banner_input.title": "Banner image",
-      "icon_url_input": {
-        "title": "Icon URL",
-        "placeholder": "https://path/to/icon.png"
-      },
-      "kyc_provider_input.title": "KYC Provider",
-      "coop_statute_input": {
-        "title": "Platform Terms & Conditions",
-        "placeholder": "https://path/to/terms.html | https://path/to/terms-file.pdf"
-      },
-      "risk_warning_input": {
-        "title": "Risk Warning",
-        "placeholder": "https://path/to/risk-warning.html | https://path/to/risk-warning.pdf"
-      },
-      "contact_url_input": {
-        "title": "Contact URL",
-        "placeholder": "mailto:support@example.com | https://example.com/contact_us"
-      },
-      "languages_input": {
-        "title": "Languages",
-        "placeholder": "fr:\"French\" el:\"Greek\":\"https://path.to/el.json\" fr-CA:\"French (Canada)\":\"https://path.to/fr-CA.json\""
-      },
-      "languages_fallback_input.title": "Use English as a fallback language",
-      "footer_input.title": "Footer",
-      "deposit_notice_input.title": "Deposit notice",
-      "arkane_id_input": {
-        "title": "Arkane ID",
-        "placeholder": "arkaneID"
-      },
-      "arkane_env_input": {
-        "title": "Arkane environment",
-        "placeholder": "arkaneEnv"
-      },
-      "verification_required_input.title": "User verification required",
-      "captcha_key_input": {
-        "title": "ReCaptcha Site Key",
-        "placeholder": "reCaptchaSiteKey"
-      },
-      "google_client_id_input": {
-        "title": "Google Client ID",
-        "placeholder": "googleClientID"
-      },
-      "facebook_app_id_input": {
-        "title": "Facebook App ID",
-        "placeholder": "facebookAppID"
-      },
-      "submit": "Update configuration"
+      "users": {
+        "title": "Users",
+        "download": "Download user summary",
+        "download.loading": "Downloading..."
+      }
     }
   },
   "header": {
@@ -857,7 +868,8 @@
       "no_user": "The requested user does not exist.",
       "invalid_bank_account_data": "Bank account data is invalid.",
       "different_password": "Old password is invalid.",
-      "invalid_privilege": "You have no sufficient privilege to do this action."
+      "invalid_privilege": "You have no sufficient privilege to do this action.",
+      "missing_info": "No users with KYC data on the platform."
     },
     "wallet": {
       "missing_wallet": "The wallet for this user doesn't exist.",

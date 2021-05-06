@@ -1,0 +1,16 @@
+<nav class="container !tw-py-0 tw-w-full tw-sticky tw-top-14 lg:tw-top-0 tw-bg-white tw-z-5 tw-px-4 tw-text-sm tw-uppercase tw-tracking-widest tw-z-10">
+    <div class="tw-flex tw-overflow-auto tw-space-x-4 tw-py-4">
+        <a routerLink="config"
+           class="tw-flex-shrink-0 tw-inline-flex hover:tw-no-underline hover:tw-border-b-2 tw-py-2 "
+           routerLinkActive="tw-border-b-2 tw-border-primary">
+            {{ 'admin.platform.tabs.config' | translate }}
+        </a>
+        <a routerLink="users"
+           class="tw-flex-shrink-0 tw-inline-flex hover:tw-no-underline hover:tw-border-b-2 tw-py-2 "
+           routerLinkActive="tw-border-b-2 tw-border-primary">
+            {{ 'admin.platform.tabs.users' | translate }}
+        </a>
+    </div>
+</nav>
+
+<router-outlet></router-outlet>

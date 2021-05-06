@@ -32,7 +32,13 @@ export class ErrorService {
             if (errorRes.error instanceof ErrorEvent) { // client-side error
                 return action$;
             } else if (errorRes.status === 400) {  // server-side error
-                const error = errorRes.error as BackendError;
+                let error: BackendError;
+                if (errorRes.error?.constructor === ArrayBuffer) {
+                    const str = String.fromCharCode.apply(null, new Uint8Array(errorRes.error));
+                    error = JSON.parse(str);
+                } else {
+                    error = errorRes.error;
+                }
 
                 switch (error?.err_code) {
                     case RegistrationError.SIGN_UP_INCOMPLETE:
@@ -101,6 +107,10 @@ export class ErrorService {
 
                     case UserError.NO_USER:
                         action$ = this.displayMessage('errors.user.no_user');
+                        break;
+
+                    case UserError.MISSING_INFO:
+                        action$ = this.displayMessage('errors.user.missing_info');
                         break;
 
                     case UserError.INVALID_BANK_ACCOUNT_DATA:
@@ -453,7 +463,8 @@ export enum UserError {
     INVALID_BANK_ACCOUNT_DATA = '0302',
     DIFFERENT_PASSWORD = '0303',
     INVALID_PRIVILEGE = '0305',
-    NO_USER = '0306'
+    NO_USER = '0306',
+    MISSING_INFO = '0307',
 }
 
 export enum WalletError {

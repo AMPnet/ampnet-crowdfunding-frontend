@@ -1,0 +1,15 @@
+<div class="container">
+    <h1 class="app-page-title">
+        {{ 'admin.platform.users.title' | translate }}
+    </h1>
+
+    <div class="tw-flex tw-content-center tw-justify-center tw-mt-4">
+        <button app-action-button
+                text="{{ 'admin.platform.users.download' | translate }}"
+                loadingText="{{ 'admin.platform.users.download.loading' | translate }}"
+                faIcon="file-chart-line"
+                class="btn normal-text"
+                [onClick]="downloadReport.bind(this)">
+        </button>
+    </div>
+</div>

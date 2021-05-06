@@ -11,8 +11,8 @@
     "build-prod": "COMMIT_HASH=$(git rev-parse --short HEAD) NODE_ENV=prod ng build --prod",
     "lint:ci": "tslint \"src/**/*.ts\" --project tsconfig.json",
     "test:ci": "ng test -- --no-watch --no-progress --browsers=ChromeHeadlessCI",
-    "lang-gen-xls": "ts-node lang-utils/langutils.ts genxls",
-    "lang-xls-to-json": "ts-node lang-utils/langutils.ts xlstojson"
+    "lang:genxls": "ts-node lang-utils/langutils.ts genxls",
+    "lang:xlstojson": "ts-node lang-utils/langutils.ts xlstojson"
   },
   "private": true,
   "dependencies": {

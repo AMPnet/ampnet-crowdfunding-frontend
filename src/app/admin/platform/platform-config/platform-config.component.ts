@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { map, shareReplay, switchMap, tap } from 'rxjs/operators';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
-import { CoopService } from '../../shared/services/user/coop.service';
-import { AppConfig, AppConfigService, KYCProvider } from '../../shared/services/app-config.service';
+import { CoopService } from '../../../shared/services/user/coop.service';
+import { AppConfig, AppConfigService, KYCProvider } from '../../../shared/services/app-config.service';
 import { ActivatedRoute } from '@angular/router';
-import { LanguageService } from '../../shared/services/language.service';
+import { LanguageService } from '../../../shared/services/language.service';
 
 @Component({
     selector: 'app-platform-config',

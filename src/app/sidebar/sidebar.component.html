@@ -143,7 +143,9 @@
         <div class="dropdown-divider" id="divider-menu"></div>
 
         <ul class="list-unstyled components" id="main-menu">
-            <span class="full-name">{{ states.user?.first_name | titlecase }} {{ states.user?.last_name | titlecase }}</span>
+            <span class="full-name" *ngIf="states.user?.first_name || states.user?.last_name">
+                {{ states.user?.first_name | titlecase }} {{ states.user?.last_name | titlecase }}
+            </span>
             <a href="{{ appConfigService.config.config.contact_url }}"
                target="_blank" rel="noopener noreferrer"
                *ngIf="appConfigService.config.config.contact_url" style="all: unset">

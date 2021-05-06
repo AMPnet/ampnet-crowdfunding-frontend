@@ -791,14 +791,6 @@
         "title": "Email",
         "placeholder": "john.smith@email.com"
       },
-      "first_name_input": {
-        "title": "First name",
-        "placeholder": "John"
-      },
-      "last_name_input": {
-        "title": "Last name",
-        "placeholder": "Smith"
-      },
       "password_input": {
         "title": "Password",
         "placeholder": "********",

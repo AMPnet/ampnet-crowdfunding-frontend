@@ -7,7 +7,6 @@ import { UserService } from '../../shared/services/user/user.service';
 import { ManageProjectsService } from '../../shared/services/project/manage-projects.service';
 import { ArkaneService } from '../../shared/services/arkane.service';
 import { PopupService } from '../../shared/services/popup.service';
-import { ErrorService } from '../../shared/services/error.service';
 import { TranslateService } from '@ngx-translate/core';
 import { RouterService } from '../../shared/services/router.service';
 import { ActivatedRoute } from '@angular/router';
@@ -33,15 +32,12 @@ export class ProjectEditComponent {
     refreshProjectSubject = new BehaviorSubject<Project>(null);
     refreshProjectWalletSubject = new BehaviorSubject<void>(null);
 
-    detailsShown = true;
-
     constructor(private projectService: ProjectService,
                 private walletService: WalletService,
                 private userService: UserService,
                 private manageProjectsService: ManageProjectsService,
                 private arkaneService: ArkaneService,
                 private popupService: PopupService,
-                private errorService: ErrorService,
                 private translate: TranslateService,
                 private router: RouterService,
                 private fb: FormBuilder,
@@ -68,7 +64,6 @@ export class ProjectEditComponent {
                             return throwError(err);
                         }
                     }),
-                    this.errorService.handleError,
                     catchError(() => EMPTY)
                 )
             )
@@ -86,7 +81,7 @@ export class ProjectEditComponent {
                     roi: fb.group({
                         from: [project.roi.from, Validators.pattern(/^\d*\.?\d+$/)],
                         to: [project.roi.to, Validators.pattern(/^\d*\.?\d+$/)],
-                    }, {validators: this.roiValidator}),
+                    }, {validators: [this.roiValidator()]}),
                     location: fb.group({
                         lat: [project.location.lat],
                         long: [project.location.long],
@@ -111,8 +106,7 @@ export class ProjectEditComponent {
         ).pipe(
             tap(() => SpinnerUtil.showSpinner()),
             switchMap(() =>
-                this.walletService.createProjectWalletTransaction(projectUUID)
-                    .pipe(this.errorService.handleError)),
+                this.walletService.createProjectWalletTransaction(projectUUID)),
             switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo).pipe(
                 catchError(_ => {
                     this.router.navigate([`/dash/manage_groups/${this.route.snapshot.params.groupID}`]);
@@ -136,7 +130,6 @@ export class ProjectEditComponent {
         return () => {
             const newsLink = form.controls['newsLink'].value;
             return this.manageProjectsService.addNewsToProject(project, newsLink).pipe(
-                this.errorService.handleError,
                 tap(updatedProject => {
                     form.get('newsLink').reset();
                     this.refreshProjectSubject.next(updatedProject);
@@ -148,7 +141,6 @@ export class ProjectEditComponent {
     deleteNewsClicked(project: Project, link: string) {
         SpinnerUtil.showSpinner();
         return this.manageProjectsService.deleteNewsFromProject(project, link).pipe(
-            this.errorService.handleError,
             tap(() => this.refreshProjectSubject.next(null)),
             finalize(() => SpinnerUtil.hideSpinner())
         );
@@ -157,7 +149,6 @@ export class ProjectEditComponent {
     toggleProjectStatusClicked(project: Project) {
         return () => {
             return this.projectService.updateProject(project.uuid, {active: !project.active}).pipe(
-                this.errorService.handleError,
                 tap(updatedProject => this.refreshProjectSubject.next(updatedProject)),
             );
         };
@@ -175,7 +166,6 @@ export class ProjectEditComponent {
                     to: Number(form.get('roi.to').value)
                 },
             }, form.get('newImage').value, form.get('newTerms').value, form.get('newDocuments').value).pipe(
-                this.errorService.handleError,
                 tap(() => {
                     form.get('newImage').reset();
                     form.get('newTerms').reset();
@@ -194,7 +184,7 @@ export class ProjectEditComponent {
             cancelButtonText: this.translate.instant('projects.edit.delete_file_confirmation.no')
         }).pipe(
             switchMap(res => res.value === true ?
-                this.manageProjectsService.deleteDocument(project.uuid, documentID).pipe(this.errorService.handleError) : EMPTY),
+                this.manageProjectsService.deleteDocument(project.uuid, documentID) : EMPTY),
             tap(() => SpinnerUtil.showSpinner()),
             tap(() => this.refreshProjectSubject.next(null)),
             finalize(() => SpinnerUtil.hideSpinner())
@@ -205,10 +195,10 @@ export class ProjectEditComponent {
         return !!wallet && !!wallet?.hash;
     }
 
-    private roiValidator(roiFromGroup: FormGroup): ValidatorFn {
-        return (_control: AbstractControl) => {
-            const from = roiFromGroup.get('from').value;
-            const to = roiFromGroup.get('to').value;
+    private roiValidator(): ValidatorFn {
+        return (control: AbstractControl) => {
+            const from = control.get('from').value;
+            const to = control.get('to').value;
             return from !== null && to !== null && from <= to ? null : {invalidROI: true};
         };
     }

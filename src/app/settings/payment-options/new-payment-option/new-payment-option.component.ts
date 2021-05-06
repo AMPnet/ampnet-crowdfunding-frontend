@@ -3,11 +3,8 @@ import { PaymentService } from '../../../shared/services/payment.service';
 import 'bootstrap-select';
 import { RouterService } from '../../../shared/services/router.service';
 import { tap } from 'rxjs/operators';
-import { ErrorService } from '../../../shared/services/error.service';
 import { CreateWalletBankAccountData } from '../../../shared/services/wallet/platform-bank-account.service';
 import { OnAddNewBankAccountData } from '../../../shared/components/new-bank-account/new-bank-account.component';
-
-declare var $: any;
 
 @Component({
     selector: 'app-new-payment-option',
@@ -16,7 +13,6 @@ declare var $: any;
 })
 export class NewPaymentOptionComponent {
     constructor(private paymentService: PaymentService,
-                private errorService: ErrorService,
                 private router: RouterService) {
     }
 
@@ -27,10 +23,12 @@ export class NewPaymentOptionComponent {
             alias: data.alias,
             bank_name: data.bank_name,
             bank_address: data.bank_address,
-            beneficiary_name: data.beneficiary_name
+            beneficiary_name: data.beneficiary_name,
+            beneficiary_address: data.beneficiary_address,
+            beneficiary_city: data.beneficiary_city,
+            beneficiary_country: data.beneficiary_country,
         };
         return this.paymentService.createBankAccount(bankAccountData).pipe(
-            this.errorService.handleError,
             tap(() => this.router.navigate(['/dash/settings/payment_options']))
         );
     }

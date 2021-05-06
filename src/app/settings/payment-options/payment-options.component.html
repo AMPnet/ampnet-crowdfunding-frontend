@@ -6,37 +6,49 @@
     <ng-container *ngIf="(bankAccounts$ | async) as bankAccounts else loading">
         <div *ngFor="let bankAccount of bankAccounts" class="my-3">
             <div class="card">
-                <div class="tw-flex tw-justify-between tw-p-4">
+                <div class="tw-flex tw-flex-col tw-p-4 lg:tw-flex-row lg:tw-justify-between">
                     <div>
-                        <div>
+                        <div class="tw-flex tw-flex-wrap">
                             <span class="tw-uppercase tw-font-bold">{{ 'payment_options.bank_account.iban' | translate }}</span>
-                            <span class="tw-ml-4">{{ bankAccount.iban }}</span>
+                            <span class="tw-ml-4 tw-break-all">{{ bankAccount.iban }}</span>
                         </div>
-                        <div>
+                        <div class="tw-flex tw-flex-wrap">
                             <span class="tw-uppercase tw-font-bold">{{ 'payment_options.bank_account.swift' | translate }}</span>
                             <span class="tw-ml-4">{{ bankAccount.bank_code }}</span>
                         </div>
-                        <div>
+                        <div class="tw-flex tw-flex-wrap">
                             <span class="tw-uppercase tw-font-bold">{{ 'payment_options.bank_account.bank_name' | translate }}</span>
-                            <span class="tw-ml-4">{{ bankAccount.bank_name }}</span>
+                            <span class="tw-ml-4 tw-break-normal">{{ bankAccount.bank_name }}</span>
                         </div>
-                        <div>
+                        <div class="tw-flex tw-flex-wrap">
                             <span class="tw-uppercase tw-font-bold">{{ 'payment_options.bank_account.bank_address' | translate }}</span>
-                            <span class="tw-ml-4">{{ bankAccount.bank_address }}</span>
+                            <span class="tw-ml-4 tw-break-normal">{{ bankAccount.bank_address }}</span>
                         </div>
-                        <div>
+                        <div class="tw-flex tw-flex-wrap">
                             <span class="tw-uppercase tw-font-bold">{{ 'payment_options.bank_account.beneficiary_name' | translate }}</span>
-                            <span class="tw-ml-4">{{ bankAccount.beneficiary_name }}</span>
+                            <span class="tw-ml-4 tw-break-normal">{{ bankAccount.beneficiary_name }}</span>
+                        </div>
+                        <div class="tw-flex tw-flex-wrap">
+                            <span class="tw-uppercase tw-font-bold">{{ 'payment_options.bank_account.beneficiary_address' | translate }}</span>
+                            <span class="tw-ml-4 tw-break-normal">{{ bankAccount.beneficiary_address}}</span>
+                        </div>
+                        <div class="tw-flex tw-flex-wrap">
+                            <span class="tw-uppercase tw-font-bold">{{ 'payment_options.bank_account.beneficiary_city' | translate }}</span>
+                            <span class="tw-ml-4 tw-break-normal">{{ bankAccount.beneficiary_city }}</span>
+                        </div>
+                        <div class="tw-flex tw-flex-wrap">
+                            <span class="tw-uppercase tw-font-bold">{{ 'payment_options.bank_account.beneficiary_country' | translate }}</span>
+                            <span class="tw-ml-4 tw-break-normal">{{ bankAccount.beneficiary_country }}</span>
                         </div>
                     </div>
-                    <div class="tw-flex-grow-0">
+                    <div class="tw-flex-grow-0 tw-self-end lg:tw-self-start">
                         <div class="text-uppercase mb-2">
                             {{ 'payment_options.bank_account.actions' | translate }}
                         </div>
                         <a [routerLink]="" (click)="deleteBankAccountClicked(bankAccount.id)">
-                                <span class="float-right align-middle">
-                                    <fa-icon icon="trash-alt"></fa-icon>
-                                </span>
+                            <span class="float-right align-middle">
+                                <fa-icon icon="trash-alt"></fa-icon>
+                            </span>
                         </a>
                     </div>
                 </div>
@@ -48,7 +60,7 @@
             </div>
         </div>
         <div class="mb-5 mt-5">
-            <button class="btn btn-primary w-100 py-3 float-right" (click)="toNewBankAccount()">
+            <button class="btn btn-primary w-100 py-3 float-right tw-mb-2" (click)="toNewBankAccount()">
                 <fa-icon icon="plus-circle" class="mr-2"></fa-icon>
                 <span>
                     {{ 'payment_options.add_new' | translate }}

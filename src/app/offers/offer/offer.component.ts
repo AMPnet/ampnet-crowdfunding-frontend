@@ -16,7 +16,6 @@ import { PortfolioService, ProjectTransactions } from '../../shared/services/wal
 import { PopupService } from '../../shared/services/popup.service';
 import { ArkaneService } from '../../shared/services/arkane.service';
 import { RouterService } from '../../shared/services/router.service';
-import { ErrorService } from '../../shared/services/error.service';
 import { TranslateService } from '@ngx-translate/core';
 import { enterTrigger } from '../../shared/animations';
 
@@ -54,25 +53,19 @@ export class OfferComponent {
                 private modalService: BsModalService,
                 private portfolioService: PortfolioService,
                 private popupService: PopupService,
-                private errorService: ErrorService,
                 private arkaneService: ArkaneService) {
         this.isOverview = this.route.snapshot.data.isOverview;
         this.isPortfolioView = this.route.snapshot.data.isPortfolioView;
         const projectUUID = this.route.snapshot.params.id;
 
         this.project$ = this.projectService.getProject(projectUUID).pipe(
-            this.errorService.handleError,
             tap(project => this.setMetaTags(project)),
             shareReplay(1)
         );
 
         this.news$ = this.project$.pipe(
             switchMap(project => project.news.length ? forkJoin(
-                project.news.map(singleNews => {
-                    return this.newsPreviewService.getLinkPreview(singleNews).pipe(
-                        this.errorService.handleError,
-                    );
-                })) : of([])
+                project.news.map(singleNews => this.newsPreviewService.getLinkPreview(singleNews))) : of([])
             ),
             map(news => ({newsList: news})),
         );
@@ -84,7 +77,6 @@ export class OfferComponent {
         this.projectWalletMW$ = this.isProjectWalletCreated$.pipe(
             switchMap(isCreated => isCreated ? this.walletService.getProjectWallet(projectUUID) : EMPTY),
             switchMap(wallet => this.middlewareService.getProjectWalletInfoCached(wallet.hash)),
-            this.errorService.handleError,
         );
 
         this.user$ = of(!this.isOverview).pipe(
@@ -99,7 +91,6 @@ export class OfferComponent {
         );
 
         this.transactions$ = this.portfolioService.getInvestmentsInProject(projectUUID).pipe(
-            this.errorService.handleError,
             shareReplay(1)
         );
 
@@ -107,14 +98,12 @@ export class OfferComponent {
             take(1),
             switchMap(([projectWallet, wallet]) => {
                 return this.portfolioService.investmentDetails(projectWallet.projectHash, wallet.wallet.hash).pipe(
-                    this.errorService.handleError,
                     map(res => res.investmentCancelable)
                 );
             })
         );
 
         this.isProjectEditable$ = this.projectService.getPersonal().pipe(
-            this.errorService.handleError,
             map(projects => Boolean(projects.projects.find(p => p.uuid === projectUUID)))
         );
     }
@@ -171,7 +160,6 @@ export class OfferComponent {
     cancelInvestment(projectUUID: string) {
         return () => {
             return this.portfolioService.generateCancelInvestmentTransaction(projectUUID).pipe(
-                this.errorService.handleError,
                 switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo)),
                 switchMap(() => this.popupService.new({
                     type: 'success',

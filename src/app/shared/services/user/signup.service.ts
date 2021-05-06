@@ -19,15 +19,13 @@ export class SignupService {
                 private userService: UserService) {
     }
 
-    signupEmail(email: string, firstName: string, lastName: string, password: string) {
+    signupEmail(email: string, password: string) {
         return this.captchaService.getToken(CaptchaAction.SIGN_UP).pipe(
             switchMap(captchaToken => {
                 return this.http.post<User>(this.endpoint, <EmailSignupData>{
                     coop: this.appConfig.config.identifier,
                     signup_method: 'EMAIL',
                     user_info: {
-                        first_name: firstName,
-                        last_name: lastName,
                         email: email,
                         password: password
                     },
@@ -87,10 +85,8 @@ export enum UserRole {
 interface EmailSignupData {
     signup_method: 'EMAIL';
     user_info: {
-        password: string;
-        last_name: string;
-        first_name: string;
         email: string;
+        password: string;
     };
     re_captcha_token: string;
 }

@@ -6,7 +6,6 @@ import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators }
 import { RouterService } from '../../shared/services/router.service';
 import { PopupService } from '../../shared/services/popup.service';
 import { ArkaneService } from '../../shared/services/arkane.service';
-import { ErrorService } from '../../shared/services/error.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ActivatedRoute } from '@angular/router';
 import { catchError, map, shareReplay, switchMap, take, tap } from 'rxjs/operators';
@@ -32,21 +31,18 @@ export class ProjectWithdrawComponent {
                 private router: RouterService,
                 private popupService: PopupService,
                 private arkaneService: ArkaneService,
-                private errorService: ErrorService,
                 private translate: TranslateService,
                 private route: ActivatedRoute,
                 private fb: FormBuilder) {
         this.projectUUID = this.route.snapshot.params.id;
 
         this.projectWallet$ = this.walletService.getProjectWallet(this.projectUUID).pipe(
-            this.errorService.handleError,
             shareReplay(1)
         );
 
         this.withdrawal$ = this.refreshWithdrawalSubject.pipe(
             switchMap(data => data !== null ? of(data) :
                 this.withdrawService.getProjectPendingWithdraw(this.projectUUID).pipe(
-                    this.errorService.handleError,
                     catchError(err => err.status === 404 ?
                         of(WithdrawalState.EMPTY) : this.recoverBack())
                 )
@@ -84,7 +80,6 @@ export class ProjectWithdrawComponent {
         const swift: string = String(this.withdrawalForm.get('swift').value).trim();
 
         return this.withdrawService.createProjectWithdrawRequest(amount, iban, swift, this.projectUUID).pipe(
-            this.errorService.handleError,
             tap(withdraw => {
                 this.refreshWithdrawalSubject.next(withdraw);
                 this.withdrawalForm.reset();
@@ -95,7 +90,6 @@ export class ProjectWithdrawComponent {
     signWithdrawal(withdrawalID: number) {
         return () => {
             return this.withdrawService.generateApproveWithdrawTx(withdrawalID).pipe(
-                this.errorService.handleError,
                 switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo)),
                 switchMap(() => this.popupService.new({
                     type: 'success',
@@ -110,7 +104,6 @@ export class ProjectWithdrawComponent {
     deleteWithdrawal(withdrawalID: number) {
         return () => {
             return this.withdrawService.deleteWithdrawal(withdrawalID).pipe(
-                this.errorService.handleError,
                 switchMap(() => this.popupService.success(
                     this.translate.instant('projects.withdraw.deleted')
                 )),

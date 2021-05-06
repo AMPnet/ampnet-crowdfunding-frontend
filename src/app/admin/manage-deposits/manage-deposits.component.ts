@@ -9,7 +9,6 @@ import { finalize, map, switchMap, tap } from 'rxjs/operators';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PopupService } from '../../shared/services/popup.service';
 import { RouterService } from '../../shared/services/router.service';
-import { ErrorService } from '../../shared/services/error.service';
 
 @Component({
     selector: 'app-manage-deposits',
@@ -25,11 +24,9 @@ export class ManageDepositsComponent {
     constructor(private router: RouterService,
                 private fb: FormBuilder,
                 private popupService: PopupService,
-                private errorService: ErrorService,
                 private depositCooperativeService: WalletCooperativeDepositService) {
         this.unapprovedDeposits$ = this.refreshDepositsSubject.pipe(
             switchMap(() => this.depositCooperativeService.getUnapprovedDeposits()),
-            this.errorService.handleError,
             map(res => res.deposits),
         );
 
@@ -45,7 +42,6 @@ export class ManageDepositsComponent {
     declineDeposit(id: number) {
         SpinnerUtil.showSpinner();
         return this.depositCooperativeService.deleteDeposit(id).pipe(
-            this.errorService.handleError,
             tap(() => this.refreshDepositsSubject.next()),
             finalize(() => SpinnerUtil.hideSpinner())
         );

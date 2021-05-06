@@ -3,7 +3,6 @@ import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { Deposit, DepositServiceService } from '../../services/wallet/deposit-service.service';
 import { PlatformBankAccount, PlatformBankAccountService } from '../../services/wallet/platform-bank-account.service';
 import { AppConfigService } from '../../services/app-config.service';
-import { ErrorService } from '../../services/error.service';
 import { catchError, map, shareReplay, switchMap, tap } from 'rxjs/operators';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { enterTrigger } from '../../animations';
@@ -33,13 +32,11 @@ export class BankTransferComponent implements OnInit {
     constructor(public appConfig: AppConfigService,
                 private depositService: DepositServiceService,
                 private bankAccountService: PlatformBankAccountService,
-                private errorService: ErrorService,
                 private fb: FormBuilder) {
     }
 
     ngOnInit() {
         this.bankAccount$ = this.bankAccountService.bankAccounts$.pipe(
-            this.errorService.handleError,
             map(res => res.bank_accounts[0]),
             map(bankAccount => bankAccount ?? BankAccountState.NOT_FOUND),
             shareReplay(1)
@@ -47,7 +44,6 @@ export class BankTransferComponent implements OnInit {
 
         this.deposit$ = this.refreshDepositSubject.pipe(
             switchMap(() => this.depositService.pendingDeposit(this.projectUUID).pipe(
-                this.errorService.handleError,
                 catchError(err => err.status === 404 ? of(DepositState.NOT_FOUND) : throwError(err))
             )),
         ) as Observable<DepositState | Deposit>;
@@ -64,7 +60,6 @@ export class BankTransferComponent implements OnInit {
     createDeposit(amount: number) {
         return () => {
             return this.depositService.createDeposit(amount, this.projectUUID).pipe(
-                this.errorService.handleError,
                 tap(() => {
                     this.refreshDepositSubject.next();
                     this.createDepositForm.reset();
@@ -76,7 +71,6 @@ export class BankTransferComponent implements OnInit {
     deleteDeposit(depositID: number) {
         return () => {
             return this.depositService.deleteDeposit(depositID).pipe(
-                this.errorService.handleError,
                 tap(() => {
                     this.refreshDepositSubject.next();
                     this.confirmDepositForm.reset();
@@ -88,7 +82,6 @@ export class BankTransferComponent implements OnInit {
     confirmDeposit(depositID: number) {
         return () => {
             return this.depositService.confirmDeposit(depositID).pipe(
-                this.errorService.handleError,
                 tap(() => this.refreshDepositSubject.next())
             );
         };

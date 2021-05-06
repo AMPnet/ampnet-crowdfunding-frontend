@@ -64,13 +64,45 @@
         </div>
 
         <div class="row">
-            <div class="col-12 mt-2">
+            <div class="col-12 col-lg-4 mt-2">
                 <label for="beneficiary_name" class="app-page-label">
                     {{ 'payment_options.new_bank_account.beneficiary_name_input.title' | translate }}
                 </label>
                 <input class="input-reg w-100" id="beneficiary_name"
                        formControlName="beneficiary_name"
                        placeholder="{{ 'payment_options.new_bank_account.beneficiary_name_input.placeholder' | translate }}"
+                       type="text">
+            </div>
+
+            <div class="col-12 col-lg-8 mt-2">
+                <label for="beneficiary_address" class="app-page-label">
+                    {{ 'payment_options.new_bank_account.beneficiary_address_input.title' | translate }}
+                </label>
+                <input class="input-reg w-100" id="beneficiary_address"
+                       formControlName="beneficiary_address"
+                       placeholder="{{ 'payment_options.new_bank_account.beneficiary_address_input.placeholder' | translate }}"
+                       type="text">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-lg-6 mt-2">
+                <label for="beneficiary_city" class="app-page-label">
+                    {{ 'payment_options.new_bank_account.beneficiary_city_input.title' | translate }}
+                </label>
+                <input class="input-reg w-100" id="beneficiary_city"
+                       formControlName="beneficiary_city"
+                       placeholder="{{ 'payment_options.new_bank_account.beneficiary_city_input.placeholder' | translate }}"
+                       type="text">
+            </div>
+
+            <div class="col-12 col-lg-6 mt-2">
+                <label for="beneficiary_country" class="app-page-label">
+                    {{ 'payment_options.new_bank_account.beneficiary_country_input.title' | translate }}
+                </label>
+                <input class="input-reg w-100" id="beneficiary_country"
+                       formControlName="beneficiary_country"
+                       placeholder="{{ 'payment_options.new_bank_account.beneficiary_country_input.placeholder' | translate }}"
                        type="text">
             </div>
         </div>

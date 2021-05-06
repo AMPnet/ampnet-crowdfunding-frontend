@@ -5,7 +5,6 @@ import { map, switchMap, take, tap } from 'rxjs/operators';
 import { WebsocketService } from '../shared/services/websocket.service';
 import { ArkaneService } from '../shared/services/arkane.service';
 import { ReportService } from '../shared/services/report/report.service';
-import { ErrorService } from '../shared/services/error.service';
 import { enterTrigger } from '../shared/animations';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AppConfigService } from '../shared/services/app-config.service';
@@ -72,7 +71,6 @@ export class WalletComponent implements OnInit, OnDestroy {
     ).subscribe(() => this.refreshTransactionHistorySubject.next('fromPending'));
 
     constructor(private walletService: WalletService,
-                private errorService: ErrorService,
                 private reportService: ReportService,
                 private fb: FormBuilder,
                 private websocketService: WebsocketService,
@@ -106,14 +104,12 @@ export class WalletComponent implements OnInit, OnDestroy {
     }
 
     downloadReport() {
-        return this.reportService.userTransactions()
-            .pipe(this.errorService.handleError);
+        return this.reportService.userTransactions();
     }
 
     downloadSingleReport(transaction: UserTransaction) {
         return () => {
-            return this.reportService.singleUserTransaction(transaction)
-                .pipe(this.errorService.handleError);
+            return this.reportService.singleUserTransaction(transaction);
         };
     }
 

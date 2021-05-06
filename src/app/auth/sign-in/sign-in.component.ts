@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthService } from 'angularx-social-login';
 import { RouterService } from '../../shared/services/router.service';
-import { from } from 'rxjs';
-import { switchMap, tap } from 'rxjs/operators';
-import { ErrorService } from '../../shared/services/error.service';
-import { socialAuthServiceProvider, UserService } from '../../shared/services/user/user.service';
+import { catchError, switchMap, tap } from 'rxjs/operators';
+import { UserService } from '../../shared/services/user/user.service';
+import { socialAuthServiceProvider } from '../../shared/services/backend-http-client.service';
+import { EMPTY } from 'rxjs';
 
 @Component({
     selector: 'app-sign-in',
@@ -23,8 +23,7 @@ export class SignInComponent {
 
     constructor(private router: RouterService,
                 private userService: UserService,
-                private auth: SocialAuthService,
-                private errorService: ErrorService,
+                private socialAuthService: SocialAuthService,
                 private fb: FormBuilder) {
         this.signInForm = this.fb.group({
             email: fb.control('', Validators.required),
@@ -41,9 +40,10 @@ export class SignInComponent {
     }
 
     performSocialSignIn(provider: string) {
-        return from(this.auth.signIn(provider)).pipe(
-            switchMap(res => this.userService.socialLogin(res.provider, res.authToken)),
-            this.errorService.handleError,
+        return this.socialAuthService.initState.pipe(
+            switchMap(() => this.socialAuthService.signIn(provider)),
+            catchError(() => EMPTY),
+            switchMap(res => this.userService.loginSocial(res.provider, res.authToken)),
             tap(() => this.router.navigate(['/dash'])),
         );
     }
@@ -51,8 +51,7 @@ export class SignInComponent {
     onFormSubmit() {
         const user = this.signInForm.value;
 
-        return this.userService.emailLogin(user.email, user.password).pipe(
-            this.errorService.handleError,
+        return this.userService.loginEmail(user.email, user.password).pipe(
             tap(() => this.router.navigate(['/dash'])),
         );
     }

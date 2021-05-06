@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BackendHttpClient } from '../backend-http-client.service';
 import { ProjectWallet } from './project.service';
 import { AppConfigService } from '../app-config.service';
+import { ImageType } from '../../components/picture/picture.component';
 
 @Injectable({
     providedIn: 'root'
@@ -73,6 +74,7 @@ export interface Organization {
     approved: boolean;
     description: string;
     header_image: string;
+    image: ImageType;
     legal_info: string;
     documents?: Document[];
     wallet_hash?: string;

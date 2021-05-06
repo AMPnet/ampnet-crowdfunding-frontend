@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { catchError, tap } from 'rxjs/operators';
 import { EMPTY } from 'rxjs';
 import { RouterService } from '../../shared/services/router.service';
-import { ErrorService } from '../../shared/services/error.service';
 import { UserService } from '../../shared/services/user/user.service';
 
 @Component({
@@ -14,7 +13,6 @@ export class SignInAutoComponent implements OnInit {
 
     constructor(private route: ActivatedRoute,
                 private router: RouterService,
-                private errorService: ErrorService,
                 private userService: UserService) {
     }
 
@@ -26,8 +24,7 @@ export class SignInAutoComponent implements OnInit {
             this.navigateHome();
         }
 
-        this.userService.emailLogin(email, password).pipe(
-            this.errorService.handleError,
+        this.userService.loginEmail(email, password).pipe(
             catchError(() => {
                 this.navigateHome();
                 return EMPTY;

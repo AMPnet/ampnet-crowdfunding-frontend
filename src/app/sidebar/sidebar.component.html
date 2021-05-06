@@ -89,7 +89,7 @@
                     <fa-icon class="menu-icon" icon="handshake"></fa-icon>
                     <span>{{ 'navigation.admin.platform_roles' | translate }}</span>
                 </li>
-                <li routerLink="admin/platform_config" routerLinkActive="side-active">
+                <li routerLink="admin/platform" routerLinkActive="side-active">
                     <fa-icon class="menu-icon" icon="cogs"></fa-icon>
                     <span>{{ 'navigation.admin.platform_config' | translate }}</span>
                 </li>
@@ -143,8 +143,11 @@
         <div class="dropdown-divider" id="divider-menu"></div>
 
         <ul class="list-unstyled components" id="main-menu">
-            <span class="full-name">{{ states.user?.first_name | titlecase }} {{ states.user?.last_name | titlecase }}</span>
+            <span class="full-name" *ngIf="states.user?.first_name || states.user?.last_name">
+                {{ states.user?.first_name | titlecase }} {{ states.user?.last_name | titlecase }}
+            </span>
             <a href="{{ appConfigService.config.config.contact_url }}"
+               target="_blank" rel="noopener noreferrer"
                *ngIf="appConfigService.config.config.contact_url" style="all: unset">
                 <li routerLinkActive="side-active" class="mt-2">
                     <fa-icon class="menu-icon" icon="envelope-open"></fa-icon>

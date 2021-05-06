@@ -5,7 +5,6 @@ import { CoopService, CreateCoopData } from '../../shared/services/user/coop.ser
 import { RouterService } from '../../shared/services/router.service';
 import { PopupService } from '../../shared/services/popup.service';
 import { FileValidator } from '../../shared/validators/file.validator';
-import { ErrorService } from '../../shared/services/error.service';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -25,7 +24,6 @@ export class NewInstanceComponent implements OnInit {
     constructor(private coopService: CoopService,
                 private router: RouterService,
                 private popupService: PopupService,
-                private errorService: ErrorService,
                 private translate: TranslateService,
                 private fb: FormBuilder,
                 @Inject('WINDOW') public window: Window) {
@@ -52,7 +50,6 @@ export class NewInstanceComponent implements OnInit {
         };
 
         return this.coopService.createCoop(createCoopData, coop.logo, coop.banner).pipe(
-            this.errorService.handleError,
             switchMap(() => this.popupService.success(
                 this.translate.instant('auth.new_instance.created')
             )),

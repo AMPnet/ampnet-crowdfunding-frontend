@@ -9,9 +9,11 @@ import { ManageSingleDepositModalComponent } from './manage-deposits/manage-sing
 import { OwnershipComponent } from './ownership/ownership.component';
 import { PlatformBankAccountComponent } from './platform-bank-account/platform-bank-account.component';
 import { NewPlatformBankAccountComponent } from './platform-bank-account/new-platform-bank-account/new-platform-bank-account.component';
-import { PlatformConfigComponent } from './platform-config/platform-config.component';
+import { PlatformConfigComponent } from './platform/platform-config/platform-config.component';
 import { WalletActivationComponent } from './wallet-activation/wallet-activation.component';
 import { AdminRoutingModule } from './admin-routing.module';
+import { PlatformComponent } from './platform/platform.component';
+import { PlatformUsersComponent } from './platform/platform-users/platform-users.component';
 
 @NgModule({
     declarations: [
@@ -23,8 +25,10 @@ import { AdminRoutingModule } from './admin-routing.module';
         OwnershipComponent,
         PlatformBankAccountComponent,
         NewPlatformBankAccountComponent,
+        WalletActivationComponent,
+        PlatformComponent,
         PlatformConfigComponent,
-        WalletActivationComponent
+        PlatformUsersComponent
     ],
     imports: [
         CommonModule,

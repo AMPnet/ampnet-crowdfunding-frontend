@@ -16,10 +16,12 @@ export class ManageWithdrawalsComponent {
     projectWithdrawals$: Observable<CoopWithdraw[]>;
 
     constructor(private withdrawCoopService: WalletCooperativeWithdrawService) {
-        this.userWithdrawals$ = withdrawCoopService.getApprovedWithdrawals()
-            .pipe(map((res => res.withdraws)));
+        this.userWithdrawals$ = withdrawCoopService.getApprovedWithdrawals().pipe(
+            map((res => res.withdraws))
+        );
 
-        this.projectWithdrawals$ = withdrawCoopService.getApprovedProjectWithdrawals()
-            .pipe(map((res => res.withdraws)));
+        this.projectWithdrawals$ = withdrawCoopService.getApprovedProjectWithdrawals().pipe(
+            map((res => res.withdraws))
+        );
     }
 }

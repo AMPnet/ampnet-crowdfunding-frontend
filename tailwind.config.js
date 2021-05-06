@@ -1,17 +1,36 @@
+const {guessProductionMode} = require("@ngneat/tailwind");
+
+process.env.TAILWIND_MODE = guessProductionMode() ? 'build' : 'watch';
+
+const registerColor = (colorVarText) => ({opacityVariable, opacityValue}) => {
+    if (opacityValue !== undefined) {
+        return `rgba(${colorVarText}, ${opacityValue})`
+    }
+    if (opacityVariable !== undefined) {
+        return `rgba(${colorVarText}, var(${opacityVariable}, 1))`
+    }
+    return `rgb(${colorVarText})`
+}
+
 module.exports = {
     prefix: 'tw-',
+    mode: 'jit',
     purge: {
-        enabled: process.env.NODE_ENV === 'prod',
         content: [
-            './src/**/*.{html,ts}',
+            './src/**/*.{html,ts,css,scss,sass,less,styl}',
         ]
     },
     darkMode: false, // or 'media' or 'class'
     theme: {
-        extend: {},
+        extend: {
+            colors: {
+                primary: registerColor('var(--color-primary)'),
+                secondary: registerColor('var(--color-secondary)')
+            }
+        },
     },
     variants: {
         extend: {},
     },
-    plugins: [],
-}
+    plugins: [require('@tailwindcss/aspect-ratio')],
+};

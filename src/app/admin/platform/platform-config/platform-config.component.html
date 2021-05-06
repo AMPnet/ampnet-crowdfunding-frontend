@@ -1,31 +1,31 @@
 <div class="container">
-    <h1 class="app-page-title">{{ 'admin.platform_config.title' | translate }}</h1>
+    <h1 class="app-page-title">{{ 'admin.platform.config.title' | translate }}</h1>
 
     <ng-container *ngIf="(appConfig$ | async) as appConfig; else spinner">
         <ng-container *ngIf="(updateForm$ | async) as updateForm; else spinner">
             <form [formGroup]="updateForm" id="updateCoopForm" class="my-3">
                 <label for="name" class="app-page-label">
-                    {{ 'admin.platform_config.instance_name_input.title' | translate }}
+                    {{ 'admin.platform.config.instance_name_input.title' | translate }}
                 </label>
                 <input class="input-reg w-100" id="name" formControlName="name"
-                       placeholder="{{ 'admin.platform_config.instance_name_input.placeholder' | translate }}"
+                       placeholder="{{ 'admin.platform.config.instance_name_input.placeholder' | translate }}"
                        type="text">
 
                 <label for="identifier" class="app-page-label mt-3">
-                    {{ 'admin.platform_config.identifier_input.title' | translate }}
+                    {{ 'admin.platform.config.identifier_input.title' | translate }}
                 </label>
                 <input class="input-reg w-100" id="identifier" [value]="appConfig.identifier"
                        [disabled]="true" type="text">
 
                 <label for="title" class="app-page-label mt-3">
-                    {{ 'admin.platform_config.web_title_input.title' | translate }}
+                    {{ 'admin.platform.config.web_title_input.title' | translate }}
                 </label>
                 <input class="input-reg w-100" id="title" formControlName="title"
-                       placeholder="{{ 'admin.platform_config.web_title_input.placeholder' | translate }}"
+                       placeholder="{{ 'admin.platform.config.web_title_input.placeholder' | translate }}"
                        type="text">
 
                 <label for="logo" class="app-page-label mt-3">
-                    {{ 'admin.platform_config.logo_input.title' | translate }}
+                    {{ 'admin.platform.config.logo_input.title' | translate }}
                 </label>
                 <app-upload-area areaID='logo-image' id="logo"
                                  [restrictions]="{
@@ -37,7 +37,7 @@
                 </app-upload-area>
 
                 <label for="banner" class="app-page-label mt-3">
-                    {{ 'admin.platform_config.banner_input.title' | translate }}
+                    {{ 'admin.platform.config.banner_input.title' | translate }}
                 </label>
                 <app-upload-area areaID='banner-image' id="banner"
                                  [restrictions]="{
@@ -49,14 +49,14 @@
                 </app-upload-area>
 
                 <label for="icon" class="app-page-label mt-3">
-                    {{ 'admin.platform_config.icon_url_input.title' | translate }}
+                    {{ 'admin.platform.config.icon_url_input.title' | translate }}
                 </label>
                 <input class="input-reg w-100" id="icon" formControlName="icon"
-                       placeholder="{{ 'admin.platform_config.icon_url_input.placeholder' | translate }}"
+                       placeholder="{{ 'admin.platform.config.icon_url_input.placeholder' | translate }}"
                        type="text">
 
                 <label for="kyc-provider" class="app-page-label mt-3">
-                    {{ 'admin.platform_config.kyc_provider_input.title' | translate }}
+                    {{ 'admin.platform.config.kyc_provider_input.title' | translate }}
                 </label>
                 <select name="kyc-providers" id="kyc-provider"
                         class="input-reg w-100"
@@ -67,31 +67,31 @@
                 </select>
 
                 <label for="coop-statute" class="app-page-label mt-3">
-                    {{ 'admin.platform_config.coop_statute_input.title' | translate }}
+                    {{ 'admin.platform.config.coop_statute_input.title' | translate }}
                 </label>
                 <input class="input-reg w-100" id="coop-statute" formControlName="coop_statute"
-                       placeholder="{{ 'admin.platform_config.coop_statute_input.placeholder' | translate }}"
+                       placeholder="{{ 'admin.platform.config.coop_statute_input.placeholder' | translate }}"
                        type="text">
 
                 <label for="risk-warning" class="app-page-label mt-3">
-                    {{ 'admin.platform_config.risk_warning_input.title' | translate }}
+                    {{ 'admin.platform.config.risk_warning_input.title' | translate }}
                 </label>
                 <input class="input-reg w-100" id="risk-warning" formControlName="risk_warning"
-                       placeholder="{{ 'admin.platform_config.risk_warning_input.placeholder' | translate }}"
+                       placeholder="{{ 'admin.platform.config.risk_warning_input.placeholder' | translate }}"
                        type="text">
 
                 <label for="contact-url" class="app-page-label mt-3">
-                    {{ 'admin.platform_config.contact_url_input.title' | translate }}
+                    {{ 'admin.platform.config.contact_url_input.title' | translate }}
                 </label>
                 <input class="input-reg w-100" id="contact-url" formControlName="contact_url"
-                       placeholder="{{ 'admin.platform_config.contact_url_input.placeholder' | translate }}"
+                       placeholder="{{ 'admin.platform.config.contact_url_input.placeholder' | translate }}"
                        type="text">
 
                 <label for="languages" class="app-page-label mt-3">
-                    {{ 'admin.platform_config.languages_input.title' | translate }}
+                    {{ 'admin.platform.config.languages_input.title' | translate }}
                 </label>
                 <input class="input-reg w-100" id="languages" formControlName="languages"
-                       placeholder="{{ 'admin.platform_config.languages_input.placeholder' | translate }}"
+                       placeholder="{{ 'admin.platform.config.languages_input.placeholder' | translate }}"
                        type="text">
 
                 <div class="d-flex align-items-center w-100 py-4">
@@ -99,12 +99,12 @@
                            formControlName="languagesFallback"
                            type="checkbox">
                     <label for="languages-fallback" class="app-page-label ml-2 mb-0">
-                        {{ 'admin.platform_config.languages_fallback_input.title' | translate }}
+                        {{ 'admin.platform.config.languages_fallback_input.title' | translate }}
                     </label>
                 </div>
 
                 <label for="footer" class="app-page-label mt-3">
-                    {{ 'admin.platform_config.footer_input.title' | translate }}
+                    {{ 'admin.platform.config.footer_input.title' | translate }}
                 </label>
                 <div class="input-group">
                     <quill-editor id="footer"
@@ -114,7 +114,7 @@
                 </div>
 
                 <label for="deposit-notice" class="app-page-label mt-3">
-                    {{ 'admin.platform_config.deposit_notice_input.title' | translate }}
+                    {{ 'admin.platform.config.deposit_notice_input.title' | translate }}
                 </label>
                 <div class="input-group">
                     <quill-editor id="deposit-notice"
@@ -126,17 +126,17 @@
                 <!-- Hidden because of security reasons. -->
                 <div [hidden]="!showSecureConfig">
                     <label for="arkane-id" class="app-page-label mt-3">
-                        {{ 'admin.platform_config.arkane_id_input.title' | translate }}
+                        {{ 'admin.platform.config.arkane_id_input.title' | translate }}
                     </label>
                     <input class="input-reg w-100" id="arkane-id" formControlName="arkaneID"
-                           placeholder="{{ 'admin.platform_config.arkane_id_input.placeholder' | translate }}"
+                           placeholder="{{ 'admin.platform.config.arkane_id_input.placeholder' | translate }}"
                            type="text">
 
                     <label for="arkane-env" class="app-page-label mt-3">
-                        {{ 'admin.platform_config.arkane_env_input.title' | translate }}
+                        {{ 'admin.platform.config.arkane_env_input.title' | translate }}
                     </label>
                     <input class="input-reg w-100" id="arkane-env" formControlName="arkaneEnv"
-                           placeholder="{{ 'admin.platform_config.arkane_env_input.placeholder' | translate }}"
+                           placeholder="{{ 'admin.platform.config.arkane_env_input.placeholder' | translate }}"
                            type="text">
 
                     <div class="d-flex align-items-center w-100 py-4">
@@ -144,34 +144,34 @@
                                formControlName="needUserVerification"
                                type="checkbox">
                         <label for="need-user-verification" class="app-page-label ml-2 mb-0">
-                            {{ 'admin.platform_config.verification_required_input.title' | translate }}
+                            {{ 'admin.platform.config.verification_required_input.title' | translate }}
                         </label>
                     </div>
 
                     <label for="recaptcha-site-key" class="app-page-label mt-3">
-                        {{ 'admin.platform_config.captcha_key_input.title' | translate }}
+                        {{ 'admin.platform.config.captcha_key_input.title' | translate }}
                     </label>
                     <input class="input-reg w-100" id="recaptcha-site-key" formControlName="reCaptchaSiteKey"
-                           placeholder="{{ 'admin.platform_config.captcha_key_input.placeholder' | translate }}"
+                           placeholder="{{ 'admin.platform.config.captcha_key_input.placeholder' | translate }}"
                            type="text">
 
                     <label for="google-client-id" class="app-page-label mt-3">
-                        {{ 'admin.platform_config.google_client_id_input.title' | translate }}
+                        {{ 'admin.platform.config.google_client_id_input.title' | translate }}
                     </label>
                     <input class="input-reg w-100" id="google-client-id" formControlName="googleClientID"
-                           placeholder="{{ 'admin.platform_config.google_client_id_input.placeholder' | translate }}"
+                           placeholder="{{ 'admin.platform.config.google_client_id_input.placeholder' | translate }}"
                            type="text">
 
                     <label for="facebook-app-id" class="app-page-label mt-3">
-                        {{ 'admin.platform_config.facebook_app_id_input.title' | translate }}
+                        {{ 'admin.platform.config.facebook_app_id_input.title' | translate }}
                     </label>
                     <input class="input-reg w-100" id="facebook-app-id" formControlName="facebookAppID"
-                           placeholder="{{ 'admin.platform_config.facebook_app_id_input.placeholder' | translate }}"
+                           placeholder="{{ 'admin.platform.config.facebook_app_id_input.placeholder' | translate }}"
                            type="text">
                 </div>
 
                 <button app-action-button
-                        text="{{ 'admin.platform_config.submit' | translate }}"
+                        text="{{ 'admin.platform.config.submit' | translate }}"
                         faIcon="paper-plane"
                         [onClick]="updateAppConfig(updateForm).bind(this)"
                         [disabled]="!updateForm.dirty || !updateForm.valid"

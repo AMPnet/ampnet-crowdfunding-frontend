@@ -14,7 +14,6 @@ import { EMPTY, Observable, of } from 'rxjs';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { FileValidator } from '../../../shared/validators/file.validator';
 import { RouterService } from '../../../shared/services/router.service';
-import { ErrorService } from '../../../shared/services/error.service';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -34,7 +33,6 @@ export class ManageSingleDepositComponent implements OnInit {
                 private arkaneService: ArkaneService,
                 private popupService: PopupService,
                 private fb: FormBuilder,
-                private errorService: ErrorService,
                 private translate: TranslateService,
                 private router: RouterService) {
         const depositID = this.route.snapshot.params.id;
@@ -58,7 +56,6 @@ export class ManageSingleDepositComponent implements OnInit {
                 }
                 return this.recoverBack();
             }),
-            this.errorService.handleError,
             switchMap(res => {
                 if (!res.deposit.approved_at) {
                     return of(res);
@@ -82,7 +79,6 @@ export class ManageSingleDepositComponent implements OnInit {
 
     generateSignerAndSign(depositID: number) {
         return this.depositCooperativeService.generateDepositMintTx(depositID).pipe(
-            this.errorService.handleError,
             switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo)),
             catchError(() => this.recoverBack()),
             switchMap(() => this.popupService.new({
@@ -107,7 +103,6 @@ export class ManageSingleDepositComponent implements OnInit {
         const confirmationSub = this.confirmationModal.content.successfulConfirmation.subscribe(() => {
             SpinnerUtil.showSpinner();
             this.depositCooperativeService.approveDeposit(depositID, amount, document).pipe(
-                this.errorService.handleError,
                 catchError(() => this.recoverBack()),
                 switchMap(() => this.generateSignerAndSign(depositID)),
                 finalize(() => SpinnerUtil.hideSpinner())

@@ -11,7 +11,6 @@ import {
 } from '@angular/forms';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { ProjectService } from '../../shared/services/project/project.service';
-import { ErrorService } from '../../shared/services/error.service';
 import { ActivatedRoute } from '@angular/router';
 import { RouterService } from '../../shared/services/router.service';
 import * as moment from 'moment';
@@ -36,7 +35,6 @@ export class ProjectNewComponent {
     ownOrgs$: Observable<Organization[]> = combineLatest(
         [this.userService.user$, this.organizationService.getPersonal()]
     ).pipe(
-        this.errorService.handleError,
         map(([user, orgs]) => orgs.organizations.filter(org => org.owner_uuid === user.uuid)),
         switchMap(ownOrgs => ownOrgs.length > 0 ? of(ownOrgs) :
             this.popupService.info(this.translate.instant('projects.new.no_orgs')).pipe(
@@ -49,7 +47,6 @@ export class ProjectNewComponent {
 
     constructor(private projectService: ProjectService,
                 private fb: FormBuilder,
-                private errorService: ErrorService,
                 private activatedRoute: ActivatedRoute,
                 private userService: UserService,
                 private popupService: PopupService,
@@ -96,7 +93,6 @@ export class ProjectNewComponent {
                 max_per_user: formValue.maxPerUser,
                 active: false
             }).pipe(
-                this.errorService.handleError,
                 tap(project => {
                     this.router.navigate([`/dash/projects/${project.uuid}/edit`]);
                 })

@@ -16,7 +16,7 @@ import { TransactionInfo, WalletService, WalletState } from './wallet/wallet.ser
 import { PopupService } from './popup.service';
 import { BroadcastService } from './broadcast.service';
 import { AppConfigService } from './app-config.service';
-import { ErrorService, WalletError } from './error.service';
+import { WalletError } from './error.service';
 import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
@@ -29,7 +29,6 @@ export class ArkaneService {
     constructor(private walletService: WalletService,
                 private appConfigService: AppConfigService,
                 private broadcastService: BroadcastService,
-                private errorService: ErrorService,
                 private translate: TranslateService,
                 private popupService: PopupService) {
         this.appConfigService.config$.subscribe(config => {
@@ -90,7 +89,6 @@ export class ArkaneService {
             concatMap(wallet => this.walletService.initWallet(wallet.address).pipe(
                 map(res => res.activation_data),
                 catchError(err => err.error?.err_code === WalletError.WALLET_ALREADY_REGISTERED ? of(null) : throwError(err)),
-                this.errorService.handleError
             )),
             takeWhile(x => x === null, true),
             find(value => value !== null),
@@ -147,10 +145,9 @@ export class ArkaneService {
 
     signAndBroadcastTx(txInfo: TransactionInfo) {
         return this.signTransaction(txInfo.tx).pipe(
-            switchMap((arkaneRes) =>
-                this.broadcastService.broadcastSignedTx(arkaneRes.result.signedTransaction, txInfo.tx_id)
-                    .pipe(this.errorService.handleError)),
-        );
+            switchMap((arkaneRes) => this.broadcastService.broadcastSignedTx(
+                arkaneRes.result.signedTransaction, txInfo.tx_id)
+            ));
     }
 
     private signTransaction(txToSign: Observable<string> | string): Observable<SignerResult> {

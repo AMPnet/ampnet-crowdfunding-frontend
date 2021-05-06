@@ -103,6 +103,10 @@ export class ErrorService {
                         action$ = this.displayMessage('errors.user.no_user');
                         break;
 
+                    case UserError.MISSING_INFO:
+                        action$ = this.displayMessage('errors.user.missing_info');
+                        break;
+
                     case UserError.INVALID_BANK_ACCOUNT_DATA:
                         action$ = this.displayMessage('errors.user.invalid_bank_account_data');
                         break;
@@ -453,7 +457,8 @@ export enum UserError {
     INVALID_BANK_ACCOUNT_DATA = '0302',
     DIFFERENT_PASSWORD = '0303',
     INVALID_PRIVILEGE = '0305',
-    NO_USER = '0306'
+    NO_USER = '0306',
+    MISSING_INFO = '0307'
 }
 
 export enum WalletError {

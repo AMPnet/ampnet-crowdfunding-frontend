@@ -10,13 +10,13 @@ sent to a translator to translate it for a specific language.
 To export a single language (e.g. Croatian - hr), use the next command:
 
 ```shell
-npm run lang-gen-xls hr
+npm run lang:genxls hr
 ```
 
 To export all languages, use the next command:
 
 ```shell
-npm run lang-gen-xls
+npm run lang:genxls
 ```
 
 ## Import
@@ -24,5 +24,5 @@ npm run lang-gen-xls
 When `.xlsx` file is successfully translated, use the next command to import the values:
 
 ```shell
-npm run lang-xls-to-json /absolute/path/to/filename.xlsx
+npm run lang:xlstojson /absolute/path/to/filename.xlsx
 ```

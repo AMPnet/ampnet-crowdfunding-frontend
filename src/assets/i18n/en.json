@@ -868,7 +868,8 @@
       "no_user": "The requested user does not exist.",
       "invalid_bank_account_data": "Bank account data is invalid.",
       "different_password": "Old password is invalid.",
-      "invalid_privilege": "You have no sufficient privilege to do this action."
+      "invalid_privilege": "You have no sufficient privilege to do this action.",
+      "missing_info": "No user with KYC data on the platform."
     },
     "wallet": {
       "missing_wallet": "The wallet for this user doesn't exist.",

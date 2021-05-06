@@ -4,12 +4,14 @@ import { DatePipe } from '@angular/common';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { UserTransaction } from '../wallet/wallet.service';
+import { ErrorService } from '../error.service';
 
 @Injectable({
     providedIn: 'root',
 })
 export class ReportService {
     constructor(private http: BackendHttpClient,
+                private errorService: ErrorService,
                 private datePipe: DatePipe) {
     }
 
@@ -27,6 +29,7 @@ export class ReportService {
             headers: this.http.authHttpOptions().headers,
             responseType: 'arraybuffer'
         }).pipe(
+            this.errorService.handleError,
             map(data => {
                 const fileName = [
                     'UserTransactions',
@@ -50,6 +53,7 @@ export class ReportService {
             },
             responseType: 'arraybuffer'
         }).pipe(
+            this.errorService.handleError,
             map(data => {
                 const fileName = [
                     'UserTransaction',
@@ -60,7 +64,6 @@ export class ReportService {
             })
         );
     }
-
 
     usersSummary(from?: Date, to?: Date): Observable<void> {
         const params = {};
@@ -76,6 +79,7 @@ export class ReportService {
             headers: this.http.authHttpOptions().headers,
             responseType: 'arraybuffer'
         }).pipe(
+            this.errorService.handleError,
             map(data => {
                 const fileName = [
                     'usersSummary',

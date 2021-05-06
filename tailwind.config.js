@@ -26,9 +26,6 @@ module.exports = {
             colors: {
                 primary: registerColor('var(--color-primary)'),
                 secondary: registerColor('var(--color-secondary)')
-            },
-            zIndex: {
-                '1000': 1000,
             }
         },
     },

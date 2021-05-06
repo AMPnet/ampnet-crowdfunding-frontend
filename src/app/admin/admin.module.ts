@@ -25,7 +25,6 @@ import { PlatformUsersComponent } from './platform/platform-users/platform-users
         OwnershipComponent,
         PlatformBankAccountComponent,
         NewPlatformBankAccountComponent,
-        PlatformConfigComponent,
         WalletActivationComponent,
         PlatformComponent,
         PlatformConfigComponent,

@@ -53,6 +53,7 @@ export class PlatformConfigComponent {
                     reCaptchaSiteKey: [appConfig.config?.reCaptchaSiteKey],
                     googleClientID: [appConfig.config?.googleClientId],
                     facebookAppID: [appConfig.config?.facebookAppId],
+                    googleAnalyticsID: [appConfig.config?.googleAnalyticsID]
                 });
             })
         );
@@ -84,7 +85,8 @@ export class PlatformConfigComponent {
                     },
                     googleClientId: appConfig.googleClientID,
                     facebookAppId: appConfig.facebookAppID,
-                    reCaptchaSiteKey: appConfig.reCaptchaSiteKey
+                    reCaptchaSiteKey: appConfig.reCaptchaSiteKey,
+                    googleAnalyticsID: appConfig.googleAnalyticsID
                 }
             }, appConfig.logo, appConfig.banner).pipe(
                 tap(newAppConfig => {

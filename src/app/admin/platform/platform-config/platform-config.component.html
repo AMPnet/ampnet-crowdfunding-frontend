@@ -123,6 +123,13 @@
                     </quill-editor>
                 </div>
 
+                <label for="google-analytics" class="app-page-label mt-3">
+                    {{ 'admin.platform.config.google_analytics_input.title' | translate }}
+                </label>
+                <input class="input-reg w-100" id="google-analytics" formControlName="googleAnalyticsID"
+                       placeholder="{{ 'admin.platform.config.google_analytics_input.placeholder' | translate }}"
+                       type="text">
+
                 <!-- Hidden because of security reasons. -->
                 <div [hidden]="!showSecureConfig">
                     <label for="arkane-id" class="app-page-label mt-3">

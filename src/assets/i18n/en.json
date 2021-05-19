@@ -713,6 +713,10 @@
         "languages_fallback_input.title": "Use English as a fallback language",
         "footer_input.title": "Footer",
         "deposit_notice_input.title": "Deposit notice",
+        "google_analytics_input": {
+          "title": "Google Analytics Tracking ID",
+          "placeholder": "UA-XXXXXXXX-Y"
+        },
         "arkane_id_input": {
           "title": "Arkane ID",
           "placeholder": "arkaneID"

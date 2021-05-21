@@ -3,10 +3,11 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { defer, EMPTY, Observable } from 'rxjs';
 import { AppConfigService } from './app-config.service';
 import { ErrorService } from './error.service';
-import { tap } from 'rxjs/operators';
+import { finalize, tap } from 'rxjs/operators';
 import { CacheService } from './cache.service';
 import { SocialAuthService } from 'angularx-social-login';
 import { JwtTokenService } from './jwt-token.service';
+import { AnalyticsService } from './analytics.service';
 
 @Injectable({
     providedIn: 'root'
@@ -15,6 +16,7 @@ export class BackendHttpClient {
     constructor(public http: HttpClient,
                 private errorService: ErrorService,
                 private cacheService: CacheService,
+                private analytics: AnalyticsService,
                 private jwtTokenService: JwtTokenService) {
     }
 
@@ -69,7 +71,10 @@ export class BackendHttpClient {
 
     logout(): Observable<void> {
         return this.jwtTokenService.logout().pipe(
-            tap(() => this.cacheService.clearAll())
+            finalize(() => {
+                this.cacheService.clearAll();
+                this.analytics.clearUser();
+            })
         );
     }
 

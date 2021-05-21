@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { AppConfigService } from './shared/services/app-config.service';
 import { Title } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/common';
-import { GoogleAnalyticsService } from './shared/services/google-analytics.service';
+import { AnalyticsService } from './shared/services/analytics.service';
 
 @Component({
     selector: 'app-root',
@@ -12,7 +12,7 @@ import { GoogleAnalyticsService } from './shared/services/google-analytics.servi
 export class AppComponent implements OnInit {
     constructor(private appConfigService: AppConfigService,
                 @Inject(DOCUMENT) private document: HTMLDocument,
-                private gaService: GoogleAnalyticsService,
+                private gaService: AnalyticsService,
                 private title: Title) {
     }
 
@@ -22,6 +22,6 @@ export class AppComponent implements OnInit {
             this.document.getElementById('appFavicon')
                 .setAttribute('href', configRes.config.icon_url);
         });
-        this.gaService.setTag();
+        this.gaService.setGATag();
     }
 }

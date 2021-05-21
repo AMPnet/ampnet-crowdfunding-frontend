@@ -12,6 +12,7 @@ import { OwnershipComponent } from './ownership/ownership.component';
 import { PlatformComponent } from './platform/platform.component';
 import { PlatformConfigComponent } from './platform/platform-config/platform-config.component';
 import { PlatformUsersComponent } from './platform/platform-users/platform-users.component';
+import { PlatformStatsComponent } from './platform/platform-analytics/platform-stats.component';
 
 const routes: Routes = [
     {path: 'manage_withdrawals', component: ManageWithdrawalsComponent},
@@ -26,7 +27,8 @@ const routes: Routes = [
         path: 'platform', component: PlatformComponent, children: [
             {path: '', pathMatch: 'full', redirectTo: 'config'},
             {path: 'config', component: PlatformConfigComponent},
-            {path: 'users', component: PlatformUsersComponent}
+            {path: 'users', component: PlatformUsersComponent},
+            {path: 'stats', component: PlatformStatsComponent}
         ]
     },
 ];

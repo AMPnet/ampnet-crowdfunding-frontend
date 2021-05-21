@@ -32,8 +32,8 @@ export class WalletService {
             public_key: address
         }).pipe(
             tap(() => {
-                this.clearAndRefreshWallet();
                 this.analytics.eventTrack(GAEvents.INIT_WALLET, {address});
+                this.clearAndRefreshWallet();
             })
         );
     }

@@ -672,7 +672,8 @@
     "platform": {
       "tabs": {
         "config": "Platform config",
-        "users": "Users"
+        "users": "Users",
+        "stats": "Stats"
       },
       "config": {
         "title": "Platform configuration",
@@ -744,6 +745,16 @@
         "title": "Users",
         "download": "Download user summary",
         "download.loading": "Downloading..."
+      },
+      "stats": {
+        "title": "Statistics",
+        "users_registered": "Users Registered",
+        "users_verified": "Users Verified",
+        "wallets_initialized": "Wallets Initialized",
+        "users_deposited": "Users Deposited",
+        "users_invested": "Users Invested",
+        "download_link": "download",
+        "google_analytics_notice": "To setup Google Analytics, go to Platform Config."
       }
     }
   },

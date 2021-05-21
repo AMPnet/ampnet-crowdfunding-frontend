@@ -14,6 +14,7 @@ import { WalletActivationComponent } from './wallet-activation/wallet-activation
 import { AdminRoutingModule } from './admin-routing.module';
 import { PlatformComponent } from './platform/platform.component';
 import { PlatformUsersComponent } from './platform/platform-users/platform-users.component';
+import { PlatformStatsComponent } from './platform/platform-analytics/platform-stats.component';
 
 @NgModule({
     declarations: [
@@ -28,7 +29,8 @@ import { PlatformUsersComponent } from './platform/platform-users/platform-users
         WalletActivationComponent,
         PlatformComponent,
         PlatformConfigComponent,
-        PlatformUsersComponent
+        PlatformUsersComponent,
+        PlatformStatsComponent
     ],
     imports: [
         CommonModule,

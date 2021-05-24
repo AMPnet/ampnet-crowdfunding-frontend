@@ -45,7 +45,7 @@ export class AnalyticsService {
     }
 
     eventTrack(event: GAEvents, payload = {}): void {
-        this.googleGlobalSiteTag.eventTrack(event, payload);
+        this.googleGlobalSiteTag.eventTrack(event, {gstCustom: payload});
     }
 
     setUser(user: User): void {

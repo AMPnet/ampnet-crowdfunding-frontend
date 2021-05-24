@@ -31,11 +31,13 @@ export class AnalyticsService {
                 head.appendChild(s);
 
                 const s2 = this.doc.createElement('script');
-                s2.innerHTML = `window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+                s2.innerHTML = `
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){dataLayer.push(arguments);}
+                    gtag('js', new Date());
 
-  gtag('config', '${gTagID}');`;
+                    gtag('config', '${gTagID}');
+                `;
                 head.appendChild(s2);
 
                 this.googleGlobalSiteTag.startTracking();

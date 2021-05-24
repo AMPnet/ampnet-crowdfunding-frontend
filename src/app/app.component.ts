@@ -12,7 +12,7 @@ import { AnalyticsService } from './shared/services/analytics.service';
 export class AppComponent implements OnInit {
     constructor(private appConfigService: AppConfigService,
                 @Inject(DOCUMENT) private document: HTMLDocument,
-                private gaService: AnalyticsService,
+                private analytics: AnalyticsService,
                 private title: Title) {
     }
 
@@ -22,6 +22,6 @@ export class AppComponent implements OnInit {
             this.document.getElementById('appFavicon')
                 .setAttribute('href', configRes.config.icon_url);
         });
-        this.gaService.setGATag();
+        this.analytics.setGTM().subscribe();
     }
 }

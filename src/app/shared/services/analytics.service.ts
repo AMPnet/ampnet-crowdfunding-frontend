@@ -1,41 +1,56 @@
 import { Inject, Injectable } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { environment } from '../../../environments/environment';
 import { AppConfigService } from './app-config.service';
-import { Angulartics2GoogleAnalytics } from 'angulartics2/ga';
 import { User } from './user/signup.service';
+import { Angulartics2GoogleGlobalSiteTag } from 'angulartics2/gst';
+import { EMPTY, Observable } from 'rxjs';
+import { catchError, last, map, takeWhile, tap, timeout } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AnalyticsService {
     constructor(@Inject(DOCUMENT) private doc: any,
-                private googleAnalytics: Angulartics2GoogleAnalytics,
+                private googleGlobalSiteTag: Angulartics2GoogleGlobalSiteTag,
                 private config: AppConfigService) {
     }
 
-    setGATag() {
-        const s = this.doc.createElement('script');
-        s.type = 'text/javascript';
-        s.innerHTML = `(function(i,s,o,g,r,a,m){i['GoogleoogleAnaltyicsAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    setGTM(): Observable<unknown> {
+        return this.config.config$.pipe(
+            takeWhile(config => !config.config.googleTagID, true),
+            last(),
+            timeout(4000),
+            map(config => config.config.googleTagID),
+            tap(gTagID => {
+                // Global site tag (gtag.js) - Google Analytics
+                // Dev page: https://developers.google.com/analytics/devguides/collection/gtagjs/
+                const s = this.doc.createElement('script');
+                s.async = true;
+                s.src = `https://www.googletagmanager.com/gtag/js?id=${gTagID}`;
+                const head = this.doc.getElementsByTagName('head')[0];
+                head.appendChild(s);
 
-  ga('create', '${this.config.config.config.googleAnalyticsID}', '${environment.production ? 'auto' : 'none'}');`;
-        const head = this.doc.getElementsByTagName('head')[0];
-        head.appendChild(s);
+                const s2 = this.doc.createElement('script');
+                s2.innerHTML = `window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
-        this.googleAnalytics.startTracking();
+  gtag('config', '${gTagID}');`;
+                head.appendChild(s2);
+
+                this.googleGlobalSiteTag.startTracking();
+            }),
+            catchError(() => EMPTY),
+        );
     }
 
     eventTrack(event: GAEvents, payload = {}): void {
-        this.googleAnalytics.eventTrack(event, payload);
+        this.googleGlobalSiteTag.eventTrack(event, payload);
     }
 
     setUser(user: User): void {
-        this.googleAnalytics.setUsername(user.uuid);
-        this.googleAnalytics.setUserProperties({
+        this.googleGlobalSiteTag.setUsername(user.uuid);
+        this.googleGlobalSiteTag.setUserProperties({
             email: user.email,
             first_name: user.first_name,
             last_name: user.last_name,
@@ -45,8 +60,8 @@ export class AnalyticsService {
     }
 
     clearUser(): void {
-        this.googleAnalytics.setUsername('');
-        this.googleAnalytics.setUserProperties({});
+        this.googleGlobalSiteTag.setUsername('');
+        this.googleGlobalSiteTag.setUserProperties({});
     }
 }
 

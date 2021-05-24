@@ -714,9 +714,9 @@
         "languages_fallback_input.title": "Use English as a fallback language",
         "footer_input.title": "Footer",
         "deposit_notice_input.title": "Deposit notice",
-        "google_analytics_input": {
-          "title": "Google Analytics Tracking ID",
-          "placeholder": "UA-XXXXXXXX-Y"
+        "google_tag_input": {
+          "title": "Google Tag Manager ID",
+          "placeholder": "G-XXXXXXXXXX"
         },
         "arkane_id_input": {
           "title": "Arkane ID",
@@ -754,7 +754,7 @@
         "users_deposited": "Users Deposited",
         "users_invested": "Users Invested",
         "download_link": "download",
-        "google_analytics_notice": "To setup Google Analytics, go to Platform Config."
+        "google_tag_notice": "To setup tracking via Google Tag Manager (Google Analytics), go to Platform Config."
       }
     }
   },

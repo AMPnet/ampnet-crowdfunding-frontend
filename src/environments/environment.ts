@@ -26,6 +26,6 @@ export const environment = {
         googleClientId: '507079277405-o3834fb5jojeq3u9tmm14aobeukg3jmo.apps.googleusercontent.com',
         facebookAppId: '611379136173563',
         reCaptchaSiteKey: '6LdbkeMZAAAAAJonuNJqiS1RfMyQkv1qNHcfZ5VE',
-        googleAnalyticsID: '',
+        googleTagID: '',
     } as CustomConfig
 };

@@ -18,6 +18,7 @@ import { BroadcastService } from './broadcast.service';
 import { AppConfigService } from './app-config.service';
 import { WalletError } from './error.service';
 import { TranslateService } from '@ngx-translate/core';
+import { Wallets } from '@arkane-network/arkane-connect/dist/src/models/wallet/Wallet';
 
 @Injectable({
     providedIn: 'root'
@@ -134,6 +135,13 @@ export class ArkaneService {
     getProfile(): Observable<Profile> {
         return this.ensureAuthenticated().pipe(
             switchMap(() => from(this.arkaneConnect.api.getProfile())),
+        );
+    }
+
+    linkWallets(): Observable<Wallet[]> {
+        return this.ensureAuthenticated().pipe(
+            concatMap(() => from(this.arkaneConnect.linkWallets())),
+            concatMap(() => this.getWallets()),
         );
     }
 

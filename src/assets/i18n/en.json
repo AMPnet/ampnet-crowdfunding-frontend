@@ -402,6 +402,7 @@
       "last_name": "Last name",
       "email": "Email",
       "languages": "Languages",
+      "link_wallets": "Link Wallets",
       "identity": {
         "title": "Verify Identity",
         "accept_terms": {

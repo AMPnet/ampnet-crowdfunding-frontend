@@ -42,7 +42,7 @@ export class LanguageService {
         return this.supportedLanguagesSubject.getValue();
     }
 
-    setLanguage(preferredLang?: string) {
+    setLanguage(preferredLang?: string): Observable<any> {
         if (preferredLang) {
             this.setPreferredLang(preferredLang);
         }

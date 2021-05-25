@@ -9,6 +9,7 @@ import { ArkaneService } from '../../shared/services/arkane.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ActivatedRoute } from '@angular/router';
 import { catchError, map, shareReplay, switchMap, take, tap } from 'rxjs/operators';
+import { AnalyticsService, GAEvents } from '../../shared/services/analytics.service';
 
 @Component({
     selector: 'app-project-withdraw',
@@ -32,6 +33,7 @@ export class ProjectWithdrawComponent {
                 private popupService: PopupService,
                 private arkaneService: ArkaneService,
                 private translate: TranslateService,
+                private analytics: AnalyticsService,
                 private route: ActivatedRoute,
                 private fb: FormBuilder) {
         this.projectUUID = this.route.snapshot.params.id;
@@ -96,7 +98,10 @@ export class ProjectWithdrawComponent {
                     title: this.translate.instant('general.transaction_signed.title'),
                     text: this.translate.instant('general.transaction_signed.description')
                 })),
-                tap(() => this.refreshWithdrawalSubject.next(null)),
+                tap(() => {
+                    this.analytics.eventTrack(GAEvents.WITHDRAW_TX_SIGNED, {withdrawalID});
+                    this.refreshWithdrawalSubject.next(null);
+                }),
             );
         };
     }
@@ -107,7 +112,10 @@ export class ProjectWithdrawComponent {
                 switchMap(() => this.popupService.success(
                     this.translate.instant('projects.withdraw.deleted')
                 )),
-                tap(() => this.refreshWithdrawalSubject.next(null)),
+                tap(() => {
+                    this.analytics.eventTrack(GAEvents.WITHDRAW_TX_CANCELED, {withdrawalID});
+                    this.refreshWithdrawalSubject.next(null);
+                }),
             );
         };
     }

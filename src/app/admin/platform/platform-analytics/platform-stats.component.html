@@ -1,0 +1,75 @@
+<div class="container">
+    <h1 class="app-page-title">{{ 'admin.platform.stats.title' | translate }}</h1>
+
+    <div class="">
+        <div class="tw-flex tw-space-x-2">
+            <span>{{ 'admin.platform.stats.users_registered' | translate }}:</span>
+            <span *ngIf="(statsUsers$ | async) as stats; else smallSpinner">
+               {{ stats.registered }}
+           </span>
+            <span>
+               <a [routerLink]="" (click)="downloadReport(reportXlsxType.REGISTERED)" class="tw-text-sm">
+                   {{ 'admin.platform.stats.download_link' | translate }}
+               </a>
+            </span>
+        </div>
+
+        <div class="tw-flex tw-space-x-2 mt-1">
+            <span>{{ 'admin.platform.stats.users_verified' | translate }}:</span>
+            <span *ngIf="(statsUsers$ | async) as stats; else smallSpinner">
+                {{ stats.verified }}
+            </span>
+            <span>
+               <a [routerLink]="" (click)="downloadReport(reportXlsxType.VERIFIED)" class="tw-text-sm">
+                   {{ 'admin.platform.stats.download_link' | translate }}
+               </a>
+            </span>
+        </div>
+
+        <div class="tw-flex tw-space-x-2 mt-1">
+            <span>{{ 'admin.platform.stats.wallets_initialized' | translate }}:</span>
+            <span *ngIf="(statsWallets$ | async) as stats; else smallSpinner">
+                {{ stats.wallets_initialized }}
+            </span>
+            <span>
+               <a [routerLink]="" (click)="downloadReport(reportXlsxType.WALLET)" class="tw-text-sm">
+                   {{ 'admin.platform.stats.download_link' | translate }}
+               </a>
+            </span>
+        </div>
+
+        <div class="tw-flex tw-space-x-2 mt-1">
+            <span>{{ 'admin.platform.stats.users_deposited' | translate }}:</span>
+            <span *ngIf="(statsWallets$ | async) as stats; else smallSpinner">
+                {{ stats.users_deposited }}
+            </span>
+            <span>
+               <a [routerLink]="" (click)="downloadReport(reportXlsxType.DEPOSIT)" class="tw-text-sm">
+                   {{ 'admin.platform.stats.download_link' | translate }}
+               </a>
+            </span>
+        </div>
+
+        <div class="tw-flex tw-space-x-2 mt-1">
+            <span>{{ 'admin.platform.stats.users_invested' | translate }}:</span>
+            <span *ngIf="(statsWallets$ | async) as stats; else smallSpinner">
+                {{ stats.users_invested }}
+            </span>
+            <span>
+               <a [routerLink]="" (click)="downloadReport(reportXlsxType.INVESTMENT)" class="tw-text-sm">
+                   {{ 'admin.platform.stats.download_link' | translate }}
+               </a>
+            </span>
+        </div>
+    </div>
+
+    <span class="tw-text-xs">
+        {{ 'admin.platform.stats.google_tag_notice' | translate }}
+    </span>
+
+    <ng-template #smallSpinner>
+        <span>
+            <app-spinner type="inline"></app-spinner>
+        </span>
+    </ng-template>
+</div>

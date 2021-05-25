@@ -57,6 +57,7 @@ import { ProjectDepositComponent } from './projects/project-deposit/project-depo
 import { ProjectWithdrawComponent } from './projects/project-withdraw/project-withdraw.component';
 import { OffersItemComponent } from './offers/offers-item/offers-item.component';
 import { TranslateStore } from '@ngx-translate/core';
+import { Angulartics2Module } from 'angulartics2';
 
 @NgModule({
     declarations: [
@@ -112,6 +113,7 @@ import { TranslateStore } from '@ngx-translate/core';
         QuillModule.forRoot(),
         BsDatepickerModule.forRoot(),
         NgxCaptchaModule,
+        Angulartics2Module.forRoot(),
     ],
     providers: [
         AppConfigService,

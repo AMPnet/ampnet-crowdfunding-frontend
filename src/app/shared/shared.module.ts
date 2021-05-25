@@ -64,7 +64,7 @@ const importExportModules = [
     ReactiveFormsModule,
     FontAwesomeModule,
     TranslationsModule,
-    QuillModule
+    QuillModule,
 ];
 
 @NgModule({

@@ -4,6 +4,7 @@ import { switchMap, tap } from 'rxjs/operators';
 import { UserService } from './user.service';
 import { AppConfigService } from '../app-config.service';
 import { CaptchaAction, CaptchaService } from '../captcha.service';
+import { AnalyticsService, GAEvents } from '../analytics.service';
 
 
 @Injectable({
@@ -16,6 +17,7 @@ export class SignupService {
     constructor(private http: BackendHttpClient,
                 private appConfig: AppConfigService,
                 private captchaService: CaptchaService,
+                private analytics: AnalyticsService,
                 private userService: UserService) {
     }
 
@@ -30,7 +32,11 @@ export class SignupService {
                         password: password
                     },
                     re_captcha_token: captchaToken
-                }, true).pipe(tap(() => this.userService.refreshUser()));
+                }, true).pipe(tap(() => {
+                    this.userService.refreshUser();
+                    // Wait to be sure that analytics.setUser has been set.
+                    setTimeout(() => this.analytics.eventTrack(GAEvents.SIGN_UP), 2000);
+                }));
             })
         );
     }
@@ -45,7 +51,11 @@ export class SignupService {
                         token: authToken
                     },
                     re_captcha_token: captchaToken
-                }, true).pipe(tap(() => this.userService.refreshUser()));
+                }, true).pipe(tap(() => {
+                    this.userService.refreshUser();
+                    // Wait to be sure that analytics.setUser has been set.
+                    setTimeout(() => this.analytics.eventTrack(GAEvents.SIGN_UP), 2000);
+                }));
             }));
     }
 
@@ -94,7 +104,7 @@ interface EmailSignupData {
 interface SocialSignupData {
     signup_method: string;
     user_info: {
-        token: string
+        token: string;
     };
     re_captcha_token: string;
 }

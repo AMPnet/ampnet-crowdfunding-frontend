@@ -8,6 +8,7 @@ import { PopupService } from '../shared/services/popup.service';
 import { TranslateService } from '@ngx-translate/core';
 import { BehaviorSubject, combineLatest, Observable, of, throwError } from 'rxjs';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { AnalyticsService, GAEvents } from '../shared/services/analytics.service';
 
 @Component({
     selector: 'app-withdraw',
@@ -29,6 +30,7 @@ export class WithdrawComponent implements OnInit {
                 private walletService: WalletService,
                 private arkaneService: ArkaneService,
                 private popupService: PopupService,
+                private analytics: AnalyticsService,
                 private translate: TranslateService,
                 private fb: FormBuilder) {
     }
@@ -96,7 +98,10 @@ export class WithdrawComponent implements OnInit {
                     title: this.translate.instant('general.transaction_signed.title'),
                     text: this.translate.instant('general.transaction_signed.description')
                 })),
-                tap(() => this.refreshWithdrawalSubject.next(null)),
+                tap(() => {
+                    this.analytics.eventTrack(GAEvents.WITHDRAW_TX_SIGNED);
+                    this.refreshWithdrawalSubject.next(null);
+                }),
             );
         };
     }
@@ -106,7 +111,10 @@ export class WithdrawComponent implements OnInit {
             return this.withdrawService.deleteWithdrawal(withdrawalID).pipe(
                 switchMap(() => this.popupService.success(
                     this.translate.instant('withdraw.withdrawal_deleted'))),
-                tap(() => this.refreshWithdrawalSubject.next(null)),
+                tap(() => {
+                    this.analytics.eventTrack(GAEvents.WITHDRAW_TX_CANCELED);
+                    this.refreshWithdrawalSubject.next(null);
+                }),
             );
         };
     }

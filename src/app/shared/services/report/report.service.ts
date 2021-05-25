@@ -93,6 +93,39 @@ export class ReportService {
         );
     }
 
+    report(type: ReportXlsxType): Observable<void> {
+        const fullFileName = [
+            this.reportFilename(type),
+            this.datePipe.transform(new Date(), 'yMdhhmmss'),
+        ].filter(text => !!text).join('_') + '.xlsx';
+
+        return this.http.http.get('/api/report/admin/report/xlsx', {
+            params: {type},
+            headers: this.http.authHttpOptions().headers,
+            responseType: 'arraybuffer'
+        }).pipe(
+            this.errorService.handleError,
+            map(data => this.downloadFile(data, fullFileName))
+        );
+    }
+
+    private reportFilename(type: ReportXlsxType): string {
+        switch (type) {
+            case ReportXlsxType.REGISTERED:
+                return 'registeredUsers';
+            case ReportXlsxType.VERIFIED:
+                return 'verifiedUsers';
+            case ReportXlsxType.WALLET:
+                return 'initializedWallets';
+            case ReportXlsxType.DEPOSIT:
+                return 'firstDeposits';
+            case ReportXlsxType.INVESTMENT:
+                return 'firstInvestments';
+            default:
+                return 'unknownReport';
+        }
+    }
+
     downloadFile(data: ArrayBuffer, fileName: string): void {
         const file = new Blob([data], {type: 'application/pdf'});
         const fileURL = URL.createObjectURL(file);
@@ -101,4 +134,12 @@ export class ReportService {
         link.download = fileName;
         link.click();
     }
+}
+
+export enum ReportXlsxType {
+    REGISTERED = 'REGISTERED',
+    VERIFIED = 'VERIFIED',
+    WALLET = 'WALLET',
+    DEPOSIT = 'DEPOSIT',
+    INVESTMENT = 'INVESTMENT',
 }

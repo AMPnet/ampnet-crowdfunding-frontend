@@ -267,6 +267,7 @@ export class ErrorService {
                     case InternalError.INVALID_REQUEST_DATA:
                     case InternalError.GRPC_FAILED_WALLET_SERVICE:
                     case InternalError.PDF_GENERATION_FAILED:
+                    case InternalError.XLSX_GENERATION_FAILED:
                         action$ = this.displayMessage('errors.internal.something_went_wrong');
                         break;
 
@@ -521,6 +522,7 @@ export enum InternalError {
     GRPC_FAILED_WALLET_SERVICE = '0809',
     PDF_GENERATION_FAILED = '0810',
     JWT_VALIDATION_FAILED = '0813',
+    XLSX_GENERATION_FAILED = '0814',
 }
 
 export enum TransactionError {

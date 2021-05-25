@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { BackendHttpClient } from './backend-http-client.service';
 
 @Injectable({
@@ -10,20 +10,11 @@ export class StatsService {
     }
 
     users(): Observable<StatsUsersRes> {
-        // return this.http.get<StatsUsersRes>('/api/user/admin/user/count');
-        return of(<StatsUsersRes>{ // TODO: remove this mock after its implemented on backend.
-            registered: 4,
-            verified: 5,
-        });
+        return this.http.get<StatsUsersRes>('/api/user/admin/user/count');
     }
 
     wallets(): Observable<StatsWalletsRes> {
-        // return this.http.get<StatsWalletsRes>('/api/wallet/admin/stats');
-        return of(<StatsWalletsRes>{ // TODO: remove this mock after its implemented on backend.
-            wallets_initialized: 23,
-            users_deposited: 4,
-            users_invested: 5,
-        });
+        return this.http.get<StatsWalletsRes>('/api/wallet/admin/stats');
     }
 }
 

@@ -3,12 +3,13 @@ import { ActivatedRoute } from '@angular/router';
 import { Project, ProjectService } from 'src/app/shared/services/project/project.service';
 import { WalletService } from '../../shared/services/wallet/wallet.service';
 import { ArkaneService } from '../../shared/services/arkane.service';
-import { shareReplay, switchMap } from 'rxjs/operators';
+import { shareReplay, switchMap, tap } from 'rxjs/operators';
 import { PopupService } from '../../shared/services/popup.service';
 import { RouterService } from '../../shared/services/router.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { enterTrigger } from '../../shared/animations';
+import { AnalyticsService, GAEvents } from '../../shared/services/analytics.service';
 
 @Component({
     selector: 'app-offer-invest-verify',
@@ -26,6 +27,7 @@ export class OfferInvestVerifyComponent implements OnInit {
                 private projectService: ProjectService,
                 private walletService: WalletService,
                 private arkaneService: ArkaneService,
+                private analytics: AnalyticsService,
                 private translate: TranslateService,
                 private popupService: PopupService) {
     }
@@ -42,6 +44,10 @@ export class OfferInvestVerifyComponent implements OnInit {
     sign() {
         return this.walletService.investToProject(this.projectID, this.investAmount).pipe(
             switchMap(txInfo => this.arkaneService.signAndBroadcastTx(txInfo)),
+            tap(() => this.analytics.eventTrack(GAEvents.INVEST_TX_SIGNED, {
+                projectUUID: this.projectID,
+                amount: this.investAmount,
+            })),
             switchMap(() => this.popupService.new({
                 type: 'success',
                 title: this.translate.instant('general.transaction_signed.title'),

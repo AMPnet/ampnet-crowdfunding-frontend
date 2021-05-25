@@ -402,6 +402,7 @@
       "last_name": "Last name",
       "email": "Email",
       "languages": "Languages",
+      "link_wallets": "Link Wallets",
       "identity": {
         "title": "Verify Identity",
         "accept_terms": {
@@ -672,7 +673,8 @@
     "platform": {
       "tabs": {
         "config": "Platform config",
-        "users": "Users"
+        "users": "Users",
+        "stats": "Stats"
       },
       "config": {
         "title": "Platform configuration",
@@ -713,6 +715,10 @@
         "languages_fallback_input.title": "Use English as a fallback language",
         "footer_input.title": "Footer",
         "deposit_notice_input.title": "Deposit notice",
+        "google_tag_input": {
+          "title": "Google Tag Manager ID",
+          "placeholder": "G-XXXXXXXXXX"
+        },
         "arkane_id_input": {
           "title": "Arkane ID",
           "placeholder": "arkaneID"
@@ -740,6 +746,16 @@
         "title": "Users",
         "download": "Download user summary",
         "download.loading": "Downloading..."
+      },
+      "stats": {
+        "title": "Statistics",
+        "users_registered": "Users Registered",
+        "users_verified": "Users Verified",
+        "wallets_initialized": "Wallets Initialized",
+        "users_deposited": "Users Deposited",
+        "users_invested": "Users Invested",
+        "download_link": "download",
+        "google_tag_notice": "To setup tracking via Google Tag Manager (Google Analytics), go to Platform Config."
       }
     }
   },

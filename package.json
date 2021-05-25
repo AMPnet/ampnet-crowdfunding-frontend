@@ -35,6 +35,7 @@
     "@ngx-translate/core": "^11.0.1",
     "@sentry/angular": "^5.29.2",
     "@veriff/incontext-sdk": "^1.1.0",
+    "angulartics2": "^10.0.0",
     "angularx-social-login": "3.5.5",
     "autonumeric": "4.5.4",
     "bootstrap": "^4.1.3",

@@ -7,6 +7,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { SharedModule } from '../shared.module';
 import { AppConfigService } from './app-config.service';
+import { Angulartics2Module } from 'angulartics2';
 
 describe('NewsPreviewService', () => {
     let http: jasmine.SpyObj<BackendHttpClient>;
@@ -17,6 +18,7 @@ describe('NewsPreviewService', () => {
             imports: [
                 RouterTestingModule,
                 TranslateModule.forRoot(),
+                Angulartics2Module.forRoot(),
                 HttpClientTestingModule,
                 SharedModule
             ],

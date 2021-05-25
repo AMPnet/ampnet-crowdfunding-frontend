@@ -194,6 +194,7 @@ export interface CustomConfig {
     reCaptchaSiteKey?: string;
     footerHTML?: string;
     depositNoticeHTML?: string;
+    googleTagID?: string;
 }
 
 export enum KYCProvider {

@@ -9,6 +9,7 @@ import { UserService } from '../../../../shared/services/user/user.service';
 import { createVeriffFrame, MESSAGES } from '@veriff/incontext-sdk';
 import { TranslateService } from '@ngx-translate/core';
 import { FormBuilder } from '@angular/forms';
+import { AnalyticsService, GAEvents } from '../../../../shared/services/analytics.service';
 
 @Component({
     selector: 'app-veriff',
@@ -31,6 +32,7 @@ export class VeriffComponent {
                 private popupService: PopupService,
                 private userService: UserService,
                 private translate: TranslateService,
+                private analytics: AnalyticsService,
                 private fb: FormBuilder,
                 private veriffService: VeriffService) {
         this.session$ = this.sessionSubject.asObservable().pipe(
@@ -58,6 +60,7 @@ export class VeriffComponent {
             switchMap(() => this.popupService.success(
                 this.translate.instant('settings.user.identity.veriff.approved')
             )),
+            tap(() => this.analytics.eventTrack(GAEvents.KYC_COMPLETED)),
             switchMap(() => this.userService.refreshUserToken()),
             catchError(() => {
                 this.router.navigate(['/dash/settings/user']);
@@ -73,6 +76,7 @@ export class VeriffComponent {
     createVeriffFrame(verification_url: string): () => Observable<MESSAGES> {
         return () => {
             return new Observable(subscriber => {
+                this.analytics.eventTrack(GAEvents.KYC_STARTED);
                 const veriffFrame = createVeriffFrame({
                     url: verification_url,
                     onEvent: (msg) => {

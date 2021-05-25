@@ -7,6 +7,7 @@ import { CacheService } from '../cache.service';
 import { AppConfigService } from '../app-config.service';
 import { LanguageService } from '../language.service';
 import { JwtTokenService } from '../jwt-token.service';
+import { AnalyticsService } from '../analytics.service';
 
 @Injectable({
     providedIn: 'root',
@@ -23,6 +24,7 @@ export class UserService {
                 private appConfig: AppConfigService,
                 private languageService: LanguageService,
                 private jwtTokenService: JwtTokenService,
+                private analytics: AnalyticsService,
                 private cacheService: CacheService) {
     }
 
@@ -37,7 +39,8 @@ export class UserService {
             map(user => ({
                 ...user,
                 verified: this.isVerified(user.verified)
-            }))
+            })),
+            tap(user => this.analytics.setUser(user))
         );
     }
 
@@ -83,14 +86,14 @@ export class UserService {
     loginEmail(email: string, password: string) {
         return this.http.loginEmail(email, password).pipe(
             tap(() => this.updateBackendLanguage.subscribe()),
-            tap(() => this.refreshUser())
+            tap(() => this.refreshUser()),
         );
     }
 
     loginSocial(provider: string, authToken: string) {
         return this.http.loginSocial(provider, authToken).pipe(
             tap(() => this.updateBackendLanguage.subscribe()),
-            tap(() => this.refreshUser())
+            tap(() => this.refreshUser()),
         );
     }
 

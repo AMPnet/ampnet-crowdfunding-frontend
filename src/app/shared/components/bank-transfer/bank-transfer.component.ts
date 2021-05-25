@@ -6,6 +6,7 @@ import { AppConfigService } from '../../services/app-config.service';
 import { catchError, map, shareReplay, switchMap, tap } from 'rxjs/operators';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { enterTrigger } from '../../animations';
+import { AnalyticsService, GAEvents } from '../../services/analytics.service';
 
 @Component({
     selector: 'app-bank-transfer',
@@ -32,6 +33,7 @@ export class BankTransferComponent implements OnInit {
     constructor(public appConfig: AppConfigService,
                 private depositService: DepositServiceService,
                 private bankAccountService: PlatformBankAccountService,
+                private analytics: AnalyticsService,
                 private fb: FormBuilder) {
     }
 
@@ -61,6 +63,10 @@ export class BankTransferComponent implements OnInit {
         return () => {
             return this.depositService.createDeposit(amount, this.projectUUID).pipe(
                 tap(() => {
+                    this.analytics.eventTrack(GAEvents.DEPOSIT_ENTERED_AMOUNT, {
+                        amount: amount,
+                        projectUUID: this.projectUUID,
+                    });
                     this.refreshDepositSubject.next();
                     this.createDepositForm.reset();
                 })
@@ -82,7 +88,13 @@ export class BankTransferComponent implements OnInit {
     confirmDeposit(depositID: number) {
         return () => {
             return this.depositService.confirmDeposit(depositID).pipe(
-                tap(() => this.refreshDepositSubject.next())
+                tap(() => {
+                    this.analytics.eventTrack(GAEvents.DEPOSIT_CONFIRMED_PAYOUT, {
+                        depositID: depositID,
+                        projectUUID: this.projectUUID,
+                    });
+                    this.refreshDepositSubject.next();
+                })
             );
         };
     }

@@ -3,6 +3,7 @@ import { BackendHttpClient } from '../backend-http-client.service';
 import { catchError, retry, switchMap, tap } from 'rxjs/operators';
 import { BehaviorSubject, EMPTY, merge, Observable, of, ReplaySubject, throwError } from 'rxjs';
 import { CacheService } from '../cache.service';
+import { AnalyticsService, GAEvents } from '../analytics.service';
 
 @Injectable({
     providedIn: 'root'
@@ -22,14 +23,19 @@ export class WalletService {
     );
 
     constructor(private http: BackendHttpClient,
+                private analytics: AnalyticsService,
                 private cacheService: CacheService) {
     }
 
     initWallet(address: string) {
-        return this.http.post<Wallet>('/api/wallet/wallet',
-            <InitWalletData>{
-                public_key: address
-            }).pipe(tap(() => this.clearAndRefreshWallet()));
+        return this.http.post<Wallet>('/api/wallet/wallet', <InitWalletData>{
+            public_key: address
+        }).pipe(
+            tap(() => {
+                this.analytics.eventTrack(GAEvents.INIT_WALLET, {address});
+                this.clearAndRefreshWallet();
+            })
+        );
     }
 
     getUserWallet(): Observable<WalletDetailsWithState> {

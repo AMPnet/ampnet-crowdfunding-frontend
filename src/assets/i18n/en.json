@@ -157,6 +157,7 @@
       "cancel": "Cancel",
       "confirm": "Confirm",
       "confirm_checkbox": "I have made a bank transaction using the presented payment details.",
+      "instructions_notice": "Make the bank transfer to our bank account using the details presented below. | After you've transferred your funds please proceed to the next step.",
       "confirmed_notice": "Your funds are on the way. It may take up to 48 hours to become visible on the platform. You will be notified via e-mail notification after your transaction has been processed. For any questions please contact your | Platform Manager |"
     }
   },

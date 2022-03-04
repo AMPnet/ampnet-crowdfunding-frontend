@@ -4,6 +4,8 @@
 
 Angular WebApp focused on crowdfunding for cooperatives.
 
+> The repository has been deprecated in favor of [newly developed frontend](https://github.com/AMPnet/amptzr).
+
 ## Development
 
 ```sh
